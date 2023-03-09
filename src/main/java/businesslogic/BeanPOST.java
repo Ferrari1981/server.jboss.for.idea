@@ -30,7 +30,7 @@ import dsu1.glassfish.atomic.SubClassWriterErros;
 public class BeanPOST {
     @Inject
     SubClassSessionBeanPOST subClassSessionBeanPOST;
-    @EJB
+    @Inject
     BEANCallsBack bEANCallsBack;
     /**
      * Default constructor.
