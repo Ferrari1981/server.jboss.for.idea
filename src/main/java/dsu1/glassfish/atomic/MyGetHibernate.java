@@ -8,16 +8,26 @@ import org.hibernate.cfg.Configuration;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Named;
 import javax.servlet.ServletContext;
+import java.net.InetAddress;
 
 // TODO: 09.03.2023  Класс Получение Менеджера для Hibertire
 @Named
 @ApplicationScoped
+public
 class MyGetHibernate{
     Session session( ServletContext ЛОГ){
         Session   session = null;
         try  {
             Configuration configuration=new Configuration();
-            configuration.configure();
+            InetAddress ip = InetAddress.getLocalHost();
+            String  Name = ip.getHostName();
+            if(	      Name.equalsIgnoreCase("PcProgram")){
+                configuration.configure();
+            }else {
+                configuration.configure("");
+            }
+
+
             try ( SessionFactory sessionFactory = configuration.buildSessionFactory()) {
                 session =sessionFactory.openSession();
                 System.out.println(" session " +session);
