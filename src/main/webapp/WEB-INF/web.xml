@@ -30,7 +30,7 @@
     </filter>
     <filter-mapping>
         <filter-name>FilterSousAvtodor</filter-name>
-        <url-pattern>/*</url-pattern>
+        <url-pattern>/DSU1JsonServlet</url-pattern>
     </filter-mapping>
 
 
