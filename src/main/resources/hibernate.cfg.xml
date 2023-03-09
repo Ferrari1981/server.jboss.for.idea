@@ -13,6 +13,28 @@
     <property name="hibernate.hbm2ddl.auto">update</property>
     <property name="hibernate.format_sql">true</property>
     <property name="hibernate.current_session_context_class">thread</property>
-    <property name="hibernate.transaction.jta.platform">org.hibernate.service.jta.platform.internal.JBossA</property>
+    <property name="hibernate.transaction.jta.platform">org.hibernate.service.jta.platform.internal.JBossAppServerJtaPlatform</property>
+
+    <mapping class="model.Fio"/>
+    <mapping class="model.Organization"/>
+    <mapping class="model.Depatment"/>
+    <mapping class="model.Region"/>
+    <mapping class="model.Cfo"/>
+    <mapping class="model.Notification"/>
+    <mapping class="model.Template"/>
+    <mapping class="model.FioTemplate"/>
+    <mapping class="model.Chat"/>
+    <mapping class="model.DataChat"/>
+    <mapping class="model.Tabel"/>
+    <mapping class="model.DataTabel"/>
+    <mapping class="model.DataNotification"/>
+    <mapping class="model.TypeMaterial"/>
+    <mapping class="model.Company"/>
+    <mapping class="model.Track"/>
+    <mapping class="model.ChatUser"/>
+    <mapping class="model.ViewOnesignal"/>
+    <mapping class="model.NomenVesov"/>
+    <mapping class="model.Settingtab"/>
+
   </session-factory>
 </hibernate-configuration>
