@@ -23,7 +23,7 @@ import javax.servlet.annotation.*;
 public class HelloServlet extends HttpServlet {
     private String message;
     @Inject
-    private  myHibernate myHibernate;
+    private  MyHibernate myHibernate;
 
     public void init() {
         message = "Hello World!";
@@ -31,11 +31,11 @@ public class HelloServlet extends HttpServlet {
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         response.setContentType("text/html");
-        Map<String ,Object> MapРезульатат=myHibernate.session() ;//new myHibernate().session();///
+       Session getSession=myHibernate.session() ;//new myHibernate().session();///
         // Hello
         PrintWriter out = response.getWriter();
         out.println("<html><body>");
-        out.println("<h1>" + message+" hashSetРезультат " +MapРезульатат.values().toString()+" время " +new Date().toLocaleString() + "</h1>");
+        out.println("<h1>" + message+" getSession " +getSession.getSession()+" время " +new Date().toLocaleString() + "</h1>");
         out.println("</body></html>");
 
     }
@@ -50,26 +50,56 @@ public class HelloServlet extends HttpServlet {
 }
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // TODO: 09.03.2023  Класс Получение Менеджера для Hibertire
 @Named
 @ApplicationScoped
-class myHibernate{
-    Map<String ,Object>  session(){
-        Map<String ,Object>  sessionproperti = new HashMap<>();
+ class MyHibernate{
+    Session  session(){
+        Session   session = null;
         try  {
             Configuration configuration=new Configuration();
             configuration.configure();
             try ( SessionFactory sessionFactory = configuration.buildSessionFactory()) {
-                Session   session =sessionFactory.openSession();
-                Map<String ,Object> getJdbcSize=    session.getProperties();
-                sessionproperti.putAll(getJdbcSize);
-                System.out.println(" sessionFactory " +sessionFactory.openSession());
+                  session =sessionFactory.openSession();;
+                System.out.println(" session " +session);
             } catch (HibernateException e) {
                 e.printStackTrace();
             }
         } catch (Exception e) {
             e.printStackTrace();
+            System.out.println(" session " +e.getMessage());
         }
-        return  sessionproperti;
+        return  session;
     }
 }
