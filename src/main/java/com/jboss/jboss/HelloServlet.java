@@ -14,6 +14,7 @@ import java.util.Map;
 import javax.enterprise.inject.Produces;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.inject.Singleton;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 
@@ -41,6 +42,7 @@ public class HelloServlet extends HttpServlet {
     public void destroy() {
     }
 }
+@Singleton
 @Named
 class myHibernate{
     Map<String ,Object>  session(){
@@ -52,6 +54,7 @@ class myHibernate{
                 Session   session =sessionFactory.openSession();
                 Map<String ,Object> getJdbcSize=    session.getProperties();
                 sessionproperti.putAll(getJdbcSize);
+                System.out.println(" sessionFactory " +sessionFactory.openSession());
             } catch (HibernateException e) {
                 e.printStackTrace();
             }
