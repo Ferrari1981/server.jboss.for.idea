@@ -1,4 +1,4 @@
-package com.jboss.jboss;
+package dsu1.glassfish.atomic;
 
 
 import org.hibernate.HibernateException;
@@ -9,9 +9,9 @@ import org.hibernate.cfg.Configuration;
 import java.io.*;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
-import javax.enterprise.inject.Produces;
+import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.inject.spi.BeanManager;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Singleton;
@@ -42,8 +42,9 @@ public class HelloServlet extends HttpServlet {
     public void destroy() {
     }
 }
-@Singleton
+
 @Named
+@ApplicationScoped
 class myHibernate{
     Map<String ,Object>  session(){
         Map<String ,Object>  sessionproperti = new HashMap<>();
