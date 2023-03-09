@@ -1,6 +1,7 @@
 package businesslogic;
 
 import dsu1.glassfish.atomic.SubClassWriterErros;
+import org.hibernate.SessionFactory;
 
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
@@ -8,6 +9,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import javax.annotation.Resource;
 import javax.crypto.NoSuchPaddingException;
 import javax.enterprise.context.RequestScoped;
 import javax.naming.InitialContext;
@@ -16,6 +18,7 @@ import javax.servlet.ServletContext;
 import javax.sql.DataSource;
 import javax.validation.constraints.NotNull;
 import javax.ws.rs.Produces;
+
 
 @RequestScoped
 public class SubClassConnectionsSQLServer extends SubClassGetCurrentIP  {
@@ -39,8 +42,6 @@ public class SubClassConnectionsSQLServer extends SubClassGetCurrentIP  {
             }
             ЛОГ.log("  КакойIP  "+КакойIP+ " datasource " +datasource);
 
-            final Object em =  ctx.lookup("java:comp/env/jdbc/ManagerFactorySes");
-            ЛОГ.log("  КакойIP  "+КакойIP+ " EntityManager " +em);
             if (datasource != null) {
                 conn = datasource.getConnection();
             }
