@@ -522,7 +522,7 @@ public class SubClassJSONp_Stremming_ОбработкаJSON_FOR_POST {
 
     }
 
-    // TODO: 09.03.2023  метод очистки Hirenate после операции 
+    // TODO: 09.03.2023  метод очистки Hirenate после операции
     private void МетодЗавершенияСеанса(Session session) {
         try{
         session.flush();

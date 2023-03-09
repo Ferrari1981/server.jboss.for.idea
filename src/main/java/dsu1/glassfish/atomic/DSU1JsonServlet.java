@@ -9,6 +9,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.util.Date;
 import javax.ejb.EJB;
 import javax.enterprise.context.ApplicationScoped;
@@ -41,7 +42,8 @@ public class DSU1JsonServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         super.doGet(req, resp);
         try{
-            // response.setContentType("text/html");
+            req.setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
+             resp.setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
            ЛОГ = getServletContext();
             //TODO ЗАПУСКАЕМ КОДЕ МЕТОДА GET()
             СессионыйБинGET.МетодБинаGET(ЛОГ,req,resp);
@@ -71,6 +73,8 @@ public class DSU1JsonServlet extends HttpServlet {
         super.doPost(req, resp);
         try{
            ЛОГ = getServletContext();
+            req.setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
+            resp.setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
             //TODO ЗАПУСКАЕМ КОДЕ МЕТОДА POST()
          	СессионыйБинPOST.МетодБинаPOST(ЛОГ,req,resp);
             ЛОГ.log("\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
