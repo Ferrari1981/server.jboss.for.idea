@@ -24,14 +24,15 @@ public class HelloServlet extends HttpServlet {
     private String message;
     @Inject
     private  MyHibernate myHibernate;
+    private     Session getSession;
 
     public void init() {
         message = "Hello World!";
+         getSession=myHibernate.session() ;//new myHibernate().session();///
     }
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         response.setContentType("text/html");
-       Session getSession=myHibernate.session() ;//new myHibernate().session();///
         // Hello
         PrintWriter out = response.getWriter();
         out.println("<html><body>");
