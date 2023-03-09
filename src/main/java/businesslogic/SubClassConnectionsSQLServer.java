@@ -11,6 +11,7 @@ import java.sql.Statement;
 import javax.crypto.NoSuchPaddingException;
 import javax.enterprise.context.RequestScoped;
 import javax.naming.InitialContext;
+import javax.persistence.EntityManager;
 import javax.servlet.ServletContext;
 import javax.sql.DataSource;
 import javax.validation.constraints.NotNull;
@@ -36,7 +37,10 @@ public class SubClassConnectionsSQLServer extends SubClassGetCurrentIP  {
             }else{
                 datasource = (DataSource) ctx.lookup("java:/CoonectionAndroidBeanTimer");//TODO это подключение в РЕЛИЗ
             }
-            ЛОГ.log("  КакойIP  "+КакойIP);
+            ЛОГ.log("  КакойIP  "+КакойIP+ " datasource " +datasource);
+
+            final Object em =  ctx.lookup("java:comp/env/jdbc/ManagerFactorySes");
+            ЛОГ.log("  КакойIP  "+КакойIP+ " EntityManager " +em);
             if (datasource != null) {
                 conn = datasource.getConnection();
             }
