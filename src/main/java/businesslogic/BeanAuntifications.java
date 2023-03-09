@@ -150,6 +150,12 @@ public class BeanAuntifications {
                     }
                 }
                 РезультатСканированиеИмениИПароль.close();
+                stmt.close();
+                //TODO
+                ЛОГ.log( " Класс"+Thread.currentThread().getStackTrace()[2].getClassName()
+                        +"\n"+
+                        " метод "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"
+                        + "Строка " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "РезультатСканированиеИмениИПароль " +РезультатСканированиеИмениИПароль);
             }
 
         } catch (Exception e) {
