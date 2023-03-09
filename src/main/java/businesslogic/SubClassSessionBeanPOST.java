@@ -98,8 +98,7 @@ public class SubClassSessionBeanPOST   {//extends    DSU1JsonServlet
     protected  StringBuffer  ГлавныйМетод_МетодаPOST(
             @NotNull	  HttpServletRequest request,
             @NotNull 	HttpServletResponse response,
-            @NotNull	ServletContext ЛОГ
-            ,	@NotNull  EntityManager JPAМенеджер) throws SecurityException {
+            @NotNull	ServletContext ЛОГ) throws SecurityException {
 
         StringBuffer	ОтветОтГлавного_МетодаPOSTДляОтправкиНААндройд=null;
         try (Connection  conn =subClassConnectionsSQLServer.МетодПредворительногоПодключенияДляМетодаGETкодИзConnection(	ЛОГ);) {
@@ -143,7 +142,7 @@ public class SubClassSessionBeanPOST   {//extends    DSU1JsonServlet
                         ОтветОтГлавного_МетодаPOSTДляОтправкиНААндройд=
                                 МетодПарсингаJSONФайлПришелОтКлиента(response,
                                         ПараметрИмяТаблицыОтАндройдаPost,
-                                        jsonReaderПришеоОтКлиентаJSON_P,JPAМенеджер);
+                                        jsonReaderПришеоОтКлиентаJSON_P);
                         ЛОГ.log(" responОтветОтГлавного_МетодаPOSTДляОтправкиНААндройдse "+ОтветОтГлавного_МетодаPOSTДляОтправкиНААндройд);
                     }
                     break;
@@ -174,8 +173,7 @@ public class SubClassSessionBeanPOST   {//extends    DSU1JsonServlet
     StringBuffer МетодПарсингаJSONФайлПришелОтКлиента(
             @NotNull	HttpServletResponse response,
             @NotNull	String ПараметрИмяТаблицыОтАндройдаPost,
-            @NotNull JsonReader jsonReaderПришеоОтКлиентаJSON_P,
-            @NotNull	  EntityManager JPAМенеджер)
+            @NotNull JsonReader jsonReaderПришеоОтКлиентаJSON_P)
             throws InterruptedException, SQLException, BrokenBarrierException, IOException {
         StringBuffer	ОтветОтГлавного_МетодаPOSTДляОтправкиНААндройд=new StringBuffer();
         try {
@@ -193,8 +191,7 @@ public class SubClassSessionBeanPOST   {//extends    DSU1JsonServlet
             //TODO ГЛАВНЫЙ МЕТОДА POST() КОТОРЫЙ ВСТАВЛЯЕТ  И/ИЛИ ОБНОВЛЕНИЯ ДАННЫХ
             ОтветОтГлавного_МетодаPOSTДляОтправкиНААндройд =
                     subClassJSONp_Stremming_ОбработкаJSON_FOR_POST.МетодОбработкиJSONPСтиминг(ЛОГ, JSONОБьектjsonReaderПришеоОтКлиентаJSON_P
-                            ,ПараметрИмяТаблицыОтАндройдаPost,
-                            JPAМенеджер);
+                            ,ПараметрИмяТаблицыОтАндройдаPost);
             ЛОГ.log(" jsonReaderПришеоОтКлиентаJSON_P "+jsonReaderПришеоОтКлиентаJSON_P.toString());
         } catch (Exception e) {
             // TODO: handle exception

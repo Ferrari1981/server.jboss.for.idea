@@ -46,8 +46,7 @@ public class BeanPOST {
 
     @SuppressWarnings("unused")
 
-    public void МетодБинаPOST( @NotNull javax.persistence.EntityManagerFactory ФабрикаДляМенеждера ,
-                               @NotNull ServletContext ЛОГ,
+    public void МетодБинаPOST(@NotNull ServletContext ЛОГ,
                                @NotNull HttpServletRequest request,
                                @NotNull  HttpServletResponse response) throws InterruptedException, ExecutionException {
         Future<StringBuffer> БуферРезультатPOST=null;
@@ -55,10 +54,8 @@ public class BeanPOST {
             ЛОГ.log("\n"+" Starting.... class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
                     " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
                     " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n");
-            EntityManager JPAМенеджер = ФабрикаДляМенеждера.createEntityManager();
-
             ///Todo  получаем данные от клиента
-            БуферРезультатPOST= 	 АсинхронныйЗапускPOST(JPAМенеджер,ЛОГ,request,response);
+            БуферРезультатPOST= 	 АсинхронныйЗапускPOST(ЛОГ,request,response);
             ЛОГ.log("  БуферРезультатGET  " +БуферРезультатPOST.get());
 
 
@@ -83,8 +80,7 @@ public class BeanPOST {
 
     @SuppressWarnings("unused")
     @Asynchronous
-    private Future<StringBuffer> АсинхронныйЗапускPOST( @NotNull   EntityManager JPAМенеджер  ,
-                                                        @NotNull ServletContext ЛОГ,
+    private Future<StringBuffer> АсинхронныйЗапускPOST( @NotNull ServletContext ЛОГ,
                                                         @NotNull HttpServletRequest request,
                                                         @NotNull  HttpServletResponse response){
         StringBuffer БуферРезультатPOST=null;
@@ -92,7 +88,7 @@ public class BeanPOST {
             ЛОГ.log("\n"+" Starting.... class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
                     " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
                     " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n");
-            БуферРезультатPOST=		subClassSessionBeanPOST.ГлавныйМетод_МетодаPOST(request, response, ЛОГ, JPAМенеджер);
+            БуферРезультатPOST=		subClassSessionBeanPOST.ГлавныйМетод_МетодаPOST(request, response, ЛОГ);
             ЛОГ.log("\n"+" Starting.... class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
                     " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
                     " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+  "  БуферРезультатPOST " +БуферРезультатPOST);

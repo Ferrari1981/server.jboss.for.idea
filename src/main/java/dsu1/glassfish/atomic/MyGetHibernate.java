@@ -15,7 +15,7 @@ import java.net.InetAddress;
 @ApplicationScoped
 public
 class MyGetHibernate{
-    Session session( ServletContext ЛОГ){
+    public Session session(ServletContext ЛОГ){
         Session   session = null;
         try  {
             Configuration configuration=new Configuration();

@@ -7,6 +7,7 @@ import java.util.Date;
 import java.util.Map.Entry;
 import java.util.Optional;
 import javax.enterprise.context.RequestScoped;
+import javax.inject.Inject;
 import javax.json.Json;
 import javax.json.JsonObject;
 import javax.json.JsonReader;
@@ -18,22 +19,30 @@ import javax.servlet.ServletContext;
 import javax.ws.rs.Produces;
 
 import com.sun.istack.NotNull;
+import dsu1.glassfish.atomic.MyGetHibernate;
 import dsu1.glassfish.atomic.SubClassWriterErros;
+import org.hibernate.Session;
 
 //TODO
 @RequestScoped
 @Produces
 public class SubClassJSONp_Stremming_ОбработкаJSON_FOR_POST {
+    @Inject
+    private MyGetHibernate myHibernate;
+    ServletContext ЛОГ;
 
+    // TODO: 09.03.2023
     StringBuffer МетодОбработкиJSONPСтиминг(
             @NotNull ServletContext ЛОГ,
             @NotNull JsonObject JSONОБьектjsonReaderПришеоОтКлиентаJSON_P
-            , @NotNull String ПараметрИмяТаблицыОтАндройдаPost,
-            @NotNull 		  EntityManager МенеджерJTA) throws SQLException {
+            , @NotNull String ПараметрИмяТаблицыОтАндройдаPost) throws SQLException {
+
         StringBuffer ОтветОтГлавного_МетодаPOSTДляОтправкиНААндройд=new StringBuffer();
         /// javax.persistence.EntityManager  МенеджерJTA = ФабрикаДляМенеждера.createEntityManager();
         try {
-            ЛОГ.log(" jsonReaderПришеоОтКлиентаJSON_P "+JSONОБьектjsonReaderПришеоОтКлиентаJSON_P.toString());
+            this.ЛОГ=ЛОГ;
+           Session session=myHibernate.session(ЛОГ) ;
+            ЛОГ.log(" jsonReaderПришеоОтКлиентаJSON_P "+JSONОБьектjsonReaderПришеоОтКлиентаJSON_P.toString()  + " session  " +session);
             //TODO ГЛАВЕНЫЙ ЦИКЛ ОБРАБОТКИ ДАННЫХ В МЕТОДЕ  POST
             JSONОБьектjsonReaderПришеоОтКлиентаJSON_P.entrySet().forEach(ВнешнаяСтрокаJSON -> {
                 //  МенеджерJTA.getTransaction().begin();
@@ -88,7 +97,7 @@ public class SubClassJSONp_Stremming_ОбработкаJSON_FOR_POST {
                                 + " ПараметрИмяТаблицыОтАндройдаPost " +ПараметрИмяТаблицыОтАндройдаPost);
 
                         //TODO Процедура Удаленная вызова SQL Server
-                        queryprocedure = МенеджерJTA.createStoredProcedureQuery("ProcedureExistsMERGEsettings_tabels#2");//TODO ProcedureExistsMERGE_fio
+                        queryprocedure = session.createStoredProcedureQuery("ProcedureExistsMERGEsettings_tabels#2");//TODO ProcedureExistsMERGE_fio
                         //TODO
                         ЛОГ.log(" case \"settings_tabels\":	queryprocedure "
                                 +queryprocedure);
@@ -103,7 +112,7 @@ public class SubClassJSONp_Stremming_ОбработкаJSON_FOR_POST {
 
 
                         //TODO Процедура Удаленная вызова SQL Server
-                        queryprocedure = МенеджерJTA.createStoredProcedureQuery( "ProcedureExistsMERGEfio#1");//TODO ProcedureExistsMERGE_fio
+                        queryprocedure = session.createStoredProcedureQuery( "ProcedureExistsMERGEfio#1");//TODO ProcedureExistsMERGE_fio
                         //TODO
                         ЛОГ.log(" case \"fio\":	queryprocedure "
                                 +queryprocedure);
@@ -120,7 +129,7 @@ public class SubClassJSONp_Stremming_ОбработкаJSON_FOR_POST {
 
 
                         //TODO Процедура Удаленная вызова SQL Server
-                        queryprocedure = МенеджерJTA.createStoredProcedureQuery( "ProcedureExistsMERGEdata_tabels#3");//TODO ProcedureExistsMERGE_fio
+                        queryprocedure = session.createStoredProcedureQuery( "ProcedureExistsMERGEdata_tabels#3");//TODO ProcedureExistsMERGE_fio
                         //TODO
                         ЛОГ.log(" case \"data_tabels\":	queryprocedure "
                                 +queryprocedure);
@@ -136,7 +145,7 @@ public class SubClassJSONp_Stremming_ОбработкаJSON_FOR_POST {
 
 
                         //TODO Процедура Удаленная вызова SQL Server
-                        queryprocedure = МенеджерJTA.createStoredProcedureQuery( "ProcedureExistsMERGEtabel#4");//TODO ProcedureExistsMERGE_fio
+                        queryprocedure = session.createStoredProcedureQuery( "ProcedureExistsMERGEtabel#4");//TODO ProcedureExistsMERGE_fio
                         //TODO
                         ЛОГ.log(" case \"tabel\":	queryprocedure "
                                 +queryprocedure);
@@ -152,7 +161,7 @@ public class SubClassJSONp_Stremming_ОбработкаJSON_FOR_POST {
 
 
                         //TODO Процедура Удаленная вызова SQL Server
-                        queryprocedure = МенеджерJTA.createStoredProcedureQuery( "ProcedureExistsMERGEorganization#5");//TODO ProcedureExistsMERGE_fio
+                        queryprocedure = session.createStoredProcedureQuery( "ProcedureExistsMERGEorganization#5");//TODO ProcedureExistsMERGE_fio
                         //TODO
                         ЛОГ.log(" case \"organization\":	queryprocedure "
                                 +queryprocedure);
@@ -168,7 +177,7 @@ public class SubClassJSONp_Stremming_ОбработкаJSON_FOR_POST {
 
 
                         //TODO Процедура Удаленная вызова SQL Server
-                        queryprocedure = МенеджерJTA.createStoredProcedureQuery( "ProcedureExistsMERGEdepatment#6");//TODO ProcedureExistsMERGE_fio
+                        queryprocedure = session.createStoredProcedureQuery( "ProcedureExistsMERGEdepatment#6");//TODO ProcedureExistsMERGE_fio
                         //TODO
                         ЛОГ.log(" case \"depatment\":	queryprocedure "
                                 +queryprocedure);
@@ -185,7 +194,7 @@ public class SubClassJSONp_Stremming_ОбработкаJSON_FOR_POST {
 
 
                         //TODO Процедура Удаленная вызова SQL Server
-                        queryprocedure = МенеджерJTA.createStoredProcedureQuery( "ProcedureExistsMERGEnotifications#7");//TODO ProcedureExistsMERGE_fio
+                        queryprocedure = session.createStoredProcedureQuery( "ProcedureExistsMERGEnotifications#7");//TODO ProcedureExistsMERGE_fio
                         //TODO
                         ЛОГ.log(" case \"notifications\":	queryprocedure "
                                 +queryprocedure);
@@ -202,7 +211,7 @@ public class SubClassJSONp_Stremming_ОбработкаJSON_FOR_POST {
 
 
                         //TODO Процедура Удаленная вызова SQL Server
-                        queryprocedure = МенеджерJTA.createStoredProcedureQuery( "ProcedureExistsMERGEdata_notification#8");//TODO ProcedureExistsMERGE_fio
+                        queryprocedure = session.createStoredProcedureQuery( "ProcedureExistsMERGEdata_notification#8");//TODO ProcedureExistsMERGE_fio
                         //TODO
                         ЛОГ.log(" case \"data_notification\":	queryprocedure "
                                 +queryprocedure);
@@ -219,7 +228,7 @@ public class SubClassJSONp_Stremming_ОбработкаJSON_FOR_POST {
 
 
                         //TODO Процедура Удаленная вызова SQL Server
-                        queryprocedure = МенеджерJTA.createStoredProcedureQuery( "ProcedureExistsMERGEchats#9");//TODO ProcedureExistsMERGE_fio
+                        queryprocedure = session.createStoredProcedureQuery( "ProcedureExistsMERGEchats#9");//TODO ProcedureExistsMERGE_fio
                         //TODO
                         ЛОГ.log(" case \"chats\":	queryprocedure "
                                 +queryprocedure);
@@ -236,7 +245,7 @@ public class SubClassJSONp_Stremming_ОбработкаJSON_FOR_POST {
 
 
                         //TODO Процедура Удаленная вызова SQL Server
-                        queryprocedure = МенеджерJTA.createStoredProcedureQuery( "ProcedureExistsMERGEdata_chat#10");//TODO ProcedureExistsMERGE_fio
+                        queryprocedure = session.createStoredProcedureQuery( "ProcedureExistsMERGEdata_chat#10");//TODO ProcedureExistsMERGE_fio
                         //TODO
                         ЛОГ.log(" case \"data_chat\":	queryprocedure "
                                 +queryprocedure);
@@ -255,7 +264,7 @@ public class SubClassJSONp_Stremming_ОбработкаJSON_FOR_POST {
 
 
                         //TODO Процедура Удаленная вызова SQL Server
-                        queryprocedure = МенеджерJTA.createStoredProcedureQuery( "ProcedureExistsMERGEtemplates#11");//TODO ProcedureExistsMERGE_fio
+                        queryprocedure = session.createStoredProcedureQuery( "ProcedureExistsMERGEtemplates#11");//TODO ProcedureExistsMERGE_fio
                         //TODO
                         ЛОГ.log(" case \"templates\":	queryprocedure "
                                 +queryprocedure);
@@ -273,7 +282,7 @@ public class SubClassJSONp_Stremming_ОбработкаJSON_FOR_POST {
 
 
                         //TODO Процедура Удаленная вызова SQL Server
-                        queryprocedure = МенеджерJTA.createStoredProcedureQuery( "ProcedureExistsMERGEfio_template#12");//TODO ProcedureExistsMERGE_fio
+                        queryprocedure = session.createStoredProcedureQuery( "ProcedureExistsMERGEfio_template#12");//TODO ProcedureExistsMERGE_fio
                         //TODO
                         ЛОГ.log(" case \"fio_template\":	queryprocedure "
                                 +queryprocedure);
@@ -295,7 +304,7 @@ public class SubClassJSONp_Stremming_ОбработкаJSON_FOR_POST {
 
 
                         //TODO Процедура Удаленная вызова SQL Server
-                        queryprocedure = МенеджерJTA.createStoredProcedureQuery( "ProcedureExistsMERGEregion#13");//TODO ProcedureExistsMERGE_fio
+                        queryprocedure = session.createStoredProcedureQuery( "ProcedureExistsMERGEregion#13");//TODO ProcedureExistsMERGE_fio
                         //TODO
                         ЛОГ.log(" case \"region\":	queryprocedure "
                                 +queryprocedure);
@@ -313,7 +322,7 @@ public class SubClassJSONp_Stremming_ОбработкаJSON_FOR_POST {
 
 
                         //TODO Процедура Удаленная вызова SQL Server
-                        queryprocedure = МенеджерJTA.createStoredProcedureQuery( "ProcedureExistsMERGEcfo#14");//TODO ProcedureExistsMERGE_fio
+                        queryprocedure = session.createStoredProcedureQuery( "ProcedureExistsMERGEcfo#14");//TODO ProcedureExistsMERGE_fio
                         //TODO
                         ЛОГ.log(" case \"cfo\":	queryprocedure "
                                 +queryprocedure);
@@ -330,7 +339,7 @@ public class SubClassJSONp_Stremming_ОбработкаJSON_FOR_POST {
                                 +ВнутренийОбщийJSONОБьектjsonReaderПришеоОтКлиентаJSON_P.toString()+"\n"
                                 + " ПараметрИмяТаблицыОтАндройдаPost " +ПараметрИмяТаблицыОтАндройдаPost);
                         //TODO Процедура Удаленная вызова SQL Server
-                        queryprocedure = МенеджерJTA.createStoredProcedureQuery( "ProcedureExistsMERGEget_materials_data#17");//TODO ProcedureExistsMERGE_fio
+                        queryprocedure = session.createStoredProcedureQuery( "ProcedureExistsMERGEget_materials_data#17");//TODO ProcedureExistsMERGE_fio
                         //TODO
                         ЛОГ.log(" case \"cfo\":	queryprocedure " +queryprocedure);
                         //TODO
@@ -493,17 +502,13 @@ public class SubClassJSONp_Stremming_ОбработкаJSON_FOR_POST {
 
             //TODO
             //TODO Очищаем менеджер от данных
-            МенеджерJTA.clear();
-            //TODO Очищаем менеджер от данных
-            МенеджерJTA.close();
+            МетодЗавершенияСеанса(session);
             //TODO
             ///ФабрикаДляМенеждера.close();
             ЛОГ.log("ОтветОтГлавного_МетодаPOSTДляОтправкиНААндройд  "+ ОтветОтГлавного_МетодаPOSTДляОтправкиНААндройд.toString());
             ///TODO
             //TODO
         } catch (Exception   e) {
-            МенеджерJTA.getTransaction().setRollbackOnly();
-            МенеджерJTA.close();
             new SubClassWriterErros().МетодаЗаписиОшибкиВЛог(e, null,
                     "\n"+" Error.... class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
                             " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"
@@ -517,10 +522,26 @@ public class SubClassJSONp_Stremming_ОбработкаJSON_FOR_POST {
 
     }
 
+    // TODO: 09.03.2023  метод очистки Hirenate после операции 
+    private void МетодЗавершенияСеанса(Session session) {
+        try{
+        session.flush();
+        session.clear();
+        //TODO Очищаем менеджер от данных
+        session.close();
+            //TODO
+            ЛОГ.log( " Класс"+Thread.currentThread().getStackTrace()[2].getClassName()
+                    +"\n"+
+                    " метод "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"
+                    + "Строка " + Thread.currentThread().getStackTrace()[2].getLineNumber());
+    } catch (Exception   e) {
+        new SubClassWriterErros().МетодаЗаписиОшибкиВЛог(e, null,
+                "\n"+" Error.... class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
+                        " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"
+                        + "{ ЛогинПолученныйОтКлиента " +null, Thread.currentThread().getStackTrace()[2],null,ЛОГ.getServerInfo().toLowerCase());
 
-
-
-
+    }
+    }
 
 
     /**
