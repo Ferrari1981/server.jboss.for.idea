@@ -33,7 +33,7 @@ public class BeanGET {
      */
     @Inject
     SubClassSessionBeanМетодаGET subClassSessionBeanМетодаGET;
-    @EJB
+    @Inject
     BEANCallsBack bEANCallsBack;
     public BeanGET(	  ) {
         // TODO Auto-generated constructor stub
@@ -62,13 +62,14 @@ public class BeanGET {
             БуферРезультатGET= 	 АсинхронныйЗапускGET(ЛОГ,request,response);
             ЛОГ.log( "  БуферРезультатGET  " +БуферРезультатGET.get());
 
-
+              while (!БуферРезультатGET.isDone());
             //TODO вторая часть посылаем клиенту ответ
-            if (БуферРезультатGET.isDone()) {
                 bEANCallsBack.МетодГлавныйМетодПосылаемДанныеАндройду(response, БуферРезультатGET.get(), ЛОГ, request);
-                ЛОГ.log("  БуферРезультатGET  " + БуферРезультатGET.get());
-            }
-
+//TODO
+            ЛОГ.log( " Класс"+Thread.currentThread().getStackTrace()[2].getClassName()
+                    +"\n"+
+                    " метод "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"
+                    + "Строка " + Thread.currentThread().getStackTrace()[2].getLineNumber()+"  БуферРезультатGET  " + БуферРезультатGET.get());
 
         } catch (Exception e) {
             new SubClassWriterErros().МетодаЗаписиОшибкиВЛог(e, null,

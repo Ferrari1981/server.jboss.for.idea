@@ -5,7 +5,17 @@ import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 import javax.inject.Inject;
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import javax.validation.constraints.NotNull;
+import java.nio.charset.StandardCharsets;
 import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.Base64;
+import java.util.Optional;
 
 /**
  * Session Bean implementation class BeanAuntifications
@@ -29,7 +39,8 @@ public class BeanAuntifications {
     @SuppressWarnings("unused")
     public Boolean МетодЗапускаетАунтифиувциюПользователяПриВходе(@NotNull ServletContext ЛОГ,
                                                                   @NotNull HttpServletRequest request,
-                                                                  @NotNull  HttpServletResponse response,@NotNull	HttpSession session) {
+                                                                  @NotNull HttpServletResponse response,
+                                                                  @NotNull HttpSession session) {
         int РазрешонныеПрава = 2;
         Integer		IDПолученныйИзSQlServerПосик=0;/// вычисялем
         String	ИмяПолученныйИзSQlServerПосик = null ;/// вычисялем
@@ -38,7 +49,7 @@ public class BeanAuntifications {
         try (Connection conn =subClassConnectionsSQLServer.МетодПредворительногоПодключенияДляМетодаGETкодИзConnection(	ЛОГ);){
             ЛОГ.log("ЛОГ  GET() " + ЛОГ +" request " + request + " response " + response);
             //TODO
-            Statement	stmt =subClassConnectionsSQLServer.	МетодПредворительногоПодключенияДляМетодаGETкодИзStatement(
+            Statement stmt =subClassConnectionsSQLServer.	МетодПредворительногоПодключенияДляМетодаGETкодИзStatement(
                     conn,
                     ЛОГ);
             ЛОГ.log(" ОТРАБОТАЛ МЕТОД ИНИЦИАЛИЗАЦИИ ПЕРЕМЕННЫХ КОТОРЫ Е ПРИШЛИ  МетодПредворительногоПодключенияДляМетодаGETкодИзКонструктора   "+
@@ -90,7 +101,7 @@ public class BeanAuntifications {
                 System.out.println(" queryСканируемИмяИпароль   " + queryСканируемИмяИпароль);
                 // TODO получаем имя и пвроль
                 //////// запрос вычисляет имя и пароль и id
-                ResultSet	РезультатСканированиеИмениИПароль = stmt.executeQuery(queryСканируемИмяИпароль);
+                ResultSet РезультатСканированиеИмениИПароль = stmt.executeQuery(queryСканируемИмяИпароль);
                 РезультатСканированиеИмениИПароль.last();
                 // todo НАЛИЧИЕ ПОЛЬЗОВАТЕЛЯ В БАЕЗ
                 int НаличиеХотябыОднуСТрочкуПользоватлеьВБАзеТакойВообщеЕсть = РезультатСканированиеИмениИПароль

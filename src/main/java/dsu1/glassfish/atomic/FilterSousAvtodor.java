@@ -1,19 +1,24 @@
 package dsu1.glassfish.atomic;
 
+import businesslogic.BEANCallsBack;
+import businesslogic.BeanAuntifications;
+
 import javax.ejb.EJB;
+import javax.inject.Inject;
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Date;
 
 
 @WebFilter(value = "/FilterSousAvtodor")
 public class FilterSousAvtodor implements Filter {
     @EJB
-    private  BeanAuntifications beanAuntifications;
-    @EJB
-    private	BEANCallsBack bEANCallsBack;
+    private BeanAuntifications beanAuntifications;
+    @Inject
+    private BEANCallsBack bEANCallsBack;
     private ServletContext ЛОГ;
     /**
      * Default constructor.
