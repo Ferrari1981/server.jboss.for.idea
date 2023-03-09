@@ -15,10 +15,11 @@ import javax.enterprise.inject.spi.BeanManager;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Singleton;
+import javax.servlet.ServletException;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 
-@WebServlet(name = "helloServlet", value = "/hello-servlet")
+@WebServlet(name = "helloServlet", value = "/dsu1.glassfish.atomic")
 public class HelloServlet extends HttpServlet {
     private String message;
     @Inject
@@ -39,10 +40,17 @@ public class HelloServlet extends HttpServlet {
 
     }
 
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        super.doPost(req, resp);
+    }
+
     public void destroy() {
     }
 }
 
+
+// TODO: 09.03.2023  Класс Получение Менеджера для Hibertire
 @Named
 @ApplicationScoped
 class myHibernate{
