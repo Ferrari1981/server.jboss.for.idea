@@ -71,7 +71,7 @@ public class FilterSousAvtodor implements Filter {
                         responseОтветКлиенту.addHeader("stream_size", String.valueOf(СерверРаботаетБезПараметров.length()));
                         ////requestФильтра.getRequestDispatcher("/index.jsp").forward(requestФильтра, responseОтветКлиенту);
                         // TODO: 10.03.2023 Ответ От Сервера
-                        bEANCallsBack.МетодBackДанныеКлиенту(	   responseОтветКлиенту, СерверРаботаетБезПараметров, ЛОГ,   requestФильтра);
+                        bEANCallsBack.МетодBackДанныеКлиенту(	   responseОтветКлиенту, СерверРаботаетБезПараметров, ЛОГ);
                         ЛОГ.log("\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
                                 " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
                                 " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+

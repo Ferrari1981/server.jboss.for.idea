@@ -51,16 +51,14 @@ public class BeanGET {
                                @NotNull  HttpServletResponse response) throws InterruptedException, ExecutionException {
         try {
             // TODO: 10.03.2023  данные от GET метода
-            Future<StringBuffer>       БуферРезультатGET= 	 АсинхронныйЗапускGET(ЛОГ,request,response);
-              while (!БуферРезультатGET.isDone());
+            Future<StringBuffer>       БуферРезультатGET= 	 АсинхронныйЗапускGET(ЛОГ,request);
+            ЛОГ.log( "  БуферРезультатGET  " + БуферРезультатGET.get());
             ///Todo отправляем  клиенту ответ от серверац
-                bEANCallsBack.МетодBackДанныеКлиенту(response, БуферРезультатGET.get(), ЛОГ, request);
-//TODO
+                bEANCallsBack.МетодBackДанныеКлиенту(response, БуферРезультатGET.get(), ЛОГ);
             ЛОГ.log( " Класс"+Thread.currentThread().getStackTrace()[2].getClassName()
                     +"\n"+
                     " метод "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"
                     + "Строка " + Thread.currentThread().getStackTrace()[2].getLineNumber()+"  БуферРезультатGET  " + БуферРезультатGET.get());
-
         } catch (Exception e) {
             new SubClassWriterErros().МетодаЗаписиОшибкиВЛог(e, null,
                     "\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
@@ -76,11 +74,10 @@ public class BeanGET {
     @SuppressWarnings("unused")
     @Asynchronous
     private Future<StringBuffer> АсинхронныйЗапускGET(@NotNull ServletContext ЛОГ,
-                                                       @NotNull HttpServletRequest request,
-                                                       @NotNull  HttpServletResponse response){
+                                                       @NotNull HttpServletRequest request){
         StringBuffer БуферРезультатGET=null;
         try {
-            БуферРезультатGET=		subClassSessionBeanМетодаGET.ГлавныйМетод_МетодаGET(request, response, ЛОГ);
+            БуферРезультатGET=		subClassSessionBeanМетодаGET.ГлавныйМетод_МетодаGET(request,  ЛОГ);
             if(БуферРезультатGET==null) {
                 БуферРезультатGET=new StringBuffer();
             }

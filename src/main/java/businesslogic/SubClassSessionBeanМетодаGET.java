@@ -64,9 +64,6 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
     @Inject
     private SubClassConnectionsSQLServer subClassConnectionsSQLServer;
 
-    @Inject
-    private MyGetHibernate myHibernate;
-
     public SubClassSessionBeanМетодаGET() {
 
         System.out.println("Конструктор  SubClassSessionBeanМетодаGET");
@@ -75,7 +72,6 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
 
     @SuppressWarnings({ "unused", "deprecation", "rawtypes", "unchecked" })
     protected StringBuffer ГлавныйМетод_МетодаGET(@NotNull HttpServletRequest request,
-                                                  @NotNull HttpServletResponse response,
                                                   @NotNull ServletContext ЛОГ) throws SecurityException, SQLException {
         // TODO Auto-generated method stub
         System.out.println("Конструктор  ЗАПУСК МЕТОДА ИЗ GET ()  ГлавныйМетод_МетодаGET()");
@@ -157,7 +153,6 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
 
             if (IDПолученныйИзSQlServerПосик>0) {
                 /// TODO НОВЫЕ ПАРАМЕТРЫ HIREBIANTE
-                session = myHibernate.session(ЛОГ);
                 ЛистДанныеОтHibenide = new ArrayList<>();
                 ЛОГ.log("\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
                         " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
@@ -547,9 +542,11 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
 
     private void МетодЗакрываемСессиюHibernate(Session session) {
         try{
-        session.flush();
-        session.clear();
-        session.close();
+            if (session!=null) {
+                session.flush();
+                session.clear();
+                session.close();
+            }
             ЛОГ.log("\n МетодЗакрываемСессиюHibernate "+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
                     " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
                     " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n");

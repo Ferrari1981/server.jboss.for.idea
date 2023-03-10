@@ -33,8 +33,7 @@ public class BEANCallsBack {
     // TODO МетодКласса отправки данных андройду
     public void МетодBackДанныеКлиенту(@NotNull HttpServletResponse response,
                                        @NotNull StringBuffer ГлавныйБуферОтправкиДанныхНААндройд,
-                                       @NotNull ServletContext ЛОГ,
-                                       @NotNull HttpServletRequest request) throws IOException, ServletException {
+                                       @NotNull ServletContext ЛОГ) throws IOException, ServletException {
         try (BufferedWriter БуферДанныеДляКлиента = new BufferedWriter(
                 new OutputStreamWriter(new GZIPOutputStream(response.getOutputStream()), StandardCharsets.UTF_16));) {
             ЛОГ.log("Data SEND FOR CLIENT ANDROID ГлавныйБуферОтправкиДанныхНААндройд=============================>>>>>>>>>>>"+ГлавныйБуферОтправкиДанныхНААндройд);

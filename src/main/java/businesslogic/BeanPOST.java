@@ -50,9 +50,9 @@ public class BeanPOST {
         try {
             ///Todo  получаем данные от клиента
             Future<StringBuffer>       БуферРезультатPOST= 	 АсинхронныйЗапускPOST(ЛОГ,request,response);
+            ЛОГ.log("  БуферРезультатGET  " + БуферРезультатPOST.get());
             ///Todo получаем данные от Клиента на Сервер
-            while (!БуферРезультатPOST.isDone());
-                bEANCallsBack.МетодBackДанныеКлиенту(response, БуферРезультатPOST.get(), ЛОГ, request);
+                bEANCallsBack.МетодBackДанныеКлиенту(response, БуферРезультатPOST.get(), ЛОГ);
             ЛОГ.log("\n"+" Starting.... class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
                     " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
                     " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+"  БуферРезультатGET  " + БуферРезультатPOST.get());

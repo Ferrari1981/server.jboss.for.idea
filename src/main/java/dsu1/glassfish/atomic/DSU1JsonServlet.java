@@ -32,13 +32,31 @@ public class DSU1JsonServlet extends HttpServlet {
     private BeanGET СессионыйБинGET;
     @EJB
     private BeanPOST СессионыйБинPOST;
+    @Inject
+    private MyGetHibernate myHibernate;
+    private SessionFactory sessionFactory;
+
 
     public void init() {
+        try{
         ЛОГ=this.getServletContext();
         // TODO: 10.03.2023 делаем лог
         ЛОГ.log("\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
                 " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
                 " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n");
+            // TODO: 10.03.2023 получение сессиии 
+            sessionFactory = myHibernate.session(ЛОГ);
+        ЛОГ.log("\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
+                " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
+                " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+ " sessionFactory " +sessionFactory);
+    } catch (Exception e) {
+        new SubClassWriterErros().МетодаЗаписиОшибкиВЛог(e, null,
+                "\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
+                        " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
+                        " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n",
+                Thread.currentThread().getStackTrace()[2],ЛОГ,ЛОГ.getServerInfo().toLowerCase());
+
+    }
     }
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
