@@ -16,9 +16,6 @@
     <property name="hibernate.transaction.jta.platform">org.hibernate.service.jta.platform.internal.JBossAppServerJtaPlatform</property>
     <property name="hibernate.connection.datasource">java:comp/env/jdbc/ResourceGlassfishBedug</property>
 
-    <property name="jboss.entity.manager.jndi.name">java:/Manager1</property>
-    <property name="jboss.entity.manager.factory.jndi.name" >java:/Manager1Factory</property>
-
     <mapping class="model.Fio"/>
     <mapping class="model.Organization"/>
     <mapping class="model.Depatment"/>

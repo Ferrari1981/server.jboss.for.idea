@@ -12,6 +12,7 @@ import java.sql.Statement;
 import javax.annotation.Resource;
 import javax.crypto.NoSuchPaddingException;
 import javax.enterprise.context.RequestScoped;
+import javax.inject.Named;
 import javax.naming.InitialContext;
 import javax.persistence.EntityManager;
 import javax.servlet.ServletContext;
@@ -19,7 +20,7 @@ import javax.sql.DataSource;
 import javax.validation.constraints.NotNull;
 import javax.ws.rs.Produces;
 
-
+@Named
 @RequestScoped
 public class SubClassConnectionsSQLServer extends SubClassGetCurrentIP  {
     @SuppressWarnings("null")

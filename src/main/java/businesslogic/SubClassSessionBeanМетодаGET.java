@@ -18,6 +18,7 @@ import java.util.Optional;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
+import javax.inject.Named;
 import javax.json.Json;
 import javax.json.JsonObjectBuilder;
 import javax.json.JsonWriter;
@@ -42,6 +43,7 @@ import com.sun.istack.NotNull;
 
 @RequestScoped
 @Produces
+@Named
 public class SubClassSessionBeanМетодаGET {// extends WITH
 
     private ServletContext ЛОГ;

@@ -28,6 +28,7 @@ import java.util.zip.GZIPInputStream;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
+import javax.inject.Named;
 import javax.json.Json;
 import javax.json.JsonObject;
 import javax.json.JsonReader;
@@ -41,6 +42,7 @@ import javax.ws.rs.Produces;
 
 @RequestScoped
 @Produces
+@Named
 public class SubClassSessionBeanPOST   {//extends    DSU1JsonServlet
 
 
@@ -1004,18 +1006,7 @@ public class SubClassSessionBeanPOST   {//extends    DSU1JsonServlet
 }
 //todo
 
-class SubClassМетодаSessionBeanМетодаPOSTдляТаблицыData_CHat extends SubClassSessionBeanPOST{
 
-    public SubClassМетодаSessionBeanМетодаPOSTдляТаблицыData_CHat(String ТекущаяТаблицаОбработки)
-            throws ClassNotFoundException, SQLException, NoSuchAlgorithmException {
-        //super();
-        // TODO Auto-generated constructor stub
-        ЛОГ.log(" create class SubClassМетодаSessionBeanМетодаPOSTдляТаблицыData_CHat extends SubClassМетодаBeanSessionPOST{ data_chat"+
-                ТекущаяТаблицаОбработки);
-
-    }
-
-}
 
 
 

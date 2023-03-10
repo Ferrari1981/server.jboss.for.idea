@@ -6,7 +6,9 @@ import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
+import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.context.RequestScoped;
+import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -22,7 +24,7 @@ import java.util.zip.GZIPOutputStream;
 
 
 @Named
-@RequestScoped
+@ApplicationScoped
 public class BEANCallsBack {
 
     /**

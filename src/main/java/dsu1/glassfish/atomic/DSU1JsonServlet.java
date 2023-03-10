@@ -21,7 +21,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 
-@WebServlet(name = "DSU1JsonServlet", value = "/dsu1.glassfish.atomic",asyncSupported = true)
+@WebServlet(name = "DSU1JsonServlet", value = "/dsu1.glassfish.atomic",asyncSupported = true )//,urlPatterns ={"/DSU1JsonServlet"}
 public class DSU1JsonServlet extends HttpServlet {
     private     Session getSession;
     private      ServletContext    ЛОГ;

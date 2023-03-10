@@ -8,6 +8,7 @@ import java.util.Map.Entry;
 import java.util.Optional;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
+import javax.inject.Named;
 import javax.json.Json;
 import javax.json.JsonObject;
 import javax.json.JsonReader;
@@ -26,6 +27,7 @@ import org.hibernate.Session;
 //TODO
 @RequestScoped
 @Produces
+@Named
 public class SubClassJSONp_Stremming_ОбработкаJSON_FOR_POST {
     @Inject
     private MyGetHibernate myHibernate;

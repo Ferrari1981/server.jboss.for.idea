@@ -13,7 +13,7 @@ import java.io.IOException;
 import java.util.Date;
 
 
-@WebFilter(value = "/FilterSousAvtodor")
+@WebFilter()//servletNames = "dsu1JsonServlet",urlPatterns = {"/FilterSousAvtodor"}
 public class FilterSousAvtodor implements Filter {
     @EJB
     private BeanAuntifications beanAuntifications;
