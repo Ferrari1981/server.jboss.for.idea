@@ -48,12 +48,11 @@ public class BeanPOST {
 
     public void МетодБинаPOST(@NotNull ServletContext ЛОГ,
                                @NotNull HttpServletRequest request,
-                               @NotNull  HttpServletResponse response) throws InterruptedException, ExecutionException {
-        Future<StringBuffer> БуферРезультатPOST=null;
+                               @NotNull  HttpServletResponse response) throws InterruptedException, ExecutionException {;
         try {
             ///Todo  получаем данные от клиента
-            БуферРезультатPOST= 	 АсинхронныйЗапускPOST(ЛОГ,request,response);
-            ///Todo отправляем  клиенту ответ от серверац
+            Future<StringBuffer>       БуферРезультатPOST= 	 АсинхронныйЗапускPOST(ЛОГ,request,response);
+            ///Todo получаем данные от Клиента на Сервер
             while (!БуферРезультатPOST.isDone());
                 bEANCallsBack.МетодГлавныйМетодПосылаемДанныеАндройду(response, БуферРезультатPOST.get(), ЛОГ, request);
             ЛОГ.log("\n"+" Starting.... class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
@@ -63,7 +62,7 @@ public class BeanPOST {
             new SubClassWriterErros().МетодаЗаписиОшибкиВЛог(e, null,
                     "\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
                             " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
-                            " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+БуферРезультатPOST.get().toString(),
+                            " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber(),
                     Thread.currentThread().getStackTrace()[2],ЛОГ,ЛОГ.getServerInfo().toLowerCase());
         }
     }

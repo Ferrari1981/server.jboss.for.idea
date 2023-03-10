@@ -53,17 +53,11 @@ public class BeanGET {
     public void  МетодБинаGET(@NotNull ServletContext ЛОГ,
                                @NotNull HttpServletRequest request,
                                @NotNull  HttpServletResponse response) throws InterruptedException, ExecutionException {
-        Future<StringBuffer> БуферРезультатGET=null;
         try {
-            ЛОГ.log("\n"+" Starting.... class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
-                    " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
-                    " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n");
-
-            БуферРезультатGET= 	 АсинхронныйЗапускGET(ЛОГ,request,response);
-            ЛОГ.log( "  БуферРезультатGET  " +БуферРезультатGET.get());
-
+            // TODO: 10.03.2023  данные от GET метода
+            Future<StringBuffer>       БуферРезультатGET= 	 АсинхронныйЗапускGET(ЛОГ,request,response);
               while (!БуферРезультатGET.isDone());
-            //TODO вторая часть посылаем клиенту ответ
+            ///Todo отправляем  клиенту ответ от серверац
                 bEANCallsBack.МетодГлавныйМетодПосылаемДанныеАндройду(response, БуферРезультатGET.get(), ЛОГ, request);
 //TODO
             ЛОГ.log( " Класс"+Thread.currentThread().getStackTrace()[2].getClassName()
@@ -75,8 +69,7 @@ public class BeanGET {
             new SubClassWriterErros().МетодаЗаписиОшибкиВЛог(e, null,
                     "\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
                             " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
-                            " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"
-                            +БуферРезультатGET.get().toString(),
+                            " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n",
                     Thread.currentThread().getStackTrace()[2],ЛОГ,ЛОГ.getServerInfo().toLowerCase());
         }
     }
