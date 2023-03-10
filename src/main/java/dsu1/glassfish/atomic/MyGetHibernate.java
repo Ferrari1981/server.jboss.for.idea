@@ -11,25 +11,26 @@ import java.util.Date;
 
 // TODO: 09.03.2023  Класс Получение Менеджера для Hibertire
 @Named
-@RequestScoped
 public
 class MyGetHibernate{
     @Produces
-    public SessionFactory SessionSousJboss(ServletContext ЛОГ){
+    @RequestScoped
+    public SessionFactory sessionSousJboss(){
         SessionFactory   sessionFactoryJboss = null;
         try  {
             Configuration configuration=new Configuration();
                 configuration.configure();
             sessionFactoryJboss = configuration.buildSessionFactory();
-            ЛОГ.log("\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
+            System.out.println("\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
                     " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
-                    " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+" sessionFactory " +sessionFactoryJboss.isOpen()+ " время" +new Date().toLocaleString());
+                    " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+" sessionFactory " +sessionFactoryJboss.isOpen()
+                    + " время" +new Date().toLocaleString());
         } catch (Exception e) {
             new SubClassWriterErros().МетодаЗаписиОшибкиВЛог(e, null,
                     "\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
                             " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
                             " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n",
-                    Thread.currentThread().getStackTrace()[2],ЛОГ,ЛОГ.getServerInfo().toLowerCase());
+                    Thread.currentThread().getStackTrace()[2],null,null);
         }
         return  sessionFactoryJboss;
     }

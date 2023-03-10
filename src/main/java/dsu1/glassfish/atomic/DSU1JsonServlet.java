@@ -36,7 +36,7 @@ public class DSU1JsonServlet extends HttpServlet {
     private MyGetHibernate myHibernate;
 
     @Inject
-    MyGetHibernate   getMyHibernate;
+    SessionFactory sessionSousJboss;
 
 
     public void init() {
@@ -47,7 +47,7 @@ public class DSU1JsonServlet extends HttpServlet {
                 " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
                 " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n");
             // TODO: 10.03.2023 получение сессиии
-            getMyHibernate.SessionSousJboss(ЛОГ);
+            sessionSousJboss.openSession();
         ЛОГ.log("\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
                 " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
                 " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n");
