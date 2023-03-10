@@ -54,7 +54,7 @@ public class FilterSousAvtodor implements Filter {
                 case "/dsu1.glassfish.atomic":
                 case "/dsu1.glassfish.atomic/DSU1JsonServlet":
                     // TODO: 10.03.2023  проверем статус логин и пароль
-                    Boolean СтатусаАунтификацииПользователя= beanAuntifications.МетодАунтификация(ЛОГ, requestФильтра,  responseОтветКлиенту,requestФильтра.getSession());
+                    Boolean СтатусаАунтификацииПользователя= beanAuntifications.МетодАунтификация(ЛОГ, requestФильтра,  requestФильтра.getSession());
                     ЛОГ.log("   doFilter doFilter doFilter СтатусаАунтификацииПользователя " +СтатусаАунтификацииПользователя);
                     if (СтатусаАунтификацииПользователя) { // pass the request along the filter
                         chain.doFilter( (HttpServletRequest) request,(HttpServletResponse) response);

@@ -15,6 +15,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.Base64;
+import java.util.Enumeration;
 import java.util.Optional;
 
 /**
@@ -36,7 +37,6 @@ public class BeanAuntifications {
     @SuppressWarnings("unused")
     public Boolean МетодАунтификация(@NotNull ServletContext ЛОГ,
                                      @NotNull HttpServletRequest request,
-                                     @NotNull HttpServletResponse response,
                                      @NotNull HttpSession session) {
         int РазрешонныеПрава = 2;
         Integer		IDПолученныйИзSQlServerПосик=0;/// вычисялем
@@ -46,25 +46,23 @@ public class BeanAuntifications {
         try (Connection conn =subClassConnectionsSQLServer.МетодGetConnect(	ЛОГ);){
             ЛОГ.log("\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
                     " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
-                    " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+ ЛОГ +" request " + request + " response " + response);
+                    " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+ ЛОГ +" request " + request );
             //TODO
             Statement stmt =subClassConnectionsSQLServer.МетодGetSmtr(conn, ЛОГ);
             ЛОГ.log(" ОТРАБОТАЛ МЕТОД ИНИЦИАЛИЗАЦИИ ПЕРЕМЕННЫХ КОТОРЫ Е ПРИШЛИ  МетодПредворительногоПодключенияДляМетодаGETкодИзКонструктора   "+ stmt);
 
             ////// TODO СКАНИРУЕМ ПОЛУЧЕНЫЙ ЛОГИН
+            Object    ЛогинПолученныйОтКлиента2 =    request.getHeaders("identifier").nextElement();
+            ЛОГ.log(" ЛогинПолученныйОтКлиента2 " +ЛогинПолученныйОтКлиента2);
+
             String    ЛогинПолученныйОтКлиента =Optional.ofNullable(request.getHeader("identifier")).orElse("") ;/// содержимое
             ////// TODO СКАНИРУЕМ ПОЛУЧЕНЫЙ ПАРОЛЬ
             String	ПарольПолученныйОтКлиента = Optional.ofNullable(request.getHeader("p_identifier")).orElse("") ;/// содержимое
-            String	ПубличныйIDАндройдКлиента = Optional.ofNullable(request.getHeader("public_clientandroid")).orElse("") ;/// содержимое
 
-            ЛОГ.log(" ПарольПолученныйОтКлиента " +ПарольПолученныйОтКлиента+" ЛогинПолученныйОтКлиента " + ЛогинПолученныйОтКлиента+  " ПубличныйIDАндройдКлиента " +ПубличныйIDАндройдКлиента);
+            String	ИдиДевайсаПолученныйОтКлиента = Optional.ofNullable(request.getHeader("id_device_androis")).orElse("") ;/// содержимое
 
-            String	ЛогинПолученныйОтКлиентаgetSession =  (String) session.getAttribute("ПарольПолученныйОтКлиента");
-            ЛОГ.log("  ЛогинПолученныйОтКлиентаgetSession " + ЛогинПолученныйОтКлиентаgetSession);
-            if (ЛогинПолученныйОтКлиентаgetSession !=null && ЛогинПолученныйОтКлиентаgetSession.equalsIgnoreCase(ЛогинПолученныйОтКлиента)) {
-                //TODO меняем статут и пускак клиента на сервер
-                РезультатАунтификацииПользователя=true;
-            }else {
+            ЛОГ.log(" ПарольПолученныйОтКлиента " +ПарольПолученныйОтКлиента+" ЛогинПолученныйОтКлиента " + ЛогинПолученныйОтКлиента +  " ИдиДевайсаПолученныйОтКлиента " +ИдиДевайсаПолученныйОтКлиента);
+            if (ПарольПолученныйОтКлиента.length()>0 && ПарольПолученныйОтКлиента.length()>0) {
                 /////// ПОЛУЧЕНИИ КОЛИЧЕСТВА
                 /////// СТОЛБЦОВ В БАЗЕ
                 String	queryСканируемИмяИпароль = "SELECT   id ,login,password  FROM    [storage].[dbo].[users]    "
@@ -131,6 +129,14 @@ public class BeanAuntifications {
                         +"\n"+
                         " метод "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"
                         + "Строка " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "РезультатСканированиеИмениИПароль " +РезультатСканированиеИмениИПароль);
+            }else {
+                //TODO
+                //TODO меняем статут и пускак клиента на сервер
+                РезультатАунтификацииПользователя=false;
+                ЛОГ.log( " Класс"+Thread.currentThread().getStackTrace()[2].getClassName()
+                        +"\n"+
+                        " метод "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"
+                        + "Строка " + Thread.currentThread().getStackTrace()[2].getLineNumber()+  "РезультатАунтификацииПользователя " +РезультатАунтификацииПользователя);
             }
 
         } catch (Exception e) {
