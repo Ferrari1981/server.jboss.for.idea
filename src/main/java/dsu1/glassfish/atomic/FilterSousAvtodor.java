@@ -49,25 +49,40 @@ public class FilterSousAvtodor implements Filter {
             HttpServletResponse responseОтветКлиенту=		(HttpServletResponse) response;		// place your code here
             requestФильтра.setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
             responseОтветКлиенту.setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
-            // TODO: 10.03.2023  проверем статус логин и пароль
-            Boolean СтатусаАунтификацииПользователя= beanAuntifications.МетодАунтификация(ЛОГ, requestФильтра,  responseОтветКлиенту,requestФильтра.getSession());
-            ЛОГ.log("   doFilter doFilter doFilter СтатусаАунтификацииПользователя " +СтатусаАунтификацииПользователя);
-            if (СтатусаАунтификацииПользователя) { // pass the request along the filter
-                chain.doFilter( (HttpServletRequest) request,(HttpServletResponse) response);
-                ЛОГ.log("\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
-                        " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
-                        " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+
-                        " Success    doFilter doFilter doFilter СтатусаАунтификацииПользователя " +СтатусаАунтификацииПользователя);
-            }else {
-                StringBuffer СерверРаботаетБезПараметров=new StringBuffer("Server Running...... Don't Login and Password"+new Date().toGMTString().toString());
-                responseОтветКлиенту.addHeader("stream_size", String.valueOf(СерверРаботаетБезПараметров.length()));
-                ////requestФильтра.getRequestDispatcher("/index.jsp").forward(requestФильтра, responseОтветКлиенту);
-                // TODO: 10.03.2023 Ответ От Сервера
-                bEANCallsBack.МетодBackДанныеКлиенту(	   responseОтветКлиенту, СерверРаботаетБезПараметров, ЛОГ,   requestФильтра);
-                ЛОГ.log("\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
-                        " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
-                        " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+
-                        " Error  doFilter doFilter doFilter СтатусаАунтификацииПользователя " +СтатусаАунтификацииПользователя);
+
+            switch (((HttpServletRequest) request).getPathInfo()){
+                case "/dsu1.glassfish.atomic":
+                    // TODO: 10.03.2023  проверем статус логин и пароль
+                    Boolean СтатусаАунтификацииПользователя= beanAuntifications.МетодАунтификация(ЛОГ, requestФильтра,  responseОтветКлиенту,requestФильтра.getSession());
+                    ЛОГ.log("   doFilter doFilter doFilter СтатусаАунтификацииПользователя " +СтатусаАунтификацииПользователя);
+                    if (СтатусаАунтификацииПользователя) { // pass the request along the filter
+                        chain.doFilter( (HttpServletRequest) request,(HttpServletResponse) response);
+                        ЛОГ.log("\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
+                                " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
+                                " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+
+                                " Success    doFilter doFilter doFilter СтатусаАунтификацииПользователя " +СтатусаАунтификацииПользователя);
+                    }else {
+                        StringBuffer СерверРаботаетБезПараметров=new StringBuffer("Server Running...... Don't Login and Password"+new Date().toGMTString().toString());
+                        responseОтветКлиенту.addHeader("stream_size", String.valueOf(СерверРаботаетБезПараметров.length()));
+                        ////requestФильтра.getRequestDispatcher("/index.jsp").forward(requestФильтра, responseОтветКлиенту);
+                        // TODO: 10.03.2023 Ответ От Сервера
+                        bEANCallsBack.МетодBackДанныеКлиенту(	   responseОтветКлиенту, СерверРаботаетБезПараметров, ЛОГ,   requestФильтра);
+                        ЛОГ.log("\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
+                                " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
+                                " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+
+                                " Error  doFilter doFilter doFilter СтатусаАунтификацииПользователя " +СтатусаАунтификацииПользователя);
+                    }
+                break;
+                default:
+                    RequestDispatcher requestDispatcher = ЛОГ.getRequestDispatcher("/dsu1.glassfish.atomic/index.jsp");
+                    requestDispatcher.forward(request, response);
+                   /// requestФильтра.getRequestDispatcher("/index.jsp").forward(requestФильтра, responseОтветКлиенту);
+                    ЛОГ.log("\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
+                            " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
+                            " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+
+                            " Error  doFilter doFilter doFilter СтатусаАунтификацииПользователя " );
+                break;
+
             }
         } catch (Exception e) {
             new SubClassWriterErros().МетодаЗаписиОшибкиВЛог(e, null,
