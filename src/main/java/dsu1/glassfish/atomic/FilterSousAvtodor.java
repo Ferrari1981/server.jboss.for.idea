@@ -52,6 +52,7 @@ public class FilterSousAvtodor implements Filter {
 
             switch (((HttpServletRequest) request).getPathInfo()){
                 case "/dsu1.glassfish.atomic":
+                case "/dsu1.glassfish.atomic/DSU1JsonServlet":
                     // TODO: 10.03.2023  проверем статус логин и пароль
                     Boolean СтатусаАунтификацииПользователя= beanAuntifications.МетодАунтификация(ЛОГ, requestФильтра,  responseОтветКлиенту,requestФильтра.getSession());
                     ЛОГ.log("   doFilter doFilter doFilter СтатусаАунтификацииПользователя " +СтатусаАунтификацииПользователя);
