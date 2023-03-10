@@ -40,7 +40,7 @@ public class SubClassGenerateJson {
         /// javax.persistence.EntityManager  МенеджерJTA = ФабрикаДляМенеждера.createEntityManager();
         try {
             this.ЛОГ=ЛОГ;
-           Session session=myHibernate.session(ЛОГ) ;
+          Session session=null;//=//myHibernate.session(ЛОГ) ;
             ЛОГ.log(" jsonReaderПришеоОтКлиентаJSON_P "+JSONОБьектjsonReaderПришеоОтКлиентаJSON_P.toString()  + " session  " +session);
             //TODO ГЛАВЕНЫЙ ЦИКЛ ОБРАБОТКИ ДАННЫХ В МЕТОДЕ  POST
             JSONОБьектjsonReaderПришеоОтКлиентаJSON_P.entrySet().forEach(ВнешнаяСтрокаJSON -> {
