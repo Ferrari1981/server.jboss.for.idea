@@ -12,9 +12,10 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.Date;
+import java.util.Enumeration;
 
 
-@WebFilter(filterName = "FilterSousAvtodor",asyncSupported = true)
+@WebFilter(filterName = "FilterSousAvtodor",asyncSupported = false)
 public class FilterSousAvtodor implements Filter {
     @EJB
     private BeanAuntifications beanAuntifications;
@@ -44,6 +45,7 @@ public class FilterSousAvtodor implements Filter {
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         // TODO Auto-generated method stub
         try {
+            Boolean СтатусаАунтификацииПользователя= false;
             ЛОГ=request.getServletContext();
             HttpServletRequest requestФильтра=  (HttpServletRequest) request;
             HttpServletResponse responseОтветКлиенту=		(HttpServletResponse) response;		// place your code here
@@ -53,9 +55,12 @@ public class FilterSousAvtodor implements Filter {
                 case "/dsu1.glassfish.atomic":
                 case "/dsu1.glassfish.atomic/DSU1JsonServlet":
                     // TODO: 10.03.2023  проверем статус логин и пароль
-                    Boolean СтатусаАунтификацииПользователя= beanAuntifications.МетодАунтификация(ЛОГ, requestФильтра,  requestФильтра.getSession());
-                    ЛОГ.log("   doFilter doFilter doFilter СтатусаАунтификацииПользователя " +СтатусаАунтификацииПользователя);
-                    if (СтатусаАунтификацииПользователя) { // pass the request along the filter
+                 Object ЛогинОтКлиентаВнутриHeadler =((HttpServletRequest) request).getHeader("identifier");
+                    if (ЛогинОтКлиентаВнутриHeadler.toString().length()>5) {
+                        СтатусаАунтификацииПользователя = beanAuntifications.МетодАунтификация(ЛОГ, requestФильтра,  requestФильтра.getSession());
+                    }
+                    ЛОГ.log("   doFilter doFilter doFilter СтатусаАунтификацииПользователя " +СтатусаАунтификацииПользователя  + "  ЛогинОтКлиентаВнутриHeadler " +ЛогинОтКлиентаВнутриHeadler);
+                    if (СтатусаАунтификацииПользователя==true) { // pass the request along the filter
                         chain.doFilter( (HttpServletRequest) request,(HttpServletResponse) response);
                         ЛОГ.log("\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
                                 " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+

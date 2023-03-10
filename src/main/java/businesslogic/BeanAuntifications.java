@@ -53,35 +53,22 @@ public class BeanAuntifications {
             String    ЛогинОтКлиента =new String();
             String	ПарольОтКлиента=new String();
             String	ИдиДевайсаПолученный=new String();
-            for (Enumeration<?> names = request.getHeaderNames(); names.hasMoreElements(); ) {
-                String ИмяHeadlerОтКлиента = (String) names.nextElement();
-                for (Enumeration<?> values = request.getHeaders(ИмяHeadlerОтКлиента); values.hasMoreElements(); ) {
-                    Object    ЗначениеHeadlerОтКлиента   = values.nextElement();
-                    switch (ИмяHeadlerОтКлиента.trim()){
-                        case"identifier":
-                            ЛогинОтКлиента=ИмяHeadlerОтКлиента.trim();
-                            ЛОГ.log(" ЛогинОтКлиента " +ЛогинОтКлиента+" ЛогинОтКлиента " + ЛогинОтКлиента +  " ИдиДевайсаПолученный " +ИдиДевайсаПолученный);
-                            break;
-                        case"p_identifier":
-                            ПарольОтКлиента=ИмяHeadlerОтКлиента.trim();
-                            ЛОГ.log(" ЛогинОтКлиента " +ЛогинОтКлиента+" ЛогинОтКлиента " + ЛогинОтКлиента +  " ИдиДевайсаПолученный " +ИдиДевайсаПолученный);
-                            break;
-                        case"id_device_androis":
-                            ИдиДевайсаПолученный=ИмяHeadlerОтКлиента.trim();
-                            ЛОГ.log(" ЛогинОтКлиента " +ЛогинОтКлиента+" ЛогинОтКлиента " + ЛогинОтКлиента +  " ИдиДевайсаПолученный " +ИдиДевайсаПолученный);
-                            break;
-                    }
-                    ЛОГ.log(" ЛогинОтКлиента " +ЛогинОтКлиента+" ЛогинОтКлиента " + ЛогинОтКлиента +  " ИдиДевайсаПолученный " +ИдиДевайсаПолученный);
 
-                }
-            }
+
+            ЛогинОтКлиента =((HttpServletRequest) request).getHeader("identifier");
+
+            ПарольОтКлиента =((HttpServletRequest) request).getHeader("p_identifier");
+
+            ИдиДевайсаПолученный =((HttpServletRequest) request).getHeader("id_device_androis");
+            ЛОГ.log(" ЛогинОтКлиента " +ЛогинОтКлиента+" ЛогинОтКлиента " + ЛогинОтКлиента +  " ИдиДевайсаПолученный " +ИдиДевайсаПолученный);
             ////// TODO полученный нданные от Клиента
             if (ЛогинОтКлиента.length()>0 && ПарольОтКлиента.length()>0 && ИдиДевайсаПолученный.length()>0) {
                 /////// ПОЛУЧЕНИИ КОЛИЧЕСТВА
                 /////// СТОЛБЦОВ В БАЗЕ
                 String	queryСканируемИмяИпароль = "SELECT   id ,login,password  FROM    [storage].[dbo].[users]    "
                         + "          WHERE login  =  '" + ЛогинОтКлиента
-                        + "' AND rights= '" + РазрешонныеПрава + "'    ;";//// ЗАПРОС
+                        + "' AND password= '" + ПарольОтКлиента + "'"
+                        + " AND rights= '" + РазрешонныеПрава + "'    ;";//// ЗАПРОС
                 //////
                 System.out.println(" queryСканируемИмяИпароль   " + queryСканируемИмяИпароль);
                 // TODO получаем имя и пвроль
@@ -109,8 +96,7 @@ public class BeanAuntifications {
                                 " ПарольОтКлиента " +ПарольОтКлиента+" СколькСтрокРезультатЕслиТакойПользовательМетод_GET "
                                 + НаличиеХотябыОднуСТрочкуПользоватлеьВБАзеТакойВообщеЕсть);
                         ////
-                        if (ЛогинОтКлиента.trim().equals(ИмяПолученныйИзSQlServerПосик)
-                                &&  ПарольПолученныйИзSQlServerПосик.compareTo(ПарольОтКлиента)==0
+                        if (ЛогинОтКлиента.compareTo(ИмяПолученныйИзSQlServerПосик)==0 &&  ПарольПолученныйИзSQlServerПосик.compareTo(ПарольОтКлиента)==0
                                 && IDПолученныйИзSQlServerПосик>0 && ИдиДевайсаПолученный.length()>0) { ///// TODO
                             //TODO меняем статут и пускак клиента на сервер
                             РезультатАунтификацииПользователя=true;
