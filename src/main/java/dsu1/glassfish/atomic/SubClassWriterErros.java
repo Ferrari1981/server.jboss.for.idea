@@ -38,7 +38,7 @@ public class SubClassWriterErros {
                 + e.fillInStackTrace().getMessage() + "\n" + "e.fillInStackTrace().getLocalizedMessage() "
                 + e.fillInStackTrace().getLocalizedMessage() + "\n"+ "ПараметрИмяТаблицыОтАндройдаGET " +ПараметрИмяТаблицыОтАндройдаGET;
 
-        /////// начало запись в файл
+        ///////// начало запись в файл
         System.err.println("public class ClassWriterErrorProjectDsu1 {  Метод : ERROR B SAMOM MOTODE ERROR GENERETOR " + e.toString());
         if (ЛОГ!=null) {
             ЛОГ.log("ERROR ???????????????????????????????????????? /САМАОШИБКАДЛЯЗАПИСИ " + "\n"
