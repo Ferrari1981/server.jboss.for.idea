@@ -14,12 +14,9 @@ import java.io.StringReader;
 import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;
 import java.security.NoSuchAlgorithmException;
-import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.BrokenBarrierException;
@@ -31,7 +28,6 @@ import javax.inject.Inject;
 import javax.json.Json;
 import javax.json.JsonObject;
 import javax.json.JsonReader;
-import javax.persistence.EntityManager;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletInputStream;
 import javax.servlet.http.HttpServletRequest;
@@ -48,7 +44,7 @@ public class SubClassSessionBeanPOST   {//extends    DSU1JsonServlet
     @Inject
     private SubClassConnectionsSQLServer subClassConnectionsSQLServer;
     @Inject
-    SubClassJSONp_Stremming_ОбработкаJSON_FOR_POST subClassJSONp_Stremming_ОбработкаJSON_FOR_POST;
+    SubClassGenerateJson subClassGenerateJson;
 
     @SuppressWarnings("unused")
     protected	ServletContext ЛОГ;
@@ -140,11 +136,7 @@ public class SubClassSessionBeanPOST   {//extends    DSU1JsonServlet
                         ЛОГ.log(" responОтветОтГлавного_МетодаPOSTДляОтправкиНААндройдse "+ОтветОтГлавного_МетодаPOSTДляОтправкиНААндройд);
                     }
                     break;
-                default:
-                    break;
             }
-
-
             ЛОГ.log("ОтветОтГлавного_МетодаPOSTДляОтправкиНААндройд  " + ОтветОтГлавного_МетодаPOSTДляОтправкиНААндройд);
         } catch (Exception e) {
             new SubClassWriterErros().МетодаЗаписиОшибкиВЛог(e,
@@ -178,7 +170,7 @@ public class SubClassSessionBeanPOST   {//extends    DSU1JsonServlet
                     "  ПараметрИмяТаблицыОтАндройдаPost " +ПараметрИмяТаблицыОтАндройдаPost);
             //TODO ГЛАВНЫЙ МЕТОДА POST() КОТОРЫЙ ВСТАВЛЯЕТ  И/ИЛИ ОБНОВЛЕНИЯ ДАННЫХ
             ОтветОтГлавного_МетодаPOSTДляОтправкиНААндройд =
-                    subClassJSONp_Stremming_ОбработкаJSON_FOR_POST.МетодОбработкиJSONPСтиминг(ЛОГ, JSONОБьектjsonReaderПришеоОтКлиентаJSON_P
+                    subClassGenerateJson.МетодГенерацияJson(ЛОГ, JSONОБьектjsonReaderПришеоОтКлиентаJSON_P
                             ,ПараметрИмяТаблицыОтАндройдаPost);
             ЛОГ.log(" jsonReaderПришеоОтКлиентаJSON_P "+jsonReaderПришеоОтКлиентаJSON_P.toString());
         } catch (Exception e) {

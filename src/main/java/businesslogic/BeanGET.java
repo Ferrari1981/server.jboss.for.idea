@@ -5,19 +5,15 @@ import java.util.concurrent.Future;
 
 import javax.ejb.AsyncResult;
 import javax.ejb.Asynchronous;
-import javax.ejb.EJB;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 import javax.inject.Inject;
-import javax.persistence.EntityManager;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.fasterxml.jackson.core.JsonGenerator;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sun.istack.NotNull;
 import dsu1.glassfish.atomic.SubClassWriterErros;
 
@@ -58,7 +54,7 @@ public class BeanGET {
             Future<StringBuffer>       БуферРезультатGET= 	 АсинхронныйЗапускGET(ЛОГ,request,response);
               while (!БуферРезультатGET.isDone());
             ///Todo отправляем  клиенту ответ от серверац
-                bEANCallsBack.МетодГлавныйМетодПосылаемДанныеАндройду(response, БуферРезультатGET.get(), ЛОГ, request);
+                bEANCallsBack.МетодBackДанныеКлиенту(response, БуферРезультатGET.get(), ЛОГ, request);
 //TODO
             ЛОГ.log( " Класс"+Thread.currentThread().getStackTrace()[2].getClassName()
                     +"\n"+

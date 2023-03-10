@@ -12,7 +12,6 @@ import javax.json.Json;
 import javax.json.JsonObject;
 import javax.json.JsonReader;
 import javax.json.JsonValue;
-import javax.persistence.EntityManager;
 import javax.persistence.ParameterMode;
 import javax.persistence.StoredProcedureQuery;
 import javax.servlet.ServletContext;
@@ -26,18 +25,18 @@ import org.hibernate.Session;
 //TODO
 @RequestScoped
 @Produces
-public class SubClassJSONp_Stremming_ОбработкаJSON_FOR_POST {
+public class SubClassGenerateJson {
     @Inject
     private MyGetHibernate myHibernate;
-    ServletContext ЛОГ;
+    private   ServletContext ЛОГ;
 
     // TODO: 09.03.2023
-    StringBuffer МетодОбработкиJSONPСтиминг(
+    StringBuffer МетодГенерацияJson(
             @NotNull ServletContext ЛОГ,
             @NotNull JsonObject JSONОБьектjsonReaderПришеоОтКлиентаJSON_P
             , @NotNull String ПараметрИмяТаблицыОтАндройдаPost) throws SQLException {
 
-        StringBuffer ОтветОтГлавного_МетодаPOSTДляОтправкиНААндройд=new StringBuffer();
+        StringBuffer БуферОтветКлиентуОтСервера=new StringBuffer();
         /// javax.persistence.EntityManager  МенеджерJTA = ФабрикаДляМенеждера.createEntityManager();
         try {
             this.ЛОГ=ЛОГ;
@@ -449,7 +448,7 @@ public class SubClassJSONp_Stremming_ОбработкаJSON_FOR_POST {
 
 
 
-                    ОтветОтГлавного_МетодаPOSTДляОтправкиНААндройд	 .append("\n")
+                    БуферОтветКлиентуОтСервера	 .append("\n")
                             .append("result POST()   insert and update from android")
                             .append("\n")
                             .append(РезультатСовершнойОперации)
@@ -462,7 +461,7 @@ public class SubClassJSONp_Stremming_ОбработкаJSON_FOR_POST {
                             .append(new Date().toString())
                             .append("\n");
 
-                    ЛОГ.log(" ОтветОтГлавного_МетодаPOSTДляОтправкиНААндройд " +ОтветОтГлавного_МетодаPOSTДляОтправкиНААндройд);
+                    ЛОГ.log(" БуферОтветКлиентуОтСервера " +БуферОтветКлиентуОтСервера);
 
 
                 }else {
@@ -470,7 +469,7 @@ public class SubClassJSONp_Stremming_ОбработкаJSON_FOR_POST {
 
                     //TODO не выбрали ни одну талицу
 
-                    ОтветОтГлавного_МетодаPOSTДляОтправкиНААндройд
+                    БуферОтветКлиентуОтСервера
                             .append("\n")
                             .append("result POST()   insert and update from android")
                             .append("Нет таблицы для Обработки ,или самой обработки")
@@ -484,7 +483,7 @@ public class SubClassJSONp_Stremming_ОбработкаJSON_FOR_POST {
                             .append(new Date().toString())
                             .append("\n");
 
-                    ЛОГ.log("NOT TABLE for generations ОтветОтГлавного_МетодаPOSTДляОтправкиНААндройд " +ОтветОтГлавного_МетодаPOSTДляОтправкиНААндройд);
+                    ЛОГ.log("NOT TABLE for generations БуферОтветКлиентуОтСервера " +БуферОтветКлиентуОтСервера);
 
 
                 }
@@ -505,25 +504,25 @@ public class SubClassJSONp_Stremming_ОбработкаJSON_FOR_POST {
             МетодЗавершенияСеанса(session);
             //TODO
             ///ФабрикаДляМенеждера.close();
-            ЛОГ.log("ОтветОтГлавного_МетодаPOSTДляОтправкиНААндройд  "+ ОтветОтГлавного_МетодаPOSTДляОтправкиНААндройд.toString());
+            ЛОГ.log("БуферОтветКлиентуОтСервера  "+ БуферОтветКлиентуОтСервера.toString());
             ///TODO
             //TODO
         } catch (Exception   e) {
             new SubClassWriterErros().МетодаЗаписиОшибкиВЛог(e, null,
                     "\n"+" Error.... class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
                             " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"
-                            + "{ ЛогинПолученныйОтКлиента "+ " \n"+ОтветОтГлавного_МетодаPOSTДляОтправкиНААндройд.toString()
+                            + "{ ЛогинПолученныйОтКлиента "+ " \n"+БуферОтветКлиентуОтСервера.toString()
                             +null
                     ,
                     Thread.currentThread().getStackTrace()[2],null,ЛОГ.getServerInfo().toLowerCase());
 
         }
-        return ОтветОтГлавного_МетодаPOSTДляОтправкиНААндройд;
+        return БуферОтветКлиентуОтСервера;
 
     }
 
     // TODO: 09.03.2023  метод очистки Hirenate после операции
-    private void МетодЗавершенияСеанса(Session session) {
+    private void МетодЗавершенияСеанса(@javax.validation.constraints.NotNull  Session session) {
         try{
         session.flush();
         session.clear();

@@ -5,7 +5,6 @@ import businesslogic.BeanAuntifications;
 
 import javax.ejb.EJB;
 import javax.inject.Inject;
-import javax.persistence.EntityManager;
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
@@ -50,22 +49,25 @@ public class FilterSousAvtodor implements Filter {
             HttpServletResponse responseОтветКлиенту=		(HttpServletResponse) response;		// place your code here
             requestФильтра.setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
             responseОтветКлиенту.setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
-            // TODO: 10.03.2023  проверем статус логин и пароль  
+            // TODO: 10.03.2023  проверем статус логин и пароль
             Boolean СтатусаАунтификацииПользователя= beanAuntifications.МетодАунтификация(ЛОГ, requestФильтра,  responseОтветКлиенту,requestФильтра.getSession());
             ЛОГ.log("   doFilter doFilter doFilter СтатусаАунтификацииПользователя " +СтатусаАунтификацииПользователя);
             if (СтатусаАунтификацииПользователя) { // pass the request along the filter
                 chain.doFilter( (HttpServletRequest) request,(HttpServletResponse) response);
-                ЛОГ.log(" Success    doFilter doFilter doFilter СтатусаАунтификацииПользователя " +СтатусаАунтификацииПользователя);
+                ЛОГ.log("\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
+                        " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
+                        " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+
+                        " Success    doFilter doFilter doFilter СтатусаАунтификацииПользователя " +СтатусаАунтификацииПользователя);
             }else {
                 StringBuffer СерверРаботаетБезПараметров=new StringBuffer("Server Running...... Don't Login and Password"+new Date().toGMTString().toString());
                 responseОтветКлиенту.addHeader("stream_size", String.valueOf(СерверРаботаетБезПараметров.length()));
                 ////requestФильтра.getRequestDispatcher("/index.jsp").forward(requestФильтра, responseОтветКлиенту);
                 // TODO: 10.03.2023 Ответ От Сервера
-                bEANCallsBack.МетодГлавныйМетодПосылаемДанныеАндройду(	   responseОтветКлиенту, СерверРаботаетБезПараметров, ЛОГ,   requestФильтра);
-                ЛОГ.log(" Error  doFilter doFilter doFilter СтатусаАунтификацииПользователя " +СтатусаАунтификацииПользователя);
+                bEANCallsBack.МетодBackДанныеКлиенту(	   responseОтветКлиенту, СерверРаботаетБезПараметров, ЛОГ,   requestФильтра);
                 ЛОГ.log("\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
                         " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
-                        " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n");
+                        " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+
+                        " Error  doFilter doFilter doFilter СтатусаАунтификацииПользователя " +СтатусаАунтификацииПользователя);
             }
         } catch (Exception e) {
             new SubClassWriterErros().МетодаЗаписиОшибкиВЛог(e, null,

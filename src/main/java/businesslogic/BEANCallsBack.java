@@ -2,10 +2,6 @@ package businesslogic;
 
 import dsu1.glassfish.atomic.SubClassWriterErros;
 
-import javax.ejb.LocalBean;
-import javax.ejb.Stateless;
-import javax.ejb.TransactionAttribute;
-import javax.ejb.TransactionAttributeType;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
 import javax.servlet.ServletContext;
@@ -35,10 +31,10 @@ public class BEANCallsBack {
                 " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n");
     }
     // TODO МетодКласса отправки данных андройду
-    public void МетодГлавныйМетодПосылаемДанныеАндройду(@NotNull HttpServletResponse response,
-                                                        @NotNull StringBuffer ГлавныйБуферОтправкиДанныхНААндройд,
-                                                        @NotNull ServletContext ЛОГ,
-                                                        @NotNull HttpServletRequest request) throws IOException, ServletException {
+    public void МетодBackДанныеКлиенту(@NotNull HttpServletResponse response,
+                                       @NotNull StringBuffer ГлавныйБуферОтправкиДанныхНААндройд,
+                                       @NotNull ServletContext ЛОГ,
+                                       @NotNull HttpServletRequest request) throws IOException, ServletException {
         try (BufferedWriter БуферДанныеДляКлиента = new BufferedWriter(
                 new OutputStreamWriter(new GZIPOutputStream(response.getOutputStream()), StandardCharsets.UTF_16));) {
             ЛОГ.log("Data SEND FOR CLIENT ANDROID ГлавныйБуферОтправкиДанныхНААндройд=============================>>>>>>>>>>>"+ГлавныйБуферОтправкиДанныхНААндройд);
