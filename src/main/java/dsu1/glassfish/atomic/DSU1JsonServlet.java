@@ -38,7 +38,6 @@ public class DSU1JsonServlet extends HttpServlet {
     @Inject
     SessionFactory sessionSousJboss;
 
-
     public void init() {
         try{
         ЛОГ=this.getServletContext();
@@ -47,10 +46,10 @@ public class DSU1JsonServlet extends HttpServlet {
                 " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
                 " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n");
             // TODO: 10.03.2023 получение сессиии
-            sessionSousJboss.openSession();
+         Session sesion=   sessionSousJboss.openSession();
         ЛОГ.log("\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
                 " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
-                " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n");
+                " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+ " sesion " +sesion);
     } catch (Exception e) {
         new SubClassWriterErros().МетодаЗаписиОшибкиВЛог(e, null,
                 "\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
