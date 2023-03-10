@@ -50,36 +50,14 @@ public class BeanAuntifications {
             //TODO
             Statement stmt =subClassConnectionsSQLServer.МетодGetSmtr(conn, ЛОГ);
             ЛОГ.log(" ОТРАБОТАЛ МЕТОД ИНИЦИАЛИЗАЦИИ ПЕРЕМЕННЫХ КОТОРЫ Е ПРИШЛИ  МетодПредворительногоПодключенияДляМетодаGETкодИзКонструктора   "+ stmt);
+
+            ////// TODO СКАНИРУЕМ ПОЛУЧЕНЫЙ ЛОГИН
+            String    ЛогинПолученныйОтКлиента =Optional.ofNullable(request.getHeader("identifier")).orElse("") ;/// содержимое
             ////// TODO СКАНИРУЕМ ПОЛУЧЕНЫЙ ПАРОЛЬ
-            String	HeaderСодержимое = Optional.ofNullable(request.getHeader("p_identifier")).orElse("") ;/// содержимое
-            System.out.println("HeaderСодержимое  " + HeaderСодержимое);
-            byte[] ПришелЗашифрованныйПароль = Base64.getDecoder()
-                    .decode(HeaderСодержимое.getBytes(StandardCharsets.UTF_8)); /// StandardCharsets.UTF_8
-            System.err.println("ПришелЗашифрованныйЛогин: " + ПришелЗашифрованныйПароль);
-            String		HeaderСодержимоеРасшифрован = new String(ПришелЗашифрованныйПароль);
-            System.out.println(" HeaderИмя  " + HeaderСодержимоеРасшифрован + " HeaderСодержимое "
-                    + HeaderСодержимоеРасшифрован);
-            String	ПарольПолученныйОтКлиента = String.valueOf(HeaderСодержимоеРасшифрован);
-            System.out.println(" HeaderСодержимое  " + HeaderСодержимое + " HeaderСодержимое "
-                    + HeaderСодержимоеРасшифрован + "  ПарольПолученныйОтКлиента " + ПарольПолученныйОтКлиента);
+            String	ПарольПолученныйОтКлиента = Optional.ofNullable(request.getHeader("p_identifier")).orElse("") ;/// содержимое
+            String	ПубличныйIDАндройдКлиента = Optional.ofNullable(request.getHeader("public_clientandroid")).orElse("") ;/// содержимое
 
-            System.out.println(" ПарольПолученныйОтКлиента  " + ПарольПолученныйОтКлиента);
-
-            // TODO
-            // $$$$$$$$$$$$$$$$$$$$$$$$-------------------------------------------LOGIN
-            // --$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
-            //////
-            HeaderСодержимое =Optional.ofNullable(request.getHeader("identifier")).orElse("") ;/// содержимое
-            System.out.println("HeaderСодержимое  " + HeaderСодержимое);
-            byte[] ПришелЗашифрованныйЛогин = Base64.getDecoder()
-                    .decode(HeaderСодержимое.getBytes(StandardCharsets.UTF_8)); /// StandardCharsets.UTF_8
-            System.err.println("ПришелЗашифрованныйЛогин: " + ПришелЗашифрованныйЛогин);
-            HeaderСодержимоеРасшифрован = new String(ПришелЗашифрованныйЛогин);
-            System.out.println(" HeaderИмя  " + HeaderСодержимоеРасшифрован + " HeaderСодержимое "
-                    + HeaderСодержимоеРасшифрован);
-            String	ЛогинПолученныйОтКлиента = HeaderСодержимоеРасшифрован;
-            System.out.println(" HeaderСодержимое  " + HeaderСодержимое + " HeaderСодержимое "
-                    + HeaderСодержимоеРасшифрован + "  ЛогинПолученныйОтКлиента " + ЛогинПолученныйОтКлиента);
+            ЛОГ.log(" ПарольПолученныйОтКлиента " +ПарольПолученныйОтКлиента+" ЛогинПолученныйОтКлиента " + ЛогинПолученныйОтКлиента+  " ПубличныйIDАндройдКлиента " +ПубличныйIDАндройдКлиента);
 
             String	ЛогинПолученныйОтКлиентаgetSession =  (String) session.getAttribute("ПарольПолученныйОтКлиента");
             ЛОГ.log("  ЛогинПолученныйОтКлиентаgetSession " + ЛогинПолученныйОтКлиентаgetSession);
@@ -111,8 +89,6 @@ public class BeanAuntifications {
                         IDПолученныйИзSQlServerПосик = РезультатСканированиеИмениИПароль.getInt(1);/// вычисялем
                         ИмяПолученныйИзSQlServerПосик = РезультатСканированиеИмениИПароль.getString(2);/// вычисялем
                         ПарольПолученныйИзSQlServerПосик = РезультатСканированиеИмениИПароль.getString(3);/// вычисялем
-                        ЛОГ.log(
-                                "  РезультатСканированиеИмениИПароль " + РезультатСканированиеИмениИПароль);
 
                         ЛОГ.log("  ЛогинПолученныйОтКлиента  "
                                 + ЛогинПолученныйОтКлиента +
@@ -142,8 +118,6 @@ public class BeanAuntifications {
                                     + " ПарольПолученныйИзSQlServerПосик " +ПарольПолученныйИзSQlServerПосик +
                                     " ПарольПолученныйОтКлиента " +ПарольПолученныйОтКлиента);
                         }
-
-
 
                         break;
                         ///////////////////////HeaderСодержимоеРасшифрован
