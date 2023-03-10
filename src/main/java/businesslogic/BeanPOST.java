@@ -51,20 +51,14 @@ public class BeanPOST {
                                @NotNull  HttpServletResponse response) throws InterruptedException, ExecutionException {
         Future<StringBuffer> БуферРезультатPOST=null;
         try {
-            ЛОГ.log("\n"+" Starting.... class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
-                    " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
-                    " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n");
             ///Todo  получаем данные от клиента
             БуферРезультатPOST= 	 АсинхронныйЗапускPOST(ЛОГ,request,response);
-            ЛОГ.log("  БуферРезультатGET  " +БуферРезультатPOST.get());
-
-
-            ///Todo отправляем  клиенту ответ от сервера
-            if (БуферРезультатPOST.isDone()) {
+            ///Todo отправляем  клиенту ответ от серверац
+            while (!БуферРезультатPOST.isDone());
                 bEANCallsBack.МетодГлавныйМетодПосылаемДанныеАндройду(response, БуферРезультатPOST.get(), ЛОГ, request);
-                ЛОГ.log("  БуферРезультатGET  " + БуферРезультатPOST.get());
-            }
-
+            ЛОГ.log("\n"+" Starting.... class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
+                    " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
+                    " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+"  БуферРезультатGET  " + БуферРезультатPOST.get());
         } catch (Exception e) {
             new SubClassWriterErros().МетодаЗаписиОшибкиВЛог(e, null,
                     "\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+

@@ -91,16 +91,13 @@ public class BeanGET {
                                                        @NotNull  HttpServletResponse response){
         StringBuffer БуферРезультатGET=null;
         try {
-            ЛОГ.log("\n"+" Starting.... class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
-                    " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
-                    " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n");
             БуферРезультатGET=		subClassSessionBeanМетодаGET.ГлавныйМетод_МетодаGET(request, response, ЛОГ);
-            ЛОГ.log("\n"+" Starting.... class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
-                    " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
-                    " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+  "  БуферРезультатGET " +БуферРезультатGET);
             if(БуферРезультатGET==null) {
                 БуферРезультатGET=new StringBuffer();
             }
+            ЛОГ.log("\n"+" Starting.... class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
+                    " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
+                    " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+  "  БуферРезультатGET " +БуферРезультатGET);
         } catch (Exception e) {
             new SubClassWriterErros().МетодаЗаписиОшибкиВЛог(e, null,
                     "\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+

@@ -145,16 +145,27 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
             String queryСканируемИмяИпароль;
             String HeaderСодержимоеРасшифрован = null;
 
-            /// TODO НОВЫЕ ПАРАМЕТРЫ HIREBIANTE
-            Session session  =myHibernate.session(ЛОГ) ;
-            org.hibernate.Query queryДляHiberite = null;
-            List<?> ЛистДанныеОтHibenide = new ArrayList<>();
-            /// TODO КОНЕЦ  НОВЫЕ ПАРАМЕТРЫ HIREBIANTE
+
 
             Integer IDПолученныйИзSQlServerПосик = Optional
                     .ofNullable(ЛОГ.getAttribute("IDПолученныйИзSQlServerПосик").toString()).map(Integer::new)
                     .orElse(0);
             System.out.println("  IDПолученныйИзSQlServerПосик " + IDПолученныйИзSQlServerПосик);
+            Session session  = null;
+            org.hibernate.Query queryДляHiberite = null;
+            List<?> ЛистДанныеОтHibenide = null;
+
+            if (IDПолученныйИзSQlServerПосик>0) {
+                /// TODO НОВЫЕ ПАРАМЕТРЫ HIREBIANTE
+                session = myHibernate.session(ЛОГ);
+                ЛистДанныеОтHibenide = new ArrayList<>();
+                ЛОГ.log("\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
+                        " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
+                        " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+ " session " +session);
+                /// TODO КОНЕЦ  НОВЫЕ ПАРАМЕТРЫ HIREBIANTE
+            }
+
+
             /// TODO ПАРАМЕНТ #1
             ПараметрИмяТаблицыОтАндройдаGET = Optional.ofNullable(request.getParameter("ИмяТаблицыОтАндройда"))
                     .map(String::trim).orElse("");

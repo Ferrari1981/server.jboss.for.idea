@@ -15,7 +15,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.Date;
 
 
-@WebFilter(filterName = "FilterSousAvtodor",servletNames = "DSU1JsonServlet")
+@WebFilter(filterName = "FilterSousAvtodor",asyncSupported = true)
 public class FilterSousAvtodor implements Filter {
     @EJB
     private BeanAuntifications beanAuntifications;
