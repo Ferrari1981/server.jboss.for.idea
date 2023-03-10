@@ -21,7 +21,6 @@ import javax.inject.Inject;
 import javax.json.Json;
 import javax.json.JsonObjectBuilder;
 import javax.json.JsonWriter;
-import javax.persistence.EntityManager;
 import javax.persistence.StoredProcedureQuery;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -81,7 +80,7 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
         // TODO Auto-generated method stub
         System.out.println("Конструктор  ЗАПУСК МЕТОДА ИЗ GET ()  ГлавныйМетод_МетодаGET()");
         StringBuffer ОтветОтГлавного_МетодаGETДляОтправкиНААндройд = null;
-        try (Connection conn = subClassConnectionsSQLServer.МетодПредворительногоПодключенияДляМетодаGETкодИзConnection(ЛОГ);) {
+        try (Connection conn = subClassConnectionsSQLServer.МетодGetConnect(ЛОГ);) {
             this.ЛОГ = ЛОГ;
             // TODO
             this.request = request;
@@ -93,7 +92,7 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
             // TODO
             ЛОГ.log(" ОТРАБОТАЛ МЕТОД ИНИЦИАЛИЗАЦИИ ПЕРЕМЕННЫХ КОТОРЫ Е ПРИШЛИ  МетодПредворительногоПодключенияДляМетодаGETкодИзStatement    conn"
                     + conn);
-            stmt = subClassConnectionsSQLServer.МетодПредворительногоПодключенияДляМетодаGETкодИзStatement(conn, ЛОГ);
+            stmt = subClassConnectionsSQLServer.МетодGetSmtr(conn, ЛОГ);
             ЛОГ.log(" ОТРАБОТАЛ МЕТОД ИНИЦИАЛИЗАЦИИ ПЕРЕМЕННЫХ КОТОРЫ Е ПРИШЛИ  МетодПредворительногоПодключенияДляМетодаGETкодИзКонструктора   "
                     + stmt);
             ////

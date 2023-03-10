@@ -47,9 +47,10 @@ public class BEANCallsBack {
             PrintWriter МеханизмОтправкиДанныхКлиенту = new PrintWriter(БуферДанныеДляКлиента, true);
             МеханизмОтправкиДанныхКлиенту.write(ГлавныйБуферОтправкиДанныхНААндройд.toString());
             МеханизмОтправкиДанныхКлиенту.flush();
-            System.out.print("\n"+" Ending... class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
+            ЛОГ.log("\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
                     " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
-                    " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n");
+                    " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"
+                    + " ГлавныйБуферОтправкиДанныхНААндройд " +ГлавныйБуферОтправкиДанныхНААндройд.toString());
         } catch (IOException e) {
             new SubClassWriterErros().МетодаЗаписиОшибкиВЛог(e, ЛОГ.getServerInfo(),
                     this.getClass().getMethods().toString() + " " + this.getClass().getCanonicalName().toString() + " "

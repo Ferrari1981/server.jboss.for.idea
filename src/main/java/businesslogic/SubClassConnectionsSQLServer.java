@@ -10,6 +10,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import javax.crypto.NoSuchPaddingException;
 import javax.enterprise.context.RequestScoped;
+import javax.inject.Named;
 import javax.naming.InitialContext;
 import javax.servlet.ServletContext;
 import javax.sql.DataSource;
@@ -17,26 +18,18 @@ import javax.validation.constraints.NotNull;
 import javax.ws.rs.Produces;
 
 @RequestScoped
-public class SubClassConnectionsSQLServer extends SubClassGetCurrentIP  {
+@Named
+public class SubClassConnectionsSQLServer  {
     @SuppressWarnings("null")
     @Produces
-    Connection   МетодПредворительногоПодключенияДляМетодаGETкодИзConnection(
+    Connection МетодGetConnect(
             @NotNull ServletContext ЛОГ) throws ClassNotFoundException, SQLException,
             NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException {
         Connection  conn = null ;
         try {
-					/*Class.forName("com.microsoft.sqlserver.jdbc.SQLServerConnectionPoolDataSource");
-						conn = DriverManager.getConnection(СтрокакКакомуСерверуБудетПодключениеДЛяSQlServer); //// ПОДКЛЮЧЕМСЯ
-*/						javax.naming.InitialContext ctx =  new InitialContext();
-
-            DataSource datasource =null;
-            boolean КакойIP=  МетодПолучениеСвоегоIPадресса(ЛОГ);
-            if(КакойIP==true){
-                datasource = (DataSource) ctx.lookup("java:/ResourceGlassfishBedug");//TODO это подключение в Дебаг
-            }else{
-                datasource = (DataSource) ctx.lookup("java:/CoonectionAndroidBeanTimer");//TODO это подключение в РЕЛИЗ
-            }
-            ЛОГ.log("  КакойIP  "+КакойIP);
+					javax.naming.InitialContext ctx =  new InitialContext();
+            DataSource datasource = (DataSource) ctx.lookup("java:/ResourceGlassfishBedug");//TODO это подключение в Дебаг
+            ЛОГ.log("  datasource  "+datasource+ " ctx.getEnvironment() "+ctx.getEnvironment());
             if (datasource != null) {
                 conn = datasource.getConnection();
             }
@@ -57,8 +50,8 @@ public class SubClassConnectionsSQLServer extends SubClassGetCurrentIP  {
     }
     ///TODO второй метод
     @Produces
-    Statement МетодПредворительногоПодключенияДляМетодаGETкодИзStatement ( @NotNull   Connection conn,
-                                                                           @NotNull ServletContext ЛОГ) throws SQLException {
+    Statement МетодGetSmtr(@NotNull   Connection conn,
+                           @NotNull ServletContext ЛОГ) throws SQLException {
         Statement statement = null ;
         try {
             ЛОГ.log(" conn " +conn.getClientInfo());

@@ -37,24 +37,23 @@ public class BeanAuntifications {
 
 
     @SuppressWarnings("unused")
-    public Boolean МетодЗапускаетАунтифиувциюПользователяПриВходе(@NotNull ServletContext ЛОГ,
-                                                                  @NotNull HttpServletRequest request,
-                                                                  @NotNull HttpServletResponse response,
-                                                                  @NotNull HttpSession session) {
+    public Boolean МетодАунтификация(@NotNull ServletContext ЛОГ,
+                                     @NotNull HttpServletRequest request,
+                                     @NotNull HttpServletResponse response,
+                                     @NotNull HttpSession session) {
         int РазрешонныеПрава = 2;
         Integer		IDПолученныйИзSQlServerПосик=0;/// вычисялем
         String	ИмяПолученныйИзSQlServerПосик = null ;/// вычисялем
         String		ПарольПолученныйИзSQlServerПосик = null ;/// вычисялем
         Boolean РезультатАунтификацииПользователя=false;
-        try (Connection conn =subClassConnectionsSQLServer.МетодПредворительногоПодключенияДляМетодаGETкодИзConnection(	ЛОГ);){
+        try (Connection conn =subClassConnectionsSQLServer.МетодGetConnect(	ЛОГ);){
             ЛОГ.log("ЛОГ  GET() " + ЛОГ +" request " + request + " response " + response);
             //TODO
-            Statement stmt =subClassConnectionsSQLServer.	МетодПредворительногоПодключенияДляМетодаGETкодИзStatement(
+            Statement stmt =subClassConnectionsSQLServer.МетодGetSmtr(
                     conn,
                     ЛОГ);
             ЛОГ.log(" ОТРАБОТАЛ МЕТОД ИНИЦИАЛИЗАЦИИ ПЕРЕМЕННЫХ КОТОРЫ Е ПРИШЛИ  МетодПредворительногоПодключенияДляМетодаGETкодИзКонструктора   "+
                     stmt);
-
             ////// TODO СКАНИРУЕМ ПОЛУЧЕНЫЙ ПАРОЛЬ
             String	HeaderСодержимое = Optional.ofNullable(request.getHeader("p_identifier")).orElse("") ;/// содержимое
             System.out.println("HeaderСодержимое  " + HeaderСодержимое);

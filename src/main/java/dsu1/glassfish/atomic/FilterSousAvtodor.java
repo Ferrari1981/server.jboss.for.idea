@@ -50,7 +50,7 @@ public class FilterSousAvtodor implements Filter {
             requestФильтра.setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
             responseОтветКлиенту.setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
             Boolean СтатусаАунтификацииПользователя=
-                    beanAuntifications.МетодЗапускаетАунтифиувциюПользователяПриВходе(ЛОГ, requestФильтра,  responseОтветКлиенту,requestФильтра.getSession());
+                    beanAuntifications.МетодАунтификация(ЛОГ, requestФильтра,  responseОтветКлиенту,requestФильтра.getSession());
             ЛОГ.log("   doFilter doFilter doFilter СтатусаАунтификацииПользователя " +СтатусаАунтификацииПользователя);
             if (СтатусаАунтификацииПользователя) { // pass the request along the filter
                 chain.doFilter( (HttpServletRequest) request,(HttpServletResponse) response);
@@ -58,17 +58,10 @@ public class FilterSousAvtodor implements Filter {
             }else {
                 StringBuffer СерверРаботаетБезПараметров=new StringBuffer("Server Running...... Don't Login and Password"+new Date().toGMTString().toString());
                 responseОтветКлиенту.addHeader("stream_size", String.valueOf(СерверРаботаетБезПараметров.length()));
-
-
-
              ///   requestФильтра.getRequestDispatcher("/index.jsp").forward(requestФильтра, responseОтветКлиенту);
-
                 // TODO: 10.03.2023 Ответ От Сервера
                 bEANCallsBack.МетодГлавныйМетодПосылаемДанныеАндройду(	   responseОтветКлиенту, СерверРаботаетБезПараметров, ЛОГ,   requestФильтра);
                 ЛОГ.log(" Error  doFilter doFilter doFilter СтатусаАунтификацииПользователя " +СтатусаАунтификацииПользователя);
-
-
-
                 ЛОГ.log("\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
                         " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
                         " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n");
