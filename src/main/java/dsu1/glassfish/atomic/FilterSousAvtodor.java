@@ -10,6 +10,7 @@ import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.Date;
 
 
@@ -46,20 +47,31 @@ public class FilterSousAvtodor implements Filter {
             ЛОГ=request.getServletContext();
             HttpServletRequest requestФильтра=  (HttpServletRequest) request;
             HttpServletResponse responseОтветКлиенту=		(HttpServletResponse) response;		// place your code here
+            requestФильтра.setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
+            responseОтветКлиенту.setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
             Boolean СтатусаАунтификацииПользователя=
                     beanAuntifications.МетодЗапускаетАунтифиувциюПользователяПриВходе(ЛОГ, requestФильтра,  responseОтветКлиенту,requestФильтра.getSession());
             ЛОГ.log("   doFilter doFilter doFilter СтатусаАунтификацииПользователя " +СтатусаАунтификацииПользователя);
             if (СтатусаАунтификацииПользователя) { // pass the request along the filter
                 chain.doFilter( (HttpServletRequest) request,(HttpServletResponse) response);
+                ЛОГ.log(" Success    doFilter doFilter doFilter СтатусаАунтификацииПользователя " +СтатусаАунтификацииПользователя);
             }else {
                 StringBuffer СерверРаботаетБезПараметров=new StringBuffer("Server Running...... Don't Login and Password"+new Date().toGMTString().toString());
                 responseОтветКлиенту.addHeader("stream_size", String.valueOf(СерверРаботаетБезПараметров.length()));
-               bEANCallsBack.МетодГлавныйМетодПосылаемДанныеАндройду(	   responseОтветКлиенту, СерверРаботаетБезПараметров, ЛОГ,   requestФильтра);
-                ЛОГ.log("   doFilter doFilter doFilter СтатусаАунтификацииПользователя " +СтатусаАунтификацииПользователя);
-                /*
-                 * HttpServletRequest requestКлиента= (HttpServletRequest) request;
-                 * requestКлиента.getRequestDispatcher("/jboss.jsp").forward(request, response);
-                 */
+
+
+
+             ///   requestФильтра.getRequestDispatcher("/index.jsp").forward(requestФильтра, responseОтветКлиенту);
+
+                // TODO: 10.03.2023 Ответ От Сервера
+                bEANCallsBack.МетодГлавныйМетодПосылаемДанныеАндройду(	   responseОтветКлиенту, СерверРаботаетБезПараметров, ЛОГ,   requestФильтра);
+                ЛОГ.log(" Error  doFilter doFilter doFilter СтатусаАунтификацииПользователя " +СтатусаАунтификацииПользователя);
+
+
+
+                ЛОГ.log("\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
+                        " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
+                        " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n");
             }
         } catch (Exception e) {
             new SubClassWriterErros().МетодаЗаписиОшибкиВЛог(e, null,

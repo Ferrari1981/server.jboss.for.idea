@@ -21,7 +21,7 @@
     </servlet>
 <servlet-mapping>
     <servlet-name>DSU1JsonServlet</servlet-name>
-    <url-pattern>/dsu1.glassfish.atomic</url-pattern>
+    <url-pattern>/*</url-pattern>
 </servlet-mapping>
 
     <filter>
@@ -30,7 +30,7 @@
     </filter>
     <filter-mapping>
         <filter-name>FilterSousAvtodor</filter-name>
-        <url-pattern>/DSU1JsonServlet</url-pattern>
+        <url-pattern>/*</url-pattern>
     </filter-mapping>
 
 
