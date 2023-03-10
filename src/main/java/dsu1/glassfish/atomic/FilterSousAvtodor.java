@@ -5,6 +5,7 @@ import businesslogic.BeanAuntifications;
 
 import javax.ejb.EJB;
 import javax.inject.Inject;
+import javax.persistence.EntityManager;
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;

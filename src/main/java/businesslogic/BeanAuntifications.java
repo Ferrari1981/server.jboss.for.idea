@@ -33,9 +33,6 @@ public class BeanAuntifications {
         // TODO Auto-generated constructor stub
     }
 
-
-
-
     @SuppressWarnings("unused")
     public Boolean МетодАунтификация(@NotNull ServletContext ЛОГ,
                                      @NotNull HttpServletRequest request,
