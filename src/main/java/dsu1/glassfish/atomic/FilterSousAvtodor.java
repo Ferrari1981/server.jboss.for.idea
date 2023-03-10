@@ -50,8 +50,8 @@ public class FilterSousAvtodor implements Filter {
             HttpServletResponse responseОтветКлиенту=		(HttpServletResponse) response;		// place your code here
             requestФильтра.setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
             responseОтветКлиенту.setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
-            Boolean СтатусаАунтификацииПользователя=
-                    beanAuntifications.МетодАунтификация(ЛОГ, requestФильтра,  responseОтветКлиенту,requestФильтра.getSession());
+            // TODO: 10.03.2023  проверем статус логин и пароль  
+            Boolean СтатусаАунтификацииПользователя= beanAuntifications.МетодАунтификация(ЛОГ, requestФильтра,  responseОтветКлиенту,requestФильтра.getSession());
             ЛОГ.log("   doFilter doFilter doFilter СтатусаАунтификацииПользователя " +СтатусаАунтификацииПользователя);
             if (СтатусаАунтификацииПользователя) { // pass the request along the filter
                 chain.doFilter( (HttpServletRequest) request,(HttpServletResponse) response);

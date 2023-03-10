@@ -44,13 +44,12 @@ public class BeanAuntifications {
         String		ПарольПолученныйИзSQlServerПосик = null ;/// вычисялем
         Boolean РезультатАунтификацииПользователя=false;
         try (Connection conn =subClassConnectionsSQLServer.МетодGetConnect(	ЛОГ);){
-            ЛОГ.log("ЛОГ  GET() " + ЛОГ +" request " + request + " response " + response);
+            ЛОГ.log("\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
+                    " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
+                    " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+ ЛОГ +" request " + request + " response " + response);
             //TODO
-            Statement stmt =subClassConnectionsSQLServer.МетодGetSmtr(
-                    conn,
-                    ЛОГ);
-            ЛОГ.log(" ОТРАБОТАЛ МЕТОД ИНИЦИАЛИЗАЦИИ ПЕРЕМЕННЫХ КОТОРЫ Е ПРИШЛИ  МетодПредворительногоПодключенияДляМетодаGETкодИзКонструктора   "+
-                    stmt);
+            Statement stmt =subClassConnectionsSQLServer.МетодGetSmtr(conn, ЛОГ);
+            ЛОГ.log(" ОТРАБОТАЛ МЕТОД ИНИЦИАЛИЗАЦИИ ПЕРЕМЕННЫХ КОТОРЫ Е ПРИШЛИ  МетодПредворительногоПодключенияДляМетодаGETкодИзКонструктора   "+ stmt);
             ////// TODO СКАНИРУЕМ ПОЛУЧЕНЫЙ ПАРОЛЬ
             String	HeaderСодержимое = Optional.ofNullable(request.getHeader("p_identifier")).orElse("") ;/// содержимое
             System.out.println("HeaderСодержимое  " + HeaderСодержимое);
