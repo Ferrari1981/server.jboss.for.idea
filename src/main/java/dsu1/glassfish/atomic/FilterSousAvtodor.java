@@ -61,7 +61,7 @@ public class FilterSousAvtodor implements Filter {
                     }
                     ЛОГ.log("   doFilter doFilter doFilter СтатусаАунтификацииПользователя " +СтатусаАунтификацииПользователя  + "  ЛогинОтКлиентаВнутриHeadler " +ЛогинОтКлиентаВнутриHeadler);
                     if (СтатусаАунтификацииПользователя==true) { // pass the request along the filter
-                        chain.doFilter( (HttpServletRequest) request,(HttpServletResponse) response);
+                        chain.doFilter( request, response);
                         ЛОГ.log("\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
                                 " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
                                 " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+

@@ -50,6 +50,7 @@ public class DSU1JsonServlet extends HttpServlet {
 
             switch (((HttpServletRequest) req).getPathInfo()) {
                 case "/dsu1.glassfish.atomic":
+                case "/dsu1.glassfish.atomic/DSU1JsonServlet":
                     //TODO ЗАПУСКАЕМ КОДЕ МЕТОДА GET()
                     СессионыйБинGET.МетодБинаGET(ЛОГ, req, resp);
                     ЛОГ.log("\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
