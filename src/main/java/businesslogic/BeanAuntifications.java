@@ -147,6 +147,7 @@ public class BeanAuntifications {
                 }
                 РезультатСканированиеИмениИПароль.close();
                 stmt.close();
+                conn.close();
                 //TODO
                 ЛОГ.log( " Класс"+Thread.currentThread().getStackTrace()[2].getClassName()
                         +"\n"+

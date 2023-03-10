@@ -58,4 +58,5 @@ public class BEANCallsBack {
                     Thread.currentThread().getStackTrace()[2], ЛОГ, ГлавныйБуферОтправкиДанныхНААндройд.toString());
         }
     }
+
 }

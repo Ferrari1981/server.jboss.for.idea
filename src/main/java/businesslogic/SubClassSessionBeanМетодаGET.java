@@ -479,8 +479,7 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
 
                     ЛОГ. log( "   ОтветОтГлавного_МетодаGETДляОтправкиНААндройд " + ОтветОтГлавного_МетодаGETДляОтправкиНААндройд.toString());
 
-                    session.flush();
-                    session.close();
+                    МетодЗакрываемСессиюHibernate(session);
                     //// TODO ЗАКРЫЫВАЕМ КУРСОРЫ ПОСЛЕ ГЕНЕРАЦИИ JSON ДЛЯ КЛИЕНТА
                     // TODO конец МЕНЕДЖЕН ПОТОКА ДАННЫХ ПРИ
                     // ОТПРАВЛЕНИЕ ДАННЫ
@@ -533,6 +532,24 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
         }
         return ОтветОтГлавного_МетодаGETДляОтправкиНААндройд; // TODO return new
         // AsyncResult<StringBuffer>(ОтветОтГлавного_МетодаGETДляОтправкиНААндройд);
+    }
+
+    private void МетодЗакрываемСессиюHibernate(Session session) {
+        try{
+        session.flush();
+        session.clear();
+        session.close();
+            ЛОГ.log("\n МетодЗакрываемСессиюHibernate "+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
+                    " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
+                    " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n");
+        /////// ошибки метода doGET
+    } catch (Exception e) {
+        new SubClassWriterErros().МетодаЗаписиОшибкиВЛог(e, ЛогинПолученныйОтКлиента,
+                "\n" + " Error.... class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n"
+                        + " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" + " line "
+                        + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n",
+                Thread.currentThread().getStackTrace()[2], ЛОГ,null);
+    }
     }
 
     // todo МЕТОД GET А ПРИНАДЛЕЖИТЬ

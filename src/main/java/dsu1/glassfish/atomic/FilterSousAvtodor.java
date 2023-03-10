@@ -15,7 +15,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.Date;
 
 
-@WebFilter(filterName = "FilterSousAvtodor")
+@WebFilter(filterName = "FilterSousAvtodor",servletNames = "DSU1JsonServlet")
 public class FilterSousAvtodor implements Filter {
     @EJB
     private BeanAuntifications beanAuntifications;
@@ -59,7 +59,7 @@ public class FilterSousAvtodor implements Filter {
             }else {
                 StringBuffer СерверРаботаетБезПараметров=new StringBuffer("Server Running...... Don't Login and Password"+new Date().toGMTString().toString());
                 responseОтветКлиенту.addHeader("stream_size", String.valueOf(СерверРаботаетБезПараметров.length()));
-             ///   requestФильтра.getRequestDispatcher("/index.jsp").forward(requestФильтра, responseОтветКлиенту);
+                ////requestФильтра.getRequestDispatcher("/index.jsp").forward(requestФильтра, responseОтветКлиенту);
                 // TODO: 10.03.2023 Ответ От Сервера
                 bEANCallsBack.МетодГлавныйМетодПосылаемДанныеАндройду(	   responseОтветКлиенту, СерверРаботаетБезПараметров, ЛОГ,   requestФильтра);
                 ЛОГ.log(" Error  doFilter doFilter doFilter СтатусаАунтификацииПользователя " +СтатусаАунтификацииПользователя);
