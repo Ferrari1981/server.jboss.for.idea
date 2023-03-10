@@ -47,9 +47,8 @@ public class FilterSousAvtodor implements Filter {
             ЛОГ=request.getServletContext();
             HttpServletRequest requestФильтра=  (HttpServletRequest) request;
             HttpServletResponse responseОтветКлиенту=		(HttpServletResponse) response;		// place your code here
-            requestФильтра.setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
-            responseОтветКлиенту.setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
-
+            request.setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
+            response.setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
             switch (((HttpServletRequest) request).getPathInfo()){
                 case "/dsu1.glassfish.atomic":
                 case "/dsu1.glassfish.atomic/DSU1JsonServlet":
