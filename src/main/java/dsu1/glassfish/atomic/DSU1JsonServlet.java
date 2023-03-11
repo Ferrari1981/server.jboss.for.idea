@@ -32,11 +32,9 @@ public class DSU1JsonServlet extends HttpServlet {
     private BeanGET СессионыйБинGET;
     @EJB
     private BeanPOST СессионыйБинPOST;
-    @Inject
-    private MyGetHibernate myHibernate;
 
-    @Inject
-    SessionFactory sessionSousJboss;
+
+
 
     public void init() {
         try{
@@ -45,11 +43,6 @@ public class DSU1JsonServlet extends HttpServlet {
         ЛОГ.log("\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
                 " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
                 " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n");
-            // TODO: 10.03.2023 получение сессиии
-         Session sesion=   sessionSousJboss.openSession();
-        ЛОГ.log("\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
-                " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
-                " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+ " sesion " +sesion);
     } catch (Exception e) {
         new SubClassWriterErros().МетодаЗаписиОшибкиВЛог(e, null,
                 "\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
