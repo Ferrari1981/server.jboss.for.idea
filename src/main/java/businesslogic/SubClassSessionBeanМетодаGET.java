@@ -27,7 +27,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.Produces;
 
-import dsu1.glassfish.atomic.MyGetHibernate;
 import org.hibernate.LockMode;
 import org.hibernate.LockOptions;
 import org.hibernate.Session;
@@ -215,7 +214,7 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
             switch (JobsFroServerЗаданиеДляСервера) {
                 // TODO ЗАДАНИЕ ДЛЯ СЕРВЕР JOBSERVERTASK #1
                 case "Хотим Получить Версию Данных Сервера":
-                    БуферCallsBackДляAndroid = МетодИзГлавногоМетодаGETВЫполянетПервоеЗаданиеПолучениеВерсииДанныхСервераДляОтправкиJSONНААндройд(
+                    БуферCallsBackДляAndroid = МетодПолучениеВерсиюДанныхДляАndroid(
                             response, JobsServerСазаданиеДляСервера, ПараметрИмяТаблицыОтАндройдаGET);
                     ЛОГ.log("Хотим Получить Версию Данных Сервера" + new Date() + " ПараметрФильтрЗадааниеДляСервлета "
                             + JobsServerСазаданиеДляСервера + "  БуферCallsBackДляAndroid "
@@ -569,7 +568,7 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
      * @param ПараметрФильтрЗадааниеДляСервлета
      * @param ПараметрИмяТаблицыОтАндройдаGET
      */
-    protected StringBuffer МетодИзГлавногоМетодаGETВЫполянетПервоеЗаданиеПолучениеВерсииДанныхСервераДляОтправкиJSONНААндройд(
+    protected StringBuffer МетодПолучениеВерсиюДанныхДляАndroid(
             HttpServletResponse response, String ПараметрФильтрЗадааниеДляСервлета,
             String ПараметрИмяТаблицыОтАндройдаGET) {
         /////// ВЕРСИЮ ДАННЫХ НА СЕРВЕРЕ
