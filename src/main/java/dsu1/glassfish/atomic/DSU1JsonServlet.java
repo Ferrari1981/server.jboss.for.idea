@@ -28,14 +28,15 @@ public class DSU1JsonServlet extends HttpServlet {
     private BeanPOST СессионыйБинPOST;
     @Inject
     SessionFactory sessionSousJboss;
-
+    SessionFactory sessionSousJbossGetPost;
     public void init() {
         try{
         ЛОГ=this.getServletContext();
         // TODO: 10.03.2023 делаем лог
+            sessionSousJbossGetPost=sessionSousJboss;
         ЛОГ.log("\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
                 " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
-                " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n");
+                " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+ " sessionSousJbossGetPost " +sessionSousJbossGetPost);
     } catch (Exception e) {
         new SubClassWriterErros().МетодаЗаписиОшибкиВЛог(e, null,
                 "\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
@@ -53,12 +54,10 @@ public class DSU1JsonServlet extends HttpServlet {
           resp.setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
            ЛОГ = getServletContext();
                     //TODO ЗАПУСКАЕМ КОДЕ МЕТОДА GET()
-                    СессионыйБинGET.МетодБинаGET(ЛОГ, req, resp,sessionSousJboss);
+                    СессионыйБинGET.МетодБинаGET(ЛОГ, req, resp,sessionSousJbossGetPost);
                     ЛОГ.log("\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                             " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + " ((HttpServletRequest) req).getPathInfo() " +((HttpServletRequest) req).getPathInfo());
-
-
         } catch (Exception e) {
             new SubClassWriterErros().МетодаЗаписиОшибкиВЛог(e, null,
                     "\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
@@ -78,7 +77,7 @@ public class DSU1JsonServlet extends HttpServlet {
             req.setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
             resp.setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
             //TODO ЗАПУСКАЕМ КОДЕ МЕТОДА POST()
-         	СессионыйБинPOST.МетодБинаPOST(ЛОГ,req,resp,sessionSousJboss);
+         	СессионыйБинPOST.МетодБинаPOST(ЛОГ,req,resp,sessionSousJbossGetPost);
             ЛОГ.log("\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
                     " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
                     " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n");

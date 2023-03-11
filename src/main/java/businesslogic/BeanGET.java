@@ -54,7 +54,7 @@ public class BeanGET {
         try {
             // TODO: 10.03.2023  данные от GET метода
             Future<StringBuffer>       БуферРезультатGET= 	 АсинхронныйЗапускGET(ЛОГ,request,sessionSousJboss);
-            ЛОГ.log( "  БуферРезультатGET  " + БуферРезультатGET.get());
+           // ЛОГ.log( "  БуферРезультатGET  " + БуферРезультатGET.get());
             ///Todo отправляем  клиенту ответ от серверац
                 bEANCallsBack.МетодBackДанныеКлиенту(response, БуферРезультатGET.get(), ЛОГ);
             ЛОГ.log( " Класс"+Thread.currentThread().getStackTrace()[2].getClassName()
