@@ -80,7 +80,7 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
                                                   @NotNull ServletContext ЛОГ) throws SecurityException, SQLException {
         // TODO Auto-generated method stub
         System.out.println("Конструктор  ЗАПУСК МЕТОДА ИЗ GET ()  ГлавныйМетод_МетодаGET()");
-        StringBuffer ОтветОтГлавного_МетодаGETДляОтправкиНААндройд = null;
+        StringBuffer БуферCallsBackДляAndroid = null;
         try (Connection conn = subClassConnectionsSQLServer.МетодGetConnect(ЛОГ);) {
             this.ЛОГ = ЛОГ;
             // TODO
@@ -97,7 +97,7 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
             ЛОГ.log(" ОТРАБОТАЛ МЕТОД ИНИЦИАЛИЗАЦИИ ПЕРЕМЕННЫХ КОТОРЫ Е ПРИШЛИ  МетодПредворительногоПодключенияДляМетодаGETкодИзКонструктора   "
                     + stmt);
             ////
-            ОтветОтГлавного_МетодаGETДляОтправкиНААндройд = new StringBuffer();
+            БуферCallsBackДляAndroid = new StringBuffer();
             // TODO получаем session
             ЛОГ.log("ЗАПУСКАЕТСЯ....... ГЛАВНЫЙ МЕТОД GET() СЕРВЛЕТА " + new Date() + "\n" + ЛОГ.getServerInfo()
                     + "  request " + request + " response " + response + " ЛОГ" + ЛОГ);
@@ -157,7 +157,7 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
 
             if (IDПолученныйИзSQlServerПосик>0) {
                 // TODO: 10.03.2023 получение сессиии HIREBIANTE
-                session=   sessionSousJboss.openSession();
+                //session=   sessionSousJboss.openSession();
                 ЛОГ.log("\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
                         " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
                         " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+ " session " +session);
@@ -215,11 +215,11 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
             switch (JobsFroServerЗаданиеДляСервера) {
                 // TODO ЗАДАНИЕ ДЛЯ СЕРВЕР JOBSERVERTASK #1
                 case "Хотим Получить Версию Данных Сервера":
-                    ОтветОтГлавного_МетодаGETДляОтправкиНААндройд = МетодИзГлавногоМетодаGETВЫполянетПервоеЗаданиеПолучениеВерсииДанныхСервераДляОтправкиJSONНААндройд(
+                    БуферCallsBackДляAndroid = МетодИзГлавногоМетодаGETВЫполянетПервоеЗаданиеПолучениеВерсииДанныхСервераДляОтправкиJSONНААндройд(
                             response, JobsServerСазаданиеДляСервера, ПараметрИмяТаблицыОтАндройдаGET);
                     ЛОГ.log("Хотим Получить Версию Данных Сервера" + new Date() + " ПараметрФильтрЗадааниеДляСервлета "
-                            + JobsServerСазаданиеДляСервера + "  ОтветОтГлавного_МетодаGETДляОтправкиНААндройд "
-                            + ОтветОтГлавного_МетодаGETДляОтправкиНААндройд.toString());
+                            + JobsServerСазаданиеДляСервера + "  БуферCallsBackДляAndroid "
+                            + БуферCallsBackДляAndroid.toString());
                     break;
 
 
@@ -485,9 +485,9 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
                     ЛОГ.  log(" ЛистДанныеОтHibenide "+ЛистДанныеОтHibenide+ " ЛистДанныеОтHibenide.size() " +ЛистДанныеОтHibenide.size()+
                             "  queryДляHiberite  " +queryДляHiberite);//gson Gson
                     //TODO ГЕНЕРАЦИЯ JSON ПО НОВОМУ
-                    ОтветОтГлавного_МетодаGETДляОтправкиНААндройд =МетодГенерацияJSONJackson(  ЛистДанныеОтHibenide);
+                    БуферCallsBackДляAndroid =МетодГенерацияJSONJackson(  ЛистДанныеОтHibenide);
 
-                    ЛОГ. log( "   ОтветОтГлавного_МетодаGETДляОтправкиНААндройд " + ОтветОтГлавного_МетодаGETДляОтправкиНААндройд.toString());
+                    ЛОГ. log( "   БуферCallsBackДляAndroid " + БуферCallsBackДляAndroid.toString());
 
                     МетодЗакрываемСессиюHibernate(session);
                     //// TODO ЗАКРЫЫВАЕМ КУРСОРЫ ПОСЛЕ ГЕНЕРАЦИИ JSON ДЛЯ КЛИЕНТА
@@ -498,28 +498,28 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
                     break;
                 // TODO ЗАДАНИЕ ДЛЯ СЕРВЕР JOBSERVERTASK #3
                 case "Хотим Получить ID для Генерации  UUID":
-                    ОтветОтГлавного_МетодаGETДляОтправкиНААндройд = Метод_МетодаGETОтпалавляемПубличныйIDПользователюАндройду(
+                    БуферCallsBackДляAndroid = Метод_МетодаGETОтпалавляемПубличныйIDПользователюАндройду(
                             response, IDПолученныйИзSQlServerПосик);
-                    ЛОГ.log(" ОтветОтГлавного_МетодаGETДляОтправкиНААндройд "
-                            + ОтветОтГлавного_МетодаGETДляОтправкиНААндройд.toString());
+                    ЛОГ.log(" БуферCallsBackДляAndroid "
+                            + БуферCallsBackДляAndroid.toString());
                     break;
                 // TODO ЗАДАНИЕ ДЛЯ СЕРВЕР JOBSERVERTASK #4
                 case "Хотим Получить Статус Блокировки Пользователя по ID":
                     // TODO ОПРЕДЕЛЯЕМ СТАТУС ПОЛЬЗОВАТЕЛЯ
-                    ОтветОтГлавного_МетодаGETДляОтправкиНААндройд = Метод_МетодаGETОтправляемБлокировкуПользователюID(
+                    БуферCallsBackДляAndroid = Метод_МетодаGETОтправляемБлокировкуПользователюID(
                             response, JobsServerСазаданиеДляСервера, IDПолученныйИзSQlServerПосик, conn);
                     ЛОГ.log(" Отправили  Хотим Получить Статус Блокировки Пользователя по ID "
-                            + JobsServerСазаданиеДляСервера + " ОтветОтГлавного_МетодаGETДляОтправкиНААндройд "
-                            + ОтветОтГлавного_МетодаGETДляОтправкиНААндройд.toString());
+                            + JobsServerСазаданиеДляСервера + " БуферCallsBackДляAndroid "
+                            + БуферCallsBackДляAndroid.toString());
                     break;
                 // TODO ЗАДАНИЕ ДЛЯ СЕРВЕР JOBSERVERTASK #5
                 case "Хотим Получить Статус Реальной Работы SQL SERVER":
                     // TODO РЕАЛЬНЫЙ СТАТУС РАБОТЫ SQL SERVER
-                    ОтветОтГлавного_МетодаGETДляОтправкиНААндройд = Метод_МетодаGETЗаданиеХотимПолучитьРеальныйСтатусРаботыSQLSeever(
+                    БуферCallsBackДляAndroid = Метод_МетодаGETЗаданиеХотимПолучитьРеальныйСтатусРаботыSQLSeever(
                             response, JobsServerСазаданиеДляСервера, conn);
                     ЛОГ.log(" Отправили Хотим Получить Статус Реальной Работы SQL SERVER " + JobsServerСазаданиеДляСервера
-                            + " ОтветОтГлавного_МетодаGETДляОтправкиНААндройд "
-                            + ОтветОтГлавного_МетодаGETДляОтправкиНААндройд.toString());
+                            + " БуферCallsBackДляAndroid "
+                            + БуферCallsBackДляAndroid.toString());
                     break;
 
                 // TODO ЗАДАНИЯ ДЛЯ СЕРВЕРА НЕТУ
@@ -529,8 +529,8 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
 
             // TODO КОГДА ЛОГИН И ПАРОЛЬ НЕТ ДОСТУПА
             // TODO
-            ЛОГ.log("ОтветОтГлавного_МетодаGETДляОтправкиНААндройд.toString() " + ""
-                    + ОтветОтГлавного_МетодаGETДляОтправкиНААндройд.toString());
+            ЛОГ.log("БуферCallsBackДляAndroid.toString() " + ""
+                    + БуферCallsBackДляAndroid.toString());
             /////// ошибки метода doGET
         } catch (Exception e) {
             new SubClassWriterErros().МетодаЗаписиОшибкиВЛог(e, ЛогинПолученныйОтКлиента,
@@ -538,10 +538,10 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
                             + " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" + " line "
                             + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n",
                     Thread.currentThread().getStackTrace()[2], ЛОГ,
-                    ОтветОтГлавного_МетодаGETДляОтправкиНААндройд.toString());
+                    БуферCallsBackДляAndroid.toString());
         }
-        return ОтветОтГлавного_МетодаGETДляОтправкиНААндройд; // TODO return new
-        // AsyncResult<StringBuffer>(ОтветОтГлавного_МетодаGETДляОтправкиНААндройд);
+        return БуферCallsBackДляAndroid; // TODO return new
+        // AsyncResult<StringBuffer>(БуферCallsBackДляAndroid);
     }
 
     private void МетодЗакрываемСессиюHibernate(Session session) {

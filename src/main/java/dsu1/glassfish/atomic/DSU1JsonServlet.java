@@ -1,30 +1,24 @@
 package dsu1.glassfish.atomic;
 
 
+import businesslogic.BEANCallsBack;
 import businesslogic.BeanGET;
 import businesslogic.BeanPOST;
-import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.cfg.Configuration;
 
-import java.io.*;
-import java.nio.charset.StandardCharsets;
-import java.util.Date;
 import javax.ejb.EJB;
-import javax.enterprise.context.ApplicationScoped;
-import javax.enterprise.context.RequestScoped;
-import javax.enterprise.inject.Produces;
 import javax.inject.Inject;
-import javax.inject.Named;
-import javax.persistence.Entity;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
-import javax.servlet.http.*;
-import javax.servlet.annotation.*;
-import javax.validation.constraints.NotNull;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 
-@WebServlet(name = "DSU1JsonServlet", value = "/dsu1.glassfish.atomic",asyncSupported = true)
+@WebServlet( value="/dsu1.glassfish.atomic",asyncSupported = true)
 public class DSU1JsonServlet extends HttpServlet {
     private     Session getSession;
     private      ServletContext    ЛОГ;
@@ -53,22 +47,23 @@ public class DSU1JsonServlet extends HttpServlet {
     }
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        super.doGet(req, resp);
+      //  super.doGet(req, resp);
         try{
-            req.setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
-             resp.setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
+          req.setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
+          resp.setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
            ЛОГ = getServletContext();
 
-            switch (((HttpServletRequest) req).getPathInfo()) {
-                case "/dsu1.glassfish.atomic":
-                case "/dsu1.glassfish.atomic/DSU1JsonServlet":
+
                     //TODO ЗАПУСКАЕМ КОДЕ МЕТОДА GET()
+
+                    ///Todo отправляем  клиенту ответ от серверац
+                    new BEANCallsBack().МетодBackДанныеКлиенту(resp, new StringBuffer("ffffffffffffexit"), ЛОГ);
+
                     СессионыйБинGET.МетодБинаGET(ЛОГ, req, resp);
                     ЛОГ.log("\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                             " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + " ((HttpServletRequest) req).getPathInfo() " +((HttpServletRequest) req).getPathInfo());
-                    break;
-            }
+
 
         } catch (Exception e) {
             new SubClassWriterErros().МетодаЗаписиОшибкиВЛог(e, null,
