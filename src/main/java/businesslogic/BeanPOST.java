@@ -18,6 +18,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.sun.istack.NotNull;
 import dsu1.glassfish.atomic.SubClassWriterErros;
+import org.hibernate.SessionFactory;
 
 /**
  * Session Bean implementation class BeanPOST
@@ -46,10 +47,11 @@ public class BeanPOST {
 
     public void МетодБинаPOST(@NotNull ServletContext ЛОГ,
                                @NotNull HttpServletRequest request,
-                               @NotNull  HttpServletResponse response) throws InterruptedException, ExecutionException {;
+                               @NotNull  HttpServletResponse response,
+                              @NotNull SessionFactory sessionSousJboss) throws InterruptedException, ExecutionException {;
         try {
             ///Todo  получаем данные от клиента
-            Future<StringBuffer>       БуферРезультатPOST= 	 АсинхронныйЗапускPOST(ЛОГ,request,response);
+            Future<StringBuffer>       БуферРезультатPOST= 	 АсинхронныйЗапускPOST(ЛОГ,request,response,sessionSousJboss);
           //  ЛОГ.log("  БуферРезультатGET  " + БуферРезультатPOST.get());
             ///Todo получаем данные от Клиента на Сервер
                 bEANCallsBack.МетодBackДанныеКлиенту(response, БуферРезультатPOST.get(), ЛОГ);
@@ -73,10 +75,11 @@ public class BeanPOST {
     @Asynchronous
     private Future<StringBuffer> АсинхронныйЗапускPOST( @NotNull ServletContext ЛОГ,
                                                         @NotNull HttpServletRequest request,
-                                                        @NotNull  HttpServletResponse response){
+                                                        @NotNull  HttpServletResponse response,
+                                                        @NotNull SessionFactory sessionSousJboss){
         StringBuffer БуферРезультатPOST=null;
         try {
-            БуферРезультатPOST=		subClassSessionBeanPOST.ГлавныйМетод_МетодаPOST(request, response, ЛОГ);
+            БуферРезультатPOST=		subClassSessionBeanPOST.ГлавныйМетод_МетодаPOST(request, response, ЛОГ,sessionSousJboss);
             if(БуферРезультатPOST==null) {
                 БуферРезультатPOST=new StringBuffer();
             }

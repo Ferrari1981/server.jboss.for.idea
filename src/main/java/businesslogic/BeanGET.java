@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.sun.istack.NotNull;
 import dsu1.glassfish.atomic.SubClassWriterErros;
+import org.hibernate.SessionFactory;
 
 /**
  * Session Bean implementation class BeanGET
@@ -47,11 +48,12 @@ public class BeanGET {
     }
     @SuppressWarnings("unused")
     public void  МетодБинаGET(@NotNull ServletContext ЛОГ,
-                               @NotNull HttpServletRequest request,
-                               @NotNull  HttpServletResponse response) throws InterruptedException, ExecutionException {
+                              @NotNull HttpServletRequest request,
+                              @NotNull  HttpServletResponse response,
+                              @NotNull SessionFactory sessionSousJboss) throws InterruptedException, ExecutionException {
         try {
             // TODO: 10.03.2023  данные от GET метода
-            Future<StringBuffer>       БуферРезультатGET= 	 АсинхронныйЗапускGET(ЛОГ,request);
+            Future<StringBuffer>       БуферРезультатGET= 	 АсинхронныйЗапускGET(ЛОГ,request,sessionSousJboss);
             ЛОГ.log( "  БуферРезультатGET  " + БуферРезультатGET.get());
             ///Todo отправляем  клиенту ответ от серверац
                 bEANCallsBack.МетодBackДанныеКлиенту(response, БуферРезультатGET.get(), ЛОГ);
@@ -74,10 +76,11 @@ public class BeanGET {
     @SuppressWarnings("unused")
     @Asynchronous
     private Future<StringBuffer> АсинхронныйЗапускGET(@NotNull ServletContext ЛОГ,
-                                                       @NotNull HttpServletRequest request){
+                                                       @NotNull HttpServletRequest request,
+                                                      @NotNull SessionFactory sessionSousJboss){
         StringBuffer БуферРезультатGET=null;
         try {
-            БуферРезультатGET=		subClassSessionBeanМетодаGET.ГлавныйМетод_МетодаGET(request,  ЛОГ);
+            БуферРезультатGET=		subClassSessionBeanМетодаGET.ГлавныйМетод_МетодаGET(request,  ЛОГ,sessionSousJboss);
             if(БуферРезультатGET==null) {
                 БуферРезультатGET=new StringBuffer();
             }

@@ -3,6 +3,7 @@ package businesslogic;
 
 
 import dsu1.glassfish.atomic.SubClassWriterErros;
+import org.hibernate.SessionFactory;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -37,8 +38,7 @@ import javax.ws.rs.Produces;
 
 @RequestScoped
 @Produces
-public class SubClassSessionBeanPOST   {//extends    DSU1JsonServlet
-
+public class SubClassSessionBeanPOST {//extends    DSU1JsonServlet
 
 
     @Inject
@@ -47,23 +47,23 @@ public class SubClassSessionBeanPOST   {//extends    DSU1JsonServlet
     SubClassGenerateJson subClassGenerateJson;
 
     @SuppressWarnings("unused")
-    protected	ServletContext ЛОГ;
+    protected ServletContext ЛОГ;
     //private	Connection conn; ////// общий коннект для всего севлтера
     @SuppressWarnings("unused")
-    private	String ПубличноеHeaderИмя = null;
-    private	Statement stmt;
+    private String ПубличноеHeaderИмя = null;
+    private Statement stmt;
     @SuppressWarnings("unused")
-    private	String ОшибкаВМетодеdoPOST = new String();
+    private String ОшибкаВМетодеdoPOST = new String();
     @SuppressWarnings("unused")
-    private	int КоличествоСтрокКоторыеМыОтправимНаКлиент;
+    private int КоличествоСтрокКоторыеМыОтправимНаКлиент;
     @SuppressWarnings("unused")
-    private	Long РезультатОтАндройдаЕгоЛокальнаяВерсияЧата = 0l;
+    private Long РезультатОтАндройдаЕгоЛокальнаяВерсияЧата = 0l;
     @SuppressWarnings("unused")
-    private	HttpServletRequest request;
+    private HttpServletRequest request;
     @SuppressWarnings("unused")
-    private	HttpServletResponse response;
+    private HttpServletResponse response;
     @SuppressWarnings("unused")
-    private	Integer ФлагСуществуетЛиВбазеТакойUUIDИеслиЕстьНоБольшеНуляПроизводимОбновлениеАЕслиНольТОВствка = 0;//// TODO
+    private Integer ФлагСуществуетЛиВбазеТакойUUIDИеслиЕстьНоБольшеНуляПроизводимОбновлениеАЕслиНольТОВствка = 0;//// TODO
     int ИндексКоличествоПолейdХЭШ = 0;
     String ПараметрИмяТаблицыОтАндройдаPost = new String();
     boolean АутентификацияПользователяПрошлаУспешна = false;///// КОГДА
@@ -91,49 +91,50 @@ public class SubClassSessionBeanPOST   {//extends    DSU1JsonServlet
      * @throws SecurityException
      */
     @SuppressWarnings("unused")
-    protected  StringBuffer  ГлавныйМетод_МетодаPOST(
-            @NotNull	  HttpServletRequest request,
-            @NotNull 	HttpServletResponse response,
-            @NotNull	ServletContext ЛОГ) throws SecurityException {
+    protected StringBuffer ГлавныйМетод_МетодаPOST(
+            @NotNull HttpServletRequest request,
+            @NotNull HttpServletResponse response,
+            @NotNull ServletContext ЛОГ,
+            @NotNull SessionFactory sessionSousJboss) throws SecurityException {
 
-        StringBuffer	ОтветОтГлавного_МетодаPOSTДляОтправкиНААндройд=null;
-        try  {
+        StringBuffer ОтветОтГлавного_МетодаPOSTДляОтправкиНААндройд = null;
+        try {
             ЛОГ.log("Конструктор  ЗАПУСК МЕТОДА ИЗ POST ()  ГлавныйМетод_МетодаPOST()");
             this.ЛОГ = ЛОГ;
             this.request = request;
             this.response = response;
-            ЛОГ.log("ЛОГ  POST() " + ЛОГ +  " request " + request + " response "
-                    + response );
-            ЛОГ.log(" ОТРАБОТАЛ МЕТОД ИНИЦИАЛИЗАЦИИ ПЕРЕМЕННЫХ КОТОРЫ Е ПРИШЛИ  МетодПредворительногоПодключенияДляМетодаGETкодИзКонструктора   "+
+            ЛОГ.log("ЛОГ  POST() " + ЛОГ + " request " + request + " response "
+                    + response);
+            ЛОГ.log(" ОТРАБОТАЛ МЕТОД ИНИЦИАЛИЗАЦИИ ПЕРЕМЕННЫХ КОТОРЫ Е ПРИШЛИ  МетодПредворительногоПодключенияДляМетодаGETкодИзКонструктора   " +
                     stmt);
             // TODO ПРИШЛИ ПАРАМЕТРЫ В МЕТОДЕ POST
             ///TODO ПАРАМЕНТ #1
-            ПараметрИмяТаблицыОтАндройдаPost = Optional.ofNullable( request.getParameter("ИмяТаблицыОтАндройда")).map(String::trim).orElse("");
-            ЛОГ.log("  ПараметрИмяТаблицыОтАндройдаPost "+ ПараметрИмяТаблицыОтАндройдаPost);
+            ПараметрИмяТаблицыОтАндройдаPost = Optional.ofNullable(request.getParameter("ИмяТаблицыОтАндройда")).map(String::trim).orElse("");
+            ЛОГ.log("  ПараметрИмяТаблицыОтАндройдаPost " + ПараметрИмяТаблицыОтАндройдаPost);
             ///TODO ПАРАМЕНТ #2
             ///TODO ПАРАМЕНТ #4
-            JobsServerСазаданиеДляСервера = Optional.ofNullable( request.getParameter("ЗаданиеДляСервлетаВнутриПотока")).map(String::trim).orElse("");
+            JobsServerСазаданиеДляСервера = Optional.ofNullable(request.getParameter("ЗаданиеДляСервлетаВнутриПотока")).map(String::trim).orElse("");
             //TODO post paramentes
-            ЛОГ.log("  ПараметрФильтрПолучаемыхТаблицДляАндройда  "+ JobsServerСазаданиеДляСервера);
+            ЛОГ.log("  ПараметрФильтрПолучаемыхТаблицДляАндройда  " + JobsServerСазаданиеДляСервера);
             ///TODO ПАРАМЕНТ #5
             switch (JobsServerСазаданиеДляСервера.trim()) {
                 case "Получение JSON файла от Андройда":
                     // ПРИШЛИ ДАННЫЕ
-                    StringBuffer			БуферJSONОтАндройда = МетодПолучениеJSONОтКлиента(request);
+                    StringBuffer БуферJSONОтАндройда = МетодПолучениеJSONОтКлиента(request);
                     ЛОГ.log("  БуферJSONОтАндройда " + БуферJSONОтАндройда.toString());///// ПРИШЕДШИХ
                     ///// TODO --ПРИШЕЛ ФАЙЛ ОТ КЛИЕНТА JSON
                     if (БуферJSONОтАндройда.toString().toCharArray().length > 3) {///// ЗАХОДИМ											///// КОД
                         ЛОГ.log("  БуферJSONОтАндройда " + БуферJSONОтАндройда.toString());///// ПРИШЕДШИХ
                         // Read back
                         JsonReader jsonReaderПришеоОтКлиентаJSON_P = Json.createReader(new StringReader(БуферJSONОтАндройда.toString()));
-                        ЛОГ.log(" response "+response.toString()+" ПараметрИмяТаблицыОтАндройдаPost "+ПараметрИмяТаблицыОтАндройдаPost+
-                                " jsonReaderПришеоОтКлиентаJSON_P " +jsonReaderПришеоОтКлиентаJSON_P);
+                        ЛОГ.log(" response " + response.toString() + " ПараметрИмяТаблицыОтАндройдаPost " + ПараметрИмяТаблицыОтАндройдаPost +
+                                " jsonReaderПришеоОтКлиентаJSON_P " + jsonReaderПришеоОтКлиентаJSON_P);
 
-                        ОтветОтГлавного_МетодаPOSTДляОтправкиНААндройд=
+                        ОтветОтГлавного_МетодаPOSTДляОтправкиНААндройд =
                                 МетодПарсингаJSONФайлПришелОтКлиента(response,
                                         ПараметрИмяТаблицыОтАндройдаPost,
-                                        jsonReaderПришеоОтКлиентаJSON_P);
-                        ЛОГ.log(" responОтветОтГлавного_МетодаPOSTДляОтправкиНААндройдse "+ОтветОтГлавного_МетодаPOSTДляОтправкиНААндройд);
+                                        jsonReaderПришеоОтКлиентаJSON_P,sessionSousJboss);
+                        ЛОГ.log(" responОтветОтГлавного_МетодаPOSTДляОтправкиНААндройдse " + ОтветОтГлавного_МетодаPOSTДляОтправкиНААндройд);
                     }
                     break;
             }
@@ -141,45 +142,44 @@ public class SubClassSessionBeanPOST   {//extends    DSU1JsonServlet
         } catch (Exception e) {
             new SubClassWriterErros().МетодаЗаписиОшибкиВЛог(e,
                     null,
-                    "\n"+" Error.... class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
-                            " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n" ,
-                    Thread.currentThread().getStackTrace()[2],ЛОГ,ОтветОтГлавного_МетодаPOSTДляОтправкиНААндройд.toString());
+                    "\n" + " Error.... class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n",
+                    Thread.currentThread().getStackTrace()[2], ЛОГ, ОтветОтГлавного_МетодаPOSTДляОтправкиНААндройд.toString());
         }
-        return  ОтветОтГлавного_МетодаPOSTДляОтправкиНААндройд;//TODO return  new AsyncResult<StringBuffer>( ОтветОтГлавного_МетодаPOSTДляОтправкиНААндройд);
+        return ОтветОтГлавного_МетодаPOSTДляОтправкиНААндройд;//TODO return  new AsyncResult<StringBuffer>( ОтветОтГлавного_МетодаPOSTДляОтправкиНААндройд);
 
     }
 
-    protected
-    StringBuffer МетодПарсингаJSONФайлПришелОтКлиента(
-            @NotNull	HttpServletResponse response,
-            @NotNull	String ПараметрИмяТаблицыОтАндройдаPost,
-            @NotNull JsonReader jsonReaderПришеоОтКлиентаJSON_P)
+    protected StringBuffer МетодПарсингаJSONФайлПришелОтКлиента(
+            @NotNull HttpServletResponse response,
+            @NotNull String ПараметрИмяТаблицыОтАндройдаPost,
+            @NotNull JsonReader jsonReaderПришеоОтКлиентаJSON_P,
+            @NotNull  @NotNull SessionFactory sessionSousJboss)
             throws InterruptedException, SQLException, BrokenBarrierException, IOException {
-        StringBuffer	ОтветОтГлавного_МетодаPOSTДляОтправкиНААндройд=new StringBuffer();
+        StringBuffer ОтветОтГлавного_МетодаPOSTДляОтправкиНААндройд = new StringBuffer();
         try {
-            ЛОГ.log(" jsonReaderПришеоОтКлиентаJSON_P "+jsonReaderПришеоОтКлиентаJSON_P.toString());
+            ЛОГ.log(" jsonReaderПришеоОтКлиентаJSON_P " + jsonReaderПришеоОтКлиентаJSON_P.toString());
             JsonObject JSONОБьектjsonReaderПришеоОтКлиентаJSON_P = jsonReaderПришеоОтКлиентаJSON_P.readObject();
-            ЛОГ.log(" jsonReaderПришеоОтКлиентаJSON_P "+jsonReaderПришеоОтКлиентаJSON_P.toString()+
+            ЛОГ.log(" jsonReaderПришеоОтКлиентаJSON_P " + jsonReaderПришеоОтКлиентаJSON_P.toString() +
                     " JSONОБьектjsonReaderПришеоОтКлиентаJSON_P.getJsonNumber(\"uuid\")"
                     + "  JSONОБьектjsonReaderПришеоОтКлиентаJSON_P.getJsonNumber(\"uuid\") "
-                    + "" +JSONОБьектjsonReaderПришеоОтКлиентаJSON_P.getJsonNumber("uuid")+
+                    + "" + JSONОБьектjsonReaderПришеоОтКлиентаJSON_P.getJsonNumber("uuid") +
                     " JSONОБьектjsonReaderПришеоОтКлиентаJSON_P.size()"
-                    +JSONОБьектjsonReaderПришеоОтКлиентаJSON_P.size()+
-                    " JSONОБьектjsonReaderПришеоОтКлиентаJSON_P.get(\"id\") "+
-                    JSONОБьектjsonReaderПришеоОтКлиентаJSON_P.entrySet().parallelStream().findFirst().get().getValue()+
-                    "  ПараметрИмяТаблицыОтАндройдаPost " +ПараметрИмяТаблицыОтАндройдаPost);
+                    + JSONОБьектjsonReaderПришеоОтКлиентаJSON_P.size() +
+                    " JSONОБьектjsonReaderПришеоОтКлиентаJSON_P.get(\"id\") " +
+                    JSONОБьектjsonReaderПришеоОтКлиентаJSON_P.entrySet().parallelStream().findFirst().get().getValue() +
+                    "  ПараметрИмяТаблицыОтАндройдаPost " + ПараметрИмяТаблицыОтАндройдаPost);
             //TODO ГЛАВНЫЙ МЕТОДА POST() КОТОРЫЙ ВСТАВЛЯЕТ  И/ИЛИ ОБНОВЛЕНИЯ ДАННЫХ
             ОтветОтГлавного_МетодаPOSTДляОтправкиНААндройд =
                     subClassGenerateJson.МетодГенерацияJson(ЛОГ, JSONОБьектjsonReaderПришеоОтКлиентаJSON_P
-                            ,ПараметрИмяТаблицыОтАндройдаPost);
-            ЛОГ.log(" jsonReaderПришеоОтКлиентаJSON_P "+jsonReaderПришеоОтКлиентаJSON_P.toString());
+                            , ПараметрИмяТаблицыОтАндройдаPost,sessionSousJboss);
+            ЛОГ.log(" jsonReaderПришеоОтКлиентаJSON_P " + jsonReaderПришеоОтКлиентаJSON_P.toString());
         } catch (Exception e) {
-            // TODO: handle exception
             new SubClassWriterErros().МетодаЗаписиОшибкиВЛог(e,
                     null,
-                    "\n"+" Error.... class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
-                            " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n" ,
-                    Thread.currentThread().getStackTrace()[2],ЛОГ,ПараметрИмяТаблицыОтАндройдаPost);
+                    "\n" + " Error.... class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n",
+                    Thread.currentThread().getStackTrace()[2], ЛОГ, ПараметрИмяТаблицыОтАндройдаPost);
         }
         return ОтветОтГлавного_МетодаPOSTДляОтправкиНААндройд;
     }
@@ -187,8 +187,8 @@ public class SubClassSessionBeanPOST   {//extends    DSU1JsonServlet
     protected StringBuffer МетодПолучениеJSONОтКлиента(@NotNull HttpServletRequest request)
             throws IOException, InterruptedException, ExecutionException {
         //TODO ПОЛУЧАЕМ ДАННЫЕ ОТ КЛИЕНТА
-        StringBuffer	БуферJSONОтАндройда =new StringBuffer();
-        try (		ServletInputStream ОткрываемПотокДляПолученогоJSONотАндройда = request.getInputStream();) {
+        StringBuffer БуферJSONОтАндройда = new StringBuffer();
+        try (ServletInputStream ОткрываемПотокДляПолученогоJSONотАндройда = request.getInputStream();) {
             ЛОГ.log("Выполяеться метод  МетодПолучениеJSONОтКлиента пришел JSON-поток от клитента на Сервера ");
             BufferedReader БуферJsonОтКлиента = new BufferedReader(
                     new InputStreamReader(new GZIPInputStream(ОткрываемПотокДляПолученогоJSONотАндройда), StandardCharsets.UTF_16));//// ПРИШЕЛ
@@ -196,19 +196,18 @@ public class SubClassSessionBeanPOST   {//extends    DSU1JsonServlet
                     .collect(StringBuffer::new, (sb, i) -> sb.append(i), StringBuffer::append);
             int РазмерJSONФайлаПришедшегоОтАндройда = БуферJSONОтАндройда.toString().toCharArray().length;
             ЛОГ.log("Выполяеться метод  МетодПолучениеJSONОтКлиента пришел JSON-поток от клитента на Сервера  + БуферJSONОтАндройда.toString())"
-                    + "" + БуферJSONОтАндройда.toString()+  " РазмерJSONФайлаПришедшегоОтАндройда " +РазмерJSONФайлаПришедшегоОтАндройда);
+                    + "" + БуферJSONОтАндройда.toString() + " РазмерJSONФайлаПришедшегоОтАндройда " + РазмерJSONФайлаПришедшегоОтАндройда);
             // TODO закрываем поторк
             БуферJsonОтКлиента.close();
         } catch (Exception e) {
             new SubClassWriterErros().МетодаЗаписиОшибкиВЛог(e,
                     null,
-                    "\n"+" Error.... class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
-                            " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n" ,
-                    Thread.currentThread().getStackTrace()[2],ЛОГ,БуферJSONОтАндройда.toString());
+                    "\n" + " Error.... class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n",
+                    Thread.currentThread().getStackTrace()[2], ЛОГ, БуферJSONОтАндройда.toString());
         }
         return БуферJSONОтАндройда;
     }
-
 
 
 //функция получающая время операции ДАННАЯ ФУНКЦИЯ ВРЕМЯ ПРИМЕНЯЕТЬСЯ ВО
@@ -218,7 +217,7 @@ public class SubClassSessionBeanPOST   {//extends    DSU1JsonServlet
 
 /// TODO Записи ROllBACK
 
-    void МетодЗаписиВЖУрналROLLBACK(Long ПараметрИмяТаблицыОтАндройдаPost,String queryДляОбновленияДанныхМетодPOST) {
+    void МетодЗаписиВЖУрналROLLBACK(Long ПараметрИмяТаблицыОтАндройдаPost, String queryДляОбновленияДанныхМетодPOST) {
         // TODO
 
         String САМАОШИБКАДЛЯЗАПИСИ = null;
@@ -251,7 +250,7 @@ public class SubClassSessionBeanPOST   {//extends    DSU1JsonServlet
             pw.append("\n");
             pw.append("\n");
             pw.append("SQL --запрос QUERY ERROR !!! ");
-            pw.append(	queryДляОбновленияДанныхМетодPOST);
+            pw.append(queryДляОбновленияДанныхМетодPOST);
             pw.append("\n");
             pw.append(САМАОШИБКАДЛЯЗАПИСИ);
             pw.append("\n");
@@ -269,122 +268,4 @@ public class SubClassSessionBeanPOST   {//extends    DSU1JsonServlet
 
     }
 
-    protected class SubClassFingUUIDForStream{
-
-
-        Long  МетодКоторыйВХЭШНадодимUUIDЧерезStream(
-                Map<String, Object> ХэшРасперсенныйJSON, String ПолеПоКоторамуНужноИскатьUUID) {
-            ////// TODO  начало НАЧИНАЕМ ВСАТВЛЯТЬ НА СЕРВЕР ДАННЫХ ОТ  ХэшРасперсенныйJSON.entrySet()
-            //  .filter( КлючХэша -> КлючХэша.getKey() == ПолеПоКоторамуНужноИскатьUUID)
-            Long СодержимоеВставляемогоСтобцаДляПроверкиНаличиеUUID=0l;
-            try{
-
-	/* Long[] ХэшСодержимоеВставляемогоСтобцаДляПроверкиНаличиеUUID = new Long[1];
-
-
-	 //TODO
-	  ХэшРасперсенныйJSON.keySet().forEach(new java.util.function.Consumer<String>() {
-          @Override
-          public void accept(String uuidХЭШ) {
-
-        	  ЛОГ.log( " vХэшСодержимоеВставляемогоСтобцаДляПроверкиНаличиеUUID "
-        				+ ХэшСодержимоеВставляемогоСтобцаДляПроверкиНаличиеUUID);
-
-
-        	  if (uuidХЭШ.equalsIgnoreCase(ПолеПоКоторамуНужноИскатьUUID)) {
-        	  		//TODO
-				ХэшСодержимоеВставляемогоСтобцаДляПроверкиНаличиеUUID[0] = (Long) ХэшРасперсенныйJSON.get(uuidХЭШ);
-			}
-							ЛОГ.log( " ХэшСодержимоеВставляемогоСтобцаДляПроверкиНаличиеUUID "
-        				+ ХэшСодержимоеВставляемогоСтобцаДляПроверкиНаличиеUUID);
-          }
-      });
-
-
-	 СодержимоеВставляемогоСтобцаДляПроверкиНаличиеUUID= ХэшСодержимоеВставляемогоСтобцаДляПроверкиНаличиеUUID[0] ;*/
-
-
-                Object РезультатПолученныйUUID=     ХэшРасперсенныйJSON.get(ПолеПоКоторамуНужноИскатьUUID);
-
-                //TODO
-
-                ЛОГ.log( " РезультатПолученныйUUID "
-                        + РезультатПолученныйUUID+ " ПолеПоКоторамуНужноИскатьUUID " +ПолеПоКоторамуНужноИскатьUUID);
-
-
-
-                //TODO
-
-                ЛОГ.log( " РезультатПолученныйUUID "
-                        + РезультатПолученныйUUID+ " ПолеПоКоторамуНужноИскатьUUID " +ПолеПоКоторамуНужноИскатьUUID);
-
-                //TODO
-
-                if (РезультатПолученныйUUID!=null ) {
-
-
-
-
-                    BigInteger bigСодержимоеВставляемогоСтобцаДляПроверкиНаличиеUUID = new BigInteger(
-                            String.valueOf(РезультатПолученныйUUID));
-                    //TODO
-                    СодержимоеВставляемогоСтобцаДляПроверкиНаличиеUUID = bigСодержимоеВставляемогоСтобцаДляПроверкиНаличиеUUID
-                            .longValue();
-                    ЛОГ.log(" СодержимоеВставляемогоСтобцаДляПроверкиНаличиеUUID "
-                            + СодержимоеВставляемогоСтобцаДляПроверкиНаличиеUUID + " ПолеПоКоторамуНужноИскатьUUID "
-                            + ПолеПоКоторамуНужноИскатьUUID);
-                }
-
-
-
-
-                //TODO
-
-
-/*
-	  Long   ПосылаемПослеУсешнойВствкиДанныхНаСерврерКлиентуЕгоUUIDИлиIDОбьект=
-              ХэшРасперсенныйJSON.entrySet().stream().filter( КлючХэша -> КлючХэша.getKey()
-            		  == ПолеПоКоторамуНужноИскатьUUID  )
-                      .mapToLong(num -> Long.parseLong(num.getValue().toString()))
-                      .findAny().getAsLong();
-
-		ЛОГ.log( " ПосылаемПослеУсешнойВствкиДанныхНаСерврерКлиентуЕгоUUIDИлиIDОбьект "
-                + ПосылаемПослеУсешнойВствкиДанныхНаСерврерКлиентуЕгоUUIDИлиIDОбьект);
-
-         Long sum=ХэшРасперсенныйJSON.entrySet()
-                 .stream().filter( КлючХэша -> КлючХэша.getKey()
-                		 == ПолеПоКоторамуНужноИскатьUUID).mapToLong(num -> Long.parseLong(num.getValue().toString())).findAny().getAsLong();
-
-
-
-
-     	ЛОГ.log( " sum "
-                + sum);*/
-
-            } catch (Exception e) {
-                new SubClassWriterErros().МетодаЗаписиОшибкиВЛог(e,
-                        null,
-                        "\n"+" Error.... class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
-                                " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n" ,
-                        Thread.currentThread().getStackTrace()[2],ЛОГ,
-                        "\n"+" Error.... class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
-                                " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
-                                " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"
-                                + ""+СодержимоеВставляемогоСтобцаДляПроверкиНаличиеUUID);
-            }
-
-            return СодержимоеВставляемогоСтобцаДляПроверкиНаличиеUUID;
-
-        }
-
-
-
-
-    }
 }
-
-
-
-
-
-//TODO  end subclass metod POST()

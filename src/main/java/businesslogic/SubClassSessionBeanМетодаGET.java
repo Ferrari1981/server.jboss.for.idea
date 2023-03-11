@@ -77,7 +77,8 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
 
     @SuppressWarnings({ "unused", "deprecation", "rawtypes", "unchecked" })
     protected StringBuffer ГлавныйМетод_МетодаGET(@NotNull HttpServletRequest request,
-                                                  @NotNull ServletContext ЛОГ) throws SecurityException, SQLException {
+                                                  @NotNull ServletContext ЛОГ,
+                                                  @NotNull SessionFactory sessionSousJboss) throws SecurityException, SQLException {
         // TODO Auto-generated method stub
         System.out.println("Конструктор  ЗАПУСК МЕТОДА ИЗ GET ()  ГлавныйМетод_МетодаGET()");
         StringBuffer БуферCallsBackДляAndroid = null;
@@ -157,7 +158,7 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
 
             if (IDПолученныйИзSQlServerПосик>0) {
                 // TODO: 10.03.2023 получение сессиии HIREBIANTE
-                //session=   sessionSousJboss.openSession();
+                session=   sessionSousJboss.openSession();
                 ЛОГ.log("\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
                         " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
                         " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+ " session " +session);

@@ -30,14 +30,13 @@ public class SubClassGenerateJson {
     @Inject
     private MyGetHibernate myHibernate;
     private   ServletContext ЛОГ;
-    @Inject
-    SessionFactory sessionSousJboss;
 
     // TODO: 09.03.2023
     StringBuffer МетодГенерацияJson(
             @NotNull ServletContext ЛОГ,
-            @NotNull JsonObject JSONОБьектjsonReaderПришеоОтКлиентаJSON_P
-            , @NotNull String ПараметрИмяТаблицыОтАндройдаPost) throws SQLException {
+            @NotNull JsonObject JSONStremОтAndrod
+            , @NotNull String ПараметрИмяТаблицыОтАндройдаPost,
+            @NotNull  SessionFactory sessionSousJboss) throws SQLException {
 
         StringBuffer БуферОтветКлиентуОтСервера=new StringBuffer();
         /// javax.persistence.EntityManager  МенеджерJTA = ФабрикаДляМенеждера.createEntityManager();
@@ -45,9 +44,9 @@ public class SubClassGenerateJson {
             this.ЛОГ=ЛОГ;
             // TODO: 11.03.2023  Получении Сесии Hiberrnate
            Session    session =sessionSousJboss.openSession();
-            ЛОГ.log(" jsonReaderПришеоОтКлиентаJSON_P "+JSONОБьектjsonReaderПришеоОтКлиентаJSON_P.toString()  + " session  " +session);
+            ЛОГ.log(" jsonReaderПришеоОтКлиентаJSON_P "+JSONStremОтAndrod.toString()  + " session  " +session);
             //TODO ГЛАВЕНЫЙ ЦИКЛ ОБРАБОТКИ ДАННЫХ В МЕТОДЕ  POST
-            JSONОБьектjsonReaderПришеоОтКлиентаJSON_P.entrySet().forEach(ВнешнаяСтрокаJSON -> {
+            JSONStremОтAndrod.entrySet().forEach(ВнешнаяСтрокаJSON -> {
                 //  МенеджерJTA.getTransaction().begin();
                 ЛОГ.log(" ВнешнаяСтрокаJSON.getKey() "+ВнешнаяСтрокаJSON.getKey()  + " ВнешнаяСтрокаJSON.getValue() " +ВнешнаяСтрокаJSON.getValue());
                 //JsonReader ДляВнутренегоЦиклаjsonReaderJSON = Json.createReader(new StringReader(ВнешнаяСтрокаJSON.getValue().toString()));
