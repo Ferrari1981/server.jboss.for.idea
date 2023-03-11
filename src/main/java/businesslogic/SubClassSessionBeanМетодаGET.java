@@ -38,6 +38,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.sun.istack.NotNull;
+import org.hibernate.SessionFactory;
 
 @RequestScoped
 @Produces
@@ -63,6 +64,10 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
     private StoredProcedureQuery queryprocedure = null;
     @Inject
     private SubClassConnectionsSQLServer subClassConnectionsSQLServer;
+    @Inject
+    SessionFactory sessionSousJboss;
+
+    private    Session session;
 
     public SubClassSessionBeanМетодаGET() {
 
@@ -147,13 +152,12 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
                     .ofNullable(ЛОГ.getAttribute("IDПолученныйИзSQlServerПосик").toString()).map(Integer::new)
                     .orElse(0);
             System.out.println("  IDПолученныйИзSQlServerПосик " + IDПолученныйИзSQlServerПосик);
-            Session session  = null;
             org.hibernate.Query queryДляHiberite = null;
-            List<?> ЛистДанныеОтHibenide = null;
+            List<?> ЛистДанныеОтHibenide  = new ArrayList<>();
 
             if (IDПолученныйИзSQlServerПосик>0) {
-                /// TODO НОВЫЕ ПАРАМЕТРЫ HIREBIANTE
-                ЛистДанныеОтHibenide = new ArrayList<>();
+                // TODO: 10.03.2023 получение сессиии HIREBIANTE
+                session=   sessionSousJboss.openSession();
                 ЛОГ.log("\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
                         " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
                         " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+ " session " +session);

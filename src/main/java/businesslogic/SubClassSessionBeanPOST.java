@@ -382,20 +382,7 @@ public class SubClassSessionBeanPOST   {//extends    DSU1JsonServlet
 
     }
 }
-//todo
 
-class SubClassМетодаSessionBeanМетодаPOSTдляТаблицыData_CHat extends SubClassSessionBeanPOST{
-
-    public SubClassМетодаSessionBeanМетодаPOSTдляТаблицыData_CHat(String ТекущаяТаблицаОбработки)
-            throws ClassNotFoundException, SQLException, NoSuchAlgorithmException {
-        //super();
-        // TODO Auto-generated constructor stub
-        ЛОГ.log(" create class SubClassМетодаSessionBeanМетодаPOSTдляТаблицыData_CHat extends SubClassМетодаBeanSessionPOST{ data_chat"+
-                ТекущаяТаблицаОбработки);
-
-    }
-
-}
 
 
 

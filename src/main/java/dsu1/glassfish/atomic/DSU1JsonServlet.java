@@ -32,9 +32,8 @@ public class DSU1JsonServlet extends HttpServlet {
     private BeanGET СессионыйБинGET;
     @EJB
     private BeanPOST СессионыйБинPOST;
-
-
-
+    @Inject
+    SessionFactory sessionSousJboss;
 
     public void init() {
         try{

@@ -21,6 +21,7 @@ import com.sun.istack.NotNull;
 import dsu1.glassfish.atomic.MyGetHibernate;
 import dsu1.glassfish.atomic.SubClassWriterErros;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 
 //TODO
 @RequestScoped
@@ -29,6 +30,8 @@ public class SubClassGenerateJson {
     @Inject
     private MyGetHibernate myHibernate;
     private   ServletContext ЛОГ;
+    @Inject
+    SessionFactory sessionSousJboss;
 
     // TODO: 09.03.2023
     StringBuffer МетодГенерацияJson(
@@ -40,7 +43,8 @@ public class SubClassGenerateJson {
         /// javax.persistence.EntityManager  МенеджерJTA = ФабрикаДляМенеждера.createEntityManager();
         try {
             this.ЛОГ=ЛОГ;
-          Session session=null;//=//myHibernate.session(ЛОГ) ;
+            // TODO: 11.03.2023  Получении Сесии Hiberrnate
+           Session    session =sessionSousJboss.openSession();
             ЛОГ.log(" jsonReaderПришеоОтКлиентаJSON_P "+JSONОБьектjsonReaderПришеоОтКлиентаJSON_P.toString()  + " session  " +session);
             //TODO ГЛАВЕНЫЙ ЦИКЛ ОБРАБОТКИ ДАННЫХ В МЕТОДЕ  POST
             JSONОБьектjsonReaderПришеоОтКлиентаJSON_P.entrySet().forEach(ВнешнаяСтрокаJSON -> {
