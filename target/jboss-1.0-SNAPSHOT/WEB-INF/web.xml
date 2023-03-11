@@ -18,21 +18,26 @@
     <servlet>
         <servlet-name>DSU1JsonServlet</servlet-name>
         <servlet-class>dsu1.glassfish.atomic.DSU1JsonServlet</servlet-class>
+        <async-supported>true</async-supported>
     </servlet>
 <servlet-mapping>
     <servlet-name>DSU1JsonServlet</servlet-name>
-    <url-pattern>/*</url-pattern>
+    <url-pattern>/dsu1.glassfish.atomic</url-pattern>
 </servlet-mapping>
 
     <filter>
-        <filter-name>FilterSousAvtodor</filter-name>
-        <filter-class>dsu1.glassfish.atomic.FilterSousAvtodor</filter-class>
+        <filter-name>FilterForGET</filter-name>
+        <filter-class>dsu1.glassfish.atomic.FilterForGET</filter-class>
+        <async-supported>true</async-supported>
     </filter>
     <filter-mapping>
-        <filter-name>FilterSousAvtodor</filter-name>
-        <url-pattern>/*</url-pattern>
+        <filter-name>FilterForGET</filter-name>
+        <url-pattern>/DSU1JsonServlet</url-pattern>
+        <dispatcher>REQUEST</dispatcher>
+        <dispatcher>FORWARD</dispatcher>
+        <dispatcher>ASYNC</dispatcher>
+        <dispatcher>INCLUDE</dispatcher>
     </filter-mapping>
-
 
 
 </web-app>

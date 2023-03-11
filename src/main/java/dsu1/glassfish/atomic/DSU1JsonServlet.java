@@ -47,15 +47,12 @@ public class DSU1JsonServlet extends HttpServlet {
     }
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-      //  super.doGet(req, resp);
+     // super.doGet(req, resp);
         try{
           req.setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
           resp.setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
            ЛОГ = getServletContext();
-
-
                     //TODO ЗАПУСКАЕМ КОДЕ МЕТОДА GET()
-
                     ///Todo отправляем  клиенту ответ от серверац
                     new BEANCallsBack().МетодBackДанныеКлиенту(resp, new StringBuffer("ffffffffffffexit"), ЛОГ);
 
@@ -78,7 +75,7 @@ public class DSU1JsonServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        super.doPost(req, resp);
+        //super.doPost(req, resp);
         try{
            ЛОГ = getServletContext();
             req.setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));

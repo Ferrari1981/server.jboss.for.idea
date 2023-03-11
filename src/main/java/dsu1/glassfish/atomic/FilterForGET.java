@@ -5,18 +5,17 @@ import businesslogic.BeanAuntifications;
 
 import javax.ejb.EJB;
 import javax.inject.Inject;
+import javax.mail.Header;
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
-import java.util.Date;
-import java.util.Enumeration;
 
 
 @WebFilter(value="/dsu1.glassfish.atomic",asyncSupported = true)
-public class FilterSousAvtodor implements Filter {
+public class FilterForGET implements Filter {
     @EJB
     private BeanAuntifications beanAuntifications;
     @Inject
@@ -36,25 +35,23 @@ public class FilterSousAvtodor implements Filter {
         // TODO Auto-generated method stub
         try {
             Boolean СтатусаАунтификацииПользователя= false;
-       /*     request.setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
-            response.setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));*/
+            request.setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
+            response.setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
                     // TODO: 10.03.2023  проверем статус логин и пароль
-                 Object ЛогинОтКлиентаВнутриHeadler = ((HttpServletRequest)request).getHeader("identifier");
-
-            response.resetBuffer();
-            response.reset();
-       if(ЛогинОтКлиентаВнутриHeadler!=null){
+         String identifier=((HttpServletRequest)request).getHeader("identifier");
+            Object ЛогинОтКлиентаВнутриHeadler = null;
+            if (identifier!=null) {
+                ЛогинОтКлиентаВнутриHeadler = ((HttpServletRequest)request).getHeader("identifier");
+            }
+            if(ЛогинОтКлиентаВнутриHeadler!=null){
 
        }else{
            chain.doFilter(request,response);
        }
-// TODO: 10.03.2023 Ответ От Сервера
-            bEANCallsBack.МетодBackДанныеКлиенту(	   ((HttpServletResponse) response), new StringBuffer("disble "), ЛОГ);
             ЛОГ.log("\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
                     " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
                     " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+
                     " Success    doFilter doFilter doFilter СтатусаАунтификацииПользователя " +СтатусаАунтификацииПользователя);
-
         } catch (Exception e) {
             new SubClassWriterErros().МетодаЗаписиОшибкиВЛог(e, null,
                     "\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+

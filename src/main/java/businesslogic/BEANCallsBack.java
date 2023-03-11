@@ -35,27 +35,38 @@ public class BEANCallsBack {
     public void МетодBackДанныеКлиенту(@NotNull ServletResponse response,
                                        @NotNull StringBuffer ГлавныйБуферОтправкиДанныхНААндройд,
                                        @NotNull ServletContext ЛОГ) throws IOException, ServletException {
-        try  {
-            BufferedWriter БуферДанныеДляКлиента = new BufferedWriter(
-                    new OutputStreamWriter(new GZIPOutputStream(response.getOutputStream()), StandardCharsets.UTF_16));
+
+        if (  response.isCommitted()==false) {
+        try  ( BufferedWriter БуферДанныеДляКлиента = new BufferedWriter(
+                new OutputStreamWriter(new GZIPOutputStream(response.getOutputStream()), StandardCharsets.UTF_16));) {
+
             int ОбщийРазмерЗаписываемогоФайла = ГлавныйБуферОтправкиДанныхНААндройд.toString().toCharArray().length;
             ((HttpServletResponse) response).addHeader("stream_size", String.valueOf(ОбщийРазмерЗаписываемогоФайла));
             PrintWriter МеханизмОтправкиДанныхКлиенту = new PrintWriter(БуферДанныеДляКлиента, true);
             МеханизмОтправкиДанныхКлиенту.write(ГлавныйБуферОтправкиДанныхНААндройд.toString());
             response.flushBuffer();
-            if (  response.isCommitted()) {
-                МеханизмОтправкиДанныхКлиенту.close();
-                response.resetBuffer();
-            }
-            ЛОГ.log("\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
-                    " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
-                    " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"
-                    + " ГлавныйБуферОтправкиДанныхНААндройд " +ГлавныйБуферОтправкиДанныхНААндройд.toString()  + "  response.isCommitted() " + response.isCommitted());
+           while (!response.isCommitted()) ;
+           МеханизмОтправкиДанныхКлиенту.close();
+            ЛОГ.log("\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
+                    + " ГлавныйБуферОтправкиДанныхНААндройд " + ГлавныйБуферОтправкиДанныхНААндройд.toString() + "  response.isCommitted() "
+                    + response.isCommitted() + "   ((HttpServletResponse) response).getStatus() " +
+                    ((HttpServletResponse) response).getStatus());
+
         } catch (IOException e) {
             new SubClassWriterErros().МетодаЗаписиОшибкиВЛог(e, ЛОГ.getServerInfo(),
                     this.getClass().getMethods().toString() + " " + this.getClass().getCanonicalName().toString() + " "
                             + this.getClass().getDeclaredMethods().toString(),
                     Thread.currentThread().getStackTrace()[2], ЛОГ, ГлавныйБуферОтправкиДанныхНААндройд.toString());
+        }
+        }else {
+            ЛОГ.log("\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
+                    + " ГлавныйБуферОтправкиДанныхНААндройд " + ГлавныйБуферОтправкиДанныхНААндройд.toString() + "  response.isCommitted() " + response.isCommitted()
+                    + "   ((HttpServletResponse) response).getStatus() " +
+                    ((HttpServletResponse) response).getStatus());
         }
     }
 
