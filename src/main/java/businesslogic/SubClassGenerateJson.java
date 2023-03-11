@@ -36,15 +36,15 @@ public class SubClassGenerateJson {
             @NotNull ServletContext ЛОГ,
             @NotNull JsonObject JSONStremОтAndrod
             , @NotNull String ПараметрИмяТаблицыОтАндройдаPost,
-            @NotNull  SessionFactory sessionSousJboss) throws SQLException {
+            @NotNull  SessionFactory sessionSousJbossRuntime) throws SQLException {
 
         StringBuffer БуферОтветКлиентуОтСервера=new StringBuffer();
         /// javax.persistence.EntityManager  МенеджерJTA = ФабрикаДляМенеждера.createEntityManager();
         try {
             this.ЛОГ=ЛОГ;
             // TODO: 11.03.2023  Получении Сесии Hiberrnate
-           Session    session =sessionSousJboss.openSession();
-            ЛОГ.log(" jsonReaderПришеоОтКлиентаJSON_P "+JSONStremОтAndrod.toString()  + " session  " +session);
+           Session    session =sessionSousJbossRuntime.openSession();
+            ЛОГ.log(" jsonReaderПришеоОтКлиентаJSON_P "+JSONStremОтAndrod.toString()  + " session  " +session + " sessionSousJbossRuntime " +sessionSousJbossRuntime);
             //TODO ГЛАВЕНЫЙ ЦИКЛ ОБРАБОТКИ ДАННЫХ В МЕТОДЕ  POST
             JSONStremОтAndrod.entrySet().forEach(ВнешнаяСтрокаJSON -> {
                 //  МенеджерJTA.getTransaction().begin();

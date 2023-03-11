@@ -64,8 +64,7 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
     private StoredProcedureQuery queryprocedure = null;
     @Inject
     private SubClassConnectionsSQLServer subClassConnectionsSQLServer;
-    @Inject
-    SessionFactory sessionSousJboss;
+
 
     private    Session session;
 
@@ -78,7 +77,7 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
     @SuppressWarnings({ "unused", "deprecation", "rawtypes", "unchecked" })
     protected StringBuffer ГлавныйМетод_МетодаGET(@NotNull HttpServletRequest request,
                                                   @NotNull ServletContext ЛОГ,
-                                                  @NotNull SessionFactory sessionSousJboss) throws SecurityException, SQLException {
+                                                  @NotNull SessionFactory sessionSousJbossRuntime) throws SecurityException, SQLException {
         // TODO Auto-generated method stub
         System.out.println("Конструктор  ЗАПУСК МЕТОДА ИЗ GET ()  ГлавныйМетод_МетодаGET()");
         StringBuffer БуферCallsBackДляAndroid = null;
@@ -158,7 +157,7 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
 
             if (IDПолученныйИзSQlServerПосик>0) {
                 // TODO: 10.03.2023 получение сессиии HIREBIANTE
-                session=   sessionSousJboss.openSession();
+                session=   sessionSousJbossRuntime.openSession();
                 ЛОГ.log("\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
                         " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
                         " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+ " session " +session);
@@ -530,8 +529,7 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
 
             // TODO КОГДА ЛОГИН И ПАРОЛЬ НЕТ ДОСТУПА
             // TODO
-            ЛОГ.log("БуферCallsBackДляAndroid.toString() " + ""
-                    + БуферCallsBackДляAndroid.toString());
+            ЛОГ.log("БуферCallsBackДляAndroid.toString() " + "" + БуферCallsBackДляAndroid.toString());
             /////// ошибки метода doGET
         } catch (Exception e) {
             new SubClassWriterErros().МетодаЗаписиОшибкиВЛог(e, ЛогинПолученныйОтКлиента,

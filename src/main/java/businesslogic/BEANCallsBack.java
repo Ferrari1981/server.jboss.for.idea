@@ -39,7 +39,6 @@ public class BEANCallsBack {
         if (  response.isCommitted()==false) {
         try  ( BufferedWriter БуферДанныеДляКлиента = new BufferedWriter(
                 new OutputStreamWriter(new GZIPOutputStream(response.getOutputStream()), StandardCharsets.UTF_16));) {
-
             int ОбщийРазмерЗаписываемогоФайла = ГлавныйБуферОтправкиДанныхНААндройд.toString().toCharArray().length;
             ((HttpServletResponse) response).addHeader("stream_size", String.valueOf(ОбщийРазмерЗаписываемогоФайла));
             PrintWriter МеханизмОтправкиДанныхКлиенту = new PrintWriter(БуферДанныеДляКлиента, true);

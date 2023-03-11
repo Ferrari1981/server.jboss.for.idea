@@ -95,7 +95,7 @@ public class SubClassSessionBeanPOST {//extends    DSU1JsonServlet
             @NotNull HttpServletRequest request,
             @NotNull HttpServletResponse response,
             @NotNull ServletContext ЛОГ,
-            @NotNull SessionFactory sessionSousJboss) throws SecurityException {
+            @NotNull SessionFactory sessionSousJbossRuntime) throws SecurityException {
 
         StringBuffer ОтветОтГлавного_МетодаPOSTДляОтправкиНААндройд = null;
         try {
@@ -133,7 +133,7 @@ public class SubClassSessionBeanPOST {//extends    DSU1JsonServlet
                         ОтветОтГлавного_МетодаPOSTДляОтправкиНААндройд =
                                 МетодПарсингаJSONФайлПришелОтКлиента(response,
                                         ПараметрИмяТаблицыОтАндройдаPost,
-                                        jsonReaderПришеоОтКлиентаJSON_P,sessionSousJboss);
+                                        jsonReaderПришеоОтКлиентаJSON_P,sessionSousJbossRuntime);
                         ЛОГ.log(" responОтветОтГлавного_МетодаPOSTДляОтправкиНААндройдse " + ОтветОтГлавного_МетодаPOSTДляОтправкиНААндройд);
                     }
                     break;
@@ -154,7 +154,7 @@ public class SubClassSessionBeanPOST {//extends    DSU1JsonServlet
             @NotNull HttpServletResponse response,
             @NotNull String ПараметрИмяТаблицыОтАндройдаPost,
             @NotNull JsonReader jsonReaderПришеоОтКлиентаJSON_P,
-            @NotNull  @NotNull SessionFactory sessionSousJboss)
+            @NotNull  @NotNull SessionFactory sessionSousJbossRuntime)
             throws InterruptedException, SQLException, BrokenBarrierException, IOException {
         StringBuffer ОтветОтГлавного_МетодаPOSTДляОтправкиНААндройд = new StringBuffer();
         try {
@@ -172,7 +172,7 @@ public class SubClassSessionBeanPOST {//extends    DSU1JsonServlet
             //TODO ГЛАВНЫЙ МЕТОДА POST() КОТОРЫЙ ВСТАВЛЯЕТ  И/ИЛИ ОБНОВЛЕНИЯ ДАННЫХ
             ОтветОтГлавного_МетодаPOSTДляОтправкиНААндройд =
                     subClassGenerateJson.МетодГенерацияJson(ЛОГ, JSONОБьектjsonReaderПришеоОтКлиентаJSON_P
-                            , ПараметрИмяТаблицыОтАндройдаPost,sessionSousJboss);
+                            , ПараметрИмяТаблицыОтАндройдаPost,sessionSousJbossRuntime);
             ЛОГ.log(" jsonReaderПришеоОтКлиентаJSON_P " + jsonReaderПришеоОтКлиентаJSON_P.toString());
         } catch (Exception e) {
             new SubClassWriterErros().МетодаЗаписиОшибкиВЛог(e,
