@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.util.Date;
 
 
 @WebFilter(value="/dsu1.glassfish.atomic",asyncSupported = true)
@@ -38,20 +39,35 @@ public class FilterForGET implements Filter {
             request.setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
             response.setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
                     // TODO: 10.03.2023  проверем статус логин и пароль
-         String identifier=((HttpServletRequest)request).getHeader("identifier");
-            Object ЛогинОтКлиентаВнутриHeadler = null;
-            if (identifier!=null) {
-                ЛогинОтКлиентаВнутриHeadler = ((HttpServletRequest)request).getHeader("identifier");
+            Object ЛогинОтКлиентаВнутриHeadle2=      ((HttpServletRequest)request).getHeaders("identifier").nextElement();
+         Object ЛогинОтКлиентаВнутриHeadler=((HttpServletRequest)request).getHeader("identifier");
+            if (ЛогинОтКлиентаВнутриHeadler!=null) {
+                if (ЛогинОтКлиентаВнутриHeadler.toString().length()>5) {
+                    СтатусаАунтификацииПользователя = beanAuntifications.МетодАунтификация(ЛОГ, ((HttpServletRequest)request),  ((HttpServletRequest)request) .getSession());
+                }
+                if (СтатусаАунтификацииПользователя==true) { // pass the request along the filter
+                    // TODO: 11.03.2023 ГЛАВНАЯ СТРОЧКА ПЕРЕНАРАВЛЕНИЕ НА СЕВРЕЛТЫ НА ГЛАВНЫЙ КОД
+                    chain.doFilter(request,response);
+                    ЛОГ.log("\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
+                            " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
+                            " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+
+                            " Success    doFilter doFilter doFilter СтатусаАунтификацииПользователя " +СтатусаАунтификацииПользователя);
+                }else {
+                    МетодФильтраНеПрошлаАунтификацию(response, СтатусаАунтификацииПользователя);
+                }
+                
+            }else{
+                // TODO: 11.03.2023  нет не имени не пароля
+                RequestDispatcher requestDispatcher = request.getRequestDispatcher("/index.jsp");
+                requestDispatcher.forward(request, response);
+                /// requestФильтра.getRequestDispatcher("/index.jsp").forward(requestФильтра, responseОтветКлиенту);
+              //  МетодФильтраНеПрошлаАунтификацию(response, СтатусаАунтификацииПользователя);
             }
-            if(ЛогинОтКлиентаВнутриHeadler!=null){
-
-       }else{
-           chain.doFilter(request,response);
-       }
             ЛОГ.log("\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
                     " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
                     " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+
-                    " Success    doFilter doFilter doFilter СтатусаАунтификацииПользователя " +СтатусаАунтификацииПользователя);
+                    " Success    doFilter doFilter doFilter СтатусаАунтификацииПользователя " +СтатусаАунтификацииПользователя+
+                     " ЛогинОтКлиентаВнутриHeadler " +ЛогинОтКлиентаВнутриHeadler);
         } catch (Exception e) {
             new SubClassWriterErros().МетодаЗаписиОшибкиВЛог(e, null,
                     "\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
@@ -61,6 +77,25 @@ public class FilterForGET implements Filter {
         }
     }
 
+    private void МетодФильтраНеПрошлаАунтификацию(ServletResponse response, Boolean СтатусаАунтификацииПользователя)
+            throws IOException, ServletException {
+        try {
+        StringBuffer СерверРаботаетБезПараметров=new StringBuffer("Server Running...... Don't Login and Password"+new Date().toGMTString().toString());
+        ((HttpServletResponse) response)  .addHeader("stream_size", String.valueOf(СерверРаботаетБезПараметров.length()));
+        // TODO: 10.03.2023 Ответ От Сервера
+        bEANCallsBack.МетодBackДанныеКлиенту(response, СерверРаботаетБезПараметров, ЛОГ);
+        ЛОГ.log("\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
+                " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
+                " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+
+                " Error  doFilter doFilter doFilter СтатусаАунтификацииПользователя " + СтатусаАунтификацииПользователя);
+    } catch (Exception e) {
+        new SubClassWriterErros().МетодаЗаписиОшибкиВЛог(e, null,
+                "\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
+                        " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
+                        " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n",
+                Thread.currentThread().getStackTrace()[2],ЛОГ,ЛОГ.getServerInfo().toLowerCase());
+    }
+    }
 
 
     public void destroy() {
