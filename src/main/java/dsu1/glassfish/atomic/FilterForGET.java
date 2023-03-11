@@ -53,7 +53,12 @@ public class FilterForGET implements Filter {
                             " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+
                             " Success    doFilter doFilter doFilter СтатусаАунтификацииПользователя " +СтатусаАунтификацииПользователя);
                 }else {
-                    МетодФильтраНеПрошлаАунтификацию(response, СтатусаАунтификацииПользователя);
+                    // TODO: 11.03.2023 ИМя и Пароль не Правильный
+                    МетодФильтраНеПрошлаАунтификацию(response);
+                    ЛОГ.log("\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
+                            " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
+                            " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+
+                            " Error  doFilter doFilter doFilter СтатусаАунтификацииПользователя "+СтатусаАунтификацииПользователя );
                 }
                 
             }else{
@@ -77,17 +82,13 @@ public class FilterForGET implements Filter {
         }
     }
 
-    private void МетодФильтраНеПрошлаАунтификацию(ServletResponse response, Boolean СтатусаАунтификацииПользователя)
+    private void МетодФильтраНеПрошлаАунтификацию(ServletResponse response)
             throws IOException, ServletException {
         try {
         StringBuffer СерверРаботаетБезПараметров=new StringBuffer("Server Running...... Don't Login and Password"+new Date().toGMTString().toString());
         ((HttpServletResponse) response)  .addHeader("stream_size", String.valueOf(СерверРаботаетБезПараметров.length()));
         // TODO: 10.03.2023 Ответ От Сервера
         bEANCallsBack.МетодBackДанныеКлиенту(response, СерверРаботаетБезПараметров, ЛОГ);
-        ЛОГ.log("\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
-                " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
-                " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+
-                " Error  doFilter doFilter doFilter СтатусаАунтификацииПользователя " + СтатусаАунтификацииПользователя);
     } catch (Exception e) {
         new SubClassWriterErros().МетодаЗаписиОшибкиВЛог(e, null,
                 "\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
