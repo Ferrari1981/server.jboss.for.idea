@@ -525,17 +525,17 @@ public class SubClassGenerateJson {
     }
 
     // TODO: 09.03.2023  метод очистки Hirenate после операции
-    private void МетодЗавершенияСеанса(@javax.validation.constraints.NotNull  Session session) {
+    private void МетодЗавершенияСеанса(@NotNull  Session session) {
         try{
-        session.flush();
-        session.clear();
-        //TODO Очищаем менеджер от данных
-        session.close();
-            //TODO
+            if (session.isOpen() || session.isConnected()) {
+                session.clear();
+                //TODO Очищаем менеджер от данных
+                session.close();
+            }
             ЛОГ.log( " Класс"+Thread.currentThread().getStackTrace()[2].getClassName()
                     +"\n"+
                     " метод "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"
-                    + "Строка " + Thread.currentThread().getStackTrace()[2].getLineNumber());
+                    + "Строка " + Thread.currentThread().getStackTrace()[2].getLineNumber()+ " session " +session);
     } catch (Exception   e) {
         new SubClassWriterErros().МетодаЗаписиОшибкиВЛог(e, null,
                 "\n"+" Error.... class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
