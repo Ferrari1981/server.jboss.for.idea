@@ -39,10 +39,13 @@ public class FilterForGET implements Filter {
             request.setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
             response.setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
                     // TODO: 10.03.2023  проверем статус логин и пароль
-            Object ЛогинОтКлиентаВнутриHeadle2=      ((HttpServletRequest)request).getHeaders("identifier").nextElement();
-         Object ЛогинОтКлиентаВнутриHeadler=((HttpServletRequest)request).getHeader("identifier");
-            if (ЛогинОтКлиентаВнутриHeadler!=null) {
-                if (ЛогинОтКлиентаВнутриHeadler.toString().length()>5) {
+            Object ЛогинОтAndroid=      ((HttpServletRequest)request).getHeaders("identifier").nextElement();
+            ЛОГ.log("\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
+                    " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
+                    " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+
+                    "  ЛогинОтAndroid    doFilter doFilter doFilter ЛогинОтAndroid " +ЛогинОтAndroid);
+            if (ЛогинОтAndroid!=null) {
+                if (ЛогинОтAndroid.toString().length()>5) {
                     СтатусаАунтификацииПользователя = beanAuntifications.МетодАунтификация(ЛОГ, ((HttpServletRequest)request),  ((HttpServletRequest)request) .getSession());
                 }
                 if (СтатусаАунтификацииПользователя==true) { // pass the request along the filter
@@ -72,7 +75,7 @@ public class FilterForGET implements Filter {
                     " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
                     " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+
                     " Success    doFilter doFilter doFilter СтатусаАунтификацииПользователя " +СтатусаАунтификацииПользователя+
-                     " ЛогинОтКлиентаВнутриHeadler " +ЛогинОтКлиентаВнутриHeadler);
+                     " ЛогинОтAndroid " +ЛогинОтAndroid);
         } catch (Exception e) {
             new SubClassWriterErros().МетодаЗаписиОшибкиВЛог(e, null,
                     "\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
