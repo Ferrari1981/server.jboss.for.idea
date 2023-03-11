@@ -489,8 +489,6 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
 
                     ЛОГ. log( "   БуферCallsBackДляAndroid " + БуферCallsBackДляAndroid.toString());
 
-                    МетодЗакрываемСессиюHibernate(session);
-                    //// TODO ЗАКРЫЫВАЕМ КУРСОРЫ ПОСЛЕ ГЕНЕРАЦИИ JSON ДЛЯ КЛИЕНТА
                     // TODO конец МЕНЕДЖЕН ПОТОКА ДАННЫХ ПРИ
                     // ОТПРАВЛЕНИЕ ДАННЫ
                     // TODO ВЫХОД ИЗ КОНКРЕТНОГО УСЛОВИЯ
@@ -528,6 +526,8 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
             }
 
             // TODO КОГДА ЛОГИН И ПАРОЛЬ НЕТ ДОСТУПА
+              МетодЗакрываемСессиюHibernate(session);
+            //// TODO ЗАКРЫЫВАЕМ КУРСОРЫ ПОСЛЕ ГЕНЕРАЦИИ JSON ДЛЯ КЛИЕНТА
             // TODO
             ЛОГ.log("БуферCallsBackДляAndroid.toString() " + "" + БуферCallsBackДляAndroid.toString());
             /////// ошибки метода doGET
@@ -545,14 +545,13 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
 
     private void МетодЗакрываемСессиюHibernate(Session session) {
         try{
-            if (session!=null) {
-                session.flush();
+            if (session.isOpen() || session.isConnected()) {
                 session.clear();
                 session.close();
             }
             ЛОГ.log("\n МетодЗакрываемСессиюHibernate "+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
                     " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
-                    " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n");
+                    " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n" +  "session " +session);
         /////// ошибки метода doGET
     } catch (Exception e) {
         new SubClassWriterErros().МетодаЗаписиОшибкиВЛог(e, ЛогинПолученныйОтКлиента,
