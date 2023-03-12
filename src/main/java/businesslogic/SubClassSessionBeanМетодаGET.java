@@ -27,9 +27,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.Produces;
 
-import org.hibernate.LockMode;
-import org.hibernate.LockOptions;
-import org.hibernate.Session;
+import org.hibernate.*;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonFactory;
@@ -37,7 +35,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.sun.istack.NotNull;
-import org.hibernate.SessionFactory;
 
 @RequestScoped
 @Produces
@@ -66,6 +63,7 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
 
 
     private    Session session;
+    private    Transaction sessionTransaction  ;
 
     public SubClassSessionBeanМетодаGET() {
 
@@ -157,6 +155,7 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
             if (IDПолученныйИзSQlServerПосик>0) {
                 // TODO: 10.03.2023 получение сессиии HIREBIANTE
                 session=   sessionSousJbossRuntime.openSession();
+                sessionTransaction = session.getTransaction();
                 ЛОГ.log("\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
                         " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
                         " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+ " session " +session);
@@ -231,6 +230,7 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
                             + JobsServerСазаданиеДляСервера+"  ПараметрВерсияДанных" + ПараметрВерсияДанных
                             + " ПараметрИмяТаблицыОтАндройдаGET " + ПараметрИмяТаблицыОтАндройдаGET);
                     ////////////// ГЕНЕРАЦИЯ JSON ДЛЯ ВСЕХ  ТАБЛИЦ
+                    sessionTransaction.begin();
                     // TODO ГЛАВНЫЙ РАСПРЕДЕЛИТЕЛЬ КАКАЯ ТЕКУЩАЯ ТАБЛИЦА ОБРАБАТЫВАЕМСЯ
                     switch (ПараметрИмяТаблицыОтАндройдаGET.trim()) {
                         case "organization":
@@ -544,6 +544,12 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
 
     private void МетодЗакрываемСессиюHibernate(Session session) {
         try{
+            if (    sessionTransaction.isActive()) {
+                sessionTransaction.commit();
+            }
+            if (session.isDirty()) {
+                session.flush();
+            }
             if (session.isOpen() || session.isConnected()) {
                 session.clear();
                 session.close();
@@ -553,6 +559,8 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
                     " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n" +  "session " +session);
         /////// ошибки метода doGET
     } catch (Exception e) {
+            // TODO: 12.03.2023
+            sessionTransaction.rollback();
         new SubClassWriterErros().МетодаЗаписиОшибкиВЛог(e, ЛогинПолученныйОтКлиента,
                 "\n" + " Error.... class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n"
                         + " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" + " line "
