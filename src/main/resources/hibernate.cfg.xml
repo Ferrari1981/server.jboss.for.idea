@@ -36,6 +36,7 @@
     <mapping class="model.ViewOnesignal"/>
     <mapping class="model.NomenVesov"/>
     <mapping class="model.Settingtab"/>
+    <mapping class="model.GetMaterialsData"/>
 
   </session-factory>
 </hibernate-configuration>
