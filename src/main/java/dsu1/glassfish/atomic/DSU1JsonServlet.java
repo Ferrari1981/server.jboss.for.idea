@@ -96,6 +96,26 @@ public class DSU1JsonServlet extends HttpServlet {
     }
 
     public void destroy() {
+      try{
+          if (sessionSousJbossRuntime!=null && sessionSousJbossRuntime.isOpen()) {
+              sessionSousJbossRuntime.close();
+          }
+          if (sessionSousJboss!=null && sessionSousJboss.isOpen()) {
+              sessionSousJboss.close();
+          }
+          ЛОГ.log("\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
+                " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
+                " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+
+                " sessionSousJbossRuntime " +sessionSousJbossRuntime);
+    } catch (Exception e) {
+        new SubClassWriterErros().МетодаЗаписиОшибкиВЛог(e, null,
+                "\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
+                        " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
+                        " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n",
+                Thread.currentThread().getStackTrace()[2],ЛОГ,ЛОГ.getServerInfo().toLowerCase());
+
+    }
+
     }
 }
 
