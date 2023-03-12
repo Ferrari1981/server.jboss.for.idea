@@ -22,6 +22,7 @@ import dsu1.glassfish.atomic.MyGetHibernate;
 import dsu1.glassfish.atomic.SubClassWriterErros;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 
 //TODO
 @RequestScoped
@@ -30,6 +31,7 @@ public class SubClassGenerateJson {
     @Inject
     private MyGetHibernate myHibernate;
     private   ServletContext ЛОГ;
+    private Transaction sessionTransaction;
 
     // TODO: 09.03.2023
     StringBuffer МетодГенерацияJson(
@@ -44,6 +46,7 @@ public class SubClassGenerateJson {
             this.ЛОГ=ЛОГ;
             // TODO: 11.03.2023  Получении Сесии Hiberrnate
            Session    session =sessionSousJbossRuntime.openSession();
+             sessionTransaction =session.getTransaction() ;
             ЛОГ.log(" jsonReaderПришеоОтКлиентаJSON_P "+JSONStremОтAndrod.toString()  + " session  " +session + " sessionSousJbossRuntime " +sessionSousJbossRuntime);
             //TODO ГЛАВЕНЫЙ ЦИКЛ ОБРАБОТКИ ДАННЫХ В МЕТОДЕ  POST
             JSONStremОтAndrod.entrySet().forEach(ВнешнаяСтрокаJSON -> {
@@ -89,6 +92,7 @@ public class SubClassGenerateJson {
                 //TODO
                 ЛОГ.log(" ФиналUIDorIdДляСостыковкиЕстьИлиНЕтУжеВБАзе "+ФиналUIDorIdДляСостыковкиЕстьИлиНЕтУжеВБАзе);
                 //TODO ЗАПОЛЕНИЯ ТАБЛИЦ И  ОТПРАВКА ЗНАЧЕНИЙ В УДАЛЕННУЮ ПРОЦЕДУРУ
+                sessionTransaction.begin();
                 StoredProcedureQuery	 queryprocedure = null;
                 //TODO ЗАПОЛЯЕМ ДАННЕЫ ДЛЯ ВСТВКИ МЕТОДА POST()
                 switch(ПараметрИмяТаблицыОтАндройдаPost) {
@@ -527,15 +531,19 @@ public class SubClassGenerateJson {
     // TODO: 09.03.2023  метод очистки Hirenate после операции
     private void МетодЗавершенияСеанса(@NotNull  Session session) {
         try{
+            if (    sessionTransaction.isActive()) {
+                sessionTransaction.commit();
+            }
+            if (session.isDirty()) {
+                session.flush();
+            }
             if (session.isOpen() || session.isConnected()) {
                 session.clear();
-                //TODO Очищаем менеджер от данных
                 session.close();
             }
-            ЛОГ.log( " Класс"+Thread.currentThread().getStackTrace()[2].getClassName()
-                    +"\n"+
-                    " метод "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"
-                    + "Строка " + Thread.currentThread().getStackTrace()[2].getLineNumber()+ " session " +session);
+            ЛОГ.log("\n МетодЗакрываемСессиюHibernate "+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
+                    " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
+                    " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n" +  "session " +session);
     } catch (Exception   e) {
         new SubClassWriterErros().МетодаЗаписиОшибкиВЛог(e, null,
                 "\n"+" Error.... class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
