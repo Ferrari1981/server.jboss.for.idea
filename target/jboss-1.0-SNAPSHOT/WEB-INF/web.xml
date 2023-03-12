@@ -23,9 +23,20 @@
 <servlet-mapping>
     <servlet-name>DSU1JsonServlet</servlet-name>
     <url-pattern>/dsu1.glassfish.atomic</url-pattern>
-    <url-pattern>/update_android_dsu1/*</url-pattern>
-
 </servlet-mapping>
+
+
+    <servlet>
+        <servlet-name>DSU1DonwloadsServlet</servlet-name>
+        <servlet-class>dsu1.glassfish.atomic.DSU1DonwloadsServlet</servlet-class>
+        <async-supported>true</async-supported>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>DSU1DonwloadsServlet</servlet-name>
+        <url-pattern>/dsu1.glassfish.download</url-pattern>
+    </servlet-mapping>
+
+
     <filter>
         <filter-name>FilterForGET</filter-name>
         <filter-class>dsu1.glassfish.atomic.FilterForGET</filter-class>
@@ -34,7 +45,7 @@
     <filter-mapping>
         <filter-name>FilterForGET</filter-name>
         <url-pattern>/DSU1JsonServlet</url-pattern>
-        <url-pattern>/update_android_dsu1/*</url-pattern>
+        <url-pattern>/DSU1DonwloadsServlet</url-pattern>
         <dispatcher>REQUEST</dispatcher>
         <dispatcher>FORWARD</dispatcher>
         <dispatcher>ASYNC</dispatcher>
