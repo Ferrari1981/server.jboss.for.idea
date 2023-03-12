@@ -515,6 +515,7 @@ public class SubClassGenerateJson {
             ///TODO
             //TODO
         } catch (Exception   e) {
+            sessionTransaction.rollback();
             new SubClassWriterErros().МетодаЗаписиОшибкиВЛог(e, null,
                     "\n"+" Error.... class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
                             " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"
