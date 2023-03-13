@@ -50,11 +50,9 @@ public class SesionBeanDownloadPO {
                               @NotNull HttpServletRequest request,
                               @NotNull HttpServletResponse response) throws InterruptedException, ExecutionException {
         try {
-            // TODO: 10.03.2023  данные от GET метода
+            // TODO: 10.03.2023  данные от JSON ANALIZE
             Future<File> ПолучаемJSONФайл= 	 МетодДляJSONФайла(ЛОГ,request,response);
-
             МетодBackДанныеКлиентуНовоеПО(response ,ПолучаемJSONФайл.get(),ЛОГ);
-
             ЛОГ.log("\n"+" Starting.... class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
                     " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
                     " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+  "  ПолучаемJSONФайл " +ПолучаемJSONФайл);
@@ -71,11 +69,9 @@ public class SesionBeanDownloadPO {
                                           @NotNull HttpServletRequest request,
                                           @NotNull HttpServletResponse response) throws InterruptedException, ExecutionException {
         try {
-            // TODO: 10.03.2023  данные от GET метода
+            // TODO: 10.03.2023  данные от .APK Download
             Future<File> ПолучаемAPKФайл= 	 МетодДляAPKФайла(ЛОГ,request,response);
-
             МетодBackДанныеКлиентуНовоеПО(response ,ПолучаемAPKФайл.get(),ЛОГ);
-
             ЛОГ.log("\n"+" Starting.... class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
                     " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
                     " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+  "  ПолучаемAPKФайл " +ПолучаемAPKФайл);
