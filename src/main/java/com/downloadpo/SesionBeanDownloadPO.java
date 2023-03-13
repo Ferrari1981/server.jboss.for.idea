@@ -16,8 +16,11 @@ import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
+import java.util.stream.Collectors;
 import java.util.zip.GZIPOutputStream;
 
 /**
@@ -88,14 +91,18 @@ public class SesionBeanDownloadPO {
     private Future<File> МетодДляJSONФайла(@NotNull ServletContext ЛОГ, @NotNull HttpServletRequest request,HttpServletResponse response){
         File ФайлJSON=null;
         try{
-        String filepath ="C:\\Users\\moraru_pi\\AndroidStudioProjectsSERVER\\sous.jboss.idea\\src\\main\\webapp\\update_android_dsu1.json";
+        String filepath ="C:\\Users\\moraru_pi\\AndroidStudioProjectsSERVER\\sous.jboss.idea\\src\\main\\webapp\\update_android_dsu1\\output-metadata.json";
             // TODO: 13.03.2023 ГЛАВНЫЙ КОД РАБОТА С ФАЙЛАМИ
             Path path = Paths.get(filepath);
             File fileJson = Paths.get(filepath).toFile();
             if(fileJson.isFile()){
                 Reader reader = new InputStreamReader( new FileInputStream(fileJson), StandardCharsets.UTF_8);
                 BufferedReader bufferedReader = new BufferedReader( reader );
-              StringBuffer БуферСамиДанныеОтСервера = bufferedReader.lines().collect(StringBuffer::new, (sb, i) -> sb.append(i), StringBuffer::append);
+              List<String> БуферСамиДанныеОтСервера = bufferedReader.lines().collect(Collectors.toList());
+               String БуферСами = БуферСамиДанныеОтСервера.get(13).replaceAll("([^0-9])", "");
+                ЛОГ.log("\n"+" Starting.... class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
+                        " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
+                        " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+  "  БуферСами " +БуферСами);
             }
             ЛОГ.log("\n"+" Starting.... class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
                     " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
