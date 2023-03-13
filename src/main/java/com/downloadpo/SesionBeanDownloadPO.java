@@ -7,11 +7,15 @@ import org.hibernate.SessionFactory;
 
 import javax.ejb.*;
 import javax.servlet.ServletContext;
+import javax.servlet.ServletException;
+import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.File;
+import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
+import java.util.zip.GZIPOutputStream;
 
 /**
  * Session Bean implementation class SesionBeanDownloadPO
@@ -78,6 +82,8 @@ public class SesionBeanDownloadPO {
         File ФайлJSON=null;
         try {
 
+            МетодBackДанныеКлиентуНовоеПО(response ,ФайлJSON,ЛОГ);
+
             ЛОГ.log("\n"+" Starting.... class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
                     " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
                     " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+  "  ФайлJSON " +ФайлJSON);
@@ -96,6 +102,9 @@ public class SesionBeanDownloadPO {
         File ФайлAPK=null;
         try {
 
+
+            МетодBackДанныеКлиентуНовоеПО(response ,ФайлAPK,ЛОГ);
+
             ЛОГ.log("\n"+" Starting.... class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
                     " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
                     " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+  "  ФайлAPK " +ФайлAPK);
@@ -108,4 +117,43 @@ public class SesionBeanDownloadPO {
         }
         return new AsyncResult<File>(ФайлAPK);
     }
+
+    // TODO МетодКласса отправки данных андройду
+    public void МетодBackДанныеКлиентуНовоеПО(@NotNull ServletResponse response,
+                                       @NotNull File ОтправкаФайлаJsonAPK,
+                                       @NotNull ServletContext ЛОГ) throws IOException, ServletException {
+
+        if (  response.isCommitted()==false) {
+            try  (BufferedWriter БуферДанныеДляКлиента = new BufferedWriter(
+                    new OutputStreamWriter(new GZIPOutputStream(response.getOutputStream()), StandardCharsets.UTF_16));) {
+                long ОбщийРазмерЗаписываемогоФайла = ОтправкаФайлаJsonAPK.length();
+                ((HttpServletResponse) response).addHeader("stream_size", String.valueOf(ОбщийРазмерЗаписываемогоФайла));
+                PrintWriter МеханизмОтправкиДанныхКлиенту = new PrintWriter(БуферДанныеДляКлиента, true);
+               // МеханизмОтправкиДанныхКлиенту.write(ГлавныйБуферОтправкиДанныхНААндройд.toString());
+                response.flushBuffer();
+                while (!response.isCommitted()) ;
+                МеханизмОтправкиДанныхКлиенту.close();
+                ЛОГ.log("\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
+                        + " ОтправкаФайлаJsonAPK " + ОтправкаФайлаJsonAPK.length() + "  response.isCommitted() "
+                        + response.isCommitted() + "   ((HttpServletResponse) response).getStatus() " +
+                        ((HttpServletResponse) response).getStatus());
+
+            } catch (IOException e) {
+                new SubClassWriterErros().МетодаЗаписиОшибкиВЛог(e, ЛОГ.getServerInfo(),
+                        this.getClass().getMethods().toString() + " " + this.getClass().getCanonicalName().toString() + " "
+                                + this.getClass().getDeclaredMethods().toString(),
+                        Thread.currentThread().getStackTrace()[2], ЛОГ, ОтправкаФайлаJsonAPK.toString());
+            }
+        }else {
+            ЛОГ.log("\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
+                    + "  ОтправкаФайлаJsonAPK.length() " + ОтправкаФайлаJsonAPK.length() + "  response.isCommitted() " + response.isCommitted()
+                    + "   ((HttpServletResponse) response).getStatus() " +
+                    ((HttpServletResponse) response).getStatus());
+        }
+    }
+
 }
