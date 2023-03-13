@@ -46,6 +46,8 @@ public class SesionBeanDownloadPO {
             // TODO: 10.03.2023  данные от GET метода
             Future<File> ПолучаемJSONФайл= 	 МетодДляJSONФайла(ЛОГ,request,response);
 
+            МетодBackДанныеКлиентуНовоеПО(response ,ПолучаемJSONФайл.get(),ЛОГ);
+
             ЛОГ.log("\n"+" Starting.... class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
                     " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
                     " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+  "  ПолучаемJSONФайл " +ПолучаемJSONФайл);
@@ -65,6 +67,8 @@ public class SesionBeanDownloadPO {
             // TODO: 10.03.2023  данные от GET метода
             Future<File> ПолучаемAPKФайл= 	 МетодДляAPKФайла(ЛОГ,request,response);
 
+            МетодBackДанныеКлиентуНовоеПО(response ,ПолучаемAPKФайл.get(),ЛОГ);
+
             ЛОГ.log("\n"+" Starting.... class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
                     " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
                     " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+  "  ПолучаемAPKФайл " +ПолучаемAPKФайл);
@@ -81,9 +85,7 @@ public class SesionBeanDownloadPO {
     private Future<File> МетодДляJSONФайла(@NotNull ServletContext ЛОГ, @NotNull HttpServletRequest request,HttpServletResponse response){
         File ФайлJSON=null;
         try {
-
-            МетодBackДанныеКлиентуНовоеПО(response ,ФайлJSON,ЛОГ);
-
+            // TODO: 13.03.2023 ГЛАВНЫЙ КОД РАБОТА С ФАЙЛАМИ
             ЛОГ.log("\n"+" Starting.... class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
                     " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
                     " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+  "  ФайлJSON " +ФайлJSON);
@@ -101,10 +103,7 @@ public class SesionBeanDownloadPO {
                                                    @NotNull HttpServletRequest request,HttpServletResponse response){
         File ФайлAPK=null;
         try {
-
-
-            МетодBackДанныеКлиентуНовоеПО(response ,ФайлAPK,ЛОГ);
-
+            // TODO: 13.03.2023 ГЛАВНЫЙ КОД РАБОТА С ФАЙЛАМИ
             ЛОГ.log("\n"+" Starting.... class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
                     " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
                     " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+  "  ФайлAPK " +ФайлAPK);
@@ -117,6 +116,41 @@ public class SesionBeanDownloadPO {
         }
         return new AsyncResult<File>(ФайлAPK);
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     // TODO МетодКласса отправки данных андройду
     public void МетодBackДанныеКлиентуНовоеПО(@NotNull ServletResponse response,
