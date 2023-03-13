@@ -26,14 +26,27 @@
 </servlet-mapping>
 
 
+
     <servlet>
         <servlet-name>DSU1DonwloadsServlet</servlet-name>
-        <servlet-class>dsu1.glassfish.atomic.DSU1DonwloadsServlet</servlet-class>
+        <servlet-class>com.downloadpo.DSU1DonwloadsServlet</servlet-class>
         <async-supported>true</async-supported>
     </servlet>
     <servlet-mapping>
         <servlet-name>DSU1DonwloadsServlet</servlet-name>
         <url-pattern>/dsu1.glassfish.download</url-pattern>
+    </servlet-mapping>
+
+
+
+    <servlet>
+        <servlet-name>DSU1ScannerServlet</servlet-name>
+        <servlet-class>jboss.scannerserver.DSU1ScannerServlet</servlet-class>
+        <async-supported>true</async-supported>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>DSU1ScannerServlet</servlet-name>
+        <url-pattern>/dsu1.glassfish.scanner</url-pattern>
     </servlet-mapping>
 
 
@@ -46,6 +59,7 @@
         <filter-name>FilterForGET</filter-name>
         <url-pattern>/DSU1JsonServlet</url-pattern>
         <url-pattern>/DSU1DonwloadsServlet</url-pattern>
+        <url-pattern>/DSU1ScannerServlet</url-pattern>
         <dispatcher>REQUEST</dispatcher>
         <dispatcher>FORWARD</dispatcher>
         <dispatcher>ASYNC</dispatcher>

@@ -15,7 +15,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.Date;
 
 
-@WebFilter(value={ "/dsu1.glassfish.atomic", "/dsu1.glassfish.download" },asyncSupported = true)
+@WebFilter(value={ "/dsu1.glassfish.atomic", "/dsu1.glassfish.download" ,"/dsu1.glassfish.scanner"},asyncSupported = true)
 public class FilterForGET implements Filter {
     @EJB
     private BeanAuntifications beanAuntifications;
