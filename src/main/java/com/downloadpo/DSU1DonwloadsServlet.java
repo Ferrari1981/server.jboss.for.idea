@@ -22,6 +22,8 @@ import java.nio.charset.StandardCharsets;
 public class DSU1DonwloadsServlet extends HttpServlet {
     private     Session getSession;
     private      ServletContext    ЛОГ;
+    @EJB
+    SesionBeanDownloadPO sesionBeanDownloadPO;
     public void init() {
         try{
         ЛОГ=this.getServletContext();
@@ -44,6 +46,13 @@ public class DSU1DonwloadsServlet extends HttpServlet {
           req.setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
           resp.setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
            ЛОГ = getServletContext();
+
+            // TODO: 13.03.2023  запуск Кода пополучениею File JSON Для Обнолвенеи ПО
+            sesionBeanDownloadPO.   МетодЗапускаДляФайлаJSON(ЛОГ,req,resp);
+
+            // TODO: 13.03.2023  запуск Кода пополучениею File .APK Для Обнолвенеи ПО
+            sesionBeanDownloadPO.   МетодЗапускаДляФайлаAPK(ЛОГ,req,resp);
+
                     ЛОГ.log("\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                             " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
