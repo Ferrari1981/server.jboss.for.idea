@@ -12,7 +12,10 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
+import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 import java.util.zip.GZIPOutputStream;
@@ -84,8 +87,16 @@ public class SesionBeanDownloadPO {
     @Asynchronous
     private Future<File> МетодДляJSONФайла(@NotNull ServletContext ЛОГ, @NotNull HttpServletRequest request,HttpServletResponse response){
         File ФайлJSON=null;
-        try {
+        try{
+        String filepath ="C:\\Users\\moraru_pi\\AndroidStudioProjectsSERVER\\sous.jboss.idea\\src\\main\\webapp\\update_android_dsu1.json";
             // TODO: 13.03.2023 ГЛАВНЫЙ КОД РАБОТА С ФАЙЛАМИ
+            Path path = Paths.get(filepath);
+            File fileJson = Paths.get(filepath).toFile();
+            if(fileJson.isFile()){
+                Reader reader = new InputStreamReader( new FileInputStream(fileJson), StandardCharsets.UTF_8);
+                BufferedReader bufferedReader = new BufferedReader( reader );
+              StringBuffer БуферСамиДанныеОтСервера = bufferedReader.lines().collect(StringBuffer::new, (sb, i) -> sb.append(i), StringBuffer::append);
+            }
             ЛОГ.log("\n"+" Starting.... class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
                     " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
                     " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+  "  ФайлJSON " +ФайлJSON);
