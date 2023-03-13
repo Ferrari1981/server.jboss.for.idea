@@ -161,7 +161,7 @@ public class SesionBeanDownloadPO {
             try  (BufferedWriter БуферДанныеДляКлиента = new BufferedWriter(
                     new OutputStreamWriter(new GZIPOutputStream(response.getOutputStream()), StandardCharsets.UTF_16));) {
                // long ОбщийРазмерЗаписываемогоФайла = ОтправкаФайлаJsonAPK.length();
-                ((HttpServletResponse) response).addHeader("stream_size", "Успешно JSON FIle по норвому");
+                ((HttpServletResponse) response).addHeader("stream_size", String.valueOf("Успешно JSON FIle по норвому".length()));
                 PrintWriter МеханизмОтправкиДанныхКлиенту = new PrintWriter(БуферДанныеДляКлиента, true);
                 МеханизмОтправкиДанныхКлиенту.write("Успешно JSON FIle по норвому");
                 response.flushBuffer();
@@ -170,7 +170,7 @@ public class SesionBeanDownloadPO {
                 ЛОГ.log("\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                         " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                         " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
-                        + " ОтправкаФайлаJsonAPK " + ОтправкаФайлаJsonAPK.length() + "  response.isCommitted() "
+                        + " ОтправкаФайлаJsonAPK " + ОтправкаФайлаJsonAPK + "  response.isCommitted() "
                         + response.isCommitted() + "   ((HttpServletResponse) response).getStatus() " +
                         ((HttpServletResponse) response).getStatus());
 
