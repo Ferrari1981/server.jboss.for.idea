@@ -8,6 +8,7 @@ import org.hibernate.SessionFactory;
 import javax.ejb.*;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
+import javax.servlet.ServletOutputStream;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -88,25 +89,16 @@ public class SesionBeanDownloadPO {
     }
 
     @Asynchronous
-    private Future<File> МетодДляJSONФайла(@NotNull ServletContext ЛОГ, @NotNull HttpServletRequest request,HttpServletResponse response){
-        File ФайлJSON=null;
+    private Future<File> МетодДляJSONФайла(@NotNull ServletContext ЛОГ, @NotNull HttpServletRequest request,  @NotNull HttpServletResponse response){
+        File fileJson = null;
         try{
         String filepath ="C:\\Users\\moraru_pi\\AndroidStudioProjectsSERVER\\sous.jboss.idea\\src\\main\\webapp\\update_android_dsu1\\output-metadata.json";
             // TODO: 13.03.2023 ГЛАВНЫЙ КОД РАБОТА С ФАЙЛАМИ
             Path path = Paths.get(filepath);
-            File fileJson = Paths.get(filepath).toFile();
-            if(fileJson.isFile()){
-                Reader reader = new InputStreamReader( new FileInputStream(fileJson), StandardCharsets.UTF_8);
-                BufferedReader bufferedReader = new BufferedReader( reader );
-              List<String> БуферСамиДанныеОтСервера = bufferedReader.lines().collect(Collectors.toList());
-               String БуферСами = БуферСамиДанныеОтСервера.get(13).replaceAll("([^0-9])", "");
-                ЛОГ.log("\n"+" Starting.... class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
-                        " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
-                        " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+  "  БуферСами " +БуферСами);
-            }
+            fileJson = Paths.get(filepath).toFile();
             ЛОГ.log("\n"+" Starting.... class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
                     " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
-                    " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+  "  ФайлJSON " +ФайлJSON);
+                    " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+  "  fileJson " +fileJson);
         } catch (Exception e) {
             new SubClassWriterErros().МетодаЗаписиОшибкиВЛог(e, null,
                     "\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
@@ -114,17 +106,20 @@ public class SesionBeanDownloadPO {
                             " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n",
                     Thread.currentThread().getStackTrace()[2],ЛОГ,ЛОГ.getServerInfo().toLowerCase());
         }
-        return new AsyncResult<File>(ФайлJSON);
+        return new AsyncResult<File>(fileJson);
     }
     @Asynchronous
     private Future<File> МетодДляAPKФайла(@NotNull ServletContext ЛОГ,
-                                                   @NotNull HttpServletRequest request,HttpServletResponse response){
-        File ФайлAPK=null;
+                                                   @NotNull HttpServletRequest request,@NotNull HttpServletResponse response){
+        File fileApk = null;
         try {
+            String filepath ="C:\\Users\\moraru_pi\\AndroidStudioProjectsSERVER\\sous.jboss.idea\\src\\main\\webapp\\update_android_dsu1\\app-release.apk";
             // TODO: 13.03.2023 ГЛАВНЫЙ КОД РАБОТА С ФАЙЛАМИ
+            Path path = Paths.get(filepath);
+            fileApk = Paths.get(filepath).toFile();
             ЛОГ.log("\n"+" Starting.... class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
                     " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
-                    " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+  "  ФайлAPK " +ФайлAPK);
+                    " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+  "  fileApk " +fileApk);
         } catch (Exception e) {
             new SubClassWriterErros().МетодаЗаписиОшибкиВЛог(e, null,
                     "\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
@@ -132,7 +127,7 @@ public class SesionBeanDownloadPO {
                             " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n",
                     Thread.currentThread().getStackTrace()[2],ЛОГ,ЛОГ.getServerInfo().toLowerCase());
         }
-        return new AsyncResult<File>(ФайлAPK);
+        return new AsyncResult<File>(fileApk);
     }
 
 
@@ -176,15 +171,17 @@ public class SesionBeanDownloadPO {
                                        @NotNull ServletContext ЛОГ) throws IOException, ServletException {
 
         if (  response.isCommitted()==false) {
-            try  (BufferedWriter БуферДанныеДляКлиента = new BufferedWriter(
-                    new OutputStreamWriter(new GZIPOutputStream(response.getOutputStream()), StandardCharsets.UTF_16));) {
-               // long ОбщийРазмерЗаписываемогоФайла = ОтправкаФайлаJsonAPK.length();
-                ((HttpServletResponse) response).addHeader("stream_size", String.valueOf("Успешно JSON FIle по норвому".length()));
-                PrintWriter МеханизмОтправкиДанныхКлиенту = new PrintWriter(БуферДанныеДляКлиента, true);
-                МеханизмОтправкиДанныхКлиенту.write("Успешно JSON FIle по норвому");
+            try  (ServletOutputStream БуферДанныеДляОбновлениеПО = response.getOutputStream();
+                  InputStream fis = new FileInputStream(ОтправкаФайлаJsonAPK);) {
+                ((HttpServletResponse) response).addHeader("stream_size", String.valueOf(ОтправкаФайлаJsonAPK.length()));
+                byte[] bufferData = new byte[1024];
+                int read=0;
+                while((read = fis.read(bufferData))!= -1){
+                    БуферДанныеДляОбновлениеПО.write(bufferData, 0, read);
+                }
+                БуферДанныеДляОбновлениеПО.flush();
                 response.flushBuffer();
                 while (!response.isCommitted()) ;
-                МеханизмОтправкиДанныхКлиенту.close();
                 ЛОГ.log("\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                         " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                         " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
