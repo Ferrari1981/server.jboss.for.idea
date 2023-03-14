@@ -48,6 +48,8 @@ public class SubClassGenerateJson {
            Session    session =sessionSousJbossRuntime.openSession();
             // TODO: 14.03.2023  Запускаем Транзакцию
              sessionTransaction =session.getTransaction() ;
+            // TODO: 14.03.2023  Запускает Транзакции 
+            sessionTransaction.begin();
             ЛОГ.log(" jsonReaderПришеоОтКлиентаJSON_P "+JSONStremОтAndrod.toString()  + " session  " +session + " sessionSousJbossRuntime " +sessionSousJbossRuntime);
             //TODO ГЛАВЕНЫЙ ЦИКЛ ОБРАБОТКИ ДАННЫХ В МЕТОДЕ  POST
             JSONStremОтAndrod.entrySet().forEach(ВнешнаяСтрокаJSON -> {
@@ -93,7 +95,6 @@ public class SubClassGenerateJson {
                 //TODO
                 ЛОГ.log(" ФиналUIDorIdДляСостыковкиЕстьИлиНЕтУжеВБАзе "+ФиналUIDorIdДляСостыковкиЕстьИлиНЕтУжеВБАзе);
                 //TODO ЗАПОЛЕНИЯ ТАБЛИЦ И  ОТПРАВКА ЗНАЧЕНИЙ В УДАЛЕННУЮ ПРОЦЕДУРУ
-                sessionTransaction.begin();
                 StoredProcedureQuery	 queryprocedure = null;
                 //TODO ЗАПОЛЯЕМ ДАННЕЫ ДЛЯ ВСТВКИ МЕТОДА POST()
                 switch(ПараметрИмяТаблицыОтАндройдаPost) {
