@@ -12,6 +12,7 @@ import javax.json.Json;
 import javax.json.JsonObject;
 import javax.json.JsonReader;
 import javax.json.JsonValue;
+import javax.persistence.LockModeType;
 import javax.persistence.ParameterMode;
 import javax.persistence.StoredProcedureQuery;
 import javax.servlet.ServletContext;
@@ -20,6 +21,7 @@ import javax.ws.rs.Produces;
 import com.sun.istack.NotNull;
 import dsu1.glassfish.atomic.MyGetHibernate;
 import dsu1.glassfish.atomic.SubClassWriterErros;
+import org.hibernate.LockMode;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -48,7 +50,7 @@ public class SubClassGenerateJson {
            Session    session =sessionSousJbossRuntime.openSession();
             // TODO: 14.03.2023  Запускаем Транзакцию
              sessionTransaction =session.getTransaction() ;
-            // TODO: 14.03.2023  Запускает Транзакции 
+            // TODO: 14.03.2023  Запускает Транзакции
             sessionTransaction.begin();
             ЛОГ.log(" jsonReaderПришеоОтКлиентаJSON_P "+JSONStremОтAndrod.toString()  + " session  " +session + " sessionSousJbossRuntime " +sessionSousJbossRuntime);
             //TODO ГЛАВЕНЫЙ ЦИКЛ ОБРАБОТКИ ДАННЫХ В МЕТОДЕ  POST
@@ -433,30 +435,17 @@ public class SubClassGenerateJson {
 
                     //TODO метод саомго выполения удаленной процедуры
 
-                    МетодСамогоВыполенияУдаленнойПроцедуры(queryprocedure,ЛОГ,ПараметрИмяТаблицыОтАндройдаPost);
+                  Integer РезультатОперацииВставкииОбновлениея=  МетодСамогоВыполенияУдаленнойПроцедуры(queryprocedure,ЛОГ,ПараметрИмяТаблицыОтАндройдаPost);
+                    String РезультатСовершнойОперации= null;
 
-
-
-                    //TODO получаем ответный результат
-                    String РезультатСовершнойОперации= (String)queryprocedure.getOutputParameterValue("ResultatMERGE");
-
-
-                    ЛОГ.log(" РезультатСовершнойОперации " +РезультатСовершнойОперации);
-
-
-
-                    /*
-                     * if(РезультатСовершнойОперации !=null &&
-                     * РезультатСовершнойОперации.matches("(.*)OriginalVesion(.*)")) { //TODO //TODO
-                     * // Закрываем Транзакцию
-                     *
-                     * МенеджерJTA.getTransaction().commit(); //TODO формируем ответ клиенту
-                     *
-                     * }else { //TODO МенеджерJTA.getTransaction().rollback(); } //TODO
-                     */
-
-
-
+                    if (РезультатОперацииВставкииОбновлениея>0) {
+                        //TODO получаем ответный результат
+                        РезультатСовершнойОперации = (String)queryprocedure.getOutputParameterValue("ResultatMERGE");
+                    }
+                    ЛОГ.log("\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
+                            + " РезультатОперацииВставкииОбновлениея "+РезультатОперацииВставкииОбновлениея  +  " РезультатСовершнойОперации " +РезультатСовершнойОперации);
                     БуферОтветКлиентуОтСервера	 .append("\n")
                             .append("result POST()   insert and update from android")
                             .append("\n")
@@ -469,15 +458,9 @@ public class SubClassGenerateJson {
                             .append("\n")
                             .append(new Date().toString())
                             .append("\n");
-
                     ЛОГ.log(" БуферОтветКлиентуОтСервера " +БуферОтветКлиентуОтСервера);
-
-
                 }else {
-
-
                     //TODO не выбрали ни одну талицу
-
                     БуферОтветКлиентуОтСервера
                             .append("\n")
                             .append("result POST()   insert and update from android")
@@ -493,20 +476,13 @@ public class SubClassGenerateJson {
                             .append("\n");
 
                     ЛОГ.log("NOT TABLE for generations БуферОтветКлиентуОтСервера " +БуферОтветКлиентуОтСервера);
-
-
                 }
-
                 //TODO проталиваемМетодОбработкиJSONPСтиминг КОНЕЦ ОБРАБОТКТ ВСТАВКИ ДАННЫХ В МЕТОД POST()
-
                 //TODO
                 ЛОГ.log(" ВнутренийОбщийJSONОБьектjsonReaderПришеоОтКлиентаJSON_P "+ВнутренийОбщийJSONОБьектjsonReaderПришеоОтКлиентаJSON_P.toString()+"\n"
                         + " ПараметрИмяТаблицыОтАндройдаPost " +ПараметрИмяТаблицыОтАндройдаPost);
-
-
             });
-            //TODO после цикла всех строк выключаем менеджеры сущностей
-            //TODO Очищаем менеджер от данных
+            //TODO после цикла всех строк выключаем менеджеры сущностей  ПОСЛЕ ЦИКЛА С ДАННЫМИ
             МетодЗавершенияСеанса(session);
             //TODO
             ///ФабрикаДляМенеждера.close();
@@ -554,28 +530,27 @@ public class SubClassGenerateJson {
     }
 
 
-    /**
-     * @param queryprocedure
-     */
-
-    private void МетодСамогоВыполенияУдаленнойПроцедуры(StoredProcedureQuery queryprocedure,ServletContext ЛОГ ,String ПараметрИмяТаблицыОтАндройдаPost) {
-        // TODO САМАЯ ВАЖНАЯ ОПЕРАЦИЯ ВЫПОЛЕНИЯ EXE
+    // TODO: 14.03.2023  Метод Самого Выполениея Операции POST EXE
+    private Integer МетодСамогоВыполенияУдаленнойПроцедуры(@NotNull  StoredProcedureQuery queryprocedure,
+                                                           @NotNull  ServletContext ЛОГ ,
+                                                           @NotNull String ПараметрИмяТаблицыОтАндройдаPost) {
+        Integer КоличестоУспешныхОперацийНаСервере=0;
         try {
-
             ЛОГ.log(" queryprocedure " +queryprocedure + "  ПараметрИмяТаблицыОтАндройдаPost " +ПараметрИмяТаблицыОтАндройдаPost);
-            ////todo выполения аоммго метода
+            ////todo выполения .EXE
             queryprocedure.execute();
-
-            //TODO
+            // TODO: 14.03.2023  Подсчитиваем КОличество спрешных Операций 
+        КоличестоУспешныхОперацийНаСервере=   queryprocedure.getUpdateCount();
+            ЛОГ.log("\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
+                    + " queryprocedure "+queryprocedure  + " КоличестоУспешныхОперацийНаСервере " +КоличестоУспешныхОперацийНаСервере);
         } catch (Exception   e) {
-            // TODO: handle exception
-
             new SubClassWriterErros().МетодаЗаписиОшибкиВЛог(e, null,
                     "		private void МетодСамогоВыполенияУдаленнойПроцедуры(StoredProcedureQuery queryprocedure,ServletContext ЛОГ ) {",
                     Thread.currentThread().getStackTrace()[2],null,ЛОГ.getServerInfo().toLowerCase());
-
         }
-
+        return  КоличестоУспешныхОперацийНаСервере;
         //TODO
     }
 
