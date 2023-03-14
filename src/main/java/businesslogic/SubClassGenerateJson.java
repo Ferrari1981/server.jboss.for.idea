@@ -46,6 +46,7 @@ public class SubClassGenerateJson {
             this.ЛОГ=ЛОГ;
             // TODO: 11.03.2023  Получении Сесии Hiberrnate
            Session    session =sessionSousJbossRuntime.openSession();
+            // TODO: 14.03.2023  Запускаем Транзакцию
              sessionTransaction =session.getTransaction() ;
             ЛОГ.log(" jsonReaderПришеоОтКлиентаJSON_P "+JSONStremОтAndrod.toString()  + " session  " +session + " sessionSousJbossRuntime " +sessionSousJbossRuntime);
             //TODO ГЛАВЕНЫЙ ЦИКЛ ОБРАБОТКИ ДАННЫХ В МЕТОДЕ  POST
@@ -504,9 +505,6 @@ public class SubClassGenerateJson {
 
             });
             //TODO после цикла всех строк выключаем менеджеры сущностей
-
-
-            //TODO
             //TODO Очищаем менеджер от данных
             МетодЗавершенияСеанса(session);
             //TODO
