@@ -1,4 +1,4 @@
-package runtimejboss;
+package authentication;
 
 
 import businesslogic.BeanGET;
@@ -18,7 +18,7 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 
 @WebServlet( value="/dsu1.glassfish.atomic",asyncSupported = true)
-public class DSU1JsonServletRuntime extends HttpServlet {
+public class DSU1ServletAuthentication extends HttpServlet {
     private     Session getSession;
     private      ServletContext    ЛОГ;
     @EJB

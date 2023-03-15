@@ -29,7 +29,7 @@
 
     <servlet>
         <servlet-name>DSU1JsonServlet</servlet-name>
-        <servlet-class>runtimejboss.DSU1JsonServletRuntime</servlet-class>
+        <servlet-class>authentication.DSU1ServletRuntime</servlet-class>
         <async-supported>true</async-supported>
     </servlet>
     <servlet-mapping>

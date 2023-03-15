@@ -1,4 +1,4 @@
-package runtimejboss;
+package authentication;
 
 import businesslogic.SubClassConnectionsSQLServer;
 import businesslogic.SubClassWriterErros;
@@ -22,7 +22,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.Produces;
 import java.io.IOException;
 import java.io.StringWriter;
-import java.math.BigDecimal;
 import java.sql.*;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -31,7 +30,7 @@ import java.util.*;
 
 @RequestScoped
 @Produces
-public class SessionBeanМетодаGETRuntime {// extends WITH
+public class SessionBeanМетодаGETRuntimeJboss {// extends WITH
 
     private ServletContext ЛОГ;
     //private	Connection conn; ////// общий коннект для всего севлтера
@@ -58,9 +57,9 @@ public class SessionBeanМетодаGETRuntime {// extends WITH
     private    Session session;
     private    Transaction sessionTransaction  ;
 
-    public SessionBeanМетодаGETRuntime() {
+    public SessionBeanМетодаGETRuntimeJboss() {
 
-        System.out.println("Конструктор  SubClassSessionBeanМетодаGET");
+        System.out.println("Конструктор  SessionBeanМетодаGETRuntime");
 
     }
 
@@ -204,304 +203,6 @@ public class SessionBeanМетодаGETRuntime {// extends WITH
                     .orElse("");
 
             switch (JobsFroServerЗаданиеДляСервера) {
-                // TODO ЗАДАНИЕ ДЛЯ СЕРВЕР JOBSERVERTASK #1
-                case "Хотим Получить Версию Данных Сервера":
-                    БуферCallsBackДляAndroid = МетодПолучениеВерсиюДанныхДляАndroid(
-                            response, JobsServerСазаданиеДляСервера, ПараметрИмяТаблицыОтАндройдаGET);
-                    ЛОГ.log("Хотим Получить Версию Данных Сервера" + new Date() + " ПараметрФильтрЗадааниеДляСервлета "
-                            + JobsServerСазаданиеДляСервера + "  БуферCallsBackДляAndroid "
-                            + БуферCallsBackДляAndroid.toString());
-                    break;
-
-
-
-
-                // TODO ЗАДАНИЕ ДЛЯ СЕРВЕР JOBSERVERTASK #2
-                case "Хотим Получить  JSON":
-
-                    ЛОГ.log("Хотим Получить  JSON" + new Date() + " JobsServerСазаданиеДляСервера "
-                            + JobsServerСазаданиеДляСервера+"  ПараметрВерсияДанных" + ПараметрВерсияДанных
-                            + " ПараметрИмяТаблицыОтАндройдаGET " + ПараметрИмяТаблицыОтАндройдаGET);
-                    ////////////// ГЕНЕРАЦИЯ JSON ДЛЯ ВСЕХ  ТАБЛИЦ
-                    sessionTransaction.begin();
-                    // TODO ГЛАВНЫЙ РАСПРЕДЕЛИТЕЛЬ КАКАЯ ТЕКУЩАЯ ТАБЛИЦА ОБРАБАТЫВАЕМСЯ
-                    switch (ПараметрИмяТаблицыОтАндройдаGET.trim()) {
-                        case "organization":
-                            // TODO
-                            queryДляHiberite  = session.createQuery(
-                                    " SELECT o FROM Organization o WHERE o.currentTable > :id ");
-                            queryДляHiberite.setLockOptions(new LockOptions(LockMode.PESSIMISTIC_READ).setTimeOut( LockOptions.WAIT_FOREVER ));
-                            queryДляHiberite.setParameter("id",new BigDecimal(ПараметрВерсияДанных ));//
-                            ЛистДанныеОтHibenide =( List<model.Organization>)  queryДляHiberite.getResultList();
-                            ЛОГ.  log(" ЛистДанныеОтHibenide "+ЛистДанныеОтHibenide+ " ЛистДанныеОтHibenide.size() " +ЛистДанныеОтHibenide.size()+
-                                    "  queryДляHiberite  " +queryДляHiberite+ " ПараметрИмяТаблицыОтАндройдаGET " +ПараметрИмяТаблицыОтАндройдаGET);//gson Gson
-                            break;
-                        case "depatment":
-                            // TODO
-                            queryДляHiberite = session.createQuery(
-                                    "SELECT d FROM Depatment d   WHERE d.currentTable > :id ");
-                            queryДляHiberite.setLockOptions(new LockOptions(LockMode.PESSIMISTIC_READ).setTimeOut( LockOptions.WAIT_FOREVER ));
-                            queryДляHiberite.setParameter("id",new BigDecimal(ПараметрВерсияДанных ));
-                            ЛистДанныеОтHibenide =( List<model.Depatment>)  queryДляHiberite.getResultList();
-                            ЛОГ.  log(" ЛистДанныеОтHibenide "+ЛистДанныеОтHibenide+ " ЛистДанныеОтHibenide.size() " +ЛистДанныеОтHibenide.size()+
-                                    "  queryДляHiberite  " +queryДляHiberite);//gson Gson
-                            break;
-                        case "fio":
-                            // TODO
-                            queryДляHiberite = session.createQuery(
-                                    "SELECT f FROM Fio f   WHERE f.currentTable > :id ");
-                            queryДляHiberite.setLockOptions(new LockOptions(LockMode.PESSIMISTIC_READ).setTimeOut( LockOptions.WAIT_FOREVER ));
-                            queryДляHiberite.setParameter("id",new BigDecimal(ПараметрВерсияДанных ));//
-                            ЛистДанныеОтHibenide =( List<model.Fio>)  queryДляHiberite.getResultList();
-                            ЛОГ.  log(" ЛистДанныеОтHibenide "+ЛистДанныеОтHibenide+ " ЛистДанныеОтHibenide.size() " +ЛистДанныеОтHibenide.size()+
-                                    "  queryДляHiberite  " +queryДляHiberite);//gson Gson
-                            break;
-                        case "region":
-                            // TODO
-                            queryДляHiberite = session.createQuery(
-                                    "SELECT r  FROM Region r   WHERE r.currentTable > :id");
-                            queryДляHiberite.setLockOptions(new LockOptions(LockMode.PESSIMISTIC_READ).setTimeOut( LockOptions.WAIT_FOREVER ));
-                            queryДляHiberite.setParameter("id",new BigDecimal(ПараметрВерсияДанных ));//
-                            ЛистДанныеОтHibenide =( List<model.Region>)  queryДляHiberite.getResultList();
-                            ЛОГ.  log(" ЛистДанныеОтHibenide "+ЛистДанныеОтHibenide+ " ЛистДанныеОтHibenide.size() " +ЛистДанныеОтHibenide.size()+
-                                    "  queryДляHiberite  " +queryДляHiberite);//gson Gson
-                            break;
-                        case "cfo":
-                            // TODO
-                            queryДляHiberite = session.createQuery(
-                                    "SELECT c FROM Cfo  c  WHERE c.currentTable > :id ");
-                            queryДляHiberite.setLockOptions(new LockOptions(LockMode.PESSIMISTIC_READ).setTimeOut( LockOptions.WAIT_FOREVER ));
-                            queryДляHiberite.setParameter("id",new BigDecimal(ПараметрВерсияДанных ));//
-                            ЛистДанныеОтHibenide =( List<model.Cfo>)  queryДляHiberite.getResultList();
-                            ЛОГ.  log(" ЛистДанныеОтHibenide "+ЛистДанныеОтHibenide+ " ЛистДанныеОтHibenide.size() " +ЛистДанныеОтHibenide.size()+
-                                    "  queryДляHiberite  " +queryДляHiberite);//gson Gson
-                            break;
-                        case "settings_tabels":
-                            // TODO
-                            queryДляHiberite = session.createQuery(
-                                    "SELECT st FROM Settingtab  st  WHERE st.currentTable > :id  AND  st.userUpdate=:user_update ");
-                            queryДляHiberite.setLockOptions(new LockOptions(LockMode.PESSIMISTIC_READ).setTimeOut( LockOptions.WAIT_FOREVER ));
-                            queryДляHiberite.setParameter("id",new BigDecimal(ПараметрВерсияДанных ));//
-                            queryДляHiberite.setParameter("user_update",IDПолученныйИзSQlServerПосик);//8641 8625
-                            ЛистДанныеОтHibenide =( List<model.Settingtab>) queryДляHiberite.getResultList();
-                            ЛОГ.  log(" ЛистДанныеОтHibenide "+ЛистДанныеОтHibenide+ " ЛистДанныеОтHibenide.size() " +ЛистДанныеОтHibenide.size()+
-                                    "  queryДляHiberite  " +queryДляHiberite);//gson Gson
-                            break;
-                        case "notifications":
-                            // TODO
-                            queryДляHiberite = session.createQuery(
-                                    " SELECT notif FROM Notification  notif  WHERE notif.currentTable > :id "
-                                            + " AND   notif.userUpdate=:user_update   "
-                                            + "  OR notif.currentTable > :id  AND     notif.idUser=:id_user ");
-                            //query4.setLockOptions( new LockOptions(  LockMode.PESSIMISTIC_READ)); //
-                            queryДляHiberite.setLockOptions(new LockOptions(LockMode.PESSIMISTIC_READ).setTimeOut( LockOptions.WAIT_FOREVER ));
-                            queryДляHiberite.setParameter("id",new BigDecimal(ПараметрВерсияДанных));//8641 8625
-                            queryДляHiberite.setParameter("user_update",IDПолученныйИзSQlServerПосик);//8641 8625
-                            queryДляHiberite.setParameter("id_user",IDПолученныйИзSQlServerПосик);//8641 8625
-                            ЛистДанныеОтHibenide =( List<model.Notification>)  queryДляHiberite.getResultList();
-                            ЛОГ.  log(" ЛистДанныеОтHibenide "+ЛистДанныеОтHibenide+ " ЛистДанныеОтHibenide.size() " +ЛистДанныеОтHibenide.size()+
-                                    "  queryДляHiberite  " +queryДляHiberite);//gson Gson
-                            break;
-                        /// TODO
-                        case "data_notification":
-                            // TODO
-                            queryДляHiberite = session.createQuery(
-                                    " SELECT da  FROM  DataNotification da WHERE"
-                                            + "  da. currentTable > :id "
-                                            + "  AND da.uuidNotifications "
-                                            + " IN (SELECT     no.uuid FROM    Notification no  WHERE   no.userUpdate=:user_update   OR  no .idUser=:id_user ) ");
-                            queryДляHiberite.setLockOptions(new LockOptions(LockMode.PESSIMISTIC_READ).setTimeOut( LockOptions.WAIT_FOREVER ));
-                            queryДляHiberite.setParameter("id",new BigDecimal(ПараметрВерсияДанных));//8641 8625
-                            queryДляHiberite.setParameter("user_update",IDПолученныйИзSQlServerПосик);//8641 8625
-                            queryДляHiberite.setParameter("id_user",IDПолученныйИзSQlServerПосик);//8641 8625
-                            ЛистДанныеОтHibenide =( List<model.DataNotification>)  queryДляHiberite.getResultList();
-                            ЛОГ.  log(" ЛистДанныеОтHibenide "+ЛистДанныеОтHibenide+ " ЛистДанныеОтHibenide.size() " +ЛистДанныеОтHibenide.size()+
-                                    "  queryДляHiberite  " +queryДляHiberite);//gson Gson
-                            break;
-                        case "templates":
-                            // TODO
-                            queryДляHiberite = session.createQuery(
-                                    " SELECT te FROM Template  te WHERE te.currentTable > :id  AND te.userUpdate=:user_update  ");
-                            queryДляHiberite.setLockOptions(new LockOptions(LockMode.PESSIMISTIC_READ).setTimeOut( LockOptions.WAIT_FOREVER ));
-                            queryДляHiberite.setParameter("id",new BigDecimal(ПараметрВерсияДанных));//8641 8625
-                            queryДляHiberite.setParameter("user_update",IDПолученныйИзSQlServerПосик);//8641 8625
-                            ЛистДанныеОтHibenide =( List<model.Template>) queryДляHiberite.getResultList();
-                            ЛОГ. log(" ЛистДанныеОтHibenide "+ЛистДанныеОтHibenide+
-                                    " ЛистДанныеОтHibenide.size() " +ЛистДанныеОтHibenide.size()+
-                                    "  queryДляHiberite  " +queryДляHiberite);//gson Gson
-                            break;
-                        case "fio_template":
-                            // TODO
-                            queryДляHiberite = session.createQuery(
-                                    " SELECT fiot FROM FioTemplate  fiot  WHERE fiot.currentTable > :id   AND fiot.userUpdate=:user_update ");
-                            queryДляHiberite.setLockOptions(new LockOptions(LockMode.PESSIMISTIC_READ).setTimeOut( LockOptions.WAIT_FOREVER ));
-                            queryДляHiberite.setParameter("id",new BigDecimal(ПараметрВерсияДанных));//8641 8625
-                            queryДляHiberite.setParameter("user_update",IDПолученныйИзSQlServerПосик);//8641 8625
-                            ЛистДанныеОтHibenide =( List<model.FioTemplate>) queryДляHiberite.getResultList();
-                            ЛОГ. log(" ЛистДанныеОтHibenide "+ЛистДанныеОтHibenide+
-                                    " ЛистДанныеОтHibenide.size() " +ЛистДанныеОтHibenide.size()+
-                                    "  queryДляHiberite  " +queryДляHiberite);//gson Gson
-                            break;
-
-                        case "chat_users":
-                            // TODO
-                            queryДляHiberite = session.createQuery(
-                                    " SELECT  ca FROM ChatUser ca  WHERE ca .currentTable > :id");
-                            queryДляHiberite.setLockOptions(new LockOptions(LockMode.PESSIMISTIC_READ).setTimeOut( LockOptions.WAIT_FOREVER ));
-                            queryДляHiberite.setParameter("id",new BigDecimal(ПараметрВерсияДанных));//8641 8625
-                            ЛистДанныеОтHibenide =( List<model.ChatUser>)  queryДляHiberite.getResultList();
-                            ЛОГ.  log(" ЛистДанныеОтHibenide "+ЛистДанныеОтHibenide+ " ЛистДанныеОтHibenide.size() " +ЛистДанныеОтHibenide.size()+
-                                    "  queryДляHiberite  " +queryДляHiberite);//gson Gson
-                            break;
-                        case "chats":
-                            // TODO
-                            queryДляHiberite = session.createQuery(
-                                    " SELECT    cat FROM Chat  cat WHERE cat .currentTable > :id "
-                                            + " AND   cat .userUpdate=:user_update"
-                                            + " OR "
-                                            + " cat .currentTable > :id AND   cat .idUser=:id_user  ");
-                            queryДляHiberite.setLockOptions(new LockOptions(LockMode.PESSIMISTIC_READ).setTimeOut( LockOptions.WAIT_FOREVER ));
-                            queryДляHiberite.setParameter("id",new BigDecimal(ПараметрВерсияДанных));//8641 8625
-                            queryДляHiberite.setParameter("user_update",IDПолученныйИзSQlServerПосик);//8641 8625
-                            queryДляHiberite.setParameter("id_user",IDПолученныйИзSQlServerПосик);//8641 8625
-                            ЛистДанныеОтHibenide =( List<model.Chat>)  queryДляHiberite.getResultList();
-                            ЛОГ.  log(" ЛистДанныеОтHibenide "+ЛистДанныеОтHibenide+ " ЛистДанныеОтHibenide.size() " +ЛистДанныеОтHibenide.size()+
-                                    "  queryДляHiberite  " +queryДляHiberite);//gson Gson
-                            break;
-                        case "data_chat":
-                            // TODO
-                            queryДляHiberite = session.createQuery( " SELECT    da FROM  DataChat da WHERE  da. currentTable > :id "
-                                    + "							  AND da.chatUuid "
-                                    + "							 IN (SELECT    ch.uuid FROM    Chat  ch"
-                                    + "  WHERE  ch.userUpdate=:user_update  OR ch.idUser=:id_user )   ");
-                            queryДляHiberite.setLockOptions(new LockOptions(LockMode.PESSIMISTIC_READ).setTimeOut( LockOptions.WAIT_FOREVER ));
-                            queryДляHiberite.setParameter("id",new BigDecimal(ПараметрВерсияДанных));//8641 8625
-                            queryДляHiberite.setParameter("user_update",IDПолученныйИзSQlServerПосик);//8641 8625
-                            queryДляHiberite.setParameter("id_user",IDПолученныйИзSQlServerПосик);//8641 8625
-                            ЛистДанныеОтHibenide =( List<model.DataChat>)  queryДляHiberite.getResultList();
-                            ЛОГ.  log(" ЛистДанныеОтHibenide "+ЛистДанныеОтHibenide+ " ЛистДанныеОтHibenide.size() " +ЛистДанныеОтHibenide.size()+
-                                    "  queryДляHiberite  " +queryДляHiberite);//gson Gson
-                            break;
-                        case "tabel":
-                            // TODO
-                            queryДляHiberite = session.createQuery(
-                                    "SELECT  tab FROM Tabel tab  WHERE tab .currentTable > :id  AND tab.userUpdate=:user_update ");
-                            queryДляHiberite.setLockOptions(new LockOptions(LockMode.PESSIMISTIC_READ).setTimeOut( LockOptions.WAIT_FOREVER ));
-                            queryДляHiberite.setParameter("id",new BigDecimal(ПараметрВерсияДанных));//8641 8625
-                            queryДляHiberite.setParameter("user_update",IDПолученныйИзSQlServerПосик);//8641 8625
-                            ЛистДанныеОтHibenide =( List<model.Tabel>)  queryДляHiberite.getResultList();
-                            ЛОГ.  log(" ЛистДанныеОтHibenide "+ЛистДанныеОтHibenide+ " ЛистДанныеОтHibenide.size() " +ЛистДанныеОтHibenide.size()+
-                                    "  queryДляHiberite  " +queryДляHiberite);//gson Gson
-                            break;
-                        case "data_tabels":
-                            // TODO
-                            queryДляHiberite = session.createQuery(
-                                    "SELECT  dat FROM DataTabel dat WHERE dat .currentTable > :id  AND dat.userUpdate=:user_update  ");
-                            queryДляHiberite.setLockOptions(new LockOptions(LockMode.PESSIMISTIC_READ).setTimeOut( LockOptions.WAIT_FOREVER ));
-                            queryДляHiberite.setParameter("id",new BigDecimal(ПараметрВерсияДанных));//8641 8625
-                            queryДляHiberite.setParameter("user_update",IDПолученныйИзSQlServerПосик);//8641 8625
-                            ЛистДанныеОтHibenide =( List<model.DataTabel>)  queryДляHiberite.getResultList();
-                            ЛОГ.  log(" ЛистДанныеОтHibenide "+ЛистДанныеОтHibenide+ " ЛистДанныеОтHibenide.size() " +ЛистДанныеОтHibenide.size()+
-                                    "  queryДляHiberite  " +queryДляHiberite);//gson Gson
-                            break;
-                        case "view_onesignal":
-                            // TODO
-                            queryДляHiberite = session.createQuery(
-                                    " SELECT  viewone FROM ViewOnesignal viewone WHERE viewone .currentTable > :id");
-                            queryДляHiberite.setLockOptions(new LockOptions(LockMode.PESSIMISTIC_READ).setTimeOut( LockOptions.WAIT_FOREVER ));
-                            queryДляHiberite.setParameter("id",new BigDecimal(ПараметрВерсияДанных));//8641 8625
-                            ЛистДанныеОтHibenide =( List<model.ViewOnesignal>)  queryДляHiberite.getResultList();
-                            ЛОГ.  log(" ЛистДанныеОтHibenide "+ЛистДанныеОтHibenide+ " ЛистДанныеОтHibenide.size() " +ЛистДанныеОтHibenide.size()+
-                                    "  queryДляHiberite  " +queryДляHiberite);//gson Gson
-                            break;
-                        case "nomen_vesov":
-                            // TODO
-                            queryДляHiberite = session.createQuery(
-                                    " SELECT  nome FROM NomenVesov nome WHERE nome .currentTable > :id");
-                            queryДляHiberite.setLockOptions(new LockOptions(LockMode.PESSIMISTIC_READ).setTimeOut( LockOptions.WAIT_FOREVER ));
-                            queryДляHiberite.setParameter("id",new BigDecimal(ПараметрВерсияДанных));//8641 8625
-                            ЛистДанныеОтHibenide =( List<model.NomenVesov>)  queryДляHiberite.getResultList();
-                            ЛОГ.  log(" ЛистДанныеОтHibenide "+ЛистДанныеОтHibenide+ " ЛистДанныеОтHibenide.size() " +ЛистДанныеОтHibenide.size()+
-                                    "  queryДляHiberite  " +queryДляHiberite);//gson Gson
-                            break;
-                        case "type_materials":
-                            // TODO
-                            queryДляHiberite = session.createQuery(
-                                    " SELECT  typem FROM TypeMaterial typem  WHERE typem .currentTable > :id");
-                            queryДляHiberite.setLockOptions(new LockOptions(LockMode.PESSIMISTIC_READ).setTimeOut( LockOptions.WAIT_FOREVER ));
-                            queryДляHiberite.setParameter("id",new BigDecimal(ПараметрВерсияДанных));//8641 8625
-                            ЛистДанныеОтHibenide =( List<model.TypeMaterial>)  queryДляHiberite.getResultList();
-                            ЛОГ.  log(" ЛистДанныеОтHibenide "+ЛистДанныеОтHibenide+ " ЛистДанныеОтHibenide.size() " +ЛистДанныеОтHibenide.size()+
-                                    "  queryДляHiberite  " +queryДляHiberite);//gson Gson
-                            break;
-                        case "get_materials_data":
-                            // TODO
-                            queryДляHiberite = session.createQuery(
-                                    " SELECT  getmat FROM GetMaterialsData  getmat  WHERE getmat .currentTable > :id  AND getmat.userUpdate=:user_update ");
-                            queryДляHiberite.setLockOptions(new LockOptions(LockMode.PESSIMISTIC_READ).setTimeOut( LockOptions.WAIT_FOREVER ));
-                            queryДляHiberite.setParameter("id",new BigDecimal(ПараметрВерсияДанных));//8641 8625
-                            queryДляHiberite.setParameter("user_update",IDПолученныйИзSQlServerПосик);//8641 8625
-                            ЛистДанныеОтHibenide =( List<model.GetMaterialsData>)  queryДляHiberite.getResultList();
-                            ЛОГ.  log(" ЛистДанныеОтHibenide "+ЛистДанныеОтHibenide+ " ЛистДанныеОтHibenide.size() " +ЛистДанныеОтHibenide.size()+
-                                    "  queryДляHiberite  " +queryДляHiberite);//gson Gson
-                            break;
-                        case "company":
-                            // TODO
-                            queryДляHiberite = session.createQuery(
-                                    " SELECT  comp FROM Company  comp  WHERE comp .currentTable > :id");
-                            queryДляHiberite.setLockOptions(new LockOptions(LockMode.PESSIMISTIC_READ).setTimeOut( LockOptions.WAIT_FOREVER ));
-                            queryДляHiberite.setParameter("id",new BigDecimal(ПараметрВерсияДанных));//8641 8625
-                            ЛистДанныеОтHibenide =( List<model.Company>)  queryДляHiberite.getResultList();
-                            ЛОГ.  log(" ЛистДанныеОтHibenide "+ЛистДанныеОтHibenide+ " ЛистДанныеОтHibenide.size() " +ЛистДанныеОтHibenide.size()+
-                                    "  queryДляHiberite  " +queryДляHiberite);//gson Gson
-                            break;
-                        case "track":
-                            // TODO
-                            queryДляHiberite = session.createQuery(
-                                    " SELECT  tr FROM Track tr  WHERE tr .currentTable > :id");
-                            queryДляHiberite.setLockOptions(new LockOptions(LockMode.PESSIMISTIC_READ).setTimeOut( LockOptions.WAIT_FOREVER ));
-                            queryДляHiberite.setParameter("id",new BigDecimal(ПараметрВерсияДанных));//8641 8625
-                            ЛистДанныеОтHibenide =( List<model.Track>)  queryДляHiberite.getResultList();
-                            ЛОГ.  log(" ЛистДанныеОтHibenide "+ЛистДанныеОтHibenide+ " ЛистДанныеОтHibenide.size() " +ЛистДанныеОтHibenide.size()+
-                                    "  queryДляHiberite  " +queryДляHiberite);//gson Gson
-                            break;
-
-
-
-                    }//TODO КОНЕЦ РАСПРЕДЕНИЕ ТАБЛИЦ 	switch (ПараметрИмяТаблицыОтАндройдаGET.trim()) {
-
-                    ЛОГ.log("запуск ..  Метод_ГлавногоМетодаGETВыполнемЗаданиеВтороеГенерацияИОтправкаJSONПотокаНаАндройд"
-                            + " КоличествоСтрокКоторыеМыОтправимНаКлиент  " + КоличествоСтрокКоторыеМыОтправимНаКлиент+
-                            " ПараметрИмяТаблицыОтАндройдаGET " +ПараметрИмяТаблицыОтАндройдаGET);
-                    //TODO ФИНАЛЬЯ СТАДИЯ ГЕНЕРИРУЕМ САМ JSON
-                    ЛОГ.  log(" ЛистДанныеОтHibenide "+ЛистДанныеОтHibenide+ " ЛистДанныеОтHibenide.size() " +ЛистДанныеОтHibenide.size()+
-                            "  queryДляHiberite  " +queryДляHiberite);//gson Gson
-                    //TODO ГЕНЕРАЦИЯ JSON ПО НОВОМУ
-                    БуферCallsBackДляAndroid =МетодГенерацияJSONJackson(  ЛистДанныеОтHibenide);
-
-                    ЛОГ. log( "   БуферCallsBackДляAndroid " + БуферCallsBackДляAndroid.toString());
-
-                    // TODO конец МЕНЕДЖЕН ПОТОКА ДАННЫХ ПРИ
-                    // ОТПРАВЛЕНИЕ ДАННЫ
-                    // TODO ВЫХОД ИЗ КОНКРЕТНОГО УСЛОВИЯ
-                    // ВЫПОЛЕННИЯ
-                    break;
-                // TODO ЗАДАНИЕ ДЛЯ СЕРВЕР JOBSERVERTASK #3
-                case "Хотим Получить ID для Генерации  UUID":
-                    БуферCallsBackДляAndroid = Метод_МетодаGETОтпалавляемПубличныйIDПользователюАндройду(
-                            response, IDПолученныйИзSQlServerПосик);
-                    ЛОГ.log(" БуферCallsBackДляAndroid "
-                            + БуферCallsBackДляAndroid.toString());
-                    break;
-                // TODO ЗАДАНИЕ ДЛЯ СЕРВЕР JOBSERVERTASK #4
-                case "Хотим Получить Статус Блокировки Пользователя по ID":
-                    // TODO ОПРЕДЕЛЯЕМ СТАТУС ПОЛЬЗОВАТЕЛЯ
-                    БуферCallsBackДляAndroid = Метод_МетодаGETОтправляемБлокировкуПользователюID(
-                            response, JobsServerСазаданиеДляСервера, IDПолученныйИзSQlServerПосик, conn);
-                    ЛОГ.log(" Отправили  Хотим Получить Статус Блокировки Пользователя по ID "
-                            + JobsServerСазаданиеДляСервера + " БуферCallsBackДляAndroid "
-                            + БуферCallsBackДляAndroid.toString());
-                    break;
                 // TODO ЗАДАНИЕ ДЛЯ СЕРВЕР JOBSERVERTASK #5
                 case "Хотим Получить Статус Реальной Работы SQL SERVER":
                     // TODO РЕАЛЬНЫЙ СТАТУС РАБОТЫ SQL SERVER

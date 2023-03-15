@@ -1,4 +1,4 @@
-package runtimejboss;
+package authentication;
 
 import businesslogic.BEANCallsBack;
 import businesslogic.BeanAuntifications;
@@ -16,7 +16,7 @@ import java.util.Date;
 
 
 @WebFilter(value={ "/dsu1.glassfish.atomic", "/dsu1.glassfish.download" ,"/dsu1.glassfish.scanner"},asyncSupported = true)
-public class FilterForGETRuntime implements Filter {
+public class FilterForGETRuntimeJboss implements Filter {
     @EJB
     private BeanAuntifications beanAuntifications;
     @Inject
