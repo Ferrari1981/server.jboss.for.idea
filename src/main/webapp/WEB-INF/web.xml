@@ -53,12 +53,12 @@
     </servlet-mapping>
 
     <servlet>
-        <servlet-name>DSU1ServletRuntime</servlet-name>
+        <servlet-name>DSU1ServletRuntimeJboss</servlet-name>
         <servlet-class>authentication.DSU1ServletRuntimeJboss</servlet-class>
         <async-supported>true</async-supported>
     </servlet>
     <servlet-mapping>
-        <servlet-name>DSU1ServletRuntime</servlet-name>
+        <servlet-name>DSU1ServletRuntimeJboss</servlet-name>
         <url-pattern>/dsu1.glassfish.runtimejboss/*</url-pattern>
     </servlet-mapping>
 
@@ -102,7 +102,7 @@
     </filter>
     <filter-mapping>
         <filter-name>FilterForGETRuntimeJboss</filter-name>
-        <url-pattern>/DSU1ServletRuntime</url-pattern>
+        <url-pattern>/DSU1ServletRuntimeJboss</url-pattern>
         <dispatcher>REQUEST</dispatcher>
         <dispatcher>FORWARD</dispatcher>
         <dispatcher>ASYNC</dispatcher>
