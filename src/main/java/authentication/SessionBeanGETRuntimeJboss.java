@@ -8,10 +8,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.sun.istack.NotNull;
-import org.hibernate.Query;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
+import org.hibernate.*;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
@@ -33,7 +30,7 @@ import java.util.*;
 
 @RequestScoped
 @Produces
-public class SessionBeanМетодаGETAuthentication {// extends WITH
+public class SessionBeanGETRuntimeJboss {// extends WITH
 
     private ServletContext ЛОГ;
     //private	Connection conn; ////// общий коннект для всего севлтера
@@ -60,9 +57,9 @@ public class SessionBeanМетодаGETAuthentication {// extends WITH
     private    Session session;
     private    Transaction sessionTransaction  ;
 
-    public SessionBeanМетодаGETAuthentication() {
+    public SessionBeanGETRuntimeJboss() {
 
-        System.out.println("Конструктор  SessionBeanМетодаGETAuthentication");
+        System.out.println("Конструктор  SessionBeanМетодаGETRuntime");
 
     }
 
@@ -206,30 +203,16 @@ public class SessionBeanМетодаGETAuthentication {// extends WITH
                     .orElse("");
 
             switch (JobsFroServerЗаданиеДляСервера) {
-                // TODO ЗАДАНИЕ ДЛЯ СЕРВЕР JOBSERVERTASK #1
-                case "Хотим Получить Версию Данных Сервера":
-                    БуферCallsBackДляAndroid = МетодПолучениеВерсиюДанныхДляАndroid(
-                            response, JobsServerСазаданиеДляСервера, ПараметрИмяТаблицыОтАндройдаGET);
-                    ЛОГ.log("Хотим Получить Версию Данных Сервера" + new Date() + " ПараметрФильтрЗадааниеДляСервлета "
-                            + JobsServerСазаданиеДляСервера + "  БуферCallsBackДляAndroid "
+                // TODO ЗАДАНИЕ ДЛЯ СЕРВЕР JOBSERVERTASK #5
+                case "Хотим Получить Статус Реальной Работы SQL SERVER":
+                    // TODO РЕАЛЬНЫЙ СТАТУС РАБОТЫ SQL SERVER
+                    БуферCallsBackДляAndroid = Метод_МетодаGETЗаданиеХотимПолучитьРеальныйСтатусРаботыSQLSeever(
+                            response, JobsServerСазаданиеДляСервера, conn);
+                    ЛОГ.log(" Отправили Хотим Получить Статус Реальной Работы SQL SERVER " + JobsServerСазаданиеДляСервера
+                            + " БуферCallsBackДляAndroid "
                             + БуферCallsBackДляAndroid.toString());
                     break;
-                // TODO ЗАДАНИЕ ДЛЯ СЕРВЕР JOBSERVERTASK #3
-                case "Хотим Получить ID для Генерации  UUID":
-                    БуферCallsBackДляAndroid = Метод_МетодаGETОтпалавляемПубличныйIDПользователюАндройду(
-                            response, IDПолученныйИзSQlServerПосик);
-                    ЛОГ.log(" БуферCallsBackДляAndroid "
-                            + БуферCallsBackДляAndroid.toString());
-                    break;
-                // TODO ЗАДАНИЕ ДЛЯ СЕРВЕР JOBSERVERTASK #4
-                case "Хотим Получить Статус Блокировки Пользователя по ID":
-                    // TODO ОПРЕДЕЛЯЕМ СТАТУС ПОЛЬЗОВАТЕЛЯ
-                    БуферCallsBackДляAndroid = Метод_МетодаGETОтправляемБлокировкуПользователюID(
-                            response, JobsServerСазаданиеДляСервера, IDПолученныйИзSQlServerПосик, conn);
-                    ЛОГ.log(" Отправили  Хотим Получить Статус Блокировки Пользователя по ID "
-                            + JobsServerСазаданиеДляСервера + " БуферCallsBackДляAndroid "
-                            + БуферCallsBackДляAndroid.toString());
-                    break;
+
                 // TODO ЗАДАНИЯ ДЛЯ СЕРВЕРА НЕТУ
                 default:
                     break;

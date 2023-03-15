@@ -17,7 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 
-@WebServlet( value="/dsu1.glassfish.atomic",asyncSupported = true)
+@WebServlet( value="/dsu1.glassfish.authentication",asyncSupported = true)
 public class DSU1ServletAuthentication extends HttpServlet {
     private     Session getSession;
     private      ServletContext    ЛОГ;
@@ -25,13 +25,6 @@ public class DSU1ServletAuthentication extends HttpServlet {
     private BeanGET СессионыйБинGET;
     @EJB
     private BeanPOST СессионыйБинPOST;
-  /*  @Inject
-    SessionFactory sessionSousJboss;*/
-
-    SessionFactory sessionSousJbossRuntime;
-
-
-
 
 
 
