@@ -3,17 +3,15 @@ package dsu1glassfishatomic;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
+import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.context.SessionScoped;
 import javax.enterprise.inject.Produces;
 import javax.inject.Named;
 import java.util.Date;
 
 // TODO: 09.03.2023  Класс Получение Менеджера для Hibertire
-@Named
-public
-class MyGetHibernate{
-    @Produces
-    @SessionScoped
+@ApplicationScoped
+public class MyGetHibernate{
     public SessionFactory sessionSousJboss(){
         SessionFactory   sessionFactoryJboss = null;
         try  {

@@ -2,7 +2,6 @@ package dowsloadpojboss;
 
 
 import dsu1glassfishatomic.SubClassWriterErros;
-import org.hibernate.Session;
 
 import javax.ejb.EJB;
 import javax.servlet.ServletContext;
@@ -16,25 +15,10 @@ import java.nio.charset.StandardCharsets;
 
 @WebServlet( value="/dsu1glassfishatomic.glassfish.download",asyncSupported = true)
 public class DSU1DonwloadsServlet extends HttpServlet {
-    private     Session getSession;
     private      ServletContext    ЛОГ;
     @EJB
-    SesionBeanDownloadPO sesionBeanDownloadPO;
-    public void init() {
-        try{
-        ЛОГ=this.getServletContext();
-        ЛОГ.log("\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
-                " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
-                " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n");
-    } catch (Exception e) {
-        new SubClassWriterErros().МетодаЗаписиОшибкиВЛог(e, null,
-                "\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
-                        " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
-                        " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n",
-                Thread.currentThread().getStackTrace()[2],ЛОГ,ЛОГ.getServerInfo().toLowerCase());
+    SessionBeanDownloadPO sessionBeanDownloadPO;
 
-    }
-    }
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
      // super.doGet(req, resp);
@@ -50,11 +34,11 @@ public class DSU1DonwloadsServlet extends HttpServlet {
             switch (ЗаданиеДляСервераЗагрузкиНовогоПо.toString()){
                 case "FileJsonUpdatePO"  :
                     // TODO: 13.03.2023  запуск Кода пополучениею File JSON Для Обнолвенеи ПО
-                    sesionBeanDownloadPO.   МетодЗапускаДляФайлаJSON(ЛОГ,req,resp);
+                    sessionBeanDownloadPO.   МетодЗапускаДляФайлаJSON(ЛОГ,req,resp);
                     break;
                 case "FileAPKUpdatePO" :
                     // TODO: 13.03.2023  запуск Кода пополучениею File .APK Для Обнолвенеи ПО
-                    sesionBeanDownloadPO.   МетодЗапускаДляФайлаAPK(ЛОГ,req,resp);
+                    sessionBeanDownloadPO.   МетодЗапускаДляФайлаAPK(ЛОГ,req,resp);
                     break;
             }
                     ЛОГ.log("\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +

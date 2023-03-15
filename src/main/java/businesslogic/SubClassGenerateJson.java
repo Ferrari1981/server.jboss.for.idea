@@ -18,7 +18,6 @@ import javax.servlet.ServletContext;
 import javax.ws.rs.Produces;
 
 import com.sun.istack.NotNull;
-import dsu1glassfishatomic.MyGetHibernate;
 import dsu1glassfishatomic.SubClassWriterErros;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -28,8 +27,6 @@ import org.hibernate.Transaction;
 @RequestScoped
 @Produces
 public class SubClassGenerateJson {
-    @Inject
-    private MyGetHibernate myHibernate;
     private   ServletContext ЛОГ;
     private Transaction sessionTransaction;
 

@@ -44,7 +44,7 @@
 
     <servlet>
         <servlet-name>DSU1ScannerServlet</servlet-name>
-        <servlet-class>jboss.DSU1ScannerServlet</servlet-class>
+        <servlet-class>serverscanners.DSU1ScannerServlet</servlet-class>
         <async-supported>true</async-supported>
     </servlet>
     <servlet-mapping>

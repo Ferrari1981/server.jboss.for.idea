@@ -1,6 +1,8 @@
 package dowsloadpojboss;
 
 
+
+
 import com.sun.istack.NotNull;
 import dsu1glassfishatomic.SubClassWriterErros;
 
@@ -18,13 +20,13 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
 /**
- * Session Bean implementation class SesionBeanDownloadPO
+ * Session Bean implementation class SessionBeanDownloadPO
  */
-@Stateless(mappedName = "SesionBeanDownloadPO")
+@Stateless(mappedName = "SessionBeanDownloadPO")
 @LocalBean
 @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
-public class SesionBeanDownloadPO {
-    public SesionBeanDownloadPO() {
+public class SessionBeanDownloadPO {
+    public SessionBeanDownloadPO() {
         // TODO Auto-generated constructor stub
         try {
             System.out.print("\n"+" Starting.... class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
@@ -40,8 +42,8 @@ public class SesionBeanDownloadPO {
     }
 
     public void  МетодЗапускаДляФайлаJSON(@NotNull ServletContext ЛОГ,
-                              @NotNull HttpServletRequest request,
-                              @NotNull HttpServletResponse response) throws InterruptedException, ExecutionException {
+                                          @NotNull HttpServletRequest request,
+                                          @NotNull HttpServletResponse response) throws InterruptedException, ExecutionException {
         try {
             // TODO: 10.03.2023  данные от JSON ANALIZE
             Future<File> ПолучаемJSONФайл= 	 МетодДляJSONФайла(ЛОГ,request,response);
@@ -59,8 +61,8 @@ public class SesionBeanDownloadPO {
     }
 
     public void  МетодЗапускаДляФайлаAPK(@NotNull ServletContext ЛОГ,
-                                          @NotNull HttpServletRequest request,
-                                          @NotNull HttpServletResponse response) throws InterruptedException, ExecutionException {
+                                         @NotNull HttpServletRequest request,
+                                         @NotNull HttpServletResponse response) throws InterruptedException, ExecutionException {
         try {
             // TODO: 10.03.2023  данные от .APK Download
             Future<File> ПолучаемAPKФайл= 	 МетодДляAPKФайла(ЛОГ,request,response);
@@ -81,7 +83,7 @@ public class SesionBeanDownloadPO {
     private Future<File> МетодДляJSONФайла(@NotNull ServletContext ЛОГ, @NotNull HttpServletRequest request,  @NotNull HttpServletResponse response){
         File fileJson = null;
         try{
-        String filepath ="C:\\Users\\moraru_pi\\AndroidStudioProjectsSERVER\\sous.jboss.idea\\src\\main\\webapp\\update_android_dsu1\\output-metadata.json";
+            String filepath ="C:\\Users\\moraru_pi\\AndroidStudioProjectsSERVER\\sous.jboss.idea\\src\\main\\webapp\\update_android_dsu1\\output-metadata.json";
             // TODO: 13.03.2023 ГЛАВНЫЙ КОД РАБОТА С ФАЙЛАМИ
             Path path = Paths.get(filepath);
             fileJson = Paths.get(filepath).toFile();
@@ -99,7 +101,7 @@ public class SesionBeanDownloadPO {
     }
     @Asynchronous
     private Future<File> МетодДляAPKФайла(@NotNull ServletContext ЛОГ,
-                                                   @NotNull HttpServletRequest request,@NotNull HttpServletResponse response){
+                                          @NotNull HttpServletRequest request,@NotNull HttpServletResponse response){
         File fileApk = null;
         try {
             String filepath ="C:\\Users\\moraru_pi\\AndroidStudioProjectsSERVER\\sous.jboss.idea\\src\\main\\webapp\\update_android_dsu1\\app-release.apk";
@@ -156,8 +158,8 @@ public class SesionBeanDownloadPO {
 
     // TODO МетодКласса отправки данных андройду
     public void МетодBackДанныеКлиентуНовоеПО(@NotNull ServletResponse response,
-                                       @NotNull File ОтправкаФайлаJsonAPK,
-                                       @NotNull ServletContext ЛОГ) throws IOException, ServletException {
+                                              @NotNull File ОтправкаФайлаJsonAPK,
+                                              @NotNull ServletContext ЛОГ) throws IOException, ServletException {
 
         if (  response.isCommitted()==false) {
             try  (ServletOutputStream БуферДанныеДляОбновлениеПО = response.getOutputStream();
@@ -195,3 +197,4 @@ public class SesionBeanDownloadPO {
     }
 
 }
+
