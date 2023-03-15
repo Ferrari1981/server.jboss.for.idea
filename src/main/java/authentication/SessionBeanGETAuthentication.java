@@ -256,8 +256,6 @@ public class SessionBeanGETAuthentication {// extends WITH
                 default:
                     break;
             }
-
-
             //// TODO ЗАКРЫЫВАЕМ КУРСОРЫ ПОСЛЕ ГЕНЕРАЦИИ JSON ДЛЯ КЛИЕНТА
             // TODO
             ЛОГ.log("БуферCallsBackДляAndroid.toString() " + "" + БуферCallsBackДляAndroid.toString());

@@ -28,7 +28,7 @@ public class FilterForGETRuntimeJboss implements Filter {
             request.setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
             response.setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
                     // TODO: 10.03.2023  проверем статус логин и пароль
-            Object IDДевайсаКлиента=      ((HttpServletRequest)request).getHeaders("identifier").nextElement();
+            Object IDДевайсаКлиента=      ((HttpServletRequest)request).getHeaders("id_device_androis").nextElement();
             ЛОГ.log("\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
                     " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
                     " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+
