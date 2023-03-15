@@ -23,14 +23,6 @@ public class FilterForGET implements Filter {
     private BEANCallsBack bEANCallsBack;
     private ServletContext ЛОГ;
 
-    public void init(FilterConfig fConfig) throws ServletException {
-        // TODO Auto-generated method stub
-        ЛОГ=fConfig.getServletContext();
-        System.out.println(	"\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
-                " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
-                " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n");
-    }
-
 
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         // TODO Auto-generated method stub

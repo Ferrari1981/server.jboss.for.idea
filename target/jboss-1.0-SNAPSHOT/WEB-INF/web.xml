@@ -22,7 +22,7 @@
     </servlet>
 <servlet-mapping>
     <servlet-name>DSU1JsonServlet</servlet-name>
-    <url-pattern>/dsu1.glassfish.atomic</url-pattern>
+    <url-pattern>/dsu1.glassfish.atomic/*</url-pattern>
 </servlet-mapping>
 
 
@@ -34,7 +34,7 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>DSU1DonwloadsServlet</servlet-name>
-        <url-pattern>/dsu1.glassfish.download</url-pattern>
+        <url-pattern>/dsu1.glassfish.download/*</url-pattern>
     </servlet-mapping>
 
 
@@ -46,7 +46,7 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>DSU1ScannerServlet</servlet-name>
-        <url-pattern>/dsu1.glassfish.scanner</url-pattern>
+        <url-pattern>/dsu1.glassfish.scanner/*</url-pattern>
     </servlet-mapping>
 
 

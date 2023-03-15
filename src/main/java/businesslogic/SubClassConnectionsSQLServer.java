@@ -22,7 +22,7 @@ import javax.ws.rs.Produces;
 public class SubClassConnectionsSQLServer  {
     @SuppressWarnings("null")
     @Produces
-    Connection МетодGetConnect(
+    public Connection МетодGetConnect(
             @NotNull ServletContext ЛОГ) throws ClassNotFoundException, SQLException,
             NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException {
         Connection  conn = null ;
@@ -50,8 +50,8 @@ public class SubClassConnectionsSQLServer  {
     }
     ///TODO второй метод
     @Produces
-    Statement МетодGetSmtr(@NotNull   Connection conn,
-                           @NotNull ServletContext ЛОГ) throws SQLException {
+    public Statement МетодGetSmtr(@NotNull Connection conn,
+                                  @NotNull ServletContext ЛОГ) throws SQLException {
         Statement statement = null ;
         try {
             ЛОГ.log(" conn " +conn.getClientInfo());
