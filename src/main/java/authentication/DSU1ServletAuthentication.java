@@ -1,11 +1,8 @@
 package authentication;
 
 
-import businesslogic.BeanGET;
-import businesslogic.BeanPOST;
-import dsu1.glassfish.atomic.SubClassWriterErros;
+import dsu1glassfishatomic.SubClassWriterErros;
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 
 import javax.ejb.EJB;
 import javax.servlet.ServletContext;
@@ -17,9 +14,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 
-@WebServlet( value="/dsu1.glassfish.authentication",asyncSupported = true)
+@WebServlet( value="/dsu1glassfishatomic.glassfish.authentication",asyncSupported = true)
 public class DSU1ServletAuthentication extends HttpServlet {
-    private     Session getSession;
     private      ServletContext    ЛОГ;
     @EJB
     private SessionBeanGETAuthentication sessionBeanGETAuthentication;

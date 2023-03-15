@@ -2,7 +2,7 @@ package businesslogic;
 
 
 
-import dsu1.glassfish.atomic.SubClassWriterErros;
+import dsu1glassfishatomic.SubClassWriterErros;
 import org.hibernate.SessionFactory;
 
 import java.io.BufferedReader;
@@ -12,13 +12,11 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.io.StringReader;
-import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;
 import java.security.NoSuchAlgorithmException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.BrokenBarrierException;
 import java.util.concurrent.ExecutionException;
@@ -236,9 +234,9 @@ public class SubClassSessionBeanPOST {//extends    DSU1JsonServlet
             System.err.println("- Erros   Error Metod POST()->  INSERT/UPDATE EVENTS ROLLBACK  " + ДатаСервлетаPOSt);
 
             PrintWriter pw = new PrintWriter(new FileOutputStream(
-                    new File("C:\\Program Files\\glassfish-4.1.2 dsu1\\glassfish4\\ErrorServletDSU1.txt"), true));
+                    new File("C:\\Program Files\\glassfish-4.1.2 dsu1glassfishatomic\\glassfish4\\ErrorServletDSU1.txt"), true));
             // PrintWriter pw = new PrintWriter(new FileOutputStream(new
-            // File("C:\\Users\\User\\git\\dsu1.glassfish\\src\\dsu1json\\com\\ErrorServletDSU1.txt"),true));
+            // File("C:\\Users\\User\\git\\dsu1glassfishatomic.glassfish\\src\\dsu1json\\com\\ErrorServletDSU1.txt"),true));
             // перевод строки в байты
             pw.println("- Erros   Error Metod POST()->  INSERT/UPDATE EVENTS ---ROLLBACK--- OPERATIONS-");
             pw.append(" Пользователь protected void doPost  ");

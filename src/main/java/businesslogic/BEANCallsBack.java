@@ -1,13 +1,12 @@
 package businesslogic;
 
-import dsu1.glassfish.atomic.SubClassWriterErros;
+import dsu1glassfishatomic.SubClassWriterErros;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.ServletResponse;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.constraints.NotNull;
 import java.io.BufferedWriter;

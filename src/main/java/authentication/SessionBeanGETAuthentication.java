@@ -10,12 +10,8 @@ import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.sun.istack.NotNull;
 import org.hibernate.Query;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
 
 import javax.ejb.*;
-import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.json.Json;
 import javax.json.JsonObjectBuilder;
@@ -24,7 +20,6 @@ import javax.persistence.StoredProcedureQuery;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.ws.rs.Produces;
 import java.io.IOException;
 import java.io.StringWriter;
 import java.sql.*;
@@ -83,7 +78,7 @@ public class SessionBeanGETAuthentication {// extends WITH
                     " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
                     " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+"  БуферРезультатАунтифиация  " + БуферРезультатАунтифиация.get());
         } catch (Exception e) {
-            new dsu1.glassfish.atomic.SubClassWriterErros().МетодаЗаписиОшибкиВЛог(e, null,
+            new dsu1glassfishatomic.SubClassWriterErros().МетодаЗаписиОшибкиВЛог(e, null,
                     "\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
                             " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
                             " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber(),

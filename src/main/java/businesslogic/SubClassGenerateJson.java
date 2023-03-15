@@ -12,16 +12,14 @@ import javax.json.Json;
 import javax.json.JsonObject;
 import javax.json.JsonReader;
 import javax.json.JsonValue;
-import javax.persistence.LockModeType;
 import javax.persistence.ParameterMode;
 import javax.persistence.StoredProcedureQuery;
 import javax.servlet.ServletContext;
 import javax.ws.rs.Produces;
 
 import com.sun.istack.NotNull;
-import dsu1.glassfish.atomic.MyGetHibernate;
-import dsu1.glassfish.atomic.SubClassWriterErros;
-import org.hibernate.LockMode;
+import dsu1glassfishatomic.MyGetHibernate;
+import dsu1glassfishatomic.SubClassWriterErros;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;

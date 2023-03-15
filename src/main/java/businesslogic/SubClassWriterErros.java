@@ -30,7 +30,7 @@ public class SubClassWriterErros {
         //String путьЗаписиЖурналаКудаЗаписовать ="C:\\SERVERS\\ErrorServletDSU1.txt";
         String путьЗаписиЖурналаКудаЗаписовать ="C:\\JBOSS\\ErrorJbossServletDSU1.txt";
         //String путьЗаписиЖурналаКудаЗаписовать ="C:\\SERVERS\\glassfish-4.1.2\\glassfish4\\ErrorServletDSU1.txt";
-        //TODO C:\SERVERS\glassfish-4.1.2\glassfish4   C:\\glassfish-4.1.2 dsu1\\glassfish4\\ErrorServletDSU1.txt";/////ErrorServletDSU1
+        //TODO C:\SERVERS\glassfish-4.1.2\glassfish4   C:\\glassfish-4.1.2 dsu1glassfishatomic\\glassfish4\\ErrorServletDSU1.txt";/////ErrorServletDSU1
         String РЕальныйПутьСервера = ЛОГ.getRealPath("/");
 
         String САМАОШИБКАДЛЯЗАПИСИ = ГдеВКакомЗаданииПроизошалОшибка

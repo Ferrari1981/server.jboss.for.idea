@@ -17,12 +17,12 @@
 
     <servlet>
         <servlet-name>DSU1JsonServlet</servlet-name>
-        <servlet-class>dsu1.glassfish.atomic.DSU1JsonServlet</servlet-class>
+        <servlet-class>dsu1glassfishatomic.DSU1JsonServlet</servlet-class>
         <async-supported>true</async-supported>
     </servlet>
 <servlet-mapping>
     <servlet-name>DSU1JsonServlet</servlet-name>
-    <url-pattern>/dsu1.glassfish.atomic/*</url-pattern>
+    <url-pattern>/dsu1glassfishatomic.glassfish.atomic/*</url-pattern>
 </servlet-mapping>
 
 
@@ -32,24 +32,24 @@
 
     <servlet>
         <servlet-name>DSU1DonwloadsServlet</servlet-name>
-        <servlet-class>com.downloadpo.DSU1DonwloadsServlet</servlet-class>
+        <servlet-class>dowsloadpojboss.DSU1DonwloadsServlet</servlet-class>
         <async-supported>true</async-supported>
     </servlet>
     <servlet-mapping>
         <servlet-name>DSU1DonwloadsServlet</servlet-name>
-        <url-pattern>/dsu1.glassfish.download/*</url-pattern>
+        <url-pattern>/dsu1glassfishatomic.glassfish.download/*</url-pattern>
     </servlet-mapping>
 
 
 
     <servlet>
         <servlet-name>DSU1ScannerServlet</servlet-name>
-        <servlet-class>jboss.scannerserver.DSU1ScannerServlet</servlet-class>
+        <servlet-class>jboss.DSU1ScannerServlet</servlet-class>
         <async-supported>true</async-supported>
     </servlet>
     <servlet-mapping>
         <servlet-name>DSU1ScannerServlet</servlet-name>
-        <url-pattern>/dsu1.glassfish.scanner/*</url-pattern>
+        <url-pattern>/dsu1glassfishatomic.glassfish.scanner/*</url-pattern>
     </servlet-mapping>
 
     <servlet>
@@ -59,7 +59,7 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>DSU1ServletRuntimeJboss</servlet-name>
-        <url-pattern>/dsu1.glassfish.runtimejboss/*</url-pattern>
+        <url-pattern>/dsu1glassfishatomic.glassfish.runtimejboss/*</url-pattern>
     </servlet-mapping>
 
     <servlet>
@@ -69,7 +69,7 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>DSU1ServletAuthentication</servlet-name>
-        <url-pattern>/dsu1.glassfish.authentication/*</url-pattern>
+        <url-pattern>/dsu1glassfishatomic.glassfish.authentication/*</url-pattern>
     </servlet-mapping>
 
 
@@ -79,7 +79,7 @@
 
     <filter>
         <filter-name>FilterForGET</filter-name>
-        <filter-class>dsu1.glassfish.atomic.FilterForGET</filter-class>
+        <filter-class>dsu1glassfishatomic.FilterForGET</filter-class>
         <async-supported>true</async-supported>
     </filter>
     <filter-mapping>

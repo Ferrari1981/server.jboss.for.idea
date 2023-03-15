@@ -1,6 +1,6 @@
 package businesslogic;
 
-import dsu1.glassfish.atomic.SubClassWriterErros;
+import dsu1glassfishatomic.SubClassWriterErros;
 
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;

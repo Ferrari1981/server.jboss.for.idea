@@ -1,10 +1,8 @@
 package authentication;
 
 import businesslogic.BEANCallsBack;
-import businesslogic.BeanAuntifications;
-import dsu1.glassfish.atomic.SubClassWriterErros;
+import dsu1glassfishatomic.SubClassWriterErros;
 
-import javax.ejb.EJB;
 import javax.inject.Inject;
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
@@ -15,7 +13,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.Date;
 
 
-@WebFilter(value={ "/dsu1.glassfish.runtimejboss"},asyncSupported = true)
+@WebFilter(value={ "/dsu1glassfishatomic.glassfish.runtimejboss"},asyncSupported = true)
 public class FilterForGETRuntimeJboss implements Filter {
     @Inject
     private BEANCallsBack bEANCallsBack;
