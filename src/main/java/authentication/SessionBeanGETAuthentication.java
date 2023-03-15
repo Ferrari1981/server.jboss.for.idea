@@ -1,5 +1,6 @@
 package authentication;
 
+import businesslogic.BEANCallsBack;
 import businesslogic.SubClassConnectionsSQLServer;
 import businesslogic.SubClassWriterErros;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -13,6 +14,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 
+import javax.ejb.*;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.json.Json;
@@ -30,9 +32,13 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.*;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
 
-@RequestScoped
-@Produces
+
+@Stateless(mappedName = "SessionBeanGETAuthentication")
+@LocalBean
+@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
 public class SessionBeanGETAuthentication {// extends WITH
 
     private ServletContext ЛОГ;
@@ -55,21 +61,45 @@ public class SessionBeanGETAuthentication {// extends WITH
     private StoredProcedureQuery queryprocedure = null;
     @Inject
     private SubClassConnectionsSQLServer subClassConnectionsSQLServer;
-
-
-    private    Session session;
-    private    Transaction sessionTransaction  ;
-
+    @Inject
+    BEANCallsBack bEANCallsBack;
     public SessionBeanGETAuthentication() {
 
         System.out.println("Конструктор  SessionBeanGETAuthentication");
 
     }
 
+
+    public void МетодГлавныйАунтиикации(@NotNull ServletContext ЛОГ,
+                                         @NotNull HttpServletRequest request,
+                                         @NotNull  HttpServletResponse response) throws InterruptedException, ExecutionException {;
+        try {
+            ///Todo  получаем данные от клиента
+            Future<StringBuffer> БуферРезультатАунтифиация= 	 МетодЗапускаАунтификации(request,ЛОГ);
+            //  ЛОГ.log("  БуферРезультатGET  " + БуферРезультатPOST.get());
+            ///Todo получаем данные от Клиента на Сервер
+            bEANCallsBack.МетодBackДанныеКлиенту(response, БуферРезультатАунтифиация.get(), ЛОГ);
+            ЛОГ.log("\n"+" Starting.... class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
+                    " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
+                    " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+"  БуферРезультатАунтифиация  " + БуферРезультатАунтифиация.get());
+        } catch (Exception e) {
+            new dsu1.glassfish.atomic.SubClassWriterErros().МетодаЗаписиОшибкиВЛог(e, null,
+                    "\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
+                            " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
+                            " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber(),
+                    Thread.currentThread().getStackTrace()[2],ЛОГ,ЛОГ.getServerInfo().toLowerCase());
+        }
+    }
+
+
+
+
+
+
+
     @SuppressWarnings({ "unused", "deprecation", "rawtypes", "unchecked" })
-    protected StringBuffer ГлавныйМетод_МетодаGET(@NotNull HttpServletRequest request,
-                                                  @NotNull ServletContext ЛОГ,
-                                                  @NotNull SessionFactory sessionSousJbossRuntime) throws SecurityException, SQLException {
+    protected Future<StringBuffer>  МетодЗапускаАунтификации(@NotNull HttpServletRequest request,
+                                                  @NotNull ServletContext ЛОГ) throws SecurityException, SQLException {
         // TODO Auto-generated method stub
         System.out.println("Конструктор  ЗАПУСК МЕТОДА ИЗ GET ()  ГлавныйМетод_МетодаGET()");
         StringBuffer БуферCallsBackДляAndroid = null;
@@ -147,15 +177,7 @@ public class SessionBeanGETAuthentication {// extends WITH
             Query queryДляHiberite = null;
             List<?> ЛистДанныеОтHibenide  = new ArrayList<>();
 
-            if (IDПолученныйИзSQlServerПосик>0) {
-                // TODO: 10.03.2023 получение сессиии HIREBIANTE
-                session=   sessionSousJbossRuntime.openSession();
-                sessionTransaction = session.getTransaction();
-                ЛОГ.log("\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
-                        " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
-                        " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+ " session " +session);
-                /// TODO КОНЕЦ  НОВЫЕ ПАРАМЕТРЫ HIREBIANTE
-            }
+
 
 
             /// TODO ПАРАМЕНТ #1
@@ -235,8 +257,7 @@ public class SessionBeanGETAuthentication {// extends WITH
                     break;
             }
 
-            // TODO КОГДА ЛОГИН И ПАРОЛЬ НЕТ ДОСТУПА
-              МетодЗакрываемСессиюHibernate(session);
+
             //// TODO ЗАКРЫЫВАЕМ КУРСОРЫ ПОСЛЕ ГЕНЕРАЦИИ JSON ДЛЯ КЛИЕНТА
             // TODO
             ЛОГ.log("БуферCallsBackДляAndroid.toString() " + "" + БуферCallsBackДляAndroid.toString());
@@ -249,36 +270,11 @@ public class SessionBeanGETAuthentication {// extends WITH
                     Thread.currentThread().getStackTrace()[2], ЛОГ,
                     БуферCallsBackДляAndroid.toString());
         }
-        return БуферCallsBackДляAndroid; // TODO return new
+        return new AsyncResult<StringBuffer>(БуферCallsBackДляAndroid);
         // AsyncResult<StringBuffer>(БуферCallsBackДляAndroid);
     }
 
-    private void МетодЗакрываемСессиюHibernate(Session session) {
-        try{
-            if (    sessionTransaction.isActive()) {
-                sessionTransaction.commit();
-            }
-            if (session.isDirty()) {
-                session.flush();
-            }
-            if (session.isOpen() || session.isConnected()) {
-                session.clear();
-                session.close();
-            }
-            ЛОГ.log("\n МетодЗакрываемСессиюHibernate "+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
-                    " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
-                    " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n" +  "session " +session);
-        /////// ошибки метода doGET
-    } catch (Exception e) {
-            // TODO: 12.03.2023
-            sessionTransaction.rollback();
-        new SubClassWriterErros().МетодаЗаписиОшибкиВЛог(e, ЛогинПолученныйОтКлиента,
-                "\n" + " Error.... class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n"
-                        + " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" + " line "
-                        + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n",
-                Thread.currentThread().getStackTrace()[2], ЛОГ,null);
-    }
-    }
+
 
     // todo МЕТОД GET А ПРИНАДЛЕЖИТЬ
 

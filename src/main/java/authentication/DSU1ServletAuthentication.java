@@ -22,9 +22,7 @@ public class DSU1ServletAuthentication extends HttpServlet {
     private     Session getSession;
     private      ServletContext    ЛОГ;
     @EJB
-    private BeanGET СессионыйБинGET;
-    @EJB
-    private BeanPOST СессионыйБинPOST;
+    private SessionBeanGETAuthentication sessionBeanGETAuthentication;
 
 
 
@@ -36,12 +34,11 @@ public class DSU1ServletAuthentication extends HttpServlet {
           resp.setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
            ЛОГ = getServletContext();
                     //TODO ЗАПУСКАЕМ КОДЕ МЕТОДА GET()
-                    СессионыйБинGET.МетодБинаGET(ЛОГ, req, resp,sessionSousJbossRuntime);
+            sessionBeanGETAuthentication.МетодГлавныйАунтиикации(ЛОГ, req, resp);
                     ЛОГ.log("\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                             " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
-                            + " ((HttpServletRequest) req).getPathInfo() " +((HttpServletRequest) req).getPathInfo()+
-                             " sessionSousJbossRuntime " +sessionSousJbossRuntime);
+                            + " ((HttpServletRequest) req).getPathInfo() " +((HttpServletRequest) req).getPathInfo());
         } catch (Exception e) {
             new SubClassWriterErros().МетодаЗаписиОшибкиВЛог(e, null,
                     "\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
@@ -52,42 +49,11 @@ public class DSU1ServletAuthentication extends HttpServlet {
         }
 
     }
-
-    @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        //super.doPost(req, resp);
-        try{
-           ЛОГ = getServletContext();
-            req.setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
-            resp.setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
-            //TODO ЗАПУСКАЕМ КОДЕ МЕТОДА POST()
-         	СессионыйБинPOST.МетодБинаPOST(ЛОГ,req,resp,sessionSousJbossRuntime);
-            ЛОГ.log("\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
-                    " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
-                    " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+((HttpServletRequest) req).getPathInfo()+
-                    " sessionSousJbossRuntime " +sessionSousJbossRuntime);
-    } catch (Exception e) {
-        new SubClassWriterErros().МетодаЗаписиОшибкиВЛог(e, null,
-                "\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
-                        " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
-                        " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n",
-                Thread.currentThread().getStackTrace()[2],ЛОГ,ЛОГ.getServerInfo().toLowerCase());
-
-    }
-    }
-
     public void destroy() {
       try{
-       /*   if (sessionSousJbossRuntime!=null && sessionSousJbossRuntime.isOpen()) {
-              sessionSousJbossRuntime.close();
-          }
-          if (sessionSousJboss!=null && sessionSousJboss.isOpen()) {
-              sessionSousJboss.close();
-          }*/
           ЛОГ.log("\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
                 " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
-                " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+
-                " sessionSousJbossRuntime " +sessionSousJbossRuntime);
+                " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber());
     } catch (Exception e) {
         new SubClassWriterErros().МетодаЗаписиОшибкиВЛог(e, null,
                 "\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+

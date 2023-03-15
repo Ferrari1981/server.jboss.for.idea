@@ -5,6 +5,7 @@ import org.hibernate.cfg.Configuration;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.context.RequestScoped;
+import javax.enterprise.context.SessionScoped;
 import javax.enterprise.inject.Produces;
 import javax.inject.Named;
 import javax.servlet.ServletContext;
@@ -15,7 +16,7 @@ import java.util.Date;
 public
 class MyGetHibernate{
     @Produces
-    @ApplicationScoped
+    @SessionScoped
     public SessionFactory sessionSousJboss(){
         SessionFactory   sessionFactoryJboss = null;
         try  {

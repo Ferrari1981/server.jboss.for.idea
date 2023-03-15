@@ -26,15 +26,8 @@ public class DSU1JsonServlet extends HttpServlet {
     private BeanGET СессионыйБинGET;
     @EJB
     private BeanPOST СессионыйБинPOST;
-  /*  @Inject
-    SessionFactory sessionSousJboss;*/
-
-    SessionFactory sessionSousJbossRuntime;
-
-
-
-
-
+   @Inject
+    SessionFactory sessionSousJboss;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -44,12 +37,11 @@ public class DSU1JsonServlet extends HttpServlet {
           resp.setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
            ЛОГ = getServletContext();
                     //TODO ЗАПУСКАЕМ КОДЕ МЕТОДА GET()
-                    СессионыйБинGET.МетодБинаGET(ЛОГ, req, resp,sessionSousJbossRuntime);
+                    СессионыйБинGET.МетодБинаGET(ЛОГ, req, resp,sessionSousJboss);
                     ЛОГ.log("\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                             " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
-                            + " ((HttpServletRequest) req).getPathInfo() " +((HttpServletRequest) req).getPathInfo()+
-                             " sessionSousJbossRuntime " +sessionSousJbossRuntime);
+                            + " ((HttpServletRequest) req).getPathInfo() " +((HttpServletRequest) req).getPathInfo());
         } catch (Exception e) {
             new SubClassWriterErros().МетодаЗаписиОшибкиВЛог(e, null,
                     "\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
@@ -69,11 +61,10 @@ public class DSU1JsonServlet extends HttpServlet {
             req.setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
             resp.setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
             //TODO ЗАПУСКАЕМ КОДЕ МЕТОДА POST()
-         	СессионыйБинPOST.МетодБинаPOST(ЛОГ,req,resp,sessionSousJbossRuntime);
+         	СессионыйБинPOST.МетодБинаPOST(ЛОГ,req,resp,sessionSousJboss);
             ЛОГ.log("\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
                     " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
-                    " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+((HttpServletRequest) req).getPathInfo()+
-                    " sessionSousJbossRuntime " +sessionSousJbossRuntime);
+                    " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+((HttpServletRequest) req).getPathInfo());
     } catch (Exception e) {
         new SubClassWriterErros().МетодаЗаписиОшибкиВЛог(e, null,
                 "\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
@@ -86,16 +77,12 @@ public class DSU1JsonServlet extends HttpServlet {
 
     public void destroy() {
       try{
-       /*   if (sessionSousJbossRuntime!=null && sessionSousJbossRuntime.isOpen()) {
-              sessionSousJbossRuntime.close();
-          }
           if (sessionSousJboss!=null && sessionSousJboss.isOpen()) {
               sessionSousJboss.close();
-          }*/
+          }
           ЛОГ.log("\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
                 " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
-                " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+
-                " sessionSousJbossRuntime " +sessionSousJbossRuntime);
+                " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber());
     } catch (Exception e) {
         new SubClassWriterErros().МетодаЗаписиОшибкиВЛог(e, null,
                 "\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+

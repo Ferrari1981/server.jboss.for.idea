@@ -17,8 +17,6 @@ import java.util.Date;
 
 @WebFilter(value={ "/dsu1.glassfish.runtimejboss"},asyncSupported = true)
 public class FilterForGETRuntimeJboss implements Filter {
-    @EJB
-    private BeanAuntifications beanAuntifications;
     @Inject
     private BEANCallsBack bEANCallsBack;
     private ServletContext ЛОГ;
@@ -27,7 +25,6 @@ public class FilterForGETRuntimeJboss implements Filter {
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         // TODO Auto-generated method stub
         try {
-            Boolean СтатусаАунтификацииПользователя= false;
             request.setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
             response.setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
                     // TODO: 10.03.2023  проверем статус логин и пароль
@@ -37,36 +34,22 @@ public class FilterForGETRuntimeJboss implements Filter {
                     " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+
                     "  ЛогинОтAndroid    doFilter doFilter doFilter IDДевайсаКлиента " +IDДевайсаКлиента);
             if (IDДевайсаКлиента!=null) {
-                if (IDДевайсаКлиента.toString().length()>5) {
-                    СтатусаАунтификацииПользователя = beanAuntifications.МетодАунтификация(ЛОГ, ((HttpServletRequest)request),  ((HttpServletRequest)request) .getSession());
-                }
-                if (СтатусаАунтификацииПользователя==true) { // pass the request along the filter
                     // TODO: 11.03.2023 ГЛАВНАЯ СТРОЧКА ПЕРЕНАРАВЛЕНИЕ НА СЕВРЕЛТЫ НА ГЛАВНЫЙ КОД
                     chain.doFilter(request,response);
                     ЛОГ.log("\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
                             " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
                             " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+
-                            " Success    doFilter doFilter doFilter СтатусаАунтификацииПользователя " +СтатусаАунтификацииПользователя);
-                }else {
-                    // TODO: 11.03.2023 ИМя и Пароль не Правильный
-                    МетодФильтраНеПрошлаАунтификацию(response);
-                    ЛОГ.log("\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
-                            " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
-                            " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+
-                            " Error  doFilter doFilter doFilter СтатусаАунтификацииПользователя "+СтатусаАунтификацииПользователя );
-                }
-                
+                            " Success    doFilter doFilter doFilter IDДевайсаКлиента " +IDДевайсаКлиента);
             }else{
                 // TODO: 11.03.2023  нет не имени не пароля
-                RequestDispatcher requestDispatcher = request.getRequestDispatcher("/index.jsp");
-                requestDispatcher.forward(request, response);
-                /// requestФильтра.getRequestDispatcher("/index.jsp").forward(requestФильтра, responseОтветКлиенту);
-              //  МетодФильтраНеПрошлаАунтификацию(response, СтатусаАунтификацииПользователя);
+             /*   RequestDispatcher requestDispatcher = request.getRequestDispatcher("/index.jsp");
+                requestDispatcher.forward(request, response);*/
+                МетодФильтраНеПрошлаАунтификацию(response);
             }
             ЛОГ.log("\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
                     " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
                     " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+
-                    " Success    doFilter doFilter doFilter СтатусаАунтификацииПользователя " +СтатусаАунтификацииПользователя+
+                    " Success    doFilter doFilter doFilter IDДевайсаКлиента " +IDДевайсаКлиента+
                      " IDДевайсаКлиента " +IDДевайсаКлиента);
         } catch (Exception e) {
             new SubClassWriterErros().МетодаЗаписиОшибкиВЛог(e, null,

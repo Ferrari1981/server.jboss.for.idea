@@ -54,7 +54,7 @@
 
     <servlet>
         <servlet-name>DSU1ServletRuntime</servlet-name>
-        <servlet-class>authentication.DSU1ServletRuntime</servlet-class>
+        <servlet-class>authentication.DSU1ServletRuntimeJboss</servlet-class>
         <async-supported>true</async-supported>
     </servlet>
     <servlet-mapping>
