@@ -18,6 +18,7 @@
     <property name="hibernate.format_sql">true</property>
     <property name="hibernate.current_session_context_class">thread</property>
     <property name="hibernate.transaction.jta.platform">org.hibernate.service.jta.platform.internal.JBossAppServerJtaPlatform</property>
+    <property name="hibernate.connection.isolation">4</property>
 
 
     <mapping class="model.Fio"/>
@@ -61,6 +62,8 @@
     <property name="hibernate.format_sql">true</property>
     <property name="hibernate.current_session_context_class">thread</property>
     <property name="hibernate.transaction.jta.platform">org.hibernate.service.jta.platform.internal.JBossAppServerJtaPlatform</property>
+    <property name="hibernate.connection.isolation">4</property>
+
 
 
     <mapping class="model.Fio"/>
