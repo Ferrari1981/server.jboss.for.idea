@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 
-@WebServlet( value="/dsu1glassfishatomic.glassfish.download",asyncSupported = true)
+@WebServlet( value="/sous.jboss.download",asyncSupported = true)
 public class DSU1DonwloadsServlet extends HttpServlet {
     private      ServletContext    ЛОГ;
     @EJB

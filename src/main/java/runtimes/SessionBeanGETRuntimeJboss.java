@@ -165,17 +165,6 @@ public class SessionBeanGETRuntimeJboss {// extends WITH
             String queryСканируемИмяИпароль;
             String HeaderСодержимоеРасшифрован = null;
 
-
-
-            Integer IDПолученныйИзSQlServerПосик = Optional
-                    .ofNullable(ЛОГ.getAttribute("IDПолученныйИзSQlServerПосик").toString()).map(Integer::new)
-                    .orElse(0);
-            System.out.println("  IDПолученныйИзSQlServerПосик " + IDПолученныйИзSQlServerПосик);
-            Query queryДляHiberite = null;
-            List<?> ЛистДанныеОтHibenide  = new ArrayList<>();
-
-
-
             /// TODO ПАРАМЕНТ #1
             ПараметрИмяТаблицыОтАндройдаGET = Optional.ofNullable(request.getParameter("ИмяТаблицыОтАндройда"))
                     .map(String::trim).orElse("");

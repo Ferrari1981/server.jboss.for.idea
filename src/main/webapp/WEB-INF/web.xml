@@ -37,7 +37,7 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>DSU1DonwloadsServlet</servlet-name>
-        <url-pattern>/dsu1glassfishatomic.glassfish.download/*</url-pattern>
+        <url-pattern>/sous.jboss.download</url-pattern>
     </servlet-mapping>
 
 
@@ -49,7 +49,7 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>DSU1ScannerServlet</servlet-name>
-        <url-pattern>/dsu1glassfishatomic.glassfish.scanner/*</url-pattern>
+        <url-pattern>/sous.jboss.scanner</url-pattern>
     </servlet-mapping>
 
     <servlet>
@@ -59,7 +59,7 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>DSU1ServletRuntimeJboss</servlet-name>
-        <url-pattern>/dsu1glassfishatomic.glassfish.runtimejboss/*</url-pattern>
+        <url-pattern>/sous.jboss.runtimejboss</url-pattern>
     </servlet-mapping>
 
     <servlet>
@@ -69,7 +69,7 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>DSU1ServletAuthentication</servlet-name>
-        <url-pattern>/dsu1glassfishatomic.glassfish.authentication/*</url-pattern>
+        <url-pattern>/sous.jboss.authentication</url-pattern>
     </servlet-mapping>
 
 
