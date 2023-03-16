@@ -19,15 +19,14 @@ import java.nio.charset.StandardCharsets;
 
 @WebServlet( value="/sous.jboss.tabel",asyncSupported = true)
 public class DSU1JsonServlet extends HttpServlet {
-    private     Session getSession;
     private      ServletContext    ЛОГ;
     @EJB
     private BeanGET СессионыйБинGET;
     @EJB
     private BeanPOST СессионыйБинPOST;
-    @Inject
-    MyGetHibernate myGetHibernate;
 
+    @Inject @ProducedCard
+    SessionFactory sessionSousJboss;
 
     DSU1JsonServlet(){
         System.out.println(" class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -45,7 +44,7 @@ public class DSU1JsonServlet extends HttpServlet {
           resp.setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
            ЛОГ = getServletContext();
                     //TODO ЗАПУСКАЕМ КОДЕ МЕТОДА GET()
-                    СессионыйБинGET.МетодБинаGET(ЛОГ, req, resp,myGetHibernate.sessionSousJboss());
+                    СессионыйБинGET.МетодБинаGET(ЛОГ, req, resp,sessionSousJboss);
                     ЛОГ.log("\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                             " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
@@ -69,7 +68,7 @@ public class DSU1JsonServlet extends HttpServlet {
             req.setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
             resp.setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
             //TODO ЗАПУСКАЕМ КОДЕ МЕТОДА POST()
-         	СессионыйБинPOST.МетодБинаPOST(ЛОГ,req,resp,myGetHibernate.sessionSousJboss());
+         	СессионыйБинPOST.МетодБинаPOST(ЛОГ,req,resp,sessionSousJboss);
             ЛОГ.log("\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
                     " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
                     " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+((HttpServletRequest) req).getPathInfo());
