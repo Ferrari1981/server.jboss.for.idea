@@ -84,9 +84,6 @@ public class DSU1JsonServlet extends HttpServlet {
 
     public void destroy() {
       try{
-         /* if (sessionSousJboss!=null && sessionSousJboss.isOpen()) {
-              sessionSousJboss.close();
-          }*/
           ЛОГ.log("\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
                 " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
                 " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber());
