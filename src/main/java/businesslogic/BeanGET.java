@@ -13,10 +13,13 @@ import javax.inject.Inject;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.transaction.Transactional;
 
 import com.sun.istack.NotNull;
 import dsu1glassfishatomic.SubClassWriterErros;
 import org.hibernate.SessionFactory;
+
+import static org.hibernate.type.StandardBasicTypes.SERIALIZABLE;
 
 /**
  * Session Bean implementation class BeanGET
