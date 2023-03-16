@@ -5,6 +5,7 @@ import dsu1glassfishatomic.SubClassWriterErros;
 import org.hibernate.Session;
 
 import javax.ejb.EJB;
+import javax.enterprise.inject.spi.InjectionPoint;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
