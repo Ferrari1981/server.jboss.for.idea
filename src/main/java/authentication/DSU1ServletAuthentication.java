@@ -20,7 +20,11 @@ public class DSU1ServletAuthentication extends HttpServlet {
     @EJB
     private SessionBeanGETAuthentication sessionBeanGETAuthentication;
 
-
+    DSU1ServletAuthentication(){
+        System.out.println(" class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber());
+    }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

@@ -19,6 +19,16 @@ public class DSU1DonwloadsServlet extends HttpServlet {
     @EJB
     SessionBeanDownloadPO sessionBeanDownloadPO;
 
+    DSU1DonwloadsServlet(){
+        System.out.println(" class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber());
+
+    }
+
+
+
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
      // super.doGet(req, resp);

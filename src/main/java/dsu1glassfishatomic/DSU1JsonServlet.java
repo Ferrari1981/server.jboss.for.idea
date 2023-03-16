@@ -28,6 +28,15 @@ public class DSU1JsonServlet extends HttpServlet {
     @Inject
     MyGetHibernate myGetHibernate;
 
+
+    DSU1JsonServlet(){
+        System.out.println(" class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber());
+    }
+
+
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
      // super.doGet(req, resp);
