@@ -25,7 +25,8 @@ public class DSU1JsonServlet extends HttpServlet {
     private BeanGET СессионыйБинGET;
     @EJB
     private BeanPOST СессионыйБинPOST;
-
+    @Inject
+    MyGetHibernate myGetHibernate;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -35,7 +36,7 @@ public class DSU1JsonServlet extends HttpServlet {
           resp.setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
            ЛОГ = getServletContext();
                     //TODO ЗАПУСКАЕМ КОДЕ МЕТОДА GET()
-                    СессионыйБинGET.МетодБинаGET(ЛОГ, req, resp,null);
+                    СессионыйБинGET.МетодБинаGET(ЛОГ, req, resp,myGetHibernate.sessionSousJboss());
                     ЛОГ.log("\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                             " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
@@ -59,7 +60,7 @@ public class DSU1JsonServlet extends HttpServlet {
             req.setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
             resp.setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
             //TODO ЗАПУСКАЕМ КОДЕ МЕТОДА POST()
-         	СессионыйБинPOST.МетодБинаPOST(ЛОГ,req,resp,null);
+         	СессионыйБинPOST.МетодБинаPOST(ЛОГ,req,resp,myGetHibernate.sessionSousJboss());
             ЛОГ.log("\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
                     " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
                     " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+((HttpServletRequest) req).getPathInfo());
