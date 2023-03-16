@@ -73,15 +73,15 @@
 <h2><i>     <font size="6" color="#fa8e47" face="serif">"Версия 805  Hibernate and Jakson"</font> </i></h2>
 <br><i>----------------------------------------------------------------------------------------------------</i><br>
 <br/>
-<a href="dsu1.glassfish.atomic">Нажми Пинг dsu1.glassfish.atomic  </a>
+<a href="sous.jboss.tabel">Нажми Пинг dsu1.glassfish.atomic  </a>
 <br><i>----------------------------------------------------------------------------------------------------</i><br>
-<a href="dsu1glassfishatomic.glassfish.download">Нажми Пинг dsu1glassfishatomic.glassfish.download  </a>
+<a href="sous.jboss.download">Нажми Пинг dsu1glassfishatomic.glassfish.download  </a>
 <br><i>----------------------------------------------------------------------------------------------------</i><br>
-<a href="dsu1glassfishatomic.glassfish.scanner">Нажми Пинг dsu1glassfishatomic.glassfish.scanner  </a>
+<a href="sous.jboss.scanner">Нажми Пинг dsu1glassfishatomic.glassfish.scanner  </a>
 <br><i>----------------------------------------------------------------------------------------------------</i><br>
-<a href="dsu1glassfishatomic.glassfish.runtimejboss">Нажми Пинг dsu1glassfishatomic.glassfish.runtimejboss </a>
+<a href="sous.jboss.runtimejboss">Нажми Пинг dsu1glassfishatomic.glassfish.runtimejboss </a>
 <br><i>----------------------------------------------------------------------------------------------------</i><br>
-<a href="dsu1glassfishatomic.glassfish.authentication">Нажми Пинг dsu1glassfishatomic.glassfish.authentication  </a>
+<a href="sous.jboss.authentication">Нажми Пинг dsu1glassfishatomic.glassfish.authentication  </a>
 <br><i>----------------------------------------------------------------------------------------------------</i><br>
 <input type="hidden" name="ipaddress" value="<%=request.getRemoteAddr()%>"/>
 <br><i>----------------------------------------------------------------------------------------------------</i><br>

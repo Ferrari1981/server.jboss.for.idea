@@ -20,6 +20,14 @@ public class FilterRuntime implements Filter {
     private ServletContext ЛОГ;
 
 
+    public void init(FilterConfig fConfig) throws ServletException {
+        ЛОГ = fConfig.getServletContext();
+        ЛОГ.log("\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
+                " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
+                " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n");
+    }
+
+
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         // TODO Auto-generated method stub
         try {
