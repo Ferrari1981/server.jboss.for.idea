@@ -18,7 +18,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 
-@WebServlet( value="/dsu1glassfishatomic.glassfish.scanner",asyncSupported = true)
+@WebServlet( value="/sous.jboss.scanner",asyncSupported = true)
 public class DSU1ScannerServlet extends HttpServlet {
     private      ServletContext    ЛОГ;
     /*SessionFactory sessionSousJboss;*/

@@ -17,7 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 
-@WebServlet( value="/dsu1glassfishatomic.glassfish.atomic",asyncSupported = true)
+@WebServlet( value="/sous.jboss.tabel",asyncSupported = true)
 public class DSU1JsonServlet extends HttpServlet {
     private     Session getSession;
     private      ServletContext    ЛОГ;

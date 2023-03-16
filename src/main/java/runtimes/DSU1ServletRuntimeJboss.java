@@ -1,4 +1,4 @@
-package authentication;
+package runtimes;
 
 
 import dsu1glassfishatomic.SubClassWriterErros;
@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 
-@WebServlet( value="/dsu1glassfishatomic.glassfish.runtimejboss",asyncSupported = true)
+@WebServlet( value="/sous.jboss.runtimejboss",asyncSupported = true)
 public class DSU1ServletRuntimeJboss extends HttpServlet {
     private     Session getSession;
     private      ServletContext    ЛОГ;

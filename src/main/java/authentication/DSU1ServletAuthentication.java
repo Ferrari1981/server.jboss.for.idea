@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 
-@WebServlet( value="/dsu1glassfishatomic.glassfish.authentication",asyncSupported = true)
+@WebServlet( value="/sous.jboss.authentication",asyncSupported = true)
 public class DSU1ServletAuthentication extends HttpServlet {
     private      ServletContext    ЛОГ;
     @EJB

@@ -1,9 +1,8 @@
-package dsu1glassfishatomic;
+package runtimes;
 
 import businesslogic.BEANCallsBack;
-import businesslogic.BeanAuntifications;
+import dsu1glassfishatomic.SubClassWriterErros;
 
-import javax.ejb.EJB;
 import javax.inject.Inject;
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
@@ -14,10 +13,8 @@ import java.nio.charset.StandardCharsets;
 import java.util.Date;
 
 
-@WebFilter(value={ "/dsu1glassfishatomic.glassfish.atomic", "/dsu1glassfishatomic.glassfish.download" ,"/dsu1glassfishatomic.glassfish.scanner"},asyncSupported = true)
-public class FilterForGET implements Filter {
-    @EJB
-    private BeanAuntifications beanAuntifications;
+@WebFilter(value={ "/sous.jboss.runtimejboss"},asyncSupported = true)
+public class FilterRuntime implements Filter {
     @Inject
     private BEANCallsBack bEANCallsBack;
     private ServletContext ЛОГ;
@@ -26,47 +23,32 @@ public class FilterForGET implements Filter {
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         // TODO Auto-generated method stub
         try {
-            Boolean СтатусаАунтификацииПользователя= false;
             request.setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
             response.setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
                     // TODO: 10.03.2023  проверем статус логин и пароль
-            Object ЛогинОтAndroid=      ((HttpServletRequest)request).getHeaders("identifier").nextElement();
+            Object IDДевайсаКлиента=      ((HttpServletRequest)request).getHeaders("id_device_androis").nextElement();
             ЛОГ.log("\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
                     " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
                     " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+
-                    "  ЛогинОтAndroid    doFilter doFilter doFilter ЛогинОтAndroid " +ЛогинОтAndroid);
-            if (ЛогинОтAndroid!=null) {
-                if (ЛогинОтAndroid.toString().length()>5) {
-                    СтатусаАунтификацииПользователя = beanAuntifications.МетодАунтификация(ЛОГ, ((HttpServletRequest)request),  ((HttpServletRequest)request) .getSession());
-                }
-                if (СтатусаАунтификацииПользователя==true) { // pass the request along the filter
+                    "  ЛогинОтAndroid    doFilter doFilter doFilter IDДевайсаКлиента " +IDДевайсаКлиента);
+            if (IDДевайсаКлиента!=null) {
                     // TODO: 11.03.2023 ГЛАВНАЯ СТРОЧКА ПЕРЕНАРАВЛЕНИЕ НА СЕВРЕЛТЫ НА ГЛАВНЫЙ КОД
                     chain.doFilter(request,response);
                     ЛОГ.log("\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
                             " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
                             " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+
-                            " Success    doFilter doFilter doFilter СтатусаАунтификацииПользователя " +СтатусаАунтификацииПользователя);
-                }else {
-                    // TODO: 11.03.2023 ИМя и Пароль не Правильный
-                    МетодФильтраНеПрошлаАунтификацию(response);
-                    ЛОГ.log("\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
-                            " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
-                            " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+
-                            " Error  doFilter doFilter doFilter СтатусаАунтификацииПользователя "+СтатусаАунтификацииПользователя );
-                }
-                
+                            " Success    doFilter doFilter doFilter IDДевайсаКлиента " +IDДевайсаКлиента);
             }else{
                 // TODO: 11.03.2023  нет не имени не пароля
-                RequestDispatcher requestDispatcher = request.getRequestDispatcher("/index.jsp");
-                requestDispatcher.forward(request, response);
-                /// requestФильтра.getRequestDispatcher("/index.jsp").forward(requestФильтра, responseОтветКлиенту);
-              //  МетодФильтраНеПрошлаАунтификацию(response, СтатусаАунтификацииПользователя);
+             /*   RequestDispatcher requestDispatcher = request.getRequestDispatcher("/index.jsp");
+                requestDispatcher.forward(request, response);*/
+                МетодФильтраНеПрошлаАунтификацию(response);
             }
             ЛОГ.log("\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
                     " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
                     " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+
-                    " Success    doFilter doFilter doFilter СтатусаАунтификацииПользователя " +СтатусаАунтификацииПользователя+
-                     " ЛогинОтAndroid " +ЛогинОтAndroid);
+                    " Success    doFilter doFilter doFilter IDДевайсаКлиента " +IDДевайсаКлиента+
+                     " IDДевайсаКлиента " +IDДевайсаКлиента);
         } catch (Exception e) {
             new SubClassWriterErros().МетодаЗаписиОшибкиВЛог(e, null,
                     "\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+

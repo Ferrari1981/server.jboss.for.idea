@@ -22,7 +22,7 @@
     </servlet>
 <servlet-mapping>
     <servlet-name>DSU1JsonServlet</servlet-name>
-    <url-pattern>/dsu1glassfishatomic.glassfish.atomic/*</url-pattern>
+    <url-pattern>/sous.jboss.tabel</url-pattern>
 </servlet-mapping>
 
 
@@ -54,7 +54,7 @@
 
     <servlet>
         <servlet-name>DSU1ServletRuntimeJboss</servlet-name>
-        <servlet-class>authentication.DSU1ServletRuntimeJboss</servlet-class>
+        <servlet-class>runtimes.DSU1ServletRuntimeJboss</servlet-class>
         <async-supported>true</async-supported>
     </servlet>
     <servlet-mapping>
@@ -79,7 +79,7 @@
 
     <filter>
         <filter-name>FilterForGET</filter-name>
-        <filter-class>dsu1glassfishatomic.FilterForGET</filter-class>
+        <filter-class>dsu1glassfishatomic.FilterPublic</filter-class>
         <async-supported>true</async-supported>
     </filter>
     <filter-mapping>
@@ -97,7 +97,7 @@
 
     <filter>
         <filter-name>FilterForGETRuntimeJboss</filter-name>
-        <filter-class>authentication.FilterForGETRuntimeJboss</filter-class>
+        <filter-class>runtimes.FilterRuntime</filter-class>
         <async-supported>true</async-supported>
     </filter>
     <filter-mapping>
