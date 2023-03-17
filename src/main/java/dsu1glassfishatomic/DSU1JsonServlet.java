@@ -24,6 +24,8 @@ public class DSU1JsonServlet extends HttpServlet {
     private BeanGET СессионыйБинGET;
     @EJB
     private BeanPOST СессионыйБинPOST;
+    @Inject @ProducedCard
+    SessionFactory sessionSousJboss;
 
     DSU1JsonServlet(){
         System.out.println(" class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
