@@ -81,6 +81,24 @@ public class DSU1JsonServlet extends HttpServlet {
     }
     }
 
+    @Override
+    public void init() throws ServletException {
+        super.init();
+        try{
+            ЛОГ = getServletContext();
+            ЛОГ.log("\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
+                    " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
+                    " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+"   sessionSousJboss.isOpen() " +  sessionSousJboss.isOpen());
+    } catch (Exception e) {
+        new SubClassWriterErros().МетодаЗаписиОшибкиВЛог(e, null,
+                "\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
+                        " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
+                        " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n",
+                Thread.currentThread().getStackTrace()[2],ЛОГ,ЛОГ.getServerInfo().toLowerCase());
+
+    }
+    }
+
     public void destroy() {
       try{
           ЛОГ.log("\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
