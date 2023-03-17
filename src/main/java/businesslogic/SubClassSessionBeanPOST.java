@@ -2,6 +2,7 @@ package businesslogic;
 
 
 
+import dsu1glassfishatomic.ProducedCard;
 import dsu1glassfishatomic.SubClassWriterErros;
 import org.hibernate.SessionFactory;
 
@@ -78,7 +79,6 @@ public class SubClassSessionBeanPOST {//extends    DSU1JsonServlet
     int СколькСтрокРезультатЕслиТакойПользователь_post_метод = 0;
     String ПарольПолученныйИзSQlServerПосик_МетодPOST = null;
 
-
     public SubClassSessionBeanPOST() throws ClassNotFoundException, SQLException, NoSuchAlgorithmException {
         System.out.println("Конструктор  SubClassМетодаBeanSessionPOST");
     }
@@ -92,8 +92,7 @@ public class SubClassSessionBeanPOST {//extends    DSU1JsonServlet
     protected StringBuffer ГлавныйМетод_МетодаPOST(
             @NotNull HttpServletRequest request,
             @NotNull HttpServletResponse response,
-            @NotNull ServletContext ЛОГ,
-            @NotNull SessionFactory sessionSousJbossRuntime) throws SecurityException {
+            @NotNull ServletContext ЛОГ) throws SecurityException {
 
         StringBuffer ОтветОтГлавного_МетодаPOSTДляОтправкиНААндройд = null;
         try {
@@ -131,7 +130,7 @@ public class SubClassSessionBeanPOST {//extends    DSU1JsonServlet
                         ОтветОтГлавного_МетодаPOSTДляОтправкиНААндройд =
                                 МетодПарсингаJSONФайлПришелОтКлиента(response,
                                         ПараметрИмяТаблицыОтАндройдаPost,
-                                        jsonReaderПришеоОтКлиентаJSON_P,sessionSousJbossRuntime);
+                                        jsonReaderПришеоОтКлиентаJSON_P);
                         ЛОГ.log(" responОтветОтГлавного_МетодаPOSTДляОтправкиНААндройдse " + ОтветОтГлавного_МетодаPOSTДляОтправкиНААндройд);
                     }
                     break;
@@ -151,8 +150,7 @@ public class SubClassSessionBeanPOST {//extends    DSU1JsonServlet
     protected StringBuffer МетодПарсингаJSONФайлПришелОтКлиента(
             @NotNull HttpServletResponse response,
             @NotNull String ПараметрИмяТаблицыОтАндройдаPost,
-            @NotNull JsonReader jsonReaderПришеоОтКлиентаJSON_P,
-            @NotNull  @NotNull SessionFactory sessionSousJbossRuntime)
+            @NotNull JsonReader jsonReaderПришеоОтКлиентаJSON_P)
             throws InterruptedException, SQLException, BrokenBarrierException, IOException {
         StringBuffer ОтветОтГлавного_МетодаPOSTДляОтправкиНААндройд = new StringBuffer();
         try {
@@ -170,7 +168,7 @@ public class SubClassSessionBeanPOST {//extends    DSU1JsonServlet
             //TODO ГЛАВНЫЙ МЕТОДА POST() КОТОРЫЙ ВСТАВЛЯЕТ  И/ИЛИ ОБНОВЛЕНИЯ ДАННЫХ
             ОтветОтГлавного_МетодаPOSTДляОтправкиНААндройд =
                     subClassGenerateJson.МетодГенерацияJson(ЛОГ, JSONОБьектjsonReaderПришеоОтКлиентаJSON_P
-                            , ПараметрИмяТаблицыОтАндройдаPost,sessionSousJbossRuntime);
+                            , ПараметрИмяТаблицыОтАндройдаPost);
             ЛОГ.log(" jsonReaderПришеоОтКлиентаJSON_P " + jsonReaderПришеоОтКлиентаJSON_P.toString());
         } catch (Exception e) {
             new SubClassWriterErros().МетодаЗаписиОшибкиВЛог(e,

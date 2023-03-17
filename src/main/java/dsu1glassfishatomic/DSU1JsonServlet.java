@@ -25,9 +25,6 @@ public class DSU1JsonServlet extends HttpServlet {
     @EJB
     private BeanPOST СессионыйБинPOST;
 
-    @Inject @ProducedCard
-    SessionFactory sessionSousJboss;
-
     DSU1JsonServlet(){
         System.out.println(" class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -44,7 +41,7 @@ public class DSU1JsonServlet extends HttpServlet {
           resp.setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
            ЛОГ = getServletContext();
                     //TODO ЗАПУСКАЕМ КОДЕ МЕТОДА GET()
-                    СессионыйБинGET.МетодБинаGET(ЛОГ, req, resp,sessionSousJboss);
+                    СессионыйБинGET.МетодБинаGET(ЛОГ, req, resp);
                     ЛОГ.log("\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                             " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
@@ -68,7 +65,7 @@ public class DSU1JsonServlet extends HttpServlet {
             req.setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
             resp.setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
             //TODO ЗАПУСКАЕМ КОДЕ МЕТОДА POST()
-         	СессионыйБинPOST.МетодБинаPOST(ЛОГ,req,resp,sessionSousJboss);
+         	СессионыйБинPOST.МетодБинаPOST(ЛОГ,req,resp);
             ЛОГ.log("\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
                     " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
                     " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+((HttpServletRequest) req).getPathInfo());

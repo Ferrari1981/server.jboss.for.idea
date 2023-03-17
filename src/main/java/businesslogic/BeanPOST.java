@@ -47,11 +47,10 @@ public class BeanPOST {
 
     public void МетодБинаPOST(@NotNull ServletContext ЛОГ,
                                @NotNull HttpServletRequest request,
-                               @NotNull  HttpServletResponse response,
-                              @NotNull SessionFactory sessionSousJbossRuntime) throws InterruptedException, ExecutionException {;
+                               @NotNull  HttpServletResponse response) throws InterruptedException, ExecutionException {;
         try {
             ///Todo  получаем данные от клиента
-            Future<StringBuffer>       БуферРезультатPOST= 	 АсинхронныйЗапускPOST(ЛОГ,request,response,sessionSousJbossRuntime);
+            Future<StringBuffer>       БуферРезультатPOST= 	 АсинхронныйЗапускPOST(ЛОГ,request,response);
           //  ЛОГ.log("  БуферРезультатGET  " + БуферРезультатPOST.get());
             ///Todo получаем данные от Клиента на Сервер
                 bEANCallsBack.МетодBackДанныеКлиенту(response, БуферРезультатPOST.get(), ЛОГ);
@@ -75,11 +74,10 @@ public class BeanPOST {
     @Asynchronous
     private Future<StringBuffer> АсинхронныйЗапускPOST( @NotNull ServletContext ЛОГ,
                                                         @NotNull HttpServletRequest request,
-                                                        @NotNull  HttpServletResponse response,
-                                                        @NotNull SessionFactory sessionSousJbossRuntime){
+                                                        @NotNull  HttpServletResponse response){
         StringBuffer БуферРезультатPOST=null;
         try {
-            БуферРезультатPOST=		subClassSessionBeanPOST.ГлавныйМетод_МетодаPOST(request, response, ЛОГ,sessionSousJbossRuntime);
+            БуферРезультатPOST=		subClassSessionBeanPOST.ГлавныйМетод_МетодаPOST(request, response, ЛОГ);
             if(БуферРезультатPOST==null) {
                 БуферРезультатPOST=new StringBuffer();
             }

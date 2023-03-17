@@ -18,6 +18,7 @@ import javax.servlet.ServletContext;
 import javax.ws.rs.Produces;
 
 import com.sun.istack.NotNull;
+import dsu1glassfishatomic.ProducedCard;
 import dsu1glassfishatomic.SubClassWriterErros;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -29,25 +30,25 @@ import org.hibernate.Transaction;
 public class SubClassGenerateJson {
     private   ServletContext ЛОГ;
     private Transaction sessionTransaction;
-
+    @Inject @ProducedCard
+    SessionFactory sessionSousJboss;
     // TODO: 09.03.2023
     StringBuffer МетодГенерацияJson(
             @NotNull ServletContext ЛОГ,
             @NotNull JsonObject JSONStremОтAndrod
-            , @NotNull String ПараметрИмяТаблицыОтАндройдаPost,
-            @NotNull  SessionFactory sessionSousJbossRuntime) throws SQLException {
+            , @NotNull String ПараметрИмяТаблицыОтАндройдаPost) throws SQLException {
 
         StringBuffer БуферОтветКлиентуОтСервера=new StringBuffer();
         /// javax.persistence.EntityManager  МенеджерJTA = ФабрикаДляМенеждера.createEntityManager();
         try {
             this.ЛОГ=ЛОГ;
             // TODO: 11.03.2023  Получении Сесии Hiberrnate
-           Session    session =sessionSousJbossRuntime.openSession();
+           Session    session =sessionSousJboss.openSession();
             // TODO: 14.03.2023  Запускаем Транзакцию
              sessionTransaction =session.getTransaction() ;
             // TODO: 14.03.2023  Запускает Транзакции
             sessionTransaction.begin();
-            ЛОГ.log(" jsonReaderПришеоОтКлиентаJSON_P "+JSONStremОтAndrod.toString()  + " session  " +session + " sessionSousJbossRuntime " +sessionSousJbossRuntime);
+            ЛОГ.log(" jsonReaderПришеоОтКлиентаJSON_P "+JSONStremОтAndrod.toString()  + " session  " +session + " sessionSousJboss " +sessionSousJboss);
             //TODO ГЛАВЕНЫЙ ЦИКЛ ОБРАБОТКИ ДАННЫХ В МЕТОДЕ  POST
             JSONStremОтAndrod.entrySet().forEach(ВнешнаяСтрокаJSON -> {
                 //  МенеджерJTA.getTransaction().begin();

@@ -27,6 +27,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.Produces;
 
+import dsu1glassfishatomic.ProducedCard;
 import org.hibernate.*;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -65,6 +66,9 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
     private    Session session;
     private    Transaction sessionTransaction  ;
 
+    @Inject @ProducedCard
+    SessionFactory sessionSousJboss;
+
     public SubClassSessionBeanМетодаGET() {
 
         System.out.println("Конструктор  SubClassSessionBeanМетодаGET");
@@ -73,8 +77,7 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
 
     @SuppressWarnings({ "unused", "deprecation", "rawtypes", "unchecked" })
     protected StringBuffer ГлавныйМетод_МетодаGET(@NotNull HttpServletRequest request,
-                                                  @NotNull ServletContext ЛОГ,
-                                                  @NotNull SessionFactory sessionSousJbossRuntime) throws SecurityException, SQLException {
+                                                  @NotNull ServletContext ЛОГ) throws SecurityException, SQLException {
         // TODO Auto-generated method stub
         System.out.println("Конструктор  ЗАПУСК МЕТОДА ИЗ GET ()  ГлавныйМетод_МетодаGET()");
         StringBuffer БуферCallsBackДляAndroid = null;
@@ -154,7 +157,7 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
 
             if (IDПолученныйИзSQlServerПосик>0) {
                 // TODO: 10.03.2023 получение сессиии HIREBIANTE
-                session=   sessionSousJbossRuntime.openSession();
+                session=   sessionSousJboss.openSession();
                 sessionTransaction = session.getTransaction();
                 ЛОГ.log("\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
                         " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
@@ -209,6 +212,8 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
 
             JobsFroServerЗаданиеДляСервера = Optional.ofNullable(request.getParameter("ЗаданиеДляСервлетаВнутриПотока"))
                     .orElse("");
+// TODO: 17.03.2023 ЗАПУСКАЕТ ТРАНЗАКЦИЮ BEGIN
+            sessionTransaction.begin();
 
             switch (JobsFroServerЗаданиеДляСервера) {
                 // TODO ЗАДАНИЕ ДЛЯ СЕРВЕР JOBSERVERTASK #1
@@ -230,7 +235,6 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
                             + JobsServerСазаданиеДляСервера+"  ПараметрВерсияДанных" + ПараметрВерсияДанных
                             + " ПараметрИмяТаблицыОтАндройдаGET " + ПараметрИмяТаблицыОтАндройдаGET);
                     ////////////// ГЕНЕРАЦИЯ JSON ДЛЯ ВСЕХ  ТАБЛИЦ
-                    sessionTransaction.begin();
                     // TODO ГЛАВНЫЙ РАСПРЕДЕЛИТЕЛЬ КАКАЯ ТЕКУЩАЯ ТАБЛИЦА ОБРАБАТЫВАЕМСЯ
                     switch (ПараметрИмяТаблицыОтАндройдаGET.trim()) {
                         case "organization":
@@ -473,6 +477,17 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
                                     "  queryДляHiberite  " +queryДляHiberite);//gson Gson
                             break;
 
+                        case "prof":
+                            // TODO
+                            queryДляHiberite = session.createQuery(
+                                    " SELECT  pr FROM Prof pr  WHERE pr .currentTable > :id");
+                            queryДляHiberite.setLockOptions(new LockOptions(LockMode.PESSIMISTIC_READ).setTimeOut( LockOptions.WAIT_FOREVER ));
+                            queryДляHiberite.setParameter("id",new BigDecimal(ПараметрВерсияДанных));//8641 8625
+                            ЛистДанныеОтHibenide =( List<model.Prof>)  queryДляHiberite.getResultList();
+                            ЛОГ.  log(" ЛистДанныеОтHibenide "+ЛистДанныеОтHibenide+ " ЛистДанныеОтHibenide.size() " +ЛистДанныеОтHibenide.size()+
+                                    "  queryДляHiberite  " +queryДляHiberite);//gson Gson
+                            break;
+
 
 
                     }//TODO КОНЕЦ РАСПРЕДЕНИЕ ТАБЛИЦ 	switch (ПараметрИмяТаблицыОтАндройдаGET.trim()) {
@@ -523,7 +538,6 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
                 default:
                     break;
             }
-
             // TODO КОГДА ЛОГИН И ПАРОЛЬ НЕТ ДОСТУПА
               МетодЗакрываемСессиюHibernate(session);
             //// TODO ЗАКРЫЫВАЕМ КУРСОРЫ ПОСЛЕ ГЕНЕРАЦИИ JSON ДЛЯ КЛИЕНТА

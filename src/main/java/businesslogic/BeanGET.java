@@ -52,11 +52,10 @@ public class BeanGET {
     @SuppressWarnings("unused")
     public void  МетодБинаGET(@NotNull ServletContext ЛОГ,
                               @NotNull HttpServletRequest request,
-                              @NotNull  HttpServletResponse response,
-                              @NotNull SessionFactory sessionSousJbossRuntime) throws InterruptedException, ExecutionException {
+                              @NotNull  HttpServletResponse response) throws InterruptedException, ExecutionException {
         try {
             // TODO: 10.03.2023  данные от GET метода
-            Future<StringBuffer>       БуферРезультатGET= 	 АсинхронныйЗапускGET(ЛОГ,request,sessionSousJbossRuntime);
+            Future<StringBuffer>       БуферРезультатGET= 	 АсинхронныйЗапускGET(ЛОГ,request);
            // ЛОГ.log( "  БуферРезультатGET  " + БуферРезультатGET.get());
             ///Todo отправляем  клиенту ответ от серверац
                 bEANCallsBack.МетодBackДанныеКлиенту(response, БуферРезультатGET.get(), ЛОГ);
@@ -79,11 +78,10 @@ public class BeanGET {
     @SuppressWarnings("unused")
     @Asynchronous
     private Future<StringBuffer> АсинхронныйЗапускGET(@NotNull ServletContext ЛОГ,
-                                                       @NotNull HttpServletRequest request,
-                                                      @NotNull SessionFactory sessionSousJbossRuntime){
+                                                       @NotNull HttpServletRequest request){
         StringBuffer БуферРезультатGET=null;
         try {
-            БуферРезультатGET=		subClassSessionBeanМетодаGET.ГлавныйМетод_МетодаGET(request,  ЛОГ,sessionSousJbossRuntime);
+            БуферРезультатGET=		subClassSessionBeanМетодаGET.ГлавныйМетод_МетодаGET(request,  ЛОГ);
             if(БуферРезультатGET==null) {
                 БуферРезультатGET=new StringBuffer();
             }
