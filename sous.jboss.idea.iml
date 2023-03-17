@@ -20,6 +20,7 @@
         <setting name="validation-enabled" value="true" />
         <datasource-mapping>
           <factory-entry name="default" />
+          <factory-entry name="noname-a.xml@0" value="54e74b37-aace-4165-aebc-38ee60fba547" />
         </datasource-mapping>
         <naming-strategy-map />
         <deploymentDescriptor name="persistence.xml" url="file://$MODULE_DIR$/src/main/resources/META-INF/persistence.xml" />
@@ -29,6 +30,7 @@
       <configuration>
         <datasource-map>
           <unit-entry name="hibernate.cfg.xml" value="9456a5af-8214-4981-a621-aee5f5038f53" />
+          <unit-entry name="hibernate_r.cfg.xml" value="a2835cce-7e66-4d95-87bd-fd3c6ac73e5b" />
         </datasource-map>
         <naming-strategy-map />
         <deploymentDescriptor name="hibernate.cfg.xml" url="file://$MODULE_DIR$/src/main/resources/hibernate.cfg.xml" />
