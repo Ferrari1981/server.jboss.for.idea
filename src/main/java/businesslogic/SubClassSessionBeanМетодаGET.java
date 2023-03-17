@@ -550,7 +550,10 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
             if (session.isDirty()) {
                 session.flush();
             }
-            if (session.isOpen() || session.isConnected()) {
+            if (session.isConnected()) {
+                session.disconnect();
+            }
+            if (session.isOpen() ) {
                 session.clear();
                 session.close();
             }

@@ -508,10 +508,14 @@ public class SubClassGenerateJson {
             if (session.isDirty()) {
                 session.flush();
             }
-            if (session.isOpen() || session.isConnected()) {
+            if ( session.isConnected()) {
+                session.disconnect();
+            }
+            if (session.isOpen() ) {
                 session.clear();
                 session.close();
             }
+
             ЛОГ.log("\n МетодЗакрываемСессиюHibernate "+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
                     " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
                     " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n" +  "session " +session);
