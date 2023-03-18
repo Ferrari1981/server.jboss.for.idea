@@ -1,9 +1,9 @@
 package model;
 
-import javax.persistence.*;
 import java.io.Serializable;
+import javax.persistence.*;
 import java.math.BigDecimal;
-import java.sql.Date;
+import java.util.Date;
 
 @Entity
 @Table(name = "prof", schema = "dbo", catalog = "storage")
