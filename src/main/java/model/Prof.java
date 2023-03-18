@@ -2,6 +2,7 @@ package model;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.sql.Date;
 
 @Entity
@@ -23,14 +24,15 @@ public class Prof implements Serializable {
     @Column(name = "user_update", nullable = false)
     private int userUpdate;
 
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "date_update", nullable = false)
     private Date dateUpdate;
 
     @Column(name = "current_table", nullable = true, precision = 0)
-    private Long currentTable;
+    private BigDecimal currentTable;
 
     @Column(name = "uuid", nullable = true, precision = 0)
-    private Long uuid;
+    private BigDecimal uuid;
 
     public int getId() {
         return id;
@@ -64,19 +66,21 @@ public class Prof implements Serializable {
         this.dateUpdate = dateUpdate;
     }
 
-    public Long getCurrentTable() {
+    public BigDecimal getCurrentTable() {
         return currentTable;
     }
 
-    public void setCurrentTable(Long currentTable) {
+    public void setCurrentTable(BigDecimal currentTable) {
+
         this.currentTable = currentTable;
     }
 
-    public Long getUuid() {
+    public BigDecimal getUuid() {
         return uuid;
     }
 
-    public void setUuid(Long uuid) {
+    public void setUuid(BigDecimal uuid) {
+
         this.uuid = uuid;
     }
 
