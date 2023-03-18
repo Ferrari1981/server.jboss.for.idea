@@ -47,11 +47,13 @@ public class SubClassWriterErros {
 
         ////// начало запись в файл
         System.err.println("public class ClassWriterErrorProjectDsu1 {  Метод : ERROR B SAMOM MOTODE ERROR GENERETOR " + e.toString());
-        if (ЛОГ!=null) {
-            ЛОГ.log("ERROR ???????????????????????????????????????? /САМАОШИБКАДЛЯЗАПИСИ " + "\n"
-                    + САМАОШИБКАДЛЯЗАПИСИ + "\n" + "e.fillInStackTrace().getMessage() " + e.fillInStackTrace().getMessage()
-                    + "\n" + "###ERROR######" + "\n" + new Date());
-        }
+
+        ЛогинПолученныйОтКлиента=  ЛОГ.getAttribute("ЛогинПолученныйОтКлиента").toString();
+      String  IDДевайсаПолученныйОтКлиента = ЛОГ.getAttribute("АдуДевайсяКлиента").toString();
+        ЛОГ.log(
+                "\n"+" Inside Error.... class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
+                        " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"  + " ЛогинПолученныйОтКлиента " +ЛогинПолученныйОтКлиента+
+         " IDДевайсаПолученныйОтКлиента "+ IDДевайсаПолученныйОтКлиента);
         try  (PrintWriter pw =
                       new PrintWriter(new OutputStreamWriter(new FileOutputStream(new File(путьЗаписиЖурналаКудаЗаписовать), true), StandardCharsets.UTF_8));) {
             //
@@ -69,6 +71,11 @@ public class SubClassWriterErros {
             pw.append("Логин чья ошибка");
             pw.append("\n");
             pw.append(ЛогинПолученныйОтКлиента);
+            pw.println("НАЗВАНИЕ ТАБЛИЦЫ ГДЕ ПРОИЗОШДА ОШИБКА//CURRENT TABLE ASYNC :: ");
+            pw.append("\n");
+            pw.append("ID Девайса Пользователя чья ошибка");
+            pw.append("\n");
+            pw.append(IDДевайсаПолученныйОтКлиента);
             pw.println("НАЗВАНИЕ ТАБЛИЦЫ ГДЕ ПРОИЗОШДА ОШИБКА//CURRENT TABLE ASYNC :: ");
             pw.append("\n");
             pw.println(ПараметрИмяТаблицыОтАндройдаGET);
