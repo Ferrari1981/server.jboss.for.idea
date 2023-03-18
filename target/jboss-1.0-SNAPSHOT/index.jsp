@@ -3,8 +3,13 @@
          pageEncoding="UTF-8"%>
 
 <%@ page import="java.util.*, java.text.* ,java.net.ServerSocket , java.net.UnknownHostException, java.io.BufferedReader,java.io.*,java.util.stream.*,java.nio.charset.Charset"%>
+<%@ page import="javax.inject.Inject" %>
+<%@ page import="dsu1glassfishatomic.ProducedCard" %>
+<%@ page import="org.hibernate.SessionFactory" %>
 <%!
-
+    @Inject
+    @ProducedCard
+    SessionFactory sessionSousJboss;
 
     String getFormattedDate()
     {
@@ -67,6 +72,7 @@
 
 <h1><i>Сегодня <%= getFormattedDate() %></i></h1>
 <h1><i>Ошибки на Сервере: <%= getSessions() %></i></h1>
+<h1><i> Статус Hibernate : <%= sessionSousJboss %></i></h1>
 <br><i>----------------------------------------------------------------------------------------------------</i><br>
 
 <h2><i> Адрес: Проездная ул., 18, Иваново, Ивановская обл.</i></h2>
