@@ -6,6 +6,8 @@
 <%@ page import="javax.inject.Inject" %>
 <%@ page import="dsu1glassfishatomic.ProducedCard" %>
 <%@ page import="org.hibernate.SessionFactory" %>
+<%@ page import="java.nio.file.Path" %>
+<%@ page import="java.nio.file.Paths" %>
 <%!
     @Inject
     @ProducedCard
@@ -93,6 +95,16 @@
 <h1><i>Сегодня <%= getFormattedDate() %></i></h1>
 <h1><i>Ошибки на Сервере: <%= getSessions() %></i></h1>
 <h1><i> Статус Hibernate : <%= sessionSousJboss %></i></h1>
+<h1><i> Request Context Path: <%= request.getContextPath() %></i></h1>
+<h1><i> Request RequestURI: <%= request.getRequestURI() %></i></h1>
+<h1><i> Request URI: <%= request.getContextPath() %></i></h1>
+<h1><i> Request URL: <%= request.getRequestURL() %></i></h1>
+<h1><i> Request getPathInfo: <%= request.getServletContext().getResourcePaths("") %></i></h1>
+<h1><i> Request getRealPath: <%= request.getServletContext().getRealPath("/") %></i></h1>
+<h1><i> Request getContextPath: <%= request.getServletContext().getContextPath() %></i></h1>
+<h1><i> exists() update_android_dsu1/output-metadata.json: <%=   Paths.get("update_android_dsu1/output-metadata.json").toFile().exists() %></i></h1>
+<h1><i> isFile() update_android_dsu1/output-metadata.json: <%=   Paths.get("update_android_dsu1/output-metadata.json").toFile().isFile() %></i></h1>
+<br><i>----------------------------------------------------------------------------------------------------</i><br>
 <br><i>----------------------------------------------------------------------------------------------------</i><br>
 
 <h2><i> Адрес: Проездная ул., 18, Иваново, Ивановская обл.</i></h2>
