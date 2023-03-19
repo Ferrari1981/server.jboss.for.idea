@@ -53,9 +53,9 @@ public class DSU1ServletAuthentication extends HttpServlet {
     }
     public void destroy() {
       try{
-          ЛОГ.log("\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
-                " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
-                " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber());
+          System.out.println(" class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                  " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                  " line " + Thread.currentThread().getStackTrace()[2].getLineNumber());
     } catch (Exception e) {
           subClassWriterErros.
                   МетодаЗаписиОшибкиВЛог(e,

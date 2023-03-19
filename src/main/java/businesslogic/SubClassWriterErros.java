@@ -67,12 +67,11 @@ public class SubClassWriterErros {
             //
             // перевод строки в байты
             pw.append("\n");
-            pw.append("\n");
             pw.append("Время");
+            pw.append("\n");
             pw.append(new Date().toGMTString().toString());
             pw.append("\n");
-            pw.append("\n");
-            pw.append("######################error start ########################### время " + new Date());
+            pw.append("######################error start JBOSS EAP ########################### время " + new Date());
             pw.append("\n");
             pw.println(ПутьНАхожденияФайлаЛогами);
             pw.append("\n");
@@ -97,12 +96,11 @@ public class SubClassWriterErros {
             pw.append("\n");
             pw.append("#####################error end ############################ " + new Date());
             pw.append("\n");
-            pw.append("\n");
             pw.append(	ЛОГ.getContextPath().toString());
             pw.append("\n");
             pw.append("		РЕальныйПутьСервера");
-            pw.append(	РЕальныйПутьСервера2);
             pw.append("\n");
+            pw.append(	РЕальныйПутьСервера2);
             pw.append("\n");
             /// todo close message send
             pw.flush();
