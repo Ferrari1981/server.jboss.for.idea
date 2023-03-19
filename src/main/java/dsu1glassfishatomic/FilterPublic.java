@@ -2,6 +2,7 @@ package dsu1glassfishatomic;
 
 import businesslogic.BEANCallsBack;
 import businesslogic.BeanAuntifications;
+import businesslogic.SubClassWriterErros;
 
 import javax.ejb.EJB;
 import javax.inject.Inject;

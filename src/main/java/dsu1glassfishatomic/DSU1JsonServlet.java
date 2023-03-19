@@ -3,6 +3,7 @@ package dsu1glassfishatomic;
 
 import businesslogic.BeanGET;
 import businesslogic.BeanPOST;
+import businesslogic.SubClassWriterErros;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 

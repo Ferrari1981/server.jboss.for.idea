@@ -3,8 +3,8 @@ package dowsloadpojboss;
 
 
 
+import businesslogic.SubClassWriterErros;
 import com.sun.istack.NotNull;
-import dsu1glassfishatomic.SubClassWriterErros;
 
 import javax.ejb.*;
 import javax.servlet.ServletContext;

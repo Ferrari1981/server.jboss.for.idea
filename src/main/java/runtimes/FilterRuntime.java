@@ -1,7 +1,7 @@
 package runtimes;
 
 import businesslogic.BEANCallsBack;
-import dsu1glassfishatomic.SubClassWriterErros;
+import businesslogic.SubClassWriterErros;
 
 import javax.inject.Inject;
 import javax.servlet.*;

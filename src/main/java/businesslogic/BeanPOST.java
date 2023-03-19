@@ -11,15 +11,12 @@ import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
-import javax.enterprise.inject.Produces;
 import javax.inject.Inject;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.sun.istack.NotNull;
-import dsu1glassfishatomic.SubClassWriterErros;
-import org.hibernate.SessionFactory;
 
 /**
  * Session Bean implementation class BeanPOST

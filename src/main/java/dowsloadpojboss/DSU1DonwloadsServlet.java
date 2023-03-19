@@ -1,7 +1,7 @@
 package dowsloadpojboss;
 
 
-import dsu1glassfishatomic.SubClassWriterErros;
+import businesslogic.SubClassWriterErros;
 
 import javax.ejb.EJB;
 import javax.servlet.ServletContext;

@@ -1,7 +1,5 @@
 package businesslogic;
 
-import dsu1glassfishatomic.SubClassWriterErros;
-
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
 import javax.servlet.ServletContext;

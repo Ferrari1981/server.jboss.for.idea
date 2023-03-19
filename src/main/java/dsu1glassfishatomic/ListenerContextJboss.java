@@ -1,5 +1,7 @@
 package dsu1glassfishatomic;
 
+import businesslogic.SubClassWriterErros;
+
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextListener;
 import javax.servlet.ServletRequestEvent;

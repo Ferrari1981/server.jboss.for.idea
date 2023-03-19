@@ -19,7 +19,6 @@ import javax.ws.rs.Produces;
 
 import com.sun.istack.NotNull;
 import dsu1glassfishatomic.ProducedCard;
-import dsu1glassfishatomic.SubClassWriterErros;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;

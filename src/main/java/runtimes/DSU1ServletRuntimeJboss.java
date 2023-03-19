@@ -1,7 +1,7 @@
 package runtimes;
 
 
-import dsu1glassfishatomic.SubClassWriterErros;
+import businesslogic.SubClassWriterErros;
 import org.hibernate.Session;
 
 import javax.ejb.EJB;

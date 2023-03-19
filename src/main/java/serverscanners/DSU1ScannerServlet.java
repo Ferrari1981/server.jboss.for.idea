@@ -1,14 +1,8 @@
 package serverscanners;
 
 
-import businesslogic.BeanGET;
-import businesslogic.BeanPOST;
-import dsu1glassfishatomic.SubClassWriterErros;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
+import businesslogic.SubClassWriterErros;
 
-import javax.ejb.EJB;
-import javax.inject.Inject;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;

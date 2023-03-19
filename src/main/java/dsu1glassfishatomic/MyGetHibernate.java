@@ -1,5 +1,6 @@
 package dsu1glassfishatomic;
 
+import businesslogic.SubClassWriterErros;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
