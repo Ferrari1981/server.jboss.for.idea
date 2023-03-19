@@ -32,6 +32,8 @@ public class SubClassGenerateJson {
     @Inject @ProducedCard
     SessionFactory sessionSousJboss;
     Session    session;
+    @Inject
+    SubClassWriterErros subClassWriterErros;
     // TODO: 09.03.2023
     StringBuffer МетодГенерацияJson(
             @NotNull ServletContext ЛОГ,
@@ -475,13 +477,11 @@ public class SubClassGenerateJson {
             //TODO
         } catch (Exception   e) {
             sessionTransaction.rollback();
-            new SubClassWriterErros().МетодаЗаписиОшибкиВЛог(e, null,
-                    "\n"+" Error.... class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
-                            " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"
-                            + "{ ЛогинПолученныйОтКлиента "+ " \n"+БуферОтветКлиентуОтСервера.toString()
-                            +null
-                    ,
-                    Thread.currentThread().getStackTrace()[2],null,ЛОГ.getServerInfo().toLowerCase());
+            subClassWriterErros.
+                    МетодаЗаписиОшибкиВЛог(e,
+                            Thread.currentThread().
+                                    getStackTrace(),
+                            ЛОГ,"ErrorsLogs/ErrorJbossServletDSU1.txt");
 
         }
         return БуферОтветКлиентуОтСервера;
@@ -511,10 +511,11 @@ public class SubClassGenerateJson {
     } catch (Exception   e) {
             // TODO: 12.03.2023
             МетодЗавершенияСеанса();
-        new SubClassWriterErros().МетодаЗаписиОшибкиВЛог(e, null,
-                "\n"+" Error.... class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
-                        " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"
-                        + "{ ЛогинПолученныйОтКлиента " +null, Thread.currentThread().getStackTrace()[2],null,ЛОГ.getServerInfo().toLowerCase());
+            subClassWriterErros.
+                    МетодаЗаписиОшибкиВЛог(e,
+                            Thread.currentThread().
+                                    getStackTrace(),
+                            ЛОГ,"ErrorsLogs/ErrorJbossServletDSU1.txt");
 
     }
     }
@@ -536,9 +537,11 @@ public class SubClassGenerateJson {
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
                     + " queryprocedure "+queryprocedure  + " КоличестоУспешныхОперацийНаСервере " +КоличестоУспешныхОперацийНаСервере);
         } catch (Exception   e) {
-            new SubClassWriterErros().МетодаЗаписиОшибкиВЛог(e, null,
-                    "		private void МетодСамогоВыполенияУдаленнойПроцедуры(StoredProcedureQuery queryprocedure,ServletContext ЛОГ ) {",
-                    Thread.currentThread().getStackTrace()[2],null,ЛОГ.getServerInfo().toLowerCase());
+            subClassWriterErros.
+                    МетодаЗаписиОшибкиВЛог(e,
+                            Thread.currentThread().
+                                    getStackTrace(),
+                            ЛОГ,"ErrorsLogs/ErrorJbossServletDSU1.txt");
         }
         return  КоличестоУспешныхОперацийНаСервере;
         //TODO
@@ -595,11 +598,11 @@ public class SubClassGenerateJson {
 
             //TODO
         } catch (Exception   e) {
-            // TODO: handle exception
-
-            new SubClassWriterErros().МетодаЗаписиОшибкиВЛог(e, null,
-                    "		void МетодПерпосредвственноЗаполентДАннымиОтКлиентаМенеджерСущностей(ServletContext ЛОГ,",
-                    Thread.currentThread().getStackTrace()[2],null,ЛОГ.getServerInfo().toLowerCase());
+            subClassWriterErros.
+                    МетодаЗаписиОшибкиВЛог(e,
+                            Thread.currentThread().
+                                    getStackTrace(),
+                            ЛОГ,"ErrorsLogs/ErrorJbossServletDSU1.txt");
 
         }
 

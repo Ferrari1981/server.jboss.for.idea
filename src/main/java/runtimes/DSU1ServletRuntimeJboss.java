@@ -5,6 +5,7 @@ import businesslogic.SubClassWriterErros;
 import org.hibernate.Session;
 
 import javax.ejb.EJB;
+import javax.inject.Inject;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -20,6 +21,8 @@ public class DSU1ServletRuntimeJboss extends HttpServlet {
     private      ServletContext    ЛОГ;
     @EJB
     private SessionBeanGETRuntimeJboss sessionBeanGETRuntimeJboss;
+    @Inject
+    SubClassWriterErros subClassWriterErros;
 
 
     DSU1ServletRuntimeJboss(){
@@ -46,11 +49,11 @@ public class DSU1ServletRuntimeJboss extends HttpServlet {
                             " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
                             + " ((HttpServletRequest) req).getPathInfo() " +((HttpServletRequest) req).getPathInfo());
         } catch (Exception e) {
-            new SubClassWriterErros().МетодаЗаписиОшибкиВЛог(e, null,
-                    "\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
-                            " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
-                            " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n",
-                    Thread.currentThread().getStackTrace()[2],ЛОГ,ЛОГ.getServerInfo().toLowerCase());
+            subClassWriterErros.
+                    МетодаЗаписиОшибкиВЛог(e,
+                            Thread.currentThread().
+                                    getStackTrace(),
+                            ЛОГ,"ErrorsLogs/ErrorJbossServletRuntime.txt");
 
         }
 
@@ -63,11 +66,11 @@ public class DSU1ServletRuntimeJboss extends HttpServlet {
                 " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
                 " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber());
     } catch (Exception e) {
-        new SubClassWriterErros().МетодаЗаписиОшибкиВЛог(e, null,
-                "\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
-                        " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
-                        " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n",
-                Thread.currentThread().getStackTrace()[2],ЛОГ,ЛОГ.getServerInfo().toLowerCase());
+          subClassWriterErros.
+                  МетодаЗаписиОшибкиВЛог(e,
+                          Thread.currentThread().
+                                  getStackTrace(),
+                          ЛОГ,"ErrorsLogs/ErrorJbossServletRuntime.txt");
 
     }
 

@@ -1,6 +1,7 @@
 package businesslogic;
 
 import javax.enterprise.context.RequestScoped;
+import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -18,7 +19,8 @@ import java.util.zip.GZIPOutputStream;
 @Named
 @RequestScoped
 public class BEANCallsBack {
-
+    @Inject
+    SubClassWriterErros subClassWriterErros;
     /**
      * Default constructor.
      */
@@ -51,10 +53,11 @@ public class BEANCallsBack {
                     ((HttpServletResponse) response).getStatus());
 
         } catch (IOException e) {
-            new SubClassWriterErros().МетодаЗаписиОшибкиВЛог(e, ЛОГ.getServerInfo(),
-                    this.getClass().getMethods().toString() + " " + this.getClass().getCanonicalName().toString() + " "
-                            + this.getClass().getDeclaredMethods().toString(),
-                    Thread.currentThread().getStackTrace()[2], ЛОГ, ГлавныйБуферОтправкиДанныхНААндройд.toString());
+            subClassWriterErros.
+                    МетодаЗаписиОшибкиВЛог(e,
+                            Thread.currentThread().
+                                    getStackTrace(),
+                            ЛОГ,"ErrorsLogs/ErrorJbossServletDSU1.txt");
         }
         }else {
             ЛОГ.log("\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +

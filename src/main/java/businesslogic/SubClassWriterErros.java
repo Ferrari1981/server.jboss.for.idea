@@ -10,6 +10,9 @@ import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
 import java.util.Date;
 
+import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.inject.Produces;
+import javax.inject.Named;
 import javax.servlet.ServletContext;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Null;
@@ -18,6 +21,7 @@ import javax.validation.constraints.Null;
  * @author moraru_pi
  *
  */
+@ApplicationScoped
 public class SubClassWriterErros {
 
     @SuppressWarnings("deprecation")
@@ -36,9 +40,9 @@ public class SubClassWriterErros {
         String РЕальныйПутьСервера2 = ЛОГ.getContextPath().toString();
 
         String САМАОШИБКАДЛЯЗАПИСИ = " Класс/CLASS :"
-                + ТекущийПотокВмоментВыполения[2].getClassName() + "\n" + " Метод/METOD :" + "\n"
-                + ТекущийПотокВмоментВыполения[2].getMethodName() + "\n" + " Линия/LINE  :"
-                + ТекущийПотокВмоментВыполения[2].getLineNumber() + "\n" + " Линия/LINE  :"
+                + ТекущийПотокВмоментВыполения[2].getClassName() + "\n" + " Class/Класс :" + "\n"
+                + ТекущийПотокВмоментВыполения[2].getMethodName() + "\n" + " Metod/Метод  :"
+                + ТекущийПотокВмоментВыполения[2].getLineNumber() + "\n" + " Line/Линия  :"
                 + ТекущийПотокВмоментВыполения[2].getFileName() + "\n" + " САМА ОШИБКА /GET ERROR ::: " + e.toString() + " Файл  :"
                 + Thread.currentThread().getStackTrace()[2].getFileName() + "\n" + " САМА ОШИБКА/GET ERROR ::: " + e.toString()
                 + "\n" + "  Класс  ОШИБКЕ   " + "\n" + e.getClass().getName() + "\n" + "  Класс  ОШИБКЕ /CLASS ERROR  " + "\n"
@@ -46,7 +50,6 @@ public class SubClassWriterErros {
                 + e.fillInStackTrace().getMessage() + "\n" + "e.fillInStackTrace().getLocalizedMessage() "
                 + e.fillInStackTrace().getLocalizedMessage() + "\n"+ "ПутьНАхожденияФайлаЛогами "
                 +ПутьНАхожденияФайлаЛогами;
-
         ////// начало запись в файл
         System.err.println("public class ClassWriterErrorProjectDsu1 {  Метод : ERROR B SAMOM MOTODE ERROR GENERETOR "
                 + e.toString());
@@ -70,7 +73,7 @@ public class SubClassWriterErros {
             pw.append("\n");
             pw.append("######################error start ########################### время " + new Date());
             pw.append("\n");
-            pw.println(ГдеВКакомЗаданииПроизошалОшибка);
+            pw.println(ПутьНАхожденияФайлаЛогами);
             pw.append("\n");
             pw.append("Логин чья ошибка");
             pw.append("\n");

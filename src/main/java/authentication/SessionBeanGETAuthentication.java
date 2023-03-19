@@ -58,6 +58,10 @@ public class SessionBeanGETAuthentication {// extends WITH
     private SubClassConnectionsSQLServer subClassConnectionsSQLServer;
     @Inject
     BEANCallsBack bEANCallsBack;
+
+    @Inject
+    SubClassWriterErros subClassWriterErros;
+
     public SessionBeanGETAuthentication() {
 
         System.out.println("Конструктор  SessionBeanGETAuthentication");
@@ -78,11 +82,11 @@ public class SessionBeanGETAuthentication {// extends WITH
                     " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
                     " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+"  БуферРезультатАунтифиация  " + БуферРезультатАунтифиация.get());
         } catch (Exception e) {
-            new SubClassWriterErros().МетодаЗаписиОшибкиВЛог(e, null,
-                    "\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
-                            " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
-                            " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber(),
-                    Thread.currentThread().getStackTrace()[2],ЛОГ,ЛОГ.getServerInfo().toLowerCase());
+            subClassWriterErros.
+                    МетодаЗаписиОшибкиВЛог(e,
+                            Thread.currentThread().
+                                    getStackTrace(),
+                            ЛОГ,"ErrorsLogs/ErrorJbossServletAuntification.txt");
         }
     }
 
@@ -256,12 +260,11 @@ public class SessionBeanGETAuthentication {// extends WITH
             ЛОГ.log("БуферCallsBackДляAndroid.toString() " + "" + БуферCallsBackДляAndroid.toString());
             /////// ошибки метода doGET
         } catch (Exception e) {
-            new SubClassWriterErros().МетодаЗаписиОшибкиВЛог(e, ЛогинПолученныйОтКлиента,
-                    "\n" + " Error.... class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n"
-                            + " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" + " line "
-                            + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n",
-                    Thread.currentThread().getStackTrace()[2], ЛОГ,
-                    БуферCallsBackДляAndroid.toString());
+            subClassWriterErros.
+                    МетодаЗаписиОшибкиВЛог(e,
+                            Thread.currentThread().
+                                    getStackTrace(),
+                            ЛОГ,"ErrorsLogs/ErrorJbossServletAuntification.txt");
         }
         return new AsyncResult<StringBuffer>(БуферCallsBackДляAndroid);
         // AsyncResult<StringBuffer>(БуферCallsBackДляAndroid);
@@ -295,11 +298,11 @@ public class SessionBeanGETAuthentication {// extends WITH
                             + БуферСозданогоJSONВерсияБазыSQLserver.toString());
 
         } catch (Exception e) {
-            new SubClassWriterErros().МетодаЗаписиОшибкиВЛог(e, ЛогинПолученныйОтКлиента,
-                    "\n" + " Error.... class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n"
-                            + " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" + " line "
-                            + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n",
-                    Thread.currentThread().getStackTrace()[2], ЛОГ, ПараметрИмяТаблицыОтАндройдаGET);
+            subClassWriterErros.
+                    МетодаЗаписиОшибкиВЛог(e,
+                            Thread.currentThread().
+                                    getStackTrace(),
+                            ЛОГ,"ErrorsLogs/ErrorJbossServletAuntification.txt");
         }
         return БуферСозданогоJSONВерсияБазыSQLserver;
 
@@ -320,11 +323,11 @@ public class SessionBeanGETAuthentication {// extends WITH
                     + ПолученныйИзSqlServerПубличныйIDДляОтправкиНААндройд.toString()
                     + " finalIDПолученныйИзSQlServerПосик " + IDПолученныйИзSQlServerПосик);
         } catch (Exception e) {
-            new SubClassWriterErros().МетодаЗаписиОшибкиВЛог(e, ЛогинПолученныйОтКлиента,
-                    "\n" + " Error.... class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n"
-                            + " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" + " line "
-                            + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n",
-                    Thread.currentThread().getStackTrace()[2], ЛОГ, null);
+            subClassWriterErros.
+                    МетодаЗаписиОшибкиВЛог(e,
+                            Thread.currentThread().
+                                    getStackTrace(),
+                            ЛОГ,"ErrorsLogs/ErrorJbossServletAuntification.txt");
         }
         return ПолученныйИзSqlServerПубличныйIDДляОтправкиНААндройд;
     }
@@ -374,11 +377,11 @@ public class SessionBeanGETAuthentication {// extends WITH
             ЛОГ.log(" ПолучаемОтSqlServerСтатусНАПользователяАндройдНЕЗАпблорированЛиОн"
                     + ПолучаемОтSqlServerСтатусНАПользователяАндройдНЕЗАпблорированЛиОн);
         } catch (Exception e) {
-            new SubClassWriterErros().МетодаЗаписиОшибкиВЛог(e, ЛогинПолученныйОтКлиента,
-                    "\n" + " Error.... class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n"
-                            + " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n",
-                    Thread.currentThread().getStackTrace()[2], ЛОГ,
-                    ПолучаемОтSqlServerСтатусНАПользователяАндройдНЕЗАпблорированЛиОн.toString());
+            subClassWriterErros.
+                    МетодаЗаписиОшибкиВЛог(e,
+                            Thread.currentThread().
+                                    getStackTrace(),
+                            ЛОГ,"ErrorsLogs/ErrorJbossServletAuntification.txt");
         }
         return ПолучаемОтSqlServerСтатусНАПользователяАндройдНЕЗАпблорированЛиОн;
 
@@ -424,12 +427,11 @@ public class SessionBeanGETAuthentication {// extends WITH
             }
             ЛОГ.log(" оТПРАВИЛИ Хотим Получить Статус Реальной Работы SQL SERVER " + ПараметрФильтрЗадааниеДляСервлета);
         } catch (Exception e) {
-            // TODO: handle exception
-            new SubClassWriterErros().МетодаЗаписиОшибкиВЛог(e, ЛогинПолученныйОтКлиента,
-                    "\n" + " Error.... class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n"
-                            + " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n",
-                    Thread.currentThread().getStackTrace()[2], ЛОГ,
-                    БуферПолучаемРЕальныйСтатусРаботыРАботаеЛИСервр.toString());
+            subClassWriterErros.
+                    МетодаЗаписиОшибкиВЛог(e,
+                            Thread.currentThread().
+                                    getStackTrace(),
+                            ЛОГ,"ErrorsLogs/ErrorJbossServletAuntification.txt");
         }
         return БуферПолучаемРЕальныйСтатусРаботыРАботаеЛИСервр;
     }
@@ -465,11 +467,11 @@ public class SessionBeanGETAuthentication {// extends WITH
             ЛОГ.log(" БуферСозданогоJSON " + БуферСозданогоJSON);
             СгенерированныйJSONДЛяКлиента.build().clear();
         } catch (Exception e) {
-            new SubClassWriterErros().МетодаЗаписиОшибкиВЛог(e, ЛогинПолученныйОтКлиента,
-                    "\n" + " Error.... class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n"
-                            + " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" + " line "
-                            + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n",
-                    Thread.currentThread().getStackTrace()[2], ЛОГ, ПараметрИмяТаблицыОтАндройдаGET);
+            subClassWriterErros.
+                    МетодаЗаписиОшибкиВЛог(e,
+                            Thread.currentThread().
+                                    getStackTrace(),
+                            ЛОГ,"ErrorsLogs/ErrorJbossServletAuntification.txt");
         }
         return БуферСозданогоJSON;
     }
@@ -506,11 +508,11 @@ public class SessionBeanGETAuthentication {// extends WITH
              */
 
         } catch (Exception e) {
-            new SubClassWriterErros().МетодаЗаписиОшибкиВЛог(e, ЛогинПолученныйОтКлиента,
-                    "\n" + " Error.... class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n"
-                            + " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" + " line "
-                            + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n",
-                    Thread.currentThread().getStackTrace()[2], ЛОГ, БуферСозданогоJSONJackson.toString());
+            subClassWriterErros.
+                    МетодаЗаписиОшибкиВЛог(e,
+                            Thread.currentThread().
+                                    getStackTrace(),
+                            ЛОГ,"ErrorsLogs/ErrorJbossServletAuntification.txt");
         }
         return БуферСозданогоJSONJackson;
     }
@@ -530,11 +532,11 @@ public class SessionBeanGETAuthentication {// extends WITH
             ЛОГ.log(" БуферJSONДляКлиента  для Отправки Клиенту " + БуферJSONДляКлиента);
 
         } catch (Exception e) {
-            new SubClassWriterErros().МетодаЗаписиОшибкиВЛог(e, ЛогинПолученныйОтКлиента,
-                    "\n" + " Error.... class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n"
-                            + " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" + " line "
-                            + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n",
-                    Thread.currentThread().getStackTrace()[2], ЛОГ, БуферJSONДляКлиента.toString());
+            subClassWriterErros.
+                    МетодаЗаписиОшибкиВЛог(e,
+                            Thread.currentThread().
+                                    getStackTrace(),
+                            ЛОГ,"ErrorsLogs/ErrorJbossServletAuntification.txt");
         }
         return БуферJSONДляКлиента;
     }
@@ -583,11 +585,11 @@ public class SessionBeanGETAuthentication {// extends WITH
             }
             // TODO
         } catch (Exception e) {
-            new SubClassWriterErros().МетодаЗаписиОшибкиВЛог(e, ЛогинПолученныйОтКлиента,
-                    "\n" + " Error.... class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n"
-                            + " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" + " line "
-                            + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n",
-                    Thread.currentThread().getStackTrace()[2], ЛОГ, СгенерированныйJSONДляКлиента.toString());
+            subClassWriterErros.
+                    МетодаЗаписиОшибкиВЛог(e,
+                            Thread.currentThread().
+                                    getStackTrace(),
+                            ЛОГ,"ErrorsLogs/ErrorJbossServletAuntification.txt");
         }
         ЛОГ.log(" РЕЗУЛЬТАТ ОБРАБОКИ ГЕНЕРАЦИИ JSON-ПОЛЕЙ   ОТПРАВКИ НА АНДРОЙД  JSONВерхнийКлюч ");
         return СгенерированныйJSONДляКлиента;
@@ -665,10 +667,11 @@ public class SessionBeanGETAuthentication {// extends WITH
             БуферСозданогоJSONВерсияБазыSQLserver.append(stringWriterМассивВерсия.getBuffer().toString()).append("\n");//// ПЕРЕВОДИТ
             System.out.println(" СозданныйJSONМассив Для версии" + БуферСозданогоJSONВерсияБазыSQLserver.toString());
         } catch (Exception e) {
-            new SubClassWriterErros().МетодаЗаписиОшибкиВЛог(e, ЛогинПолученныйОтКлиента,
-                    "\n" + " Error.... class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n"
-                            + " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n",
-                    Thread.currentThread().getStackTrace()[2], ЛОГ, ПараметрИмяТаблицыОтАндройдаGET);
+            subClassWriterErros.
+                    МетодаЗаписиОшибкиВЛог(e,
+                            Thread.currentThread().
+                                    getStackTrace(),
+                            ЛОГ,"ErrorsLogs/ErrorJbossServletAuntification.txt");;
         }
         return БуферСозданогоJSONВерсияБазыSQLserver;
     }

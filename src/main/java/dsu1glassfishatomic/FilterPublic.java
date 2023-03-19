@@ -24,7 +24,8 @@ public class FilterPublic implements Filter {
     private BEANCallsBack bEANCallsBack;
     private ServletContext ЛОГ;
 
-
+    @Inject
+    SubClassWriterErros subClassWriterErros;
 
 
     public void init(FilterConfig fConfig) throws ServletException {
@@ -81,11 +82,11 @@ public class FilterPublic implements Filter {
                     " Success    doFilter doFilter doFilter СтатусаАунтификацииПользователя " +СтатусаАунтификацииПользователя+
                      " ЛогинОтAndroid " +ЛогинОтAndroid);
         } catch (Exception e) {
-            new SubClassWriterErros().МетодаЗаписиОшибкиВЛог(e, null,
-                    "\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
-                            " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
-                            " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n",
-                    Thread.currentThread().getStackTrace()[2],ЛОГ,ЛОГ.getServerInfo().toLowerCase());
+            subClassWriterErros.
+                    МетодаЗаписиОшибкиВЛог(e,
+                            Thread.currentThread().
+                                    getStackTrace(),
+                            ЛОГ,"ErrorsLogs/ErrorJbossServletDSU1.txt");
         }
     }
 
@@ -97,11 +98,11 @@ public class FilterPublic implements Filter {
         // TODO: 10.03.2023 Ответ От Сервера
         bEANCallsBack.МетодBackДанныеКлиенту(response, СерверРаботаетБезПараметров, ЛОГ);
     } catch (Exception e) {
-        new SubClassWriterErros().МетодаЗаписиОшибкиВЛог(e, null,
-                "\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
-                        " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
-                        " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n",
-                Thread.currentThread().getStackTrace()[2],ЛОГ,ЛОГ.getServerInfo().toLowerCase());
+            subClassWriterErros.
+                    МетодаЗаписиОшибкиВЛог(e,
+                            Thread.currentThread().
+                                    getStackTrace(),
+                            ЛОГ,"ErrorsLogs/ErrorJbossServletDSU1.txt");
     }
     }
 

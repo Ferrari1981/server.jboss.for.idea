@@ -69,6 +69,9 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
     @Inject @ProducedCard
     SessionFactory sessionSousJboss;
 
+    @Inject
+    SubClassWriterErros subClassWriterErros;
+
     public SubClassSessionBeanМетодаGET() {
 
         System.out.println("Конструктор  SubClassSessionBeanМетодаGET");
@@ -545,12 +548,11 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
             ЛОГ.log("БуферCallsBackДляAndroid.toString() " + "" + БуферCallsBackДляAndroid.toString());
             /////// ошибки метода doGET
         } catch (Exception e) {
-            new SubClassWriterErros().МетодаЗаписиОшибкиВЛог(e, ЛогинПолученныйОтКлиента,
-                    "\n" + " Error.... class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n"
-                            + " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" + " line "
-                            + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n",
-                    Thread.currentThread().getStackTrace()[2], ЛОГ,
-                    БуферCallsBackДляAndroid.toString());
+            subClassWriterErros.
+                    МетодаЗаписиОшибкиВЛог(e,
+                            Thread.currentThread().
+                                    getStackTrace(),
+                            ЛОГ,"ErrorsLogs/ErrorJbossServletDSU1.txt");
         }
         return БуферCallsBackДляAndroid; // TODO return new
         // AsyncResult<StringBuffer>(БуферCallsBackДляAndroid);
@@ -578,11 +580,11 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
     } catch (Exception e) {
             // TODO: 12.03.2023
             МетодЗакрываемСессиюHibernate();
-            new SubClassWriterErros().МетодаЗаписиОшибкиВЛог(e, ЛогинПолученныйОтКлиента,
-                "\n" + " Error.... class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n"
-                        + " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" + " line "
-                        + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n",
-                Thread.currentThread().getStackTrace()[2], ЛОГ,null);
+            subClassWriterErros.
+                    МетодаЗаписиОшибкиВЛог(e,
+                            Thread.currentThread().
+                                    getStackTrace(),
+                            ЛОГ,"ErrorsLogs/ErrorJbossServletDSU1.txt");
     }
     }
 
@@ -612,11 +614,11 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
                             + БуферСозданогоJSONВерсияБазыSQLserver.toString());
 
         } catch (Exception e) {
-            new SubClassWriterErros().МетодаЗаписиОшибкиВЛог(e, ЛогинПолученныйОтКлиента,
-                    "\n" + " Error.... class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n"
-                            + " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" + " line "
-                            + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n",
-                    Thread.currentThread().getStackTrace()[2], ЛОГ, ПараметрИмяТаблицыОтАндройдаGET);
+            subClassWriterErros.
+                    МетодаЗаписиОшибкиВЛог(e,
+                            Thread.currentThread().
+                                    getStackTrace(),
+                            ЛОГ,"ErrorsLogs/ErrorJbossServletDSU1.txt");
         }
         return БуферСозданогоJSONВерсияБазыSQLserver;
 
@@ -637,11 +639,11 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
                     + ПолученныйИзSqlServerПубличныйIDДляОтправкиНААндройд.toString()
                     + " finalIDПолученныйИзSQlServerПосик " + IDПолученныйИзSQlServerПосик);
         } catch (Exception e) {
-            new SubClassWriterErros().МетодаЗаписиОшибкиВЛог(e, ЛогинПолученныйОтКлиента,
-                    "\n" + " Error.... class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n"
-                            + " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" + " line "
-                            + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n",
-                    Thread.currentThread().getStackTrace()[2], ЛОГ, null);
+            subClassWriterErros.
+                    МетодаЗаписиОшибкиВЛог(e,
+                            Thread.currentThread().
+                                    getStackTrace(),
+                            ЛОГ,"ErrorsLogs/ErrorJbossServletDSU1.txt");
         }
         return ПолученныйИзSqlServerПубличныйIDДляОтправкиНААндройд;
     }
@@ -691,11 +693,11 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
             ЛОГ.log(" ПолучаемОтSqlServerСтатусНАПользователяАндройдНЕЗАпблорированЛиОн"
                     + ПолучаемОтSqlServerСтатусНАПользователяАндройдНЕЗАпблорированЛиОн);
         } catch (Exception e) {
-            new SubClassWriterErros().МетодаЗаписиОшибкиВЛог(e, ЛогинПолученныйОтКлиента,
-                    "\n" + " Error.... class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n"
-                            + " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n",
-                    Thread.currentThread().getStackTrace()[2], ЛОГ,
-                    ПолучаемОтSqlServerСтатусНАПользователяАндройдНЕЗАпблорированЛиОн.toString());
+            subClassWriterErros.
+                    МетодаЗаписиОшибкиВЛог(e,
+                            Thread.currentThread().
+                                    getStackTrace(),
+                            ЛОГ,"ErrorsLogs/ErrorJbossServletDSU1.txt");
         }
         return ПолучаемОтSqlServerСтатусНАПользователяАндройдНЕЗАпблорированЛиОн;
 
@@ -741,12 +743,11 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
             }
             ЛОГ.log(" оТПРАВИЛИ Хотим Получить Статус Реальной Работы SQL SERVER " + ПараметрФильтрЗадааниеДляСервлета);
         } catch (Exception e) {
-            // TODO: handle exception
-            new SubClassWriterErros().МетодаЗаписиОшибкиВЛог(e, ЛогинПолученныйОтКлиента,
-                    "\n" + " Error.... class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n"
-                            + " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n",
-                    Thread.currentThread().getStackTrace()[2], ЛОГ,
-                    БуферПолучаемРЕальныйСтатусРаботыРАботаеЛИСервр.toString());
+            subClassWriterErros.
+                    МетодаЗаписиОшибкиВЛог(e,
+                            Thread.currentThread().
+                                    getStackTrace(),
+                            ЛОГ,"ErrorsLogs/ErrorJbossServletDSU1.txt");
         }
         return БуферПолучаемРЕальныйСтатусРаботыРАботаеЛИСервр;
     }
@@ -782,11 +783,11 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
             ЛОГ.log(" БуферСозданогоJSON " + БуферСозданогоJSON);
             СгенерированныйJSONДЛяКлиента.build().clear();
         } catch (Exception e) {
-            new SubClassWriterErros().МетодаЗаписиОшибкиВЛог(e, ЛогинПолученныйОтКлиента,
-                    "\n" + " Error.... class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n"
-                            + " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" + " line "
-                            + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n",
-                    Thread.currentThread().getStackTrace()[2], ЛОГ, ПараметрИмяТаблицыОтАндройдаGET);
+            subClassWriterErros.
+                    МетодаЗаписиОшибкиВЛог(e,
+                            Thread.currentThread().
+                                    getStackTrace(),
+                            ЛОГ,"ErrorsLogs/ErrorJbossServletDSU1.txt");
         }
         return БуферСозданогоJSON;
     }
@@ -823,11 +824,11 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
              */
 
         } catch (Exception e) {
-            new SubClassWriterErros().МетодаЗаписиОшибкиВЛог(e, ЛогинПолученныйОтКлиента,
-                    "\n" + " Error.... class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n"
-                            + " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" + " line "
-                            + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n",
-                    Thread.currentThread().getStackTrace()[2], ЛОГ, БуферСозданогоJSONJackson.toString());
+            subClassWriterErros.
+                    МетодаЗаписиОшибкиВЛог(e,
+                            Thread.currentThread().
+                                    getStackTrace(),
+                            ЛОГ,"ErrorsLogs/ErrorJbossServletDSU1.txt");
         }
         return БуферСозданогоJSONJackson;
     }
@@ -847,11 +848,11 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
             ЛОГ.log(" БуферJSONДляКлиента  для Отправки Клиенту " + БуферJSONДляКлиента);
 
         } catch (Exception e) {
-            new SubClassWriterErros().МетодаЗаписиОшибкиВЛог(e, ЛогинПолученныйОтКлиента,
-                    "\n" + " Error.... class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n"
-                            + " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" + " line "
-                            + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n",
-                    Thread.currentThread().getStackTrace()[2], ЛОГ, БуферJSONДляКлиента.toString());
+            subClassWriterErros.
+                    МетодаЗаписиОшибкиВЛог(e,
+                            Thread.currentThread().
+                                    getStackTrace(),
+                            ЛОГ,"ErrorsLogs/ErrorJbossServletDSU1.txt");;
         }
         return БуферJSONДляКлиента;
     }
@@ -900,11 +901,11 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
             }
             // TODO
         } catch (Exception e) {
-            new SubClassWriterErros().МетодаЗаписиОшибкиВЛог(e, ЛогинПолученныйОтКлиента,
-                    "\n" + " Error.... class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n"
-                            + " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" + " line "
-                            + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n",
-                    Thread.currentThread().getStackTrace()[2], ЛОГ, СгенерированныйJSONДляКлиента.toString());
+            subClassWriterErros.
+                    МетодаЗаписиОшибкиВЛог(e,
+                            Thread.currentThread().
+                                    getStackTrace(),
+                            ЛОГ,"ErrorsLogs/ErrorJbossServletDSU1.txt");
         }
         ЛОГ.log(" РЕЗУЛЬТАТ ОБРАБОКИ ГЕНЕРАЦИИ JSON-ПОЛЕЙ   ОТПРАВКИ НА АНДРОЙД  JSONВерхнийКлюч ");
         return СгенерированныйJSONДляКлиента;
@@ -982,10 +983,11 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
             БуферСозданогоJSONВерсияБазыSQLserver.append(stringWriterМассивВерсия.getBuffer().toString()).append("\n");//// ПЕРЕВОДИТ
             System.out.println(" СозданныйJSONМассив Для версии" + БуферСозданогоJSONВерсияБазыSQLserver.toString());
         } catch (Exception e) {
-            new SubClassWriterErros().МетодаЗаписиОшибкиВЛог(e, ЛогинПолученныйОтКлиента,
-                    "\n" + " Error.... class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n"
-                            + " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n",
-                    Thread.currentThread().getStackTrace()[2], ЛОГ, ПараметрИмяТаблицыОтАндройдаGET);
+            subClassWriterErros.
+                    МетодаЗаписиОшибкиВЛог(e,
+                            Thread.currentThread().
+                                    getStackTrace(),
+                            ЛОГ,"ErrorsLogs/ErrorJbossServletDSU1.txt");
         }
         return БуферСозданогоJSONВерсияБазыSQLserver;
     }

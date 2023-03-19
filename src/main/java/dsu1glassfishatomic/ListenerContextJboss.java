@@ -2,6 +2,7 @@ package dsu1glassfishatomic;
 
 import businesslogic.SubClassWriterErros;
 
+import javax.inject.Inject;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextListener;
 import javax.servlet.ServletRequestEvent;
@@ -14,6 +15,9 @@ import javax.servlet.http.HttpSessionListener;
 @WebListener
 public class ListenerContextJboss implements ServletContextListener,ServletRequestListener, HttpSessionListener {
     ServletContext ЛОГ ;
+    @Inject
+    SubClassWriterErros subClassWriterErros;
+
     /**
      * Default constructor.
      */
@@ -33,11 +37,11 @@ public class ListenerContextJboss implements ServletContextListener,ServletReque
                     " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
                     " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n");
         } catch (Exception e)  {
-            new SubClassWriterErros().МетодаЗаписиОшибкиВЛог(e, null,
-                    "\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
-                            " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
-                            " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n",
-                    Thread.currentThread().getStackTrace()[2], null,ЛОГ.getServerInfo());
+            subClassWriterErros.
+                    МетодаЗаписиОшибкиВЛог(e,
+                            Thread.currentThread().
+                                    getStackTrace(),
+                            ЛОГ,"ErrorsLogs/ErrorJbossServletDSU1.txt");
         }
     }
 
@@ -53,11 +57,11 @@ public class ListenerContextJboss implements ServletContextListener,ServletReque
                     " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
                     " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n");
         } catch (Exception e)  {
-            new SubClassWriterErros().МетодаЗаписиОшибкиВЛог(e, null,
-                    "\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
-                            " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
-                            " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n",
-                    Thread.currentThread().getStackTrace()[2], null,ЛОГ.getServerInfo());
+            subClassWriterErros.
+                    МетодаЗаписиОшибкиВЛог(e,
+                            Thread.currentThread().
+                                    getStackTrace(),
+                            ЛОГ,"ErrorsLogs/ErrorJbossServletDSU1.txt");
         }
     }
 
@@ -68,11 +72,11 @@ public class ListenerContextJboss implements ServletContextListener,ServletReque
         HttpSessionListener.super.sessionCreated(se);
         System.out.println(" metod "+Thread.currentThread().getStackTrace()[2].getMethodName());
     } catch (Exception e)  {
-        new SubClassWriterErros().МетодаЗаписиОшибкиВЛог(e, null,
-                "\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
-                        " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
-                        " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n",
-                Thread.currentThread().getStackTrace()[2], null,ЛОГ.getServerInfo());
+            subClassWriterErros.
+                    МетодаЗаписиОшибкиВЛог(e,
+                            Thread.currentThread().
+                                    getStackTrace(),
+                            ЛОГ,"ErrorsLogs/ErrorJbossServletDSU1.txt");
     }
     }
 
@@ -83,11 +87,11 @@ public class ListenerContextJboss implements ServletContextListener,ServletReque
         HttpSessionListener.super.sessionDestroyed(se);
         System.out.println(" metod "+Thread.currentThread().getStackTrace()[2].getMethodName());
     } catch (Exception e)  {
-        new SubClassWriterErros().МетодаЗаписиОшибкиВЛог(e, null,
-                "\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
-                        " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
-                        " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n",
-                Thread.currentThread().getStackTrace()[2], null,ЛОГ.getServerInfo());
+            subClassWriterErros.
+                    МетодаЗаписиОшибкиВЛог(e,
+                            Thread.currentThread().
+                                    getStackTrace(),
+                            ЛОГ,"ErrorsLogs/ErrorJbossServletDSU1.txt");
     }
     }
 

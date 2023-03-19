@@ -75,6 +75,10 @@ public class SubClassSessionBeanPOST {//extends    DSU1JsonServlet
     int СколькСтрокРезультатЕслиТакойПользователь_post_метод = 0;
     String ПарольПолученныйИзSQlServerПосик_МетодPOST = null;
 
+
+    @Inject
+    SubClassWriterErros subClassWriterErros;
+
     public SubClassSessionBeanPOST() throws ClassNotFoundException, SQLException, NoSuchAlgorithmException {
         System.out.println("Конструктор  SubClassМетодаBeanSessionPOST");
     }
@@ -133,11 +137,11 @@ public class SubClassSessionBeanPOST {//extends    DSU1JsonServlet
             }
             ЛОГ.log("ОтветОтГлавного_МетодаPOSTДляОтправкиНААндройд  " + ОтветОтГлавного_МетодаPOSTДляОтправкиНААндройд);
         } catch (Exception e) {
-            new SubClassWriterErros().МетодаЗаписиОшибкиВЛог(e,
-                    null,
-                    "\n" + " Error.... class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n",
-                    Thread.currentThread().getStackTrace()[2], ЛОГ, ОтветОтГлавного_МетодаPOSTДляОтправкиНААндройд.toString());
+            subClassWriterErros.
+                    МетодаЗаписиОшибкиВЛог(e,
+                            Thread.currentThread().
+                                    getStackTrace(),
+                            ЛОГ,"ErrorsLogs/ErrorJbossServletDSU1.txt");
         }
         return ОтветОтГлавного_МетодаPOSTДляОтправкиНААндройд;//TODO return  new AsyncResult<StringBuffer>( ОтветОтГлавного_МетодаPOSTДляОтправкиНААндройд);
 
@@ -167,11 +171,11 @@ public class SubClassSessionBeanPOST {//extends    DSU1JsonServlet
                             , ПараметрИмяТаблицыОтАндройдаPost);
             ЛОГ.log(" jsonReaderПришеоОтКлиентаJSON_P " + jsonReaderПришеоОтКлиентаJSON_P.toString());
         } catch (Exception e) {
-            new SubClassWriterErros().МетодаЗаписиОшибкиВЛог(e,
-                    null,
-                    "\n" + " Error.... class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n",
-                    Thread.currentThread().getStackTrace()[2], ЛОГ, ПараметрИмяТаблицыОтАндройдаPost);
+            subClassWriterErros.
+                    МетодаЗаписиОшибкиВЛог(e,
+                            Thread.currentThread().
+                                    getStackTrace(),
+                            ЛОГ,"ErrorsLogs/ErrorJbossServletDSU1.txt");
         }
         return ОтветОтГлавного_МетодаPOSTДляОтправкиНААндройд;
     }
@@ -192,11 +196,11 @@ public class SubClassSessionBeanPOST {//extends    DSU1JsonServlet
             // TODO закрываем поторк
             БуферJsonОтКлиента.close();
         } catch (Exception e) {
-            new SubClassWriterErros().МетодаЗаписиОшибкиВЛог(e,
-                    null,
-                    "\n" + " Error.... class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n",
-                    Thread.currentThread().getStackTrace()[2], ЛОГ, БуферJSONОтАндройда.toString());
+            subClassWriterErros.
+                    МетодаЗаписиОшибкиВЛог(e,
+                            Thread.currentThread().
+                                    getStackTrace(),
+                            ЛОГ,"ErrorsLogs/ErrorJbossServletDSU1.txt");
         }
         return БуферJSONОтАндройда;
     }

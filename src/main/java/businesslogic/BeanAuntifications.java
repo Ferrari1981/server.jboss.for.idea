@@ -27,6 +27,8 @@ import java.util.Optional;
 public class BeanAuntifications {
     @Inject
     private	SubClassConnectionsSQLServer subClassConnectionsSQLServer;
+    @Inject
+    SubClassWriterErros subClassWriterErros;
     /**
      * Default constructor.
      */
@@ -142,11 +144,11 @@ public class BeanAuntifications {
             }
 
         } catch (Exception e) {
-            new SubClassWriterErros().МетодаЗаписиОшибкиВЛог(e, null,
-                    "\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
-                            " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
-                            " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n",
-                    Thread.currentThread().getStackTrace()[2],ЛОГ,ЛОГ.getServerInfo().toLowerCase());
+            subClassWriterErros.
+                    МетодаЗаписиОшибкиВЛог(e,
+                            Thread.currentThread().
+                                    getStackTrace(),
+                            ЛОГ,"ErrorsLogs/ErrorJbossServletDSU1.txt");
         }
         return РезультатАунтификацииПользователя;
     }

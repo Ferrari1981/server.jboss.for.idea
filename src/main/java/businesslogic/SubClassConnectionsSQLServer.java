@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import javax.crypto.NoSuchPaddingException;
 import javax.enterprise.context.RequestScoped;
+import javax.inject.Inject;
 import javax.inject.Named;
 import javax.naming.InitialContext;
 import javax.servlet.ServletContext;
@@ -18,6 +19,8 @@ import javax.ws.rs.Produces;
 @RequestScoped
 @Named
 public class SubClassConnectionsSQLServer  {
+    @Inject
+    SubClassWriterErros subClassWriterErros;
     @SuppressWarnings("null")
     @Produces
     public Connection МетодGetConnect(
@@ -39,10 +42,11 @@ public class SubClassConnectionsSQLServer  {
                 ЛОГ.log(" ERROR  CONNECTION WITH DATABASE SOUS DSU1 "+ conn.getClientInfo());
             }
         } catch (Exception e) {
-            new SubClassWriterErros().МетодаЗаписиОшибкиВЛог(e, null,
-                    "\n"+" Error.... class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
-                            " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n",
-                    Thread.currentThread().getStackTrace()[2], null, conn.getClientInfo().toString());
+            subClassWriterErros.
+                    МетодаЗаписиОшибкиВЛог(e,
+                            Thread.currentThread().
+                                    getStackTrace(),
+                            ЛОГ,"ErrorsLogs/ErrorJbossServletDSU1.txt");
         }
         return conn;
     }
@@ -56,9 +60,11 @@ public class SubClassConnectionsSQLServer  {
             statement = conn.createStatement();
             statement = conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);///// TODO
         } catch (Exception e) {
-            new SubClassWriterErros().МетодаЗаписиОшибкиВЛог(e, null,
-                    "		void МетодПредворительногоПодключенияДляМетодаGETкодИзКонструктора() throws ClassNotFoundException, SQLException,",
-                    Thread.currentThread().getStackTrace()[2], null, conn.getClientInfo().toString());
+            subClassWriterErros.
+                    МетодаЗаписиОшибкиВЛог(e,
+                            Thread.currentThread().
+                                    getStackTrace(),
+                            ЛОГ,"ErrorsLogs/ErrorJbossServletDSU1.txt");
         }
         return statement;
     }

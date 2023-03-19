@@ -30,6 +30,8 @@ public class BeanGET {
     SubClassSessionBeanМетодаGET subClassSessionBeanМетодаGET;
     @Inject
     BEANCallsBack bEANCallsBack;
+    @Inject
+    SubClassWriterErros subClassWriterErros;
     public BeanGET(	  ) {
         // TODO Auto-generated constructor stub
         try {
@@ -59,11 +61,11 @@ public class BeanGET {
                     " метод "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"
                     + "Строка " + Thread.currentThread().getStackTrace()[2].getLineNumber()+"  БуферРезультатGET  " + БуферРезультатGET.get());
         } catch (Exception e) {
-            new SubClassWriterErros().МетодаЗаписиОшибкиВЛог(e, null,
-                    "\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
-                            " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
-                            " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n",
-                    Thread.currentThread().getStackTrace()[2],ЛОГ,ЛОГ.getServerInfo().toLowerCase());
+            subClassWriterErros.
+                    МетодаЗаписиОшибкиВЛог(e,
+                            Thread.currentThread().
+                                    getStackTrace(),
+                            ЛОГ,"ErrorsLogs/ErrorJbossServletDSU1.txt");
         }
     }
 
@@ -84,11 +86,11 @@ public class BeanGET {
                     " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
                     " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+  "  БуферРезультатGET " +БуферРезультатGET);
         } catch (Exception e) {
-            new SubClassWriterErros().МетодаЗаписиОшибкиВЛог(e, null,
-                    "\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
-                            " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
-                            " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n",
-                    Thread.currentThread().getStackTrace()[2],ЛОГ,ЛОГ.getServerInfo().toLowerCase());
+            subClassWriterErros.
+                    МетодаЗаписиОшибкиВЛог(e,
+                            Thread.currentThread().
+                                    getStackTrace(),
+                            ЛОГ,"ErrorsLogs/ErrorJbossServletDSU1.txt");
         }
         return new AsyncResult<StringBuffer>(БуферРезультатGET);
     }

@@ -4,6 +4,7 @@ package dowsloadpojboss;
 import businesslogic.SubClassWriterErros;
 
 import javax.ejb.EJB;
+import javax.inject.Inject;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -18,6 +19,8 @@ public class DSU1DonwloadsServlet extends HttpServlet {
     private      ServletContext    ЛОГ;
     @EJB
     SessionBeanDownloadPO sessionBeanDownloadPO;
+    @Inject
+    SubClassWriterErros subClassWriterErros;
 
     DSU1DonwloadsServlet(){
         System.out.println(" class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -56,11 +59,11 @@ public class DSU1DonwloadsServlet extends HttpServlet {
                             " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
                             + " ((HttpServletRequest) req).getPathInfo() " +((HttpServletRequest) req).getPathInfo());
         } catch (Exception e) {
-            new SubClassWriterErros().МетодаЗаписиОшибкиВЛог(e, null,
-                    "\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
-                            " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
-                            " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n",
-                    Thread.currentThread().getStackTrace()[2],ЛОГ,ЛОГ.getServerInfo().toLowerCase());
+            subClassWriterErros.
+                    МетодаЗаписиОшибкиВЛог(e,
+                            Thread.currentThread().
+                                    getStackTrace(),
+                            ЛОГ,"ErrorsLogs/ErrorJbossServletUpdatePO.txt");
 
         }
 
@@ -74,11 +77,11 @@ public class DSU1DonwloadsServlet extends HttpServlet {
                 " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
                 " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber());
     } catch (Exception e) {
-        new SubClassWriterErros().МетодаЗаписиОшибкиВЛог(e, null,
-                "\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
-                        " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
-                        " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n",
-                Thread.currentThread().getStackTrace()[2],ЛОГ,ЛОГ.getServerInfo().toLowerCase());
+          subClassWriterErros.
+                  МетодаЗаписиОшибкиВЛог(e,
+                          Thread.currentThread().
+                                  getStackTrace(),
+                          ЛОГ,"ErrorsLogs/ErrorJbossServletUpdatePO.txt");
 
     }
 

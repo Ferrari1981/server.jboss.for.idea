@@ -7,6 +7,7 @@ import businesslogic.SubClassWriterErros;
 import com.sun.istack.NotNull;
 
 import javax.ejb.*;
+import javax.inject.Inject;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.ServletOutputStream;
@@ -28,6 +29,9 @@ import java.util.concurrent.Future;
 @LocalBean
 @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
 public class SessionBeanDownloadPO {
+@Inject
+    SubClassWriterErros subClassWriterErros;
+
     public SessionBeanDownloadPO() {
         // TODO Auto-generated constructor stub
         try {
@@ -54,11 +58,11 @@ public class SessionBeanDownloadPO {
                     " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
                     " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+  "  ПолучаемJSONФайл " +ПолучаемJSONФайл);
         } catch (Exception e) {
-            new SubClassWriterErros().МетодаЗаписиОшибкиВЛог(e, null,
-                    "\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
-                            " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
-                            " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n",
-                    Thread.currentThread().getStackTrace()[2],ЛОГ,ЛОГ.getServerInfo().toLowerCase());
+            subClassWriterErros.
+                    МетодаЗаписиОшибкиВЛог(e,
+                            Thread.currentThread().
+                                    getStackTrace(),
+                            ЛОГ,"ErrorsLogs/ErrorJbossServletUpdatePO.txt");
         }
     }
 
@@ -73,11 +77,11 @@ public class SessionBeanDownloadPO {
                     " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
                     " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+  "  ПолучаемAPKФайл " +ПолучаемAPKФайл);
         } catch (Exception e) {
-            new SubClassWriterErros().МетодаЗаписиОшибкиВЛог(e, null,
-                    "\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
-                            " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
-                            " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n",
-                    Thread.currentThread().getStackTrace()[2],ЛОГ,ЛОГ.getServerInfo().toLowerCase());
+            subClassWriterErros.
+                    МетодаЗаписиОшибкиВЛог(e,
+                            Thread.currentThread().
+                                    getStackTrace(),
+                            ЛОГ,"ErrorsLogs/ErrorJbossServletUpdatePO.txt");
         }
     }
 
@@ -95,11 +99,11 @@ public class SessionBeanDownloadPO {
                     " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
                     " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+  "  fileJson " +fileJson);
         } catch (Exception e) {
-            new SubClassWriterErros().МетодаЗаписиОшибкиВЛог(e, null,
-                    "\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
-                            " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
-                            " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n",
-                    Thread.currentThread().getStackTrace()[2],ЛОГ,ЛОГ.getServerInfo().toLowerCase());
+            subClassWriterErros.
+                    МетодаЗаписиОшибкиВЛог(e,
+                            Thread.currentThread().
+                                    getStackTrace(),
+                            ЛОГ,"ErrorsLogs/ErrorJbossServletUpdatePO.txt");
         }
         return new AsyncResult<File>(fileJson);
     }
@@ -118,7 +122,7 @@ public class SessionBeanDownloadPO {
                     " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
                     " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+  "  fileApk " +fileApk);
         } catch (Exception e) {
-            new SubClassWriterErros().
+            subClassWriterErros.
                     МетодаЗаписиОшибкиВЛог(e,
                             Thread.currentThread().
                                     getStackTrace(),
@@ -183,10 +187,11 @@ public class SessionBeanDownloadPO {
                         ((HttpServletResponse) response).getStatus());
 
             } catch (IOException e) {
-                new SubClassWriterErros().МетодаЗаписиОшибкиВЛог(e, ЛОГ.getServerInfo(),
-                        this.getClass().getMethods().toString() + " " + this.getClass().getCanonicalName().toString() + " "
-                                + this.getClass().getDeclaredMethods().toString(),
-                        Thread.currentThread().getStackTrace()[2], ЛОГ, ОтправкаФайлаJsonAPK.toString());
+                subClassWriterErros.
+                        МетодаЗаписиОшибкиВЛог(e,
+                                Thread.currentThread().
+                                        getStackTrace(),
+                                ЛОГ,"ErrorsLogs/ErrorJbossServletUpdatePO.txt");
             }
         }else {
             ЛОГ.log("\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
