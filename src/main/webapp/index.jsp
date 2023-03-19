@@ -105,6 +105,16 @@
 <h1><i> exists() update_android_dsu1/output-metadata.json: <%=   Paths.get("update_android_dsu1/output-metadata.json").toFile().exists() %></i></h1>
 <h1><i> isFile() update_android_dsu1/output-metadata.json: <%=   Paths.get("update_android_dsu1/output-metadata.json").toFile().isFile() %></i></h1>
 <br><i>----------------------------------------------------------------------------------------------------</i><br>
+<h1><i> exists() update_android_dsu1/app-release.apk: <%=   Paths.get("update_android_dsu1/app-release.apk").toFile().exists() %></i></h1>
+<h1><i> isFile() update_android_dsu1/app-release.apk: <%=   Paths.get("update_android_dsu1/app-release.apk").toFile().isFile() %></i></h1>
+<br><i>----------------------------------------------------------------------------------------------------</i><br>
+<h1><i> isFile() add-user.properties: <%=   Paths.get("C:\\JBOSS\\EAP-7.4.0\\bin\\add-user.properties").toFile().isFile() %></i></h1>
+<h1><i> exists() add-user.properties: <%=   Paths.get("C:\\JBOSS\\EAP-7.4.0\\bin\\add-user.properties").toFile().exists() %></i></h1>
+<br><i>----------------------------------------------------------------------------------------------------</i><br>
+
+<br><i>----------------------------------------------------------------------------------------------------</i><br>
+<h1><i> MOSKVA isFile() add-user.properties: <%=   Paths.get("C:\\RedHatJboss\\EAP-7.4.0\\bin\\add-user.properties").toFile().isFile() %></i></h1>
+<h1><i> MOSKVA exists() add-user.properties: <%=   Paths.get("C:\\RedHatJboss\\EAP-7.4.0\\bin\\add-user.properties").toFile().exists() %></i></h1>
 <br><i>----------------------------------------------------------------------------------------------------</i><br>
 
 <h2><i> Адрес: Проездная ул., 18, Иваново, Ивановская обл.</i></h2>
