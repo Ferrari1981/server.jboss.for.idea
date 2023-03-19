@@ -107,13 +107,6 @@ public class SubClassWriterErros {
             System.err.println(
                     "\n"+"Inside Error.... class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
                             " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n" + e.toString());
-            if (ЛОГ!=null) {
-                ЛОГ.log(
-                        "\n"+" Inside Error.... class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
-                                " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n" );
-
-            }
-
         }
 
     }
