@@ -14,6 +14,7 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.concurrent.ExecutionException;
@@ -83,8 +84,8 @@ public class SessionBeanDownloadPO {
     private Future<File> МетодДляJSONФайла(@NotNull ServletContext ЛОГ, @NotNull HttpServletRequest request,  @NotNull HttpServletResponse response){
         File fileJson = null;
         try{
-            String filepath ="src\\main\\webapp\\update_android_dsu1\\output-metadata.json";
-           // String filepath ="C:\\Users\\moraru_pi\\AndroidStudioProjectsSERVER\\sous.jboss.idea\\src\\main\\webapp\\update_android_dsu1\\output-metadata.json";
+          //  String filepath ="src\\main\\webapp\\update_android_dsu1\\output-metadata.json";
+            String filepath ="C:\\Users\\moraru_pi\\AndroidStudioProjectsSERVER\\sous.jboss.idea\\src\\main\\webapp\\update_android_dsu1\\output-metadata.json";
             // TODO: 13.03.2023 ГЛАВНЫЙ КОД РАБОТА С ФАЙЛАМИ
             Path path = Paths.get(filepath);
             fileJson = Paths.get(filepath).toFile();
@@ -105,8 +106,8 @@ public class SessionBeanDownloadPO {
                                           @NotNull HttpServletRequest request,@NotNull HttpServletResponse response){
         File fileApk = null;
         try {
-            //String filepath ="C:\\Users\\moraru_pi\\AndroidStudioProjectsSERVER\\sous.jboss.idea\\src\\main\\webapp\\update_android_dsu1\\app-release.apk";
-            String filepath ="src\\main\\webapp\\update_android_dsu1\\app-release.apk";
+            String filepath ="C:\\Users\\moraru_pi\\AndroidStudioProjectsSERVER\\sous.jboss.idea\\src\\main\\webapp\\update_android_dsu1\\app-release.apk";
+           // String filepath ="src\\main\\webapp\\update_android_dsu1\\app-release.apk";
             // TODO: 13.03.2023 ГЛАВНЫЙ КОД РАБОТА С ФАЙЛАМИ
             Path path = Paths.get(filepath);
             fileApk = Paths.get(filepath).toFile();
@@ -167,11 +168,7 @@ public class SessionBeanDownloadPO {
             try  (ServletOutputStream БуферДанныеДляОбновлениеПО = response.getOutputStream();
                   InputStream fis = new FileInputStream(ОтправкаФайлаJsonAPK);) {
                 ((HttpServletResponse) response).addHeader("stream_size", String.valueOf(ОтправкаФайлаJsonAPK.length()));
-                byte[] bufferData = new byte[1024];
-                int read=0;
-                while((read = fis.read(bufferData))!= -1){
-                    БуферДанныеДляОбновлениеПО.write(bufferData, 0, read);
-                }
+                БуферДанныеДляОбновлениеПО.write(fis.readAllBytes());
                 БуферДанныеДляОбновлениеПО.flush();
                 response.flushBuffer();
                 while (!response.isCommitted()) ;

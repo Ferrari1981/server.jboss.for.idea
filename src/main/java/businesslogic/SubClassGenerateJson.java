@@ -51,22 +51,13 @@ public class SubClassGenerateJson {
             ЛОГ.log(" jsonReaderПришеоОтКлиентаJSON_P "+JSONStremОтAndrod.toString()  + " session  " +session + " sessionSousJboss " +sessionSousJboss);
             //TODO ГЛАВЕНЫЙ ЦИКЛ ОБРАБОТКИ ДАННЫХ В МЕТОДЕ  POST
             JSONStremОтAndrod.entrySet().forEach(ВнешнаяСтрокаJSON -> {
-                ЛОГ.log(" ВнешнаяСтрокаJSON.getKey() "+ВнешнаяСтрокаJSON.getKey()  + " ВнешнаяСтрокаJSON.getValue() " +ВнешнаяСтрокаJSON.getValue());
-                //TODO
                 JsonReader ДляВнутренегоЦиклаjsonReaderJSON = Json.createReader(new StringReader(ВнешнаяСтрокаJSON.getValue().toString()));
-                //TODO
-                ЛОГ.log(" ДляВнутренегоЦиклаjsonReaderJSON "+ДляВнутренегоЦиклаjsonReaderJSON.toString()+"\n"+
-                        " ПараметрИмяТаблицыОтАндройдаPost " +ПараметрИмяТаблицыОтАндройдаPost);
-                //TODO Внутриний JSON			  //TODO
                 JsonObject ВнутренийОбщийJSONОБьектjsonReaderПришеоОтКлиентаJSON_P = ДляВнутренегоЦиклаjsonReaderJSON.readObject();
-                //TODO
-                ЛОГ.log(" ВнутренийОбщийJSONОБьектjsonReaderПришеоОтКлиентаJSON_P "+ВнутренийОбщийJSONОБьектjsonReaderПришеоОтКлиентаJSON_P.toString());
-
-                //TODO
-                ЛОГ.log(" ВнутренийОбщийJSONОБьектjsonReaderПришеоОтКлиентаJSON_P "+ВнутренийОбщийJSONОБьектjsonReaderПришеоОтКлиентаJSON_P.toString()+
-                        "ПараметрИмяТаблицыОтАндройдаPost   " +ПараметрИмяТаблицыОтАндройдаPost);
-
-                //TODO ВНИМАНИЕ второй АРГУМЕНТ FIO #2
+                ЛОГ.log( "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+
+                        "ПараметрИмяТаблицыОтАндройдаPost   " +ПараметрИмяТаблицыОтАндройдаPost
+                        +" ВнутренийОбщийJSONОБьектjsonReaderПришеоОтКлиентаJSON_P "+ВнутренийОбщийJSONОБьектjsonReaderПришеоОтКлиентаJSON_P.toString());
                 String	ФиналUIDorIdДляСостыковкиЕстьИлиНЕтУжеВБАзе = null ;
                 //TODO определем если в таблицы есть поле  UUID или ID
                 if(ВнутренийОбщийJSONОБьектjsonReaderПришеоОтКлиентаJSON_P.containsKey("uuid")) {
