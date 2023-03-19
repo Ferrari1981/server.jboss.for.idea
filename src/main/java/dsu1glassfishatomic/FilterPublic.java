@@ -71,8 +71,7 @@ public class FilterPublic implements Filter {
                 // TODO: 11.03.2023  нет не имени не пароля
                 RequestDispatcher requestDispatcher = request.getRequestDispatcher("/index.jsp");
                 requestDispatcher.forward(request, response);
-                // TODO: 19.03.2023 ТЕСТ КОД
-                new SessionBeanDownloadPO().МетодДляJSONФайла(request.getServletContext(),((HttpServletRequest)request),((HttpServletResponse)response));
+
                 /// requestФильтра.getRequestDispatcher("/index.jsp").forward(requestФильтра, responseОтветКлиенту);
               //  МетодФильтраНеПрошлаАунтификацию(response, СтатусаАунтификацииПользователя);
             }
