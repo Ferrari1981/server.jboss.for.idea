@@ -539,7 +539,7 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
                     break;
             }
             // TODO КОГДА ЛОГИН И ПАРОЛЬ НЕТ ДОСТУПА
-              МетодЗакрываемСессиюHibernate(session);
+              МетодЗакрываемСессиюHibernate();
             //// TODO ЗАКРЫЫВАЕМ КУРСОРЫ ПОСЛЕ ГЕНЕРАЦИИ JSON ДЛЯ КЛИЕНТА
             // TODO
             ЛОГ.log("БуферCallsBackДляAndroid.toString() " + "" + БуферCallsBackДляAndroid.toString());
@@ -556,29 +556,31 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
         // AsyncResult<StringBuffer>(БуферCallsBackДляAndroid);
     }
 
-    private void МетодЗакрываемСессиюHibernate(Session session) {
+    private void МетодЗакрываемСессиюHibernate() {
         try{
-            if (    sessionTransaction.isActive()) {
-                sessionTransaction.commit();
+            if (session!=null) {
+                if (    sessionTransaction.isActive()) {
+                    sessionTransaction.commit();
+                }
+                if (session.isDirty()) {
+                    session.flush();
+                }
+                if (session.isConnected()) {
+                    session.disconnect();
+                }
+                if (session.isOpen() ) {
+                    session.clear();
+                    session.close();
+                }
+                ЛОГ.log("\n МетодЗакрываемСессиюHibernate "+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
+                        " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
+                        " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n" +  "session " +session);
             }
-            if (session.isDirty()) {
-                session.flush();
-            }
-            if (session.isConnected()) {
-                session.disconnect();
-            }
-            if (session.isOpen() ) {
-                session.clear();
-                session.close();
-            }
-            ЛОГ.log("\n МетодЗакрываемСессиюHibernate "+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
-                    " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
-                    " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n" +  "session " +session);
         /////// ошибки метода doGET
     } catch (Exception e) {
             // TODO: 12.03.2023
-            sessionTransaction.rollback();
-        new SubClassWriterErros().МетодаЗаписиОшибкиВЛог(e, ЛогинПолученныйОтКлиента,
+            МетодЗакрываемСессиюHibernate();
+            new SubClassWriterErros().МетодаЗаписиОшибкиВЛог(e, ЛогинПолученныйОтКлиента,
                 "\n" + " Error.... class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n"
                         + " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" + " line "
                         + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n",
