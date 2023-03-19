@@ -569,14 +569,12 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
                     session.disconnect();
                 }
                 if (session.isOpen() ) {
-                    session.clear();
                     session.close();
                 }
                 ЛОГ.log("\n МетодЗакрываемСессиюHibernate "+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
                         " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
                         " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n" +  "session " +session);
             }
-        /////// ошибки метода doGET
     } catch (Exception e) {
             // TODO: 12.03.2023
             МетодЗакрываемСессиюHibernate();

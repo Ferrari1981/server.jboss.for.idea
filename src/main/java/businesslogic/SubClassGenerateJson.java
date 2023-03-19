@@ -32,6 +32,7 @@ public class SubClassGenerateJson {
     private Transaction sessionTransaction;
     @Inject @ProducedCard
     SessionFactory sessionSousJboss;
+    Session    session;
     // TODO: 09.03.2023
     StringBuffer МетодГенерацияJson(
             @NotNull ServletContext ЛОГ,
@@ -43,17 +44,15 @@ public class SubClassGenerateJson {
         try {
             this.ЛОГ=ЛОГ;
             // TODO: 11.03.2023  Получении Сесии Hiberrnate
-           Session    session =sessionSousJboss.openSession();
+            session =sessionSousJboss.openSession();
             // TODO: 14.03.2023  Запускаем Транзакцию
-             sessionTransaction =session.getTransaction() ;
+            sessionTransaction =session.getTransaction() ;
             // TODO: 14.03.2023  Запускает Транзакции
             sessionTransaction.begin();
             ЛОГ.log(" jsonReaderПришеоОтКлиентаJSON_P "+JSONStremОтAndrod.toString()  + " session  " +session + " sessionSousJboss " +sessionSousJboss);
             //TODO ГЛАВЕНЫЙ ЦИКЛ ОБРАБОТКИ ДАННЫХ В МЕТОДЕ  POST
             JSONStremОтAndrod.entrySet().forEach(ВнешнаяСтрокаJSON -> {
-                //  МенеджерJTA.getTransaction().begin();
                 ЛОГ.log(" ВнешнаяСтрокаJSON.getKey() "+ВнешнаяСтрокаJSON.getKey()  + " ВнешнаяСтрокаJSON.getValue() " +ВнешнаяСтрокаJSON.getValue());
-                //JsonReader ДляВнутренегоЦиклаjsonReaderJSON = Json.createReader(new StringReader(ВнешнаяСтрокаJSON.getValue().toString()));
                 //TODO
                 JsonReader ДляВнутренегоЦиклаjsonReaderJSON = Json.createReader(new StringReader(ВнешнаяСтрокаJSON.getValue().toString()));
                 //TODO
@@ -479,9 +478,8 @@ public class SubClassGenerateJson {
                         + " ПараметрИмяТаблицыОтАндройдаPost " +ПараметрИмяТаблицыОтАндройдаPost);
             });
             //TODO после цикла всех строк выключаем менеджеры сущностей  ПОСЛЕ ЦИКЛА С ДАННЫМИ
-            МетодЗавершенияСеанса(session);
+            МетодЗавершенияСеанса();
             //TODO
-            ///ФабрикаДляМенеждера.close();
             ЛОГ.log("БуферОтветКлиентуОтСервера  "+ БуферОтветКлиентуОтСервера.toString());
             ///TODO
             //TODO
@@ -501,26 +499,28 @@ public class SubClassGenerateJson {
     }
 
     // TODO: 09.03.2023  метод очистки Hirenate после операции
-    private void МетодЗавершенияСеанса(@NotNull  Session session) {
+    private void МетодЗавершенияСеанса() {
         try{
-            if (    sessionTransaction.isActive()) {
-                sessionTransaction.commit();
+            if (session!=null) {
+                if (    sessionTransaction.isActive()) {
+                    sessionTransaction.commit();
+                }
+                if (session.isDirty()) {
+                    session.flush();
+                }
+                if (session.isConnected()) {
+                    session.disconnect();
+                }
+                if (session.isOpen() ) {
+                    session.close();
+                }
+                ЛОГ.log("\n МетодЗакрываемСессиюHibernate "+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
+                        " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
+                        " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n" +  "session " +session);
             }
-            if (session.isDirty()) {
-                session.flush();
-            }
-            if ( session.isConnected()) {
-                session.disconnect();
-            }
-            if (session.isOpen() ) {
-                session.clear();
-                session.close();
-            }
-
-            ЛОГ.log("\n МетодЗакрываемСессиюHibernate "+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
-                    " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
-                    " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n" +  "session " +session);
     } catch (Exception   e) {
+            // TODO: 12.03.2023
+            МетодЗавершенияСеанса();
         new SubClassWriterErros().МетодаЗаписиОшибкиВЛог(e, null,
                 "\n"+" Error.... class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
                         " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"
