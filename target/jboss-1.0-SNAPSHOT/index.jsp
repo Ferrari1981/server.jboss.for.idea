@@ -119,7 +119,7 @@
 
 
 <h1><i> LOG exists() ErrorJbossServletDSU1.txt: <%=   Paths.get("ErrorsLogs/ErrorJbossServletDSU1.txt").toFile().exists() %></i></h1>
-<h1><i>  LOG isFile() ErrorJbossServletDSU1.txt: <%=   Paths.get("update_android_dsu1/app-release.apk").toFile().isFile() %></i></h1>
+<h1><i>  LOG isFile() ErrorJbossServletDSU1.txt: <%=   Paths.get("ErrorsLogs/ErrorJbossServletDSU1.txt").toFile().isFile() %></i></h1>
 
 <h2><i> Адрес: Проездная ул., 18, Иваново, Ивановская обл.</i></h2>
 <h2><i>     <font size="6" color="#fa8e47" face="serif">"Версия 805  Hibernate and Jakson"</font> </i></h2>
