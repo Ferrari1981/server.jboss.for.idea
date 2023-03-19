@@ -9,6 +9,7 @@ import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
 import java.util.Date;
+import java.util.Optional;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.inject.Produces;
@@ -53,8 +54,8 @@ public class SubClassWriterErros {
         ////// начало запись в файл
         System.err.println("public class ClassWriterErrorProjectDsu1 {  Метод : ERROR B SAMOM MOTODE ERROR GENERETOR "
                 + e.toString());
-        String    ЛогинПолученныйОтКлиента = ЛОГ.getAttribute("ЛогинПолученныйОтКлиента").toString();
-        String    IDДевайсаПолученныйОтКлиента = ЛОГ.getAttribute("АдуДевайсяКлиента").toString();
+        Object ЛогинПолученныйОтКлиента = Optional.ofNullable(ЛОГ.getAttribute("ЛогинПолученныйОтКлиента")).orElse("");
+        Object IDДевайсаПолученныйОтКлиента = Optional.ofNullable(ЛОГ.getAttribute("АдуДевайсяКлиента")).orElse("");
             ЛОГ.log(
                     "\n"+" Inside Error.... class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
                             " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"
@@ -77,12 +78,12 @@ public class SubClassWriterErros {
             pw.append("\n");
             pw.append("Логин чья ошибка");
             pw.append("\n");
-            pw.append(ЛогинПолученныйОтКлиента);
+            pw.append(ЛогинПолученныйОтКлиента.toString());
             pw.println("НАЗВАНИЕ ТАБЛИЦЫ ГДЕ ПРОИЗОШДА ОШИБКА//CURRENT TABLE ASYNC :: ");
             pw.append("\n");
             pw.append("ID Девайса Пользователя чья ошибка");
             pw.append("\n");
-            pw.append(IDДевайсаПолученныйОтКлиента);
+            pw.append(IDДевайсаПолученныйОтКлиента.toString());
             pw.println("НАЗВАНИЕ ТАБЛИЦЫ ГДЕ ПРОИЗОШДА ОШИБКА//CURRENT TABLE ASYNC :: ");
             pw.append("\n");
             pw.println(ПутьНАхожденияФайлаЛогами);

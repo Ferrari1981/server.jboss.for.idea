@@ -43,11 +43,12 @@ public class FilterPublic implements Filter {
             request.setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
             response.setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
                     // TODO: 10.03.2023  проверем статус логин и пароль
-            Object ЛогинОтAndroid=      ((HttpServletRequest)request).getHeaders("identifier").nextElement();
+            //Object ЛогинОтAndroid=      ((HttpServletRequest)request).getHeaders("identifier").nextElement();
+            Object ЛогинОтAndroid=      ((HttpServletRequest)request).getHeaders("identifierss").nextElement();
             ЛОГ.log("\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
                     " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
                     " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+
-                    "  ЛогинОтAndroid    doFilter doFilter doFilter ЛогинОтAndroid " +ЛогинОтAndroid);
+                    "  ЛогинОтAndroid    doFilter doFilter doFilter ЛогинОтAndroid " +ЛогинОтAndroid+ЛогинОтAndroid.toString().length());
             if (ЛогинОтAndroid!=null) {
                 if (ЛогинОтAndroid.toString().length()>5) {
                     СтатусаАунтификацииПользователя = beanAuntifications.МетодАунтификация(ЛОГ, ((HttpServletRequest)request),  ((HttpServletRequest)request) .getSession());
