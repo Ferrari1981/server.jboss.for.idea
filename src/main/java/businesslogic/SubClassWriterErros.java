@@ -11,6 +11,8 @@ import java.nio.charset.StandardCharsets;
 import java.util.Date;
 
 import javax.servlet.ServletContext;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Null;
 
 /**
  * @author moraru_pi
@@ -19,43 +21,45 @@ import javax.servlet.ServletContext;
 public class SubClassWriterErros {
 
     @SuppressWarnings("deprecation")
-    public void МетодаЗаписиОшибкиВЛог(Exception e,
-                                       String ЛогинПолученныйОтКлиента,
-                                       String ГдеВКакомЗаданииПроизошалОшибка,
-                                       StackTraceElement ТекущийПотокВмоментВыполения,
-                                       ServletContext 	ЛОГ,
-                                       String ПараметрИмяТаблицыОтАндройдаGET) {
+    public void МетодаЗаписиОшибкиВЛог(@NotNull  Exception e,
+                                       @NotNull StackTraceElement[] ТекущийПотокВмоментВыполения,
+                                       @NotNull ServletContext 	ЛОГ,
+                                       @NotNull String ПутьНАхожденияФайлаЛогами) {
         e.printStackTrace();
         // TODO
+
         //String путьЗаписиЖурналаКудаЗаписовать ="C:\\SERVERS\\ErrorServletDSU1.txt";
-        String путьЗаписиЖурналаКудаЗаписовать ="C:\\JBOSS\\ErrorJbossServletDSU1.txt";
+        //String путьЗаписиЖурналаКудаЗаписовать ="C:\\JBOSS\\ErrorJbossServletDSU1.txt";
         //String путьЗаписиЖурналаКудаЗаписовать ="C:\\SERVERS\\glassfish-4.1.2\\glassfish4\\ErrorServletDSU1.txt";
         //TODO C:\SERVERS\glassfish-4.1.2\glassfish4   C:\\glassfish-4.1.2 dsu1glassfishatomic\\glassfish4\\ErrorServletDSU1.txt";/////ErrorServletDSU1
-        String РЕальныйПутьСервера = ЛОГ.getRealPath("/");
+        String РЕальныйПутьСервера1 = ЛОГ.getRealPath("/");
+        String РЕальныйПутьСервера2 = ЛОГ.getContextPath().toString();
 
-        String САМАОШИБКАДЛЯЗАПИСИ = ГдеВКакомЗаданииПроизошалОшибка
-                + "\n" + " Класс/CLASS :"
-                + ТекущийПотокВмоментВыполения.getClassName() + "\n" + " Метод/METOD :" + "\n"
-                + ТекущийПотокВмоментВыполения.getMethodName() + "\n" + " Линия/LINE  :"
-                + ТекущийПотокВмоментВыполения.getLineNumber() + "\n" + " Линия/LINE  :"
-                + ТекущийПотокВмоментВыполения.getFileName() + "\n" + " САМА ОШИБКА /GET ERROR ::: " + e.toString() + " Файл  :"
+        String САМАОШИБКАДЛЯЗАПИСИ = " Класс/CLASS :"
+                + ТекущийПотокВмоментВыполения[2].getClassName() + "\n" + " Метод/METOD :" + "\n"
+                + ТекущийПотокВмоментВыполения[2].getMethodName() + "\n" + " Линия/LINE  :"
+                + ТекущийПотокВмоментВыполения[2].getLineNumber() + "\n" + " Линия/LINE  :"
+                + ТекущийПотокВмоментВыполения[2].getFileName() + "\n" + " САМА ОШИБКА /GET ERROR ::: " + e.toString() + " Файл  :"
                 + Thread.currentThread().getStackTrace()[2].getFileName() + "\n" + " САМА ОШИБКА/GET ERROR ::: " + e.toString()
                 + "\n" + "  Класс  ОШИБКЕ   " + "\n" + e.getClass().getName() + "\n" + "  Класс  ОШИБКЕ /CLASS ERROR  " + "\n"
                 + e.toString().toUpperCase().toString() + "\n" + "  метод  ОШИБКЕ /METOD ERROR  " + "\n"
                 + e.fillInStackTrace().getMessage() + "\n" + "e.fillInStackTrace().getLocalizedMessage() "
-                + e.fillInStackTrace().getLocalizedMessage() + "\n"+ "ПараметрИмяТаблицыОтАндройдаGET " +ПараметрИмяТаблицыОтАндройдаGET;
+                + e.fillInStackTrace().getLocalizedMessage() + "\n"+ "ПутьНАхожденияФайлаЛогами "
+                +ПутьНАхожденияФайлаЛогами;
 
         ////// начало запись в файл
-        System.err.println("public class ClassWriterErrorProjectDsu1 {  Метод : ERROR B SAMOM MOTODE ERROR GENERETOR " + e.toString());
-
-        ЛогинПолученныйОтКлиента=  ЛОГ.getAttribute("ЛогинПолученныйОтКлиента").toString();
-      String  IDДевайсаПолученныйОтКлиента = ЛОГ.getAttribute("АдуДевайсяКлиента").toString();
-        ЛОГ.log(
-                "\n"+" Inside Error.... class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
-                        " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"  + " ЛогинПолученныйОтКлиента " +ЛогинПолученныйОтКлиента+
-         " IDДевайсаПолученныйОтКлиента "+ IDДевайсаПолученныйОтКлиента);
+        System.err.println("public class ClassWriterErrorProjectDsu1 {  Метод : ERROR B SAMOM MOTODE ERROR GENERETOR "
+                + e.toString());
+        String    ЛогинПолученныйОтКлиента = ЛОГ.getAttribute("ЛогинПолученныйОтКлиента").toString();
+        String    IDДевайсаПолученныйОтКлиента = ЛОГ.getAttribute("АдуДевайсяКлиента").toString();
+            ЛОГ.log(
+                    "\n"+" Inside Error.... class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
+                            " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"
+                            + " ЛогинПолученныйОтКлиента " +ЛогинПолученныйОтКлиента+
+             " IDДевайсаПолученныйОтКлиента "+ IDДевайсаПолученныйОтКлиента);
         try  (PrintWriter pw =
-                      new PrintWriter(new OutputStreamWriter(new FileOutputStream(new File(путьЗаписиЖурналаКудаЗаписовать), true), StandardCharsets.UTF_8));) {
+                      new PrintWriter(new OutputStreamWriter(new FileOutputStream(new File(ПутьНАхожденияФайлаЛогами),
+                              true), StandardCharsets.UTF_8));) {
             //
             // перевод строки в байты
             pw.append("\n");
@@ -78,11 +82,7 @@ public class SubClassWriterErros {
             pw.append(IDДевайсаПолученныйОтКлиента);
             pw.println("НАЗВАНИЕ ТАБЛИЦЫ ГДЕ ПРОИЗОШДА ОШИБКА//CURRENT TABLE ASYNC :: ");
             pw.append("\n");
-            pw.println(ПараметрИмяТаблицыОтАндройдаGET);
-            pw.append("\n");
-            pw.append(" Пользователь ");
-            pw.append("\n");
-            pw.append(ЛОГ.getAttribute("HeaderСодержимоеРасшифрован").toString());
+            pw.println(ПутьНАхожденияФайлаЛогами);
             pw.append("\n");
             pw.append("Дата ошибки");
             pw.append("\n");
@@ -97,7 +97,7 @@ public class SubClassWriterErros {
             pw.append(	ЛОГ.getContextPath().toString());
             pw.append("\n");
             pw.append("		РЕальныйПутьСервера");
-            pw.append(	РЕальныйПутьСервера);
+            pw.append(	РЕальныйПутьСервера2);
             pw.append("\n");
             pw.append("\n");
             /// todo close message send

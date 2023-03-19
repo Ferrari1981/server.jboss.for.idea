@@ -42,13 +42,12 @@ public class MyGetHibernate{
             System.out.println("\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + " configuration "
-                    + configuration + " время" + new Date().toLocaleString() + " Name " + Name);
+                    + configuration + " время" + new Date().toLocaleString() + " configuration " + configuration);
         } catch (Exception e) {
-            new SubClassWriterErros().МетодаЗаписиОшибкиВЛог(e, null,
-                    "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n",
-                    Thread.currentThread().getStackTrace()[2], null, null);
+            System.out.println("\n" + " ERROR " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + " configuration "
+                    + configuration + " время" + new Date().toLocaleString() + "  e " +  e.getMessage().toString());
         }
         return configuration.buildSessionFactory();
     }

@@ -118,11 +118,11 @@ public class SessionBeanDownloadPO {
                     " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
                     " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+  "  fileApk " +fileApk);
         } catch (Exception e) {
-            new SubClassWriterErros().МетодаЗаписиОшибкиВЛог(e, null,
-                    "\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
-                            " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
-                            " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n",
-                    Thread.currentThread().getStackTrace()[2],ЛОГ,ЛОГ.getServerInfo().toLowerCase());
+            new SubClassWriterErros().
+                    МетодаЗаписиОшибкиВЛог(e,
+                            Thread.currentThread().
+                                    getStackTrace(),
+                            ЛОГ,"ErrorsLogs/ErrorJbossServletUpdatePO.txt");
         }
         return new AsyncResult<File>(fileApk);
     }
