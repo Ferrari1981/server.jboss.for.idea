@@ -60,7 +60,7 @@ public class SubClassWriterErros {
                     "\n"+" Inside Error.... class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
                             " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"
                             + " ЛогинПолученныйОтКлиента " +ЛогинПолученныйОтКлиента+
-             " IDДевайсаПолученныйОтКлиента "+ IDДевайсаПолученныйОтКлиента);
+             " IDДевайсаПолученныйОтКлиента "+ IDДевайсаПолученныйОтКлиента+" САМАОШИБКАДЛЯЗАПИСИ " +САМАОШИБКАДЛЯЗАПИСИ);
         try  (PrintWriter pw =
                       new PrintWriter(new OutputStreamWriter(new FileOutputStream(new File(ПутьНАхожденияФайлаЛогами),
                               true), StandardCharsets.UTF_8));) {

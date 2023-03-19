@@ -34,13 +34,33 @@
         try {
             cs1=Charset.forName("Cp1251");
             cs2=Charset.forName("UTF-8");
-            BufferedReader reader = new BufferedReader(new FileReader(new File("C:\\JBOSS\\ErrorJbossServletDSU1.txt")));
+            StringBuffer stringBufferВсеОшибки=new StringBuffer();
+            //BufferedReader reader = new BufferedReader(new FileReader(new File("C:\\JBOSS\\ErrorJbossServletDSU1.txt")));
+            BufferedReader reader = new BufferedReader(new FileReader(new File("ErrorsLogs/ErrorJbossServletDSU1.txt")));
             ПолученныеОшибки=  reader.lines().collect(Collectors.joining(System.lineSeparator()));
-            System.out.println( "ПолученныеОшибки   "+ПолученныеОшибки);
-            if(ПолученныеОшибки==null){
+            stringBufferВсеОшибки.append("ErrorJbossServletDSU1").append("\n").append(ПолученныеОшибки).append("\n");
+            // TODO: 19.03.2023 error2
+             reader = new BufferedReader(new FileReader(new File("ErrorsLogs/ErrorJbossServletAuntification.txt")));
+            ПолученныеОшибки=  reader.lines().collect(Collectors.joining(System.lineSeparator()));
+            stringBufferВсеОшибки.append("ErrorJbossServletDSU1").append("\n").append(ПолученныеОшибки).append("\n");
+            // TODO: 19.03.2023 error3
+            reader = new BufferedReader(new FileReader(new File("ErrorsLogs/ErrorJbossServletRuntime.txt")));
+            ПолученныеОшибки=  reader.lines().collect(Collectors.joining(System.lineSeparator()));
+            stringBufferВсеОшибки.append("ErrorJbossServletRuntime").append("\n").append(ПолученныеОшибки).append("\n");
+            // TODO: 19.03.2023 error4
+            reader = new BufferedReader(new FileReader(new File("ErrorsLogs/ErrorJbossServletScanner.txt")));
+            ПолученныеОшибки=  reader.lines().collect(Collectors.joining(System.lineSeparator()));
+            stringBufferВсеОшибки.append("ErrorJbossServletScanner").append("\n").append(ПолученныеОшибки).append("\n");
+            // TODO: 19.03.2023 error5
+            reader = new BufferedReader(new FileReader(new File("ErrorsLogs/ErrorJbossServletUpdatePO.txt")));
+            ПолученныеОшибки=  reader.lines().collect(Collectors.joining(System.lineSeparator()));
+            stringBufferВсеОшибки.append("ErrorJbossServletUpdatePO").append("\n").append(ПолученныеОшибки).append("\n");
+
+            System.out.println( "stringBufferВсеОшибки   "+stringBufferВсеОшибки.toString());
+            if(stringBufferВсеОшибки.toString().length()==0){
                 ПолученныеОшибки="DON'T ERROR SERVER";
             }else{
-                ПолученныеОшибки=new String( ПолученныеОшибки.getBytes(cs1), cs2);
+                ПолученныеОшибки=new String( stringBufferВсеОшибки.toString().getBytes(cs1), cs2);
             }
             reader.close();
         } catch (Exception e1) {
