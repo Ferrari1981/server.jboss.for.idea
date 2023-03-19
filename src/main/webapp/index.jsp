@@ -117,6 +117,10 @@
 <h1><i> MOSKVA exists() add-user.properties: <%=   Paths.get("C:\\RedHatJboss\\EAP-7.4.0\\bin\\add-user.properties").toFile().exists() %></i></h1>
 <br><i>----------------------------------------------------------------------------------------------------</i><br>
 
+
+<h1><i> LOG exists() ErrorJbossServletDSU1.txt: <%=   Paths.get("ErrorsLogs/ErrorJbossServletDSU1.txt").toFile().exists() %></i></h1>
+<h1><i>  LOG isFile() ErrorJbossServletDSU1.txt: <%=   Paths.get("ErrorsLogs/ErrorJbossServletDSU1.txt").toFile().isFile() %></i></h1>
+
 <h2><i> Адрес: Проездная ул., 18, Иваново, Ивановская обл.</i></h2>
 <h2><i>     <font size="6" color="#fa8e47" face="serif">"Версия 805  Hibernate and Jakson"</font> </i></h2>
 <br><i>----------------------------------------------------------------------------------------------------</i><br>
