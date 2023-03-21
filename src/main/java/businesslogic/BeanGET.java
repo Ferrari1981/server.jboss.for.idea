@@ -59,8 +59,7 @@ public class BeanGET {
             ЛОГ.log( " Класс"+Thread.currentThread().getStackTrace()[2].getClassName()
                     +"\n"+
                     " метод "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"
-                    + "Строка " + Thread.currentThread().getStackTrace()[2].getLineNumber()
-                    +"  БуферРезультатGET.cancel(true)  " + БуферРезультатGET.cancel(true));
+                    + "Строка " + Thread.currentThread().getStackTrace()[2].getLineNumber());
         } catch (Exception e) {
             subClassWriterErros.
                     МетодаЗаписиОшибкиВЛог(e,
