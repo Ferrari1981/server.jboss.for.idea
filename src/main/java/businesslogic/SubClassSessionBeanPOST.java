@@ -4,22 +4,20 @@ package businesslogic;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonFactory;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectReader;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import io.reactivex.rxjava3.core.Flowable;
+import io.reactivex.rxjava3.core.Observable;
+import io.reactivex.rxjava3.functions.Consumer;
 import io.reactivex.rxjava3.functions.Function;
 import model.Cfo;
+import model.Settingtab;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
-import java.io.StringReader;
+import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.security.NoSuchAlgorithmException;
 import java.sql.ResultSet;
@@ -33,7 +31,6 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.BrokenBarrierException;
 import java.util.concurrent.ExecutionException;
-import java.util.function.Consumer;
 import java.util.stream.Stream;
 import java.util.zip.GZIPInputStream;
 
@@ -44,6 +41,7 @@ import javax.json.JsonObject;
 import javax.json.JsonReader;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletInputStream;
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.constraints.NotNull;
@@ -183,11 +181,35 @@ public class SubClassSessionBeanPOST {//extends    DSU1JsonServlet
                     " JSONОБьектjsonReaderПришеоОтКлиентаJSON_P.get(\"id\") " +
                     JSONОБьектjsonReaderПришеоОтКлиентаJSON_P.entrySet().parallelStream().findFirst().get().getValue() +
                     "  ПараметрИмяТаблицыОтАндройдаPost " + ПараметрИмяТаблицыОтАндройдаPost);*/
+
+            JsonFactory factory = new JsonFactory();
+            DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS", new Locale("ru"));
+            final ObjectMapper mapperJackson = new ObjectMapper(factory);
+            mapperJackson.setDateFormat(df);
+            mapperJackson.setLocale(new Locale("ru"));
+            mapperJackson.setSerializationInclusion(JsonInclude.Include.NON_NULL);
+            mapperJackson.setPropertyNamingStrategy(PropertyNamingStrategy.CAMEL_CASE_TO_LOWER_CASE_WITH_UNDERSCORES);
+
+
+            //JsonObject jsonParser=ДляВнутренегоЦиклаjsonReaderJSON.readObject();
+            ServletOutputStream dataInput=response.getOutputStream();
+            Observable.just(dataInput).blockingForEach(new Consumer<ServletOutputStream>() {
+                @Override
+                public void accept(ServletOutputStream servletOutputStream) throws Throwable {
+                    ЛОГ.log(" jsonReaderПришеоОтКлиентаJSON_P " + jsonReaderПришеоОтКлиентаJSON_P.toString());
+                }
+            });
+     //  Object o = mapperJackson.readValue((DataInput) dataInput,model.Settingtab.class);
+
+            model.Settingtab employee = mapperJackson.readValue(jsonReaderПришеоОтКлиентаJSON_P.toString(), model.Settingtab.class);
+
+            Map<String, Object> stringObjectMap
+                    = mapperJackson.readValue(jsonReaderПришеоОтКлиентаJSON_P.toString(), new TypeReference<Map<String,Object>>(){});
             //TODO ГЛАВНЫЙ МЕТОДА POST() КОТОРЫЙ ВСТАВЛЯЕТ  И/ИЛИ ОБНОВЛЕНИЯ ДАННЫХ
             ОтветОтГлавного_МетодаPOSTДляОтправкиНААндройд =
                     subClassGenerateJson.МетодГенерацияJson(ЛОГ, jsonReaderПришеоОтКлиентаJSON_P
                             , ПараметрИмяТаблицыОтАндройдаPost);
-            ЛОГ.log(" jsonReaderПришеоОтКлиентаJSON_P " + jsonReaderПришеоОтКлиентаJSON_P.toString());
+            ЛОГ.log(" jsonReaderПришеоОтКлиентаJSON_P " + jsonReaderПришеоОтКлиентаJSON_P.toString()+  "stringObjectMap "+stringObjectMap);
         } catch (Exception e) {
             subClassWriterErros.
                     МетодаЗаписиОшибкиВЛог(e,

@@ -1,6 +1,7 @@
 package businesslogic;
 
 
+import java.io.Reader;
 import java.io.StringReader;
 import java.sql.SQLException;
 import java.text.DateFormat;
@@ -10,6 +11,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Optional;
+import java.util.function.BiConsumer;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.json.Json;
@@ -23,6 +25,7 @@ import javax.ws.rs.Produces;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonFactory;
+import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -30,6 +33,7 @@ import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.sun.istack.NotNull;
 import dsu1glassfishatomic.ProducedCard;
 import io.reactivex.rxjava3.core.Flowable;
+import io.reactivex.rxjava3.functions.Consumer;
 import io.reactivex.rxjava3.functions.Function;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -67,7 +71,7 @@ public class SubClassGenerateJson {
 
             ЛОГ.log(" JSONStremОтAndrod" + JSONStremОтAndrod.toString() );
             //TODO Jacson парсинг JSON
-            JsonFactory factory = new JsonFactory();
+         /*   JsonFactory factory = new JsonFactory();
             DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS", new Locale("ru"));
             final ObjectMapper mapperJackson = new ObjectMapper(factory);
             mapperJackson.setDateFormat(df);
@@ -75,21 +79,25 @@ public class SubClassGenerateJson {
             mapperJackson.setSerializationInclusion(JsonInclude.Include.NON_NULL);
             mapperJackson.setPropertyNamingStrategy(PropertyNamingStrategy.CAMEL_CASE_TO_LOWER_CASE_WITH_UNDERSCORES);
 
-            Map<String, Object> stringObjectMap
-                    = null;
+            JsonReader ДляВнутренегоЦиклаjsonReaderJSON = Json.createReader(new StringReader(JSONStremОтAndrod.toString()));
+            JsonObject jsonParser=ДляВнутренегоЦиклаjsonReaderJSON.readObject();
+            model.Settingtab.class);
+
             try {
-                stringObjectMap = mapperJackson.readValue(JSONStremОтAndrod.toString(), new TypeReference<Map<String,Object>>(){});
+                Settingtab = mapperJackson.readTree((Reader) ДляВнутренегоЦиклаjsonReaderJSON)
             } catch (JsonProcessingException ex) {
                 ex.printStackTrace();
             }
 
-            Flowable.fromIterable(stringObjectMap.entrySet()).map(new Function<Entry<String, Object>, Object>() {
-                @Override
-                public Object apply(Map.Entry<String, Object> stringObjectEntry) throws Throwable {
-                    ЛОГ.log(" заработал  Jackson ...  МетодГенерацияJSONJackson --->  JSONStremОтAndrod " + JSONStremОтAndrod.toString() );
-                    return stringObjectEntry;
-                }
-            }).blockingSubscribe();
+            Flowable.fromIterable(stringObjectMap.entrySet())
+                    .doOnNext(new Consumer<Entry<String, com.fasterxml.jackson.annotation.JsonValue>>() {
+                        @Override
+                        public void accept(Entry<String, com.fasterxml.jackson.annotation.JsonValue> stringJsonValueEntry) throws Throwable {
+                            ЛОГ.log(" заработал  Jackson ...  МетодГенерацияJSONJackson ---> " +
+                                    " stringJsonValueEntry " + stringJsonValueEntry.getValue());
+                        }
+                    })
+                    .blockingSubscribe();*/
 
             ЛОГ.log(" заработал  Jackson ...  МетодГенерацияJSONJackson --->  JSONStremОтAndrod " + JSONStremОтAndrod.toString() );
 
