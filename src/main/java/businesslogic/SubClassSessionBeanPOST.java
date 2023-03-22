@@ -2,6 +2,17 @@ package businesslogic;
 
 
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.core.JsonFactory;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectReader;
+import com.fasterxml.jackson.databind.ObjectWriter;
+import com.fasterxml.jackson.databind.PropertyNamingStrategy;
+import io.reactivex.rxjava3.core.Flowable;
+import io.reactivex.rxjava3.functions.Function;
+import model.Cfo;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -14,9 +25,16 @@ import java.security.NoSuchAlgorithmException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.BrokenBarrierException;
 import java.util.concurrent.ExecutionException;
+import java.util.function.Consumer;
+import java.util.stream.Stream;
 import java.util.zip.GZIPInputStream;
 
 import javax.enterprise.context.RequestScoped;
@@ -263,5 +281,78 @@ public class SubClassSessionBeanPOST {//extends    DSU1JsonServlet
         }
 
     }
+    // TODO ГЕНЕРАЦИЯ JSON ПО  НОВОМУ Jackson
+    StringBuffer МетодJSONJacksonОтАндройда(@NotNull String JSONОтАндройд ,Class dd)
+            throws SQLException, SecurityException {
+        StringBuffer БуферСозданогоJSONJackson = new StringBuffer();
+        try {
+            ЛОГ.log(" JSONОтАндройд" + JSONОтАндройд );
+            //TODO Jacson парсинг JSON
+            JsonFactory factory = new JsonFactory();
+            DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS", new Locale("ru"));
+            final ObjectMapper mapperJackson = new ObjectMapper(factory);
+            mapperJackson.setDateFormat(df);
+            mapperJackson.setLocale(new Locale("ru"));
+            mapperJackson.setSerializationInclusion(JsonInclude.Include.NON_NULL);
+            mapperJackson.setPropertyNamingStrategy(PropertyNamingStrategy.CAMEL_CASE_TO_LOWER_CASE_WITH_UNDERSCORES);
+           model.Cfo  objectReader = mapperJackson.readValue(JSONОтАндройд,  model.Cfo.class);
+            ЛОГ.  log(" objectReader "+objectReader);//gson
 
+            Stream<model.Cfo> cfoStream=Stream.of(objectReader);
+
+            cfoStream.forEach(new Consumer<Cfo>() {
+                @Override
+                public void accept(Cfo cfo) {
+
+                }
+            });
+
+
+          //  String json = "{ \"color\" : \"Black\", \"type\" : \"BMW\" }";
+            Map<String, Object> stringObjectMap
+                    = mapperJackson.readValue(JSONОтАндройд, new TypeReference<Map<String,Object>>(){});
+
+            Flowable.fromIterable(stringObjectMap.entrySet()).map(new Function<Map.Entry<String, Object>, Object>() {
+                @Override
+                public Object apply(Map.Entry<String, Object> stringObjectEntry) throws Throwable {
+                    return null;
+                }
+            }).subscribe();
+
+            ЛОГ.log(" заработал  Jackson ...  МетодГенерацияJSONJackson --->  БуферСозданогоJSONJackson " + БуферСозданогоJSONJackson.toString() );
+            /*
+             * // Create custom configuration JsonbConfig nillableConfig = new
+             * JsonbConfig().withNullValues(true);
+             * nillableConfig.withDateFormat("yyyy-MM-dd HH:mm:ss.SSS", new Locale("ru"));
+             * Jsonb jsonb = JsonbBuilder.create(nillableConfig); String resultjsonb =
+             * jsonb.toJson(listОтHiberideДляГенерации); ЛОГ.
+             * log(" resultjsonb "+resultjsonb.length());//gson
+             * 3.4. Creating a Java List From a JSON Array String
+We can parse a JSON in the form of an array into a Java object list using a TypeReference:
+
+String jsonCarArray =
+  "[{ \"color\" : \"Black\", \"type\" : \"BMW\" }, { \"color\" : \"Red\", \"type\" : \"FIAT\" }]";
+List<Car> listCar = objectMapper.readValue(jsonCarArray, new TypeReference<List<Car>>(){});
+Copy
+3.5. Creating Java Map From JSON String
+Similarly, we can parse a JSON into a Java Map:
+
+String json = "{ \"color\" : \"Black\", \"type\" : \"BMW\" }";
+Map<String, Object> map
+  = objectMapper.readValue(json, new TypeReference<Map<String,Object>>(){});
+  *
+  * String json = "{ \"color\" : \"Black\", \"type\" : \"BMW\" }";
+Map<String, Object> map
+  = objectMapper.readValue(json, new TypeReference<Map<String,Object>>(){});
+             */
+
+        } catch (Exception e) {
+            subClassWriterErros.
+                    МетодаЗаписиОшибкиВЛог(e,
+                            Thread.currentThread().
+                                    getStackTrace(),
+                            ЛОГ,"ErrorsLogs/ErrorJbossServletDSU1.txt");
+        }
+        return БуферСозданогоJSONJackson;
+    }
 }
