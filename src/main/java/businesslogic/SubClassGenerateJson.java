@@ -3,7 +3,11 @@ package businesslogic;
 
 import java.io.StringReader;
 import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
+import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Optional;
 import javax.enterprise.context.RequestScoped;
@@ -17,8 +21,16 @@ import javax.persistence.StoredProcedureQuery;
 import javax.servlet.ServletContext;
 import javax.ws.rs.Produces;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.core.JsonFactory;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.sun.istack.NotNull;
 import dsu1glassfishatomic.ProducedCard;
+import io.reactivex.rxjava3.core.Flowable;
+import io.reactivex.rxjava3.functions.Function;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -37,7 +49,7 @@ public class SubClassGenerateJson {
     // TODO: 09.03.2023
     StringBuffer МетодГенерацияJson(
             @NotNull ServletContext ЛОГ,
-            @NotNull JsonObject JSONStremОтAndrod
+            @NotNull StringBuffer JSONStremОтAndrod
             , @NotNull String ПараметрИмяТаблицыОтАндройдаPost) throws SQLException {
 
         StringBuffer БуферОтветКлиентуОтСервера=new StringBuffer();
@@ -52,7 +64,37 @@ public class SubClassGenerateJson {
             sessionTransaction.begin();
             ЛОГ.log(" jsonReaderПришеоОтКлиентаJSON_P "+JSONStremОтAndrod.toString()  + " session  " +session + " sessionSousJboss " +sessionSousJboss);
             //TODO ГЛАВЕНЫЙ ЦИКЛ ОБРАБОТКИ ДАННЫХ В МЕТОДЕ  POST
-            JSONStremОтAndrod.entrySet().forEach(ВнешнаяСтрокаJSON -> {
+
+            ЛОГ.log(" JSONStremОтAndrod" + JSONStremОтAndrod.toString() );
+            //TODO Jacson парсинг JSON
+            JsonFactory factory = new JsonFactory();
+            DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS", new Locale("ru"));
+            final ObjectMapper mapperJackson = new ObjectMapper(factory);
+            mapperJackson.setDateFormat(df);
+            mapperJackson.setLocale(new Locale("ru"));
+            mapperJackson.setSerializationInclusion(JsonInclude.Include.NON_NULL);
+            mapperJackson.setPropertyNamingStrategy(PropertyNamingStrategy.CAMEL_CASE_TO_LOWER_CASE_WITH_UNDERSCORES);
+
+            Map<String, Object> stringObjectMap
+                    = null;
+            try {
+                stringObjectMap = mapperJackson.readValue(JSONStremОтAndrod.toString(), new TypeReference<Map<String,Object>>(){});
+            } catch (JsonProcessingException ex) {
+                ex.printStackTrace();
+            }
+
+            Flowable.fromIterable(stringObjectMap.entrySet()).map(new Function<Entry<String, Object>, Object>() {
+                @Override
+                public Object apply(Map.Entry<String, Object> stringObjectEntry) throws Throwable {
+                    ЛОГ.log(" заработал  Jackson ...  МетодГенерацияJSONJackson --->  JSONStremОтAndrod " + JSONStremОтAndrod.toString() );
+                    return stringObjectEntry;
+                }
+            }).blockingSubscribe();
+
+            ЛОГ.log(" заработал  Jackson ...  МетодГенерацияJSONJackson --->  JSONStremОтAndrod " + JSONStremОтAndrod.toString() );
+
+
+           /* JSONStremОтAndrod.entrySet().forEach(ВнешнаяСтрокаJSON -> {
                 JsonReader ДляВнутренегоЦиклаjsonReaderJSON = Json.createReader(new StringReader(ВнешнаяСтрокаJSON.getValue().toString()));
                 JsonObject ВнутренийОбщийJSONОБьектjsonReaderПришеоОтКлиентаJSON_P = ДляВнутренегоЦиклаjsonReaderJSON.readObject();
                 ЛОГ.log( "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -468,7 +510,7 @@ public class SubClassGenerateJson {
                 //TODO
                 ЛОГ.log(" ВнутренийОбщийJSONОБьектjsonReaderПришеоОтКлиентаJSON_P "+ВнутренийОбщийJSONОБьектjsonReaderПришеоОтКлиентаJSON_P.toString()+"\n"
                         + " ПараметрИмяТаблицыОтАндройдаPost " +ПараметрИмяТаблицыОтАндройдаPost);
-            });
+            });*/
             //TODO после цикла всех строк выключаем менеджеры сущностей  ПОСЛЕ ЦИКЛА С ДАННЫМИ
             МетодЗавершенияСеанса();
             //TODO

@@ -141,14 +141,14 @@ public class SubClassSessionBeanPOST {//extends    DSU1JsonServlet
                     if (БуферJSONОтАндройда.toString().toCharArray().length > 3) {///// ЗАХОДИМ											///// КОД
                         ЛОГ.log("  БуферJSONОтАндройда " + БуферJSONОтАндройда.toString());///// ПРИШЕДШИХ
                         // Read back
-                        JsonReader jsonReaderПришеоОтКлиентаJSON_P = Json.createReader(new StringReader(БуферJSONОтАндройда.toString()));
+                   /*     JsonReader jsonReaderПришеоОтКлиентаJSON_P = Json.createReader(new StringReader(БуферJSONОтАндройда.toString()));
                         ЛОГ.log(" response " + response.toString() + " ПараметрИмяТаблицыОтАндройдаPost " + ПараметрИмяТаблицыОтАндройдаPost +
-                                " jsonReaderПришеоОтКлиентаJSON_P " + jsonReaderПришеоОтКлиентаJSON_P);
+                                " jsonReaderПришеоОтКлиентаJSON_P " + jsonReaderПришеоОтКлиентаJSON_P);*/
 
                         ОтветОтГлавного_МетодаPOSTДляОтправкиНААндройд =
                                 МетодПарсингаJSONФайлПришелОтКлиента(response,
                                         ПараметрИмяТаблицыОтАндройдаPost,
-                                        jsonReaderПришеоОтКлиентаJSON_P);
+                                        БуферJSONОтАндройда);
                         ЛОГ.log(" responОтветОтГлавного_МетодаPOSTДляОтправкиНААндройдse " + ОтветОтГлавного_МетодаPOSTДляОтправкиНААндройд);
                     }
                     break;
@@ -168,12 +168,12 @@ public class SubClassSessionBeanPOST {//extends    DSU1JsonServlet
     protected StringBuffer МетодПарсингаJSONФайлПришелОтКлиента(
             @NotNull HttpServletResponse response,
             @NotNull String ПараметрИмяТаблицыОтАндройдаPost,
-            @NotNull JsonReader jsonReaderПришеоОтКлиентаJSON_P)
+            @NotNull StringBuffer jsonReaderПришеоОтКлиентаJSON_P)
             throws InterruptedException, SQLException, BrokenBarrierException, IOException {
         StringBuffer ОтветОтГлавного_МетодаPOSTДляОтправкиНААндройд = new StringBuffer();
         try {
             ЛОГ.log(" jsonReaderПришеоОтКлиентаJSON_P " + jsonReaderПришеоОтКлиентаJSON_P.toString());
-            JsonObject JSONОБьектjsonReaderПришеоОтКлиентаJSON_P = jsonReaderПришеоОтКлиентаJSON_P.readObject();
+        /*    JsonObject JSONОБьектjsonReaderПришеоОтКлиентаJSON_P = jsonReaderПришеоОтКлиентаJSON_P.readObject();
             ЛОГ.log(" jsonReaderПришеоОтКлиентаJSON_P " + jsonReaderПришеоОтКлиентаJSON_P.toString() +
                     " JSONОБьектjsonReaderПришеоОтКлиентаJSON_P.getJsonNumber(\"uuid\")"
                     + "  JSONОБьектjsonReaderПришеоОтКлиентаJSON_P.getJsonNumber(\"uuid\") "
@@ -182,10 +182,10 @@ public class SubClassSessionBeanPOST {//extends    DSU1JsonServlet
                     + JSONОБьектjsonReaderПришеоОтКлиентаJSON_P.size() +
                     " JSONОБьектjsonReaderПришеоОтКлиентаJSON_P.get(\"id\") " +
                     JSONОБьектjsonReaderПришеоОтКлиентаJSON_P.entrySet().parallelStream().findFirst().get().getValue() +
-                    "  ПараметрИмяТаблицыОтАндройдаPost " + ПараметрИмяТаблицыОтАндройдаPost);
+                    "  ПараметрИмяТаблицыОтАндройдаPost " + ПараметрИмяТаблицыОтАндройдаPost);*/
             //TODO ГЛАВНЫЙ МЕТОДА POST() КОТОРЫЙ ВСТАВЛЯЕТ  И/ИЛИ ОБНОВЛЕНИЯ ДАННЫХ
             ОтветОтГлавного_МетодаPOSTДляОтправкиНААндройд =
-                    subClassGenerateJson.МетодГенерацияJson(ЛОГ, JSONОБьектjsonReaderПришеоОтКлиентаJSON_P
+                    subClassGenerateJson.МетодГенерацияJson(ЛОГ, jsonReaderПришеоОтКлиентаJSON_P
                             , ПараметрИмяТаблицыОтАндройдаPost);
             ЛОГ.log(" jsonReaderПришеоОтКлиентаJSON_P " + jsonReaderПришеоОтКлиентаJSON_P.toString());
         } catch (Exception e) {
@@ -282,7 +282,7 @@ public class SubClassSessionBeanPOST {//extends    DSU1JsonServlet
 
     }
     // TODO ГЕНЕРАЦИЯ JSON ПО  НОВОМУ Jackson
-    StringBuffer МетодJSONJacksonОтАндройда(@NotNull String JSONОтАндройд ,Class dd)
+    StringBuffer МетодJSONJacksonОтАндройда(@NotNull String JSONОтАндройд)
             throws SQLException, SecurityException {
         StringBuffer БуферСозданогоJSONJackson = new StringBuffer();
         try {
@@ -295,31 +295,38 @@ public class SubClassSessionBeanPOST {//extends    DSU1JsonServlet
             mapperJackson.setLocale(new Locale("ru"));
             mapperJackson.setSerializationInclusion(JsonInclude.Include.NON_NULL);
             mapperJackson.setPropertyNamingStrategy(PropertyNamingStrategy.CAMEL_CASE_TO_LOWER_CASE_WITH_UNDERSCORES);
-           model.Cfo  objectReader = mapperJackson.readValue(JSONОтАндройд,  model.Cfo.class);
-            ЛОГ.  log(" objectReader "+objectReader);//gson
 
-            Stream<model.Cfo> cfoStream=Stream.of(objectReader);
-
-            cfoStream.forEach(new Consumer<Cfo>() {
-                @Override
-                public void accept(Cfo cfo) {
-
-                }
-            });
-
-
-          //  String json = "{ \"color\" : \"Black\", \"type\" : \"BMW\" }";
             Map<String, Object> stringObjectMap
                     = mapperJackson.readValue(JSONОтАндройд, new TypeReference<Map<String,Object>>(){});
 
             Flowable.fromIterable(stringObjectMap.entrySet()).map(new Function<Map.Entry<String, Object>, Object>() {
                 @Override
                 public Object apply(Map.Entry<String, Object> stringObjectEntry) throws Throwable {
-                    return null;
+                    ЛОГ.log(" заработал  Jackson ...  МетодГенерацияJSONJackson --->  БуферСозданогоJSONJackson " + БуферСозданогоJSONJackson.toString() );
+                    return stringObjectEntry;
                 }
-            }).subscribe();
+            }).blockingSubscribe();
 
             ЛОГ.log(" заработал  Jackson ...  МетодГенерацияJSONJackson --->  БуферСозданогоJSONJackson " + БуферСозданогоJSONJackson.toString() );
+
+
+
+
+            //model.Cfo  objectReader = mapperJackson.readValue(JSONОтАндройд,  model.Cfo.class);
+      /*      ЛОГ.  log(" objectReader "+objectReader);//gson
+
+            Stream<model.Cfo> cfoStream=Stream.of(objectReader);
+
+            cfoStream.forEach(new Consumer<Cfo>() {
+                @Override
+                public void accept(Cfo cfo) {
+                    ЛОГ.log(" заработал  Jackson ...  МетодГенерацияJSONJackson --->  БуферСозданогоJSONJackson " + БуферСозданогоJSONJackson.toString() );
+                }
+            });*/
+
+
+            //  String json = "{ \"color\" : \"Black\", \"type\" : \"BMW\" }";
+
             /*
              * // Create custom configuration JsonbConfig nillableConfig = new
              * JsonbConfig().withNullValues(true);
