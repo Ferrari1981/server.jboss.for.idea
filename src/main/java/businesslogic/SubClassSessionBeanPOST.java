@@ -171,7 +171,8 @@ public class SubClassSessionBeanPOST {//extends    DSU1JsonServlet
         StringBuffer ОтветОтГлавного_МетодаPOSTДляОтправкиНААндройд = new StringBuffer();
         try {
             // convert JSON string to Map
-         CopyOnWriteArrayList<Map<String, String>> БуферJSONJackson =new GeneratorJackson().getGeneratorJackson(ЛОГ).readValue(jsonReaderПришеоОтКлиентаJSON_P.toString(), CopyOnWriteArrayList.class);
+         CopyOnWriteArrayList<Map<String, String>> БуферJSONJackson =new GeneratorJackson()
+                 .getGeneratorJackson(ЛОГ).readValue(jsonReaderПришеоОтКлиентаJSON_P.toString(), CopyOnWriteArrayList.class);
             //TODO ГЛАВНЫЙ МЕТОДА POST() КОТОРЫЙ ВСТАВЛЯЕТ  И/ИЛИ ОБНОВЛЕНИЯ ДАННЫХ
            ОтветОтГлавного_МетодаPOSTДляОтправкиНААндройд = subClassGenerateJson.МетодГенерацияJson(ЛОГ, БуферJSONJackson
                             , ПараметрИмяТаблицыОтАндройдаPost);

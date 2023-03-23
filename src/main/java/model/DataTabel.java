@@ -107,6 +107,8 @@ public class DataTabel implements Serializable {
     @Column(name="uuid_tabel")
     private BigDecimal uuidTabel;
 
+    private int prof;
+
     public DataTabel() {
     }
 
@@ -428,6 +430,14 @@ public class DataTabel implements Serializable {
 
     public void setUuidTabel(BigDecimal uuidTabel) {
         this.uuidTabel = uuidTabel;
+    }
+
+    public int getProf() {
+        return this.prof;
+    }
+
+    public void setProf(int prof) {
+        this.prof = prof;
     }
 
 }
