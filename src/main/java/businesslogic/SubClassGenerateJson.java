@@ -6,11 +6,9 @@ import java.io.StringReader;
 import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
-import java.util.Map;
+import java.util.*;
 import java.util.Map.Entry;
-import java.util.Optional;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.function.BiConsumer;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
@@ -55,7 +53,7 @@ public class SubClassGenerateJson {
     // TODO: 09.03.2023
     StringBuffer МетодГенерацияJson(
             @NotNull ServletContext ЛОГ,
-            @NotNull  Map<String, String> ПарсингJSONJacson
+            @NotNull CopyOnWriteArrayList<Map<String, String>> БуферJSONJackson
             , @NotNull String ПараметрИмяТаблицыОтАндройдаPost) throws SQLException {
         StringBuffer БуферОтветКлиентуОтСервера=new StringBuffer();
         try {
@@ -69,7 +67,7 @@ public class SubClassGenerateJson {
             ЛОГ.log("\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
                     " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
                     " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+
-                    " ПарсингJSONJacson "+ПарсингJSONJacson.toString()  +
+                    " БуферJSONJackson "+БуферJSONJackson.toString()  +
                     " session  " +session + " sessionSousJboss " +sessionSousJboss);
                 //TODO определем если в таблицы есть поле  UUID или ID
                 StoredProcedureQuery queryprocedure = МетодПолучениеХранимойПроцедуры(ЛОГ, ПараметрИмяТаблицыОтАндройдаPost);
@@ -81,114 +79,120 @@ public class SubClassGenerateJson {
                     ЛОГ.log(" NOT NULL queryprocedure " + queryprocedure);
                     //TODO ГЛАВЕНЫЙ ЦИКЛ ОБРАБОТКИ ДАННЫХ В МЕТОДЕ  POST
                     final String[] UUIDСотсыковочныйХранимойПроцедуры = {null};
-                    Flowable.fromIterable(ПарсингJSONJacson.entrySet())
+                    Flowable.fromIterable(БуферJSONJackson)
                             .onBackpressureBuffer(true)
-                            .doOnNext(new Consumer<Entry<String, String>>() {
-                                @Override
-                                public void accept(Entry<String, String> stringStringEntry) throws Throwable {
-                                    if (stringStringEntry.getKey().equalsIgnoreCase("uuid")) {
-                                        UUIDСотсыковочныйХранимойПроцедуры[0] = stringStringEntry.getValue().trim();
-                                    }
-                                /*    String ФиналЗначениеДляЗаполенияJSON =
-                                            Optional.ofNullable(stringStringEntry.getValue().toString().replaceAll("\"", "")).orElse("");*/
-                                    // TODO заполенем JSonValue
-                                    queryprocedure.registerStoredProcedureParameter(stringStringEntry.getKey(), String.class, ParameterMode.IN)
-                                            .setParameter(stringStringEntry.getKey(), stringStringEntry.getValue());
+                            .doOnNext(new Consumer<Map<String, String>>() {
+                        @Override
+                        public void accept(Map<String, String> stringStringMap) throws Throwable {
+                            Flowable.fromIterable(stringStringMap.entrySet())
+                                    .onBackpressureBuffer(true)
+                                    .doOnNext(new Consumer<Entry<String, String>>() {
+                                        @Override
+                                        public void accept(Entry<String, String> stringStringEntry) throws Throwable {
+                                            if (stringStringEntry.getKey().equalsIgnoreCase("uuid")) {
+                                                UUIDСотсыковочныйХранимойПроцедуры[0] = stringStringEntry.getValue().trim();
+                                            }
+                                            // TODO заполенем JSonValue
+                                            queryprocedure.registerStoredProcedureParameter(stringStringEntry.getKey(), String.class, ParameterMode.IN)
+                                                    .setParameter(stringStringEntry.getKey(), stringStringEntry.getValue());
 
-                                    ЛОГ.log("\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
-                                            " stringStringEntry.getKey() " + stringStringEntry.getKey() + " stringStringEntry.getValue() " + stringStringEntry.getValue()
-                                            + "  UUIDСотсыковочныйХранимойПроцедуры[0] " + UUIDСотсыковочныйХранимойПроцедуры[0]);
-                                }
-                            })
-                            .doOnError(new Consumer<Throwable>() {
-                                @Override
-                                public void accept(Throwable throwable) throws Throwable {
-                                    ЛОГ.log("ERROR class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + " throwable " + throwable.getMessage());
-                                }
-                            })
-                            .doOnComplete(new Action() {
-                                @Override
-                                public void run() throws Throwable {
-                                    queryprocedure.registerStoredProcedureParameter("SrabnitUUIDOrID", String.class, ParameterMode.IN).setParameter("SrabnitUUIDOrID", UUIDСотсыковочныйХранимойПроцедуры[0]);
-                                    queryprocedure.registerStoredProcedureParameter("ResultatMERGE", String.class, ParameterMode.INOUT).setParameter("ResultatMERGE", "complete merge");
+                                            ЛОГ.log("\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
+                                                    " stringStringEntry.getKey() " + stringStringEntry.getKey() + " stringStringEntry.getValue() " + stringStringEntry.getValue()
+                                                    + "  UUIDСотсыковочныйХранимойПроцедуры[0] " + UUIDСотсыковочныйХранимойПроцедуры[0]);
+                                        }
+                                    })
+                                    .doOnError(new Consumer<Throwable>() {
+                                        @Override
+                                        public void accept(Throwable throwable) throws Throwable {
+                                            ЛОГ.log("ERROR class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + " throwable " + throwable.getMessage());
+                                        }
+                                    })
+                                    .doOnComplete(new Action() {
+                                        @Override
+                                        public void run() throws Throwable {
+                                            queryprocedure.registerStoredProcedureParameter("SrabnitUUIDOrID", String.class, ParameterMode.IN).setParameter("SrabnitUUIDOrID", UUIDСотсыковочныйХранимойПроцедуры[0]);
+                                            queryprocedure.registerStoredProcedureParameter("ResultatMERGE", String.class, ParameterMode.INOUT).setParameter("ResultatMERGE", "complete merge");
 
-                                    Integer РезультатОперацииВставкииОбновлениея=  МетодСамогоВыполенияУдаленнойПроцедуры(queryprocedure,ЛОГ,ПараметрИмяТаблицыОтАндройдаPost);
-                                    String РезультатСовершнойОперации= null;
+                                            Integer РезультатОперацииВставкииОбновлениея=  МетодСамогоВыполенияУдаленнойПроцедуры(queryprocedure,ЛОГ,ПараметрИмяТаблицыОтАндройдаPost);
+                                            String РезультатСовершнойОперации= null;
 
-                                    if (РезультатОперацииВставкииОбновлениея>0) {
-                                        //TODO получаем ответный результат
-                                        РезультатСовершнойОперации = (String)queryprocedure.getOutputParameterValue("ResultatMERGE");
+                                            if (РезультатОперацииВставкииОбновлениея>0) {
+                                                //TODO получаем ответный результат
+                                                РезультатСовершнойОперации = (String)queryprocedure.getOutputParameterValue("ResultatMERGE");
 
-                                    ЛОГ.log("\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
-                                            + " РезультатОперацииВставкииОбновлениея "+РезультатОперацииВставкииОбновлениея  +  " РезультатСовершнойОперации " +РезультатСовершнойОперации);
-                                    БуферОтветКлиентуОтСервера	 .append("\n")
-                                            .append("Success result POST()   insert and update from android")
-                                            .append("\n")
-                                            .append(РезультатСовершнойОперации)
-                                            .append("\n")
-                                            .append(" таблица обработки ").append(ПараметрИмяТаблицыОтАндройдаPost)
-                                            .append("\n")
-                                            .append("Пользователь Операциии")
-                                            .append("\n")
-                                            .append("\n")
-                                            .append(new Date().toString())
-                                            .append("\n");
-                                    ЛОГ.log(" БуферОтветКлиентуОтСервера " +БуферОтветКлиентуОтСервера);
-                                }else {
-                                    //TODO не выбрали ни одну талицу
-                                    БуферОтветКлиентуОтСервера
-                                            .append("\n")
-                                            .append("ERROR result POST()   insert and update from android")
-                                            .append("Нет таблицы для Обработки ,или самой обработки")
-                                            .append("\n")
-                                            .append("\n")
-                                            .append("Пользователь Операциии")
-                                            .append("\n")
-                                            .append(" таблица обработки ").append(ПараметрИмяТаблицыОтАндройдаPost)
-                                            .append("\n")
-                                            .append("\n")
-                                            .append(new Date().toString())
-                                            .append("\n");
+                                                ЛОГ.log("\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
+                                                        + " РезультатОперацииВставкииОбновлениея "+РезультатОперацииВставкииОбновлениея  +  " РезультатСовершнойОперации " +РезультатСовершнойОперации);
+                                                БуферОтветКлиентуОтСервера	 .append("\n")
+                                                        .append("Success result POST()   insert and update from android")
+                                                        .append("\n")
+                                                        .append(РезультатСовершнойОперации)
+                                                        .append("\n")
+                                                        .append(" таблица обработки ").append(ПараметрИмяТаблицыОтАндройдаPost)
+                                                        .append("\n")
+                                                        .append("Пользователь Операциии")
+                                                        .append("\n")
+                                                        .append("\n")
+                                                        .append(new Date().toString())
+                                                        .append("\n");
+                                                ЛОГ.log(" БуферОтветКлиентуОтСервера " +БуферОтветКлиентуОтСервера);
+                                            }else {
+                                                //TODO не выбрали ни одну талицу
+                                                БуферОтветКлиентуОтСервера
+                                                        .append("\n")
+                                                        .append("ERROR result POST()   insert and update from android")
+                                                        .append("Нет таблицы для Обработки ,или самой обработки")
+                                                        .append("\n")
+                                                        .append("\n")
+                                                        .append("Пользователь Операциии")
+                                                        .append("\n")
+                                                        .append(" таблица обработки ").append(ПараметрИмяТаблицыОтАндройдаPost)
+                                                        .append("\n")
+                                                        .append("\n")
+                                                        .append(new Date().toString())
+                                                        .append("\n");
 
-                                    ЛОГ.log("NOT TABLE for generations БуферОтветКлиентуОтСервера " +БуферОтветКлиентуОтСервера);
-                                }
-                                    ЛОГ.log("\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
-                                            "  UUIDСотсыковочныйХранимойПроцедуры[0] " + UUIDСотсыковочныйХранимойПроцедуры[0]);
+                                                ЛОГ.log("NOT TABLE for generations БуферОтветКлиентуОтСервера " +БуферОтветКлиентуОтСервера);
+                                            }
+                                            ЛОГ.log("\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
+                                                    "  UUIDСотсыковочныйХранимойПроцедуры[0] " + UUIDСотсыковочныйХранимойПроцедуры[0]);
 
-                                }
-                            })
-                            .onErrorComplete(new Predicate<Throwable>() {
-                                @Override
-                                public boolean test(Throwable throwable) throws Throwable {
-                                    ЛОГ.log("ERROR class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + " throwable " + throwable.getMessage());
-                                    return false;
-                                }
-                            })
-                            .doOnTerminate(new Action() {
-                                @Override
-                                public void run() throws Throwable {
-                                    //TODO после цикла всех строк выключаем менеджеры сущностей  ПОСЛЕ ЦИКЛА С ДАННЫМИ
-                                    МетодЗавершенияСеанса();
-                                    ЛОГ.log("\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
-                                }
-                            })
-                            .blockingSubscribe();
+                                        }
+                                    })
+                                    .onErrorComplete(new Predicate<Throwable>() {
+                                        @Override
+                                        public boolean test(Throwable throwable) throws Throwable {
+                                            ЛОГ.log("ERROR class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + " throwable " + throwable.getMessage());
+                                            return false;
+                                        }
+                                    })
+                                    .doOnTerminate(new Action() {
+                                        @Override
+                                        public void run() throws Throwable {
+                                            //TODO после цикла всех строк выключаем менеджеры сущностей  ПОСЛЕ ЦИКЛА С ДАННЫМИ
+                                            МетодЗавершенияСеанса();
+                                            ЛОГ.log("\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
+                                        }
+                                    })
+                                    .blockingSubscribe();
+                        }
+                    }).blockingSubscribe();
+
                     ЛОГ.log("\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                             " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
-                            " ПарсингJSONJacson " + ПарсингJSONJacson.toString() +
+                            " БуферJSONJackson " + БуферJSONJackson.toString() +
                             " session  " + session + " sessionSousJboss " + sessionSousJboss);
                 }
             //TODO

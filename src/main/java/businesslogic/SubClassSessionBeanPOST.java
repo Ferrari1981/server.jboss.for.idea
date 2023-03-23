@@ -30,6 +30,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.concurrent.BrokenBarrierException;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.ExecutionException;
 import java.util.function.BiConsumer;
 import java.util.stream.Stream;
@@ -170,17 +171,14 @@ public class SubClassSessionBeanPOST {//extends    DSU1JsonServlet
         StringBuffer ОтветОтГлавного_МетодаPOSTДляОтправкиНААндройд = new StringBuffer();
         try {
             // convert JSON string to Map
-            Map<String, String> ПарсингJSONJacson =new GeneratorJackson().getGeneratorJackson(ЛОГ)
-                    .readValue(jsonReaderПришеоОтКлиентаJSON_P.toString(), Map.class);
+         CopyOnWriteArrayList<Map<String, String>> БуферJSONJackson =new GeneratorJackson().getGeneratorJackson(ЛОГ).readValue(jsonReaderПришеоОтКлиентаJSON_P.toString(), CopyOnWriteArrayList.class);
+            //TODO ГЛАВНЫЙ МЕТОДА POST() КОТОРЫЙ ВСТАВЛЯЕТ  И/ИЛИ ОБНОВЛЕНИЯ ДАННЫХ
+           ОтветОтГлавного_МетодаPOSTДляОтправкиНААндройд = subClassGenerateJson.МетодГенерацияJson(ЛОГ, БуферJSONJackson
+                            , ПараметрИмяТаблицыОтАндройдаPost);
             ЛОГ.log( " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+
-                    " jsonReaderПришеоОтКлиентаJSON_P " + jsonReaderПришеоОтКлиентаJSON_P.toString());
-            //TODO ГЛАВНЫЙ МЕТОДА POST() КОТОРЫЙ ВСТАВЛЯЕТ  И/ИЛИ ОБНОВЛЕНИЯ ДАННЫХ
-            ОтветОтГлавного_МетодаPOSTДляОтправкиНААндройд =
-                    subClassGenerateJson.МетодГенерацияJson(ЛОГ, ПарсингJSONJacson
-                            , ПараметрИмяТаблицыОтАндройдаPost);
-            ЛОГ.log(" jsonReaderПришеоОтКлиентаJSON_P " + jsonReaderПришеоОтКлиентаJSON_P.toString()+  "ПарсингJSONJacson "+ПарсингJSONJacson);
+                    " БуферJSONJackson " + БуферJSONJackson.size());
         } catch (Exception e) {
             subClassWriterErros.
                     МетодаЗаписиОшибкиВЛог(e,
