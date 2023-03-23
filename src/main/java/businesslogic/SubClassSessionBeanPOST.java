@@ -3,7 +3,10 @@ package businesslogic;
 
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonValue;
 import com.fasterxml.jackson.core.JsonFactory;
+import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -25,10 +28,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 import java.util.concurrent.BrokenBarrierException;
 import java.util.concurrent.ExecutionException;
 import java.util.stream.Stream;
@@ -203,8 +203,21 @@ public class SubClassSessionBeanPOST {//extends    DSU1JsonServlet
 
             model.Settingtab employee = mapperJackson.readValue(jsonReaderПришеоОтКлиентаJSON_P.toString(), model.Settingtab.class);
 
-            Map<String, Object> stringObjectMap
-                    = mapperJackson.readValue(jsonReaderПришеоОтКлиентаJSON_P.toString(), new TypeReference<Map<String,Object>>(){});
+
+            Map<String, String> stringObjectMap
+                    = mapperJackson.readValue(jsonReaderПришеоОтКлиентаJSON_P.toString(), new TypeReference<Map<String,String>>(){});
+
+
+
+            // convert JSON string to Map
+            Map<String, String> map = mapperJackson.readValue(jsonReaderПришеоОтКлиентаJSON_P.toString(), Map.class);
+
+            // it works
+            //Map<String, String> map = mapper.readValue(json, new TypeReference<Map<String, String>>() {});
+
+            System.out.println(map);
+
+
             //TODO ГЛАВНЫЙ МЕТОДА POST() КОТОРЫЙ ВСТАВЛЯЕТ  И/ИЛИ ОБНОВЛЕНИЯ ДАННЫХ
             ОтветОтГлавного_МетодаPOSTДляОтправкиНААндройд =
                     subClassGenerateJson.МетодГенерацияJson(ЛОГ, jsonReaderПришеоОтКлиентаJSON_P
