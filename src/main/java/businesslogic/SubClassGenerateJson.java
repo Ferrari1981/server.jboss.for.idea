@@ -89,8 +89,8 @@ public class SubClassGenerateJson {
                                     if (stringStringEntry.getKey().equalsIgnoreCase("uuid")) {
                                         UUIDСотсыковочныйХранимойПроцедуры[0] = stringStringEntry.getValue();
                                     }
-                                    String ФиналЗначениеДляЗаполенияJSON =
-                                            Optional.ofNullable(stringStringEntry.getValue().toString().replaceAll("\"", "")).orElse("");
+                                /*    String ФиналЗначениеДляЗаполенияJSON =
+                                            Optional.ofNullable(stringStringEntry.getValue().toString().replaceAll("\"", "")).orElse("");*/
                                     // TODO заполенем JSonValue
                                     queryprocedure.registerStoredProcedureParameter(stringStringEntry.getKey(), String.class, ParameterMode.IN)
                                             .setParameter(stringStringEntry.getKey(), stringStringEntry.getValue());
@@ -127,7 +127,7 @@ public class SubClassGenerateJson {
                                             " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
                                             + " РезультатОперацииВставкииОбновлениея "+РезультатОперацииВставкииОбновлениея  +  " РезультатСовершнойОперации " +РезультатСовершнойОперации);
                                     БуферОтветКлиентуОтСервера	 .append("\n")
-                                            .append("result POST()   insert and update from android")
+                                            .append("Success result POST()   insert and update from android")
                                             .append("\n")
                                             .append(РезультатСовершнойОперации)
                                             .append("\n")
@@ -143,7 +143,7 @@ public class SubClassGenerateJson {
                                     //TODO не выбрали ни одну талицу
                                     БуферОтветКлиентуОтСервера
                                             .append("\n")
-                                            .append("result POST()   insert and update from android")
+                                            .append("ERROR result POST()   insert and update from android")
                                             .append("Нет таблицы для Обработки ,или самой обработки")
                                             .append("\n")
                                             .append("\n")
@@ -305,10 +305,7 @@ public class SubClassGenerateJson {
                 if (session.isDirty()) {
                     session.flush();
                 }
-                if (session.isConnected()) {
-                    session.disconnect();
-                }
-                if (session.isOpen() ) {
+                if (session.isOpen() || session.isConnected() ) {
                     session.close();
                 }
                 ЛОГ.log("\n МетодЗакрываемСессиюHibernate "+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
@@ -317,6 +314,9 @@ public class SubClassGenerateJson {
             }
     } catch (Exception   e) {
             // TODO: 12.03.2023
+            ЛОГ.log( "ERROR class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber()  + " e " +e.getMessage() );
             МетодЗавершенияСеанса();
             subClassWriterErros.
                     МетодаЗаписиОшибкиВЛог(e,
