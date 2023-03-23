@@ -87,7 +87,7 @@ public class SubClassGenerateJson {
                                 @Override
                                 public void accept(Entry<String, String> stringStringEntry) throws Throwable {
                                     if (stringStringEntry.getKey().equalsIgnoreCase("uuid")) {
-                                        UUIDСотсыковочныйХранимойПроцедуры[0] = stringStringEntry.getValue();
+                                        UUIDСотсыковочныйХранимойПроцедуры[0] = stringStringEntry.getValue().trim();
                                     }
                                 /*    String ФиналЗначениеДляЗаполенияJSON =
                                             Optional.ofNullable(stringStringEntry.getValue().toString().replaceAll("\"", "")).orElse("");*/
@@ -98,7 +98,8 @@ public class SubClassGenerateJson {
                                     ЛОГ.log("\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                                             " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
-                                            " stringStringEntry.getKey() " + stringStringEntry.getKey() + " stringStringEntry.getValue() " + stringStringEntry.getValue());
+                                            " stringStringEntry.getKey() " + stringStringEntry.getKey() + " stringStringEntry.getValue() " + stringStringEntry.getValue()
+                                            + "  UUIDСотсыковочныйХранимойПроцедуры[0] " + UUIDСотсыковочныйХранимойПроцедуры[0]);
                                 }
                             })
                             .doOnError(new Consumer<Throwable>() {
@@ -189,9 +190,7 @@ public class SubClassGenerateJson {
                             " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
                             " ПарсингJSONJacson " + ПарсингJSONJacson.toString() +
                             " session  " + session + " sessionSousJboss " + sessionSousJboss);
-
                 }
-
             //TODO
             ЛОГ.log("БуферОтветКлиентуОтСервера  "+ БуферОтветКлиентуОтСервера.toString());
         } catch (Exception   e) {
@@ -204,10 +203,8 @@ public class SubClassGenerateJson {
                             Thread.currentThread().
                                     getStackTrace(),
                             ЛОГ,"ErrorsLogs/ErrorJbossServletDSU1.txt");
-
         }
         return БуферОтветКлиентуОтСервера;
-
     }
 
 
@@ -313,11 +310,10 @@ public class SubClassGenerateJson {
                         " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n" +  "session " +session);
             }
     } catch (Exception   e) {
-            // TODO: 12.03.2023
             ЛОГ.log( "ERROR class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber()  + " e " +e.getMessage() );
-            МетодЗавершенияСеанса();
+            sessionTransaction.rollback();
             subClassWriterErros.
                     МетодаЗаписиОшибкиВЛог(e,
                             Thread.currentThread().

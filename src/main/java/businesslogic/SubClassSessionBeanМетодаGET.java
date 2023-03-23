@@ -567,10 +567,7 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
                 if (session.isDirty()) {
                     session.flush();
                 }
-                if (session.isConnected()) {
-                    session.disconnect();
-                }
-                if (session.isOpen() ) {
+                if (session.isOpen()   || session.isConnected()) {
                     session.close();
                 }
                 ЛОГ.log("\n МетодЗакрываемСессиюHibernate "+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
@@ -578,8 +575,10 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
                         " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n" +  "session " +session);
             }
     } catch (Exception e) {
-            // TODO: 12.03.2023
-            МетодЗакрываемСессиюHibernate();
+            ЛОГ.log( "ERROR class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber()  + " e " +e.getMessage() );
+            sessionTransaction.rollback();
             subClassWriterErros.
                     МетодаЗаписиОшибкиВЛог(e,
                             Thread.currentThread().
