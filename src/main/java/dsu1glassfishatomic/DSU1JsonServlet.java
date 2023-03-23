@@ -52,6 +52,9 @@ public class DSU1JsonServlet extends HttpServlet {
                             " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
                             + " ((HttpServletRequest) req).getPathInfo() " +((HttpServletRequest) req).getPathInfo());
         } catch (Exception e) {
+            ЛОГ.log( "ERROR class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() );
             subClassWriterErros.
                     МетодаЗаписиОшибкиВЛог(e,
                             Thread.currentThread().
@@ -76,6 +79,9 @@ public class DSU1JsonServlet extends HttpServlet {
                     " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
                     " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+((HttpServletRequest) req).getPathInfo());
     } catch (Exception e) {
+            ЛОГ.log( "ERROR class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() );
             subClassWriterErros.
                     МетодаЗаписиОшибкиВЛог(e,
                             Thread.currentThread().

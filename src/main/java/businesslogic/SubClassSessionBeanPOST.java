@@ -31,6 +31,7 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.concurrent.BrokenBarrierException;
 import java.util.concurrent.ExecutionException;
+import java.util.function.BiConsumer;
 import java.util.stream.Stream;
 import java.util.zip.GZIPInputStream;
 
@@ -138,16 +139,14 @@ public class SubClassSessionBeanPOST {//extends    DSU1JsonServlet
                     ///// TODO --ПРИШЕЛ ФАЙЛ ОТ КЛИЕНТА JSON
                     if (БуферJSONОтАндройда.toString().toCharArray().length > 3) {///// ЗАХОДИМ											///// КОД
                         ЛОГ.log("  БуферJSONОтАндройда " + БуферJSONОтАндройда.toString());///// ПРИШЕДШИХ
-                        // Read back
-                   /*     JsonReader jsonReaderПришеоОтКлиентаJSON_P = Json.createReader(new StringReader(БуферJSONОтАндройда.toString()));
-                        ЛОГ.log(" response " + response.toString() + " ПараметрИмяТаблицыОтАндройдаPost " + ПараметрИмяТаблицыОтАндройдаPost +
-                                " jsonReaderПришеоОтКлиентаJSON_P " + jsonReaderПришеоОтКлиентаJSON_P);*/
-
                         ОтветОтГлавного_МетодаPOSTДляОтправкиНААндройд =
                                 МетодПарсингаJSONФайлПришелОтКлиента(response,
                                         ПараметрИмяТаблицыОтАндройдаPost,
                                         БуферJSONОтАндройда);
-                        ЛОГ.log(" responОтветОтГлавного_МетодаPOSTДляОтправкиНААндройдse " + ОтветОтГлавного_МетодаPOSTДляОтправкиНААндройд);
+                        ЛОГ.log( " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
+                                + " ОтветОтГлавного_МетодаPOSTДляОтправкиНААндройд "+ОтветОтГлавного_МетодаPOSTДляОтправкиНААндройд.toString());
                     }
                     break;
             }
@@ -170,59 +169,18 @@ public class SubClassSessionBeanPOST {//extends    DSU1JsonServlet
             throws InterruptedException, SQLException, BrokenBarrierException, IOException {
         StringBuffer ОтветОтГлавного_МетодаPOSTДляОтправкиНААндройд = new StringBuffer();
         try {
-            ЛОГ.log(" jsonReaderПришеоОтКлиентаJSON_P " + jsonReaderПришеоОтКлиентаJSON_P.toString());
-        /*    JsonObject JSONОБьектjsonReaderПришеоОтКлиентаJSON_P = jsonReaderПришеоОтКлиентаJSON_P.readObject();
-            ЛОГ.log(" jsonReaderПришеоОтКлиентаJSON_P " + jsonReaderПришеоОтКлиентаJSON_P.toString() +
-                    " JSONОБьектjsonReaderПришеоОтКлиентаJSON_P.getJsonNumber(\"uuid\")"
-                    + "  JSONОБьектjsonReaderПришеоОтКлиентаJSON_P.getJsonNumber(\"uuid\") "
-                    + "" + JSONОБьектjsonReaderПришеоОтКлиентаJSON_P.getJsonNumber("uuid") +
-                    " JSONОБьектjsonReaderПришеоОтКлиентаJSON_P.size()"
-                    + JSONОБьектjsonReaderПришеоОтКлиентаJSON_P.size() +
-                    " JSONОБьектjsonReaderПришеоОтКлиентаJSON_P.get(\"id\") " +
-                    JSONОБьектjsonReaderПришеоОтКлиентаJSON_P.entrySet().parallelStream().findFirst().get().getValue() +
-                    "  ПараметрИмяТаблицыОтАндройдаPost " + ПараметрИмяТаблицыОтАндройдаPost);*/
-
-            JsonFactory factory = new JsonFactory();
-            DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS", new Locale("ru"));
-            final ObjectMapper mapperJackson = new ObjectMapper(factory);
-            mapperJackson.setDateFormat(df);
-            mapperJackson.setLocale(new Locale("ru"));
-            mapperJackson.setSerializationInclusion(JsonInclude.Include.NON_NULL);
-            mapperJackson.setPropertyNamingStrategy(PropertyNamingStrategy.CAMEL_CASE_TO_LOWER_CASE_WITH_UNDERSCORES);
-
-
-            //JsonObject jsonParser=ДляВнутренегоЦиклаjsonReaderJSON.readObject();
-            ServletOutputStream dataInput=response.getOutputStream();
-            Observable.just(dataInput).blockingForEach(new Consumer<ServletOutputStream>() {
-                @Override
-                public void accept(ServletOutputStream servletOutputStream) throws Throwable {
-                    ЛОГ.log(" jsonReaderПришеоОтКлиентаJSON_P " + jsonReaderПришеоОтКлиентаJSON_P.toString());
-                }
-            });
-     //  Object o = mapperJackson.readValue((DataInput) dataInput,model.Settingtab.class);
-
-            model.Settingtab employee = mapperJackson.readValue(jsonReaderПришеоОтКлиентаJSON_P.toString(), model.Settingtab.class);
-
-
-            Map<String, String> stringObjectMap
-                    = mapperJackson.readValue(jsonReaderПришеоОтКлиентаJSON_P.toString(), new TypeReference<Map<String,String>>(){});
-
-
-
             // convert JSON string to Map
-            Map<String, String> map = mapperJackson.readValue(jsonReaderПришеоОтКлиентаJSON_P.toString(), Map.class);
-
-            // it works
-            //Map<String, String> map = mapper.readValue(json, new TypeReference<Map<String, String>>() {});
-
-            System.out.println(map);
-
-
+            Map<String, String> ПарсингJSONJacson =new GeneratorJackson().getGeneratorJackson(ЛОГ)
+                    .readValue(jsonReaderПришеоОтКлиентаJSON_P.toString(), Map.class);
+            ЛОГ.log( " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+
+                    " jsonReaderПришеоОтКлиентаJSON_P " + jsonReaderПришеоОтКлиентаJSON_P.toString());
             //TODO ГЛАВНЫЙ МЕТОДА POST() КОТОРЫЙ ВСТАВЛЯЕТ  И/ИЛИ ОБНОВЛЕНИЯ ДАННЫХ
             ОтветОтГлавного_МетодаPOSTДляОтправкиНААндройд =
-                    subClassGenerateJson.МетодГенерацияJson(ЛОГ, jsonReaderПришеоОтКлиентаJSON_P
+                    subClassGenerateJson.МетодГенерацияJson(ЛОГ, ПарсингJSONJacson
                             , ПараметрИмяТаблицыОтАндройдаPost);
-            ЛОГ.log(" jsonReaderПришеоОтКлиентаJSON_P " + jsonReaderПришеоОтКлиентаJSON_P.toString()+  "stringObjectMap "+stringObjectMap);
+            ЛОГ.log(" jsonReaderПришеоОтКлиентаJSON_P " + jsonReaderПришеоОтКлиентаJSON_P.toString()+  "ПарсингJSONJacson "+ПарсингJSONJacson);
         } catch (Exception e) {
             subClassWriterErros.
                     МетодаЗаписиОшибкиВЛог(e,

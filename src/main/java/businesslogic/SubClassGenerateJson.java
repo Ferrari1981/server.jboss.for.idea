@@ -53,11 +53,9 @@ public class SubClassGenerateJson {
     // TODO: 09.03.2023
     StringBuffer МетодГенерацияJson(
             @NotNull ServletContext ЛОГ,
-            @NotNull StringBuffer JSONStremОтAndrod
+            @NotNull  Map<String, String> ПарсингJSONJacson
             , @NotNull String ПараметрИмяТаблицыОтАндройдаPost) throws SQLException {
-
         StringBuffer БуферОтветКлиентуОтСервера=new StringBuffer();
-        /// javax.persistence.EntityManager  МенеджерJTA = ФабрикаДляМенеждера.createEntityManager();
         try {
             this.ЛОГ=ЛОГ;
             // TODO: 11.03.2023  Получении Сесии Hiberrnate
@@ -66,40 +64,31 @@ public class SubClassGenerateJson {
             sessionTransaction =session.getTransaction() ;
             // TODO: 14.03.2023  Запускает Транзакции
             sessionTransaction.begin();
-            ЛОГ.log(" jsonReaderПришеоОтКлиентаJSON_P "+JSONStremОтAndrod.toString()  + " session  " +session + " sessionSousJboss " +sessionSousJboss);
+            ЛОГ.log("\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
+                    " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
+                    " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+
+                    " ПарсингJSONJacson "+ПарсингJSONJacson.toString()  +
+                    " session  " +session + " sessionSousJboss " +sessionSousJboss);
             //TODO ГЛАВЕНЫЙ ЦИКЛ ОБРАБОТКИ ДАННЫХ В МЕТОДЕ  POST
-
-            ЛОГ.log(" JSONStremОтAndrod" + JSONStremОтAndrod.toString() );
-            //TODO Jacson парсинг JSON
-         /*   JsonFactory factory = new JsonFactory();
-            DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS", new Locale("ru"));
-            final ObjectMapper mapperJackson = new ObjectMapper(factory);
-            mapperJackson.setDateFormat(df);
-            mapperJackson.setLocale(new Locale("ru"));
-            mapperJackson.setSerializationInclusion(JsonInclude.Include.NON_NULL);
-            mapperJackson.setPropertyNamingStrategy(PropertyNamingStrategy.CAMEL_CASE_TO_LOWER_CASE_WITH_UNDERSCORES);
-
-            JsonReader ДляВнутренегоЦиклаjsonReaderJSON = Json.createReader(new StringReader(JSONStremОтAndrod.toString()));
-            JsonObject jsonParser=ДляВнутренегоЦиклаjsonReaderJSON.readObject();
-            model.Settingtab.class);
-
-            try {
-                Settingtab = mapperJackson.readTree((Reader) ДляВнутренегоЦиклаjsonReaderJSON)
-            } catch (JsonProcessingException ex) {
-                ex.printStackTrace();
-            }
-
-            Flowable.fromIterable(stringObjectMap.entrySet())
-                    .doOnNext(new Consumer<Entry<String, com.fasterxml.jackson.annotation.JsonValue>>() {
+            Flowable.fromIterable(ПарсингJSONJacson.entrySet())
+                    .onBackpressureBuffer(true)
+                    .doOnNext(new Consumer<Entry<String, String>>() {
                         @Override
-                        public void accept(Entry<String, com.fasterxml.jackson.annotation.JsonValue> stringJsonValueEntry) throws Throwable {
-                            ЛОГ.log(" заработал  Jackson ...  МетодГенерацияJSONJackson ---> " +
-                                    " stringJsonValueEntry " + stringJsonValueEntry.getValue());
+                        public void accept(Entry<String, String> stringStringEntry) throws Throwable {
+                            ЛОГ.log("\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
+                                    " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
+                                    " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+
+                                    " stringStringEntry "+stringStringEntry);
                         }
                     })
-                    .blockingSubscribe();*/
+                    .blockingSubscribe();
 
-            ЛОГ.log(" заработал  Jackson ...  МетодГенерацияJSONJackson --->  JSONStremОтAndrod " + JSONStremОтAndrod.toString() );
+
+            ЛОГ.log("\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
+                    " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
+                    " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+
+                    " ПарсингJSONJacson "+ПарсингJSONJacson.toString()  +
+                    " session  " +session + " sessionSousJboss " +sessionSousJboss);
 
 
            /* JSONStremОтAndrod.entrySet().forEach(ВнешнаяСтрокаJSON -> {
