@@ -33,8 +33,10 @@ import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.sun.istack.NotNull;
 import dsu1glassfishatomic.ProducedCard;
 import io.reactivex.rxjava3.core.Flowable;
+import io.reactivex.rxjava3.functions.Action;
 import io.reactivex.rxjava3.functions.Consumer;
 import io.reactivex.rxjava3.functions.Function;
+import io.reactivex.rxjava3.functions.Predicate;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -69,452 +71,133 @@ public class SubClassGenerateJson {
                     " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+
                     " ПарсингJSONJacson "+ПарсингJSONJacson.toString()  +
                     " session  " +session + " sessionSousJboss " +sessionSousJboss);
-            //TODO ГЛАВЕНЫЙ ЦИКЛ ОБРАБОТКИ ДАННЫХ В МЕТОДЕ  POST
-            Flowable.fromIterable(ПарсингJSONJacson.entrySet())
-                    .onBackpressureBuffer(true)
-                    .doOnNext(new Consumer<Entry<String, String>>() {
-                        @Override
-                        public void accept(Entry<String, String> stringStringEntry) throws Throwable {
-                            ЛОГ.log("\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
-                                    " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
-                                    " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+
-                                    " stringStringEntry "+stringStringEntry);
-                        }
-                    })
-                    .blockingSubscribe();
-
-
-            ЛОГ.log("\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
-                    " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
-                    " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+
-                    " ПарсингJSONJacson "+ПарсингJSONJacson.toString()  +
-                    " session  " +session + " sessionSousJboss " +sessionSousJboss);
-
-
-           /* JSONStremОтAndrod.entrySet().forEach(ВнешнаяСтрокаJSON -> {
-                JsonReader ДляВнутренегоЦиклаjsonReaderJSON = Json.createReader(new StringReader(ВнешнаяСтрокаJSON.getValue().toString()));
-                JsonObject ВнутренийОбщийJSONОБьектjsonReaderПришеоОтКлиентаJSON_P = ДляВнутренегоЦиклаjsonReaderJSON.readObject();
-                ЛОГ.log( "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+
-                        "ПараметрИмяТаблицыОтАндройдаPost   " +ПараметрИмяТаблицыОтАндройдаPost
-                        +" ВнутренийОбщийJSONОБьектjsonReaderПришеоОтКлиентаJSON_P "+ВнутренийОбщийJSONОБьектjsonReaderПришеоОтКлиентаJSON_P.toString());
-                String	ФиналUIDorIdДляСостыковкиЕстьИлиНЕтУжеВБАзе = null ;
                 //TODO определем если в таблицы есть поле  UUID или ID
-                if(ВнутренийОбщийJSONОБьектjsonReaderПришеоОтКлиентаJSON_P.containsKey("uuid")) {
-                    //TODO
-                    ЛОГ.log("ВнутренийОбщийJSONОБьектjsonReaderПришеоОтКлиентаJSON_P.containsKey(\"uuid\")  " +
-                            ВнутренийОбщийJSONОБьектjsonReaderПришеоОтКлиентаJSON_P.containsKey("uuid"));
-                    ФиналUIDorIdДляСостыковкиЕстьИлиНЕтУжеВБАзе=
-                            Optional.ofNullable(ВнутренийОбщийJSONОБьектjsonReaderПришеоОтКлиентаJSON_P
-                                    .getString("uuid").replaceAll("\"", "")).map(String::new).get();
-                }else {
-                    //TODO ID
-                    if(ВнутренийОбщийJSONОБьектjsonReaderПришеоОтКлиентаJSON_P.containsKey("id")) {
-                        //TODO
-                        ЛОГ.log("ВнутренийОбщийJSONОБьектjsonReaderПришеоОтКлиентаJSON_P.containsKey(\"id\")  " +
-                                ВнутренийОбщийJSONОБьектjsonReaderПришеоОтКлиентаJSON_P.containsKey("id"));
-
-                        ФиналUIDorIdДляСостыковкиЕстьИлиНЕтУжеВБАзе=
-                                Optional.ofNullable(ВнутренийОбщийJSONОБьектjsonReaderПришеоОтКлиентаJSON_P
-                                        .getString("id").replaceAll("\"", "")).map(String::new).get();
-                    }
-                }
-                //TODO
-                ЛОГ.log(" ФиналUIDorIdДляСостыковкиЕстьИлиНЕтУжеВБАзе "+ФиналUIDorIdДляСостыковкиЕстьИлиНЕтУжеВБАзе);
-                //TODO ЗАПОЛЕНИЯ ТАБЛИЦ И  ОТПРАВКА ЗНАЧЕНИЙ В УДАЛЕННУЮ ПРОЦЕДУРУ
-                StoredProcedureQuery	 queryprocedure = null;
-                //TODO ЗАПОЛЯЕМ ДАННЕЫ ДЛЯ ВСТВКИ МЕТОДА POST()
-                switch(ПараметрИмяТаблицыОтАндройдаPost) {
-                    //TODO
-                    case "settings_tabels":
-                        //TODO
-                        ЛОГ.log(" ВнутренийОбщийJSONОБьектjsonReaderПришеоОтКлиентаJSON_P "+ВнутренийОбщийJSONОБьектjsonReaderПришеоОтКлиентаJSON_P.toString()+"\n"
-                                + " ПараметрИмяТаблицыОтАндройдаPost " +ПараметрИмяТаблицыОтАндройдаPost);
-
-                        //TODO Процедура Удаленная вызова SQL Server
-                        queryprocedure = session.createStoredProcedureQuery("ProcedureExistsMERGEsettings_tabels#2");//TODO ProcedureExistsMERGE_fio
-                        //TODO
-                        ЛОГ.log(" case \"settings_tabels\":	queryprocedure "
-                                +queryprocedure);
-
-                        break;
-                    //TODO fio
-
-                    case "fio":
-                        //TODO
-                        ЛОГ.log(" ВнутренийОбщийJSONОБьектjsonReaderПришеоОтКлиентаJSON_P "+ВнутренийОбщийJSONОБьектjsonReaderПришеоОтКлиентаJSON_P.toString()+"\n"
-                                + " ПараметрИмяТаблицыОтАндройдаPost " +ПараметрИмяТаблицыОтАндройдаPost);
-
-
-                        //TODO Процедура Удаленная вызова SQL Server
-                        queryprocedure = session.createStoredProcedureQuery( "ProcedureExistsMERGEfio#1");//TODO ProcedureExistsMERGE_fio
-                        //TODO
-                        ЛОГ.log(" case \"fio\":	queryprocedure "
-                                +queryprocedure);
-
-
-
-                        //TODO
-                        break;
-                    //TODO data_tabels
-                    case "data_tabels":
-                        //TODO
-                        ЛОГ.log(" ВнутренийОбщийJSONОБьектjsonReaderПришеоОтКлиентаJSON_P "+ВнутренийОбщийJSONОБьектjsonReaderПришеоОтКлиентаJSON_P.toString()+"\n"
-                                + " ПараметрИмяТаблицыОтАндройдаPost " +ПараметрИмяТаблицыОтАндройдаPost);
-
-
-                        //TODO Процедура Удаленная вызова SQL Server
-                        queryprocedure = session.createStoredProcedureQuery( "ProcedureExistsMERGEdata_tabels#3");//TODO ProcedureExistsMERGE_fio
-                        //TODO
-                        ЛОГ.log(" case \"data_tabels\":	queryprocedure "
-                                +queryprocedure);
-
-                        //TODO
-                        break;
-
-                    //TODO tabel
-                    case "tabel":
-
-                        ЛОГ.log(" ВнутренийОбщийJSONОБьектjsonReaderПришеоОтКлиентаJSON_P "+ВнутренийОбщийJSONОБьектjsonReaderПришеоОтКлиентаJSON_P.toString()+"\n"
-                                + " ПараметрИмяТаблицыОтАндройдаPost " +ПараметрИмяТаблицыОтАндройдаPost);
-
-
-                        //TODO Процедура Удаленная вызова SQL Server
-                        queryprocedure = session.createStoredProcedureQuery( "ProcedureExistsMERGEtabel#4");//TODO ProcedureExistsMERGE_fio
-                        //TODO
-                        ЛОГ.log(" case \"tabel\":	queryprocedure "
-                                +queryprocedure);
-
-                        //TODO
-                        break;
-
-                    //todo organization
-                    case "organization":
-
-                        ЛОГ.log(" ВнутренийОбщийJSONОБьектjsonReaderПришеоОтКлиентаJSON_P "+ВнутренийОбщийJSONОБьектjsonReaderПришеоОтКлиентаJSON_P.toString()+"\n"
-                                + " ПараметрИмяТаблицыОтАндройдаPost " +ПараметрИмяТаблицыОтАндройдаPost);
-
-
-                        //TODO Процедура Удаленная вызова SQL Server
-                        queryprocedure = session.createStoredProcedureQuery( "ProcedureExistsMERGEorganization#5");//TODO ProcedureExistsMERGE_fio
-                        //TODO
-                        ЛОГ.log(" case \"organization\":	queryprocedure "
-                                +queryprocedure);
-
-                        //TODO
-                        break;
-                    //TODO
-
-                    case "depatment":
-
-                        ЛОГ.log(" ВнутренийОбщийJSONОБьектjsonReaderПришеоОтКлиентаJSON_P "+ВнутренийОбщийJSONОБьектjsonReaderПришеоОтКлиентаJSON_P.toString()+"\n"
-                                + " ПараметрИмяТаблицыОтАндройдаPost " +ПараметрИмяТаблицыОтАндройдаPost);
-
-
-                        //TODO Процедура Удаленная вызова SQL Server
-                        queryprocedure = session.createStoredProcedureQuery( "ProcedureExistsMERGEdepatment#6");//TODO ProcedureExistsMERGE_fio
-                        //TODO
-                        ЛОГ.log(" case \"depatment\":	queryprocedure "
-                                +queryprocedure);
-                        //TODO
-                        break;
-
-
-                    //TODO notifications
-                    case "notifications":
-
-                        ЛОГ.log(" ВнутренийОбщийJSONОБьектjsonReaderПришеоОтКлиентаJSON_P "
-                                +ВнутренийОбщийJSONОБьектjsonReaderПришеоОтКлиентаJSON_P.toString()+"\n"
-                                + " ПараметрИмяТаблицыОтАндройдаPost " +ПараметрИмяТаблицыОтАндройдаPost);
-
-
-                        //TODO Процедура Удаленная вызова SQL Server
-                        queryprocedure = session.createStoredProcedureQuery( "ProcedureExistsMERGEnotifications#7");//TODO ProcedureExistsMERGE_fio
-                        //TODO
-                        ЛОГ.log(" case \"notifications\":	queryprocedure "
-                                +queryprocedure);
-
-                        //TODO
-                        break;
-
-                    //TODO data_notification
-                    case "data_notification":
-                        //TODO
-                        ЛОГ.log(" ВнутренийОбщийJSONОБьектjsonReaderПришеоОтКлиентаJSON_P "
-                                +ВнутренийОбщийJSONОБьектjsonReaderПришеоОтКлиентаJSON_P.toString()+"\n"
-                                + " ПараметрИмяТаблицыОтАндройдаPost " +ПараметрИмяТаблицыОтАндройдаPost);
-
-
-                        //TODO Процедура Удаленная вызова SQL Server
-                        queryprocedure = session.createStoredProcedureQuery( "ProcedureExistsMERGEdata_notification#8");//TODO ProcedureExistsMERGE_fio
-                        //TODO
-                        ЛОГ.log(" case \"data_notification\":	queryprocedure "
-                                +queryprocedure);
-
-                        //TODO
-                        break;
-
-                    //TODO chats
-                    case "chats":
-                        //TODO
-                        ЛОГ.log(" ВнутренийОбщийJSONОБьектjsonReaderПришеоОтКлиентаJSON_P "
-                                +ВнутренийОбщийJSONОБьектjsonReaderПришеоОтКлиентаJSON_P.toString()+"\n"
-                                + " ПараметрИмяТаблицыОтАндройдаPost " +ПараметрИмяТаблицыОтАндройдаPost);
-
-
-                        //TODO Процедура Удаленная вызова SQL Server
-                        queryprocedure = session.createStoredProcedureQuery( "ProcedureExistsMERGEchats#9");//TODO ProcedureExistsMERGE_fio
-                        //TODO
-                        ЛОГ.log(" case \"chats\":	queryprocedure "
-                                +queryprocedure);
-
-
-                        //TODO
-                        break;
-
-                    //TODO
-                    case "data_chat":
-                        ЛОГ.log(" ВнутренийОбщийJSONОБьектjsonReaderПришеоОтКлиентаJSON_P "
-                                +ВнутренийОбщийJSONОБьектjsonReaderПришеоОтКлиентаJSON_P.toString()+"\n"
-                                + " ПараметрИмяТаблицыОтАндройдаPost " +ПараметрИмяТаблицыОтАндройдаPost);
-
-
-                        //TODO Процедура Удаленная вызова SQL Server
-                        queryprocedure = session.createStoredProcedureQuery( "ProcedureExistsMERGEdata_chat#10");//TODO ProcedureExistsMERGE_fio
-                        //TODO
-                        ЛОГ.log(" case \"data_chat\":	queryprocedure "
-                                +queryprocedure);
-
-
-
-                        //TODO
-                        break;
-
-                    //TODO templates
-                    case	"templates":
-                        //TODO
-                        ЛОГ.log(" ВнутренийОбщийJSONОБьектjsonReaderПришеоОтКлиентаJSON_P "
-                                +ВнутренийОбщийJSONОБьектjsonReaderПришеоОтКлиентаJSON_P.toString()+"\n"
-                                + " ПараметрИмяТаблицыОтАндройдаPost " +ПараметрИмяТаблицыОтАндройдаPost);
-
-
-                        //TODO Процедура Удаленная вызова SQL Server
-                        queryprocedure = session.createStoredProcedureQuery( "ProcedureExistsMERGEtemplates#11");//TODO ProcedureExistsMERGE_fio
-                        //TODO
-                        ЛОГ.log(" case \"templates\":	queryprocedure "
-                                +queryprocedure);
-
-
-                        //TODO
-                        break;
-
-                    //TODO  fio_template
-                    case	"fio_template":
-                        //TODO
-                        ЛОГ.log(" ВнутренийОбщийJSONОБьектjsonReaderПришеоОтКлиентаJSON_P "
-                                +ВнутренийОбщийJSONОБьектjsonReaderПришеоОтКлиентаJSON_P.toString()+"\n"
-                                + " ПараметрИмяТаблицыОтАндройдаPost " +ПараметрИмяТаблицыОтАндройдаPost);
-
-
-                        //TODO Процедура Удаленная вызова SQL Server
-                        queryprocedure = session.createStoredProcedureQuery( "ProcedureExistsMERGEfio_template#12");//TODO ProcedureExistsMERGE_fio
-                        //TODO
-                        ЛОГ.log(" case \"fio_template\":	queryprocedure "
-                                +queryprocedure);
-
-
-                        //TODO
-                        break;
-
-
-
-                    //TODO region
-
-                    //TODO  fio_template
-                    case	"region":
-                        //TODO
-                        ЛОГ.log(" ВнутренийОбщийJSONОБьектjsonReaderПришеоОтКлиентаJSON_P "
-                                +ВнутренийОбщийJSONОБьектjsonReaderПришеоОтКлиентаJSON_P.toString()+"\n"
-                                + " ПараметрИмяТаблицыОтАндройдаPost " +ПараметрИмяТаблицыОтАндройдаPost);
-
-
-                        //TODO Процедура Удаленная вызова SQL Server
-                        queryprocedure = session.createStoredProcedureQuery( "ProcedureExistsMERGEregion#13");//TODO ProcedureExistsMERGE_fio
-                        //TODO
-                        ЛОГ.log(" case \"region\":	queryprocedure "
-                                +queryprocedure);
-
-
-                        //TODO
-                        break;
-
-                    //TODO cfo
-                    case	"cfo":
-                        //TODO
-                        ЛОГ.log(" ВнутренийОбщийJSONОБьектjsonReaderПришеоОтКлиентаJSON_P "
-                                +ВнутренийОбщийJSONОБьектjsonReaderПришеоОтКлиентаJSON_P.toString()+"\n"
-                                + " ПараметрИмяТаблицыОтАндройдаPost " +ПараметрИмяТаблицыОтАндройдаPost);
-
-
-                        //TODO Процедура Удаленная вызова SQL Server
-                        queryprocedure = session.createStoredProcedureQuery( "ProcedureExistsMERGEcfo#14");//TODO ProcedureExistsMERGE_fio
-                        //TODO
-                        ЛОГ.log(" case \"cfo\":	queryprocedure "
-                                +queryprocedure);
-
-
-
-
-                        //TODO
-                        break;
-                    //TODO get_materials_data
-                    case	"get_materials_data":
-                        //TODO
-                        ЛОГ.log(" ВнутренийОбщийJSONОБьектjsonReaderПришеоОтКлиентаJSON_P "
-                                +ВнутренийОбщийJSONОБьектjsonReaderПришеоОтКлиентаJSON_P.toString()+"\n"
-                                + " ПараметрИмяТаблицыОтАндройдаPost " +ПараметрИмяТаблицыОтАндройдаPost);
-                        //TODO Процедура Удаленная вызова SQL Server
-                        queryprocedure = session.createStoredProcedureQuery( "ProcedureExistsMERGEget_materials_data#17");//TODO ProcedureExistsMERGE_fio
-                        //TODO
-                        ЛОГ.log(" case \"cfo\":	queryprocedure " +queryprocedure);
-                        //TODO
-                        break;
-                    //TODO не выбраны таблицы
-
-                    default:
-                        //TODO
-                        ЛОГ.log(" NE BiBRANA NE ODNA TABLIZA(не выбрана не одна таблицы !!!"
-                                + ") default:default:default:default: ВнутренийОбщийJSONОБьектjsonReaderПришеоОтКлиентаJSON_P "+"\n"
-                                +ВнутренийОбщийJSONОБьектjsonReaderПришеоОтКлиентаJSON_P.toString()+"\n"
-                                + " ПараметрИмяТаблицыОтАндройдаPost " +ПараметрИмяТаблицыОтАндройдаPost);
-                        break;
-                    ///TODO конец всех таблиц
-
-                }//TODO end switch --выбор таблиц
-                //TODO заполеяеним значение для состыковки id or uuid
-                ЛОГ.log(" queryprocedure " + queryprocedure);
+                StoredProcedureQuery queryprocedure = МетодПолучениеХранимойПроцедуры(ЛОГ, ПараметрИмяТаблицыОтАндройдаPost);
+                ЛОГ.log("\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
+                        " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
+                        " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+" queryprocedure " +queryprocedure);
                 //TODO Заполения
                 if(queryprocedure!=null) {
                     ЛОГ.log(" NOT NULL queryprocedure " + queryprocedure);
-                    //TODO ГЛАВНЫЙ ЦИКЛ ЗАПОЛЕНИЯ ДАННЫМИИ JSONVALUE  ТАБЛИЦЫ
-                    //TOOD заполем колонки ВТОРОЙ ЦИКЛ ЗАПОЛНЕНИЯ КОЛОНОК
-                    for (Entry<String, JsonValue> ДанныеДляОбработкиКолонокJSON :ВнутренийОбщийJSONОБьектjsonReaderПришеоОтКлиентаJSON_P.entrySet())
-                    {
-                        //TODO
+                    //TODO ГЛАВЕНЫЙ ЦИКЛ ОБРАБОТКИ ДАННЫХ В МЕТОДЕ  POST
+                    final String[] UUIDСотсыковочныйХранимойПроцедуры = {null};
+                    Flowable.fromIterable(ПарсингJSONJacson.entrySet())
+                            .onBackpressureBuffer(true)
+                            .doOnNext(new Consumer<Entry<String, String>>() {
+                                @Override
+                                public void accept(Entry<String, String> stringStringEntry) throws Throwable {
+                                    if (stringStringEntry.getKey().equalsIgnoreCase("uuid")) {
+                                        UUIDСотсыковочныйХранимойПроцедуры[0] = stringStringEntry.getValue();
+                                    }
+                                    String ФиналЗначениеДляЗаполенияJSON =
+                                            Optional.ofNullable(stringStringEntry.getValue().toString().replaceAll("\"", "")).orElse("");
+                                    // TODO заполенем JSonValue
+                                    queryprocedure.registerStoredProcedureParameter(stringStringEntry.getKey(), String.class, ParameterMode.IN)
+                                            .setParameter(stringStringEntry.getKey(), stringStringEntry.getValue());
 
-                        String КлючДляЗаполенияJSON=ДанныеДляОбработкиКолонокJSON.getKey();
+                                    ЛОГ.log("\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
+                                            " stringStringEntry.getKey() " + stringStringEntry.getKey() + " stringStringEntry.getValue() " + stringStringEntry.getValue());
+                                }
+                            })
+                            .doOnError(new Consumer<Throwable>() {
+                                @Override
+                                public void accept(Throwable throwable) throws Throwable {
+                                    ЛОГ.log("ERROR class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + " throwable " + throwable.getMessage());
+                                }
+                            })
+                            .doOnComplete(new Action() {
+                                @Override
+                                public void run() throws Throwable {
+                                    queryprocedure.registerStoredProcedureParameter("SrabnitUUIDOrID", String.class, ParameterMode.IN).setParameter("SrabnitUUIDOrID", UUIDСотсыковочныйХранимойПроцедуры[0]);
+                                    queryprocedure.registerStoredProcedureParameter("ResultatMERGE", String.class, ParameterMode.INOUT).setParameter("ResultatMERGE", "complete merge");
 
+                                    Integer РезультатОперацииВставкииОбновлениея=  МетодСамогоВыполенияУдаленнойПроцедуры(queryprocedure,ЛОГ,ПараметрИмяТаблицыОтАндройдаPost);
+                                    String РезультатСовершнойОперации= null;
 
-                        //TODO
+                                    if (РезультатОперацииВставкииОбновлениея>0) {
+                                        //TODO получаем ответный результат
+                                        РезультатСовершнойОперации = (String)queryprocedure.getOutputParameterValue("ResultatMERGE");
 
-                        //TODO иключение  только для двух таблиц , работа по ID  полю "region"  "cfo"
-                        ЛОГ.log(" КлючДляЗаполенияJSON "+КлючДляЗаполенияJSON+"\n"
-                                + " ПараметрИмяТаблицыОтАндройдаPost " +ПараметрИмяТаблицыОтАндройдаPost+ " ДанныеДляОбработкиКолонокJSON "+ДанныеДляОбработкиКолонокJSON);
+                                    ЛОГ.log("\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
+                                            + " РезультатОперацииВставкииОбновлениея "+РезультатОперацииВставкииОбновлениея  +  " РезультатСовершнойОперации " +РезультатСовершнойОперации);
+                                    БуферОтветКлиентуОтСервера	 .append("\n")
+                                            .append("result POST()   insert and update from android")
+                                            .append("\n")
+                                            .append(РезультатСовершнойОперации)
+                                            .append("\n")
+                                            .append(" таблица обработки ").append(ПараметрИмяТаблицыОтАндройдаPost)
+                                            .append("\n")
+                                            .append("Пользователь Операциии")
+                                            .append("\n")
+                                            .append("\n")
+                                            .append(new Date().toString())
+                                            .append("\n");
+                                    ЛОГ.log(" БуферОтветКлиентуОтСервера " +БуферОтветКлиентуОтСервера);
+                                }else {
+                                    //TODO не выбрали ни одну талицу
+                                    БуферОтветКлиентуОтСервера
+                                            .append("\n")
+                                            .append("result POST()   insert and update from android")
+                                            .append("Нет таблицы для Обработки ,или самой обработки")
+                                            .append("\n")
+                                            .append("\n")
+                                            .append("Пользователь Операциии")
+                                            .append("\n")
+                                            .append(" таблица обработки ").append(ПараметрИмяТаблицыОтАндройдаPost)
+                                            .append("\n")
+                                            .append("\n")
+                                            .append(new Date().toString())
+                                            .append("\n");
 
-                        //TODO само заполенения
+                                    ЛОГ.log("NOT TABLE for generations БуферОтветКлиентуОтСервера " +БуферОтветКлиентуОтСервера);
+                                }
+                                    ЛОГ.log("\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
+                                            "  UUIDСотсыковочныйХранимойПроцедуры[0] " + UUIDСотсыковочныйХранимойПроцедуры[0]);
 
-
-
-                        //TODO
-                        if(!ДанныеДляОбработкиКолонокJSON.getKey().contentEquals("id")) {
-
-                            ///TODO заполения данными из таблицы улиента менеджер сущностей
-                            МетодПерпосредвственноЗаполентДАннымиОтКлиентаМенеджерСущностей(ЛОГ,
-                                    ПараметрИмяТаблицыОтАндройдаPost,
-                                    ВнутренийОбщийJSONОБьектjsonReaderПришеоОтКлиентаJSON_P, queryprocedure, ДанныеДляОбработкиКолонокJSON,
-                                    КлючДляЗаполенияJSON);
-
-                            // TODO ПОСЛЕ ЗАПОЛЕНИЯ
-                            ЛОГ.log(" КлючДляЗаполенияJSON "+КлючДляЗаполенияJSON);
-                        }
-
-                        //TODO
-
-
-
-                        // TODO ПОСЛЕ ЗАПОЛЕНИЯ
-                        ЛОГ.log(" queryprocedure "+queryprocedure);
-
-
-                    }//TODO end FOR
-
-
-                    //TODO заполения систменыеми постоянными двумя параментырами
-
-                    //TODO ВНИМАНИЕ ВТОРОЕ  ПАРАМЕНТ ДЛЯ ВСЕХ ТАБЛИЦ #1
-                    //TODO
-                    queryprocedure.registerStoredProcedureParameter("SrabnitUUIDOrID", String.class, ParameterMode.IN)
-                            .setParameter("SrabnitUUIDOrID",ФиналUIDorIdДляСостыковкиЕстьИлиНЕтУжеВБАзе);
-                    //TODO
-                    ЛОГ.log(" 			queryprocedure.registerStoredProcedureParameter(\"SrabnitUUIDOrID\", String.class, ParameterMode.IN) ");
-
-                    //TODO ВНИМАНИЕ ПЕРЫЙ ПАРАМЕНТ ДЛЯ ВСЕХ ТАБЛИЦ #2
-                    queryprocedure.registerStoredProcedureParameter( "ResultatMERGE", String.class, ParameterMode.INOUT )
-                            .setParameter("ResultatMERGE",  "complete merge");//todo Long.class
-                    // TODO
-                    ЛОГ.log(" 		queryprocedure.registerStoredProcedureParameter( 1, String.class, ParameterMode.OUT ) ");
-                    //TODO
-
-                    // TODO
-                    ЛОГ.log(" queryprocedure "+queryprocedure.getParameters().size()  + " ПараметрИмяТаблицыОтАндройдаPost  " +ПараметрИмяТаблицыОтАндройдаPost);
-
-                    //TODO метод саомго выполения удаленной процедуры
-
-                  Integer РезультатОперацииВставкииОбновлениея=  МетодСамогоВыполенияУдаленнойПроцедуры(queryprocedure,ЛОГ,ПараметрИмяТаблицыОтАндройдаPost);
-                    String РезультатСовершнойОперации= null;
-
-                    if (РезультатОперацииВставкииОбновлениея>0) {
-                        //TODO получаем ответный результат
-                        РезультатСовершнойОперации = (String)queryprocedure.getOutputParameterValue("ResultatMERGE");
-                    }
+                                }
+                            })
+                            .onErrorComplete(new Predicate<Throwable>() {
+                                @Override
+                                public boolean test(Throwable throwable) throws Throwable {
+                                    ЛОГ.log("ERROR class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + " throwable " + throwable.getMessage());
+                                    return false;
+                                }
+                            })
+                            .doOnTerminate(new Action() {
+                                @Override
+                                public void run() throws Throwable {
+                                    //TODO после цикла всех строк выключаем менеджеры сущностей  ПОСЛЕ ЦИКЛА С ДАННЫМИ
+                                    МетодЗавершенияСеанса();
+                                    ЛОГ.log("\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
+                                }
+                            })
+                            .blockingSubscribe();
                     ЛОГ.log("\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
-                            + " РезультатОперацииВставкииОбновлениея "+РезультатОперацииВставкииОбновлениея  +  " РезультатСовершнойОперации " +РезультатСовершнойОперации);
-                    БуферОтветКлиентуОтСервера	 .append("\n")
-                            .append("result POST()   insert and update from android")
-                            .append("\n")
-                            .append(РезультатСовершнойОперации)
-                            .append("\n")
-                            .append(" таблица обработки ").append(ПараметрИмяТаблицыОтАндройдаPost)
-                            .append("\n")
-                            .append("Пользователь Операциии")
-                            .append("\n")
-                            .append("\n")
-                            .append(new Date().toString())
-                            .append("\n");
-                    ЛОГ.log(" БуферОтветКлиентуОтСервера " +БуферОтветКлиентуОтСервера);
-                }else {
-                    //TODO не выбрали ни одну талицу
-                    БуферОтветКлиентуОтСервера
-                            .append("\n")
-                            .append("result POST()   insert and update from android")
-                            .append("Нет таблицы для Обработки ,или самой обработки")
-                            .append("\n")
-                            .append("\n")
-                            .append("Пользователь Операциии")
-                            .append("\n")
-                            .append(" таблица обработки ").append(ПараметрИмяТаблицыОтАндройдаPost)
-                            .append("\n")
-                            .append("\n")
-                            .append(new Date().toString())
-                            .append("\n");
+                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
+                            " ПарсингJSONJacson " + ПарсингJSONJacson.toString() +
+                            " session  " + session + " sessionSousJboss " + sessionSousJboss);
 
-                    ЛОГ.log("NOT TABLE for generations БуферОтветКлиентуОтСервера " +БуферОтветКлиентуОтСервера);
                 }
-                //TODO проталиваемМетодОбработкиJSONPСтиминг КОНЕЦ ОБРАБОТКТ ВСТАВКИ ДАННЫХ В МЕТОД POST()
-                //TODO
-                ЛОГ.log(" ВнутренийОбщийJSONОБьектjsonReaderПришеоОтКлиентаJSON_P "+ВнутренийОбщийJSONОБьектjsonReaderПришеоОтКлиентаJSON_P.toString()+"\n"
-                        + " ПараметрИмяТаблицыОтАндройдаPost " +ПараметрИмяТаблицыОтАндройдаPost);
-            });*/
-            //TODO после цикла всех строк выключаем менеджеры сущностей  ПОСЛЕ ЦИКЛА С ДАННЫМИ
-            МетодЗавершенияСеанса();
+
             //TODO
             ЛОГ.log("БуферОтветКлиентуОтСервера  "+ БуферОтветКлиентуОтСервера.toString());
-            ///TODO
-            //TODO
         } catch (Exception   e) {
+            ЛОГ.log( "ERROR class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber()  + " e " +e.getMessage() );
             sessionTransaction.rollback();
             subClassWriterErros.
                     МетодаЗаписиОшибкиВЛог(e,
@@ -525,6 +208,91 @@ public class SubClassGenerateJson {
         }
         return БуферОтветКлиентуОтСервера;
 
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    private StoredProcedureQuery МетодПолучениеХранимойПроцедуры(ServletContext ЛОГ, String ПараметрИмяТаблицыОтАндройдаPost) {
+        //TODO ЗАПОЛЕНИЯ ТАБЛИЦ И  ОТПРАВКА ЗНАЧЕНИЙ В УДАЛЕННУЮ ПРОЦЕДУРУ
+        StoredProcedureQuery	 queryprocedure = null;
+        try{
+        switch(ПараметрИмяТаблицыОтАндройдаPost) {
+            case "settings_tabels":
+                queryprocedure = session.createStoredProcedureQuery("ProcedureExistsMERGEsettings_tabels#2");//TODO ProcedureExistsMERGE_fio
+                break;
+            case "fio":
+                queryprocedure = session.createStoredProcedureQuery( "ProcedureExistsMERGEfio#1");//TODO ProcedureExistsMERGE_fio
+                break;
+            case "data_tabels":
+                queryprocedure = session.createStoredProcedureQuery( "ProcedureExistsMERGEdata_tabels#3");//TODO ProcedureExistsMERGE_fio
+                break;
+            case "tabel":
+                queryprocedure = session.createStoredProcedureQuery( "ProcedureExistsMERGEtabel#4");//TODO ProcedureExistsMERGE_fio
+                break;
+            case "organization":
+                queryprocedure = session.createStoredProcedureQuery( "ProcedureExistsMERGEorganization#5");//TODO ProcedureExistsMERGE_fio
+                break;
+            case "depatment":
+                queryprocedure = session.createStoredProcedureQuery( "ProcedureExistsMERGEdepatment#6");//TODO ProcedureExistsMERGE_fio
+                break;
+            case "notifications":
+                queryprocedure = session.createStoredProcedureQuery( "ProcedureExistsMERGEnotifications#7");//TODO ProcedureExistsMERGE_fio
+                break;
+            case "data_notification":
+                queryprocedure = session.createStoredProcedureQuery( "ProcedureExistsMERGEdata_notification#8");//TODO ProcedureExistsMERGE_fio
+                break;
+            case "chats":
+                queryprocedure = session.createStoredProcedureQuery( "ProcedureExistsMERGEchats#9");//TODO ProcedureExistsMERGE_fio
+                break;
+            case "data_chat":
+                queryprocedure = session.createStoredProcedureQuery( "ProcedureExistsMERGEdata_chat#10");//TODO ProcedureExistsMERGE_fio
+                break;
+            case	"templates":
+                queryprocedure = session.createStoredProcedureQuery( "ProcedureExistsMERGEtemplates#11");//TODO ProcedureExistsMERGE_fio
+                break;
+            case	"fio_template":
+                queryprocedure = session.createStoredProcedureQuery( "ProcedureExistsMERGEfio_template#12");//TODO ProcedureExistsMERGE_fio
+                break;
+            case	"region":
+                queryprocedure = session.createStoredProcedureQuery( "ProcedureExistsMERGEregion#13");//TODO ProcedureExistsMERGE_fio
+                break;
+            case	"cfo":
+                queryprocedure = session.createStoredProcedureQuery( "ProcedureExistsMERGEcfo#14");//TODO ProcedureExistsMERGE_fio
+                break;
+            case	"get_materials_data":
+                queryprocedure = session.createStoredProcedureQuery( "ProcedureExistsMERGEget_materials_data#17");//TODO ProcedureExistsMERGE_fio
+                break;
+            default:
+                ЛОГ.log("\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
+                        " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
+                        " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+
+                        " ПараметрИмяТаблицыОтАндройдаPost " + ПараметрИмяТаблицыОтАндройдаPost);
+                break;
+            ///TODO конец всех таблиц
+        }
+        ЛОГ.log("\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
+                " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
+                " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+
+                " ПараметрИмяТаблицыОтАндройдаPost " + ПараметрИмяТаблицыОтАндройдаPost);
+    } catch (Exception e) {
+        subClassWriterErros.
+                МетодаЗаписиОшибкиВЛог(e,
+                        Thread.currentThread().
+                                getStackTrace(),
+                        ЛОГ,"ErrorsLogs/ErrorJbossServletDSU1.txt");
+    }
+        return queryprocedure;
     }
 
     // TODO: 09.03.2023  метод очистки Hirenate после операции
@@ -576,6 +344,9 @@ public class SubClassGenerateJson {
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
                     + " queryprocedure "+queryprocedure  + " КоличестоУспешныхОперацийНаСервере " +КоличестоУспешныхОперацийНаСервере);
         } catch (Exception   e) {
+            ЛОГ.log( "ERROR class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber()  + " e " +e.getMessage() );
             subClassWriterErros.
                     МетодаЗаписиОшибкиВЛог(e,
                             Thread.currentThread().
@@ -586,66 +357,6 @@ public class SubClassGenerateJson {
         //TODO
     }
 
-    /**
-     * @param ЛОГ
-     * @param ПараметрИмяТаблицыОтАндройдаPost
-     * @param ВнутренийОбщийJSONОБьектjsonReaderПришеоОтКлиентаJSON_P
-     * @param queryprocedure
-     * @param entry
-     * @param КлючДляЗаполенияJSON
-     */
-    void МетодПерпосредвственноЗаполентДАннымиОтКлиентаМенеджерСущностей(ServletContext ЛОГ,
-                                                                         String ПараметрИмяТаблицыОтАндройдаPost,
-                                                                         JsonObject ВнутренийОбщийJSONОБьектjsonReaderПришеоОтКлиентаJSON_P,
-                                                                         StoredProcedureQuery queryprocedure,
-                                                                         Entry<String, JsonValue> entry,
-                                                                         String КлючДляЗаполенияJSON) {
-
-        ЛОГ.log(" КлючДляЗаполенияJSON "+КлючДляЗаполенияJSON+"\n"
-                + " ПараметрИмяТаблицыОтАндройдаPost " +ПараметрИмяТаблицыОтАндройдаPost);
-
-        try {
-
-
-            //TODO 2
-            Object ЗначениеДляЗаполенияJSON=entry.getValue();
-
-
-
-            //TODO
-            String	ФиналЗначениеДляЗаполенияJSON=
-                    Optional.ofNullable(ЗначениеДляЗаполенияJSON.toString().replaceAll("\"", "")).orElse("");
-
-
-
-            //TODO заполеяеним значение для состыковки id or uuid
-            ЛОГ.log(" КлючДляЗаполенияJSON " + КлючДляЗаполенияJSON +
-                    " ФиналЗначениеДляЗаполенияJSON " +ФиналЗначениеДляЗаполенияJSON);
-
-            // TODO заполенем JSonValue
-            queryprocedure.registerStoredProcedureParameter(КлючДляЗаполенияJSON, String.class, ParameterMode.IN)
-                    .setParameter(КлючДляЗаполенияJSON,ФиналЗначениеДляЗаполенияJSON);
-            //TODO
-
-            // TODO
-            ЛОГ.log(" ЗначениеДляЗаполенияJSON.toString() "
-                    +ЗначениеДляЗаполенияJSON.toString()+
-                    " 	ВнутренийОбщийJSONОБьектjsonReaderПришеоОтКлиентаJSON_P.getString(КлючДляЗаполенияJSON)" +
-                    ВнутренийОбщийJSONОБьектjsonReaderПришеоОтКлиентаJSON_P.getString(КлючДляЗаполенияJSON)+
-                    "  ФиналЗначениеДляЗаполенияJSON " +ФиналЗначениеДляЗаполенияJSON);
-
-
-            //TODO
-        } catch (Exception   e) {
-            subClassWriterErros.
-                    МетодаЗаписиОшибкиВЛог(e,
-                            Thread.currentThread().
-                                    getStackTrace(),
-                            ЛОГ,"ErrorsLogs/ErrorJbossServletDSU1.txt");
-
-        }
-
-    }
 
 }
 
