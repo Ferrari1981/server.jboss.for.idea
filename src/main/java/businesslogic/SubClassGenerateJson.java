@@ -132,16 +132,19 @@ public class SubClassGenerateJson {
                                                             .append("Success result POST()   insert and update from android")
                                                             .append("\n")
                                                             .append("\n")
+                                                            .append(РезультатСовершнойОперации)
                                                             .append("\n")
                                                             .append("\n")
-                                                            .append(UUIDСотсыковочныйХранимойПроцедуры[0])
                                                             .append("\n")
                                                             .append(" таблица обработки ").append(ПараметрИмяТаблицыОтАндройдаPost)
                                                             .append("\n")
                                                             .append("Пользователь Операциии")
                                                             .append("\n")
                                                             .append(new Date().toString())
-                                                            .append("\n");
+                                                            .append("\n")
+                                                            .append("\n")
+                                                            .append("\n")
+                                                            .append(UUIDСотсыковочныйХранимойПроцедуры[0]);
                                                     ЛОГ.log(" БуферОтветКлиентуОтСервера " +БуферОтветКлиентуОтСервера);
                                                 }else {
                                                     //TODO не выбрали ни одну талицу
@@ -154,13 +157,16 @@ public class SubClassGenerateJson {
                                                             .append("\n")
                                                             .append("\n")
                                                             .append("\n")
-                                                            .append(UUIDСотсыковочныйХранимойПроцедуры[0])
                                                             .append("Пользователь Операциии")
                                                             .append("\n")
                                                             .append(" таблица обработки ").append(ПараметрИмяТаблицыОтАндройдаPost)
                                                             .append("\n")
                                                             .append(new Date().toString())
-                                                            .append("\n");
+                                                            .append("\n")
+                                                            .append("\n")
+                                                            .append("\n")
+                                                            .append("\n")
+                                                            .append(UUIDСотсыковочныйХранимойПроцедуры[0]);
                                                     ЛОГ.log("NOT TABLE for generations БуферОтветКлиентуОтСервера " +БуферОтветКлиентуОтСервера);
                                                 }
                                             }
