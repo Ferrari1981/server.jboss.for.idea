@@ -122,48 +122,52 @@ public class SubClassGenerateJson {
 
                                             if (РезультатОперацииВставкииОбновлениея>0) {
                                                 //TODO получаем ответный результат
-                                                РезультатСовершнойОперации = (String)queryprocedure.getOutputParameterValue("ResultatMERGE");
-
+                                                РезультатСовершнойОперации = (String) queryprocedure.getOutputParameterValue("ResultatMERGE");
                                                 ЛОГ.log("\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                                         " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                                                         " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
-                                                        + " РезультатОперацииВставкииОбновлениея "+РезультатОперацииВставкииОбновлениея  +  " РезультатСовершнойОперации " +РезультатСовершнойОперации);
-                                                БуферОтветКлиентуОтСервера	 .append("\n")
-                                                        .append("Success result POST()   insert and update from android")
-                                                        .append("\n")
-                                                        .append(РезультатСовершнойОперации)
-                                                        .append("\n")
-                                                        .append(" таблица обработки ").append(ПараметрИмяТаблицыОтАндройдаPost)
-                                                        .append("\n")
-                                                        .append("Пользователь Операциии")
-                                                        .append("\n")
-                                                        .append("\n")
-                                                        .append(new Date().toString())
-                                                        .append("\n");
-                                                ЛОГ.log(" БуферОтветКлиентуОтСервера " +БуферОтветКлиентуОтСервера);
-                                            }else {
-                                                //TODO не выбрали ни одну талицу
-                                                БуферОтветКлиентуОтСервера
-                                                        .append("\n")
-                                                        .append("ERROR result POST()   insert and update from android")
-                                                        .append("Нет таблицы для Обработки ,или самой обработки")
-                                                        .append("\n")
-                                                        .append("\n")
-                                                        .append("Пользователь Операциии")
-                                                        .append("\n")
-                                                        .append(" таблица обработки ").append(ПараметрИмяТаблицыОтАндройдаPost)
-                                                        .append("\n")
-                                                        .append("\n")
-                                                        .append(new Date().toString())
-                                                        .append("\n");
-
-                                                ЛОГ.log("NOT TABLE for generations БуферОтветКлиентуОтСервера " +БуферОтветКлиентуОтСервера);
+                                                        + " РезультатОперацииВставкииОбновлениея " + РезультатОперацииВставкииОбновлениея + " РезультатСовершнойОперации " + РезультатСовершнойОперации);
+                                                if (РезультатСовершнойОперации.matches("(.*)OriginalVesion(.*)")) {
+                                                    БуферОтветКлиентуОтСервера	 .append("\n")
+                                                            .append("Success result POST()   insert and update from android")
+                                                            .append("\n")
+                                                            .append("\n")
+                                                            .append("\n")
+                                                            .append("\n")
+                                                            .append(UUIDСотсыковочныйХранимойПроцедуры[0])
+                                                            .append("\n")
+                                                            .append(" таблица обработки ").append(ПараметрИмяТаблицыОтАндройдаPost)
+                                                            .append("\n")
+                                                            .append("Пользователь Операциии")
+                                                            .append("\n")
+                                                            .append(new Date().toString())
+                                                            .append("\n");
+                                                    ЛОГ.log(" БуферОтветКлиентуОтСервера " +БуферОтветКлиентуОтСервера);
+                                                }else {
+                                                    //TODO не выбрали ни одну талицу
+                                                    БуферОтветКлиентуОтСервера
+                                                            .append("\n")
+                                                            .append("\n")
+                                                            .append("\n")
+                                                            .append("ERROR result POST()   insert and update from android")
+                                                            .append("Нет таблицы для Обработки ,или самой обработки")
+                                                            .append("\n")
+                                                            .append("\n")
+                                                            .append("\n")
+                                                            .append(UUIDСотсыковочныйХранимойПроцедуры[0])
+                                                            .append("Пользователь Операциии")
+                                                            .append("\n")
+                                                            .append(" таблица обработки ").append(ПараметрИмяТаблицыОтАндройдаPost)
+                                                            .append("\n")
+                                                            .append(new Date().toString())
+                                                            .append("\n");
+                                                    ЛОГ.log("NOT TABLE for generations БуферОтветКлиентуОтСервера " +БуферОтветКлиентуОтСервера);
+                                                }
                                             }
                                             ЛОГ.log("\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                                                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
                                                     "  UUIDСотсыковочныйХранимойПроцедуры[0] " + UUIDСотсыковочныйХранимойПроцедуры[0]);
-
                                         }
                                     })
                                     .onErrorComplete(new Predicate<Throwable>() {
@@ -175,19 +179,29 @@ public class SubClassGenerateJson {
                                             return false;
                                         }
                                     })
-                                    .doOnTerminate(new Action() {
-                                        @Override
-                                        public void run() throws Throwable {
-                                            //TODO после цикла всех строк выключаем менеджеры сущностей  ПОСЛЕ ЦИКЛА С ДАННЫМИ
-                                            МетодЗавершенияСеанса();
-                                            ЛОГ.log("\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                                                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
-                                        }
-                                    })
                                     .blockingSubscribe();
                         }
-                    }).blockingSubscribe();
+                    })
+                            .onErrorComplete(new Predicate<Throwable>() {
+                                @Override
+                                public boolean test(Throwable throwable) throws Throwable {
+                                    ЛОГ.log("ERROR class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + " throwable " + throwable.getMessage());
+                                    return false;
+                                }
+                            })
+                            .doOnComplete(new Action() {
+                                @Override
+                                public void run() throws Throwable {
+                                    //TODO после цикла всех строк выключаем менеджеры сущностей  ПОСЛЕ ЦИКЛА С ДАННЫМИ
+                                    МетодЗавершенияСеанса();
+                                    ЛОГ.log("\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
+                                }
+                            })
+                            .blockingSubscribe();
 
                     ЛОГ.log("\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -202,8 +216,7 @@ public class SubClassGenerateJson {
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber()  + " e " +e.getMessage() );
             sessionTransaction.rollback();
-            subClassWriterErros.
-                    МетодаЗаписиОшибкиВЛог(e,
+            subClassWriterErros.МетодаЗаписиОшибкиВЛог(e,
                             Thread.currentThread().
                                     getStackTrace(),
                             ЛОГ,"ErrorsLogs/ErrorJbossServletDSU1.txt");
