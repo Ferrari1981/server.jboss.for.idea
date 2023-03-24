@@ -432,7 +432,7 @@ public class DataTabel implements Serializable {
         this.uuidTabel = uuidTabel;
     }
 
-    public int getProf() {
+    public Integer getProf() {
         return this.prof;
     }
 

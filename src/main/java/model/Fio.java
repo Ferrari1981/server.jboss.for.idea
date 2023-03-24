@@ -189,7 +189,7 @@ public class Fio implements Serializable {
     public void setUuid(BigDecimal uuid) {
         this.uuid = uuid;
     }
-    public int getProf() {
+    public Integer getProf() {
         return this.prof;
     }
 
