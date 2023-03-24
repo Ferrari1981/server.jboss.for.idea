@@ -72,6 +72,10 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
     @Inject
     SubClassWriterErros subClassWriterErros;
 
+
+    @Inject
+    ObjectMapper getGeneratorJackson;
+
     public SubClassSessionBeanМетодаGET() {
 
         System.out.println("Конструктор  SubClassSessionBeanМетодаGET");
@@ -812,19 +816,14 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
         StringBuffer БуферСозданогоJSONJackson = new StringBuffer();
         try {
             ЛОГ.log(" listОтHiberideДляГенерации" + listОтHiberideДляГенерации );
-            //TODO Jacson парсинг JSON
-            JsonFactory factory = new JsonFactory();
-            DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS", new Locale("ru"));
-            final ObjectMapper mapperJackson = new ObjectMapper(factory);
-            mapperJackson.setDateFormat(df);
-            mapperJackson.setLocale(new Locale("ru"));
-            mapperJackson.setSerializationInclusion(JsonInclude.Include.NON_NULL);
-            mapperJackson.setPropertyNamingStrategy(PropertyNamingStrategy.CAMEL_CASE_TO_LOWER_CASE_WITH_UNDERSCORES);
-            ObjectWriter writer = mapperJackson.writerWithDefaultPrettyPrinter();
+            ObjectWriter writer = getGeneratorJackson.writerWithDefaultPrettyPrinter();
             String Сгенерированыйjson = 	  writer.writeValueAsString(listОтHiberideДляГенерации);
             ЛОГ.  log(" Сгенерированыйjson "+Сгенерированыйjson.length());//gson
             БуферСозданогоJSONJackson.append(Сгенерированыйjson);
-            ЛОГ.log(" заработал  Jackson ...  МетодГенерацияJSONJackson --->  БуферСозданогоJSONJackson " + БуферСозданогоJSONJackson.toString() );
+         ЛОГ.log("\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
+                " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
+                " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+
+            "БуферСозданогоJSONJackson " + БуферСозданогоJSONJackson.toString());
             /*
              * // Create custom configuration JsonbConfig nillableConfig = new
              * JsonbConfig().withNullValues(true);
@@ -832,8 +831,15 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
              * Jsonb jsonb = JsonbBuilder.create(nillableConfig); String resultjsonb =
              * jsonb.toJson(listОтHiberideДляГенерации); ЛОГ.
              * log(" resultjsonb "+resultjsonb.length());//gson
+             *  //TODO Jacson парсинг JSON
+            JsonFactory factory = new JsonFactory();
+            DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS", new Locale("ru"));
+            final ObjectMapper mapperJackson = new ObjectMapper(factory);
+            mapperJackson.setDateFormat(df);
+            mapperJackson.setLocale(new Locale("ru"));
+            mapperJackson.setSerializationInclusion(JsonInclude.Include.NON_NULL);
+            mapperJackson.setPropertyNamingStrategy(PropertyNamingStrategy.CAMEL_CASE_TO_LOWER_CASE_WITH_UNDERSCORES);
              */
-
         } catch (Exception e) {
             subClassWriterErros.
                     МетодаЗаписиОшибкиВЛог(e,

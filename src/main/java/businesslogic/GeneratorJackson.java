@@ -27,6 +27,7 @@ public class GeneratorJackson {
     public ObjectMapper getGeneratorJackson()   {
         ObjectMapper mapperJackson = null;
         try{
+            //TODO Jacson парсинг JSON
             JsonFactory factory = new JsonFactory();
             mapperJackson = new ObjectMapper(factory);
             mapperJackson.writerWithDefaultPrettyPrinter();
@@ -40,7 +41,6 @@ public class GeneratorJackson {
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
                     + " mapperJackson "+mapperJackson);
-
         } catch (Exception e) {
             e.printStackTrace();
             System.err.println( " ERROR  class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +

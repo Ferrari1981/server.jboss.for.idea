@@ -194,6 +194,7 @@ public class Fio implements Serializable {
     }
 
     public void setProf(Integer prof) {
+
         this.prof = prof;
     }
 }
