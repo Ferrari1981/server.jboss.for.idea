@@ -27,7 +27,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.Produces;
 
-import dsu1glassfishatomic.ProducedCard;
+import dsu1glassfishatomic.workinterfaces.ProducedCard;
 import org.hibernate.*;
 
 import com.fasterxml.jackson.annotation.JsonInclude;

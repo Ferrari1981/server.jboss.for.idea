@@ -4,7 +4,7 @@
 
 <%@ page import="java.util.*, java.text.* ,java.net.ServerSocket , java.net.UnknownHostException, java.io.BufferedReader,java.io.*,java.util.stream.*,java.nio.charset.Charset"%>
 <%@ page import="javax.inject.Inject" %>
-<%@ page import="dsu1glassfishatomic.ProducedCard" %>
+<%@ page import="dsu1glassfishatomic.workinterfaces.ProducedCard" %>
 <%@ page import="org.hibernate.SessionFactory" %>
 <%@ page import="java.nio.file.Path" %>
 <%@ page import="java.nio.file.Paths" %>

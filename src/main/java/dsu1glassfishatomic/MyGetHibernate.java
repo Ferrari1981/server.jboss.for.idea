@@ -1,22 +1,12 @@
 package dsu1glassfishatomic;
 
-import businesslogic.SubClassWriterErros;
+import dsu1glassfishatomic.workinterfaces.ProducedCard;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
 import javax.enterprise.context.ApplicationScoped;
-import javax.enterprise.context.RequestScoped;
-import javax.enterprise.context.SessionScoped;
-import javax.enterprise.inject.Default;
 import javax.enterprise.inject.Produces;
-import javax.inject.Named;
-import javax.inject.Qualifier;
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
 import java.net.InetAddress;
-import java.net.UnknownHostException;
 import java.util.Date;
 
 // TODO: 09.03.2023  Класс Получение Менеджера для Hibertire
@@ -24,7 +14,8 @@ import java.util.Date;
 
 
 public class MyGetHibernate{
-    @Produces @ProducedCard @ApplicationScoped
+    @Produces @ProducedCard
+    @ApplicationScoped
     public SessionFactory sessionSousJboss() {
         Configuration configuration = null;
         try {

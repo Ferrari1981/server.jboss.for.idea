@@ -4,7 +4,7 @@ package dsu1glassfishatomic;
 import businesslogic.BeanGET;
 import businesslogic.BeanPOST;
 import businesslogic.SubClassWriterErros;
-import org.hibernate.Session;
+import dsu1glassfishatomic.workinterfaces.ProducedCard;
 import org.hibernate.SessionFactory;
 
 import javax.ejb.EJB;

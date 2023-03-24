@@ -4,21 +4,27 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
+import dsu1glassfishatomic.workinterfaces.ProducedJacson;
 
+import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.context.RequestScoped;
+import javax.enterprise.context.SessionScoped;
+import javax.enterprise.inject.Produces;
 import javax.inject.Inject;
-import javax.servlet.ServletContext;
-import javax.validation.constraints.NotNull;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Locale;
 
-public class GeneratorJackson {
 
+@ApplicationScoped
+@ProducedJacson
+public class GeneratorJackson {
     @Inject
     SubClassWriterErros subClassWriterErros;
     // TODO: 23.03.2023  ПАСРСИНГ  JSON JSCSON
 // TODO: 23.03.2023  БИБЛИОТКЕ Jackson для созданиия И ПАРСИНГА JSON
-    public ObjectMapper getGeneratorJackson(@NotNull ServletContext ЛОГ)   {
+    @Produces
+    public ObjectMapper getGeneratorJackson()   {
         ObjectMapper mapperJackson = null;
         try{
             JsonFactory factory = new JsonFactory();
@@ -30,23 +36,17 @@ public class GeneratorJackson {
             mapperJackson.setLocale(new Locale("ru"));
             mapperJackson.setSerializationInclusion(JsonInclude.Include.NON_NULL);
 
-            ЛОГ.log( " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+          System.out.println( " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
                     + " mapperJackson "+mapperJackson);
 
         } catch (Exception e) {
             e.printStackTrace();
-            ЛОГ.log( "ERROR class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+            System.err.println( " ERROR  class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
                     + " mapperJackson "+mapperJackson);
-            subClassWriterErros.
-                    МетодаЗаписиОшибкиВЛог(e,
-                            Thread.currentThread().
-                                    getStackTrace(),
-                            ЛОГ,"ErrorsLogs/ErrorJbossServletDSU1.txt");
-
         }
         return  mapperJackson;
 

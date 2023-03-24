@@ -13,6 +13,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectReader;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
+import dsu1glassfishatomic.workinterfaces.ProducedCard;
+import dsu1glassfishatomic.workinterfaces.ProducedJacson;
 import io.reactivex.rxjava3.core.Flowable;
 import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.functions.Consumer;
@@ -93,9 +95,11 @@ public class SubClassSessionBeanPOST {//extends    DSU1JsonServlet
     int СколькСтрокРезультатЕслиТакойПользователь_post_метод = 0;
     String ПарольПолученныйИзSQlServerПосик_МетодPOST = null;
 
-
     @Inject
     SubClassWriterErros subClassWriterErros;
+
+    @Inject
+    ObjectMapper getGeneratorJackson;
 
     public SubClassSessionBeanPOST() throws ClassNotFoundException, SQLException, NoSuchAlgorithmException {
         System.out.println("Конструктор  SubClassМетодаBeanSessionPOST");
@@ -171,8 +175,8 @@ public class SubClassSessionBeanPOST {//extends    DSU1JsonServlet
         StringBuffer ОтветОтГлавного_МетодаPOSTДляОтправкиНААндройд = new StringBuffer();
         try {
             // convert JSON string to Map
-         CopyOnWriteArrayList<Map<String, String>> БуферJSONJackson =new GeneratorJackson()
-                 .getGeneratorJackson(ЛОГ).readValue(jsonReaderПришеоОтКлиентаJSON_P.toString(), CopyOnWriteArrayList.class);
+         CopyOnWriteArrayList<Map<String, String>> БуферJSONJackson = getGeneratorJackson.readValue(jsonReaderПришеоОтКлиентаJSON_P.toString(), new TypeReference<CopyOnWriteArrayList<Map<String, String>>>() {});
+
             //TODO ГЛАВНЫЙ МЕТОДА POST() КОТОРЫЙ ВСТАВЛЯЕТ  И/ИЛИ ОБНОВЛЕНИЯ ДАННЫХ
            ОтветОтГлавного_МетодаPOSTДляОтправкиНААндройд = subClassGenerateJson.МетодГенерацияJson(ЛОГ, БуферJSONJackson
                             , ПараметрИмяТаблицыОтАндройдаPost);
