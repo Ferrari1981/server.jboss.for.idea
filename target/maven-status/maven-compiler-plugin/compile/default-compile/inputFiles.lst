@@ -1,6 +1,7 @@
 C:\Users\moraru_pi\AndroidStudioProjectsSERVER\sous.jboss.idea\src\main\java\dsu1glassfishatomic\MyGetHibernate.java
 C:\Users\moraru_pi\AndroidStudioProjectsSERVER\sous.jboss.idea\src\main\java\model\Cfo.java
 C:\Users\moraru_pi\AndroidStudioProjectsSERVER\sous.jboss.idea\src\main\java\model\DataNotification.java
+C:\Users\moraru_pi\AndroidStudioProjectsSERVER\sous.jboss.idea\src\main\java\dsu1glassfishatomic\workinterfaces\ProducedCard.java
 C:\Users\moraru_pi\AndroidStudioProjectsSERVER\sous.jboss.idea\src\main\java\model\TypeMaterial.java
 C:\Users\moraru_pi\AndroidStudioProjectsSERVER\sous.jboss.idea\src\main\java\businesslogic\BeanPOST.java
 C:\Users\moraru_pi\AndroidStudioProjectsSERVER\sous.jboss.idea\src\main\java\model\Region.java
@@ -10,7 +11,6 @@ C:\Users\moraru_pi\AndroidStudioProjectsSERVER\sous.jboss.idea\src\main\java\bus
 C:\Users\moraru_pi\AndroidStudioProjectsSERVER\sous.jboss.idea\src\main\java\dsu1glassfishatomic\FilterPublic.java
 C:\Users\moraru_pi\AndroidStudioProjectsSERVER\sous.jboss.idea\src\main\java\model\ViewOnesignal.java
 C:\Users\moraru_pi\AndroidStudioProjectsSERVER\sous.jboss.idea\src\main\java\runtimes\FilterRuntime.java
-C:\Users\moraru_pi\AndroidStudioProjectsSERVER\sous.jboss.idea\src\main\java\dsu1glassfishatomic\ProducedCard.java
 C:\Users\moraru_pi\AndroidStudioProjectsSERVER\sous.jboss.idea\src\main\java\model\FioTemplate.java
 C:\Users\moraru_pi\AndroidStudioProjectsSERVER\sous.jboss.idea\src\main\java\model\GetMaterialsData.java
 C:\Users\moraru_pi\AndroidStudioProjectsSERVER\sous.jboss.idea\src\main\java\businesslogic\SubClassGeneratorDate.java
@@ -18,6 +18,7 @@ C:\Users\moraru_pi\AndroidStudioProjectsSERVER\sous.jboss.idea\src\main\java\mod
 C:\Users\moraru_pi\AndroidStudioProjectsSERVER\sous.jboss.idea\src\main\java\dowsloadpojboss\DSU1DonwloadsServlet.java
 C:\Users\moraru_pi\AndroidStudioProjectsSERVER\sous.jboss.idea\src\main\java\model\Template.java
 C:\Users\moraru_pi\AndroidStudioProjectsSERVER\sous.jboss.idea\src\main\java\dsu1glassfishatomic\ListenerContextJboss.java
+C:\Users\moraru_pi\AndroidStudioProjectsSERVER\sous.jboss.idea\src\main\java\dsu1glassfishatomic\workinterfaces\ProducedJacson.java
 C:\Users\moraru_pi\AndroidStudioProjectsSERVER\sous.jboss.idea\src\main\java\businesslogic\SubClassGenerateJson.java
 C:\Users\moraru_pi\AndroidStudioProjectsSERVER\sous.jboss.idea\src\main\java\model\ChatUser.java
 C:\Users\moraru_pi\AndroidStudioProjectsSERVER\sous.jboss.idea\src\main\java\model\Prof.java
