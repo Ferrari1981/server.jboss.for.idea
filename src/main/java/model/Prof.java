@@ -1,5 +1,7 @@
 package model;
 
+import org.hibernate.annotations.OptimisticLockType;
+
 import java.io.Serializable;
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -9,9 +11,7 @@ import java.util.Date;
 @Table(name = "prof", schema = "dbo", catalog = "storage")
 @NamedQuery(name="Prof.findAll", query="SELECT pr FROM Prof pr")
 @org.hibernate.annotations.OptimisticLocking(
-        type = org.hibernate.annotations.OptimisticLockType.ALL)
-@org.hibernate.annotations.DynamicUpdate
-
+        type = OptimisticLockType.VERSION)
 public class Prof implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -24,6 +24,9 @@ public class Prof implements Serializable {
     @Column(name = "user_update", nullable = false)
     private int userUpdate;
 
+
+    @Version
+    // Необязательно: @org.hibernate.annotations.Type(type = "dbtimestamp")
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "date_update", nullable = false)
     private Date dateUpdate;

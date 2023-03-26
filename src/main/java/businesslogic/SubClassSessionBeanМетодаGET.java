@@ -248,7 +248,7 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
                             // TODO
                             queryДляHiberite  = session.createQuery(
                                     " SELECT o FROM Organization o WHERE o.currentTable > :id ");
-                            queryДляHiberite.setLockOptions(new LockOptions(LockMode.PESSIMISTIC_READ) );
+                            queryДляHiberite.setLockOptions(new LockOptions(LockMode.OPTIMISTIC_FORCE_INCREMENT) );
                             queryДляHiberite.setParameter("id",new BigDecimal(ПараметрВерсияДанных ));//
                             ЛистДанныеОтHibenide =( List<model.Organization>)  queryДляHiberite.getResultList();
                             ЛОГ.  log(" ЛистДанныеОтHibenide "+ЛистДанныеОтHibenide+ " ЛистДанныеОтHibenide.size() " +ЛистДанныеОтHibenide.size()+
@@ -258,7 +258,7 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
                             // TODO
                             queryДляHiberite = session.createQuery(
                                     "SELECT d FROM Depatment d   WHERE d.currentTable > :id ");
-                            queryДляHiberite.setLockOptions(new LockOptions(LockMode.PESSIMISTIC_READ) );
+                            queryДляHiberite.setLockOptions(new LockOptions(LockMode.OPTIMISTIC_FORCE_INCREMENT) );
                             queryДляHiberite.setParameter("id",new BigDecimal(ПараметрВерсияДанных ));
                             ЛистДанныеОтHibenide =( List<model.Depatment>)  queryДляHiberite.getResultList();
                             ЛОГ.  log(" ЛистДанныеОтHibenide "+ЛистДанныеОтHibenide+ " ЛистДанныеОтHibenide.size() " +ЛистДанныеОтHibenide.size()+
@@ -268,7 +268,7 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
                             // TODO
                             queryДляHiberite = session.createQuery(
                                     "SELECT f FROM Fio f   WHERE f.currentTable > :id ");
-                            queryДляHiberite.setLockOptions(new LockOptions(LockMode.PESSIMISTIC_READ) );
+                            queryДляHiberite.setLockOptions(new LockOptions(LockMode.OPTIMISTIC_FORCE_INCREMENT) );
                             queryДляHiberite.setParameter("id",new BigDecimal(ПараметрВерсияДанных ));//
                             ЛистДанныеОтHibenide =( List<model.Fio>)  queryДляHiberite.getResultList();
                             ЛОГ.  log(" ЛистДанныеОтHibenide "+ЛистДанныеОтHibenide+ " ЛистДанныеОтHibenide.size() " +ЛистДанныеОтHibenide.size()+
@@ -278,7 +278,7 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
                             // TODO
                             queryДляHiberite = session.createQuery(
                                     "SELECT r  FROM Region r   WHERE r.currentTable > :id");
-                            queryДляHiberite.setLockOptions(new LockOptions(LockMode.PESSIMISTIC_READ) );
+                            queryДляHiberite.setLockOptions(new LockOptions(LockMode.OPTIMISTIC_FORCE_INCREMENT) );
                             queryДляHiberite.setParameter("id",new BigDecimal(ПараметрВерсияДанных ));//
                             ЛистДанныеОтHibenide =( List<model.Region>)  queryДляHiberite.getResultList();
                             ЛОГ.  log(" ЛистДанныеОтHibenide "+ЛистДанныеОтHibenide+ " ЛистДанныеОтHibenide.size() " +ЛистДанныеОтHibenide.size()+
@@ -288,7 +288,7 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
                             // TODO
                             queryДляHiberite = session.createQuery(
                                     "SELECT c FROM Cfo  c  WHERE c.currentTable > :id ");
-                            queryДляHiberite.setLockOptions(new LockOptions(LockMode.PESSIMISTIC_READ) );
+                            queryДляHiberite.setLockOptions(new LockOptions(LockMode.OPTIMISTIC_FORCE_INCREMENT) );
                             queryДляHiberite.setParameter("id",new BigDecimal(ПараметрВерсияДанных ));//
                             ЛистДанныеОтHibenide =( List<model.Cfo>)  queryДляHiberite.getResultList();
                             ЛОГ.  log(" ЛистДанныеОтHibenide "+ЛистДанныеОтHibenide+ " ЛистДанныеОтHibenide.size() " +ЛистДанныеОтHibenide.size()+
@@ -298,7 +298,7 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
                             // TODO
                             queryДляHiberite = session.createQuery(
                                     "SELECT st FROM Settingtab  st  WHERE st.currentTable > :id  AND  st.userUpdate=:user_update ");
-                            queryДляHiberite.setLockOptions(new LockOptions(LockMode.PESSIMISTIC_READ) );
+                            queryДляHiberite.setLockOptions(new LockOptions(LockMode.OPTIMISTIC_FORCE_INCREMENT) );
                             queryДляHiberite.setParameter("id",new BigDecimal(ПараметрВерсияДанных ));//
                             queryДляHiberite.setParameter("user_update",IDПолученныйИзSQlServerПосик);//8641 8625
                             ЛистДанныеОтHibenide =( List<model.Settingtab>) queryДляHiberite.getResultList();
@@ -311,8 +311,8 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
                                     " SELECT notif FROM Notification  notif  WHERE notif.currentTable > :id "
                                             + " AND   notif.userUpdate=:user_update   "
                                             + "  OR notif.currentTable > :id  AND     notif.idUser=:id_user ");
-                            //query4.setLockOptions( new LockOptions(  LockMode.PESSIMISTIC_READ)); //
-                            queryДляHiberite.setLockOptions(new LockOptions(LockMode.PESSIMISTIC_READ) );
+                            //query4.setLockOptions( new LockOptions(  LockMode.OPTIMISTIC_FORCE_INCREMENT)); //
+                            queryДляHiberite.setLockOptions(new LockOptions(LockMode.OPTIMISTIC_FORCE_INCREMENT) );
                             queryДляHiberite.setParameter("id",new BigDecimal(ПараметрВерсияДанных));//8641 8625
                             queryДляHiberite.setParameter("user_update",IDПолученныйИзSQlServerПосик);//8641 8625
                             queryДляHiberite.setParameter("id_user",IDПолученныйИзSQlServerПосик);//8641 8625
@@ -328,7 +328,7 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
                                             + "  da. currentTable > :id "
                                             + "  AND da.uuidNotifications "
                                             + " IN (SELECT     no.uuid FROM    Notification no  WHERE   no.userUpdate=:user_update   OR  no .idUser=:id_user ) ");
-                            queryДляHiberite.setLockOptions(new LockOptions(LockMode.PESSIMISTIC_READ) );
+                            queryДляHiberite.setLockOptions(new LockOptions(LockMode.OPTIMISTIC_FORCE_INCREMENT) );
                             queryДляHiberite.setParameter("id",new BigDecimal(ПараметрВерсияДанных));//8641 8625
                             queryДляHiberite.setParameter("user_update",IDПолученныйИзSQlServerПосик);//8641 8625
                             queryДляHiberite.setParameter("id_user",IDПолученныйИзSQlServerПосик);//8641 8625
@@ -340,7 +340,7 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
                             // TODO
                             queryДляHiberite = session.createQuery(
                                     " SELECT te FROM Template  te WHERE te.currentTable > :id  AND te.userUpdate=:user_update  ");
-                            queryДляHiberite.setLockOptions(new LockOptions(LockMode.PESSIMISTIC_READ) );
+                            queryДляHiberite.setLockOptions(new LockOptions(LockMode.OPTIMISTIC_FORCE_INCREMENT) );
                             queryДляHiberite.setParameter("id",new BigDecimal(ПараметрВерсияДанных));//8641 8625
                             queryДляHiberite.setParameter("user_update",IDПолученныйИзSQlServerПосик);//8641 8625
                             ЛистДанныеОтHibenide =( List<model.Template>) queryДляHiberite.getResultList();
@@ -352,7 +352,7 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
                             // TODO
                             queryДляHiberite = session.createQuery(
                                     " SELECT fiot FROM FioTemplate  fiot  WHERE fiot.currentTable > :id   AND fiot.userUpdate=:user_update ");
-                            queryДляHiberite.setLockOptions(new LockOptions(LockMode.PESSIMISTIC_READ) );
+                            queryДляHiberite.setLockOptions(new LockOptions(LockMode.OPTIMISTIC_FORCE_INCREMENT) );
                             queryДляHiberite.setParameter("id",new BigDecimal(ПараметрВерсияДанных));//8641 8625
                             queryДляHiberite.setParameter("user_update",IDПолученныйИзSQlServerПосик);//8641 8625
                             ЛистДанныеОтHibenide =( List<model.FioTemplate>) queryДляHiberite.getResultList();
@@ -365,7 +365,7 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
                             // TODO
                             queryДляHiberite = session.createQuery(
                                     " SELECT  ca FROM ChatUser ca  WHERE ca .currentTable > :id");
-                            queryДляHiberite.setLockOptions(new LockOptions(LockMode.PESSIMISTIC_READ));
+                            queryДляHiberite.setLockOptions(new LockOptions(LockMode.OPTIMISTIC_FORCE_INCREMENT));
                             queryДляHiberite.setParameter("id",new BigDecimal(ПараметрВерсияДанных));//8641 8625
                             ЛистДанныеОтHibenide =( List<model.ChatUser>)  queryДляHiberite.getResultList();
                             ЛОГ.  log(" ЛистДанныеОтHibenide "+ЛистДанныеОтHibenide+ " ЛистДанныеОтHibenide.size() " +ЛистДанныеОтHibenide.size()+
@@ -378,7 +378,7 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
                                             + " AND   cat .userUpdate=:user_update"
                                             + " OR "
                                             + " cat .currentTable > :id AND   cat .idUser=:id_user  ");
-                            queryДляHiberite.setLockOptions(new LockOptions(LockMode.PESSIMISTIC_READ) );
+                            queryДляHiberite.setLockOptions(new LockOptions(LockMode.OPTIMISTIC_FORCE_INCREMENT) );
                             queryДляHiberite.setParameter("id",new BigDecimal(ПараметрВерсияДанных));//8641 8625
                             queryДляHiberite.setParameter("user_update",IDПолученныйИзSQlServerПосик);//8641 8625
                             queryДляHiberite.setParameter("id_user",IDПолученныйИзSQlServerПосик);//8641 8625
@@ -392,7 +392,7 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
                                     + "							  AND da.chatUuid "
                                     + "							 IN (SELECT    ch.uuid FROM    Chat  ch"
                                     + "  WHERE  ch.userUpdate=:user_update  OR ch.idUser=:id_user )   ");
-                            queryДляHiberite.setLockOptions(new LockOptions(LockMode.PESSIMISTIC_READ) );
+                            queryДляHiberite.setLockOptions(new LockOptions(LockMode.OPTIMISTIC_FORCE_INCREMENT) );
                             queryДляHiberite.setParameter("id",new BigDecimal(ПараметрВерсияДанных));//8641 8625
                             queryДляHiberite.setParameter("user_update",IDПолученныйИзSQlServerПосик);//8641 8625
                             queryДляHiberite.setParameter("id_user",IDПолученныйИзSQlServerПосик);//8641 8625
@@ -404,7 +404,7 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
                             // TODO
                             queryДляHiberite = session.createQuery(
                                     "SELECT  tab FROM Tabel tab  WHERE tab .currentTable > :id  AND tab.userUpdate=:user_update ");
-                            queryДляHiberite.setLockOptions(new LockOptions(LockMode.PESSIMISTIC_READ) );
+                            queryДляHiberite.setLockOptions(new LockOptions(LockMode.OPTIMISTIC_FORCE_INCREMENT) );
                             queryДляHiberite.setParameter("id",new BigDecimal(ПараметрВерсияДанных));//8641 8625
                             queryДляHiberite.setParameter("user_update",IDПолученныйИзSQlServerПосик);//8641 8625
                             ЛистДанныеОтHibenide =( List<model.Tabel>)  queryДляHiberite.getResultList();
@@ -415,7 +415,7 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
                             // TODO
                             queryДляHiberite = session.createQuery(
                                     "SELECT  dat FROM DataTabel dat WHERE dat .currentTable > :id  AND dat.userUpdate=:user_update  ");
-                            queryДляHiberite.setLockOptions(new LockOptions(LockMode.PESSIMISTIC_READ) );
+                            queryДляHiberite.setLockOptions(new LockOptions(LockMode.OPTIMISTIC_FORCE_INCREMENT) );
                             queryДляHiberite.setParameter("id",new BigDecimal(ПараметрВерсияДанных));//8641 8625
                             queryДляHiberite.setParameter("user_update",IDПолученныйИзSQlServerПосик);//8641 8625
                             ЛистДанныеОтHibenide =( List<model.DataTabel>)  queryДляHiberite.getResultList();
@@ -426,7 +426,7 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
                             // TODO
                             queryДляHiberite = session.createQuery(
                                     " SELECT  viewone FROM ViewOnesignal viewone WHERE viewone .currentTable > :id");
-                            queryДляHiberite.setLockOptions(new LockOptions(LockMode.PESSIMISTIC_READ) );
+                            queryДляHiberite.setLockOptions(new LockOptions(LockMode.OPTIMISTIC_FORCE_INCREMENT) );
                             queryДляHiberite.setParameter("id",new BigDecimal(ПараметрВерсияДанных));//8641 8625
                             ЛистДанныеОтHibenide =( List<model.ViewOnesignal>)  queryДляHiberite.getResultList();
                             ЛОГ.  log(" ЛистДанныеОтHibenide "+ЛистДанныеОтHibenide+ " ЛистДанныеОтHibenide.size() " +ЛистДанныеОтHibenide.size()+
@@ -436,7 +436,7 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
                             // TODO
                             queryДляHiberite = session.createQuery(
                                     " SELECT  nome FROM NomenVesov nome WHERE nome .currentTable > :id");
-                            queryДляHiberite.setLockOptions(new LockOptions(LockMode.PESSIMISTIC_READ) );
+                            queryДляHiberite.setLockOptions(new LockOptions(LockMode.OPTIMISTIC_FORCE_INCREMENT) );
                             queryДляHiberite.setParameter("id",new BigDecimal(ПараметрВерсияДанных));//8641 8625
                             ЛистДанныеОтHibenide =( List<model.NomenVesov>)  queryДляHiberite.getResultList();
                             ЛОГ.  log(" ЛистДанныеОтHibenide "+ЛистДанныеОтHibenide+ " ЛистДанныеОтHibenide.size() " +ЛистДанныеОтHibenide.size()+
@@ -446,7 +446,7 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
                             // TODO
                             queryДляHiberite = session.createQuery(
                                     " SELECT  typem FROM TypeMaterial typem  WHERE typem .currentTable > :id");
-                            queryДляHiberite.setLockOptions(new LockOptions(LockMode.PESSIMISTIC_READ) );
+                            queryДляHiberite.setLockOptions(new LockOptions(LockMode.OPTIMISTIC_FORCE_INCREMENT) );
                             queryДляHiberite.setParameter("id",new BigDecimal(ПараметрВерсияДанных));//8641 8625
                             ЛистДанныеОтHibenide =( List<model.TypeMaterial>)  queryДляHiberite.getResultList();
                             ЛОГ.  log(" ЛистДанныеОтHibenide "+ЛистДанныеОтHibenide+ " ЛистДанныеОтHibenide.size() " +ЛистДанныеОтHibenide.size()+
@@ -456,7 +456,7 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
                             // TODO
                             queryДляHiberite = session.createQuery(
                                     " SELECT  getmat FROM GetMaterialsData  getmat  WHERE getmat .currentTable > :id  AND getmat.userUpdate=:user_update ");
-                            queryДляHiberite.setLockOptions(new LockOptions(LockMode.PESSIMISTIC_READ) );
+                            queryДляHiberite.setLockOptions(new LockOptions(LockMode.OPTIMISTIC_FORCE_INCREMENT) );
                             queryДляHiberite.setParameter("id",new BigDecimal(ПараметрВерсияДанных));//8641 8625
                             queryДляHiberite.setParameter("user_update",IDПолученныйИзSQlServerПосик);//8641 8625
                             ЛистДанныеОтHibenide =( List<model.GetMaterialsData>)  queryДляHiberite.getResultList();
@@ -467,7 +467,7 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
                             // TODO
                             queryДляHiberite = session.createQuery(
                                     " SELECT  comp FROM Company  comp  WHERE comp .currentTable > :id");
-                            queryДляHiberite.setLockOptions(new LockOptions(LockMode.PESSIMISTIC_READ) );
+                            queryДляHiberite.setLockOptions(new LockOptions(LockMode.OPTIMISTIC_FORCE_INCREMENT) );
                             queryДляHiberite.setParameter("id",new BigDecimal(ПараметрВерсияДанных));//8641 8625
                             ЛистДанныеОтHibenide =( List<model.Company>)  queryДляHiberite.getResultList();
                             ЛОГ.  log(" ЛистДанныеОтHibenide "+ЛистДанныеОтHibenide+ " ЛистДанныеОтHibenide.size() " +ЛистДанныеОтHibenide.size()+
@@ -477,7 +477,7 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
                             // TODO
                             queryДляHiberite = session.createQuery(
                                     " SELECT  tr FROM Track tr  WHERE tr .currentTable > :id");
-                            queryДляHiberite.setLockOptions(new LockOptions(LockMode.PESSIMISTIC_READ) );
+                            queryДляHiberite.setLockOptions(new LockOptions(LockMode.OPTIMISTIC_FORCE_INCREMENT) );
                             queryДляHiberite.setParameter("id",new BigDecimal(ПараметрВерсияДанных));//8641 8625
                             ЛистДанныеОтHibenide =( List<model.Track>)  queryДляHiberite.getResultList();
                             ЛОГ.  log(" ЛистДанныеОтHibenide "+ЛистДанныеОтHibenide+ " ЛистДанныеОтHibenide.size() " +ЛистДанныеОтHibenide.size()+
@@ -488,14 +488,12 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
                             // TODO
                             queryДляHiberite = session.createQuery(
                                     " SELECT  pr FROM Prof pr  WHERE pr .currentTable > :id");
-                            queryДляHiberite.setLockOptions(new LockOptions(LockMode.PESSIMISTIC_READ) );
+                            queryДляHiberite.setLockOptions(new LockOptions(LockMode.OPTIMISTIC_FORCE_INCREMENT) );
                             queryДляHiberite.setParameter("id",new BigDecimal(ПараметрВерсияДанных));//8641 8625
                             ЛистДанныеОтHibenide =( List<model.Prof>)  queryДляHiberite.getResultList();
                             ЛОГ.  log(" ЛистДанныеОтHibenide "+ЛистДанныеОтHibenide+ " ЛистДанныеОтHibenide.size() " +ЛистДанныеОтHibenide.size()+
                                     "  queryДляHiberite  " +queryДляHiberite);//gson Gson
                             break;
-
-
 
                     }//TODO КОНЕЦ РАСПРЕДЕНИЕ ТАБЛИЦ 	switch (ПараметрИмяТаблицыОтАндройдаGET.trim()) {
 

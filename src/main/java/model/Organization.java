@@ -8,16 +8,11 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.NamedQuery;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.hibernate.annotations.OptimisticLockType;
 
 /**
  * The persistent class for the organization database table.
@@ -27,8 +22,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 @Table(name="organization",catalog="storage",schema="dbo")
 @NamedQuery(name="Organization.findAll", query="SELECT o FROM Organization o")
 @org.hibernate.annotations.OptimisticLocking(
-        type = org.hibernate.annotations.OptimisticLockType.ALL)
-@org.hibernate.annotations.DynamicUpdate
+        type = OptimisticLockType.VERSION)
 public class Organization implements Serializable {
     private static final long serialVersionUID = 1L;
 
@@ -41,6 +35,9 @@ public class Organization implements Serializable {
     @Column(name="current_table")
     private BigDecimal currentTable;
 
+
+    @Version
+    // Необязательно: @org.hibernate.annotations.Type(type = "dbtimestamp")
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name="date_update")
     private Date dateUpdate;
