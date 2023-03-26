@@ -13,6 +13,7 @@ import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.OptimisticLockType;
 
 
@@ -22,9 +23,9 @@ import org.hibernate.annotations.OptimisticLockType;
  */
 @Entity
 @Table(name="fio",catalog="storage",schema="dbo")
-@NamedQuery(name="Fio.findAll", query="SELECT f FROM Fio f")
-@org.hibernate.annotations.OptimisticLocking(
-        type = OptimisticLockType.VERSION)
+@NamedQuery(name="Fio.findAll", query="SELECT f FROM Fio f",lockMode = LockModeType.OPTIMISTIC)
+@org.hibernate.annotations.OptimisticLocking(type = OptimisticLockType.ALL)
+@DynamicUpdate(true)
 public class Fio implements Serializable {
     private static final long serialVersionUID = 1L;
 
@@ -49,9 +50,6 @@ public class Fio implements Serializable {
     private BigDecimal currentTable;
 
 
-
-    @Version
-    // Необязательно: @org.hibernate.annotations.Type(type = "dbtimestamp")
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name="date_update")
     private Date dateUpdate;

@@ -1,5 +1,6 @@
 package model;
 
+import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.OptimisticLockType;
 
 import java.io.Serializable;
@@ -14,9 +15,9 @@ import java.util.Date;
  */
 @Entity
 @Table(name="settings_tabels",catalog="storage",schema="dbo")
-@NamedQuery(name="Settingtab.findAll", query="SELECT s FROM Settingtab s")
-@org.hibernate.annotations.OptimisticLocking(
-        type = OptimisticLockType.VERSION)
+@NamedQuery(name="Settingtab.findAll", query="SELECT s FROM Settingtab s",lockMode = LockModeType.OPTIMISTIC)
+@org.hibernate.annotations.OptimisticLocking(type = OptimisticLockType.ALL)
+@DynamicUpdate(true)
 public class Settingtab implements Serializable {
     private static final long serialVersionUID = 1L;
 
@@ -28,8 +29,6 @@ public class Settingtab implements Serializable {
     private BigDecimal currentTable;
 
 
-    @Version
-    // Необязательно: @org.hibernate.annotations.Type(type = "dbtimestamp")
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name="date_update")
     private Date dateUpdate;

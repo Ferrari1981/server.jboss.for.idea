@@ -1,5 +1,6 @@
 package model;
 
+import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.OptimisticLockType;
 
 import java.io.Serializable;
@@ -15,9 +16,9 @@ import java.util.List;
  */
 @Entity
 @Table(name="templates",catalog="storage",schema="dbo")
-@NamedQuery(name="Template.findAll", query="SELECT t FROM Template t")
-@org.hibernate.annotations.OptimisticLocking(
-        type = OptimisticLockType.VERSION)
+@NamedQuery(name="Template.findAll", query="SELECT t FROM Template t",lockMode = LockModeType.OPTIMISTIC)
+@org.hibernate.annotations.OptimisticLocking(type = OptimisticLockType.ALL)
+@DynamicUpdate(true)
 public class Template implements Serializable {
     private static final long serialVersionUID = 1L;
 
@@ -29,9 +30,6 @@ public class Template implements Serializable {
 
 
 
-
-    @Version
-    // Необязательно: @org.hibernate.annotations.Type(type = "dbtimestamp")
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name="date_update")
     private Date dateUpdate;
