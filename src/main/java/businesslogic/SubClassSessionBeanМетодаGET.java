@@ -141,7 +141,7 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
             /////// асинхронный код запускаем
             String ТолькоДляАунтификацииИмяПолученныйИзSQlServerПосик = new String();
             //////
-            String ПараметрИмяТаблицыОтАндройдаGET = new String();/// ОПРЕДЕЛЯЕМ
+            String ТаблицаGET = new String();/// ОПРЕДЕЛЯЕМ
             /////// НАЧАЛО КОД ДОСТУПА К СЕРВЛЕТУ
             String HeaderСодержимое = new String();
             // Количество колонок в результирующем запросе
@@ -174,9 +174,9 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
 
 
             /// TODO ПАРАМЕНТ #1
-            ПараметрИмяТаблицыОтАндройдаGET = Optional.ofNullable(request.getParameter("ИмяТаблицыОтАндройда"))
+            ТаблицаGET = Optional.ofNullable(request.getParameter("ИмяТаблицыОтАндройда"))
                     .map(String::trim).orElse("");
-            System.out.println("  ПараметрИмяТаблицыОтАндройдаGET " + ПараметрИмяТаблицыОтАндройдаGET);
+            System.out.println("  ТаблицаGET " + ТаблицаGET);
             /// TODO ПАРАМЕНТ #2
             ПараметрФильтрНаДанныеСервлета = Optional.ofNullable(request.getParameter("ФильтрДляДанныхСервлета"))
                     .map(String::trim).orElse("");
@@ -226,7 +226,7 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
                 // TODO ЗАДАНИЕ ДЛЯ СЕРВЕР JOBSERVERTASK #1
                 case "Хотим Получить Версию Данных Сервера":
                     БуферCallsBackДляAndroid = МетодПолучениеВерсиюДанныхДляАndroid(
-                            response, JobsServerСазаданиеДляСервера, ПараметрИмяТаблицыОтАндройдаGET);
+                            response, JobsServerСазаданиеДляСервера, ТаблицаGET);
                     ЛОГ.log("Хотим Получить Версию Данных Сервера" + new Date() + " ПараметрФильтрЗадааниеДляСервлета "
                             + JobsServerСазаданиеДляСервера + "  БуферCallsBackДляAndroid "
                             + БуферCallsBackДляAndroid.toString());
@@ -240,10 +240,10 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
 
                     ЛОГ.log("Хотим Получить  JSON" + new Date() + " JobsServerСазаданиеДляСервера "
                             + JobsServerСазаданиеДляСервера+"  ПараметрВерсияДанных" + ПараметрВерсияДанных
-                            + " ПараметрИмяТаблицыОтАндройдаGET " + ПараметрИмяТаблицыОтАндройдаGET);
+                            + " ТаблицаGET " + ТаблицаGET);
                     ////////////// ГЕНЕРАЦИЯ JSON ДЛЯ ВСЕХ  ТАБЛИЦ
                     // TODO ГЛАВНЫЙ РАСПРЕДЕЛИТЕЛЬ КАКАЯ ТЕКУЩАЯ ТАБЛИЦА ОБРАБАТЫВАЕМСЯ
-                    switch (ПараметрИмяТаблицыОтАндройдаGET.trim()) {
+                    switch (ТаблицаGET.trim()) {
                         case "organization":
                             // TODO
                             queryДляHiberite  = session.createQuery(
@@ -252,7 +252,7 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
                             queryДляHiberite.setParameter("id",new BigDecimal(ПараметрВерсияДанных ));//
                             ЛистДанныеОтHibenide =( List<model.Organization>)  queryДляHiberite.getResultList();
                             ЛОГ.  log(" ЛистДанныеОтHibenide "+ЛистДанныеОтHibenide+ " ЛистДанныеОтHibenide.size() " +ЛистДанныеОтHibenide.size()+
-                                    "  queryДляHiberite  " +queryДляHiberite+ " ПараметрИмяТаблицыОтАндройдаGET " +ПараметрИмяТаблицыОтАндройдаGET);//gson Gson
+                                    "  queryДляHiberite  " +queryДляHiberite+ " ТаблицаGET " +ТаблицаGET);//gson Gson
                             break;
                         case "depatment":
                             // TODO
@@ -495,11 +495,11 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
                                     "  queryДляHiberite  " +queryДляHiberite);//gson Gson
                             break;
 
-                    }//TODO КОНЕЦ РАСПРЕДЕНИЕ ТАБЛИЦ 	switch (ПараметрИмяТаблицыОтАндройдаGET.trim()) {
+                    }//TODO КОНЕЦ РАСПРЕДЕНИЕ ТАБЛИЦ 	switch (ТаблицаGET.trim()) {
 
                     ЛОГ.log("запуск ..  Метод_ГлавногоМетодаGETВыполнемЗаданиеВтороеГенерацияИОтправкаJSONПотокаНаАндройд"
                             + " КоличествоСтрокКоторыеМыОтправимНаКлиент  " + КоличествоСтрокКоторыеМыОтправимНаКлиент+
-                            " ПараметрИмяТаблицыОтАндройдаGET " +ПараметрИмяТаблицыОтАндройдаGET);
+                            " ТаблицаGET " +ТаблицаGET);
                     //TODO ФИНАЛЬЯ СТАДИЯ ГЕНЕРИРУЕМ САМ JSON
                     ЛОГ.  log(" ЛистДанныеОтHibenide "+ЛистДанныеОтHibenide+ " ЛистДанныеОтHibenide.size() " +ЛистДанныеОтHibenide.size()+
                             "  queryДляHiberite  " +queryДляHiberite);//gson Gson

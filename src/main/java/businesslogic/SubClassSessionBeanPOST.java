@@ -169,7 +169,7 @@ public class SubClassSessionBeanPOST {//extends    DSU1JsonServlet
 
     protected StringBuffer МетодПарсингаJSONФайлПришелОтКлиента(
             @NotNull HttpServletResponse response,
-            @NotNull String ПараметрИмяТаблицыОтАндройдаPost,
+            @NotNull String ТаблицаPOST,
             @NotNull StringBuffer jsonReaderПришеоОтКлиентаJSON_P)
             throws InterruptedException, SQLException, BrokenBarrierException, IOException {
         StringBuffer ОтветОтГлавного_МетодаPOSTДляОтправкиНААндройд = new StringBuffer();
@@ -179,7 +179,7 @@ public class SubClassSessionBeanPOST {//extends    DSU1JsonServlet
 
             //TODO ГЛАВНЫЙ МЕТОДА POST() КОТОРЫЙ ВСТАВЛЯЕТ  И/ИЛИ ОБНОВЛЕНИЯ ДАННЫХ
            ОтветОтГлавного_МетодаPOSTДляОтправкиНААндройд = subClassGenerateJson.МетодГенерацияJson(ЛОГ, БуферJSONJackson
-                            , ПараметрИмяТаблицыОтАндройдаPost);
+                            , ТаблицаPOST);
             ЛОГ.log( " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+
