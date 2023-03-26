@@ -170,12 +170,12 @@ public class SubClassSessionBeanPOST {//extends    DSU1JsonServlet
     protected StringBuffer МетодПарсингаJSONФайлПришелОтКлиента(
             @NotNull HttpServletResponse response,
             @NotNull String ТаблицаPOST,
-            @NotNull StringBuffer jsonReaderПришеоОтКлиентаJSON_P)
+            @NotNull StringBuffer БуферJSONотAndroid)
             throws InterruptedException, SQLException, BrokenBarrierException, IOException {
         StringBuffer ОтветОтГлавного_МетодаPOSTДляОтправкиНААндройд = new StringBuffer();
         try {
             // convert JSON string to Map
-         CopyOnWriteArrayList<Map<String, String>> БуферJSONJackson = getGeneratorJackson.readValue(jsonReaderПришеоОтКлиентаJSON_P.toString(), new TypeReference<CopyOnWriteArrayList<Map<String, String>>>() {});
+         CopyOnWriteArrayList<Map<String, String>> БуферJSONJackson = getGeneratorJackson.readValue(БуферJSONотAndroid.toString(), new TypeReference<CopyOnWriteArrayList<Map<String, String>>>() {});
 
             //TODO ГЛАВНЫЙ МЕТОДА POST() КОТОРЫЙ ВСТАВЛЯЕТ  И/ИЛИ ОБНОВЛЕНИЯ ДАННЫХ
            ОтветОтГлавного_МетодаPOSTДляОтправкиНААндройд = subClassGenerateJson.МетодГенерацияJson(ЛОГ, БуферJSONJackson
