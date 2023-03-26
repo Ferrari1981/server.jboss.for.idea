@@ -2,14 +2,21 @@ package model;
 
 
 
-import org.hibernate.annotations.DynamicUpdate;
-import org.hibernate.annotations.OptimisticLockType;
-
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 
 /**
@@ -18,9 +25,10 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name="chats",catalog="storage",schema="dbo")
-@NamedQuery(name="Chat.findAll", query="SELECT c FROM Chat c" ,lockMode = LockModeType.OPTIMISTIC)
-@org.hibernate.annotations.OptimisticLocking(type = OptimisticLockType.ALL)
-@DynamicUpdate(true)
+@NamedQuery(name="Chat.findAll", query="SELECT c FROM Chat c")
+@org.hibernate.annotations.OptimisticLocking(
+        type = org.hibernate.annotations.OptimisticLockType.ALL)
+@org.hibernate.annotations.DynamicUpdate
 public class Chat implements Serializable {
     private static final long serialVersionUID = 1L;
 

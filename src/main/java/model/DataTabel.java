@@ -1,8 +1,5 @@
 package model;
 
-import org.hibernate.annotations.DynamicUpdate;
-import org.hibernate.annotations.OptimisticLockType;
-
 import java.io.Serializable;
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -15,9 +12,10 @@ import java.util.Date;
  */
 @Entity
 @Table(name="data_tabels",catalog="storage",schema="dbo")
-@NamedQuery(name="DataTabel.findAll", query="SELECT d FROM DataTabel d",lockMode = LockModeType.OPTIMISTIC)
-@org.hibernate.annotations.OptimisticLocking(type = OptimisticLockType.ALL)
-@DynamicUpdate(true)
+@NamedQuery(name="DataTabel.findAll", query="SELECT d FROM DataTabel d")
+@org.hibernate.annotations.OptimisticLocking(
+        type = org.hibernate.annotations.OptimisticLockType.ALL)
+@org.hibernate.annotations.DynamicUpdate
 public class DataTabel implements Serializable {
     private static final long serialVersionUID = 1L;
 

@@ -2,14 +2,17 @@ package model;
 
 
 
-import org.hibernate.annotations.DynamicUpdate;
-import org.hibernate.annotations.OptimisticLockType;
-
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /**
  * The persistent class for the data_chat database table.
@@ -21,9 +24,10 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "data_chat", catalog = "storage", schema = "dbo")
-@NamedQuery(name = "DataChat.findAll", query = "SELECT d FROM DataChat d",lockMode = LockModeType.OPTIMISTIC)
-@org.hibernate.annotations.OptimisticLocking(type = OptimisticLockType.ALL)
-@DynamicUpdate(true)
+@NamedQuery(name = "DataChat.findAll", query = "SELECT d FROM DataChat d")
+@org.hibernate.annotations.OptimisticLocking(
+        type = org.hibernate.annotations.OptimisticLockType.ALL)
+@org.hibernate.annotations.DynamicUpdate
 public class DataChat implements Serializable {
     private static final long serialVersionUID = 1L;
 
@@ -37,7 +41,6 @@ public class DataChat implements Serializable {
 
     @Column(name = "current_table")
     private BigDecimal currentTable;
-
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "date_update")

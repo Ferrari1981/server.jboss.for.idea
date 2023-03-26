@@ -8,13 +8,17 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import org.hibernate.annotations.DynamicUpdate;
-import org.hibernate.annotations.OptimisticLockType;
 
 
 /**
@@ -23,9 +27,10 @@ import org.hibernate.annotations.OptimisticLockType;
  */
 @Entity
 @Table(name="fio",catalog="storage",schema="dbo")
-@NamedQuery(name="Fio.findAll", query="SELECT f FROM Fio f",lockMode = LockModeType.OPTIMISTIC)
-@org.hibernate.annotations.OptimisticLocking(type = OptimisticLockType.ALL)
-@DynamicUpdate(true)
+@NamedQuery(name="Fio.findAll", query="SELECT f FROM Fio f")
+@org.hibernate.annotations.OptimisticLocking(
+        type = org.hibernate.annotations.OptimisticLockType.ALL)
+@org.hibernate.annotations.DynamicUpdate
 public class Fio implements Serializable {
     private static final long serialVersionUID = 1L;
 
@@ -48,7 +53,6 @@ public class Fio implements Serializable {
 
     @Column(name="current_table")
     private BigDecimal currentTable;
-
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name="date_update")

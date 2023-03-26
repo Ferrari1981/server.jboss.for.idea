@@ -5,8 +5,6 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.ColumnDefault;
-import org.hibernate.annotations.DynamicUpdate;
-import org.hibernate.annotations.OptimisticLockType;
 
 import java.math.BigDecimal;
 import java.util.Date;
@@ -18,9 +16,10 @@ import java.util.Date;
  */
 @Entity
 @Table(name="get_materials_data",catalog="storage",schema="dbo")
-@NamedQuery(name="GetMaterialsData.findAll", query="SELECT g FROM GetMaterialsData g",lockMode = LockModeType.OPTIMISTIC)
-@org.hibernate.annotations.OptimisticLocking(type = OptimisticLockType.ALL)
-@DynamicUpdate(true)
+@NamedQuery(name="GetMaterialsData.findAll", query="SELECT g FROM GetMaterialsData g")
+@org.hibernate.annotations.OptimisticLocking(
+        type = org.hibernate.annotations.OptimisticLockType.ALL)
+@org.hibernate.annotations.DynamicUpdate
 public class GetMaterialsData implements Serializable {
     private static final long serialVersionUID = 1L;
 
