@@ -1,6 +1,7 @@
 package model;
 
 
+import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.OptimisticLockType;
 
@@ -19,7 +20,6 @@ import java.util.Date;
 @NamedQuery(name="Cfo.findAll", query="SELECT c FROM Cfo c" ,lockMode = LockModeType.OPTIMISTIC)
 @org.hibernate.annotations.OptimisticLocking(type = OptimisticLockType.ALL)
 @DynamicUpdate(true)
-
 public class Cfo  implements Serializable {
 private static final long serialVersionUID = 1L;
 
