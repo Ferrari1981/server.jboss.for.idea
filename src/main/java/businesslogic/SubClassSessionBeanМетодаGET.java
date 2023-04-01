@@ -312,7 +312,7 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
                                             + " AND   notif.userUpdate=:user_update   "
                                             + "  OR notif.currentTable > :id  AND     notif.idUser=:id_user ");
                             //query4.setLockOptions( new LockOptions(  LockMode.PESSIMISTIC_READ)); //
-                            queryДляHiberite.setLockOptions(new LockOptions(LockMode.PESSIMISTIC_READ).setFollowOnLocking(false) );
+                            queryДляHiberite.setLockOptions(new LockOptions(LockMode.).setFollowOnLocking(false) );
                             queryДляHiberite.setParameter("id",new BigDecimal(ПараметрВерсияДанных));//8641 8625
                             queryДляHiberite.setParameter("user_update",IDПолученныйИзSQlServerПосик);//8641 8625
                             queryДляHiberite.setParameter("id_user",IDПолученныйИзSQlServerПосик);//8641 8625
