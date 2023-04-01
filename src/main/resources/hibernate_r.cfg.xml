@@ -42,6 +42,8 @@
     <mapping class="model.Settingtab"/>
     <mapping class="model.GetMaterialsData"/>
     <mapping class="model.Prof"/>
+    <mapping class="model.User"/>
+    <mapping class="model.ViewDataModification"/>
 
   </session-factory>
 
