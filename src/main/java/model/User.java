@@ -56,7 +56,7 @@ public class User implements Serializable {
     private int regoin;
 
     @Column(nullable=false)
-    private int rights;
+    private Integer rights;
 
     @Column(length=255)
     private String telephone;
@@ -146,11 +146,12 @@ public class User implements Serializable {
         this.regoin = regoin;
     }
 
-    public int getRights() {
+    public Integer getRights() {
+
         return this.rights;
     }
 
-    public void setRights(int rights) {
+    public void setRights(Integer rights) {
         this.rights = rights;
     }
 

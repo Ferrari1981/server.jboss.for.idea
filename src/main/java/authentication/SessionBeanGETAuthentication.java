@@ -9,7 +9,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.sun.istack.NotNull;
+import dsu1glassfishatomic.workinterfaces.ProducedCard;
 import org.hibernate.Query;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 
 import javax.ejb.*;
 import javax.inject.Inject;
@@ -62,6 +66,13 @@ public class SessionBeanGETAuthentication {// extends WITH
     @Inject
     SubClassWriterErros subClassWriterErros;
 
+    @Inject @ProducedCard
+    SessionFactory sessionSousJboss;
+
+    private Session session;
+    private Transaction sessionTransaction  ;
+
+
     public SessionBeanGETAuthentication() {
 
         System.out.println("Конструктор  SessionBeanGETAuthentication");
@@ -100,9 +111,8 @@ public class SessionBeanGETAuthentication {// extends WITH
     protected StringBuffer  МетодЗапускаАунтификации(@NotNull HttpServletRequest request,
                                                   @NotNull ServletContext ЛОГ) throws SecurityException, SQLException {
         // TODO Auto-generated method stub
-        System.out.println("Конструктор  ЗАПУСК МЕТОДА ИЗ GET ()  ГлавныйМетод_МетодаGET()");
-        StringBuffer БуферCallsBackДляAndroid = null;
-        try (Connection conn = subClassConnectionsSQLServer.МетодGetConnect(ЛОГ);) {
+        StringBuffer БуферCallsBackДляAndroid = new StringBuffer();
+        try  {
             this.ЛОГ = ЛОГ;
             // TODO
             this.request = request;
@@ -110,15 +120,6 @@ public class SessionBeanGETAuthentication {// extends WITH
             this.response = response;
             // TODO Коннектимся к Базе SQl Server
             ЛОГ.log("ЛОГ  GET() " + ЛОГ + " request " + request + " response " + response);
-
-            // TODO
-            ЛОГ.log(" ОТРАБОТАЛ МЕТОД ИНИЦИАЛИЗАЦИИ ПЕРЕМЕННЫХ КОТОРЫ Е ПРИШЛИ  МетодПредворительногоПодключенияДляМетодаGETкодИзStatement    conn"
-                    + conn);
-            stmt = subClassConnectionsSQLServer.МетодGetSmtr(conn, ЛОГ);
-            ЛОГ.log(" ОТРАБОТАЛ МЕТОД ИНИЦИАЛИЗАЦИИ ПЕРЕМЕННЫХ КОТОРЫ Е ПРИШЛИ  МетодПредворительногоПодключенияДляМетодаGETкодИзКонструктора   "
-                    + stmt);
-            ////
-            БуферCallsBackДляAndroid = new StringBuffer();
             // TODO получаем session
             ЛОГ.log("ЗАПУСКАЕТСЯ....... ГЛАВНЫЙ МЕТОД GET() СЕРВЛЕТА " + new Date() + "\n" + ЛОГ.getServerInfo()
                     + "  request " + request + " response " + response + " ЛОГ" + ЛОГ);
@@ -129,13 +130,11 @@ public class SessionBeanGETAuthentication {// extends WITH
             String ПараметрКонкретнаяТаблицаВПотокеВнутриПотока = null;
 
 
-            JsonObjectBuilder builder = null; ////// БИЛДЕР СОЗДАНИЕ JSON
+
             String результатшифрование;
             String РезультатОбновлениеДляОтправкиВАндройд;//// для понимания
             String пароль;
-            int КоличествоСтрокВБАзеSQLSERVER = 0;
-            JsonObjectBuilder JsonПоля = Json.createObjectBuilder();
-            // JsonArrayBuilder МассивБилдер=Json.createArrayBuilder();
+            int КоличествоСтрокВБАзеSQLSERVER = 0;;
 
             int ДляПосикаКоличествоСтолбцовВБАзеSQLSERVER;
             String queryJSON = new String(); /// ПОЛУЧЕННЫЙ JSON САМО ТЕЛО ОТВЕТА
@@ -147,11 +146,6 @@ public class SessionBeanGETAuthentication {// extends WITH
             /// TODO logginf info
             ЛОГ.log("СТАРТ/START МЕТОД/METOD  protected void doGet  logger  ::: " + "\n");
             ///// TODO создание клуча
-            System.out.println(" protected void doGet");
-            ///
-            StringWriter stringWriterМассивВерсия = null;
-            ///////
-            JsonWriter jsonWriterВерсия;
             /////// асинхронный код запускаем
             String ТолькоДляАунтификацииИмяПолученныйИзSQlServerПосик = new String();
             //////
@@ -175,8 +169,13 @@ public class SessionBeanGETAuthentication {// extends WITH
             System.out.println("  IDПолученныйИзSQlServerПосик " + IDПолученныйИзSQlServerПосик);
             Query queryДляHiberite = null;
             List<?> ЛистДанныеОтHibenide  = new ArrayList<>();
-
-
+            if (IDПолученныйИзSQlServerПосик>0) {
+                // TODO: 10.03.2023 получение сессиии HIREBIANTE
+                session=   sessionSousJboss.getCurrentSession();
+                // TODO: 10.03.2023 получение сессиии Transaction
+                sessionTransaction = session.getTransaction();
+                sessionTransaction.begin();
+            }
 
 
             /// TODO ПАРАМЕНТ #1
@@ -229,11 +228,9 @@ public class SessionBeanGETAuthentication {// extends WITH
             switch (JobsFroServerЗаданиеДляСервера) {
                 // TODO ЗАДАНИЕ ДЛЯ СЕРВЕР JOBSERVERTASK #1
                 case "Хотим Получить Версию Данных Сервера":
-                    БуферCallsBackДляAndroid = МетодПолучениеВерсиюДанныхДляАndroid(
-                            response, JobsServerСазаданиеДляСервера, ПараметрИмяТаблицыОтАндройдаGET);
+                    ЛистДанныеОтHibenide = МетодДляКлиентаMODIFITATION_Server(session);
                     ЛОГ.log("Хотим Получить Версию Данных Сервера" + new Date() + " ПараметрФильтрЗадааниеДляСервлета "
-                            + JobsServerСазаданиеДляСервера + "  БуферCallsBackДляAndroid "
-                            + БуферCallsBackДляAndroid.toString());
+                            + ЛистДанныеОтHibenide + "  ЛистДанныеОтHibenide ");
                     break;
                 // TODO ЗАДАНИЕ ДЛЯ СЕРВЕР JOBSERVERTASK #3
                 case "Хотим Получить ID для Генерации  UUID":
@@ -245,21 +242,27 @@ public class SessionBeanGETAuthentication {// extends WITH
                 // TODO ЗАДАНИЕ ДЛЯ СЕРВЕР JOBSERVERTASK #4
                 case "Хотим Получить Статус Блокировки Пользователя по ID":
                     // TODO ОПРЕДЕЛЯЕМ СТАТУС ПОЛЬЗОВАТЕЛЯ
-                    БуферCallsBackДляAndroid = Метод_МетодаGETОтправляемБлокировкуПользователюID(
-                            response, JobsServerСазаданиеДляСервера, IDПолученныйИзSQlServerПосик, conn);
+                    ЛистДанныеОтHibenide = Метод_МетодаСтатусЗаблорированогоКлиента( IDПолученныйИзSQlServerПосик,session);
                     ЛОГ.log(" Отправили  Хотим Получить Статус Блокировки Пользователя по ID "
-                            + JobsServerСазаданиеДляСервера + " БуферCallsBackДляAndroid "
-                            + БуферCallsBackДляAndroid.toString());
+                            + JobsServerСазаданиеДляСервера + " ЛистДанныеОтHibenide " + ЛистДанныеОтHibenide.size() + " IDПолученныйИзSQlServerПосик "+IDПолученныйИзSQlServerПосик);
                     break;
                 // TODO ЗАДАНИЯ ДЛЯ СЕРВЕРА НЕТУ
                 default:
+                    ЛОГ.log("\n"+"  default:  Starting.... class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
+                            " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
+                            " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+
+                            "Метод_РеальнаяСтатусSqlServer  ЛистДанныеОтHibenide " +ЛистДанныеОтHibenide.size());
                     break;
             }
             //// TODO ЗАКРЫЫВАЕМ КУРСОРЫ ПОСЛЕ ГЕНЕРАЦИИ JSON ДЛЯ КЛИЕНТА
             // TODO
+            //TODO ГЕНЕРАЦИЯ JSON ПО НОВОМУ
+            БуферCallsBackДляAndroid =МетодГенерацияJSONJackson(  ЛистДанныеОтHibenide);
+            if(sessionTransaction.isActive()){sessionTransaction.commit();}
             ЛОГ.log("БуферCallsBackДляAndroid.toString() " + "" + БуферCallsBackДляAndroid.toString());
             /////// ошибки метода doGET
         } catch (Exception e) {
+            sessionTransaction.rollback();
             subClassWriterErros.
                     МетодаЗаписиОшибкиВЛог(e,
                             Thread.currentThread().
@@ -675,5 +678,49 @@ public class SessionBeanGETAuthentication {// extends WITH
         }
         return БуферСозданогоJSONВерсияБазыSQLserver;
     }
+    // todo МЕТОД генерируем для килента MODIFITATIONServer
+    protected    List<?> МетодДляКлиентаMODIFITATION_Server(@javax.validation.constraints.NotNull Session session) {
+        /////// ВЕРСИЮ ДАННЫХ НА СЕРВЕРЕ
+        List<?> ЛистДанныеОтHibenide  = new ArrayList<>();
+        try {
+            org.hibernate.Query queryДляHiberite   = session.createQuery(
+                    "SELECT vd FROM ViewDataModification  vd WHERE vd.id IS NOT NULL ");
+            ЛистДанныеОтHibenide =( List<model.ViewDataModification>) queryДляHiberite.getResultList();
 
+            ЛОГ.log("\n"+" Starting.... class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
+                    " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
+                    " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+
+                    " ЛистДанныеОтHibenide " +ЛистДанныеОтHibenide.toString());
+        } catch (Exception e) {
+            subClassWriterErros.
+                    МетодаЗаписиОшибкиВЛог(e,
+                            Thread.currentThread().
+                                    getStackTrace(),
+                            ЛОГ,"ErrorsLogs/ErrorJbossServletDSU1.txt");
+        }
+        return ЛистДанныеОтHibenide;
+
+    }
+    // TODO еще генерируем заблокирваный статус клиента
+    protected List<?> Метод_МетодаСтатусЗаблорированогоКлиента(@javax.validation.constraints.NotNull   Integer  IDПолученныйИзSQlServerПосик,
+                                                               @javax.validation.constraints.NotNull Session session ) {
+        List<?> ЛистДанныеОтHibenide  = new ArrayList<>();
+        try {
+            org.hibernate.Query queryДляHiberite   = session.createQuery("SELECT us.locked FROM User  us WHERE us.id  = :id ");
+            queryДляHiberite.setParameter("id",new Integer(IDПолученныйИзSQlServerПосик));//8641 8625
+            ЛистДанныеОтHibenide =( List<model.User>) queryДляHiberite.getResultList();
+            ЛОГ.log("\n"+" Starting.... class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
+                    " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
+                    " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+
+                    " ЛистДанныеОтHibenide " +ЛистДанныеОтHibenide.toString());
+        } catch (Exception e) {
+            subClassWriterErros.
+                    МетодаЗаписиОшибкиВЛог(e,
+                            Thread.currentThread().
+                                    getStackTrace(),
+                            ЛОГ,"ErrorsLogs/ErrorJbossServletDSU1.txt");
+        }
+        return ЛистДанныеОтHibenide  ;
+
+    }
 }

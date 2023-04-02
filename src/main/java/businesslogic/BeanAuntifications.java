@@ -1,5 +1,14 @@
 package businesslogic;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectWriter;
+import dsu1glassfishatomic.workinterfaces.ProducedCard;
+import model.User;
+import model.ViewDataModification;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
@@ -13,10 +22,10 @@ import javax.validation.constraints.NotNull;
 import java.nio.charset.StandardCharsets;
 import java.sql.Connection;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.Base64;
-import java.util.Enumeration;
-import java.util.Optional;
+import java.util.*;
+import java.util.function.Consumer;
 
 /**
  * Session Bean implementation class BeanAuntifications
@@ -29,6 +38,12 @@ public class BeanAuntifications {
     private	SubClassConnectionsSQLServer subClassConnectionsSQLServer;
     @Inject
     SubClassWriterErros subClassWriterErros;
+    private Session session;
+    private Transaction sessionTransaction  ;
+    @Inject @ProducedCard
+    SessionFactory sessionSousJboss;
+    @Inject
+    ObjectMapper getGeneratorJackson;
     /**
      * Default constructor.
      */
@@ -36,103 +51,94 @@ public class BeanAuntifications {
         // TODO Auto-generated constructor stub
     }
 
+
     @SuppressWarnings("unused")
     public Boolean МетодАунтификация(@NotNull ServletContext ЛОГ,
                                      @NotNull HttpServletRequest request,
-                                     @NotNull HttpSession session) {
+                                     @NotNull HttpSession sessionEJB) {
         int РазрешонныеПрава = 2;
-        Integer		IDПолученныйИзSQlServerПосик=0;/// вычисялем
-        String	ИмяПолученныйИзSQlServerПосик = null ;/// вычисялем
-        String		ПарольПолученныйИзSQlServerПосик = null ;/// вычисялем
         Boolean РезультатАунтификацииПользователя=false;
-        try (Connection conn =subClassConnectionsSQLServer.МетодGetConnect(	ЛОГ);){
+        try {
+            List<?> ЛистДанныеОтHibenide  = new ArrayList<>();
             ЛОГ.log("\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
                     " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
                     " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+ ЛОГ +" request " + request );
-            //TODO
-            Statement stmt =subClassConnectionsSQLServer.МетодGetSmtr(conn, ЛОГ);
-            ЛОГ.log(" ОТРАБОТАЛ МЕТОД ИНИЦИАЛИЗАЦИИ ПЕРЕМЕННЫХ КОТОРЫ Е ПРИШЛИ  МетодПредворительногоПодключенияДляМетодаGETкодИзКонструктора   "+ stmt);
-            String    ЛогинОтКлиента =new String();
-            String	ПарольОтКлиента=new String();
-            String	ИдиДевайсаПолученный=new String();
 
-
-            ЛогинОтКлиента =((HttpServletRequest) request).getHeader("identifier");
-
-            ПарольОтКлиента =((HttpServletRequest) request).getHeader("p_identifier");
-
-            ИдиДевайсаПолученный =((HttpServletRequest) request).getHeader("id_device_androis");
+            String    ЛогинОтКлиента =((HttpServletRequest) request).getHeader("identifier");
+            String ПарольОтКлиента =((HttpServletRequest) request).getHeader("p_identifier");
+            String ИдиДевайсаПолученный =((HttpServletRequest) request).getHeader("id_device_androis");
             ЛОГ.log(" ЛогинОтКлиента " +ЛогинОтКлиента+" ЛогинОтКлиента " + ЛогинОтКлиента +  " ИдиДевайсаПолученный " +ИдиДевайсаПолученный);
             ////// TODO полученный нданные от Клиента
-            if (ЛогинОтКлиента.length()>0 && ПарольОтКлиента.length()>0 && ИдиДевайсаПолученный.length()>0) {
-                /////// ПОЛУЧЕНИИ КОЛИЧЕСТВА
-                /////// СТОЛБЦОВ В БАЗЕ
-                String	queryСканируемИмяИпароль = "SELECT   id ,login,password  FROM    [storage].[dbo].[users]    "
-                        + "          WHERE login  =  '" + ЛогинОтКлиента
-                        + "' AND password= '" + ПарольОтКлиента + "'"
-                        + " AND rights= '" + РазрешонныеПрава + "'    ;";//// ЗАПРОС
-                //////
-                System.out.println(" queryСканируемИмяИпароль   " + queryСканируемИмяИпароль);
-                // TODO получаем имя и пвроль
-                //////// запрос вычисляет имя и пароль и id
-                ResultSet РезультатСканированиеИмениИПароль = stmt.executeQuery(queryСканируемИмяИпароль);
-                РезультатСканированиеИмениИПароль.last();
-                // todo НАЛИЧИЕ ПОЛЬЗОВАТЕЛЯ В БАЕЗ
-                int НаличиеХотябыОднуСТрочкуПользоватлеьВБАзеТакойВообщеЕсть = РезультатСканированиеИмениИПароль
-                        .getRow();
-                РезультатСканированиеИмениИПароль.beforeFirst();
-                System.out.println(" protected void doGet НаличиеХотябыОднуСТрочкуПользоватлеьВБАзеТакойВообщеЕсть"
-                        + НаличиеХотябыОднуСТрочкуПользоватлеьВБАзеТакойВообщеЕсть);
-                // TODO ЕСЛИ У ТЕКУЩЕГО ПОЛЬЗОВАТЕЛЯ НЕТ ПРАВ НАПРИМЕР--2 ТО
-                if (НаличиеХотябыОднуСТрочкуПользоватлеьВБАзеТакойВообщеЕсть > 0) {
-                    //// TODO СЮДА ЗАХОДИМ КОГДА ПОЛЬЗОВАТЕЛЬ
-                    while (РезультатСканированиеИмениИПароль.next()) { //// КОЛИЧЕСТВО
-                        IDПолученныйИзSQlServerПосик = РезультатСканированиеИмениИПароль.getInt(1);/// вычисялем
-                        ИмяПолученныйИзSQlServerПосик = РезультатСканированиеИмениИПароль.getString(2);/// вычисялем
-                        ПарольПолученныйИзSQlServerПосик = РезультатСканированиеИмениИПароль.getString(3);/// вычисялем
+            if (ЛогинОтКлиента.trim().length()>0 && ПарольОтКлиента.trim().length()>0 && ИдиДевайсаПолученный.trim().length()>0) {
+                // TODO: 10.03.2023 получение сессиии HIREBIANTE
+                session = sessionSousJboss.getCurrentSession();
+                // TODO: 10.03.2023 получение сессиии Transaction
+                sessionTransaction = session.getTransaction();
+                sessionTransaction.begin();
+                org.hibernate.Query queryДляHiberite = session.createQuery("SELECT us.id ,us.login,us.password FROM User  us WHERE us.login=:login AND " +
+                        "us.password  = :password " +
+                        "AND us.rights=:rights  ");
+                queryДляHiberite.setParameter("login", new String(ЛогинОтКлиента));//8641 8625
+                queryДляHiberite.setParameter("password", new String(ПарольОтКлиента));//8641 8625
+                queryДляHiberite.setParameter("rights", new Integer(РазрешонныеПрава));//8641 8625
+                ЛистДанныеОтHibenide = (List<User>) queryДляHiberite.getResultList();
+                // TODO: 02.04.2023 Вытаскиваем Из ПРишедзиъ данных логин и пароль
+                StringBuffer БуферСозданогоJSONJackson = МетодГенерацияJSONJackson(ЛОГ, ЛистДанныеОтHibenide);
 
-                        ЛОГ.log("  ЛогинПолученныйОтКлиента  "
-                                + ЛогинОтКлиента +
-                                " ИмяПолученныйИзSQlServerПосик " +ИмяПолученныйИзSQlServerПосик
-                                + " ПарольПолученныйИзSQlServerПосик " +ПарольПолученныйИзSQlServerПосик +
-                                " ПарольОтКлиента " +ПарольОтКлиента+" СколькСтрокРезультатЕслиТакойПользовательМетод_GET "
-                                + НаличиеХотябыОднуСТрочкуПользоватлеьВБАзеТакойВообщеЕсть);
-                        ////
-                        if (ЛогинОтКлиента.compareTo(ИмяПолученныйИзSQlServerПосик)==0
-                                &&  ПарольПолученныйИзSQlServerПосик.compareTo(ПарольОтКлиента)==0
-                                && IDПолученныйИзSQlServerПосик>0 && ИдиДевайсаПолученный.length()>0) { ///// TODO
+                for(int i = 0; i < БуферСозданогоJSONJackson.length(); i++) {
+                    ЛОГ.log("\n"+" Starting.... class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
+                            " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
+                            " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+
+                            " БуферСозданогоJSONJackson " +БуферСозданогоJSONJackson);
+                }
+
+
+                ЛОГ.log("\n"+" Starting.... class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
+                        " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
+                        " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+
+                        " БуферСозданогоJSONJackson " +БуферСозданогоJSONJackson);
+                //TODO ГЕНЕРАЦИЯ JSON ПО НОВОМУ
+               Object IDПолученныйИзSQlServer  =   ЛистДанныеОтHibenide.stream().limit(1).findAny().get();
+                Object  ЛогинОтКлиентаИзSQlServer   =   ЛистДанныеОтHibenide.stream().skip(1).limit(2).findAny().get();
+                Object  ПарольИзSQlServer   =   ЛистДанныеОтHibenide.stream().skip(2).limit(3).findAny().get();
+                ЛОГ.log("\n"+" Starting.... class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
+                        " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
+                        " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+
+                        " ЛистДанныеОтHibenide " +ЛистДанныеОтHibenide.toString()  +  "ЛогинОтКлиентаИзSQlServer "+ЛогинОтКлиентаИзSQlServer +
+                        "ПарольИзSQlServer " +ПарольИзSQlServer  + "IDПолученныйИзSQlServer " +IDПолученныйИзSQlServer);
+                if(sessionTransaction.isActive()) {sessionTransaction.commit();}
+                if (ЛистДанныеОтHibenide.size() > 0) {
+                    //// TODO СЮДА ЗАХОДИМ КОГДА ПОЛЬЗОВАТЕЛЬ
+                        if (ЛогинОтКлиента.compareTo(ЛогинОтКлиентаИзSQlServer.toString())==0
+                                &&  ПарольОтКлиента.compareTo(ПарольИзSQlServer.toString())==0
+                                && Integer.parseInt(IDПолученныйИзSQlServer.toString())>0
+                                && ИдиДевайсаПолученный.toString().length()>0) { ///// TODO
                             //TODO ЗАПЫИСЫВАМ ПУБЛИЧНЫЙ ID  ТЕКУЩЕГО ПОЛЗОВАТКЕЛЯ
-                            ЛОГ.setAttribute("IDПолученныйИзSQlServerПосик", IDПолученныйИзSQlServerПосик);
+                            ЛОГ.setAttribute("IDПолученныйИзSQlServerПосик", IDПолученныйИзSQlServer);
                             ЛОГ.setAttribute("ЛогинПолученныйОтКлиента", ЛогинОтКлиента);
                             ЛОГ.setAttribute("ПарольПолученныйОтКлиента", ПарольОтКлиента);
                             ЛОГ.setAttribute("АдуДевайсяКлиента", ИдиДевайсаПолученный);
 
-                            session.setAttribute("IDПолученныйИзSQlServerПосик", IDПолученныйИзSQlServerПосик);
-                            session.setAttribute("ЛогинПолученныйОтКлиента", ЛогинОтКлиента);
-                            session.setAttribute("ПарольПолученныйОтКлиента", ПарольОтКлиента);
-                            session.setAttribute("АдуДевайсяКлиента", ИдиДевайсаПолученный);
+
+                            sessionEJB.setAttribute("IDПолученныйИзSQlServerПосик", IDПолученныйИзSQlServer);
+                            sessionEJB.setAttribute("ЛогинПолученныйОтКлиента", ЛогинОтКлиента);
+                            sessionEJB.setAttribute("ПарольПолученныйОтКлиента", ПарольОтКлиента);
+                            sessionEJB.setAttribute("АдуДевайсяКлиента", ИдиДевайсаПолученный);
 
                             //TODO меняем статут и пускак клиента на сервер ВАЖНО
                             РезультатАунтификацииПользователя=true;
                             ЛОГ.log("  ЛогинОтКлиента  "
                                     + ЛогинОтКлиента +
-                                    " ИмяПолученныйИзSQlServerПосик " +ИмяПолученныйИзSQlServerПосик
+                                    " IDПолученныйИзSQlServer " +IDПолученныйИзSQlServer
                                     + " ПарольОтКлиента " +ПарольОтКлиента +
-                                    " IDПолученныйИзSQlServerПосик " +IDПолученныйИзSQlServerПосик+ " ИдиДевайсаПолученный "+ИдиДевайсаПолученный);
+                                    " ЛогинОтКлиента " +ЛогинОтКлиента+ " ИдиДевайсаПолученный "+ИдиДевайсаПолученный);
                         }
-
-                        break;
-                        ///////////////////////HeaderСодержимоеРасшифрован
-                    }
                 }
-                РезультатСканированиеИмениИПароль.close();
-                stmt.close();
-                conn.close();
                 //TODO
                 ЛОГ.log( " Класс"+Thread.currentThread().getStackTrace()[2].getClassName()
                         +"\n"+
                         " метод "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"
-                        + "Строка " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "РезультатСканированиеИмениИПароль " +РезультатСканированиеИмениИПароль);
+                        + "Строка " + Thread.currentThread().getStackTrace()[2].getLineNumber());
             }else {
                 //TODO
                 //TODO меняем статут и пускак клиента на сервер
@@ -144,6 +150,7 @@ public class BeanAuntifications {
             }
 
         } catch (Exception e) {
+            sessionTransaction.rollback();
             subClassWriterErros.
                     МетодаЗаписиОшибкиВЛог(e,
                             Thread.currentThread().
@@ -152,5 +159,29 @@ public class BeanAuntifications {
         }
         return РезультатАунтификацииПользователя;
     }
+    public StringBuffer МетодГенерацияJSONJackson(@NotNull ServletContext ЛОГ,
+                                             @javax.validation.constraints.NotNull List<?> listОтHiberideДляГенерации) {
+        StringBuffer БуферСозданогоJSONJackson = new StringBuffer();
+        try {
 
+            ЛОГ.log(" listОтHiberideДляГенерации" + listОтHiberideДляГенерации );
+            ObjectWriter writer = getGeneratorJackson.writerWithDefaultPrettyPrinter();
+            String Сгенерированыйjson = 	  writer.writeValueAsString(listОтHiberideДляГенерации);
+            ЛОГ.  log(" Сгенерированыйjson "+Сгенерированыйjson.length());//gson
+            БуферСозданогоJSONJackson.append(Сгенерированыйjson);
+            ЛОГ.log("\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
+                    " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
+                    " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+
+                    "БуферСозданогоJSONJackson " + БуферСозданогоJSONJackson.toString());
+
+        } catch (Exception e) {
+            sessionTransaction.rollback();
+            subClassWriterErros.
+                    МетодаЗаписиОшибкиВЛог(e,
+                            Thread.currentThread().
+                                    getStackTrace(),
+                            ЛОГ,"ErrorsLogs/ErrorJbossServletDSU1.txt");
+        }
+        return БуферСозданогоJSONJackson;
+    }
 }
