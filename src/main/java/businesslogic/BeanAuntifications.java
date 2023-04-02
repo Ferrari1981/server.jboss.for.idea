@@ -1,11 +1,8 @@
 package businesslogic;
 
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import dsu1glassfishatomic.workinterfaces.ProducedCard;
-import model.User;
-import model.ViewDataModification;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -17,19 +14,9 @@ import javax.ejb.TransactionAttributeType;
 import javax.inject.Inject;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.constraints.NotNull;
-import java.nio.charset.StandardCharsets;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.*;
-import java.util.concurrent.CopyOnWriteArrayList;
-import java.util.function.Consumer;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * Session Bean implementation class BeanAuntifications
@@ -77,13 +64,10 @@ public class BeanAuntifications {
                 // TODO: 10.03.2023 получение сессиии Transaction
                 sessionTransaction = session.getTransaction();
                 sessionTransaction.begin();
-                org.hibernate.Query queryДляHiberite = session.createQuery("SELECT us.id ,us.login,us.password FROM User  us WHERE us.login=:login AND " +
-                        "us.password  = :password " +
-                        "AND us.rights=:rights  ");
-                queryДляHiberite.setParameter("login", new String(ЛогинОтКлиента));//8641 8625
-                queryДляHiberite.setParameter("password", new String(ПарольОтКлиента));//8641 8625
-                queryДляHiberite.setParameter("rights", new Integer(РазрешонныеПрава));//8641 8625
-                List<model.User>    ЛистДанныеОтHibenide = (List<model.User>) queryДляHiberite.getResultList();
+                org.hibernate.Query queryДляHiberite   = session.createQuery("SELECT  us FROM model.UsersEntity us WHERE us.rights =:rights   ");
+
+                queryДляHiberite.setParameter("rights",new Integer(2));//8641 8625
+           List<model.UsersEntity>    ЛистДанныеОтHibenide =( List<model.UsersEntity>) queryДляHiberite.setMaxResults(1).getResultList();
                 // TODO: 02.04.2023 Вытаскиваем Из ПРишедзиъ данных логин и пароль
                 StringBuffer БуферСозданогоJSONJacksonАунтификация = МетодГенерацияJSONJackson(ЛОГ, ЛистДанныеОтHibenide);
 
@@ -92,18 +76,7 @@ public class BeanAuntifications {
                 String ЛогинОтКлиентаИзSQlServer=new String();
                 String ПарольИзSQlServer=new String();
 
-                for(String буфер:БуферСозданогоJSONJacksonАунтификация.toString().split(",")){
-                    буфер=     буфер.replaceAll("[^\\da-zA-Zа-яёА-ЯЁ ]".trim(),"");
-                       if(IDПолученныйИзSQlServer == 0){
-                           IDПолученныйИзSQlServer=  Integer.parseInt(буфер);
-                       }
-                    if(ЛогинОтКлиентаИзSQlServer.length()==0){
-                        ЛогинОтКлиентаИзSQlServer= буфер;
-                    }
-                    if(ПарольИзSQlServer.length()==0){
-                        ПарольИзSQlServer=  буфер;
-                    }
-                }
+
                 ЛОГ.log("\n"+" Starting.... class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
                         " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
                         " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+

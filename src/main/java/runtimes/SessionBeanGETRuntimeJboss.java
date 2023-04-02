@@ -3,34 +3,20 @@ package runtimes;
 import businesslogic.BEANCallsBack;
 import businesslogic.StreamJSONJacksons;
 import businesslogic.SubClassWriterErros;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.core.JsonFactory;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.ObjectWriter;
-import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.sun.istack.NotNull;
 import dsu1glassfishatomic.workinterfaces.ProducedCard;
-import model.User;
 import org.hibernate.*;
-
 import javax.ejb.*;
 import javax.inject.Inject;
-import javax.json.Json;
-import javax.json.JsonObjectBuilder;
-import javax.json.JsonWriter;
-import javax.persistence.StoredProcedureQuery;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.StringWriter;
 import java.sql.*;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.*;
 import java.util.concurrent.ExecutionException;
-import java.util.concurrent.Future;
 
 @Stateless(mappedName = "SessionBeanGETRuntimeJboss")
 @LocalBean
@@ -54,7 +40,7 @@ public class SessionBeanGETRuntimeJboss {// extends WITH
     @SuppressWarnings("unused")
     private HttpServletRequest request;
     private HttpServletResponse response;
-    private StoredProcedureQuery queryprocedure = null;
+
 
     @Inject
     BEANCallsBack bEANCallsBack;
@@ -110,7 +96,7 @@ public class SessionBeanGETRuntimeJboss {// extends WITH
         // TODO Auto-generated method stub
         StringBuffer БуферCallsBackДляAndroid = null;
         try  {
-            List<model.User>         ЛистДанныеОтHibenide = null;
+            List<?>         ЛистДанныеОтHibenide = null;
             this.ЛОГ = ЛОГ;
             // TODO
             this.request = request;
@@ -240,42 +226,7 @@ public class SessionBeanGETRuntimeJboss {// extends WITH
 
 
 
-    // todo МЕТОД GET А ПРИНАДЛЕЖИТЬ
 
-    /**
-     * @param response
-     * @param ПараметрФильтрЗадааниеДляСервлета
-     * @param ПараметрИмяТаблицыОтАндройдаGET
-     */
-    protected StringBuffer МетодПолучениеВерсиюДанныхДляАndroid(
-            HttpServletResponse response, String ПараметрФильтрЗадааниеДляСервлета,
-            String ПараметрИмяТаблицыОтАндройдаGET) {
-        /////// ВЕРСИЮ ДАННЫХ НА СЕРВЕРЕ
-        StringBuffer БуферСозданогоJSONВерсияБазыSQLserver = new StringBuffer();
-        try {
-            System.out.println(
-                    "Аутентификация Пользователя Прошла Успешна  (ВЫ ВНУТРИ СЕРВЛЕТА) ПараметрФильтрЗадааниеДляСервлета"
-                            + ПараметрФильтрЗадааниеДляСервлета + " finalПараметрИмяТаблицыОтАндройдаGET "
-                            + ПараметрИмяТаблицыОтАндройдаGET);
-            БуферСозданогоJSONВерсияБазыSQLserver = МетодСозданиеJSONТаблицКоторыеНадоОтправитьКлиенту(
-                    ПараметрФильтрЗадааниеДляСервлета, ПараметрИмяТаблицыОтАндройдаGET);
-            /// ПЕРВАЯ ПОСЫЛКА ДАННЫХ ИЗ SQL SERVER
-            /// НА АНДРОЙД
-            System.out.println(
-                    "Аутентификация Пользователя Прошла Успешна  (ВЫ ВНУТРИ СЕРВЛЕТА) ПараметрФильтрЗадааниеДляСервлета БуферСозданогоJSONВерсияБазыSQLserver"
-                            + БуферСозданогоJSONВерсияБазыSQLserver.toString());
-
-        } catch (Exception e) {
-            subClassWriterErros.
-                    МетодаЗаписиОшибкиВЛог(e,
-                            Thread.currentThread().
-                                    getStackTrace(),
-                            ЛОГ,"ErrorsLogs/ErrorJbossServletRuntime.txt");
-
-        }
-        return БуферСозданогоJSONВерсияБазыSQLserver;
-
-    }
 
     // TODO еще один перенесенный в метод GEt метод
 
@@ -359,210 +310,20 @@ public class SessionBeanGETRuntimeJboss {// extends WITH
 
 
 
-    // TODO ГЕНЕРАЦИЯ JSON ПО СТАРОМУ
-    StringBuffer Метод_ГлавногоМетодаGETВыполнемЗаданиеВтороеГенерацияИОтправкаJSONПотокаНаАндройд(
-            HttpServletResponse response, JsonObjectBuilder JsonПоля, String ПараметрИмяТаблицыОтАндройдаGET,
-            int КоличествоСтолбцовВБАзеSQLSERVERРАзное, ResultSet РезультатГлавногоЗапросаМетодаGETПосылаемНаКлиентJSON)
-            throws SQLException, SecurityException {
-        StringBuffer БуферСозданогоJSON = new StringBuffer();
-        JsonObjectBuilder СгенерированныйJSONДЛяКлиента = Json.createObjectBuilder();
-        try {
-            System.out.println(" еСТЬ ЗАПУСКАМЕ СОЗДАНИЕ JSON КоличествоСтрокКоторыеМыОтправимНаКлиент"
-                    + КоличествоСтрокКоторыеМыОтправимНаКлиент);
-            КоличествоСтрокКоторыеМыОтправимНаКлиент = 0;
-            РезультатГлавногоЗапросаМетодаGETПосылаемНаКлиентJSON.last();
-            int ФлагХотеЕстьОднаСтрокаДляЦиклаJSON = РезультатГлавногоЗапросаМетодаGETПосылаемНаКлиентJSON.getRow();
-            РезультатГлавногоЗапросаМетодаGETПосылаемНаКлиентJSON.beforeFirst();
-            ////// //todo ЕСЛИ ЕСТЬ ХОТТЬ ОДНА СТРОКА 0 ТО ФОРМИНИУРЕМ JSON
-            ЛОГ.log(" еСТЬ ЗАПУСКАМЕ СОЗДАНИЕ JSON ФлагХотеЕстьОднаСтрокаДляЦиклаJSON "
-                    + ФлагХотеЕстьОднаСтрокаДляЦиклаJSON);
-            ////// Сгенированный JSON
-            СгенерированныйJSONДЛяКлиента = МетодГенерацииJSONПОтокаДЛяОтправкиКлиенту(
-                    КоличествоСтолбцовВБАзеSQLSERVERРАзное, РезультатГлавногоЗапросаМетодаGETПосылаемНаКлиентJSON);
-            ЛОГ.log(" ОТРАБОТАЛ ...  МетодГенерацииJSONПОтокаДЛяОтправкиКлиенту ---> " + СгенерированныйJSONДЛяКлиента);
-            ////// Преобразовавываем в Буфер <----- JSON
-            БуферСозданогоJSON = МетодВторойПослеГенрацииJSONСтрочкеДляФорматируемЕгоВБуфер(
-                    СгенерированныйJSONДЛяКлиента);
-            // TODO результа второго метод а УЖЕ ПОЛУЧАЕТЬСЯ БУФЕР
-            ЛОГ.log(" БуферСозданогоJSON " + БуферСозданогоJSON);
-            СгенерированныйJSONДЛяКлиента.build().clear();
-        } catch (Exception e) {
-            subClassWriterErros.
-                    МетодаЗаписиОшибкиВЛог(e,
-                            Thread.currentThread().
-                                    getStackTrace(),
-                            ЛОГ,"ErrorsLogs/ErrorJbossServletRuntime.txt");
-        }
-        return БуферСозданогоJSON;
-    }
 
 
 
 
 
 
-    StringBuffer МетодВторойПослеГенрацииJSONСтрочкеДляФорматируемЕгоВБуфер(
-            @NotNull JsonObjectBuilder СгенерированныйJSONДЛяКонфертациивБуфер) {
-        StringWriter stringWriterМассив = new StringWriter();
-        StringBuffer БуферJSONДляКлиента = new StringBuffer();
-        try {
-            ЛОГ.log("СгенерированныйJSONДЛяКонфертациивБуфер " + СгенерированныйJSONДЛяКонфертациивБуфер.toString());
-            JsonWriter jsonWriter = Json.createWriter(stringWriterМассив);/// ОТКРЫВАЕМ
-            jsonWriter.writeObject(СгенерированныйJSONДЛяКонфертациивБуфер.build());// САМО
-            БуферJSONДляКлиента.append(stringWriterМассив.getBuffer().toString()).append("\n");//// ПЕРЕВОДИТ
-            ЛОГ.log(" БуферJSONДляКлиента  для Отправки Клиенту " + БуферJSONДляКлиента);
 
-        } catch (Exception e) {
-            subClassWriterErros.
-                    МетодаЗаписиОшибкиВЛог(e,
-                            Thread.currentThread().
-                                    getStackTrace(),
-                            ЛОГ,"ErrorsLogs/ErrorJbossServletRuntime.txt");
-        }
-        return БуферJSONДляКлиента;
-    }
-
-    // todo ЕЩЕ ОДИН КОД ПЕРЕНЕСЛИВ МЕТОД GET()
-
-
-    JsonObjectBuilder МетодГенерацииJSONПОтокаДЛяОтправкиКлиенту(@NotNull int КоличествоСтолбцовВБАзеSQLSERVERРАзное,
-                                                                 @NotNull ResultSet КурсорГенерацияJSONДляКлиента) throws SQLException, SecurityException {
-        JsonObjectBuilder СгенерированныйJSONДляКлиента = Json.createObjectBuilder(); // TODO
-        try {
-
-            System.out.println("  ВЫПОЕЛНИЯ СтрокаКлиентJSON " + КурсорГенерацияJSONДляКлиента);
-            while (КурсорГенерацияJSONДляКлиента.next()) {
-                JsonObjectBuilder JsonгенерацияТекущейСтроки = Json.createObjectBuilder();// TODO стока одна
-                String СодержимоеКолонкиВSqlServer = null;
-                System.out.println(" количество стобцов  " + КоличествоСтолбцовВБАзеSQLSERVERРАзное);
-                int ИндексПоКолонкам;
-                String ИдиДляJSONПоле = null;
-                for (ИндексПоКолонкам = 1; ИндексПоКолонкам <= КоличествоСтолбцовВБАзеSQLSERVERРАзное; ИндексПоКолонкам++) {
-                    String НазваниеСтлбикаДляГенерацииJSON = КурсорГенерацияJSONДляКлиента.getMetaData()
-                            .getColumnName(ИндексПоКолонкам);
-                    СодержимоеКолонкиВSqlServer = КурсорГенерацияJSONДляКлиента.getString(ИндексПоКолонкам);
-                    ИдиДляJSONПоле = String.valueOf(КурсорГенерацияJSONДляКлиента.getString(1)); /// данное
-
-                    ЛОГ.log(" НазваниеСтлбикаДляГенерацииJSON " + НазваниеСтлбикаДляГенерацииJSON
-                            + " СодержимоеКолонкиВSqlServer " + СодержимоеКолонкиВSqlServer + " ИдиДляJSONПоле "
-                            + ИдиДляJSONПоле + " СтрочкагерериацииJSON " + КурсорГенерацияJSONДляКлиента);
-                    if (СодержимоеКолонкиВSqlServer != null && НазваниеСтлбикаДляГенерацииJSON != null) {
-                        ЛОГ.log(" НазваниеСтлбикаДляГенерацииJSON " + НазваниеСтлбикаДляГенерацииJSON
-                                + " СодержимоеКолонкиВSqlServer " + СодержимоеКолонкиВSqlServer + " ИдиДляJSONПоле "
-                                + ИдиДляJSONПоле);
-                        JsonгенерацияТекущейСтроки.add(НазваниеСтлбикаДляГенерацииJSON, СодержимоеКолонкиВSqlServer);//// заполение
-                        ЛОГ.log(" JsonгенерацияТекущейСтроки " + JsonгенерацияТекущейСтроки.toString()
-                                + "   СодержимоеКолонкиВSqlServer " + СодержимоеКолонкиВSqlServer);
-                    }
-                    ЛОГ.log(" JsonгенерацияТекущейСтроки " + JsonгенерацияТекущейСтроки.toString()
-                            + "   СодержимоеКолонкиВSqlServer " + СодержимоеКолонкиВSqlServer);
-                }
-                СгенерированныйJSONДляКлиента.add(ИдиДляJSONПоле, JsonгенерацияТекущейСтроки.build());
-            }
-            ;
-            // TODO конец генерации полей JSON для отпарви
-            if (!КурсорГенерацияJSONДляКлиента.isClosed()) {
-                КурсорГенерацияJSONДляКлиента.close();
-            }
-            // TODO
-        } catch (Exception e) {
-            subClassWriterErros.
-                    МетодаЗаписиОшибкиВЛог(e,
-                            Thread.currentThread().
-                                    getStackTrace(),
-                            ЛОГ,"ErrorsLogs/ErrorJbossServletRuntime.txt");
-        }
-        ЛОГ.log(" РЕЗУЛЬТАТ ОБРАБОКИ ГЕНЕРАЦИИ JSON-ПОЛЕЙ   ОТПРАВКИ НА АНДРОЙД  JSONВерхнийКлюч ");
-        return СгенерированныйJSONДляКлиента;
-    }
-    // TODO Еще ОДИН КОД ПЕРЕНЕСЛИ В МЕТОД GET() МОЖЕТ ПОСЛЕДНИЙ А МОЖЕТ И НЕТ
-
-    //// ТУТ---ГЕНРИРУЕМ JSON СПИСОК ТАБЛИЦ КОТОРЫХ НАДО ОТПАРВМТЬ КЛИЕНТУ
-
-    /**
-     * @param ПараметрФильтрПолучаемыхТаблицДляАндройда
-     * @param ПараметрИмяТаблицыОтАндройдаGET
-     * @return
-     * @throws SQLException
-     */
-    protected StringBuffer МетодСозданиеJSONТаблицКоторыеНадоОтправитьКлиенту(
-            String ПараметрФильтрПолучаемыхТаблицДляАндройда, String ПараметрИмяТаблицыОтАндройдаGET)
-            throws SQLException {
-        StringWriter stringWriterМассивВерсия;
-        JsonWriter jsonWriterВерсия;
-        StringBuffer БуферСозданогоJSONВерсияБазыSQLserver = null;
-        try {
-            System.out.println("старт метода doGet создание Посылаем версию данных на сервере Version Data SQLServer  "
-                    + ПараметрИмяТаблицыОтАндройдаGET);
-  /*          String queryДляПолучениеСпискаТаблицДляАндройда = "  SELECT *   FROM   [storage].[dbo].["
-                    + ПараметрИмяТаблицыОтАндройдаGET.trim() + "]       ; ";/// ГЛАВНЫЙ,READPAST*/
-
-            String queryДляПолучениеСпискаТаблицДляАндройда = "  SELECT *   FROM  " + ПараметрИмяТаблицыОтАндройдаGET.trim() + "";/// ГЛАВНЫЙ,READPAST
-            //////// запрос вычисляет имя и пароль и id
-            ResultSet РезультатПолучениеВерсииТаблицSQlServera = stmt
-                    .executeQuery(queryДляПолучениеСпискаТаблицДляАндройда);
-            JsonObjectBuilder JsonПоляВерсияБазы = Json.createObjectBuilder();
-            JsonObjectBuilder JSONВерхнийКлючВерсияБазы = Json.createObjectBuilder();
-            String ИдиДляJSONПолеВерсия = null;
-            int КоличествоСтолбцовВБАзеSQLSERVERДляВерсии = РезультатПолучениеВерсииТаблицSQlServera.getMetaData()
-                    .getColumnCount(); /// вычисялем сколько столбцов
-            РезультатПолучениеВерсииТаблицSQlServera.last();
-            @SuppressWarnings("unused")
-            int КоличествоСтрочекВБАзеSQLSERVERДляВерсии = РезультатПолучениеВерсииТаблицSQlServera.getRow();
-            РезультатПолучениеВерсииТаблицSQlServera.beforeFirst();
-            РезультатПолучениеВерсииТаблицSQlServera.last();
-            int ФлагХотеЕстьОднаСтрокаДляЦикла = РезультатПолучениеВерсииТаблицSQlServera.getRow();
-            РезультатПолучениеВерсииТаблицSQlServera.beforeFirst();
-            if (ФлагХотеЕстьОднаСтрокаДляЦикла > 0) {
-                while (РезультатПолучениеВерсииТаблицSQlServera.next()) {
-                    JsonПоляВерсияБазы = Json.createObjectBuilder();
-                    // process data
-                    for (int ИндексПоКолонкам = 1; ИндексПоКолонкам <= КоличествоСтолбцовВБАзеSQLSERVERДляВерсии; ИндексПоКолонкам++) {
-                        РезультатПолучениеВерсииТаблицSQlServera.getMetaData().getColumnName(ИндексПоКолонкам);
-                        /////////////// TODO ПЕРВОЕ дейсвтие
-                        String НазваниеКолонкиКотроеНУжновставить = РезультатПолучениеВерсииТаблицSQlServera
-                                .getMetaData().getColumnName(ИндексПоКолонкам);
-                        String СодержимоеКолонкиВSqlServer = РезультатПолучениеВерсииТаблицSQlServera
-                                .getString(ИндексПоКолонкам);
-                        System.out.println("НазваниеКолонкиКотроеНУжновставить " + НазваниеКолонкиКотроеНУжновставить
-                                + " СодержимоеКолонкиВSqlServer " + СодержимоеКолонкиВSqlServer);
-                        ИдиДляJSONПолеВерсия = String.valueOf(РезультатПолучениеВерсииТаблицSQlServera.getString(3)); /// данное
-                        if (СодержимоеКолонкиВSqlServer != null && НазваниеКолонкиКотроеНУжновставить != null) {////// ЕСЛИ
-                            ///// todo САМА ВСТАВКА ДАННЫХ В JSON
-                            JsonПоляВерсияБазы.add(НазваниеКолонкиКотроеНУжновставить, СодержимоеКолонкиВSqlServer);//// заполение
-                            System.out
-                                    .println("НазваниеКолонкиКотроеНУжновставить " + НазваниеКолонкиКотроеНУжновставить
-                                            + " СодержимоеКолонкиВSqlServer " + СодержимоеКолонкиВSqlServer);
-                        }
-                    }
-                    System.out.println("ИдиДляJSONПолеВерсия " + ИдиДляJSONПолеВерсия);
-                    JSONВерхнийКлючВерсияБазы.add(ИдиДляJSONПолеВерсия, JsonПоляВерсияБазы.build());///// ИНИЗАЛИЦАСИЯ
-                    System.out.println(" JSONВерхнийКлючВерсияБазы " + JSONВерхнийКлючВерсияБазы.toString());
-                    ///////////////////////
-                } // TODO end loop
-            }
-            stringWriterМассивВерсия = new StringWriter();
-            jsonWriterВерсия = Json.createWriter(stringWriterМассивВерсия);/// ОТКРЫВАЕМ
-            jsonWriterВерсия.writeObject(JSONВерхнийКлючВерсияБазы.build());// САМО
-            БуферСозданогоJSONВерсияБазыSQLserver = new StringBuffer();/// СОЗАДАНИЕ
-            БуферСозданогоJSONВерсияБазыSQLserver.append(stringWriterМассивВерсия.getBuffer().toString()).append("\n");//// ПЕРЕВОДИТ
-            System.out.println(" СозданныйJSONМассив Для версии" + БуферСозданогоJSONВерсияБазыSQLserver.toString());
-        } catch (Exception e) {
-            subClassWriterErros.
-                    МетодаЗаписиОшибкиВЛог(e,
-                            Thread.currentThread().
-                                    getStackTrace(),
-                            ЛОГ,"ErrorsLogs/ErrorJbossServletRuntime.txt");
-        }
-        return БуферСозданогоJSONВерсияБазыSQLserver;
-    }
     // TODO реальный статус POST SQl Servera
-    protected List<model.User> Метод_РеальнаяСтатусSqlServer() {
-        List<model.User> ЛистДанныеОтHibenide  = new ArrayList<>();
+    protected List<model.UsersEntity> Метод_РеальнаяСтатусSqlServer() {
+        List<model.UsersEntity> ЛистДанныеОтHibenide  = new ArrayList<>();
         try {
-            org.hibernate.Query queryДляHiberite   = session.createQuery("SELECT  us.id FROM User us WHERE us. rights =:rights ");
+            org.hibernate.Query queryДляHiberite   = session.createQuery("SELECT  us FROM model.UsersEntity us WHERE us.rights =:rights   ");
             queryДляHiberite.setParameter("rights",new Integer(2));//8641 8625
-            ЛистДанныеОтHibenide =( List<User>) queryДляHiberite.setMaxResults(1).getResultList();
+            ЛистДанныеОтHibenide =( List<model.UsersEntity>) queryДляHiberite.setMaxResults(1).getResultList();
             ЛОГ.log("\n"+" Starting.... class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
                     " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
                     " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+

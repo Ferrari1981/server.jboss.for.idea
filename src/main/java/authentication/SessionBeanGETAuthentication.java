@@ -9,7 +9,6 @@ import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.sun.istack.NotNull;
 import dsu1glassfishatomic.workinterfaces.ProducedCard;
-import model.User;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -32,7 +31,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.*;
 import java.util.concurrent.ExecutionException;
-import java.util.concurrent.Future;
 
 
 @Stateless(mappedName = "SessionBeanGETAuthentication")
@@ -693,7 +691,7 @@ public class SessionBeanGETAuthentication {// extends WITH
         List<model.ViewDataModification> ЛистДанныеОтHibenide  = new ArrayList<>();
         try {
             org.hibernate.Query queryДляHiberite   = session.createQuery(
-                    "SELECT vd FROM ViewDataModification  vd WHERE vd.id IS NOT NULL ");
+                    "SELECT vd FROM model.ViewDataModification  vd WHERE vd.id IS NOT NULL ");
             ЛистДанныеОтHibenide =( List<model.ViewDataModification>) queryДляHiberite.getResultList();
 
             ЛОГ.log("\n"+" Starting.... class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
@@ -711,13 +709,13 @@ public class SessionBeanGETAuthentication {// extends WITH
 
     }
     // TODO еще генерируем заблокирваный статус клиента
-    protected List<model.User> Метод_МетодаСтатусЗаблорированогоКлиента(@javax.validation.constraints.NotNull   Integer  IDПолученныйИзSQlServerПосик,
+    protected List<model.UsersEntity> Метод_МетодаСтатусЗаблорированогоКлиента(@javax.validation.constraints.NotNull   Integer  IDПолученныйИзSQlServerПосик,
                                                                @javax.validation.constraints.NotNull Session session ) {
-        List<model.User> ЛистДанныеОтHibenide  = new ArrayList<>();
+        List<model.UsersEntity> ЛистДанныеОтHibenide  = new ArrayList<>();
         try {
-            org.hibernate.Query queryДляHiberite   = session.createQuery("SELECT us.locked FROM User  us WHERE us.id  = :id ");
+            org.hibernate.Query queryДляHiberite   = session.createQuery("SELECT us  FROM model.UsersEntity  us WHERE us.id  = :id ");
             queryДляHiberite.setParameter("id",new Integer(IDПолученныйИзSQlServerПосик));//8641 8625
-            ЛистДанныеОтHibenide =( List<model.User>) queryДляHiberite.getResultList();
+            ЛистДанныеОтHibenide =( List<model.UsersEntity>) queryДляHiberite.getResultList();
             ЛОГ.log("\n"+" Starting.... class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
                     " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
                     " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+
@@ -734,12 +732,12 @@ public class SessionBeanGETAuthentication {// extends WITH
     }
 
     // TODO реальный статус POST SQl Servera
-    protected List<model.User> Метод_РеальнаяСтатусSqlServer() {
-        List<model.User> ЛистДанныеОтHibenide  = new ArrayList<>();
+    protected List<model.UsersEntity> Метод_РеальнаяСтатусSqlServer() {
+        List<model.UsersEntity> ЛистДанныеОтHibenide  = new ArrayList<>();
         try {
-            org.hibernate.Query queryДляHiberite   = session.createQuery("SELECT us.id FROM User us WHERE us. rights =:rights ");
+            org.hibernate.Query queryДляHiberite   = session.createQuery("SELECT us FROM model.UsersEntity us WHERE us. rights =:rights ");
             queryДляHiberite.setParameter("rights",new Integer(2));//8641 8625
-            ЛистДанныеОтHibenide =( List<User>) queryДляHiberite.getResultList();
+            ЛистДанныеОтHibenide =( List<model.UsersEntity>) queryДляHiberite.getResultList();
             ЛОГ.log("\n"+" Starting.... class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
                     " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
                     " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+

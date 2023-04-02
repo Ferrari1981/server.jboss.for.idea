@@ -1,6 +1,8 @@
 package model;
 
+import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.OptimisticLockType;
+import org.hibernate.annotations.OptimisticLocking;
 
 import java.io.Serializable;
 import javax.persistence.*;
@@ -15,9 +17,9 @@ import java.util.Date;
 @Entity
 @Table(name="view_onesignal",catalog="storage",schema="dbo")
 @NamedQuery(name="ViewOnesignal.findAll", query="SELECT v FROM ViewOnesignal v")
-@org.hibernate.annotations.OptimisticLocking(
-        type = OptimisticLockType.DIRTY)
-@org.hibernate.annotations.DynamicUpdate
+@DynamicUpdate
+@OptimisticLocking(type=OptimisticLockType.DIRTY)
+
 
 public class ViewOnesignal implements Serializable {
     private static final long serialVersionUID = 1L;

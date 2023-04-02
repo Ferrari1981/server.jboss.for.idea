@@ -1,6 +1,8 @@
 package model;
 
+import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.OptimisticLockType;
+import org.hibernate.annotations.OptimisticLocking;
 
 import java.io.Serializable;
 import javax.persistence.*;
@@ -10,9 +12,8 @@ import java.util.Date;
 @Entity
 @Table(name = "prof", schema = "dbo", catalog = "storage")
 @NamedQuery(name="Prof.findAll", query="SELECT pr FROM Prof pr")
-@org.hibernate.annotations.OptimisticLocking(
-        type = OptimisticLockType.DIRTY)
-@org.hibernate.annotations.DynamicUpdate
+@DynamicUpdate
+@OptimisticLocking(type=OptimisticLockType.DIRTY)
 
 
 public class Prof implements Serializable {

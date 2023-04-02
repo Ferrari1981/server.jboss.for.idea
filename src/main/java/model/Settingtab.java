@@ -1,6 +1,8 @@
 package model;
 
+import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.OptimisticLockType;
+import org.hibernate.annotations.OptimisticLocking;
 
 import java.io.Serializable;
 import javax.persistence.*;
@@ -15,9 +17,8 @@ import java.util.Date;
 @Entity
 @Table(name="settings_tabels",catalog="storage",schema="dbo")
 @NamedQuery(name="Settingtab.findAll", query="SELECT s FROM Settingtab s")
-@org.hibernate.annotations.OptimisticLocking(
-        type = OptimisticLockType.DIRTY)
-@org.hibernate.annotations.DynamicUpdate
+@DynamicUpdate
+@OptimisticLocking(type=OptimisticLockType.DIRTY)
 
 public class Settingtab implements Serializable {
     private static final long serialVersionUID = 1L;

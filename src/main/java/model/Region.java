@@ -1,6 +1,8 @@
 package model;
 
+import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.OptimisticLockType;
+import org.hibernate.annotations.OptimisticLocking;
 
 import java.io.Serializable;
 import javax.persistence.*;
@@ -15,9 +17,8 @@ import java.util.Date;
 @Entity
 @Table(name="region",catalog="storage",schema="dbo")
 @NamedQuery(name="Region.findAll", query="SELECT r FROM Region r")
-@org.hibernate.annotations.OptimisticLocking(
-        type = OptimisticLockType.DIRTY)
-@org.hibernate.annotations.DynamicUpdate
+@DynamicUpdate
+@OptimisticLocking(type=OptimisticLockType.DIRTY)
 
 public class Region implements Serializable {
     private static final long serialVersionUID = 1L;
