@@ -31,9 +31,6 @@ import javax.ws.rs.Produces;
 @Produces
 public class SubClassSessionBeanPOST {//extends    DSU1JsonServlet
 
-
-    @Inject
-    private SubClassConnectionsSQLServer subClassConnectionsSQLServer;
     @Inject
     SubClassGenerateJson subClassGenerateJson;
 

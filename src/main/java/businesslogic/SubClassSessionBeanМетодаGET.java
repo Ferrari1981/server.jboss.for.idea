@@ -53,8 +53,7 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
     private HttpServletRequest request;
     private HttpServletResponse response;
     private StoredProcedureQuery queryprocedure = null;
-    @Inject
-    private SubClassConnectionsSQLServer subClassConnectionsSQLServer;
+
 
 
     private    Session session;
@@ -525,9 +524,7 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
                 if (    sessionTransaction.isActive()) {
                     sessionTransaction.commit();
                 }
-                if (session.isDirty()) {
-                    session.flush();
-                }
+
                 if (session.isOpen()   || session.isConnected()) {
                     session.close();
                 }

@@ -329,9 +329,7 @@ public class SubClassGenerateJson {
                 if (    sessionTransaction.isActive()) {
                     sessionTransaction.commit();
                 }
-                if (session.isDirty()) {
-                    session.flush();
-                }
+
                 if (session.isOpen() || session.isConnected() ) {
                     session.close();
                 }

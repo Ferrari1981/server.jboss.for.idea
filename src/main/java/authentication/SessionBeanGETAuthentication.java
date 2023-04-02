@@ -1,7 +1,6 @@
 package authentication;
 
 import businesslogic.BEANCallsBack;
-import businesslogic.SubClassConnectionsSQLServer;
 import businesslogic.SubClassWriterErros;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonFactory;
@@ -59,8 +58,6 @@ public class SessionBeanGETAuthentication {// extends WITH
     private HttpServletRequest request;
     private HttpServletResponse response;
     private StoredProcedureQuery queryprocedure = null;
-    @Inject
-    private SubClassConnectionsSQLServer subClassConnectionsSQLServer;
     @Inject
     BEANCallsBack bEANCallsBack;
 
@@ -762,9 +759,7 @@ public class SessionBeanGETAuthentication {// extends WITH
                 if (    sessionTransaction.isActive()) {
                     sessionTransaction.commit();
                 }
-                if (session.isDirty()) {
-                    session.flush();
-                }
+
                 if (session.isOpen()   || session.isConnected()) {
                     session.close();
                 }

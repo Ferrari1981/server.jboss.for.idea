@@ -38,8 +38,7 @@ import java.util.stream.Stream;
 @LocalBean
 @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
 public class BeanAuntifications {
-    @Inject
-    private	SubClassConnectionsSQLServer subClassConnectionsSQLServer;
+
     @Inject
     SubClassWriterErros subClassWriterErros;
     private Session session;
@@ -195,9 +194,7 @@ public class BeanAuntifications {
                 if (    sessionTransaction.isActive()) {
                     sessionTransaction.commit();
                 }
-                if (session.isDirty()) {
-                    session.flush();
-                }
+
                 if (session.isOpen()   || session.isConnected()) {
                     session.close();
                 }
