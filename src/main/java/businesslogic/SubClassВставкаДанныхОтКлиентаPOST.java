@@ -10,7 +10,6 @@ import javax.inject.Inject;
 import javax.persistence.ParameterMode;
 import javax.persistence.StoredProcedureQuery;
 import javax.servlet.ServletContext;
-import javax.ws.rs.Produces;
 
 import com.sun.istack.NotNull;
 import dsu1glassfishatomic.workinterfaces.ProducedCard;
@@ -24,8 +23,7 @@ import org.hibernate.Transaction;
 
 //TODO
 @RequestScoped
-@Produces
-public class SubClassGenerateJson {
+public class SubClassВставкаДанныхОтКлиентаPOST {
     private   ServletContext ЛОГ;
     private Transaction sessionTransaction;
     @Inject @ProducedCard
@@ -34,7 +32,7 @@ public class SubClassGenerateJson {
     @Inject
     SubClassWriterErros subClassWriterErros;
     // TODO: 09.03.2023
-    StringBuffer МетодГенерацияJson(
+    StringBuffer методВставкаИлиОбновлениеДаннымиОтАкдройда(
             @NotNull ServletContext ЛОГ,
             @NotNull CopyOnWriteArrayList<Map<String, String>> БуферJSONJackson
             , @NotNull String ПараметрИмяТаблицыОтАндройдаPost) throws SQLException {
@@ -225,10 +223,10 @@ public class SubClassGenerateJson {
             //TODO
             ЛОГ.log("БуферОтветКлиентуОтСервера  "+ БуферОтветКлиентуОтСервера.toString());
         } catch (Exception   e) {
+            sessionTransaction.rollback();
             ЛОГ.log( "ERROR class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber()  + " e " +e.getMessage() );
-            sessionTransaction.rollback();
             subClassWriterErros.МетодаЗаписиОшибкиВЛог(e,
                             Thread.currentThread().
                                     getStackTrace(),

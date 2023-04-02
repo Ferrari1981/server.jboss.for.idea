@@ -23,7 +23,6 @@ import javax.servlet.ServletContext;
 import javax.servlet.ServletInputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import javax.validation.constraints.NotNull;
 import javax.ws.rs.Produces;
 
@@ -32,7 +31,7 @@ import javax.ws.rs.Produces;
 public class SubClassSessionBeanPOST {//extends    DSU1JsonServlet
 
     @Inject
-    SubClassGenerateJson subClassGenerateJson;
+    SubClassВставкаДанныхОтКлиентаPOST subClassВставкаДанныхОтКлиентаPOST;
 
     @SuppressWarnings("unused")
     protected ServletContext ЛОГ;
@@ -89,7 +88,7 @@ public class SubClassSessionBeanPOST {//extends    DSU1JsonServlet
             @NotNull HttpServletResponse response,
             @NotNull ServletContext ЛОГ) throws SecurityException {
 
-        StringBuffer ОтветОтГлавного_МетодаPOSTДляОтправкиНААндройд = null;
+        StringBuffer БуферГлавныйГенерацииJSONДляAndroid = null;
         try {
             ЛОГ.log("Конструктор  ЗАПУСК МЕТОДА ИЗ POST ()  ГлавныйМетод_МетодаPOST()");
             this.ЛОГ = ЛОГ;
@@ -100,55 +99,28 @@ public class SubClassSessionBeanPOST {//extends    DSU1JsonServlet
             ЛОГ.log(" ОТРАБОТАЛ МЕТОД ИНИЦИАЛИЗАЦИИ ПЕРЕМЕННЫХ КОТОРЫ Е ПРИШЛИ  МетодПредворительногоПодключенияДляМетодаGETкодИзКонструктора   " +
                     stmt);
             // TODO ПРИШЛИ ПАРАМЕТРЫ В МЕТОДЕ POST
-            ///TODO ПАРАМЕНТ #1
             ПараметрИмяТаблицыОтАндройдаPost = Optional.ofNullable(request.getParameter("ИмяТаблицыОтАндройда")).map(String::trim).orElse("");
             ЛОГ.log("  ПараметрИмяТаблицыОтАндройдаPost " + ПараметрИмяТаблицыОтАндройдаPost);
             ///TODO ПАРАМЕНТ #2
-            ///TODO ПАРАМЕНТ #4
             JobsServerСазаданиеДляСервера = Optional.ofNullable(request.getParameter("ЗаданиеДляСервлетаВнутриПотока")).map(String::trim).orElse("");
             //TODO post paramentes
             ЛОГ.log("  ПараметрФильтрПолучаемыхТаблицДляАндройда  " + JobsServerСазаданиеДляСервера);
             ///TODO ПАРАМЕНТ #5
             switch (JobsServerСазаданиеДляСервера.trim()) {
                 case "Получение JSON файла от Андройда":
-                    // ПРИШЛИ ДАННЫЕ
                     StringBuffer БуферJSONОтАндройда = МетодПолучениеJSONОтКлиента(request);
                     ЛОГ.log("  БуферJSONОтАндройда " + БуферJSONОтАндройда.toString());///// ПРИШЕДШИХ
-                    ///// TODO --ПРИШЕЛ ФАЙЛ ОТ КЛИЕНТА JSON
                     if (БуферJSONОтАндройда.toString().toCharArray().length > 3) {///// ЗАХОДИМ											///// КОД
                         ЛОГ.log("  БуферJSONОтАндройда " + БуферJSONОтАндройда.toString());///// ПРИШЕДШИХ
-                        ОтветОтГлавного_МетодаPOSTДляОтправкиНААндройд =
-                                МетодПарсингаJSONФайлПришелОтКлиента(response,
-                                        ПараметрИмяТаблицыОтАндройдаPost,
-                                        БуферJSONОтАндройда);
+                        БуферГлавныйГенерацииJSONДляAndroid = МетодПарсингаJSONФайлПришелОтКлиента(response, ПараметрИмяТаблицыОтАндройдаPost, БуферJSONОтАндройда);
                         ЛОГ.log( " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                                 " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
-                                + " ОтветОтГлавного_МетодаPOSTДляОтправкиНААндройд "+ОтветОтГлавного_МетодаPOSTДляОтправкиНААндройд.toString());
+                                + " БуферГлавныйГенерацииJSONДляAndroid "+БуферГлавныйГенерацииJSONДляAndroid.toString());
                     }
                     break;
             }
-
-
-
-            /// TODO ПАРАМЕНТ #7
-            HttpSession sessionEJB=request.getSession();
-            String ПараметрПользовательФильтр=Optional.ofNullable(request.getParameter("IDДляПолучениеКонткртнойНабораТаблиц")).map(String::new).orElse("");
-            if(ПараметрПользовательФильтр.length()>0) {
-                Integer ТекущийПользователь = Optional.ofNullable(ПараметрПользовательФильтр).map(Integer::new).orElse(0);
-                ЛОГ.log("  ТекущийПользователь  "+ ТекущийПользователь); //setParameter
-                sessionEJB.setAttribute("ПараметрТекущийПользовательEJB", ТекущийПользователь);
-
-            }
-            /// TODO ПАРАМЕНТ #8
-            String ПараметрВерсияДанныхФильтр=	 Optional.ofNullable(request.getParameter("РезультаПолученаяЛокальнаяВерсияДанныхДляОтправкиНаСервер"))
-                    .map(String::new).orElse("");
-            if (ПараметрВерсияДанныхФильтр.length()>0) {
-                Long    ПараметрВерсияДанных= Optional.ofNullable(ПараметрВерсияДанныхФильтр).map(Long::new).orElse(0l);
-                ЛОГ.log("  ПараметрВерсияДанных  "	+ ПараметрВерсияДанных); //setParameter
-                sessionEJB.setAttribute("ПараметрВерсияДанныхEJB", ПараметрВерсияДанных);
-            }
-            ЛОГ.log("ОтветОтГлавного_МетодаPOSTДляОтправкиНААндройд  " + ОтветОтГлавного_МетодаPOSTДляОтправкиНААндройд);
+            ЛОГ.log("БуферГлавныйГенерацииJSONДляAndroid  " + БуферГлавныйГенерацииJSONДляAndroid);
         } catch (Exception e) {
             subClassWriterErros.
                     МетодаЗаписиОшибкиВЛог(e,
@@ -156,7 +128,7 @@ public class SubClassSessionBeanPOST {//extends    DSU1JsonServlet
                                     getStackTrace(),
                             ЛОГ,"ErrorsLogs/ErrorJbossServletDSU1.txt");
         }
-        return ОтветОтГлавного_МетодаPOSTДляОтправкиНААндройд;//TODO return  new AsyncResult<StringBuffer>( ОтветОтГлавного_МетодаPOSTДляОтправкиНААндройд);
+        return БуферГлавныйГенерацииJSONДляAndroid;//TODO return  new AsyncResult<StringBuffer>( БуферГлавныйГенерацииJSONДляAndroid);
 
     }
 
@@ -165,13 +137,13 @@ public class SubClassSessionBeanPOST {//extends    DSU1JsonServlet
             @NotNull String ТаблицаPOST,
             @NotNull StringBuffer БуферJSONотAndroid)
             throws InterruptedException, SQLException, BrokenBarrierException, IOException {
-        StringBuffer ОтветОтГлавного_МетодаPOSTДляОтправкиНААндройд = new StringBuffer();
+        StringBuffer БуферОтветаПослеОперацииДаннымиОтАндройда = new StringBuffer();
         try {
             // convert JSON string to Map
          CopyOnWriteArrayList<Map<String, String>> БуферJSONJackson = getGeneratorJackson.readValue(БуферJSONотAndroid.toString(),
                  new TypeReference<CopyOnWriteArrayList<Map<String, String>>>() {});
             //TODO ГЛАВНЫЙ МЕТОДА POST() КОТОРЫЙ ВСТАВЛЯЕТ  И/ИЛИ ОБНОВЛЕНИЯ ДАННЫХ
-           ОтветОтГлавного_МетодаPOSTДляОтправкиНААндройд = subClassGenerateJson.МетодГенерацияJson(ЛОГ, БуферJSONJackson
+           БуферОтветаПослеОперацииДаннымиОтАндройда = subClassВставкаДанныхОтКлиентаPOST.методВставкаИлиОбновлениеДаннымиОтАкдройда(ЛОГ, БуферJSONJackson
                             , ТаблицаPOST);
             ЛОГ.log( " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -184,7 +156,7 @@ public class SubClassSessionBeanPOST {//extends    DSU1JsonServlet
                                     getStackTrace(),
                             ЛОГ,"ErrorsLogs/ErrorJbossServletDSU1.txt");
         }
-        return ОтветОтГлавного_МетодаPOSTДляОтправкиНААндройд;
+        return БуферОтветаПослеОперацииДаннымиОтАндройда;
     }
 
     protected StringBuffer МетодПолучениеJSONОтКлиента(@NotNull HttpServletRequest request)
@@ -211,64 +183,4 @@ public class SubClassSessionBeanPOST {//extends    DSU1JsonServlet
         }
         return БуферJSONОтАндройда;
     }
-
-
-//функция получающая время операции ДАННАЯ ФУНКЦИЯ ВРЕМЯ ПРИМЕНЯЕТЬСЯ ВО
-//ВСЕЙ
-//ПРОГРАММЕ
-
-
-/// TODO Записи ROllBACK
-
-    void МетодЗаписиВЖУрналROLLBACK(Long ПараметрИмяТаблицыОтАндройдаPost, String queryДляОбновленияДанныхМетодPOST) {
-        // TODO
-
-        String САМАОШИБКАДЛЯЗАПИСИ = null;
-        try {
-
-            САМАОШИБКАДЛЯЗАПИСИ = "Ошибка При Выполнении............ ........ " + "\n" + " Класс :"
-                    + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" + " Метод :"
-                    + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" + " Линия  :"
-                    + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + " Файл  :"
-                    + Thread.currentThread().getStackTrace()[2].getFileName();
-
-            String ДатаСервлетаPOSt = new SubClassGeneratorDate().ДатаВремяОперациисБезКовычекЗаписямиСервлета()
-                    .toString();
-
-            //
-            System.err.println("- Erros   Error Metod POST()->  INSERT/UPDATE EVENTS ROLLBACK  " + ДатаСервлетаPOSt);
-
-            PrintWriter pw = new PrintWriter(new FileOutputStream(
-                    new File("C:\\Program Files\\glassfish-4.1.2 dsu1glassfishatomic\\glassfish4\\ErrorServletDSU1.txt"), true));
-            // PrintWriter pw = new PrintWriter(new FileOutputStream(new
-            // File("C:\\Users\\User\\git\\dsu1glassfishatomic.glassfish\\src\\dsu1json\\com\\ErrorServletDSU1.txt"),true));
-            // перевод строки в байты
-            pw.println("- Erros   Error Metod POST()->  INSERT/UPDATE EVENTS ---ROLLBACK--- OPERATIONS-");
-            pw.append(" Пользователь protected void doPost  ");
-            pw.append(" " + null + "  ");
-            pw.append("Дата Роллбэка");
-            pw.append(" " + ДатаСервлетаPOSt + "  ");
-            pw.append(" Таблица Ошибки ПРИ ROLLBACK");
-            pw.append(" " + ПараметрИмяТаблицыОтАндройдаPost + "  ");
-            pw.append("\n");
-            pw.append("\n");
-            pw.append("SQL --запрос QUERY ERROR !!! ");
-            pw.append(queryДляОбновленияДанныхМетодPOST);
-            pw.append("\n");
-            pw.append(САМАОШИБКАДЛЯЗАПИСИ);
-            pw.append("\n");
-            pw.append("\n");
-            pw.append("\n");
-            pw.append("\n");
-            pw.flush();
-            pw.close();
-        } catch (IOException ex) {
-            // System.out.println("Ошибка в методе doPOST" + e.toString());
-
-            System.err.println("  Erros   Error Metod POST()->  INSERT/UPDATE EVENTS ROLLBACK " + САМАОШИБКАДЛЯЗАПИСИ);
-
-        }
-
-    }
-
 }

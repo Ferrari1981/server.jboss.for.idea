@@ -177,26 +177,6 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
             System.out.println(
                     "  ПараметрКонкретнаяТаблицаВПотокеВнутриПотока  " + ПараметрКонкретнаяТаблицаВПотокеВнутриПотока);
 
-
-
-
-            /// TODO ПАРАМЕНТ #7
-            HttpSession sessionEJB=request.getSession();
-            String ПараметрПользовательФильтр=Optional.ofNullable(request.getParameter("IDДляПолучениеКонткртнойНабораТаблиц")).map(String::new).orElse("");
-            if(ПараметрПользовательФильтр.length()>0) {
-                ПараметрТекущийПользователь = Optional.ofNullable(ПараметрПользовательФильтр).map(Integer::new).orElse(0);
-                ЛОГ.log("  ПараметрФильтрПолучаемыхТаблицДляАндройда  "+ ПараметрТекущийПользователь); //setParameter
-                sessionEJB.setAttribute("ПараметрТекущийПользовательEJB", ПараметрТекущийПользователь);
-            }
-            /// TODO ПАРАМЕНТ #8
-            String ПараметрВерсияДанныхФильтр=	 Optional.ofNullable(request.getParameter("РезультаПолученаяЛокальнаяВерсияДанныхДляОтправкиНаСервер"))
-                    .map(String::new).orElse("");
-            if (ПараметрВерсияДанныхФильтр.length()>0) {
-                ПараметрВерсияДанных= Optional.ofNullable(ПараметрВерсияДанныхФильтр).map(Long::new).orElse(0l);
-                ЛОГ.log("  РезультатОтАндройдаЕгоЛокальнаяВерсияЧата  "	+ ПараметрВерсияДанных); //setParameter
-                sessionEJB.setAttribute("ПараметрВерсияДанныхEJB", ПараметрВерсияДанных);
-            }
-            ЛОГ.log("sessionEJB" + sessionEJB+ " ПараметрВерсияДанных "+ПараметрВерсияДанных);
             // TODO: 02.04.2023  Задание на исполение Сервром  
             JobsFroServerЗаданиеДляСервера = Optional.ofNullable(request.getParameter("ЗаданиеДляСервлетаВнутриПотока"))
                     .orElse("");
