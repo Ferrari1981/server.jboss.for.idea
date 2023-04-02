@@ -26,6 +26,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.*;
 import java.util.function.Consumer;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * Session Bean implementation class BeanAuntifications
@@ -59,7 +61,6 @@ public class BeanAuntifications {
         int РазрешонныеПрава = 2;
         Boolean РезультатАунтификацииПользователя=false;
         try {
-            List<?> ЛистДанныеОтHibenide  = new ArrayList<>();
             ЛОГ.log("\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
                     " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
                     " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+ ЛОГ +" request " + request );
@@ -81,16 +82,16 @@ public class BeanAuntifications {
                 queryДляHiberite.setParameter("login", new String(ЛогинОтКлиента));//8641 8625
                 queryДляHiberite.setParameter("password", new String(ПарольОтКлиента));//8641 8625
                 queryДляHiberite.setParameter("rights", new Integer(РазрешонныеПрава));//8641 8625
-                ЛистДанныеОтHibenide = (List<User>) queryДляHiberite.getResultList();
+                List<model.User>    ЛистДанныеОтHibenide = (List<model.User>) queryДляHiberite.getResultList();
                 // TODO: 02.04.2023 Вытаскиваем Из ПРишедзиъ данных логин и пароль
                 StringBuffer БуферСозданогоJSONJackson = МетодГенерацияJSONJackson(ЛОГ, ЛистДанныеОтHibenide);
 
-                for(int i = 0; i < БуферСозданогоJSONJackson.length(); i++) {
-                    ЛОГ.log("\n"+" Starting.... class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
-                            " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
-                            " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+
-                            " БуферСозданогоJSONJackson " +БуферСозданогоJSONJackson);
+                for(model.User p: ЛистДанныеОтHibenide) {
+                    Integer persAccount1 = p.getId();
+                    String persAccount2= p.getLogin();
+                    String persAccount3 = p.getPassword();
                 }
+
 
 
                 ЛОГ.log("\n"+" Starting.... class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
@@ -106,7 +107,7 @@ public class BeanAuntifications {
                         " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+
                         " ЛистДанныеОтHibenide " +ЛистДанныеОтHibenide.toString()  +  "ЛогинОтКлиентаИзSQlServer "+ЛогинОтКлиентаИзSQlServer +
                         "ПарольИзSQlServer " +ПарольИзSQlServer  + "IDПолученныйИзSQlServer " +IDПолученныйИзSQlServer);
-                if(sessionTransaction.isActive()) {sessionTransaction.commit();}
+
                 if (ЛистДанныеОтHibenide.size() > 0) {
                     //// TODO СЮДА ЗАХОДИМ КОГДА ПОЛЬЗОВАТЕЛЬ
                         if (ЛогинОтКлиента.compareTo(ЛогинОтКлиентаИзSQlServer.toString())==0
@@ -148,7 +149,8 @@ public class BeanAuntifications {
                         " метод "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"
                         + "Строка " + Thread.currentThread().getStackTrace()[2].getLineNumber()+  "РезультатАунтификацииПользователя " +РезультатАунтификацииПользователя);
             }
-
+            // TODO: 02.04.2023 закрываем сессию
+            МетодЗакрываемСессиюHibernate(ЛОГ);
         } catch (Exception e) {
             sessionTransaction.rollback();
             subClassWriterErros.
@@ -183,5 +185,34 @@ public class BeanAuntifications {
                             ЛОГ,"ErrorsLogs/ErrorJbossServletDSU1.txt");
         }
         return БуферСозданогоJSONJackson;
+    }
+    private void МетодЗакрываемСессиюHibernate(@NotNull ServletContext ЛОГ) {
+        try{
+            if (session!=null) {
+                if (    sessionTransaction.isActive()) {
+                    sessionTransaction.commit();
+                }
+                if (session.isDirty()) {
+                    session.flush();
+                }
+                if (session.isOpen()   || session.isConnected()) {
+                    session.close();
+                }
+                ЛОГ.log("\n МетодЗакрываемСессиюHibernate "+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
+                        " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
+                        " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n" +  "session " +session);
+            }
+        } catch (Exception e) {
+            ЛОГ.log( "ERROR class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber()  + " e " +e.getMessage() );
+            sessionTransaction.rollback();
+            session.close();
+            subClassWriterErros.
+                    МетодаЗаписиОшибкиВЛог(e,
+                            Thread.currentThread().
+                                    getStackTrace(),
+                            ЛОГ,"ErrorsLogs/ErrorJbossServletDSU1.txt");
+        }
     }
 }

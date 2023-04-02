@@ -10,6 +10,7 @@ import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.sun.istack.NotNull;
 import dsu1glassfishatomic.workinterfaces.ProducedCard;
+import model.User;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -113,6 +114,7 @@ public class SessionBeanGETAuthentication {// extends WITH
         // TODO Auto-generated method stub
         StringBuffer БуферCallsBackДляAndroid = new StringBuffer();
         try  {
+            List<?>        ЛистДанныеОтHibenide = null;
             this.ЛОГ = ЛОГ;
             // TODO
             this.request = request;
@@ -168,7 +170,6 @@ public class SessionBeanGETAuthentication {// extends WITH
                     .orElse(0);
             System.out.println("  IDПолученныйИзSQlServerПосик " + IDПолученныйИзSQlServerПосик);
             Query queryДляHiberite = null;
-            List<?> ЛистДанныеОтHibenide  = new ArrayList<>();
             if (IDПолученныйИзSQlServerПосик>0) {
                 // TODO: 10.03.2023 получение сессиии HIREBIANTE
                 session=   sessionSousJboss.getCurrentSession();
@@ -228,7 +229,7 @@ public class SessionBeanGETAuthentication {// extends WITH
             switch (JobsFroServerЗаданиеДляСервера) {
                 // TODO ЗАДАНИЕ ДЛЯ СЕРВЕР JOBSERVERTASK #1
                 case "Хотим Получить Версию Данных Сервера":
-                    ЛистДанныеОтHibenide = МетодДляКлиентаMODIFITATION_Server(session);
+                      ЛистДанныеОтHibenide = МетодДляКлиентаMODIFITATION_Server(session);
                     ЛОГ.log("Хотим Получить Версию Данных Сервера" + new Date() + " ПараметрФильтрЗадааниеДляСервлета "
                             + ЛистДанныеОтHibenide + "  ЛистДанныеОтHibenide ");
                     break;
@@ -242,7 +243,7 @@ public class SessionBeanGETAuthentication {// extends WITH
                 // TODO ЗАДАНИЕ ДЛЯ СЕРВЕР JOBSERVERTASK #4
                 case "Хотим Получить Статус Блокировки Пользователя по ID":
                     // TODO ОПРЕДЕЛЯЕМ СТАТУС ПОЛЬЗОВАТЕЛЯ
-                    ЛистДанныеОтHibenide = Метод_МетодаСтатусЗаблорированогоКлиента( IDПолученныйИзSQlServerПосик,session);
+                         ЛистДанныеОтHibenide = Метод_МетодаСтатусЗаблорированогоКлиента( IDПолученныйИзSQlServerПосик,session);
                     ЛОГ.log(" Отправили  Хотим Получить Статус Блокировки Пользователя по ID "
                             + JobsServerСазаданиеДляСервера + " ЛистДанныеОтHibenide " + ЛистДанныеОтHibenide.size() + " IDПолученныйИзSQlServerПосик "+IDПолученныйИзSQlServerПосик);
                     break;
@@ -260,14 +261,16 @@ public class SessionBeanGETAuthentication {// extends WITH
                     ЛОГ.log("\n"+"  default:  Starting.... class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
                             " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
                             " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+
-                            "Метод_РеальнаяСтатусSqlServer  ЛистДанныеОтHibenide " +ЛистДанныеОтHibenide.size());
+                            "Метод_РеальнаяСтатусSqlServer  ЛистДанныеОтHibenide ");
                     break;
             }
             //// TODO ЗАКРЫЫВАЕМ КУРСОРЫ ПОСЛЕ ГЕНЕРАЦИИ JSON ДЛЯ КЛИЕНТА
             // TODO
             //TODO ГЕНЕРАЦИЯ JSON ПО НОВОМУ
             БуферCallsBackДляAndroid =МетодГенерацияJSONJackson(  ЛистДанныеОтHibenide);
-            if(sessionTransaction.isActive()){sessionTransaction.commit();}
+            // TODO: 02.04.2023 закрываем сессию
+            МетодЗакрываемСессиюHibernate(ЛОГ);
+
             ЛОГ.log("БуферCallsBackДляAndroid.toString() " + "" + БуферCallsBackДляAndroid.toString());
             /////// ошибки метода doGET
         } catch (Exception e) {
@@ -688,9 +691,9 @@ public class SessionBeanGETAuthentication {// extends WITH
         return БуферСозданогоJSONВерсияБазыSQLserver;
     }
     // todo МЕТОД генерируем для килента MODIFITATIONServer
-    protected    List<?> МетодДляКлиентаMODIFITATION_Server(@javax.validation.constraints.NotNull Session session) {
+    protected    List<model.ViewDataModification> МетодДляКлиентаMODIFITATION_Server(@javax.validation.constraints.NotNull Session session) {
         /////// ВЕРСИЮ ДАННЫХ НА СЕРВЕРЕ
-        List<?> ЛистДанныеОтHibenide  = new ArrayList<>();
+        List<model.ViewDataModification> ЛистДанныеОтHibenide  = new ArrayList<>();
         try {
             org.hibernate.Query queryДляHiberite   = session.createQuery(
                     "SELECT vd FROM ViewDataModification  vd WHERE vd.id IS NOT NULL ");
@@ -711,9 +714,9 @@ public class SessionBeanGETAuthentication {// extends WITH
 
     }
     // TODO еще генерируем заблокирваный статус клиента
-    protected List<?> Метод_МетодаСтатусЗаблорированогоКлиента(@javax.validation.constraints.NotNull   Integer  IDПолученныйИзSQlServerПосик,
+    protected List<model.User> Метод_МетодаСтатусЗаблорированогоКлиента(@javax.validation.constraints.NotNull   Integer  IDПолученныйИзSQlServerПосик,
                                                                @javax.validation.constraints.NotNull Session session ) {
-        List<?> ЛистДанныеОтHibenide  = new ArrayList<>();
+        List<model.User> ЛистДанныеОтHibenide  = new ArrayList<>();
         try {
             org.hibernate.Query queryДляHiberite   = session.createQuery("SELECT us.locked FROM User  us WHERE us.id  = :id ");
             queryДляHiberite.setParameter("id",new Integer(IDПолученныйИзSQlServerПосик));//8641 8625
@@ -734,12 +737,12 @@ public class SessionBeanGETAuthentication {// extends WITH
     }
 
     // TODO реальный статус POST SQl Servera
-    protected List<?> Метод_РеальнаяСтатусSqlServer() {
-        List<?> ЛистДанныеОтHibenide  = new ArrayList<>();
+    protected List<model.User> Метод_РеальнаяСтатусSqlServer() {
+        List<model.User> ЛистДанныеОтHibenide  = new ArrayList<>();
         try {
             org.hibernate.Query queryДляHiberite   = session.createQuery("SELECT us.id FROM User us WHERE us. rights =:rights ");
             queryДляHiberite.setParameter("rights",new Integer(2));//8641 8625
-            ЛистДанныеОтHibenide =( List<model.ViewDataModification>) queryДляHiberite.getResultList();
+            ЛистДанныеОтHibenide =( List<User>) queryДляHiberite.getResultList();
             ЛОГ.log("\n"+" Starting.... class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
                     " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
                     " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+
@@ -753,5 +756,33 @@ public class SessionBeanGETAuthentication {// extends WITH
         }
         return ЛистДанныеОтHibenide;
     }
-
+    private void МетодЗакрываемСессиюHibernate(@javax.validation.constraints.NotNull ServletContext ЛОГ) {
+        try{
+            if (session!=null) {
+                if (    sessionTransaction.isActive()) {
+                    sessionTransaction.commit();
+                }
+                if (session.isDirty()) {
+                    session.flush();
+                }
+                if (session.isOpen()   || session.isConnected()) {
+                    session.close();
+                }
+                ЛОГ.log("\n МетодЗакрываемСессиюHibernate "+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
+                        " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
+                        " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n" +  "session " +session);
+            }
+        } catch (Exception e) {
+            ЛОГ.log( "ERROR class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber()  + " e " +e.getMessage() );
+            sessionTransaction.rollback();
+            session.close();
+            subClassWriterErros.
+                    МетодаЗаписиОшибкиВЛог(e,
+                            Thread.currentThread().
+                                    getStackTrace(),
+                            ЛОГ,"ErrorsLogs/ErrorJbossServletDSU1.txt");
+        }
+    }
 }
