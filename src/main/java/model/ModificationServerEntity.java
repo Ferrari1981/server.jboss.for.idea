@@ -8,7 +8,7 @@ import javax.persistence.*;
 import java.sql.Date;
 
 @Entity
-@Table(name = "modification_server", schema = "dbo", catalog = "storage")
+@Table(name = "modificationserver", schema = "dbo", catalog = "storage")
 @DynamicUpdate
 @OptimisticLocking(type= OptimisticLockType.DIRTY)
 public class ModificationServerEntity {
