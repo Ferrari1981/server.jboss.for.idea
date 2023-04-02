@@ -1,5 +1,7 @@
 package model;
 
+import org.hibernate.annotations.OptimisticLockType;
+
 import java.io.Serializable;
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -9,8 +11,9 @@ import java.util.Date;
 @Table(name = "prof", schema = "dbo", catalog = "storage")
 @NamedQuery(name="Prof.findAll", query="SELECT pr FROM Prof pr")
 @org.hibernate.annotations.OptimisticLocking(
-        type = org.hibernate.annotations.OptimisticLockType.ALL)
+        type = OptimisticLockType.DIRTY)
 @org.hibernate.annotations.DynamicUpdate
+
 
 public class Prof implements Serializable {
     private static final long serialVersionUID = 1L;

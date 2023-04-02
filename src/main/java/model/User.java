@@ -20,6 +20,7 @@ import java.util.Date;
 @org.hibernate.annotations.OptimisticLocking(
         type = OptimisticLockType.DIRTY)
 @org.hibernate.annotations.DynamicUpdate
+
 public class User implements Serializable {
     private static final long serialVersionUID = 1L;
 

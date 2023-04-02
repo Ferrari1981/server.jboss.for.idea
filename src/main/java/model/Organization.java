@@ -18,6 +18,7 @@ import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.hibernate.annotations.OptimisticLockType;
 
 /**
  * The persistent class for the organization database table.
@@ -27,8 +28,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 @Table(name="organization",catalog="storage",schema="dbo")
 @NamedQuery(name="Organization.findAll", query="SELECT o FROM Organization o")
 @org.hibernate.annotations.OptimisticLocking(
-        type = org.hibernate.annotations.OptimisticLockType.ALL)
+        type = OptimisticLockType.DIRTY)
 @org.hibernate.annotations.DynamicUpdate
+
 public class Organization implements Serializable {
     private static final long serialVersionUID = 1L;
 

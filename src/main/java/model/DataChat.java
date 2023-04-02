@@ -2,6 +2,8 @@ package model;
 
 
 
+import org.hibernate.annotations.OptimisticLockType;
+
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
@@ -26,8 +28,9 @@ import javax.persistence.TemporalType;
 @Table(name = "data_chat", catalog = "storage", schema = "dbo")
 @NamedQuery(name = "DataChat.findAll", query = "SELECT d FROM DataChat d")
 @org.hibernate.annotations.OptimisticLocking(
-        type = org.hibernate.annotations.OptimisticLockType.ALL)
+        type = OptimisticLockType.DIRTY)
 @org.hibernate.annotations.DynamicUpdate
+
 public class DataChat implements Serializable {
     private static final long serialVersionUID = 1L;
 

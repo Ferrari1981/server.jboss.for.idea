@@ -23,6 +23,7 @@ import javax.servlet.ServletContext;
 import javax.servlet.ServletInputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.validation.constraints.NotNull;
 import javax.ws.rs.Produces;
 
@@ -130,6 +131,26 @@ public class SubClassSessionBeanPOST {//extends    DSU1JsonServlet
                     }
                     break;
             }
+
+
+
+            /// TODO ПАРАМЕНТ #7
+            HttpSession sessionEJB=request.getSession();
+            String ПараметрПользовательФильтр=Optional.ofNullable(request.getParameter("IDДляПолучениеКонткртнойНабораТаблиц")).map(String::new).orElse("");
+            if(ПараметрПользовательФильтр.length()>0) {
+                Integer ТекущийПользователь = Optional.ofNullable(ПараметрПользовательФильтр).map(Integer::new).orElse(0);
+                ЛОГ.log("  ТекущийПользователь  "+ ТекущийПользователь); //setParameter
+                sessionEJB.setAttribute("ПараметрТекущийПользовательEJB", ТекущийПользователь);
+
+            }
+            /// TODO ПАРАМЕНТ #8
+            String ПараметрВерсияДанныхФильтр=	 Optional.ofNullable(request.getParameter("РезультаПолученаяЛокальнаяВерсияДанныхДляОтправкиНаСервер"))
+                    .map(String::new).orElse("");
+            if (ПараметрВерсияДанныхФильтр.length()>0) {
+                Long    ПараметрВерсияДанных= Optional.ofNullable(ПараметрВерсияДанныхФильтр).map(Long::new).orElse(0l);
+                ЛОГ.log("  ПараметрВерсияДанных  "	+ ПараметрВерсияДанных); //setParameter
+                sessionEJB.setAttribute("ПараметрВерсияДанныхEJB", ПараметрВерсияДанных);
+            }
             ЛОГ.log("ОтветОтГлавного_МетодаPOSTДляОтправкиНААндройд  " + ОтветОтГлавного_МетодаPOSTДляОтправкиНААндройд);
         } catch (Exception e) {
             subClassWriterErros.
@@ -152,8 +173,6 @@ public class SubClassSessionBeanPOST {//extends    DSU1JsonServlet
             // convert JSON string to Map
          CopyOnWriteArrayList<Map<String, String>> БуферJSONJackson = getGeneratorJackson.readValue(БуферJSONотAndroid.toString(),
                  new TypeReference<CopyOnWriteArrayList<Map<String, String>>>() {});
-
-
             //TODO ГЛАВНЫЙ МЕТОДА POST() КОТОРЫЙ ВСТАВЛЯЕТ  И/ИЛИ ОБНОВЛЕНИЯ ДАННЫХ
            ОтветОтГлавного_МетодаPOSTДляОтправкиНААндройд = subClassGenerateJson.МетодГенерацияJson(ЛОГ, БуферJSONJackson
                             , ТаблицаPOST);

@@ -1,5 +1,7 @@
 package model;
 
+import org.hibernate.annotations.OptimisticLockType;
+
 import java.io.Serializable;
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -15,8 +17,9 @@ import java.util.List;
 @Table(name="templates",catalog="storage",schema="dbo")
 @NamedQuery(name="Template.findAll", query="SELECT t FROM Template t")
 @org.hibernate.annotations.OptimisticLocking(
-        type = org.hibernate.annotations.OptimisticLockType.ALL)
+        type = OptimisticLockType.DIRTY)
 @org.hibernate.annotations.DynamicUpdate
+
 public class Template implements Serializable {
     private static final long serialVersionUID = 1L;
 

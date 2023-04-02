@@ -97,26 +97,6 @@ public class BeanAuntifications {
                                 + " ПарольПолученныйИзSQlServerПосик " +ПарольПолученныйИзSQlServerПосик +
                                 " ПарольОтКлиента " +ПарольОтКлиента+" СколькСтрокРезультатЕслиТакойПользовательМетод_GET "
                                 + НаличиеХотябыОднуСТрочкуПользоватлеьВБАзеТакойВообщеЕсть);
-
-
-
-
-
-                        /// TODO ПАРАМЕНТ #7
-                        String ПараметрПользовательФильтр=Optional.ofNullable(request.getParameter("IDДляПолучениеКонткртнойНабораТаблиц")).map(String::new).orElse("");
-                        if(ПараметрПользовательФильтр.length()>0) {
-                            Integer ПараметрТекущийПользовательPOST = Optional.ofNullable(ПараметрПользовательФильтр).map(Integer::new).orElse(0);
-                            ЛОГ.log("  ПараметрТекущийПользовательPOST  "+ ПараметрТекущийПользовательPOST); //setParameter
-                        }
-                        /// TODO ПАРАМЕНТ #8
-                        String ПараметрВерсияДанныхФильтр=	 Optional.ofNullable(request.getParameter("РезультаПолученаяЛокальнаяВерсияДанныхДляОтправкиНаСервер"))
-                                .map(String::new).orElse("");
-                        if (ПараметрВерсияДанныхФильтр.length()>0) {
-                            Long    ПараметрВерсияДанныхPOST= Optional.ofNullable(ПараметрВерсияДанныхФильтр).map(Long::new).orElse(0l);
-                            ЛОГ.log("  ПараметрВерсияДанныхPOST  "	+ ПараметрВерсияДанныхPOST); //setParameter
-                        }
-
-
                         ////
                         if (ЛогинОтКлиента.compareTo(ИмяПолученныйИзSQlServerПосик)==0
                                 &&  ПарольПолученныйИзSQlServerПосик.compareTo(ПарольОтКлиента)==0
