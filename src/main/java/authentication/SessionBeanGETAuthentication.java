@@ -246,6 +246,15 @@ public class SessionBeanGETAuthentication {// extends WITH
                     ЛОГ.log(" Отправили  Хотим Получить Статус Блокировки Пользователя по ID "
                             + JobsServerСазаданиеДляСервера + " ЛистДанныеОтHibenide " + ЛистДанныеОтHibenide.size() + " IDПолученныйИзSQlServerПосик "+IDПолученныйИзSQlServerПосик);
                     break;
+                // TODO ЗАДАНИЕ ДЛЯ СЕРВЕР JOBSERVERTASK #5
+                case "Хотим Получить Статус Реальной Работы SQL SERVER":
+                    // TODO РЕАЛЬНЫЙ СТАТУС РАБОТЫ SQL SERVER
+                    ЛистДанныеОтHibenide = Метод_РеальнаяСтатусSqlServer();
+                    ЛОГ.log(" Отправили Хотим Получить Статус Реальной Работы SQL SERVER " + JobsServerСазаданиеДляСервера
+                            + " БуферCallsBackДляAndroid "
+                            + БуферCallsBackДляAndroid.toString());
+                    break;
+
                 // TODO ЗАДАНИЯ ДЛЯ СЕРВЕРА НЕТУ
                 default:
                     ЛОГ.log("\n"+"  default:  Starting.... class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
@@ -723,4 +732,26 @@ public class SessionBeanGETAuthentication {// extends WITH
         return ЛистДанныеОтHibenide  ;
 
     }
+
+    // TODO реальный статус POST SQl Servera
+    protected List<?> Метод_РеальнаяСтатусSqlServer() {
+        List<?> ЛистДанныеОтHibenide  = new ArrayList<>();
+        try {
+            org.hibernate.Query queryДляHiberite   = session.createQuery("SELECT us.id FROM User us WHERE us. rights =:rights ");
+            queryДляHiberite.setParameter("rights",new Integer(2));//8641 8625
+            ЛистДанныеОтHibenide =( List<model.ViewDataModification>) queryДляHiberite.getResultList();
+            ЛОГ.log("\n"+" Starting.... class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
+                    " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
+                    " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+
+                    "Метод_РеальнаяСтатусSqlServer  ЛистДанныеОтHibenide " +ЛистДанныеОтHibenide.size());
+        } catch (Exception e) {
+            subClassWriterErros.
+                    МетодаЗаписиОшибкиВЛог(e,
+                            Thread.currentThread().
+                                    getStackTrace(),
+                            ЛОГ,"ErrorsLogs/ErrorJbossServletDSU1.txt");
+        }
+        return ЛистДанныеОтHibenide;
+    }
+
 }

@@ -468,8 +468,7 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
 
                     }//TODO КОНЕЦ РАСПРЕДЕНИЕ ТАБЛИЦ 	switch (ТаблицаGET.trim()) {
 
-                    ЛОГ.log("запуск ..  Метод_ГлавногоМетодаGETВыполнемЗаданиеВтороеГенерацияИОтправкаJSONПотокаНаАндройд"
-                            + " КоличествоСтрокКоторыеМыОтправимНаКлиент  " + КоличествоСтрокКоторыеМыОтправимНаКлиент+
+                    ЛОГ.log(" КоличествоСтрокКоторыеМыОтправимНаКлиент  " + КоличествоСтрокКоторыеМыОтправимНаКлиент+
                             " ТаблицаGET " +ТаблицаGET);
                     //TODO ФИНАЛЬЯ СТАДИЯ ГЕНЕРИРУЕМ САМ JSON
                     ЛОГ.  log(" ЛистДанныеОтHibenide "+ЛистДанныеОтHibenide+ " ЛистДанныеОтHibenide.size() " +ЛистДанныеОтHibenide.size()+
@@ -479,15 +478,6 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
                     // TODO ВЫХОД ИЗ КОНКРЕТНОГО УСЛОВИЯ
                     // ВЫПОЛЕННИЯ
                     break;
-                // TODO ЗАДАНИЕ ДЛЯ СЕРВЕР JOBSERVERTASK #5
-                case "Хотим Получить Статус Реальной Работы SQL SERVER":
-                    // TODO РЕАЛЬНЫЙ СТАТУС РАБОТЫ SQL SERVER
-                    ЛистДанныеОтHibenide = Метод_РеальнаяСтатусSqlServer();
-                    ЛОГ.log(" Отправили Хотим Получить Статус Реальной Работы SQL SERVER " + JobsServerСазаданиеДляСервера
-                            + " БуферCallsBackДляAndroid "
-                            + БуферCallsBackДляAndroid.toString());
-                    break;
-
                 // TODO ЗАДАНИЯ ДЛЯ СЕРВЕРА НЕТУ
                 default:
                     ЛОГ.log("\n"+"  default:  Starting.... class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
@@ -558,74 +548,6 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
                             ЛОГ,"ErrorsLogs/ErrorJbossServletDSU1.txt");
     }
     }
-
-
-
-
-
-
-
-    // TODO реальный статус POST SQl Servera
-    protected List<?> Метод_РеальнаяСтатусSqlServer() {
-        List<?> ЛистДанныеОтHibenide  = new ArrayList<>();
-        try {
-            org.hibernate.Query queryДляHiberite   = session.createQuery("SELECT us.id FROM User us WHERE us. rights =:rights ");
-            queryДляHiberite.setParameter("rights",new Integer(2));//8641 8625
-            ЛистДанныеОтHibenide =( List<model.ViewDataModification>) queryДляHiberite.getResultList();
-            ЛОГ.log("\n"+" Starting.... class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
-                    " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
-                    " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+
-                    "Метод_РеальнаяСтатусSqlServer  ЛистДанныеОтHibenide " +ЛистДанныеОтHibenide.size());
-        } catch (Exception e) {
-            subClassWriterErros.
-                    МетодаЗаписиОшибкиВЛог(e,
-                            Thread.currentThread().
-                                    getStackTrace(),
-                            ЛОГ,"ErrorsLogs/ErrorJbossServletDSU1.txt");
-        }
-        return ЛистДанныеОтHibenide;
-    }
-
-
-
-
-    // TODO ГЕНЕРАЦИЯ JSON ПО СТАРОМУ
-    StringBuffer Метод_ГлавногоМетодаGETВыполнемЗаданиеВтороеГенерацияИОтправкаJSONПотокаНаАндройд(
-            HttpServletResponse response, JsonObjectBuilder JsonПоля, String ПараметрИмяТаблицыОтАндройдаGET,
-            int КоличествоСтолбцовВБАзеSQLSERVERРАзное, ResultSet РезультатГлавногоЗапросаМетодаGETПосылаемНаКлиентJSON)
-            throws SQLException, SecurityException {
-        StringBuffer БуферСозданогоJSON = new StringBuffer();
-        JsonObjectBuilder СгенерированныйJSONДЛяКлиента = Json.createObjectBuilder();
-        try {
-            System.out.println(" еСТЬ ЗАПУСКАМЕ СОЗДАНИЕ JSON КоличествоСтрокКоторыеМыОтправимНаКлиент"
-                    + КоличествоСтрокКоторыеМыОтправимНаКлиент);
-            КоличествоСтрокКоторыеМыОтправимНаКлиент = 0;
-            РезультатГлавногоЗапросаМетодаGETПосылаемНаКлиентJSON.last();
-            int ФлагХотеЕстьОднаСтрокаДляЦиклаJSON = РезультатГлавногоЗапросаМетодаGETПосылаемНаКлиентJSON.getRow();
-            РезультатГлавногоЗапросаМетодаGETПосылаемНаКлиентJSON.beforeFirst();
-            ////// //todo ЕСЛИ ЕСТЬ ХОТТЬ ОДНА СТРОКА 0 ТО ФОРМИНИУРЕМ JSON
-            ЛОГ.log(" еСТЬ ЗАПУСКАМЕ СОЗДАНИЕ JSON ФлагХотеЕстьОднаСтрокаДляЦиклаJSON "
-                    + ФлагХотеЕстьОднаСтрокаДляЦиклаJSON);
-            ////// Сгенированный JSON
-            СгенерированныйJSONДЛяКлиента = МетодГенерацииJSONПОтокаДЛяОтправкиКлиенту(
-                    КоличествоСтолбцовВБАзеSQLSERVERРАзное, РезультатГлавногоЗапросаМетодаGETПосылаемНаКлиентJSON);
-            ЛОГ.log(" ОТРАБОТАЛ ...  МетодГенерацииJSONПОтокаДЛяОтправкиКлиенту ---> " + СгенерированныйJSONДЛяКлиента);
-            ////// Преобразовавываем в Буфер <----- JSON
-            БуферСозданогоJSON = МетодВторойПослеГенрацииJSONСтрочкеДляФорматируемЕгоВБуфер(
-                    СгенерированныйJSONДЛяКлиента);
-            // TODO результа второго метод а УЖЕ ПОЛУЧАЕТЬСЯ БУФЕР
-            ЛОГ.log(" БуферСозданогоJSON " + БуферСозданогоJSON);
-            СгенерированныйJSONДЛяКлиента.build().clear();
-        } catch (Exception e) {
-            subClassWriterErros.
-                    МетодаЗаписиОшибкиВЛог(e,
-                            Thread.currentThread().
-                                    getStackTrace(),
-                            ЛОГ,"ErrorsLogs/ErrorJbossServletDSU1.txt");
-        }
-        return БуферСозданогоJSON;
-    }
-
 
 
 
