@@ -1,5 +1,6 @@
 package businesslogic;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import dsu1glassfishatomic.workinterfaces.ProducedCard;
@@ -25,6 +26,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.*;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -84,24 +86,25 @@ public class BeanAuntifications {
                 queryДляHiberite.setParameter("rights", new Integer(РазрешонныеПрава));//8641 8625
                 List<model.User>    ЛистДанныеОтHibenide = (List<model.User>) queryДляHiberite.getResultList();
                 // TODO: 02.04.2023 Вытаскиваем Из ПРишедзиъ данных логин и пароль
-                StringBuffer БуферСозданогоJSONJackson = МетодГенерацияJSONJackson(ЛОГ, ЛистДанныеОтHibenide);
+                StringBuffer БуферСозданогоJSONJacksonАунтификация = МетодГенерацияJSONJackson(ЛОГ, ЛистДанныеОтHibenide);
 
-                for(model.User p: ЛистДанныеОтHibenide) {
-                    Integer persAccount1 = p.getId();
-                    String persAccount2= p.getLogin();
-                    String persAccount3 = p.getPassword();
+
+                Integer IDПолученныйИзSQlServer = 0;
+                String ЛогинОтКлиентаИзSQlServer=new String();
+                String ПарольИзSQlServer=new String();
+
+                for(String буфер:БуферСозданогоJSONJacksonАунтификация.toString().split(",")){
+                    буфер=     буфер.replaceAll("[^\\da-zA-Zа-яёА-ЯЁ ]".trim(),"");
+                       if(IDПолученныйИзSQlServer == 0){
+                           IDПолученныйИзSQlServer=  Integer.parseInt(буфер);
+                       }
+                    if(ЛогинОтКлиентаИзSQlServer.length()==0){
+                        ЛогинОтКлиентаИзSQlServer= буфер;
+                    }
+                    if(ПарольИзSQlServer.length()==0){
+                        ПарольИзSQlServer=  буфер;
+                    }
                 }
-
-
-
-                ЛОГ.log("\n"+" Starting.... class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
-                        " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
-                        " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+
-                        " БуферСозданогоJSONJackson " +БуферСозданогоJSONJackson);
-                //TODO ГЕНЕРАЦИЯ JSON ПО НОВОМУ
-               Object IDПолученныйИзSQlServer  =   ЛистДанныеОтHibenide.stream().limit(1).findAny().get();
-                Object  ЛогинОтКлиентаИзSQlServer   =   ЛистДанныеОтHibenide.stream().skip(1).limit(2).findAny().get();
-                Object  ПарольИзSQlServer   =   ЛистДанныеОтHibenide.stream().skip(2).limit(3).findAny().get();
                 ЛОГ.log("\n"+" Starting.... class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
                         " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
                         " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+
