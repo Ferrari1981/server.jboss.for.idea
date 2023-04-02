@@ -2,6 +2,8 @@ package model;
 
 
 
+import org.hibernate.annotations.OptimisticLockType;
+
 import java.io.Serializable;
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -15,6 +17,9 @@ import java.util.Date;
 @Entity
 @Table(name="view_data_modification")
 @NamedQuery(name="ViewDataModification.findAll", query="SELECT v FROM ViewDataModification v")
+@org.hibernate.annotations.OptimisticLocking(
+        type = OptimisticLockType.DIRTY)
+@org.hibernate.annotations.DynamicUpdate
 public class ViewDataModification implements Serializable {
     private static final long serialVersionUID = 1L;
 

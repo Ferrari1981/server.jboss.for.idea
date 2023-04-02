@@ -495,16 +495,14 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
                 // TODO ЗАДАНИЕ ДЛЯ СЕРВЕР JOBSERVERTASK #4
                 case "Хотим Получить Статус Блокировки Пользователя по ID":
                     // TODO ОПРЕДЕЛЯЕМ СТАТУС ПОЛЬЗОВАТЕЛЯ
-                    БуферCallsBackДляAndroid = Метод_МетодаСтатусЗаблорированогоКлиента(JobsServerСазаданиеДляСервера, IDПолученныйИзSQlServerПосик);
+                    ЛистДанныеОтHibenide = Метод_МетодаСтатусЗаблорированогоКлиента( IDПолученныйИзSQlServerПосик,session);
                     ЛОГ.log(" Отправили  Хотим Получить Статус Блокировки Пользователя по ID "
-                            + JobsServerСазаданиеДляСервера + " БуферCallsBackДляAndroid "
-                            + БуферCallsBackДляAndroid.toString());
+                            + JobsServerСазаданиеДляСервера + " ЛистДанныеОтHibenide " + ЛистДанныеОтHibenide.size() + " IDПолученныйИзSQlServerПосик "+IDПолученныйИзSQlServerПосик);
                     break;
                 // TODO ЗАДАНИЕ ДЛЯ СЕРВЕР JOBSERVERTASK #5
                 case "Хотим Получить Статус Реальной Работы SQL SERVER":
                     // TODO РЕАЛЬНЫЙ СТАТУС РАБОТЫ SQL SERVER
-                    БуферCallsBackДляAndroid = Метод_МетодаGETЗаданиеХотимПолучитьРеальныйСтатусРаботыSQLSeever(
-                            response, JobsServerСазаданиеДляСервера);
+                    ЛистДанныеОтHibenide = Метод_РеальнаяСтатусSqlServer();
                     ЛОГ.log(" Отправили Хотим Получить Статус Реальной Работы SQL SERVER " + JobsServerСазаданиеДляСервера
                             + " БуферCallsBackДляAndroid "
                             + БуферCallsBackДляAndroid.toString());
@@ -512,14 +510,17 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
 
                 // TODO ЗАДАНИЯ ДЛЯ СЕРВЕРА НЕТУ
                 default:
+                    ЛОГ.log("\n"+"  default:  Starting.... class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
+                            " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
+                            " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+
+                            "Метод_РеальнаяСтатусSqlServer  ЛистДанныеОтHibenide " +ЛистДанныеОтHibenide.size());
                     break;
             }
             //TODO ГЕНЕРАЦИЯ JSON ПО НОВОМУ
             БуферCallsBackДляAndroid =МетодГенерацияJSONJackson(  ЛистДанныеОтHibenide);
 
             ЛОГ.log(" ОТВЕТ КЛИЕНТУ OTBEN LKIENTYY JobsServerСазаданиеДляСервера " + JobsServerСазаданиеДляСервера
-                    + " БуферCallsBackДляAndroid "
-                    + БуферCallsBackДляAndroid.toString());
+                    + " БуферCallsBackДляAndroid " + БуферCallsBackДляAndroid.toString());
             // TODO КОГДА ЛОГИН И ПАРОЛЬ НЕТ ДОСТУПА
               МетодЗакрываемСессиюHibernate();
             //// TODO ЗАКРЫЫВАЕМ КУРСОРЫ ПОСЛЕ ГЕНЕРАЦИИ JSON ДЛЯ КЛИЕНТА
@@ -626,19 +627,20 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
         return ПолученныйИзSqlServerПубличныйIDДляОтправкиНААндройд;
     }
 
-    // TODO еще ОДНИ метод перенесенный в метод GET
 
 
-    protected StringBuffer Метод_МетодаСтатусЗаблорированогоКлиента(String ПараметрФильтрЗадааниеДляСервлета,
-                                                                    Integer IDПолученныйИзSQlServerПосик) {
-        StringBuffer БуферЗаблорированого = new StringBuffer();
-        // TODO ЗАПУСКАЕМ МЕНЕДЖЕР ПОТОКОВ ДЯЛ ПЕРВОГО ЗАДАНИЕ ВЕРСИЮ ДАННЫХ
-        boolean РезультатЗаблокированПользовательИлиНЕТ = false;
+    // TODO еще генерируем заблокирваный статус клиента
+    protected List<?> Метод_МетодаСтатусЗаблорированогоКлиента(@javax.validation.constraints.NotNull   Integer  IDПолученныйИзSQlServerПосик,
+       @javax.validation.constraints.NotNull Session session ) {
+        List<?> ЛистДанныеОтHibenide  = new ArrayList<>();
         try {
-            String ФиналРезультатЗаблокированПользовательИлиНЕТ = null;
-            queryJSON = " SELECT locked FROM     [storage].[dbo].[users]        WHERE id = "
-                    + IDПолученныйИзSQlServerПосик + "   AND date_update IS NOT NULL   ;"; // цифра
-
+            org.hibernate.Query queryДляHiberite   = session.createQuery("SELECT us.locked FROM User  us WHERE us.id  = :id ");
+            queryДляHiberite.setParameter("id",new Integer(IDПолученныйИзSQlServerПосик));//8641 8625
+            ЛистДанныеОтHibenide =( List<model.ViewDataModification>) queryДляHiberite.getResultList();
+            ЛОГ.log("\n"+" Starting.... class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
+                    " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
+                    " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+
+                    " ЛистДанныеОтHibenide " +ЛистДанныеОтHibenide.toString());
         } catch (Exception e) {
             subClassWriterErros.
                     МетодаЗаписиОшибкиВЛог(e,
@@ -646,50 +648,24 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
                                     getStackTrace(),
                             ЛОГ,"ErrorsLogs/ErrorJbossServletDSU1.txt");
         }
-        return БуферЗаблорированого;
+        return ЛистДанныеОтHibenide  ;
 
     }
 
-    // TODO еще один перенесенный код в метод GET()
 
-    /**
-     * @param response
-     * @param ПараметрФильтрЗадааниеДляСервлета
-     */
-    protected StringBuffer Метод_МетодаGETЗаданиеХотимПолучитьРеальныйСтатусРаботыSQLSeever(
-            HttpServletResponse response, String ПараметрФильтрЗадааниеДляСервлета) {
-        StringBuffer БуферПолучаемРЕальныйСтатусРаботыРАботаеЛИСервр = new StringBuffer();
+
+
+    // TODO реальный статус POST SQl Servera
+    protected List<?> Метод_РеальнаяСтатусSqlServer() {
+        List<?> ЛистДанныеОтHibenide  = new ArrayList<>();
         try {
-            System.out.println("ТУТ ОПРАВЛЯЕМ только СТАТУС Хотим Получить Статус Реальной Работы SQL SERVER");
-            @SuppressWarnings("unused")
-            Long НаличиефиналуюВерсиюДанныхТолькоМетодаHead = 0l;
-            ///////////////////////// TODO
-            PreparedStatement preparedStatementПингуемЕслиХотьОднаСтрочкаВБАзеЕслиЕстьТОБАзаАработаетРЕально = conn
-                    .prepareStatement(
-                            "SELECT TOP 1  id ,login,password  FROM [storage].[dbo].[users]     "
-                                    + "     WHERE    rights  = ?      ;  ",
-                            ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE); // id_user
-            preparedStatementПингуемЕслиХотьОднаСтрочкаВБАзеЕслиЕстьТОБАзаАработаетРЕально.setInt(1, 2);
-            ResultSet resultSetПолученныйРЕзультатРабоатетЛиБазаРЕальноКогдаЕстЬХотьОДнаСТрочка =
-                    preparedStatementПингуемЕслиХотьОднаСтрочкаВБАзеЕслиЕстьТОБАзаАработаетРЕально
-                    .executeQuery();
-            resultSetПолученныйРЕзультатРабоатетЛиБазаРЕальноКогдаЕстЬХотьОДнаСТрочка.last();
-            Integer ПолученаяСтрочкаГоворящаяОРеальнойРаботеБАзы = resultSetПолученныйРЕзультатРабоатетЛиБазаРЕальноКогдаЕстЬХотьОДнаСТрочка
-                    .getRow();
-            System.out.println(
-                    "ПолученаяСтрочкаГоворящаяОРеальнойРаботеБАзы" + ПолученаяСтрочкаГоворящаяОРеальнойРаботеБАзы);
-            // TODO ПРИСВАИВАЕМ СТАТУС которы будт отправлен НА КЛИЕНТ
-            БуферПолучаемРЕальныйСтатусРаботыРАботаеЛИСервр.append(ПолученаяСтрочкаГоворящаяОРеальнойРаботеБАзы);
-            System.out.println("ПолученаяСтрочкаГоворящаяОРеальнойРаботеБАзы"
-                    + ПолученаяСтрочкаГоворящаяОРеальнойРаботеБАзы + " БуферПолучаемРЕальныйСтатусРаботыРАботаеЛИСервр "
-                    + БуферПолучаемРЕальныйСтатусРаботыРАботаеЛИСервр.toString());
-            ////
-            if (resultSetПолученныйРЕзультатРабоатетЛиБазаРЕальноКогдаЕстЬХотьОДнаСТрочка != null) {
-                if (!resultSetПолученныйРЕзультатРабоатетЛиБазаРЕальноКогдаЕстЬХотьОДнаСТрочка.isClosed()) {
-                    resultSetПолученныйРЕзультатРабоатетЛиБазаРЕальноКогдаЕстЬХотьОДнаСТрочка.close();
-                }
-            }
-            ЛОГ.log(" оТПРАВИЛИ Хотим Получить Статус Реальной Работы SQL SERVER " + ПараметрФильтрЗадааниеДляСервлета);
+            org.hibernate.Query queryДляHiberite   = session.createQuery("SELECT us.id FROM User us WHERE us. rights =:rights ");
+            queryДляHiberite.setParameter("rights",new Integer(2));//8641 8625
+            ЛистДанныеОтHibenide =( List<model.ViewDataModification>) queryДляHiberite.getResultList();
+            ЛОГ.log("\n"+" Starting.... class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
+                    " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
+                    " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+
+                    "Метод_РеальнаяСтатусSqlServer  ЛистДанныеОтHibenide " +ЛистДанныеОтHibenide.size());
         } catch (Exception e) {
             subClassWriterErros.
                     МетодаЗаписиОшибкиВЛог(e,
@@ -697,7 +673,7 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
                                     getStackTrace(),
                             ЛОГ,"ErrorsLogs/ErrorJbossServletDSU1.txt");
         }
-        return БуферПолучаемРЕальныйСтатусРаботыРАботаеЛИСервр;
+        return ЛистДанныеОтHibenide;
     }
 
 

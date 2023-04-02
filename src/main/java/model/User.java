@@ -2,6 +2,8 @@ package model;
 
 
 
+import org.hibernate.annotations.OptimisticLockType;
+
 import java.io.Serializable;
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -15,13 +17,16 @@ import java.util.Date;
 @Entity
 @Table(name="users")
 @NamedQuery(name="User.findAll", query="SELECT u FROM User u")
+@org.hibernate.annotations.OptimisticLocking(
+        type = OptimisticLockType.DIRTY)
+@org.hibernate.annotations.DynamicUpdate
 public class User implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy=GenerationType.TABLE)
     @Column(unique=true, nullable=false)
-    private int id;
+    private Integer id;
 
     @Column(length=50)
     private String baza;
@@ -58,11 +63,13 @@ public class User implements Serializable {
     public User() {
     }
 
-    public int getId() {
+    public Integer getId() {
+
         return this.id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
+
         this.id = id;
     }
 
