@@ -65,12 +65,12 @@ public class BeanAuntifications {
                 sessionTransaction = session.getTransaction();
                 sessionTransaction.begin();
                 // TODO: 02.04.2023 Проводим Аунтификаций через пароли логин
-                org.hibernate.Query queryДляHiberite   = session.createQuery("SELECT  us FROM model.UsersEntity us WHERE us.rights =:rights  AND us.login=:login AND us.password=:password ");
+                org.hibernate.Query queryДляHiberite   = session.createQuery("SELECT  us FROM model.UsersEntitySuccess us WHERE us.rights =:rights  AND us.login=:login AND us.password=:password ");
 
                 queryДляHiberite.setParameter("rights",new Integer(2));//8641 8625
                 queryДляHiberite.setParameter("login",new String(ЛогинОтКлиента));//8641 8625
                 queryДляHiberite.setParameter("password",new String(ПарольОтКлиента));//8641 8625
-           List<model.UsersEntity>    ЛистДанныеОтHibenide =( List<model.UsersEntity>) queryДляHiberite.setMaxResults(1).getResultList();
+           List<model.UsersEntitySuccess>    ЛистДанныеОтHibenide =( List<model.UsersEntitySuccess>) queryДляHiberite.setMaxResults(1).getResultList();
                 // TODO: 02.04.2023 Вытаскиваем Из ПРишедзиъ данных логин и пароль
                 StringBuffer БуферСозданогоJSONJacksonАунтификация = МетодГенерацияJSONJackson(ЛОГ, ЛистДанныеОтHibenide);
 

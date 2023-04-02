@@ -262,11 +262,13 @@ public class SessionBeanGETAuthentication {// extends WITH
             //// TODO ЗАКРЫЫВАЕМ КУРСОРЫ ПОСЛЕ ГЕНЕРАЦИИ JSON ДЛЯ КЛИЕНТА
             // TODO
             //TODO ГЕНЕРАЦИЯ JSON ПО НОВОМУ
-            БуферCallsBackДляAndroid =МетодГенерацияJSONJackson(  ЛистДанныеОтHibenide);
+            if (ЛистДанныеОтHibenide!=null) {
+                БуферCallsBackДляAndroid = МетодГенерацияJSONJackson(ЛистДанныеОтHibenide);
+            }
             // TODO: 02.04.2023 закрываем сессию
             МетодЗакрываемСессиюHibernate(ЛОГ);
 
-            ЛОГ.log("БуферCallsBackДляAndroid.toString() " + "" + БуферCallsBackДляAndroid.toString());
+            ЛОГ.log("БуферCallsBackДляAndroid.toString() " + "" + БуферCallsBackДляAndroid.toString()  + " ЛистДанныеОтHibenide " +ЛистДанныеОтHibenide);
             /////// ошибки метода doGET
         } catch (Exception e) {
             sessionTransaction.rollback();
@@ -494,29 +496,28 @@ public class SessionBeanGETAuthentication {// extends WITH
             throws SQLException, SecurityException {
         StringBuffer БуферСозданогоJSONJackson = new StringBuffer();
         try {
-            ЛОГ.log(" listОтHiberideДляГенерации" + listОтHiberideДляГенерации );
-            //TODO Jacson парсинг JSON
-            JsonFactory factory = new JsonFactory();
-            DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS", new Locale("ru"));
-            final ObjectMapper mapperJackson = new ObjectMapper(factory);
-            mapperJackson.setDateFormat(df);
-            mapperJackson.setLocale(new Locale("ru"));
-            mapperJackson.setSerializationInclusion(JsonInclude.Include.NON_NULL);
-            mapperJackson.setPropertyNamingStrategy(PropertyNamingStrategy.CAMEL_CASE_TO_LOWER_CASE_WITH_UNDERSCORES);
-            ObjectWriter writer = mapperJackson.writerWithDefaultPrettyPrinter();
-            String Сгенерированыйjson = 	  writer.writeValueAsString(listОтHiberideДляГенерации);
-            ЛОГ.  log(" Сгенерированыйjson "+Сгенерированыйjson.length());//gson
-            БуферСозданогоJSONJackson.append(Сгенерированыйjson);
-            ЛОГ.log(" заработал  Jackson ...  МетодГенерацияJSONJackson --->  БуферСозданогоJSONJackson " + БуферСозданогоJSONJackson.toString() );
-            /*
-             * // Create custom configuration JsonbConfig nillableConfig = new
-             * JsonbConfig().withNullValues(true);
-             * nillableConfig.withDateFormat("yyyy-MM-dd HH:mm:ss.SSS", new Locale("ru"));
-             * Jsonb jsonb = JsonbBuilder.create(nillableConfig); String resultjsonb =
-             * jsonb.toJson(listОтHiberideДляГенерации); ЛОГ.
-             * log(" resultjsonb "+resultjsonb.length());//gson
-             */
-
+                ЛОГ.log(" listОтHiberideДляГенерации" + listОтHiberideДляГенерации );
+                //TODO Jacson парсинг JSON
+                JsonFactory factory = new JsonFactory();
+                DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS", new Locale("ru"));
+                final ObjectMapper mapperJackson = new ObjectMapper(factory);
+                mapperJackson.setDateFormat(df);
+                mapperJackson.setLocale(new Locale("ru"));
+                mapperJackson.setSerializationInclusion(JsonInclude.Include.NON_NULL);
+                mapperJackson.setPropertyNamingStrategy(PropertyNamingStrategy.CAMEL_CASE_TO_LOWER_CASE_WITH_UNDERSCORES);
+                ObjectWriter writer = mapperJackson.writerWithDefaultPrettyPrinter();
+                String Сгенерированыйjson = 	  writer.writeValueAsString(listОтHiberideДляГенерации);
+                ЛОГ.  log(" Сгенерированыйjson "+Сгенерированыйjson.length());//gson
+                БуферСозданогоJSONJackson.append(Сгенерированыйjson);
+                ЛОГ.log(" заработал  Jackson ...  МетодГенерацияJSONJackson --->  БуферСозданогоJSONJackson " + БуферСозданогоJSONJackson.toString() );
+                /*
+                 * // Create custom configuration JsonbConfig nillableConfig = new
+                 * JsonbConfig().withNullValues(true);
+                 * nillableConfig.withDateFormat("yyyy-MM-dd HH:mm:ss.SSS", new Locale("ru"));
+                 * Jsonb jsonb = JsonbBuilder.create(nillableConfig); String resultjsonb =
+                 * jsonb.toJson(listОтHiberideДляГенерации); ЛОГ.
+                 * log(" resultjsonb "+resultjsonb.length());//gson
+                 */
         } catch (Exception e) {
             subClassWriterErros.
                     МетодаЗаписиОшибкиВЛог(e,
@@ -686,13 +687,13 @@ public class SessionBeanGETAuthentication {// extends WITH
         return БуферСозданогоJSONВерсияБазыSQLserver;
     }
     // todo МЕТОД генерируем для килента MODIFITATIONServer
-    protected    List<model.ViewDataModification> МетодДляКлиентаMODIFITATION_Server(@javax.validation.constraints.NotNull Session session) {
+    protected    List<model.ModificationServerEntity> МетодДляКлиентаMODIFITATION_Server(@javax.validation.constraints.NotNull Session session) {
         /////// ВЕРСИЮ ДАННЫХ НА СЕРВЕРЕ
-        List<model.ViewDataModification> ЛистДанныеОтHibenide  = new ArrayList<>();
+        List<model.ModificationServerEntity> ЛистДанныеОтHibenide  = new ArrayList<>();
         try {
             org.hibernate.Query queryДляHiberite   = session.createQuery(
-                    "SELECT vd FROM model.ViewDataModification  vd WHERE vd.id IS NOT NULL ");
-            ЛистДанныеОтHibenide =( List<model.ViewDataModification>) queryДляHiberite.getResultList();
+                    "SELECT vd FROM model.ModificationServerEntity  vd ");
+            ЛистДанныеОтHibenide =( List<model.ModificationServerEntity>) queryДляHiberite.getResultList();
 
             ЛОГ.log("\n"+" Starting.... class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
                     " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+

@@ -90,6 +90,7 @@
     <mapping class="model.GetMaterialsData"/>
     <mapping class="model.Prof"/>
     <mapping class="model.UsersEntity"/>
-    <mapping class="model.ViewDataModification"/>
+    <mapping class="model.UsersEntitySuccess"/>
+    <mapping class="model.ModificationServerEntity"/>
   </session-factory>
 </hibernate-configuration>

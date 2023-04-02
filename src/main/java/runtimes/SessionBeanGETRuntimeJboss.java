@@ -205,9 +205,8 @@ public class SessionBeanGETRuntimeJboss {// extends WITH
                 default:
                     break;
             }
-            StringBuffer БуферДоОбработкиСтатуса = streamJSONJacksons.getStreamJacksons(ЛистДанныеОтHibenide);
+            БуферCallsBackДляAndroid= streamJSONJacksons.getStreamJacksons(ЛистДанныеОтHibenide);
             // TODO
-            БуферCallsBackДляAndroid.append(БуферДоОбработкиСтатуса.toString().trim().replaceAll("[^\\da-zA-Zа-яёА-ЯЁ ]","")) ;
             ЛОГ.log("БуферCallsBackДляAndroid.toString() " + "" + БуферCallsBackДляAndroid.toString());
 
             МетодЗакрываемСессиюHibernate(ЛОГ);
@@ -321,7 +320,7 @@ public class SessionBeanGETRuntimeJboss {// extends WITH
     protected List<model.UsersEntity> Метод_РеальнаяСтатусSqlServer() {
         List<model.UsersEntity> ЛистДанныеОтHibenide  = new ArrayList<>();
         try {
-            org.hibernate.Query queryДляHiberite   = session.createQuery("SELECT  us FROM model.UsersEntity us WHERE us.rights =:rights   ");
+            org.hibernate.Query queryДляHiberite   = session.createQuery("SELECT  us as id FROM model.UsersEntity us WHERE us.rights =:rights   ");
             queryДляHiberite.setParameter("rights",new Integer(2));//8641 8625
             ЛистДанныеОтHibenide =( List<model.UsersEntity>) queryДляHiberite.setMaxResults(1).getResultList();
             ЛОГ.log("\n"+" Starting.... class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+

@@ -15,12 +15,17 @@ public class UsersEntity {
     @Id
     @Column(name = "id", nullable = false)
     private int id;
+    @Transient
     @Basic
     @Column(name = "fio", nullable = false)
     private int fio;
+
+    @Transient
     @Basic
     @Column(name = "login", nullable = false, length = 100)
     private String login;
+
+    @Transient
     @Basic
     @Column(name = "password", nullable = false, length = 50)
     private String password;
@@ -30,21 +35,27 @@ public class UsersEntity {
     @Basic
     @Column(name = "locked", nullable = true)
     private Boolean locked;
+
+    @Transient
     @Basic
     @Column(name = "telephone", nullable = true, length = 255)
     private String telephone;
     @Basic
     @Column(name = "date_update", nullable = true)
     private Date dateUpdate;
+    @Transient
     @Basic
     @Column(name = "regoin", nullable = true)
     private Integer regoin;
+    @Transient
     @Basic
     @Column(name = "current_table", nullable = true, precision = 0)
     private Long currentTable;
+    @Transient
     @Basic
     @Column(name = "baza", nullable = true, length = 50)
     private String baza;
+    @Transient
     @Basic
     @Column(name = "kod", nullable = true, length = 255)
     private String kod;
