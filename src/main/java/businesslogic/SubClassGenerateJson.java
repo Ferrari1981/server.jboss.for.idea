@@ -42,7 +42,7 @@ public class SubClassGenerateJson {
         try {
             this.ЛОГ=ЛОГ;
             // TODO: 11.03.2023  Получении Сесии Hiberrnate
-            session =sessionSousJboss.openSession();
+            session =sessionSousJboss.getCurrentSession();
             // TODO: 14.03.2023  Запускаем Транзакцию
             sessionTransaction =session.getTransaction() ;
             // TODO: 14.03.2023  Запускает Транзакции

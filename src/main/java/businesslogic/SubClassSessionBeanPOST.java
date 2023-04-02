@@ -2,25 +2,8 @@ package businesslogic;
 
 
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonValue;
-import com.fasterxml.jackson.core.JsonFactory;
-import com.fasterxml.jackson.core.JsonGenerator;
-import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.ObjectReader;
-import com.fasterxml.jackson.databind.ObjectWriter;
-import com.fasterxml.jackson.databind.PropertyNamingStrategy;
-import dsu1glassfishatomic.workinterfaces.ProducedCard;
-import dsu1glassfishatomic.workinterfaces.ProducedJacson;
-import io.reactivex.rxjava3.core.Flowable;
-import io.reactivex.rxjava3.core.Observable;
-import io.reactivex.rxjava3.functions.Consumer;
-import io.reactivex.rxjava3.functions.Function;
-import model.Cfo;
-import model.Settingtab;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
@@ -28,24 +11,16 @@ import java.security.NoSuchAlgorithmException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.concurrent.BrokenBarrierException;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.ExecutionException;
-import java.util.function.BiConsumer;
-import java.util.stream.Stream;
 import java.util.zip.GZIPInputStream;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
-import javax.json.Json;
-import javax.json.JsonObject;
-import javax.json.JsonReader;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletInputStream;
-import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.constraints.NotNull;
@@ -111,7 +86,7 @@ public class SubClassSessionBeanPOST {//extends    DSU1JsonServlet
      * @throws SecurityException
      */
     @SuppressWarnings("unused")
-    protected StringBuffer ГлавныйМетод_МетодаPOST(
+    protected StringBuffer МетодЗапускаPOST(
             @NotNull HttpServletRequest request,
             @NotNull HttpServletResponse response,
             @NotNull ServletContext ЛОГ) throws SecurityException {

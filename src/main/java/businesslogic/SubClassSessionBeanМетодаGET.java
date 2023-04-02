@@ -3,17 +3,13 @@ package businesslogic;
 import java.io.IOException;
 import java.io.StringWriter;
 import java.math.BigDecimal;
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 import java.util.Optional;
 
 import javax.enterprise.context.RequestScoped;
@@ -21,7 +17,6 @@ import javax.inject.Inject;
 import javax.json.Json;
 import javax.json.JsonObjectBuilder;
 import javax.json.JsonWriter;
-import javax.persistence.LockModeType;
 import javax.persistence.StoredProcedureQuery;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -31,11 +26,8 @@ import javax.ws.rs.Produces;
 import dsu1glassfishatomic.workinterfaces.ProducedCard;
 import org.hibernate.*;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
-import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.sun.istack.NotNull;
 
 @RequestScoped
@@ -88,8 +80,8 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
                                                   @NotNull ServletContext ЛОГ) throws SecurityException, SQLException {
         // TODO Auto-generated method stub
         System.out.println("Конструктор  ЗАПУСК МЕТОДА ИЗ GET ()  ГлавныйМетод_МетодаGET()");
-        StringBuffer БуферCallsBackДляAndroid = null;
-        try (Connection conn = subClassConnectionsSQLServer.МетодGetConnect(ЛОГ);) {
+        StringBuffer БуферCallsBackДляAndroid = new StringBuffer();;
+        try   {
             this.ЛОГ = ЛОГ;
             // TODO
             this.request = request;
@@ -97,15 +89,6 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
             this.response = response;
             // TODO Коннектимся к Базе SQl Server
             ЛОГ.log("ЛОГ  GET() " + ЛОГ + " request " + request + " response " + response);
-
-            // TODO
-            ЛОГ.log(" ОТРАБОТАЛ МЕТОД ИНИЦИАЛИЗАЦИИ ПЕРЕМЕННЫХ КОТОРЫ Е ПРИШЛИ  МетодПредворительногоПодключенияДляМетодаGETкодИзStatement    conn"
-                    + conn);
-            stmt = subClassConnectionsSQLServer.МетодGetSmtr(conn, ЛОГ);
-            ЛОГ.log(" ОТРАБОТАЛ МЕТОД ИНИЦИАЛИЗАЦИИ ПЕРЕМЕННЫХ КОТОРЫ Е ПРИШЛИ  МетодПредворительногоПодключенияДляМетодаGETкодИзКонструктора   "
-                    + stmt);
-            ////
-            БуферCallsBackДляAndroid = new StringBuffer();
             // TODO получаем session
             ЛОГ.log("ЗАПУСКАЕТСЯ....... ГЛАВНЫЙ МЕТОД GET() СЕРВЛЕТА " + new Date() + "\n" + ЛОГ.getServerInfo()
                     + "  request " + request + " response " + response + " ЛОГ" + ЛОГ);
@@ -115,14 +98,10 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
             String JobsServerСазаданиеДляСервера = null;
             String ПараметрКонкретнаяТаблицаВПотокеВнутриПотока = null;
 
-
-            JsonObjectBuilder builder = null; ////// БИЛДЕР СОЗДАНИЕ JSON
             String результатшифрование;
             String РезультатОбновлениеДляОтправкиВАндройд;//// для понимания
             String пароль;
             int КоличествоСтрокВБАзеSQLSERVER = 0;
-            JsonObjectBuilder JsonПоля = Json.createObjectBuilder();
-            // JsonArrayBuilder МассивБилдер=Json.createArrayBuilder();
 
             int ДляПосикаКоличествоСтолбцовВБАзеSQLSERVER;
             String queryJSON = new String(); /// ПОЛУЧЕННЫЙ JSON САМО ТЕЛО ОТВЕТА
@@ -132,21 +111,13 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
             int СколькСтрокРезультатЕслиТакойПользовательМетод_GET = 0;
             ЛОГ.log("СТАРТ/START МЕТОД/METOD  protected void doGet  logger  ::: " + new Date() + "\n");
             /// TODO logginf info
-            ЛОГ.log("СТАРТ/START МЕТОД/METOD  protected void doGet  logger  ::: " + "\n");
-            ///// TODO создание клуча
-            System.out.println(" protected void doGet");
-            ///
-            StringWriter stringWriterМассивВерсия = null;
-            ///////
-            JsonWriter jsonWriterВерсия;
-            /////// асинхронный код запускаем
             String ТолькоДляАунтификацииИмяПолученныйИзSQlServerПосик = new String();
             //////
             String ТаблицаGET = new String();/// ОПРЕДЕЛЯЕМ
             /////// НАЧАЛО КОД ДОСТУПА К СЕРВЛЕТУ
             String HeaderСодержимое = new String();
-            // Количество колонок в результирующем запросе
-            СколькСтрокРезультатЕслиТакойПользовательМетод_GET = 0;
+
+
             ИмяПолученныйИзSQlServerПосик = new String();/// вычисялем
             String ПарольПолученныйИзSQlServerПосик = null;
 
@@ -154,6 +125,13 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
             String queryСканируемИмяИпароль;
             String HeaderСодержимоеРасшифрован = null;
 
+            ЛОГ.log("\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
+                    " БуферCallsBackДляAndroid " + БуферCallsBackДляAndroid.toString() +
+                    " session  " + session + " sessionSousJboss " + sessionSousJboss
+                    + " ЛОГИН "+ЛОГ.getAttribute("ЛогинПолученныйОтКлиента")+
+                    " ID ТЕЛЕФОНА "+  ЛОГ.getAttribute("АдуДевайсяКлиента"));
 
 
             Integer IDПолученныйИзSQlServerПосик = Optional
@@ -208,7 +186,8 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
 
 
             /// TODO ПАРАМЕНТ #8
-            String ПараметрВерсияДанныхФильтр=	 Optional.ofNullable(request.getParameter("РезультаПолученаяЛокальнаяВерсияДанныхДляОтправкиНаСервер")).map(String::new).orElse("");
+            String ПараметрВерсияДанныхФильтр=	 Optional.ofNullable(request.getParameter("РезультаПолученаяЛокальнаяВерсияДанныхДляОтправкиНаСервер"))
+                    .map(String::new).orElse("");
             if (ПараметрВерсияДанныхФильтр.length()>0) {
                 ПараметрВерсияДанных= Optional.ofNullable(ПараметрВерсияДанныхФильтр).map(Long::new).orElse(0l);
                 ЛОГ.log("  РезультатОтАндройдаЕгоЛокальнаяВерсияЧата  "	+ ПараметрВерсияДанных); //setParameter
@@ -224,19 +203,18 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
 // TODO: 17.03.2023 ЗАПУСКАЕТ ТРАНЗАКЦИЮ BEGIN
             sessionTransaction.begin();
 
+
+
+
+
             switch (JobsFroServerЗаданиеДляСервера) {
                 // TODO ЗАДАНИЕ ДЛЯ СЕРВЕР JOBSERVERTASK #1
                 case "Хотим Получить Версию Данных Сервера":
-                    БуферCallsBackДляAndroid = МетодПолучениеВерсиюДанныхДляАndroid(
-                            response, JobsServerСазаданиеДляСервера, ТаблицаGET);
+                    ЛистДанныеОтHibenide = МетодДляКлиентаMODIFITATION_Server( ТаблицаGET,session);
                     ЛОГ.log("Хотим Получить Версию Данных Сервера" + new Date() + " ПараметрФильтрЗадааниеДляСервлета "
-                            + JobsServerСазаданиеДляСервера + "  БуферCallsBackДляAndroid "
-                            + БуферCallsBackДляAndroid.toString());
+                            + ЛистДанныеОтHibenide + "  ЛистДанныеОтHibenide "+
+                             " ТаблицаGET" + ТаблицаGET);
                     break;
-
-
-
-
                 // TODO ЗАДАНИЕ ДЛЯ СЕРВЕР JOBSERVERTASK #2
                 case "Хотим Получить  JSON":
 
@@ -250,7 +228,7 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
                             // TODO
                             queryДляHiberite  = session.createQuery(
                                     " SELECT o FROM Organization o WHERE o.currentTable > :id ");
-                       queryДляHiberite.setLockOptions(LockOptions.UPGRADE);
+                      
                             queryДляHiberite.setParameter("id",new BigDecimal(ПараметрВерсияДанных ));//
                             ЛистДанныеОтHibenide =( List<model.Organization>)  queryДляHiberite.getResultList();
                             ЛОГ.  log(" ЛистДанныеОтHibenide "+ЛистДанныеОтHibenide+ " ЛистДанныеОтHibenide.size() " +ЛистДанныеОтHibenide.size()+
@@ -260,7 +238,7 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
                             // TODO
                             queryДляHiberite = session.createQuery(
                                     "SELECT d FROM Depatment d   WHERE d.currentTable > :id ");
-                       queryДляHiberite.setLockOptions(LockOptions.UPGRADE);
+                      
                             queryДляHiberite.setParameter("id",new BigDecimal(ПараметрВерсияДанных ));
                             ЛистДанныеОтHibenide =( List<model.Depatment>)  queryДляHiberite.getResultList();
                             ЛОГ.  log(" ЛистДанныеОтHibenide "+ЛистДанныеОтHibenide+ " ЛистДанныеОтHibenide.size() " +ЛистДанныеОтHibenide.size()+
@@ -270,7 +248,7 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
                             // TODO
                             queryДляHiberite = session.createQuery(
                                     "SELECT f FROM Fio f   WHERE f.currentTable > :id ");
-                       queryДляHiberite.setLockOptions(LockOptions.UPGRADE);
+                      
                             queryДляHiberite.setParameter("id",new BigDecimal(ПараметрВерсияДанных ));//
                             ЛистДанныеОтHibenide =( List<model.Fio>)  queryДляHiberite.getResultList();
                             ЛОГ.  log(" ЛистДанныеОтHibenide "+ЛистДанныеОтHibenide+ " ЛистДанныеОтHibenide.size() " +ЛистДанныеОтHibenide.size()+
@@ -280,7 +258,7 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
                             // TODO
                             queryДляHiberite = session.createQuery(
                                     "SELECT r  FROM Region r   WHERE r.currentTable > :id");
-                       queryДляHiberite.setLockOptions(LockOptions.UPGRADE);
+                      
                             queryДляHiberite.setParameter("id",new BigDecimal(ПараметрВерсияДанных ));//
                             ЛистДанныеОтHibenide =( List<model.Region>)  queryДляHiberite.getResultList();
                             ЛОГ.  log(" ЛистДанныеОтHibenide "+ЛистДанныеОтHibenide+ " ЛистДанныеОтHibenide.size() " +ЛистДанныеОтHibenide.size()+
@@ -290,7 +268,7 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
                             // TODO
                             queryДляHiberite = session.createQuery(
                                     "SELECT c FROM Cfo  c  WHERE c.currentTable > :id ");
-                       queryДляHiberite.setLockOptions(LockOptions.UPGRADE);
+                      
                             queryДляHiberite.setParameter("id",new BigDecimal(ПараметрВерсияДанных ));//
                             ЛистДанныеОтHibenide =( List<model.Cfo>)  queryДляHiberite.getResultList();
                             ЛОГ.  log(" ЛистДанныеОтHibenide "+ЛистДанныеОтHibenide+ " ЛистДанныеОтHibenide.size() " +ЛистДанныеОтHibenide.size()+
@@ -300,7 +278,7 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
                             // TODO
                             queryДляHiberite = session.createQuery(
                                     "SELECT st FROM Settingtab  st  WHERE st.currentTable > :id  AND  st.userUpdate=:user_update ");
-                       queryДляHiberite.setLockOptions(LockOptions.UPGRADE);
+                      
                             queryДляHiberite.setParameter("id",new BigDecimal(ПараметрВерсияДанных ));//
                             queryДляHiberite.setParameter("user_update",IDПолученныйИзSQlServerПосик);//8641 8625
                             ЛистДанныеОтHibenide =( List<model.Settingtab>) queryДляHiberite.getResultList();
@@ -313,7 +291,7 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
                                     " SELECT notif FROM Notification  notif  WHERE notif.currentTable > :id "
                                             + " AND   notif.userUpdate=:user_update   "
                                             + "  OR notif.currentTable > :id  AND     notif.idUser=:id_user ");
-                            queryДляHiberite.setLockOptions(LockOptions.UPGRADE);
+                           
                             queryДляHiberite.setParameter("id",new BigDecimal(ПараметрВерсияДанных));//8641 8625
                             queryДляHiberite.setParameter("user_update",IDПолученныйИзSQlServerПосик);//8641 8625
                             queryДляHiberite.setParameter("id_user",IDПолученныйИзSQlServerПосик);//8641 8625
@@ -329,7 +307,7 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
                                             + "  da. currentTable > :id "
                                             + "  AND da.uuidNotifications "
                                             + " IN (SELECT     no.uuid FROM    Notification no  WHERE   no.userUpdate=:user_update   OR  no .idUser=:id_user ) ");
-                       queryДляHiberite.setLockOptions(LockOptions.UPGRADE);
+                      
                             queryДляHiberite.setParameter("id",new BigDecimal(ПараметрВерсияДанных));//8641 8625
                             queryДляHiberite.setParameter("user_update",IDПолученныйИзSQlServerПосик);//8641 8625
                             queryДляHiberite.setParameter("id_user",IDПолученныйИзSQlServerПосик);//8641 8625
@@ -341,7 +319,7 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
                             // TODO
                             queryДляHiberite = session.createQuery(
                                     " SELECT te FROM Template  te WHERE te.currentTable > :id  AND te.userUpdate=:user_update  ");
-                       queryДляHiberite.setLockOptions(LockOptions.UPGRADE);
+                      
                             queryДляHiberite.setParameter("id",new BigDecimal(ПараметрВерсияДанных));//8641 8625
                             queryДляHiberite.setParameter("user_update",IDПолученныйИзSQlServerПосик);//8641 8625
                             ЛистДанныеОтHibenide =( List<model.Template>) queryДляHiberite.getResultList();
@@ -353,7 +331,7 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
                             // TODO
                             queryДляHiberite = session.createQuery(
                                     " SELECT fiot FROM FioTemplate  fiot  WHERE fiot.currentTable > :id   AND fiot.userUpdate=:user_update ");
-                       queryДляHiberite.setLockOptions(LockOptions.UPGRADE);
+                      
                             queryДляHiberite.setParameter("id",new BigDecimal(ПараметрВерсияДанных));//8641 8625
                             queryДляHiberite.setParameter("user_update",IDПолученныйИзSQlServerПосик);//8641 8625
                             ЛистДанныеОтHibenide =( List<model.FioTemplate>) queryДляHiberite.getResultList();
@@ -379,7 +357,7 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
                                             + " AND   cat .userUpdate=:user_update"
                                             + " OR "
                                             + " cat .currentTable > :id AND   cat .idUser=:id_user  ");
-                       queryДляHiberite.setLockOptions(LockOptions.UPGRADE);
+                      
                             queryДляHiberite.setParameter("id",new BigDecimal(ПараметрВерсияДанных));//8641 8625
                             queryДляHiberite.setParameter("user_update",IDПолученныйИзSQlServerПосик);//8641 8625
                             queryДляHiberite.setParameter("id_user",IDПолученныйИзSQlServerПосик);//8641 8625
@@ -393,7 +371,7 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
                                     + "							  AND da.chatUuid "
                                     + "							 IN (SELECT    ch.uuid FROM    Chat  ch"
                                     + "  WHERE  ch.userUpdate=:user_update  OR ch.idUser=:id_user )   ");
-                       queryДляHiberite.setLockOptions(LockOptions.UPGRADE);
+                      
                             queryДляHiberite.setParameter("id",new BigDecimal(ПараметрВерсияДанных));//8641 8625
                             queryДляHiberite.setParameter("user_update",IDПолученныйИзSQlServerПосик);//8641 8625
                             queryДляHiberite.setParameter("id_user",IDПолученныйИзSQlServerПосик);//8641 8625
@@ -405,7 +383,7 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
                             // TODO
                             queryДляHiberite = session.createQuery(
                                     "SELECT  tab FROM Tabel tab  WHERE tab .currentTable > :id  AND tab.userUpdate=:user_update ");
-                       queryДляHiberite.setLockOptions(LockOptions.UPGRADE);
+                      
                             queryДляHiberite.setParameter("id",new BigDecimal(ПараметрВерсияДанных));//8641 8625
                             queryДляHiberite.setParameter("user_update",IDПолученныйИзSQlServerПосик);//8641 8625
                             ЛистДанныеОтHibenide =( List<model.Tabel>)  queryДляHiberite.getResultList();
@@ -416,7 +394,7 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
                             // TODO
                             queryДляHiberite = session.createQuery(
                                     "SELECT  dat FROM DataTabel dat WHERE dat .currentTable > :id  AND dat.userUpdate=:user_update  ");
-                       queryДляHiberite.setLockOptions(LockOptions.UPGRADE);
+                      
                             queryДляHiberite.setParameter("id",new BigDecimal(ПараметрВерсияДанных));//8641 8625
                             queryДляHiberite.setParameter("user_update",IDПолученныйИзSQlServerПосик);//8641 8625
                             ЛистДанныеОтHibenide =( List<model.DataTabel>)  queryДляHiberite.getResultList();
@@ -427,7 +405,7 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
                             // TODO
                             queryДляHiberite = session.createQuery(
                                     " SELECT  viewone FROM ViewOnesignal viewone WHERE viewone .currentTable > :id");
-                       queryДляHiberite.setLockOptions(LockOptions.UPGRADE);
+                      
                             queryДляHiberite.setParameter("id",new BigDecimal(ПараметрВерсияДанных));//8641 8625
                             ЛистДанныеОтHibenide =( List<model.ViewOnesignal>)  queryДляHiberite.getResultList();
                             ЛОГ.  log(" ЛистДанныеОтHibenide "+ЛистДанныеОтHibenide+ " ЛистДанныеОтHibenide.size() " +ЛистДанныеОтHibenide.size()+
@@ -437,7 +415,7 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
                             // TODO
                             queryДляHiberite = session.createQuery(
                                     " SELECT  nome FROM NomenVesov nome WHERE nome .currentTable > :id");
-                       queryДляHiberite.setLockOptions(LockOptions.UPGRADE);
+                      
                             queryДляHiberite.setParameter("id",new BigDecimal(ПараметрВерсияДанных));//8641 8625
                             ЛистДанныеОтHibenide =( List<model.NomenVesov>)  queryДляHiberite.getResultList();
                             ЛОГ.  log(" ЛистДанныеОтHibenide "+ЛистДанныеОтHibenide+ " ЛистДанныеОтHibenide.size() " +ЛистДанныеОтHibenide.size()+
@@ -447,7 +425,7 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
                             // TODO
                             queryДляHiberite = session.createQuery(
                                     " SELECT  typem FROM TypeMaterial typem  WHERE typem .currentTable > :id");
-                       queryДляHiberite.setLockOptions(LockOptions.UPGRADE);
+                      
                             queryДляHiberite.setParameter("id",new BigDecimal(ПараметрВерсияДанных));//8641 8625
                             ЛистДанныеОтHibenide =( List<model.TypeMaterial>)  queryДляHiberite.getResultList();
                             ЛОГ.  log(" ЛистДанныеОтHibenide "+ЛистДанныеОтHibenide+ " ЛистДанныеОтHibenide.size() " +ЛистДанныеОтHibenide.size()+
@@ -457,7 +435,6 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
                             // TODO
                             queryДляHiberite = session.createQuery(
                                     " SELECT  getmat FROM GetMaterialsData  getmat  WHERE getmat .currentTable > :id  AND getmat.userUpdate=:user_update ");
-                       queryДляHiberite.setLockOptions(LockOptions.UPGRADE);
                             queryДляHiberite.setParameter("id",new BigDecimal(ПараметрВерсияДанных));//8641 8625
                             queryДляHiberite.setParameter("user_update",IDПолученныйИзSQlServerПосик);//8641 8625
                             ЛистДанныеОтHibenide =( List<model.GetMaterialsData>)  queryДляHiberite.getResultList();
@@ -468,7 +445,7 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
                             // TODO
                             queryДляHiberite = session.createQuery(
                                     " SELECT  comp FROM Company  comp  WHERE comp .currentTable > :id");
-                       queryДляHiberite.setLockOptions(LockOptions.UPGRADE);
+                      
                             queryДляHiberite.setParameter("id",new BigDecimal(ПараметрВерсияДанных));//8641 8625
                             ЛистДанныеОтHibenide =( List<model.Company>)  queryДляHiberite.getResultList();
                             ЛОГ.  log(" ЛистДанныеОтHibenide "+ЛистДанныеОтHibenide+ " ЛистДанныеОтHibenide.size() " +ЛистДанныеОтHibenide.size()+
@@ -478,7 +455,7 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
                             // TODO
                             queryДляHiberite = session.createQuery(
                                     " SELECT  tr FROM Track tr  WHERE tr .currentTable > :id");
-                       queryДляHiberite.setLockOptions(LockOptions.UPGRADE);
+                      
                             queryДляHiberite.setParameter("id",new BigDecimal(ПараметрВерсияДанных));//8641 8625
                             ЛистДанныеОтHibenide =( List<model.Track>)  queryДляHiberite.getResultList();
                             ЛОГ.  log(" ЛистДанныеОтHibenide "+ЛистДанныеОтHibenide+ " ЛистДанныеОтHibenide.size() " +ЛистДанныеОтHibenide.size()+
@@ -489,7 +466,7 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
                             // TODO
                             queryДляHiberite = session.createQuery(
                                     " SELECT  pr FROM Prof pr  WHERE pr .currentTable > :id");
-                       queryДляHiberite.setLockOptions(LockOptions.UPGRADE);
+                      
                             queryДляHiberite.setParameter("id",new BigDecimal(ПараметрВерсияДанных));//8641 8625
                             ЛистДанныеОтHibenide =( List<model.Prof>)  queryДляHiberite.getResultList();
                             ЛОГ.  log(" ЛистДанныеОтHibenide "+ЛистДанныеОтHibenide+ " ЛистДанныеОтHibenide.size() " +ЛистДанныеОтHibenide.size()+
@@ -504,11 +481,6 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
                     //TODO ФИНАЛЬЯ СТАДИЯ ГЕНЕРИРУЕМ САМ JSON
                     ЛОГ.  log(" ЛистДанныеОтHibenide "+ЛистДанныеОтHibenide+ " ЛистДанныеОтHibenide.size() " +ЛистДанныеОтHibenide.size()+
                             "  queryДляHiberite  " +queryДляHiberite);//gson Gson
-                    //TODO ГЕНЕРАЦИЯ JSON ПО НОВОМУ
-                    БуферCallsBackДляAndroid =МетодГенерацияJSONJackson(  ЛистДанныеОтHibenide);
-
-                    ЛОГ. log( "   БуферCallsBackДляAndroid " + БуферCallsBackДляAndroid.toString());
-
                     // TODO конец МЕНЕДЖЕН ПОТОКА ДАННЫХ ПРИ
                     // ОТПРАВЛЕНИЕ ДАННЫ
                     // TODO ВЫХОД ИЗ КОНКРЕТНОГО УСЛОВИЯ
@@ -516,16 +488,14 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
                     break;
                 // TODO ЗАДАНИЕ ДЛЯ СЕРВЕР JOBSERVERTASK #3
                 case "Хотим Получить ID для Генерации  UUID":
-                    БуферCallsBackДляAndroid = Метод_МетодаGETОтпалавляемПубличныйIDПользователюАндройду(
-                            response, IDПолученныйИзSQlServerПосик);
+                    БуферCallsBackДляAndroid = Метод_МетодаПубличныйIDКлиента(IDПолученныйИзSQlServerПосик);
                     ЛОГ.log(" БуферCallsBackДляAndroid "
                             + БуферCallsBackДляAndroid.toString());
                     break;
                 // TODO ЗАДАНИЕ ДЛЯ СЕРВЕР JOBSERVERTASK #4
                 case "Хотим Получить Статус Блокировки Пользователя по ID":
                     // TODO ОПРЕДЕЛЯЕМ СТАТУС ПОЛЬЗОВАТЕЛЯ
-                    БуферCallsBackДляAndroid = Метод_МетодаGETОтправляемБлокировкуПользователюID(
-                            response, JobsServerСазаданиеДляСервера, IDПолученныйИзSQlServerПосик, conn);
+                    БуферCallsBackДляAndroid = Метод_МетодаСтатусЗаблорированогоКлиента(JobsServerСазаданиеДляСервера, IDПолученныйИзSQlServerПосик);
                     ЛОГ.log(" Отправили  Хотим Получить Статус Блокировки Пользователя по ID "
                             + JobsServerСазаданиеДляСервера + " БуферCallsBackДляAndroid "
                             + БуферCallsBackДляAndroid.toString());
@@ -534,7 +504,7 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
                 case "Хотим Получить Статус Реальной Работы SQL SERVER":
                     // TODO РЕАЛЬНЫЙ СТАТУС РАБОТЫ SQL SERVER
                     БуферCallsBackДляAndroid = Метод_МетодаGETЗаданиеХотимПолучитьРеальныйСтатусРаботыSQLSeever(
-                            response, JobsServerСазаданиеДляСервера, conn);
+                            response, JobsServerСазаданиеДляСервера);
                     ЛОГ.log(" Отправили Хотим Получить Статус Реальной Работы SQL SERVER " + JobsServerСазаданиеДляСервера
                             + " БуферCallsBackДляAndroid "
                             + БуферCallsBackДляAndroid.toString());
@@ -544,6 +514,12 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
                 default:
                     break;
             }
+            //TODO ГЕНЕРАЦИЯ JSON ПО НОВОМУ
+            БуферCallsBackДляAndroid =МетодГенерацияJSONJackson(  ЛистДанныеОтHibenide);
+
+            ЛОГ.log(" ОТВЕТ КЛИЕНТУ OTBEN LKIENTYY JobsServerСазаданиеДляСервера " + JobsServerСазаданиеДляСервера
+                    + " БуферCallsBackДляAndroid "
+                    + БуферCallsBackДляAndroid.toString());
             // TODO КОГДА ЛОГИН И ПАРОЛЬ НЕТ ДОСТУПА
               МетодЗакрываемСессиюHibernate();
             //// TODO ЗАКРЫЫВАЕМ КУРСОРЫ ПОСЛЕ ГЕНЕРАЦИИ JSON ДЛЯ КЛИЕНТА
@@ -602,31 +578,20 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
     }
     }
 
-    // todo МЕТОД GET А ПРИНАДЛЕЖИТЬ
-
-    /**
-     * @param response
-     * @param ПараметрФильтрЗадааниеДляСервлета
-     * @param ПараметрИмяТаблицыОтАндройдаGET
-     */
-    protected StringBuffer МетодПолучениеВерсиюДанныхДляАndroid(
-            HttpServletResponse response, String ПараметрФильтрЗадааниеДляСервлета,
-            String ПараметрИмяТаблицыОтАндройдаGET) {
+    // todo МЕТОД генерируем для килента MODIFITATIONServer
+    protected    List<?> МетодДляКлиентаMODIFITATION_Server(@javax.validation.constraints.NotNull      String ТаблицаGET ,
+                                                            @javax.validation.constraints.NotNull Session session) {
         /////// ВЕРСИЮ ДАННЫХ НА СЕРВЕРЕ
-        StringBuffer БуферСозданогоJSONВерсияБазыSQLserver = new StringBuffer();
+        List<?> ЛистДанныеОтHibenide  = new ArrayList<>();
         try {
-            System.out.println(
-                    "Аутентификация Пользователя Прошла Успешна  (ВЫ ВНУТРИ СЕРВЛЕТА) ПараметрФильтрЗадааниеДляСервлета"
-                            + ПараметрФильтрЗадааниеДляСервлета + " finalПараметрИмяТаблицыОтАндройдаGET "
-                            + ПараметрИмяТаблицыОтАндройдаGET);
-            БуферСозданогоJSONВерсияБазыSQLserver = МетодСозданиеJSONТаблицКоторыеНадоОтправитьКлиенту(
-                    ПараметрФильтрЗадааниеДляСервлета, ПараметрИмяТаблицыОтАндройдаGET);
-            /// ПЕРВАЯ ПОСЫЛКА ДАННЫХ ИЗ SQL SERVER
-            /// НА АНДРОЙД
-            System.out.println(
-                    "Аутентификация Пользователя Прошла Успешна  (ВЫ ВНУТРИ СЕРВЛЕТА) ПараметрФильтрЗадааниеДляСервлета БуферСозданогоJSONВерсияБазыSQLserver"
-                            + БуферСозданогоJSONВерсияБазыSQLserver.toString());
+            org.hibernate.Query queryДляHiberite   = session.createQuery(
+                    "SELECT vd FROM ViewDataModification  vd WHERE vd.id IS NOT NULL ");
+            ЛистДанныеОтHibenide =( List<model.ViewDataModification>) queryДляHiberite.getResultList();
 
+            ЛОГ.log("\n"+" Starting.... class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
+                    " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
+                    " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+
+                    " ЛистДанныеОтHibenide " +ЛистДанныеОтHibenide.toString());
         } catch (Exception e) {
             subClassWriterErros.
                     МетодаЗаписиОшибкиВЛог(e,
@@ -634,15 +599,14 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
                                     getStackTrace(),
                             ЛОГ,"ErrorsLogs/ErrorJbossServletDSU1.txt");
         }
-        return БуферСозданогоJSONВерсияБазыSQLserver;
+        return ЛистДанныеОтHibenide;
 
     }
 
     // TODO еще один перенесенный в метод GEt метод
 
 
-    protected StringBuffer Метод_МетодаGETОтпалавляемПубличныйIDПользователюАндройду(HttpServletResponse response,
-                                                                                     Integer IDПолученныйИзSQlServerПосик) throws IOException {
+    protected StringBuffer Метод_МетодаПубличныйIDКлиента(Integer IDПолученныйИзSQlServerПосик) throws IOException {
         StringBuffer ПолученныйИзSqlServerПубличныйIDДляОтправкиНААндройд = new StringBuffer();
         try {
             System.out.println("ИмяПолученныйИзSQlServerПосик			 " + ИмяПолученныйИзSQlServerПосик);
@@ -665,47 +629,16 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
     // TODO еще ОДНИ метод перенесенный в метод GET
 
 
-    protected StringBuffer Метод_МетодаGETОтправляемБлокировкуПользователюID(HttpServletResponse response,
-                                                                             String ПараметрФильтрЗадааниеДляСервлета, Integer IDПолученныйИзSQlServerПосик, Connection conn) {
-        StringBuffer ПолучаемОтSqlServerСтатусНАПользователяАндройдНЕЗАпблорированЛиОн = new StringBuffer();
+    protected StringBuffer Метод_МетодаСтатусЗаблорированогоКлиента(String ПараметрФильтрЗадааниеДляСервлета,
+                                                                    Integer IDПолученныйИзSQlServerПосик) {
+        StringBuffer БуферЗаблорированого = new StringBuffer();
         // TODO ЗАПУСКАЕМ МЕНЕДЖЕР ПОТОКОВ ДЯЛ ПЕРВОГО ЗАДАНИЕ ВЕРСИЮ ДАННЫХ
         boolean РезультатЗаблокированПользовательИлиНЕТ = false;
         try {
-            ЛОГ.log(" Хотим Получить Статус Блокировки Пользователя по ID " + ПараметрФильтрЗадааниеДляСервлета
-                    + " IDПолученныйИзSQlServerПосик " + IDПолученныйИзSQlServerПосик);
-            String queryJSON = null;
             String ФиналРезультатЗаблокированПользовательИлиНЕТ = null;
             queryJSON = " SELECT locked FROM     [storage].[dbo].[users]        WHERE id = "
                     + IDПолученныйИзSQlServerПосик + "   AND date_update IS NOT NULL   ;"; // цифра
-            PreparedStatement РезультатПолученияСтатусаЗаблокированогоПользователя = conn.prepareStatement(queryJSON,
-                    ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
-            ResultSet resultSetРезультатПолученияСтатусаЗаблокированогоПользователя = РезультатПолученияСтатусаЗаблокированогоПользователя
-                    .executeQuery();
-            resultSetРезультатПолученияСтатусаЗаблокированогоПользователя.last();
-            int ФлагХотеЕстьОднаСтрокаДляЦиклаДва = resultSetРезультатПолученияСтатусаЗаблокированогоПользователя
-                    .getRow();
-            resultSetРезультатПолученияСтатусаЗаблокированогоПользователя.beforeFirst();
-            if (ФлагХотеЕстьОднаСтрокаДляЦиклаДва > 0) {
-                while (resultSetРезультатПолученияСтатусаЗаблокированогоПользователя.next()) {
-                    @SuppressWarnings("unused")
-                    int id = resultSetРезультатПолученияСтатусаЗаблокированогоПользователя.getInt("locked");
-                    РезультатЗаблокированПользовательИлиНЕТ = resultSetРезультатПолученияСтатусаЗаблокированогоПользователя
-                            .getBoolean("locked");
-                    /////////////////////////////
-                    ФиналРезультатЗаблокированПользовательИлиНЕТ = String
-                            .valueOf(РезультатЗаблокированПользовательИлиНЕТ);
-                }
-            }
-            ПолучаемОтSqlServerСтатусНАПользователяАндройдНЕЗАпблорированЛиОн
-                    .append(ФиналРезультатЗаблокированПользовательИлиНЕТ);
-            ////
-            if (РезультатПолученияСтатусаЗаблокированогоПользователя != null) {
-                if (!РезультатПолученияСтатусаЗаблокированогоПользователя.isClosed()) {
-                    РезультатПолученияСтатусаЗаблокированогоПользователя.close();
-                }
-            }
-            ЛОГ.log(" ПолучаемОтSqlServerСтатусНАПользователяАндройдНЕЗАпблорированЛиОн"
-                    + ПолучаемОтSqlServerСтатусНАПользователяАндройдНЕЗАпблорированЛиОн);
+
         } catch (Exception e) {
             subClassWriterErros.
                     МетодаЗаписиОшибкиВЛог(e,
@@ -713,7 +646,7 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
                                     getStackTrace(),
                             ЛОГ,"ErrorsLogs/ErrorJbossServletDSU1.txt");
         }
-        return ПолучаемОтSqlServerСтатусНАПользователяАндройдНЕЗАпблорированЛиОн;
+        return БуферЗаблорированого;
 
     }
 
@@ -724,7 +657,7 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
      * @param ПараметрФильтрЗадааниеДляСервлета
      */
     protected StringBuffer Метод_МетодаGETЗаданиеХотимПолучитьРеальныйСтатусРаботыSQLSeever(
-            HttpServletResponse response, String ПараметрФильтрЗадааниеДляСервлета, Connection conn) {
+            HttpServletResponse response, String ПараметрФильтрЗадааниеДляСервлета) {
         StringBuffer БуферПолучаемРЕальныйСтатусРаботыРАботаеЛИСервр = new StringBuffer();
         try {
             System.out.println("ТУТ ОПРАВЛЯЕМ только СТАТУС Хотим Получить Статус Реальной Работы SQL SERVER");
@@ -931,82 +864,5 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
 
     //// ТУТ---ГЕНРИРУЕМ JSON СПИСОК ТАБЛИЦ КОТОРЫХ НАДО ОТПАРВМТЬ КЛИЕНТУ
 
-    /**
-     * @param ПараметрФильтрПолучаемыхТаблицДляАндройда
-     * @param ПараметрИмяТаблицыОтАндройдаGET
-     * @return
-     * @throws SQLException
-     */
-    protected StringBuffer МетодСозданиеJSONТаблицКоторыеНадоОтправитьКлиенту(
-            String ПараметрФильтрПолучаемыхТаблицДляАндройда, String ПараметрИмяТаблицыОтАндройдаGET)
-            throws SQLException {
-        StringWriter stringWriterМассивВерсия;
-        JsonWriter jsonWriterВерсия;
-        StringBuffer БуферСозданогоJSONВерсияБазыSQLserver = null;
-        try {
-            System.out.println("старт метода doGet создание Посылаем версию данных на сервере Version Data SQLServer  "
-                    + ПараметрИмяТаблицыОтАндройдаGET);
-  /*          String queryДляПолучениеСпискаТаблицДляАндройда = "  SELECT *   FROM   [storage].[dbo].["
-                    + ПараметрИмяТаблицыОтАндройдаGET.trim() + "]       ; ";/// ГЛАВНЫЙ,READPAST*/
-
-            String queryДляПолучениеСпискаТаблицДляАндройда = "  SELECT *   FROM  " + ПараметрИмяТаблицыОтАндройдаGET.trim() + "";/// ГЛАВНЫЙ,READPAST
-            //////// запрос вычисляет имя и пароль и id
-            ResultSet РезультатПолучениеВерсииТаблицSQlServera = stmt
-                    .executeQuery(queryДляПолучениеСпискаТаблицДляАндройда);
-            JsonObjectBuilder JsonПоляВерсияБазы = Json.createObjectBuilder();
-            JsonObjectBuilder JSONВерхнийКлючВерсияБазы = Json.createObjectBuilder();
-            String ИдиДляJSONПолеВерсия = null;
-            int КоличествоСтолбцовВБАзеSQLSERVERДляВерсии = РезультатПолучениеВерсииТаблицSQlServera.getMetaData()
-                    .getColumnCount(); /// вычисялем сколько столбцов
-            РезультатПолучениеВерсииТаблицSQlServera.last();
-            @SuppressWarnings("unused")
-            int КоличествоСтрочекВБАзеSQLSERVERДляВерсии = РезультатПолучениеВерсииТаблицSQlServera.getRow();
-            РезультатПолучениеВерсииТаблицSQlServera.beforeFirst();
-            РезультатПолучениеВерсииТаблицSQlServera.last();
-            int ФлагХотеЕстьОднаСтрокаДляЦикла = РезультатПолучениеВерсииТаблицSQlServera.getRow();
-            РезультатПолучениеВерсииТаблицSQlServera.beforeFirst();
-            if (ФлагХотеЕстьОднаСтрокаДляЦикла > 0) {
-                while (РезультатПолучениеВерсииТаблицSQlServera.next()) {
-                    JsonПоляВерсияБазы = Json.createObjectBuilder();
-                    // process data
-                    for (int ИндексПоКолонкам = 1; ИндексПоКолонкам <= КоличествоСтолбцовВБАзеSQLSERVERДляВерсии; ИндексПоКолонкам++) {
-                        РезультатПолучениеВерсииТаблицSQlServera.getMetaData().getColumnName(ИндексПоКолонкам);
-                        /////////////// TODO ПЕРВОЕ дейсвтие
-                        String НазваниеКолонкиКотроеНУжновставить = РезультатПолучениеВерсииТаблицSQlServera
-                                .getMetaData().getColumnName(ИндексПоКолонкам);
-                        String СодержимоеКолонкиВSqlServer = РезультатПолучениеВерсииТаблицSQlServera
-                                .getString(ИндексПоКолонкам);
-                        System.out.println("НазваниеКолонкиКотроеНУжновставить " + НазваниеКолонкиКотроеНУжновставить
-                                + " СодержимоеКолонкиВSqlServer " + СодержимоеКолонкиВSqlServer);
-                        ИдиДляJSONПолеВерсия = String.valueOf(РезультатПолучениеВерсииТаблицSQlServera.getString(3)); /// данное
-                        if (СодержимоеКолонкиВSqlServer != null && НазваниеКолонкиКотроеНУжновставить != null) {////// ЕСЛИ
-                            ///// todo САМА ВСТАВКА ДАННЫХ В JSON
-                            JsonПоляВерсияБазы.add(НазваниеКолонкиКотроеНУжновставить, СодержимоеКолонкиВSqlServer);//// заполение
-                            System.out
-                                    .println("НазваниеКолонкиКотроеНУжновставить " + НазваниеКолонкиКотроеНУжновставить
-                                            + " СодержимоеКолонкиВSqlServer " + СодержимоеКолонкиВSqlServer);
-                        }
-                    }
-                    System.out.println("ИдиДляJSONПолеВерсия " + ИдиДляJSONПолеВерсия);
-                    JSONВерхнийКлючВерсияБазы.add(ИдиДляJSONПолеВерсия, JsonПоляВерсияБазы.build());///// ИНИЗАЛИЦАСИЯ
-                    System.out.println(" JSONВерхнийКлючВерсияБазы " + JSONВерхнийКлючВерсияБазы.toString());
-                    ///////////////////////
-                } // TODO end loop
-            }
-            stringWriterМассивВерсия = new StringWriter();
-            jsonWriterВерсия = Json.createWriter(stringWriterМассивВерсия);/// ОТКРЫВАЕМ
-            jsonWriterВерсия.writeObject(JSONВерхнийКлючВерсияБазы.build());// САМО
-            БуферСозданогоJSONВерсияБазыSQLserver = new StringBuffer();/// СОЗАДАНИЕ
-            БуферСозданогоJSONВерсияБазыSQLserver.append(stringWriterМассивВерсия.getBuffer().toString()).append("\n");//// ПЕРЕВОДИТ
-            System.out.println(" СозданныйJSONМассив Для версии" + БуферСозданогоJSONВерсияБазыSQLserver.toString());
-        } catch (Exception e) {
-            subClassWriterErros.
-                    МетодаЗаписиОшибкиВЛог(e,
-                            Thread.currentThread().
-                                    getStackTrace(),
-                            ЛОГ,"ErrorsLogs/ErrorJbossServletDSU1.txt");
-        }
-        return БуферСозданогоJSONВерсияБазыSQLserver;
-    }
 
 }

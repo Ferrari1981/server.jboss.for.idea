@@ -3,14 +3,8 @@ package businesslogic;
 
 
 import java.util.concurrent.ExecutionException;
-import java.util.concurrent.Future;
 
-import javax.ejb.AsyncResult;
-import javax.ejb.Asynchronous;
-import javax.ejb.LocalBean;
-import javax.ejb.Stateless;
-import javax.ejb.TransactionAttribute;
-import javax.ejb.TransactionAttributeType;
+import javax.ejb.*;
 import javax.inject.Inject;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -21,7 +15,7 @@ import com.sun.istack.NotNull;
 /**
  * Session Bean implementation class BeanPOST
  */
-@Stateless(mappedName = "SessionBeanForPOST")
+@Stateful(mappedName = "SessionBeanForPOST")
 @LocalBean
 @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
 public class BeanPOST {
@@ -50,10 +44,9 @@ public class BeanPOST {
                                @NotNull  HttpServletResponse response) throws InterruptedException, ExecutionException {;
         try {
             ///Todo  получаем данные от клиента
-            Future<StringBuffer>       БуферРезультатPOST= 	 АсинхронныйЗапускPOST(ЛОГ,request,response);
-          //  ЛОГ.log("  БуферРезультатGET  " + БуферРезультатPOST.get());
+          StringBuffer  БуферРезультатPOST=		subClassSessionBeanPOST.МетодЗапускаPOST(request, response, ЛОГ);
             ///Todo получаем данные от Клиента на Сервер
-                bEANCallsBack.МетодBackДанныеКлиенту(response, БуферРезультатPOST.get(), ЛОГ);
+                bEANCallsBack.МетодBackДанныеКлиенту(response, БуферРезультатPOST, ЛОГ);
             ЛОГ.log("\n"+" Starting.... class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
                     " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
                     " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n");
@@ -65,36 +58,6 @@ public class BeanPOST {
                             ЛОГ,"ErrorsLogs/ErrorJbossServletDSU1.txt");
         }
     }
-
-
-
-
-
-    @SuppressWarnings("unused")
-    @Asynchronous
-    private Future<StringBuffer> АсинхронныйЗапускPOST( @NotNull ServletContext ЛОГ,
-                                                        @NotNull HttpServletRequest request,
-                                                        @NotNull  HttpServletResponse response){
-        StringBuffer БуферРезультатPOST=null;
-        try {
-            БуферРезультатPOST=		subClassSessionBeanPOST.ГлавныйМетод_МетодаPOST(request, response, ЛОГ);
-            if(БуферРезультатPOST==null) {
-                БуферРезультатPOST=new StringBuffer();
-            }
-            ЛОГ.log("\n"+" Starting.... class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
-                    " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
-                    " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+  "  БуферРезультатPOST " +БуферРезультатPOST);
-        } catch (Exception e) {
-            subClassWriterErros.
-                    МетодаЗаписиОшибкиВЛог(e,
-                            Thread.currentThread().
-                                    getStackTrace(),
-                            ЛОГ,"ErrorsLogs/ErrorJbossServletDSU1.txt");
-        }
-        return new AsyncResult<StringBuffer>(БуферРезультатPOST);
-    }
-
-
 
 
 }

@@ -52,10 +52,9 @@ public class BeanGET {
                               @NotNull  HttpServletResponse response) throws InterruptedException, ExecutionException {
         try {
             // TODO: 10.03.2023  данные от GET метода
-            Future<StringBuffer>       БуферРезультатGET= 	 АсинхронныйЗапускGET(ЛОГ,request);
-           // ЛОГ.log( "  БуферРезультатGET  " + БуферРезультатGET.get());
+        StringBuffer    БуферРезультатGET=		subClassSessionBeanМетодаGET.ГлавныйМетод_МетодаGET(request,  ЛОГ);
             ///Todo отправляем  клиенту ответ от серверац
-                bEANCallsBack.МетодBackДанныеКлиенту(response, БуферРезультатGET.get(), ЛОГ);
+                bEANCallsBack.МетодBackДанныеКлиенту(response, БуферРезультатGET, ЛОГ);
             ЛОГ.log( " Класс"+Thread.currentThread().getStackTrace()[2].getClassName()
                     +"\n"+
                     " метод "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"
@@ -69,31 +68,6 @@ public class BeanGET {
         }
     }
 
-
-
-
-    @SuppressWarnings("unused")
-    @Asynchronous
-    private Future<StringBuffer> АсинхронныйЗапускGET(@NotNull ServletContext ЛОГ,
-                                                       @NotNull HttpServletRequest request){
-        StringBuffer БуферРезультатGET=null;
-        try {
-            БуферРезультатGET=		subClassSessionBeanМетодаGET.ГлавныйМетод_МетодаGET(request,  ЛОГ);
-            if(БуферРезультатGET==null) {
-                БуферРезультатGET=new StringBuffer();
-            }
-            ЛОГ.log("\n"+" Starting.... class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
-                    " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
-                    " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+  "  БуферРезультатGET " +БуферРезультатGET);
-        } catch (Exception e) {
-            subClassWriterErros.
-                    МетодаЗаписиОшибкиВЛог(e,
-                            Thread.currentThread().
-                                    getStackTrace(),
-                            ЛОГ,"ErrorsLogs/ErrorJbossServletDSU1.txt");
-        }
-        return new AsyncResult<StringBuffer>(БуферРезультатGET);
-    }
 
 
 }
