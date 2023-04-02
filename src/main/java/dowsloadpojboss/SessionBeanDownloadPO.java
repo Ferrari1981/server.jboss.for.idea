@@ -52,8 +52,8 @@ public class SessionBeanDownloadPO {
                                           @NotNull HttpServletResponse response) throws InterruptedException, ExecutionException {
         try {
             // TODO: 10.03.2023  данные от JSON ANALIZE
-            Future<File> ПолучаемJSONФайл= 	 МетодДляJSONФайла(ЛОГ,request,response);
-            МетодBackДанныеКлиентуНовоеПО(response ,ПолучаемJSONФайл.get(),ЛОГ);
+          File ПолучаемJSONФайл= 	 МетодДляJSONФайла(ЛОГ,request,response);
+            МетодBackДанныеКлиентуНовоеПО(response ,ПолучаемJSONФайл,ЛОГ);
             ЛОГ.log("\n"+" Starting.... class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
                     " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
                     " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+  "  ПолучаемJSONФайл " +ПолучаемJSONФайл);
@@ -71,8 +71,8 @@ public class SessionBeanDownloadPO {
                                          @NotNull HttpServletResponse response) throws InterruptedException, ExecutionException {
         try {
             // TODO: 10.03.2023  данные от .APK Download
-            Future<File> ПолучаемAPKФайл= 	 МетодДляAPKФайла(ЛОГ,request,response);
-            МетодBackДанныеКлиентуНовоеПО(response ,ПолучаемAPKФайл.get(),ЛОГ);
+           File ПолучаемAPKФайл= 	 МетодДляAPKФайла(ЛОГ,request,response);
+            МетодBackДанныеКлиентуНовоеПО(response ,ПолучаемAPKФайл,ЛОГ);
             ЛОГ.log("\n"+" Starting.... class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
                     " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
                     " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+  "  ПолучаемAPKФайл " +ПолучаемAPKФайл);
@@ -85,8 +85,8 @@ public class SessionBeanDownloadPO {
         }
     }
 
-    @Asynchronous
-    public Future<File> МетодДляJSONФайла(@NotNull ServletContext ЛОГ, @NotNull HttpServletRequest request,  @NotNull HttpServletResponse response){
+
+    public File МетодДляJSONФайла(@NotNull ServletContext ЛОГ, @NotNull HttpServletRequest request,  @NotNull HttpServletResponse response){
         File fileJson = null;
         try{
             //String filepath ="C:\\Users\\moraru_pi\\AndroidStudioProjectsSERVER\\sous.jboss.idea\\src\\main\\webapp\\update_android_dsu1\\output-metadata.json";
@@ -105,10 +105,10 @@ public class SessionBeanDownloadPO {
                                     getStackTrace(),
                             ЛОГ,"ErrorsLogs/ErrorJbossServletUpdatePO.txt");
         }
-        return new AsyncResult<File>(fileJson);
+        return fileJson;
     }
-    @Asynchronous
-    private Future<File> МетодДляAPKФайла(@NotNull ServletContext ЛОГ,
+
+    private File МетодДляAPKФайла(@NotNull ServletContext ЛОГ,
                                           @NotNull HttpServletRequest request,@NotNull HttpServletResponse response){
         File fileApk = null;
         try {
@@ -128,7 +128,7 @@ public class SessionBeanDownloadPO {
                                     getStackTrace(),
                             ЛОГ,"ErrorsLogs/ErrorJbossServletUpdatePO.txt");
         }
-        return new AsyncResult<File>(fileApk);
+        return fileApk;
     }
 
 

@@ -73,13 +73,13 @@ public class SessionBeanGETRuntimeJboss {// extends WITH
                                          @NotNull  HttpServletResponse response) throws InterruptedException, ExecutionException {;
         try {
             ///Todo  получаем данные от клиента
-            Future<StringBuffer> БуферРезультатRuntime= 	 МетодЗапускаRuntime(request,ЛОГ,response);
+           StringBuffer БуферРезультатRuntime= 	 МетодЗапускаRuntime(request,ЛОГ,response);
             //  ЛОГ.log("  БуферРезультатGET  " + БуферРезультатPOST.get());
             ///Todo получаем данные от Клиента на Сервер
-            bEANCallsBack.МетодBackДанныеКлиенту(response, БуферРезультатRuntime.get(), ЛОГ);
+            bEANCallsBack.МетодBackДанныеКлиенту(response, БуферРезультатRuntime, ЛОГ);
             ЛОГ.log("\n"+" Starting.... class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
                     " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
-                    " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+"  БуферРезультатRuntime  " + БуферРезультатRuntime.get());
+                    " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+"  БуферРезультатRuntime  " + БуферРезультатRuntime );
         } catch (Exception e) {
             subClassWriterErros.
                     МетодаЗаписиОшибкиВЛог(e,
@@ -94,9 +94,9 @@ public class SessionBeanGETRuntimeJboss {// extends WITH
 
 
 
-    @Asynchronous
+
     @SuppressWarnings({ "unused", "deprecation", "rawtypes", "unchecked" })
-    public Future<StringBuffer> МетодЗапускаRuntime(@NotNull HttpServletRequest request,
+    public StringBuffer МетодЗапускаRuntime(@NotNull HttpServletRequest request,
                                                     @NotNull ServletContext ЛОГ,
                                                     @NotNull  HttpServletResponse response) throws SecurityException, SQLException {
         // TODO Auto-generated method stub
@@ -242,7 +242,7 @@ public class SessionBeanGETRuntimeJboss {// extends WITH
                             ЛОГ,"ErrorsLogs/ErrorJbossServletRuntime.txt");
 
         }
-        return new AsyncResult<StringBuffer>(БуферCallsBackДляAndroid);
+        return  БуферCallsBackДляAndroid;
         // AsyncResult<StringBuffer>(БуферCallsBackДляAndroid);
     }
 

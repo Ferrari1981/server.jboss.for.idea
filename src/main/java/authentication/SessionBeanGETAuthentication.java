@@ -74,13 +74,13 @@ public class SessionBeanGETAuthentication {// extends WITH
                                          @NotNull  HttpServletResponse response) throws InterruptedException, ExecutionException {;
         try {
             ///Todo  получаем данные от клиента
-            Future<StringBuffer> БуферРезультатАунтифиация= 	 МетодЗапускаАунтификации(request,ЛОГ);
+            StringBuffer БуферРезультатАунтифиация= 	 МетодЗапускаАунтификации(request,ЛОГ);
             //  ЛОГ.log("  БуферРезультатGET  " + БуферРезультатPOST.get());
             ///Todo получаем данные от Клиента на Сервер
-            bEANCallsBack.МетодBackДанныеКлиенту(response, БуферРезультатАунтифиация.get(), ЛОГ);
+            bEANCallsBack.МетодBackДанныеКлиенту(response, БуферРезультатАунтифиация, ЛОГ);
             ЛОГ.log("\n"+" Starting.... class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
                     " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
-                    " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+"  БуферРезультатАунтифиация  " + БуферРезультатАунтифиация.get());
+                    " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+"  БуферРезультатАунтифиация  " + БуферРезультатАунтифиация );
         } catch (Exception e) {
             subClassWriterErros.
                     МетодаЗаписиОшибкиВЛог(e,
@@ -97,7 +97,7 @@ public class SessionBeanGETAuthentication {// extends WITH
 
 
     @SuppressWarnings({ "unused", "deprecation", "rawtypes", "unchecked" })
-    protected Future<StringBuffer>  МетодЗапускаАунтификации(@NotNull HttpServletRequest request,
+    protected StringBuffer  МетодЗапускаАунтификации(@NotNull HttpServletRequest request,
                                                   @NotNull ServletContext ЛОГ) throws SecurityException, SQLException {
         // TODO Auto-generated method stub
         System.out.println("Конструктор  ЗАПУСК МЕТОДА ИЗ GET ()  ГлавныйМетод_МетодаGET()");
@@ -266,7 +266,7 @@ public class SessionBeanGETAuthentication {// extends WITH
                                     getStackTrace(),
                             ЛОГ,"ErrorsLogs/ErrorJbossServletAuntification.txt");
         }
-        return new AsyncResult<StringBuffer>(БуферCallsBackДляAndroid);
+        return  БуферCallsBackДляAndroid;
         // AsyncResult<StringBuffer>(БуферCallsBackДляAndroid);
     }
 
