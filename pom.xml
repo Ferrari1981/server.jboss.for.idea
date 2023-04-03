@@ -78,11 +78,7 @@
             <version>9.5.0.jre8-preview</version>
         </dependency>
 
-        <dependency>
-            <groupId>com.microsoft.sqlserver</groupId>
-            <artifactId>mssql-jdbc</artifactId>
-            <version>9.5.0.jre11-preview</version>
-        </dependency>
+
 
         <!-- https://mvnrepository.com/artifact/io.reactivex.rxjava3/rxjava -->
         <dependency>
