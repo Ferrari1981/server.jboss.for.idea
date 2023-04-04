@@ -80,7 +80,7 @@
 <label for="range-1">Slider:</label>
 <input name="range-1" id="range-1" data-highlight="true" min="0" max="100" value="40" type="range"/>
 <br><i>---------------------------------------------------------------------------------------------------------</i><br>
-<h2>Добро пожаловать я страница JSP Red Hat Jboss 7 на intellij idea </h2>
+<h2>Добро пожаловать я страница (index.jsp) JSP Red Hat Jboss 7 на intellij idea </h2>
 <h1> ООО "Союз Автодор Иваново "</h1>
 
 <h1><i>Сегодня <%= getFormattedDate() %></i></h1>

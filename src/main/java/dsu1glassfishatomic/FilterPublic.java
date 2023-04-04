@@ -71,7 +71,7 @@ public class FilterPublic implements Filter {
                 
             }else{
                 // TODO: 11.03.2023  нет не имени не пароля
-                RequestDispatcher requestDispatcher = request.getRequestDispatcher("/index.jsp");
+                RequestDispatcher requestDispatcher = request.getRequestDispatcher("/indexfilterpublic.jsp");
                 requestDispatcher.forward(request, response);
 
                 /// requestФильтра.getRequestDispatcher("/index.jsp").forward(requestФильтра, responseОтветКлиенту);
