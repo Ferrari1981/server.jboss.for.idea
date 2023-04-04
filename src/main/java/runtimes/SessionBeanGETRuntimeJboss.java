@@ -47,7 +47,7 @@ public class SessionBeanGETRuntimeJboss {// extends WITH
     @Inject
     SubClassWriterErros subClassWriterErros;
 
-    @Inject
+    @Inject @ProducedCard
     SessionFactory sessionSousJboss;
 
     private Session session;

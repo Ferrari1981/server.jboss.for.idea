@@ -8,25 +8,16 @@
 <%@ page import="org.hibernate.SessionFactory" %>
 <%@ page import="java.nio.file.Path" %>
 <%@ page import="java.nio.file.Paths" %>
+<%@ page import="org.hibernate.Session" %>
 <%!
-    @Inject
-    @ProducedCard
-    SessionFactory sessionSousJboss;
 
     String getFormattedDate()
     {
-
-
-
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-dd-MM HH:mm:ss.SSS");
         System.out.println( "Create Stranizi Sosdannoy DSU-1  JSP --page "+sdf.format(new Date()));
         return sdf.format(new Date());
 
     }
-
-
-
-
 
     String getSessions()
     {
@@ -94,7 +85,6 @@
 
 <h1><i>Сегодня <%= getFormattedDate() %></i></h1>
 <h1><i>Ошибки на Сервере: <%= getSessions() %></i></h1>
-<h1><i> Статус Hibernate : <%= sessionSousJboss %></i></h1>
 <h1><i> Request Context Path: <%= request.getContextPath() %></i></h1>
 <h1><i> Request RequestURI: <%= request.getRequestURI() %></i></h1>
 <h1><i> Request URI: <%= request.getContextPath() %></i></h1>

@@ -25,7 +25,7 @@ public class DSU1JsonServlet extends HttpServlet {
     private BeanGET СессионыйБинGET;
     @EJB
     private BeanPOST СессионыйБинPOST;
-    @Inject
+    @Inject  @ProducedCard
     SessionFactory sessionSousJboss;
     @Inject
     SubClassWriterErros subClassWriterErros;
