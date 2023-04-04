@@ -12,8 +12,9 @@ import java.util.Date;
 // TODO: 09.03.2023  Класс Получение Менеджера для Hibertire
 
 
-@ApplicationScoped
+
 public class MyGetHibernate{
+    @ApplicationScoped
     @Produces
     @ProducedCard
     public SessionFactory sessionSousJboss() {
