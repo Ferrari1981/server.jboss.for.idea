@@ -10,7 +10,7 @@
 <%@ page import="java.nio.file.Paths" %>
 <%!
     @Inject
-    @ProducedCard
+
     SessionFactory sessionSousJboss;
 
     String getFormattedDate()
@@ -94,7 +94,7 @@
 
 <h1><i>Сегодня <%= getFormattedDate() %></i></h1>
 <h1><i>Ошибки на Сервере: <%= getSessions() %></i></h1>
-<h1><i> Статус Hibernate : <%= sessionSousJboss %></i></h1>
+<h1><i> Статус Hibernate : <%= sessionSousJboss.getCurrentSession() %></i></h1>
 <h1><i> Request Context Path: <%= request.getContextPath() %></i></h1>
 <h1><i> Request RequestURI: <%= request.getRequestURI() %></i></h1>
 <h1><i> Request URI: <%= request.getContextPath() %></i></h1>

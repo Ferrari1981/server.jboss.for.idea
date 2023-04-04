@@ -62,7 +62,7 @@ public class SessionBeanGETAuthentication {// extends WITH
     @Inject
     SubClassWriterErros subClassWriterErros;
 
-    @Inject @ProducedCard
+    @Inject
     SessionFactory sessionSousJboss;
 
     private Session session;

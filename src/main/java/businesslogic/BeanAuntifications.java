@@ -30,7 +30,7 @@ public class BeanAuntifications {
     SubClassWriterErros subClassWriterErros;
     private Session session;
     private Transaction sessionTransaction  ;
-    @Inject @ProducedCard
+    @Inject
     SessionFactory sessionSousJboss;
     @Inject
     ObjectMapper getGeneratorJackson;

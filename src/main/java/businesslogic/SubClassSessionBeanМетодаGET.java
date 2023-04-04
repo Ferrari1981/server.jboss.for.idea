@@ -59,7 +59,7 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
     private    Session session;
     private    Transaction sessionTransaction  ;
 
-    @Inject @ProducedCard
+    @Inject
     SessionFactory sessionSousJboss;
 
     @Inject

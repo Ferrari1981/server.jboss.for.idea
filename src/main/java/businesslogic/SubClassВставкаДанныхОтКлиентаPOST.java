@@ -26,7 +26,7 @@ import org.hibernate.Transaction;
 public class SubClassВставкаДанныхОтКлиентаPOST {
     private   ServletContext ЛОГ;
     private Transaction sessionTransaction;
-    @Inject @ProducedCard
+    @Inject
     SessionFactory sessionSousJboss;
     Session    session;
     @Inject
