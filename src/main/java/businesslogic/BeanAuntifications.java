@@ -71,22 +71,22 @@ public class BeanAuntifications {
                 queryДляHiberite.setParameter("login",new String(ЛогинОтКлиента));//8641 8625
                 queryДляHiberite.setParameter("password",new String(ПарольОтКлиента));//8641 8625
            List<model.UsersEntitySuccess>    ЛистДанныеОтHibenide =( List<model.UsersEntitySuccess>) queryДляHiberite.setMaxResults(1).getResultList();
-                // TODO: 02.04.2023 Вытаскиваем Из ПРишедзиъ данных логин и пароль
-                StringBuffer БуферСозданогоJSONJacksonАунтификация = МетодГенерацияJSONJackson(ЛОГ, ЛистДанныеОтHibenide);
-
-
-                Integer IDПолученныйИзSQlServer = ЛистДанныеОтHibenide.get(0).getId();
-                String ЛогинОтКлиентаИзSQlServer= ЛистДанныеОтHibenide.get(0).getLogin();
-                String ПарольИзSQlServer= ЛистДанныеОтHibenide.get(0).getPassword();
-
-
-                ЛОГ.log("\n"+" Starting.... class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
-                        " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
-                        " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+
-                        " ЛистДанныеОтHibenide " +ЛистДанныеОтHibenide.toString()  +  "ЛогинОтКлиентаИзSQlServer "+ЛогинОтКлиентаИзSQlServer +
-                        "ПарольИзSQlServer " +ПарольИзSQlServer  + "IDПолученныйИзSQlServer " +IDПолученныйИзSQlServer);
-
                 if (ЛистДанныеОтHibenide.size() > 0) {
+                    // TODO: 02.04.2023 Вытаскиваем Из ПРишедзиъ данных логин и пароль
+                    StringBuffer БуферСозданогоJSONJacksonАунтификация = МетодГенерацияJSONJackson(ЛОГ, ЛистДанныеОтHibenide);
+
+                    Integer IDПолученныйИзSQlServer = ЛистДанныеОтHibenide.get(0).getId();
+                    String ЛогинОтКлиентаИзSQlServer= ЛистДанныеОтHibenide.get(0).getLogin();
+                    String ПарольИзSQlServer= ЛистДанныеОтHibenide.get(0).getPassword();
+
+
+                    ЛОГ.log("\n"+" Starting.... class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
+                            " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
+                            " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+
+                            " ЛистДанныеОтHibenide " +ЛистДанныеОтHibenide.toString()  +  "ЛогинОтКлиентаИзSQlServer "+ЛогинОтКлиентаИзSQlServer +
+                            "ПарольИзSQlServer " +ПарольИзSQlServer  + "IDПолученныйИзSQlServer " +IDПолученныйИзSQlServer);
+
+
                     //// TODO СЮДА ЗАХОДИМ КОГДА ПОЛЬЗОВАТЕЛЬ
                         if (ЛогинОтКлиента.compareTo(ЛогинОтКлиентаИзSQlServer.toString())==0
                                 &&  ПарольОтКлиента.compareTo(ПарольИзSQlServer.toString())==0
@@ -112,6 +112,13 @@ public class BeanAuntifications {
                                     + " ПарольОтКлиента " +ПарольОтКлиента +
                                     " ЛогинОтКлиента " +ЛогинОтКлиента+ " ИдиДевайсаПолученный "+ИдиДевайсаПолученный);
                         }
+                }else {
+                    //TODO меняем статут и пускак клиента на сервер
+                    РезультатАунтификацииПользователя=false;
+                    ЛОГ.log( " Класс"+Thread.currentThread().getStackTrace()[2].getClassName()
+                            +"\n"+
+                            " метод "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"
+                            + "Строка " + Thread.currentThread().getStackTrace()[2].getLineNumber()+  "РезультатАунтификацииПользователя " +РезультатАунтификацииПользователя);
                 }
                 //TODO
                 ЛОГ.log( " Класс"+Thread.currentThread().getStackTrace()[2].getClassName()
@@ -156,6 +163,7 @@ public class BeanAuntifications {
 
         } catch (Exception e) {
             sessionTransaction.rollback();
+            session.close();
             subClassWriterErros.
                     МетодаЗаписиОшибкиВЛог(e,
                             Thread.currentThread().
