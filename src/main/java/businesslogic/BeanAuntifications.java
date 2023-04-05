@@ -23,7 +23,6 @@ import java.util.*;
  */
 @Stateless(mappedName = "SessionBeanAynt")
 @LocalBean
-@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
 public class BeanAuntifications {
 
     @Inject
