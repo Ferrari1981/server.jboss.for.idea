@@ -4,7 +4,10 @@ package model;
 import org.hibernate.annotations.OptimisticLockType;
 
 import java.io.Serializable;
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
 import javax.persistence.*;
+import javax.transaction.TransactionScoped;
 import java.math.BigDecimal;
 import java.util.Date;
 

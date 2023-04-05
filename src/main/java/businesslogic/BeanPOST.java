@@ -17,6 +17,7 @@ import com.sun.istack.NotNull;
  */
 @Stateless(mappedName = "SessionBeanForPOST")
 @LocalBean
+@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
 public class BeanPOST {
     @Inject
     SubClassSessionBeanPOST subClassSessionBeanPOST;

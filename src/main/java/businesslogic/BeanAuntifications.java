@@ -15,6 +15,7 @@ import javax.inject.Inject;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.swing.text.html.Option;
 import javax.validation.constraints.NotNull;
 import java.util.*;
 
@@ -23,6 +24,7 @@ import java.util.*;
  */
 @Stateless(mappedName = "SessionBeanAynt")
 @LocalBean
+@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
 public class BeanAuntifications {
 
     @Inject
@@ -52,9 +54,9 @@ public class BeanAuntifications {
                     " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
                     " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+ ЛОГ +" request " + request );
 
-            String    ЛогинОтКлиента =((HttpServletRequest) request).getHeader("identifier");
-            String ПарольОтКлиента =((HttpServletRequest) request).getHeader("p_identifier");
-            String ИдиДевайсаПолученный =((HttpServletRequest) request).getHeader("id_device_androis");
+            String    ЛогинОтКлиента =  Optional.ofNullable(((HttpServletRequest) request).getHeader("identifier").toString()).orElse("")     ;
+            String ПарольОтКлиента =  Optional.ofNullable(((HttpServletRequest) request).getHeader("p_identifier").toString()).orElse("");
+            String ИдиДевайсаПолученный = Optional.ofNullable(((HttpServletRequest) request).getHeader("id_device_androis").toString()).orElse("");
             ЛОГ.log(" ЛогинОтКлиента " +ЛогинОтКлиента+" ЛогинОтКлиента " + ЛогинОтКлиента +  " ИдиДевайсаПолученный " +ИдиДевайсаПолученный);
             ////// TODO полученный нданные от Клиента
             if (ЛогинОтКлиента.trim().length()>0 && ПарольОтКлиента.trim().length()>0 && ИдиДевайсаПолученный.trim().length()>0) {
@@ -64,7 +66,8 @@ public class BeanAuntifications {
                 sessionTransaction = session.getTransaction();
                 sessionTransaction.begin();
                 // TODO: 02.04.2023 Проводим Аунтификаций через пароли логин
-                org.hibernate.Query queryДляHiberite   = session.createQuery("SELECT  us FROM model.UsersEntitySuccess us WHERE us.rights =:rights  AND us.login=:login AND us.password=:password ");
+                org.hibernate.Query queryДляHiberite   = session.createQuery("SELECT " +
+                        " us FROM model.UsersEntitySuccess us WHERE us.rights =:rights  AND us.login=:login AND us.password=:password ");
 
                 queryДляHiberite.setParameter("rights",new Integer(2));//8641 8625
                 queryДляHiberite.setParameter("login",new String(ЛогинОтКлиента));//8641 8625

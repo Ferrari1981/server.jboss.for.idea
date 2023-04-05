@@ -35,6 +35,7 @@ import java.util.concurrent.ExecutionException;
 
 @Stateless(mappedName = "SessionBeanGETAuthentication")
 @LocalBean
+@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
 public class SessionBeanGETAuthentication {// extends WITH
 
     private ServletContext ЛОГ;

@@ -27,6 +27,7 @@ import java.util.concurrent.Future;
  */
 @Stateless(mappedName = "SessionBeanDownloadPO")
 @LocalBean
+@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
 public class SessionBeanDownloadPO {
 @Inject
     SubClassWriterErros subClassWriterErros;

@@ -20,6 +20,7 @@ import java.util.concurrent.ExecutionException;
 
 @Stateless(mappedName = "SessionBeanGETRuntimeJboss")
 @LocalBean
+@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
 public class SessionBeanGETRuntimeJboss {// extends WITH
 
     private ServletContext ЛОГ;

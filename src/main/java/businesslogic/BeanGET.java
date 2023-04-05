@@ -21,6 +21,7 @@ import com.sun.istack.NotNull;
  */
 @Stateless(mappedName = "SessionBeanForGET")
 @LocalBean
+@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
 public class BeanGET {
     /**
      * Default constructor.
