@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.Date;
+import java.util.Optional;
 
 
 @WebFilter(value={ "/sous.jboss.tabel", "/sous.jboss.download" ,"/sous.jboss.scanner","/sous.jboss.authentication"},asyncSupported = true)
@@ -43,14 +44,14 @@ public class FilterPublic implements Filter {
             request.setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
             response.setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
                     // TODO: 10.03.2023  проверем статус логин и пароль
-            //Object ЛогинОтAndroid=      ((HttpServletRequest)request).getHeaders("identifier").nextElement();
-            Object ЛогинОтAndroid=      ((HttpServletRequest)request).getHeaders("identifier").nextElement();
+            //Object ЛогинОтAndroid=      ((HttpServletRequest)request).getHeaders("identifier").nextElement()
+            Object IDДевайсаКлиентаPUBLIC=        Optional.ofNullable(((HttpServletRequest)request).getHeaders("id_device_androis").nextElement()).orElse("");
             ЛОГ.log("\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
                     " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
                     " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+
-                    "  ЛогинОтAndroid    doFilter doFilter doFilter ЛогинОтAndroid " +ЛогинОтAndroid);
-            if (ЛогинОтAndroid!=null) {
-                if (ЛогинОтAndroid.toString().length()>5) {
+                    "  ЛогинОтAndroid    doFilter doFilter doFilter IDДевайсаКлиентаPUBLIC " +IDДевайсаКлиентаPUBLIC);
+            if (IDДевайсаКлиентаPUBLIC!=null) {
+                if (IDДевайсаКлиентаPUBLIC.toString().length()>5) {
                     СтатусаАунтификацииПользователя = beanAuntifications.МетодАунтификация(ЛОГ, ((HttpServletRequest)request),  ((HttpServletRequest)request) .getSession());
                 }
                 if (СтатусаАунтификацииПользователя==true) { // pass the request along the filter
@@ -81,7 +82,7 @@ public class FilterPublic implements Filter {
                     " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
                     " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+
                     " Success    doFilter doFilter doFilter СтатусаАунтификацииПользователя " +СтатусаАунтификацииПользователя+
-                     " ЛогинОтAndroid " +ЛогинОтAndroid);
+                     " IDДевайсаКлиентаPUBLIC " +IDДевайсаКлиентаPUBLIC);
         } catch (Exception e) {
             subClassWriterErros.
                     МетодаЗаписиОшибкиВЛог(e,

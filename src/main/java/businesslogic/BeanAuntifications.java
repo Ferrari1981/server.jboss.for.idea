@@ -3,15 +3,21 @@ package businesslogic;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import dsu1glassfishatomic.workinterfaces.ProducedCard;
+import model.UsersEntitySuccess;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.hibernate.query.Query;
 
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 import javax.inject.Inject;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Path;
+import javax.persistence.criteria.Root;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -54,12 +60,12 @@ public class BeanAuntifications {
                     " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
                     " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+ ЛОГ +" request " + request );
 
-            String    ЛогинОтКлиента =  Optional.ofNullable(((HttpServletRequest) request).getHeader("identifier").toString()).orElse("")     ;
-            String ПарольОтКлиента =  Optional.ofNullable(((HttpServletRequest) request).getHeader("p_identifier").toString()).orElse("");
-            String ИдиДевайсаПолученный = Optional.ofNullable(((HttpServletRequest) request).getHeader("id_device_androis").toString()).orElse("");
-            ЛОГ.log(" ЛогинОтКлиента " +ЛогинОтКлиента+" ЛогинОтКлиента " + ЛогинОтКлиента +  " ИдиДевайсаПолученный " +ИдиДевайсаПолученный);
+            String    ЛогинОтКлиента =  Optional.ofNullable(((HttpServletRequest) request).getHeader("identifier") ).orElse("")     ;
+            String ПарольОтКлиента =  Optional.ofNullable(((HttpServletRequest) request).getHeader("p_identifier") ).orElse("");
+            String IDДевайсаКлиента =  Optional.ofNullable(((HttpServletRequest) request).getHeader("id_device_androis") ).orElse("");
+            ЛОГ.log(" ЛогинОтКлиента " +ЛогинОтКлиента+" ЛогинОтКлиента " + ЛогинОтКлиента );
             ////// TODO полученный нданные от Клиента
-            if (ЛогинОтКлиента.trim().length()>0 && ПарольОтКлиента.trim().length()>0 && ИдиДевайсаПолученный.trim().length()>0) {
+            if (ЛогинОтКлиента.trim().length()>3 && ПарольОтКлиента.trim().length()>3 ) {
                 // TODO: 10.03.2023 получение сессиии HIREBIANTE
                 session = sessionSousJboss.getCurrentSession();
                 // TODO: 10.03.2023 получение сессиии Transaction
@@ -93,18 +99,18 @@ public class BeanAuntifications {
                         if (ЛогинОтКлиента.compareTo(ЛогинОтКлиентаИзSQlServer.toString())==0
                                 &&  ПарольОтКлиента.compareTo(ПарольИзSQlServer.toString())==0
                                 && Integer.parseInt(IDПолученныйИзSQlServer.toString())>0
-                                && ИдиДевайсаПолученный.toString().length()>0) { ///// TODO
+                                && IDДевайсаКлиента.toString().length()>0) { ///// TODO
                             //TODO ЗАПЫИСЫВАМ ПУБЛИЧНЫЙ ID  ТЕКУЩЕГО ПОЛЗОВАТКЕЛЯ
                             ЛОГ.setAttribute("IDПолученныйИзSQlServerПосик", IDПолученныйИзSQlServer);
                             ЛОГ.setAttribute("ЛогинПолученныйОтКлиента", ЛогинОтКлиента);
                             ЛОГ.setAttribute("ПарольПолученныйОтКлиента", ПарольОтКлиента);
-                            ЛОГ.setAttribute("АдуДевайсяКлиента", ИдиДевайсаПолученный);
+                            ЛОГ.setAttribute("АдуДевайсяКлиента", IDДевайсаКлиента);
 
 
                             sessionEJB.setAttribute("IDПолученныйИзSQlServerПосик", IDПолученныйИзSQlServer);
                             sessionEJB.setAttribute("ЛогинПолученныйОтКлиента", ЛогинОтКлиента);
                             sessionEJB.setAttribute("ПарольПолученныйОтКлиента", ПарольОтКлиента);
-                            sessionEJB.setAttribute("АдуДевайсяКлиента", ИдиДевайсаПолученный);
+                            sessionEJB.setAttribute("АдуДевайсяКлиента", IDДевайсаКлиента);
 
                             //TODO меняем статут и пускак клиента на сервер ВАЖНО
                             РезультатАунтификацииПользователя=true;
@@ -112,7 +118,7 @@ public class BeanAuntifications {
                                     + ЛогинОтКлиента +
                                     " IDПолученныйИзSQlServer " +IDПолученныйИзSQlServer
                                     + " ПарольОтКлиента " +ПарольОтКлиента +
-                                    " ЛогинОтКлиента " +ЛогинОтКлиента+ " ИдиДевайсаПолученный "+ИдиДевайсаПолученный);
+                                    " ЛогинОтКлиента " +ЛогинОтКлиента+ " IDДевайсаКлиента "+IDДевайсаКлиента);
                         }
                 }else {
                     //TODO меняем статут и пускак клиента на сервер

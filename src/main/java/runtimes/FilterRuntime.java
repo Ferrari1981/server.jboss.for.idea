@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.Date;
+import java.util.Optional;
 
 
 @WebFilter(value={ "/sous.jboss.runtimejboss"},asyncSupported = true)
@@ -34,8 +35,8 @@ public class FilterRuntime implements Filter {
         try {
             request.setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
             response.setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
-                    // TODO: 10.03.2023  проверем статус логин и пароль
-            Object IDДевайсаКлиента=      ((HttpServletRequest)request).getHeaders("id_device_androis").nextElement();
+                    // TODO: 10.03.2023  ТОЛЬКО ID DEVICE
+            Object IDДевайсаКлиента=        Optional.ofNullable(((HttpServletRequest)request).getHeaders("id_device_androis").nextElement()).orElse("");
             ЛОГ.log("\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
                     " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
                     " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+
