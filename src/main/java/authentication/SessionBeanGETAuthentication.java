@@ -7,7 +7,7 @@ import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
-import com.sun.istack.NotNull;
+import org.jetbrains.annotations.NotNull;
 import dsu1glassfishatomic.workinterfaces.ProducedCard;
 import org.hibernate.Query;
 import org.hibernate.Session;
