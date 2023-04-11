@@ -20,6 +20,10 @@
     <property name="hibernate.current_session_context_class">thread</property>
     <property name="hibernate.transaction.jta.platform">org.hibernate.service.jta.platform.internal.JBossAppServerJtaPlatform</property>
     <property name="hibernate.connection.isolation">4</property>
+    <property name="hibernate.transaction.auto_close_session">true</property>
+    <property name="hibernate.dbcp.maxIdle">50</property>
+    <property name="hibernate.dbcp.minIdle">0</property>
+    <property name="hibernate.dbcp.maxWait">180000</property>
 
     <mapping class="model.Fio"/>
     <mapping class="model.Organization"/>
