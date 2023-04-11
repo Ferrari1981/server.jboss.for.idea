@@ -66,10 +66,13 @@
     <property name="hibernate.transaction.jta.platform">org.hibernate.service.jta.platform.internal.JBossAppServerJtaPlatform</property>
     <property name="hibernate.connection.isolation">4</property>
     <property name="hibernate.transaction.auto_close_session">true</property>
-    <property name="hibernate.dbcp.maxIdle">50</property>
-    <property name="hibernate.dbcp.minIdle">0</property>
-    <property name="hibernate.dbcp.maxWait">180000</property>
 
+    <!-- dbcp connection pool configuration -->
+    <property name="hibernate.dbcp.initialSize">50</property>
+    <property name="hibernate.dbcp.maxTotal">200</property>
+    <property name="hibernate.dbcp.maxIdle">10</property>
+    <property name="hibernate.dbcp.minIdle">5</property>
+    <property name="hibernate.dbcp.maxWaitMillis">30000</property>
 
 
     <mapping class="model.Fio"/>

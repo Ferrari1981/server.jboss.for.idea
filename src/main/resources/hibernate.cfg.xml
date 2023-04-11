@@ -67,7 +67,12 @@
     <property name="hibernate.connection.isolation">4</property>
     <property name="hibernate.transaction.auto_close_session">true</property>
 
-
+    <!-- dbcp connection pool configuration -->
+    <property name="hibernate.dbcp.initialSize">50</property>
+    <property name="hibernate.dbcp.maxTotal">200</property>
+    <property name="hibernate.dbcp.maxIdle">10</property>
+    <property name="hibernate.dbcp.minIdle">5</property>
+    <property name="hibernate.dbcp.maxWaitMillis">30000</property>
 
 
     <mapping class="model.Fio"/>
