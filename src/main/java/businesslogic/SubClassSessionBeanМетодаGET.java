@@ -199,7 +199,7 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
                         case "organization":
                             // TODO
                             queryДляHiberite  = session.createQuery(
-                                    " SELECT o FROM Organization o WHERE o.currentTable > :id ");
+                                    " SELECT o FROM  Organization o WHERE o.currentTable > :id ");
                       
                             queryДляHiberite.setParameter("id",new BigDecimal(ПараметрВерсияДанных ));//
                             ЛистДанныеОтHibenide =( List<model.Organization>)  queryДляHiberite.getResultList();
@@ -209,7 +209,7 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
                         case "depatment":
                             // TODO
                             queryДляHiberite = session.createQuery(
-                                    "SELECT d FROM Depatment d   WHERE d.currentTable > :id ");
+                                    "SELECT d FROM  Depatment d   WHERE d.currentTable > :id ");
                       
                             queryДляHiberite.setParameter("id",new BigDecimal(ПараметрВерсияДанных ));
                             ЛистДанныеОтHibenide =( List<model.Depatment>)  queryДляHiberite.getResultList();
@@ -406,7 +406,7 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
                         case "get_materials_data":
                             // TODO
                             queryДляHiberite = session.createQuery(
-                                    " SELECT  getmat FROM GetMaterialsData  getmat  WHERE getmat .currentTable > :id  AND getmat.userUpdate=:user_update ");
+                                    " SELECT  getmat FROM  GetMaterialsData  getmat  WHERE getmat .currentTable > :id  AND getmat.userUpdate=:user_update ");
                             queryДляHiberite.setParameter("id",new BigDecimal(ПараметрВерсияДанных));//8641 8625
                             queryДляHiberite.setParameter("user_update",IDПолученныйИзSQlServerПосик);//8641 8625
                             ЛистДанныеОтHibenide =( List<model.GetMaterialsData>)  queryДляHiberite.getResultList();
@@ -416,7 +416,7 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
                         case "company":
                             // TODO
                             queryДляHiberite = session.createQuery(
-                                    " SELECT  comp FROM Company  comp  WHERE comp .currentTable > :id");
+                                    " SELECT  comp FROM  Company  comp  WHERE comp .currentTable > :id");
                       
                             queryДляHiberite.setParameter("id",new BigDecimal(ПараметрВерсияДанных));//8641 8625
                             ЛистДанныеОтHibenide =( List<model.Company>)  queryДляHiberite.getResultList();
@@ -426,7 +426,7 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
                         case "track":
                             // TODO
                             queryДляHiberite = session.createQuery(
-                                    " SELECT  tr FROM Track tr  WHERE tr .currentTable > :id");
+                                    " SELECT  tr FROM  Track tr  WHERE tr .currentTable > :id");
                       
                             queryДляHiberite.setParameter("id",new BigDecimal(ПараметрВерсияДанных));//8641 8625
                             ЛистДанныеОтHibenide =( List<model.Track>)  queryДляHiberite.getResultList();
