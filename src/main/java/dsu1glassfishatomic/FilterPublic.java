@@ -50,10 +50,10 @@ public class FilterPublic implements Filter {
                     " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
                     " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+
                     "  ЛогинОтAndroid    doFilter doFilter doFilter IDДевайсаКлиентаPUBLIC " +IDДевайсаКлиентаPUBLIC);
-            if (IDДевайсаКлиентаPUBLIC!=null) {
-                if (IDДевайсаКлиентаPUBLIC.toString().length()>5) {
+            if (IDДевайсаКлиентаPUBLIC.toString().length()>5) {
+
                     СтатусаАунтификацииПользователя = beanAuntifications.МетодАунтификация(ЛОГ, ((HttpServletRequest)request),  ((HttpServletRequest)request) .getSession());
-                }
+
                 if (СтатусаАунтификацииПользователя==true) { // pass the request along the filter
                     // TODO: 11.03.2023 ГЛАВНАЯ СТРОЧКА ПЕРЕНАРАВЛЕНИЕ НА СЕВРЕЛТЫ НА ГЛАВНЫЙ КОД
                     chain.doFilter(request,response);

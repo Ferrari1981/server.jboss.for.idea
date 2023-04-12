@@ -36,18 +36,18 @@ public class FilterRuntime implements Filter {
             request.setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
             response.setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
                     // TODO: 10.03.2023  ТОЛЬКО ID DEVICE
-            Object IDДевайсаКлиента=        Optional.ofNullable(((HttpServletRequest)request).getHeaders("id_device_androis").nextElement()).orElse("");
+            Object IDДевайсаКлиентаRuntime=        Optional.ofNullable(((HttpServletRequest)request).getHeaders("id_device_androis").nextElement()).orElse("");
             ЛОГ.log("\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
                     " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
                     " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+
-                    "  ЛогинОтAndroid    doFilter doFilter doFilter IDДевайсаКлиента " +IDДевайсаКлиента);
-            if (IDДевайсаКлиента!=null) {
+                    "  ЛогинОтAndroid    doFilter doFilter doFilter IDДевайсаКлиентаRuntime " +IDДевайсаКлиентаRuntime);
+            if (IDДевайсаКлиентаRuntime.toString().length()>5) {
                     // TODO: 11.03.2023 ГЛАВНАЯ СТРОЧКА ПЕРЕНАРАВЛЕНИЕ НА СЕВРЕЛТЫ НА ГЛАВНЫЙ КОД
                     chain.doFilter(request,response);
                     ЛОГ.log("\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
                             " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
                             " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+
-                            " Success    doFilter doFilter doFilter IDДевайсаКлиента " +IDДевайсаКлиента);
+                            " Success    doFilter doFilter doFilter IDДевайсаКлиента " +IDДевайсаКлиентаRuntime);
             }else{
                 // TODO: 11.03.2023  нет не имени не пароля
              /*   RequestDispatcher requestDispatcher = request.getRequestDispatcher("/index.jsp");
@@ -57,8 +57,8 @@ public class FilterRuntime implements Filter {
             ЛОГ.log("\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
                     " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
                     " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+
-                    " Success    doFilter doFilter doFilter IDДевайсаКлиента " +IDДевайсаКлиента+
-                     " IDДевайсаКлиента " +IDДевайсаКлиента);
+                    " Success    doFilter doFilter doFilter IDДевайсаКлиентаRuntime " +IDДевайсаКлиентаRuntime+
+                     " IDДевайсаКлиентаRuntime " +IDДевайсаКлиентаRuntime);
         } catch (Exception e) {
             subClassWriterErros.
                     МетодаЗаписиОшибкиВЛог(e,
