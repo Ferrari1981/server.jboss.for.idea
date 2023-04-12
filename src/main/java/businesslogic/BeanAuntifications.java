@@ -70,7 +70,9 @@ public class BeanAuntifications {
                 session = sessionSousJboss.getCurrentSession();
                 // TODO: 10.03.2023 получение сессиии Transaction
                 sessionTransaction = session.getTransaction();
-                sessionTransaction.begin();
+                if (!sessionTransaction.isActive()) {
+                    sessionTransaction.begin();
+                }
                 // TODO: 02.04.2023 Проводим Аунтификаций через пароли логин
                 org.hibernate.Query queryДляHiberite   = session.createQuery("SELECT " +
                         " us FROM model.UsersEntitySuccess us WHERE us.rights =:rights  AND us.login=:login AND us.password=:password ");

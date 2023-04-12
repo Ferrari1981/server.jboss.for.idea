@@ -118,7 +118,9 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
                 // TODO: 10.03.2023 получение сессиии Transaction
                 sessionTransaction = session.getTransaction();
                 // TODO: 17.03.2023 ЗАПУСКАЕТ ТРАНЗАКЦИЮ BEGIN
-                sessionTransaction.begin();
+                if (!sessionTransaction.isActive()) {
+                    sessionTransaction.begin();
+                }
                 ЛОГ.log("\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
                         " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
                         " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+ " session " +session  + " sessionTransaction " +sessionTransaction);

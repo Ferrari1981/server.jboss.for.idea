@@ -115,7 +115,9 @@ public class SessionBeanGETRuntimeJboss {// extends WITH
                 session=   sessionSousJboss.getCurrentSession();
                 // TODO: 10.03.2023 получение сессиии Transaction
                 sessionTransaction = session.getTransaction();
-                sessionTransaction.begin();
+                if (!sessionTransaction.isActive()) {
+                    sessionTransaction.begin();
+                }
             }
 
             switch (JobForServer) {

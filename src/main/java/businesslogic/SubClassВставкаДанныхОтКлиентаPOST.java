@@ -44,7 +44,9 @@ public class SubClassВставкаДанныхОтКлиентаPOST {
             // TODO: 14.03.2023  Запускаем Транзакцию
             sessionTransaction =session.getTransaction() ;
             // TODO: 14.03.2023  Запускает Транзакции
-            sessionTransaction.begin();
+            if (!sessionTransaction.isActive()) {
+                sessionTransaction.begin();
+            }
             ЛОГ.log("\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
                     " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
                     " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+
