@@ -52,7 +52,7 @@ public class SubClassSessionBeanPOST {//extends    DSU1JsonServlet
     @SuppressWarnings("unused")
     private Integer ФлагСуществуетЛиВбазеТакойUUIDИеслиЕстьНоБольшеНуляПроизводимОбновлениеАЕслиНольТОВствка = 0;//// TODO
     int ИндексКоличествоПолейdХЭШ = 0;
-    String ПараметрИмяТаблицыОтАндройдаPost = new String();
+    String NameTable = new String();
     boolean АутентификацияПользователяПрошлаУспешна = false;///// КОГДА
     String ТолькоДляАунтификацииИмяПолученныйИзSQlServerПосик = new String();
     int СколькСтрокРезультатЕслиТакойПользовательМетод_POST = 0;
@@ -60,7 +60,7 @@ public class SubClassSessionBeanPOST {//extends    DSU1JsonServlet
     String СодержимоеВставляемогоСтобцаДляПроверкиНаличиеUUID = new String();
     int КоличествоСтолбцовВБАзеSQLSERVER = 0;
     String query = null;
-    String JobsServerСазаданиеДляСервера = null;
+    String JobForServer = null;
     String HeaderИмя = new String();
     String HeaderСодержимое = new String();
     ResultSet РезультатСканированиеИмениИПарольМетодPOST = null;
@@ -99,20 +99,20 @@ public class SubClassSessionBeanPOST {//extends    DSU1JsonServlet
             ЛОГ.log(" ОТРАБОТАЛ МЕТОД ИНИЦИАЛИЗАЦИИ ПЕРЕМЕННЫХ КОТОРЫ Е ПРИШЛИ  МетодПредворительногоПодключенияДляМетодаGETкодИзКонструктора   " +
                     stmt);
             // TODO ПРИШЛИ ПАРАМЕТРЫ В МЕТОДЕ POST
-            ПараметрИмяТаблицыОтАндройдаPost = Optional.ofNullable(request.getParameter("ИмяТаблицыОтАндройда")).map(String::trim).orElse("");
-            ЛОГ.log("  ПараметрИмяТаблицыОтАндройдаPost " + ПараметрИмяТаблицыОтАндройдаPost);
+            NameTable = Optional.ofNullable(request.getParameter("NameTable")).map(String::trim).orElse("");
+            ЛОГ.log("  ПараметрИмяТаблицыОтАндройдаPost " + NameTable);
             ///TODO ПАРАМЕНТ #2
-            JobsServerСазаданиеДляСервера = Optional.ofNullable(request.getParameter("ЗаданиеДляСервлетаВнутриПотока")).map(String::trim).orElse("");
+            JobForServer = Optional.ofNullable(request.getParameter("JobForServer")).map(String::trim).orElse("");
             //TODO post paramentes
-            ЛОГ.log("  ПараметрФильтрПолучаемыхТаблицДляАндройда  " + JobsServerСазаданиеДляСервера);
+            ЛОГ.log("  ПараметрФильтрПолучаемыхТаблицДляАндройда  " + JobForServer);
             ///TODO ПАРАМЕНТ #5
-            switch (JobsServerСазаданиеДляСервера.trim()) {
+            switch (JobForServer.trim()) {
                 case "Получение JSON файла от Андройда":
                     StringBuffer БуферJSONОтАндройда = МетодПолучениеJSONОтКлиента(request);
                     ЛОГ.log("  БуферJSONОтАндройда " + БуферJSONОтАндройда.toString());///// ПРИШЕДШИХ
                     if (БуферJSONОтАндройда.toString().toCharArray().length > 3) {///// ЗАХОДИМ											///// КОД
                         ЛОГ.log("  БуферJSONОтАндройда " + БуферJSONОтАндройда.toString());///// ПРИШЕДШИХ
-                        БуферГлавныйГенерацииJSONДляAndroid = МетодПарсингаJSONФайлПришелОтКлиента(response, ПараметрИмяТаблицыОтАндройдаPost, БуферJSONОтАндройда);
+                        БуферГлавныйГенерацииJSONДляAndroid = МетодПарсингаJSONФайлПришелОтКлиента(response, NameTable, БуферJSONОтАндройда);
                         ЛОГ.log( " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                                 " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"

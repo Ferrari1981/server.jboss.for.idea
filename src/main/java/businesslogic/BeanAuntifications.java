@@ -99,17 +99,14 @@ public class BeanAuntifications {
                         if (ЛогинОтКлиента.compareTo(ЛогинОтКлиентаИзSQlServer.toString())==0
                                 &&  ПарольОтКлиента.compareTo(ПарольИзSQlServer.toString())==0
                                 && Integer.parseInt(IDПолученныйИзSQlServer.toString())>0
-                                && IDДевайсаКлиента.toString().length()>0) { ///// TODO
-                            //TODO ЗАПЫИСЫВАМ ПУБЛИЧНЫЙ ID  ТЕКУЩЕГО ПОЛЗОВАТКЕЛЯ
-                            ЛОГ.setAttribute("IDПолученныйИзSQlServerПосик", IDПолученныйИзSQlServer);
+                                && IDДевайсаКлиента.toString().length()>5) { ///// TODO
+                            //TODO ЗАПЫИСЫВАМ ПУБЛИЧНЫЙ В ЛОГ
+                            ЛОГ.setAttribute("IdUser", IDПолученныйИзSQlServer);
                             ЛОГ.setAttribute("ЛогинПолученныйОтКлиента", ЛогинОтКлиента);
-                            ЛОГ.setAttribute("ПарольПолученныйОтКлиента", ПарольОтКлиента);
                             ЛОГ.setAttribute("АдуДевайсяКлиента", IDДевайсаКлиента);
-
-
+                            //TODO ЗАПЫИСЫВАМ ПУБЛИЧНЫЙ В Session
                             sessionEJB.setAttribute("IDПолученныйИзSQlServerПосик", IDПолученныйИзSQlServer);
                             sessionEJB.setAttribute("ЛогинПолученныйОтКлиента", ЛогинОтКлиента);
-                            sessionEJB.setAttribute("ПарольПолученныйОтКлиента", ПарольОтКлиента);
                             sessionEJB.setAttribute("АдуДевайсяКлиента", IDДевайсаКлиента);
 
                             //TODO меняем статут и пускак клиента на сервер ВАЖНО
