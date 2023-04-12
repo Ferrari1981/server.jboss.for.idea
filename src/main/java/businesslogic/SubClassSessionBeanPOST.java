@@ -50,22 +50,6 @@ public class SubClassSessionBeanPOST {//extends    DSU1JsonServlet
     @SuppressWarnings("unused")
     private HttpServletResponse response;
     @SuppressWarnings("unused")
-    private Integer ФлагСуществуетЛиВбазеТакойUUIDИеслиЕстьНоБольшеНуляПроизводимОбновлениеАЕслиНольТОВствка = 0;//// TODO
-    int ИндексКоличествоПолейdХЭШ = 0;
-    String NameTable = new String();
-    boolean АутентификацияПользователяПрошлаУспешна = false;///// КОГДА
-    String ТолькоДляАунтификацииИмяПолученныйИзSQlServerПосик = new String();
-    int СколькСтрокРезультатЕслиТакойПользовательМетод_POST = 0;
-    Object СодержимоеВставляемогоСтобцаДляПроверкиНаличиеUUIDОбьект;
-    String СодержимоеВставляемогоСтобцаДляПроверкиНаличиеUUID = new String();
-    int КоличествоСтолбцовВБАзеSQLSERVER = 0;
-    String query = null;
-    String JobForServer = null;
-    String HeaderИмя = new String();
-    String HeaderСодержимое = new String();
-    ResultSet РезультатСканированиеИмениИПарольМетодPOST = null;
-    int СколькСтрокРезультатЕслиТакойПользователь_post_метод = 0;
-    String ПарольПолученныйИзSQlServerПосик_МетодPOST = null;
 
     @Inject
     SubClassWriterErros subClassWriterErros;
@@ -99,10 +83,10 @@ public class SubClassSessionBeanPOST {//extends    DSU1JsonServlet
             ЛОГ.log(" ОТРАБОТАЛ МЕТОД ИНИЦИАЛИЗАЦИИ ПЕРЕМЕННЫХ КОТОРЫ Е ПРИШЛИ  МетодПредворительногоПодключенияДляМетодаGETкодИзКонструктора   " +
                     stmt);
             // TODO ПРИШЛИ ПАРАМЕТРЫ В МЕТОДЕ POST
-            NameTable = Optional.ofNullable(request.getParameter("NameTable")).map(String::trim).orElse("");
+         String   NameTable = Optional.ofNullable(request.getParameter("NameTable")).map(String::trim).orElse("");
             ЛОГ.log("  ПараметрИмяТаблицыОтАндройдаPost " + NameTable);
             ///TODO ПАРАМЕНТ #2
-            JobForServer = Optional.ofNullable(request.getParameter("JobForServer")).map(String::trim).orElse("");
+            String    JobForServer = Optional.ofNullable(request.getParameter("JobForServer")).map(String::trim).orElse("");
             //TODO post paramentes
             ЛОГ.log("  ПараметрФильтрПолучаемыхТаблицДляАндройда  " + JobForServer);
             ///TODO ПАРАМЕНТ #5

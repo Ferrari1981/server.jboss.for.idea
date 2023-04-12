@@ -102,8 +102,8 @@ public class BeanAuntifications {
                                 && IDДевайсаКлиента.toString().length()>5) { ///// TODO
                             //TODO ЗАПЫИСЫВАМ ПУБЛИЧНЫЙ В ЛОГ
                             ЛОГ.setAttribute("IdUser", IDПолученныйИзSQlServer);
-                            ЛОГ.setAttribute("ЛогинПолученныйОтКлиента", ЛогинОтКлиента);
-                            ЛОГ.setAttribute("АдуДевайсяКлиента", IDДевайсаКлиента);
+                            ЛОГ.setAttribute("ЛогинПолученныйОтКлиента", ЛогинОтКлиента.trim());
+                            ЛОГ.setAttribute("АдуДевайсяКлиента", IDДевайсаКлиента.trim());
                             //TODO ЗАПЫИСЫВАМ ПУБЛИЧНЫЙ В Session
                             sessionEJB.setAttribute("IDПолученныйИзSQlServerПосик", IDПолученныйИзSQlServer);
                             sessionEJB.setAttribute("ЛогинПолученныйОтКлиента", ЛогинОтКлиента);

@@ -139,9 +139,6 @@ public class SessionBeanGETAuthentication {// extends WITH
                         " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+ " session " +session  + " sessionTransaction " +sessionTransaction);
                 /// TODO КОНЕЦ  НОВЫЕ ПАРАМЕТРЫ HIREBIANTE
             }
-
-            JobForServer = Optional.ofNullable(request.getParameter("JobForServer")).orElse("");
-
             switch (JobForServer) {
                 // TODO ЗАДАНИЕ ДЛЯ СЕРВЕР JOBSERVERTASK #1
                 case "Хотим Получить Версию Данных Сервера":
@@ -183,7 +180,7 @@ public class SessionBeanGETAuthentication {// extends WITH
             //// TODO ЗАКРЫЫВАЕМ КУРСОРЫ ПОСЛЕ ГЕНЕРАЦИИ JSON ДЛЯ КЛИЕНТА
             // TODO
             //TODO ГЕНЕРАЦИЯ JSON ПО НОВОМУ
-            if (ЛистДанныеОтHibenide!=null) {
+            if (ЛистДанныеОтHibenide.size()>0) {
                 БуферCallsBackДляAndroid = МетодГенерацияJSONJackson(ЛистДанныеОтHibenide);
             }
             // TODO: 02.04.2023 закрываем сессию

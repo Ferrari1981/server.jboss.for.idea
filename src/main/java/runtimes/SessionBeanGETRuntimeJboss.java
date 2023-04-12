@@ -138,6 +138,8 @@ public class SessionBeanGETRuntimeJboss {// extends WITH
             МетодЗакрываемСессиюHibernate(ЛОГ);
             /////// ошибки метода doGET
         } catch (Exception e) {
+            sessionTransaction.rollback();
+            session.close();
             subClassWriterErros.
                     МетодаЗаписиОшибкиВЛог(e,
                             Thread.currentThread().
