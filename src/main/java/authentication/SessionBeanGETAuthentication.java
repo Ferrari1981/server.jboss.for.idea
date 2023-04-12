@@ -50,8 +50,6 @@ public class SessionBeanGETAuthentication {// extends WITH
     @SuppressWarnings("unused")
     private String ПарольПолученныйОтКлиента = null;
     private String ЛогинПолученныйОтКлиента = null;
-    private Long ПараметрВерсияДанных = 0l;//TOD ВЕРСИЯ ДАННЫХ
-    private Integer ПараметрТекущийПользователь = 0;  //TODO ТЕКУЩИЙ ПОЛЬЗОВАТЕЛЬ
     @SuppressWarnings("unused")
     private HttpServletRequest request;
     private HttpServletResponse response;
@@ -109,119 +107,42 @@ public class SessionBeanGETAuthentication {// extends WITH
         // TODO Auto-generated method stub
         StringBuffer БуферCallsBackДляAndroid = new StringBuffer();
         try  {
-            List<?>        ЛистДанныеОтHibenide = null;
             this.ЛОГ = ЛОГ;
             // TODO
             this.request = request;
             /// TODO
             this.response = response;
-            // TODO Коннектимся к Базе SQl Server
             ЛОГ.log("ЛОГ  GET() " + ЛОГ + " request " + request + " response " + response);
             // TODO получаем session
-            ЛОГ.log("ЗАПУСКАЕТСЯ....... ГЛАВНЫЙ МЕТОД GET() СЕРВЛЕТА " + new Date() + "\n" + ЛОГ.getServerInfo()
-                    + "  request " + request + " response " + response + " ЛОГ" + ЛОГ);
-            // TODO ГАЛВНЫЙ МЕТОД GET НАЧИНАЕТ РАБОТАТЬ
-            String JobsFroServerЗаданиеДляСервера = null;
-            String ПараметрФильтрНаДанныеСервлета = null;
-            String JobsServerСазаданиеДляСервера = null;
-            String ПараметрКонкретнаяТаблицаВПотокеВнутриПотока = null;
+            /// TODO ПАРАМЕНТ #1
+            Integer IdUser = Optional.ofNullable(ЛОГ.getAttribute("IdUser").toString()).map(Integer::new).orElse(0);
+            /// TODO ПАРАМЕНТ #2
+            String     NameTable = Optional.ofNullable(request.getParameter("NameTable")).map(String::trim).orElse("");
+            /// TODO ПАРАМЕНТ #3
+            String      JobForServer = Optional.ofNullable(request.getParameter("JobForServer")).map(String::trim).orElse("");
+            /// TODO ПАРАМЕНТ #4
+            Long VersionData = Optional.ofNullable(request.getParameter("VersionData")).map(Long::new).orElse(0l);
 
+            System.out.println("  IdUser " + IdUser);
+            org.hibernate.Query queryДляHiberite = null;
+            List<?> ЛистДанныеОтHibenide  = new ArrayList<>();
 
-
-            String результатшифрование;
-            String РезультатОбновлениеДляОтправкиВАндройд;//// для понимания
-            String пароль;
-            int КоличествоСтрокВБАзеSQLSERVER = 0;;
-
-            int ДляПосикаКоличествоСтолбцовВБАзеSQLSERVER;
-            String queryJSON = new String(); /// ПОЛУЧЕННЫЙ JSON САМО ТЕЛО ОТВЕТА
-            String ПараметрФильтрНаДанныеСервлетаКонкретнаяТАблицаКоторойНУжноВерсиюУзнать;//// ;//////указываем
-            int РазрешонныеПрава = 2;// TODO права для табельного учёта 2 два только
-            // Количество колонок в результирующем запросе
-            int СколькСтрокРезультатЕслиТакойПользовательМетод_GET = 0;
-            ЛОГ.log("СТАРТ/START МЕТОД/METOD  protected void doGet  logger  ::: " + new Date() + "\n");
-            /// TODO logginf info
-            ЛОГ.log("СТАРТ/START МЕТОД/METOD  protected void doGet  logger  ::: " + "\n");
-            ///// TODO создание клуча
-            /////// асинхронный код запускаем
-            String ТолькоДляАунтификацииИмяПолученныйИзSQlServerПосик = new String();
-            //////
-            String ПараметрИмяТаблицыОтАндройдаGET = new String();/// ОПРЕДЕЛЯЕМ
-            /////// НАЧАЛО КОД ДОСТУПА К СЕРВЛЕТУ
-            String HeaderСодержимое = new String();
-            // Количество колонок в результирующем запросе
-            СколькСтрокРезультатЕслиТакойПользовательМетод_GET = 0;
-            ИмяПолученныйИзSQlServerПосик = new String();/// вычисялем
-            String ПарольПолученныйИзSQlServerПосик = null;
-
-            ResultSet РезультатСканированиеИмениИПароль = null;// ОЧИЩАЕМ
-            String queryСканируемИмяИпароль;
-            String HeaderСодержимоеРасшифрован = null;
-
-
-
-            Integer IDПолученныйИзSQlServerПосик = Optional
-                    .ofNullable(ЛОГ.getAttribute("IDПолученныйИзSQlServerПосик").toString()).map(Integer::new)
-                    .orElse(0);
-            System.out.println("  IDПолученныйИзSQlServerПосик " + IDПолученныйИзSQlServerПосик);
-            Query queryДляHiberite = null;
-            if (IDПолученныйИзSQlServerПосик>0) {
+            if (IdUser>0) {
                 // TODO: 10.03.2023 получение сессиии HIREBIANTE
                 session=   sessionSousJboss.getCurrentSession();
                 // TODO: 10.03.2023 получение сессиии Transaction
                 sessionTransaction = session.getTransaction();
+                // TODO: 17.03.2023 ЗАПУСКАЕТ ТРАНЗАКЦИЮ BEGIN
                 sessionTransaction.begin();
+                ЛОГ.log("\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
+                        " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
+                        " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+ " session " +session  + " sessionTransaction " +sessionTransaction);
+                /// TODO КОНЕЦ  НОВЫЕ ПАРАМЕТРЫ HIREBIANTE
             }
 
+            JobForServer = Optional.ofNullable(request.getParameter("JobForServer")).orElse("");
 
-            /// TODO ПАРАМЕНТ #1
-            ПараметрИмяТаблицыОтАндройдаGET = Optional.ofNullable(request.getParameter("ИмяТаблицыОтАндройда"))
-                    .map(String::trim).orElse("");
-            System.out.println("  ПараметрИмяТаблицыОтАндройдаGET " + ПараметрИмяТаблицыОтАндройдаGET);
-            /// TODO ПАРАМЕНТ #2
-            ПараметрФильтрНаДанныеСервлета = Optional.ofNullable(request.getParameter("ФильтрДляДанныхСервлета"))
-                    .map(String::trim).orElse("");
-            System.out.println("  ПараметрФильтрНаДанныеСервлета  " + ПараметрФильтрНаДанныеСервлета);
-            /// TODO ПАРАМЕНТ #3
-            ПараметрФильтрНаДанныеСервлетаКонкретнаяТАблицаКоторойНУжноВерсиюУзнать = Optional
-                    .ofNullable(request.getParameter("КонкретнаяТАблицаКоторойНУжноВерсиюУзнать")).map(String::trim)
-                    .orElse("");
-            System.out.println("  ПараметрФильтрНаДанныеСервлетаКонкретнаяТАблицаКоторойНУжноВерсиюУзнать  "
-                    + ПараметрФильтрНаДанныеСервлетаКонкретнаяТАблицаКоторойНУжноВерсиюУзнать);
-            /// TODO ПАРАМЕНТ #4
-            JobsServerСазаданиеДляСервера = Optional.ofNullable(request.getParameter("ЗаданиеДляСервлетаВнутриПотока"))
-                    .map(String::trim).orElse("");
-            System.out.println("  ПараметрФильтрПолучаемыхТаблицДляАндройда  " + JobsServerСазаданиеДляСервера);
-            /// TODO ПАРАМЕНТ #5
-            ПараметрКонкретнаяТаблицаВПотокеВнутриПотока = Optional
-                    .ofNullable(request.getParameter("КонкретнаяТаблицаВПотоке")).map(String::trim).orElse("");
-            System.out.println(
-                    "  ПараметрКонкретнаяТаблицаВПотокеВнутриПотока  " + ПараметрКонкретнаяТаблицаВПотокеВнутриПотока);
-
-            /// TODO ПАРАМЕНТ #7
-            String ПараметрПользовательФильтр=Optional.ofNullable(request.getParameter("IDДляПолучениеКонткртнойНабораТаблиц")).map(String::new).orElse("");
-            if(ПараметрПользовательФильтр.length()>0) {
-                ПараметрТекущийПользователь = Optional.ofNullable(ПараметрПользовательФильтр).map(Integer::new).orElse(0);
-                ЛОГ.log("  ПараметрФильтрПолучаемыхТаблицДляАндройда  "+ ПараметрТекущийПользователь); //setParameter
-            }
-
-
-            /// TODO ПАРАМЕНТ #8
-            String ПараметрВерсияДанныхФильтр=	 Optional.ofNullable(request.getParameter("РезультаПолученаяЛокальнаяВерсияДанныхДляОтправкиНаСервер")).map(String::new).orElse("");
-            if (ПараметрВерсияДанныхФильтр.length()>0) {
-                ПараметрВерсияДанных= Optional.ofNullable(ПараметрВерсияДанныхФильтр).map(Long::new).orElse(0l);
-                ЛОГ.log("  РезультатОтАндройдаЕгоЛокальнаяВерсияЧата  "	+ ПараметрВерсияДанных); //setParameter
-            }
-
-            // TODO ТРЕТИЙ ДЕЙСТВИЕ САМА РАБОТА КОТОРУЮ НУЖНО СЕРВЕРУ ВЫПОЛНИТЬ
-
-            ЛОГ.log("request.getParameter(\"ЗаданиеДляСервлетаВнутриПотока\")+ "
-                    + request.getParameter("ЗаданиеДляСервлетаВнутриПотока"));
-
-            JobsFroServerЗаданиеДляСервера = Optional.ofNullable(request.getParameter("ЗаданиеДляСервлетаВнутриПотока"))
-                    .orElse("");
-
-            switch (JobsFroServerЗаданиеДляСервера) {
+            switch (JobForServer) {
                 // TODO ЗАДАНИЕ ДЛЯ СЕРВЕР JOBSERVERTASK #1
                 case "Хотим Получить Версию Данных Сервера":
                       ЛистДанныеОтHibenide = МетодДляКлиентаMODIFITATION_Server(session);
@@ -231,22 +152,22 @@ public class SessionBeanGETAuthentication {// extends WITH
                 // TODO ЗАДАНИЕ ДЛЯ СЕРВЕР JOBSERVERTASK #3
                 case "Хотим Получить ID для Генерации  UUID":
                     БуферCallsBackДляAndroid = Метод_МетодаGETОтпалавляемПубличныйIDПользователюАндройду(
-                            response, IDПолученныйИзSQlServerПосик);
+                            response, IdUser);
                     ЛОГ.log(" БуферCallsBackДляAndroid "
                             + БуферCallsBackДляAndroid.toString());
                     break;
                 // TODO ЗАДАНИЕ ДЛЯ СЕРВЕР JOBSERVERTASK #4
                 case "Хотим Получить Статус Блокировки Пользователя по ID":
                     // TODO ОПРЕДЕЛЯЕМ СТАТУС ПОЛЬЗОВАТЕЛЯ
-                         ЛистДанныеОтHibenide = Метод_МетодаСтатусЗаблорированогоКлиента( IDПолученныйИзSQlServerПосик,session);
+                         ЛистДанныеОтHibenide = Метод_МетодаСтатусЗаблорированогоКлиента( IdUser,session);
                     ЛОГ.log(" Отправили  Хотим Получить Статус Блокировки Пользователя по ID "
-                            + JobsServerСазаданиеДляСервера + " ЛистДанныеОтHibenide " + ЛистДанныеОтHibenide.size() + " IDПолученныйИзSQlServerПосик "+IDПолученныйИзSQlServerПосик);
+                            + JobForServer + " ЛистДанныеОтHibenide " + ЛистДанныеОтHibenide.size() + " IDПолученныйИзSQlServerПосик "+IdUser);
                     break;
                 // TODO ЗАДАНИЕ ДЛЯ СЕРВЕР JOBSERVERTASK #5
                 case "Хотим Получить Статус Реальной Работы SQL SERVER":
                     // TODO РЕАЛЬНЫЙ СТАТУС РАБОТЫ SQL SERVER
                     ЛистДанныеОтHibenide = Метод_РеальнаяСтатусSqlServer();
-                    ЛОГ.log(" Отправили Хотим Получить Статус Реальной Работы SQL SERVER " + JobsServerСазаданиеДляСервера
+                    ЛОГ.log(" Отправили Хотим Получить Статус Реальной Работы SQL SERVER " + JobForServer
                             + " БуферCallsBackДляAndroid "
                             + БуферCallsBackДляAndroid.toString());
                     break;

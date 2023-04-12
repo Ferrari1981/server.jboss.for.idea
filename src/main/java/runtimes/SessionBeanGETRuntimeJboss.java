@@ -35,8 +35,7 @@ public class SessionBeanGETRuntimeJboss {// extends WITH
     @SuppressWarnings("unused")
     private String ПарольПолученныйОтКлиента = null;
     private String ЛогинПолученныйОтКлиента = null;
-    private Long ПараметрВерсияДанных = 0l;//TOD ВЕРСИЯ ДАННЫХ
-    private Integer ПараметрТекущийПользователь = 0;  //TODO ТЕКУЩИЙ ПОЛЬЗОВАТЕЛЬ
+
     @SuppressWarnings("unused")
     private HttpServletRequest request;
     private HttpServletResponse response;
@@ -110,96 +109,23 @@ public class SessionBeanGETRuntimeJboss {// extends WITH
             ЛОГ.log("ЗАПУСКАЕТСЯ....... ГЛАВНЫЙ МЕТОД GET() СЕРВЛЕТА " + new Date() + "\n" + ЛОГ.getServerInfo()
                     + "  request " + request + " response " + response + " ЛОГ" + ЛОГ);
             // TODO ГАЛВНЫЙ МЕТОД GET НАЧИНАЕТ РАБОТАТЬ
-            String JobsFroServerЗаданиеДляСервера = null;
-            String ПараметрФильтрНаДанныеСервлета = null;
-            String JobsServerСазаданиеДляСервера = null;
-            String ПараметрКонкретнаяТаблицаВПотокеВнутриПотока = null;
-
-            String результатшифрование;
-            String РезультатОбновлениеДляОтправкиВАндройд;//// для понимания
-            String пароль;
-            int КоличествоСтрокВБАзеSQLSERVER = 0;
-            int ДляПосикаКоличествоСтолбцовВБАзеSQLSERVER;
-            String queryJSON = new String(); /// ПОЛУЧЕННЫЙ JSON САМО ТЕЛО ОТВЕТА
-            String ПараметрФильтрНаДанныеСервлетаКонкретнаяТАблицаКоторойНУжноВерсиюУзнать;//// ;//////указываем
-            int РазрешонныеПрава = 2;// TODO права для табельного учёта 2 два только
-            // Количество колонок в результирующем запросе
-            int СколькСтрокРезультатЕслиТакойПользовательМетод_GET = 0;
-            ЛОГ.log("СТАРТ/START МЕТОД/METOD  protected void doGet  logger  ::: " + new Date() + "\n");
-            /// TODO logginf info
-            ЛОГ.log("СТАРТ/START МЕТОД/METOD  protected void doGet  logger  ::: " + "\n");
-            ///// TODO создание клуча
-            String ТолькоДляАунтификацииИмяПолученныйИзSQlServerПосик = new String();
-            //////
-            String ПараметрИмяТаблицыОтАндройдаGET = new String();/// ОПРЕДЕЛЯЕМ
-            /////// НАЧАЛО КОД ДОСТУПА К СЕРВЛЕТУ
-            String HeaderСодержимое = new String();
-            ИмяПолученныйИзSQlServerПосик = new String();/// вычисялем
-            String ПарольПолученныйИзSQlServerПосик = null;
-
-            String queryСканируемИмяИпароль;
-            String HeaderСодержимоеРасшифрован = null;
-
-            // TODO: 10.03.2023 получение сессиии HIREBIANTE
-            session=   sessionSousJboss.getCurrentSession();
-            // TODO: 10.03.2023 получение сессиии Transaction
-            sessionTransaction = session.getTransaction();
-            sessionTransaction.begin();
-
-            /// TODO ПАРАМЕНТ #1
-            ПараметрИмяТаблицыОтАндройдаGET = Optional.ofNullable(request.getParameter("ИмяТаблицыОтАндройда"))
-                    .map(String::trim).orElse("");
-            System.out.println("  ПараметрИмяТаблицыОтАндройдаGET " + ПараметрИмяТаблицыОтАндройдаGET);
-            /// TODO ПАРАМЕНТ #2
-            ПараметрФильтрНаДанныеСервлета = Optional.ofNullable(request.getParameter("ФильтрДляДанныхСервлета"))
-                    .map(String::trim).orElse("");
-            System.out.println("  ПараметрФильтрНаДанныеСервлета  " + ПараметрФильтрНаДанныеСервлета);
-            /// TODO ПАРАМЕНТ #3
-            ПараметрФильтрНаДанныеСервлетаКонкретнаяТАблицаКоторойНУжноВерсиюУзнать = Optional
-                    .ofNullable(request.getParameter("КонкретнаяТАблицаКоторойНУжноВерсиюУзнать")).map(String::trim)
-                    .orElse("");
-            System.out.println("  ПараметрФильтрНаДанныеСервлетаКонкретнаяТАблицаКоторойНУжноВерсиюУзнать  "
-                    + ПараметрФильтрНаДанныеСервлетаКонкретнаяТАблицаКоторойНУжноВерсиюУзнать);
-            /// TODO ПАРАМЕНТ #4
-            JobsServerСазаданиеДляСервера = Optional.ofNullable(request.getParameter("ЗаданиеДляСервлетаВнутриПотока"))
-                    .map(String::trim).orElse("");
-            System.out.println("  ПараметрФильтрПолучаемыхТаблицДляАндройда  " + JobsServerСазаданиеДляСервера);
-            /// TODO ПАРАМЕНТ #5
-            ПараметрКонкретнаяТаблицаВПотокеВнутриПотока = Optional
-                    .ofNullable(request.getParameter("КонкретнаяТаблицаВПотоке")).map(String::trim).orElse("");
-            System.out.println(
-                    "  ПараметрКонкретнаяТаблицаВПотокеВнутриПотока  " + ПараметрКонкретнаяТаблицаВПотокеВнутриПотока);
-
-            /// TODO ПАРАМЕНТ #7
-            String ПараметрПользовательФильтр=Optional.ofNullable(request.getParameter("IDДляПолучениеКонткртнойНабораТаблиц")).map(String::new).orElse("");
-            if(ПараметрПользовательФильтр.length()>0) {
-                ПараметрТекущийПользователь = Optional.ofNullable(ПараметрПользовательФильтр).map(Integer::new).orElse(0);
-                ЛОГ.log("  ПараметрФильтрПолучаемыхТаблицДляАндройда  "+ ПараметрТекущийПользователь); //setParameter
+            String   JobForServer = Optional.ofNullable(request.getParameter("JobForServer")).orElse("");
+            if (JobForServer.length()>0) {
+                // TODO: 10.03.2023 получение сессиии HIREBIANTE
+                session=   sessionSousJboss.getCurrentSession();
+                // TODO: 10.03.2023 получение сессиии Transaction
+                sessionTransaction = session.getTransaction();
+                sessionTransaction.begin();
             }
 
-
-            /// TODO ПАРАМЕНТ #8
-            String ПараметрВерсияДанныхФильтр=	 Optional.ofNullable(request.getParameter("РезультаПолученаяЛокальнаяВерсияДанныхДляОтправкиНаСервер")).map(String::new).orElse("");
-            if (ПараметрВерсияДанныхФильтр.length()>0) {
-                ПараметрВерсияДанных= Optional.ofNullable(ПараметрВерсияДанныхФильтр).map(Long::new).orElse(0l);
-                ЛОГ.log("  РезультатОтАндройдаЕгоЛокальнаяВерсияЧата  "	+ ПараметрВерсияДанных); //setParameter
-            }
-
-            // TODO ТРЕТИЙ ДЕЙСТВИЕ САМА РАБОТА КОТОРУЮ НУЖНО СЕРВЕРУ ВЫПОЛНИТЬ
-
-            ЛОГ.log("request.getParameter(\"ЗаданиеДляСервлетаВнутриПотока\")+ " + request.getParameter("ЗаданиеДляСервлетаВнутриПотока"));
-
-            JobsFroServerЗаданиеДляСервера = Optional.ofNullable(request.getParameter("ЗаданиеДляСервлетаВнутриПотока"))
-                    .orElse("");
-
-            switch (JobsFroServerЗаданиеДляСервера) {
+            switch (JobForServer) {
                 // TODO ЗАДАНИЕ ДЛЯ СЕРВЕР JOBSERVERTASK #5
                 case "Хотим Получить Статус Реальной Работы SQL SERVER":
                     // TODO РЕАЛЬНЫЙ СТАТУС РАБОТЫ SQL SERVER
                        ЛистДанныеОтHibenide = Метод_РеальнаяСтатусSqlServer();
-                    ЛОГ.log(" Отправили Хотим Получить Статус Реальной Работы SQL SERVER " + JobsServerСазаданиеДляСервера
-                            + " БуферCallsBackДляAndroid "
-                            + БуферCallsBackДляAndroid.toString());
+                    ЛОГ.log(" Отправили Хотим Получить Статус Реальной Работы SQL SERVER  JobForServer " + JobForServer
+                            + " ЛистДанныеОтHibenide "
+                            + ЛистДанныеОтHibenide.size());
                     break;
                 // TODO ЗАДАНИЯ ДЛЯ СЕРВЕРА НЕТУ
                 default:
