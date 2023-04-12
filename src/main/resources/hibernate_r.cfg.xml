@@ -21,6 +21,7 @@
     <property name="hibernate.transaction.jta.platform">org.hibernate.service.jta.platform.internal.JBossAppServerJtaPlatform</property>
     <property name="hibernate.connection.isolation">4</property>
     <property name="hibernate.transaction.auto_close_session">true</property>
+    <property name="hibernate.generate_statistics=true">true</property>
 
 
     <mapping class="model.Fio"/>
