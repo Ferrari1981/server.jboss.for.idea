@@ -23,6 +23,11 @@
     <property name="hibernate.transaction.auto_close_session">true</property>
     <property name="hibernate.generate_statistics=true">true</property>
 
+    <property name="hibernate.c3p0.preferredTestQuery">select 1;</property>
+    <property name="hibernate.transaction.factory_class">org.hibernate.engine.transaction.internal.jta.JtaStatusHelper</property>
+    <property name="hibernate.transaction.coordinator_class">jta</property>
+    <property name="hibernate.jta.prefer_user_transaction">true</property>
+
 
     <mapping class="model.Fio"/>
     <mapping class="model.Organization"/>

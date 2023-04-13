@@ -42,9 +42,9 @@ public class BEANCallsBack {
             ((HttpServletResponse) response).addHeader("stream_size", String.valueOf(ОбщийРазмерЗаписываемогоФайла));
             PrintWriter МеханизмОтправкиДанныхКлиенту = new PrintWriter(БуферДанныеДляКлиента, true);
             МеханизмОтправкиДанныхКлиенту.write(ГлавныйБуферОтправкиДанныхНААндройд.toString());
+            МеханизмОтправкиДанныхКлиенту.flush();
             response.flushBuffer();
-           while (!response.isCommitted()) ;
-           МеханизмОтправкиДанныхКлиенту.close();
+            МеханизмОтправкиДанныхКлиенту.close();
             ЛОГ.log("\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
@@ -53,6 +53,7 @@ public class BEANCallsBack {
                     ((HttpServletResponse) response).getStatus());
 
         } catch (IOException e) {
+            response.resetBuffer();
             subClassWriterErros.
                     МетодаЗаписиОшибкиВЛог(e,
                             Thread.currentThread().
