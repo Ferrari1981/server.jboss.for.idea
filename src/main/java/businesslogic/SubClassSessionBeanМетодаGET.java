@@ -30,6 +30,7 @@ import org.hibernate.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.sun.istack.NotNull;
+import org.hibernate.resource.transaction.spi.TransactionStatus;
 
 @RequestScoped
 @Produces
@@ -118,7 +119,7 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
                 // TODO: 10.03.2023 получение сессиии Transaction
                 sessionTransaction = session.getTransaction();
                 // TODO: 17.03.2023 ЗАПУСКАЕТ ТРАНЗАКЦИЮ BEGIN
-                if (!sessionTransaction.isActive()) {
+                if (sessionTransaction.getStatus()== TransactionStatus.NOT_ACTIVE) {
                     sessionTransaction.begin();
                 }
                 ЛОГ.log("\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
@@ -426,7 +427,7 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
     private void МетодЗакрываемСессиюHibernate() {
         try{
             if (session!=null) {
-                if (    sessionTransaction.isActive()) {
+                if (sessionTransaction.getStatus()== TransactionStatus.ACTIVE) {
                     sessionTransaction.commit();
                 }
 

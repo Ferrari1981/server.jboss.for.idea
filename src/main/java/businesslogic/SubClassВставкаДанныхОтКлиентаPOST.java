@@ -20,6 +20,7 @@ import io.reactivex.rxjava3.functions.Predicate;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.hibernate.resource.transaction.spi.TransactionStatus;
 
 //TODO
 @RequestScoped
@@ -41,10 +42,10 @@ public class SubClassВставкаДанныхОтКлиентаPOST {
             this.ЛОГ=ЛОГ;
             // TODO: 11.03.2023  Получении Сесии Hiberrnate
             session =sessionSousJboss.getCurrentSession();
+            // TODO: 14.03.2023  Запускает Транзакции
             // TODO: 14.03.2023  Запускаем Транзакцию
             sessionTransaction =session.getTransaction() ;
-            // TODO: 14.03.2023  Запускает Транзакции
-            if (!sessionTransaction.isActive()) {
+            if (sessionTransaction.getStatus()== TransactionStatus.NOT_ACTIVE) {
                 sessionTransaction.begin();
             }
             ЛОГ.log("\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
@@ -327,7 +328,7 @@ public class SubClassВставкаДанныхОтКлиентаPOST {
     private void МетодЗавершенияСеанса() {
         try{
             if (session!=null) {
-                if (    sessionTransaction.isActive()) {
+                if (sessionTransaction.getStatus()== TransactionStatus.ACTIVE) {
                     sessionTransaction.commit();
                 }
 

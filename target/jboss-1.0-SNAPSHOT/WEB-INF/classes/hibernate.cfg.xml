@@ -61,7 +61,7 @@
     <property name="hibernate.hbm2ddl.auto">update</property>
     <property name="connection.pool_size">200</property>
     <property name="hibernate.format_sql">true</property>
-    <property name="connection.autocommit">true</property>
+    <property name="connection.autocommit">false</property>
     <property name="hibernate.current_session_context_class">thread</property>
     <property name="hibernate.transaction.jta.platform">org.hibernate.service.jta.platform.internal.JBossAppServerJtaPlatform</property>
     <property name="hibernate.connection.isolation">4</property>
@@ -71,7 +71,7 @@
     <property name="hibernate.c3p0.preferredTestQuery">select 1</property>
 
     <property name = "hibernate.transaction.manager_lookup_class" >org.hibernate.engine.transaction.jta.platform.internal.JBossAppServerJtaPlatform</property>
-    
+
     <mapping class="model.Fio"/>
     <mapping class="model.Organization"/>
     <mapping class="model.Depatment"/>

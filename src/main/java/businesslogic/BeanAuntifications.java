@@ -8,6 +8,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
+import org.hibernate.resource.transaction.spi.TransactionStatus;
 
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
@@ -70,7 +71,7 @@ public class BeanAuntifications {
                 session = sessionSousJboss.getCurrentSession();
                 // TODO: 10.03.2023 получение сессиии Transaction
                 sessionTransaction = session.getTransaction();
-                if (!sessionTransaction.isActive()) {
+                if (sessionTransaction.getStatus()== TransactionStatus.NOT_ACTIVE) {
                     sessionTransaction.begin();
                 }
                 // TODO: 02.04.2023 Проводим Аунтификаций через пароли логин
@@ -182,7 +183,7 @@ public class BeanAuntifications {
     private void МетодЗакрываемСессиюHibernate(@NotNull ServletContext ЛОГ) {
         try{
             if (session!=null) {
-                if (    sessionTransaction.isActive()) {
+                if (sessionTransaction.getStatus()== TransactionStatus.ACTIVE) {
                     sessionTransaction.commit();
                 }
 

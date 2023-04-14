@@ -6,6 +6,8 @@ import businesslogic.SubClassWriterErros;
 import com.sun.istack.NotNull;
 import dsu1glassfishatomic.workinterfaces.ProducedCard;
 import org.hibernate.*;
+import org.hibernate.resource.transaction.spi.TransactionStatus;
+
 import javax.ejb.*;
 import javax.inject.Inject;
 import javax.servlet.ServletContext;
@@ -115,7 +117,7 @@ public class SessionBeanGETRuntimeJboss {// extends WITH
                 session=   sessionSousJboss.getCurrentSession();
                 // TODO: 10.03.2023 получение сессиии Transaction
                 sessionTransaction = session.getTransaction();
-                if (!sessionTransaction.isActive()) {
+                if (sessionTransaction.getStatus()== TransactionStatus.NOT_ACTIVE) {
                     sessionTransaction.begin();
                 }
             }
@@ -269,7 +271,7 @@ public class SessionBeanGETRuntimeJboss {// extends WITH
     private void МетодЗакрываемСессиюHibernate(@javax.validation.constraints.NotNull ServletContext ЛОГ) {
         try{
             if (session!=null) {
-                if (    sessionTransaction.isActive()) {
+                if (sessionTransaction.getStatus()== TransactionStatus.ACTIVE) {
                     sessionTransaction.commit();
                 }
                 if (session.isOpen()   || session.isConnected()) {

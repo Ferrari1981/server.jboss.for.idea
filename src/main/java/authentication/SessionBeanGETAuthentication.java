@@ -7,6 +7,7 @@ import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
+import org.hibernate.resource.transaction.spi.TransactionStatus;
 import org.jetbrains.annotations.NotNull;
 import dsu1glassfishatomic.workinterfaces.ProducedCard;
 import org.hibernate.Query;
@@ -130,10 +131,10 @@ public class SessionBeanGETAuthentication {// extends WITH
             if (IdUser>0) {
                 // TODO: 10.03.2023 получение сессиии HIREBIANTE
                 session=   sessionSousJboss.getCurrentSession();
+                // TODO: 17.03.2023 ЗАПУСКАЕТ ТРАНЗАКЦИЮ BEGIN
                 // TODO: 10.03.2023 получение сессиии Transaction
                 sessionTransaction = session.getTransaction();
-                // TODO: 17.03.2023 ЗАПУСКАЕТ ТРАНЗАКЦИЮ BEGIN
-                if (!sessionTransaction.isActive()) {
+                if (sessionTransaction.getStatus()== TransactionStatus.NOT_ACTIVE) {
                     sessionTransaction.begin();
                 }
                 ЛОГ.log("\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
@@ -675,7 +676,7 @@ public class SessionBeanGETAuthentication {// extends WITH
     private void МетодЗакрываемСессиюHibernate(@javax.validation.constraints.NotNull ServletContext ЛОГ) {
         try{
             if (session!=null) {
-                if (    sessionTransaction.isActive()) {
+                if (sessionTransaction.getStatus()== TransactionStatus.ACTIVE) {
                     sessionTransaction.commit();
                 }
 
