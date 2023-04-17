@@ -24,6 +24,7 @@ import javax.persistence.StoredProcedureQuery;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.transaction.TransactionScoped;
 import java.io.IOException;
 import java.io.StringWriter;
 import java.sql.*;
@@ -36,7 +37,7 @@ import java.util.concurrent.ExecutionException;
 
 @Stateless(mappedName = "SessionBeanGETAuthentication")
 @LocalBean
-@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
+@TransactionAttribute(TransactionAttributeType.REQUIRED)
 public class SessionBeanGETAuthentication {// extends WITH
 
     private ServletContext ЛОГ;

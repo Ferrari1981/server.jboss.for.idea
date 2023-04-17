@@ -13,6 +13,8 @@ import javax.inject.Inject;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.transaction.TransactionScoped;
+import javax.transaction.Transactional;
 import java.io.IOException;
 import java.io.StringWriter;
 import java.sql.*;
@@ -22,7 +24,7 @@ import java.util.concurrent.ExecutionException;
 
 @Stateless(mappedName = "SessionBeanGETRuntimeJboss")
 @LocalBean
-@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
+@TransactionAttribute(TransactionAttributeType.REQUIRED)
 public class SessionBeanGETRuntimeJboss {// extends WITH
 
     private ServletContext ЛОГ;
@@ -74,7 +76,8 @@ public class SessionBeanGETRuntimeJboss {// extends WITH
             bEANCallsBack.МетодBackДанныеКлиенту(response, БуферРезультатRuntime, ЛОГ);
             ЛОГ.log("\n"+" Starting.... class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
                     " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
-                    " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+"  БуферРезультатRuntime  " + БуферРезультатRuntime );
+                    " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+"  БуферРезультатRuntime  "
+                    + БуферРезультатRuntime );
         } catch (Exception e) {
             subClassWriterErros.
                     МетодаЗаписиОшибкиВЛог(e,
@@ -154,99 +157,6 @@ public class SessionBeanGETRuntimeJboss {// extends WITH
         return  БуферCallsBackДляAndroid;
         // AsyncResult<StringBuffer>(БуферCallsBackДляAndroid);
     }
-
-
-
-
-
-    // TODO еще один перенесенный в метод GEt метод
-
-
-    protected StringBuffer Метод_МетодаGETОтпалавляемПубличныйIDПользователюАндройду(HttpServletResponse response,
-                                                                                     Integer IDПолученныйИзSQlServerПосик) throws IOException {
-        StringBuffer ПолученныйИзSqlServerПубличныйIDДляОтправкиНААндройд = new StringBuffer();
-        try {
-            System.out.println("ИмяПолученныйИзSQlServerПосик			 " + ИмяПолученныйИзSQlServerПосик);
-            /// TODO проверяем если мся и пароль н
-            ПолученныйИзSqlServerПубличныйIDДляОтправкиНААндройд.append(IDПолученныйИзSQlServerПосик);
-            ЛОГ.log("ИмяПолученныйИзSQlServerПосик			 " + ИмяПолученныйИзSQlServerПосик
-                    + " ПолученныйИзSqlServerПубличныйIDДляОтправкиНААндройд "
-                    + ПолученныйИзSqlServerПубличныйIDДляОтправкиНААндройд.toString()
-                    + " finalIDПолученныйИзSQlServerПосик " + IDПолученныйИзSQlServerПосик);
-        } catch (Exception e) {
-            subClassWriterErros.
-                    МетодаЗаписиОшибкиВЛог(e,
-                            Thread.currentThread().
-                                    getStackTrace(),
-                            ЛОГ,"ErrorsLogs/ErrorJbossServletRuntime.txt");
-        }
-        return ПолученныйИзSqlServerПубличныйIDДляОтправкиНААндройд;
-    }
-
-    // TODO еще ОДНИ метод перенесенный в метод GET
-
-
-    protected StringBuffer Метод_МетодаGETОтправляемБлокировкуПользователюID(HttpServletResponse response,
-                                                                             String ПараметрФильтрЗадааниеДляСервлета, Integer IDПолученныйИзSQlServerПосик, Connection conn) {
-        StringBuffer ПолучаемОтSqlServerСтатусНАПользователяАндройдНЕЗАпблорированЛиОн = new StringBuffer();
-        // TODO ЗАПУСКАЕМ МЕНЕДЖЕР ПОТОКОВ ДЯЛ ПЕРВОГО ЗАДАНИЕ ВЕРСИЮ ДАННЫХ
-        boolean РезультатЗаблокированПользовательИлиНЕТ = false;
-        try {
-            ЛОГ.log(" Хотим Получить Статус Блокировки Пользователя по ID " + ПараметрФильтрЗадааниеДляСервлета
-                    + " IDПолученныйИзSQlServerПосик " + IDПолученныйИзSQlServerПосик);
-            String queryJSON = null;
-            String ФиналРезультатЗаблокированПользовательИлиНЕТ = null;
-            queryJSON = " SELECT locked FROM     [storage].[dbo].[users]        WHERE id = "
-                    + IDПолученныйИзSQlServerПосик + "   AND date_update IS NOT NULL   ;"; // цифра
-            PreparedStatement РезультатПолученияСтатусаЗаблокированогоПользователя = conn.prepareStatement(queryJSON,
-                    ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
-            ResultSet resultSetРезультатПолученияСтатусаЗаблокированогоПользователя = РезультатПолученияСтатусаЗаблокированогоПользователя
-                    .executeQuery();
-            resultSetРезультатПолученияСтатусаЗаблокированогоПользователя.last();
-            int ФлагХотеЕстьОднаСтрокаДляЦиклаДва = resultSetРезультатПолученияСтатусаЗаблокированогоПользователя
-                    .getRow();
-            resultSetРезультатПолученияСтатусаЗаблокированогоПользователя.beforeFirst();
-            if (ФлагХотеЕстьОднаСтрокаДляЦиклаДва > 0) {
-                while (resultSetРезультатПолученияСтатусаЗаблокированогоПользователя.next()) {
-                    @SuppressWarnings("unused")
-                    int id = resultSetРезультатПолученияСтатусаЗаблокированогоПользователя.getInt("locked");
-                    РезультатЗаблокированПользовательИлиНЕТ = resultSetРезультатПолученияСтатусаЗаблокированогоПользователя
-                            .getBoolean("locked");
-                    /////////////////////////////
-                    ФиналРезультатЗаблокированПользовательИлиНЕТ = String
-                            .valueOf(РезультатЗаблокированПользовательИлиНЕТ);
-                }
-            }
-            ПолучаемОтSqlServerСтатусНАПользователяАндройдНЕЗАпблорированЛиОн
-                    .append(ФиналРезультатЗаблокированПользовательИлиНЕТ);
-            ////
-            if (РезультатПолученияСтатусаЗаблокированогоПользователя != null) {
-                if (!РезультатПолученияСтатусаЗаблокированогоПользователя.isClosed()) {
-                    РезультатПолученияСтатусаЗаблокированогоПользователя.close();
-                }
-            }
-            ЛОГ.log(" ПолучаемОтSqlServerСтатусНАПользователяАндройдНЕЗАпблорированЛиОн"
-                    + ПолучаемОтSqlServerСтатусНАПользователяАндройдНЕЗАпблорированЛиОн);
-        } catch (Exception e) {
-            subClassWriterErros.
-                    МетодаЗаписиОшибкиВЛог(e,
-                            Thread.currentThread().
-                                    getStackTrace(),
-                            ЛОГ,"ErrorsLogs/ErrorJbossServletRuntime.txt");
-        }
-        return ПолучаемОтSqlServerСтатусНАПользователяАндройдНЕЗАпблорированЛиОн;
-
-    }
-
-
-
-
-
-
-
-
-
-
 
     // TODO реальный статус POST SQl Servera
     protected List<model.UsersEntity> Метод_РеальнаяСтатусSqlServer() {

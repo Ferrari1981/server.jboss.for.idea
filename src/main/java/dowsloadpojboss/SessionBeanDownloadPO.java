@@ -14,6 +14,7 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.transaction.TransactionScoped;
 import java.io.*;
 import java.net.URI;
 import java.nio.file.Files;
@@ -27,7 +28,7 @@ import java.util.concurrent.Future;
  */
 @Stateless(mappedName = "SessionBeanDownloadPO")
 @LocalBean
-@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
+@TransactionAttribute(TransactionAttributeType.REQUIRED)
 public class SessionBeanDownloadPO {
 @Inject
     SubClassWriterErros subClassWriterErros;

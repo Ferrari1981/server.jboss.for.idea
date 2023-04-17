@@ -23,6 +23,7 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.swing.text.html.Option;
+import javax.transaction.TransactionScoped;
 import javax.validation.constraints.NotNull;
 import java.util.*;
 
@@ -31,7 +32,7 @@ import java.util.*;
  */
 @Stateless(mappedName = "SessionBeanAynt")
 @LocalBean
-@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
+@TransactionAttribute(TransactionAttributeType.REQUIRED)
 public class BeanAuntifications {
 
     @Inject

@@ -13,6 +13,7 @@ import javax.inject.Inject;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.transaction.TransactionScoped;
 
 import com.sun.istack.NotNull;
 
@@ -21,7 +22,7 @@ import com.sun.istack.NotNull;
  */
 @Stateless(mappedName = "SessionBeanForGET")
 @LocalBean
-@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
+@TransactionAttribute(TransactionAttributeType.REQUIRED)
 public class BeanGET {
     /**
      * Default constructor.
