@@ -112,76 +112,18 @@ public class SubClassВставкаДанныхОтКлиентаPOST {
                                                         " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
                                                         + " РезультатОперацииВставкииОбновлениея " + РезультатОперацииВставкииОбновлениея + " РезультатСовершнойОперации " + РезультатСовершнойОперации);
                                                 if (РезультатСовершнойОперации.matches("(.*)OriginalVesion(.*)")) {
-                                                    БуферОтветКлиентуОтСервера	 .append("\n")
-                                                            .append("Success result POST()   insert and update from android")
-                                                            .append("\n")
-                                                            .append("\n")
-                                                            .append(РезультатСовершнойОперации)
-                                                            .append("\n")
-                                                            .append("\n")
-                                                            .append(" таблица обработки ").append(ПараметрИмяТаблицыОтАндройдаPost)
-                                                            .append("\n")
-                                                            .append("Пользователь Операциии")
-                                                            .append("\n")
-                                                            .append("\n")
-                                                            .append(ЛОГ.getAttribute("ЛогинПолученныйОтКлиента"))
-                                                            .append("\n")
-                                                            .append("\n")
-                                                            .append(ЛОГ.getAttribute("АдуДевайсяКлиента"))
-                                                            .append("\n")
-                                                            .append("\n")
-                                                            .append("Времия Операциии")
-                                                            .append("\n")
-                                                            .append("\n")
-                                                            .append(new Date().toString())
-                                                            .append("\n")
-                                                            .append("\n")
-                                                            .append("\n")
-                                                            .append(UUIDСотсыковочныйХранимойПроцедуры[0]);
-                                                    ЛОГ.log(" БуферОтветКлиентуОтСервера " +БуферОтветКлиентуОтСервера);
+                                                    РезультатСовершнойОперации=   РезультатСовершнойОперации.replaceAll("[^0-9]","");
+                                                    // TODO: 18.04.2023  ответ клиенту
+                                                    БуферОтветКлиентуОтСервера.append(РезультатСовершнойОперации);
                                                 }else {
-                                                    //TODO не выбрали ни одну талицу
-                                                    БуферОтветКлиентуОтСервера
-                                                            .append("\n")
-                                                            .append("\n")
-                                                            .append("\n")
-                                                            .append("ERROR result POST()   insert and update from android")
-                                                            .append("\n")
-                                                            .append("\n")
-                                                            .append("Нет таблицы для Обработки ,или самой обработки")
-                                                            .append("\n")
-                                                            .append("\n")
-                                                            .append(" таблица обработки ").append(ПараметрИмяТаблицыОтАндройдаPost)
-                                                            .append("\n")
-                                                            .append("\n")
-                                                            .append("\n")
-                                                            .append("Время операции")
-                                                            .append("\n")
-                                                            .append("\n")
-                                                            .append("\n")
-                                                            .append(new Date().toString())
-                                                            .append("\n")
-                                                            .append("Пользователь Операциии")
-                                                            .append("\n")
-                                                            .append("\n")
-                                                            .append("\n")
-                                                            .append(ЛОГ.getAttribute("ЛогинПолученныйОтКлиента"))
-                                                            .append("\n")
-                                                            .append("\n")
-                                                            .append("\n")
-                                                            .append(ЛОГ.getAttribute("АдуДевайсяКлиента"))
-                                                            .append("\n")
-                                                            .append("\n")
-                                                            .append("\n")
-                                                            .append(UUIDСотсыковочныйХранимойПроцедуры[0]);
-                                                    ЛОГ.log("NOT TABLE for generations БуферОтветКлиентуОтСервера " +БуферОтветКлиентуОтСервера);
+                                                    БуферОтветКлиентуОтСервера.append("0");
                                                 }
                                             }
                                             ЛОГ.log("\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                                                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
                                                     "  UUIDСотсыковочныйХранимойПроцедуры[0] " + UUIDСотсыковочныйХранимойПроцедуры[0]  + " ЛОГИН "+ЛОГ.getAttribute("ЛогинПолученныйОтКлиента")+
-                                                    " ID ТЕЛЕФОНА "+  ЛОГ.getAttribute("АдуДевайсяКлиента"));
+                                                    " ID ТЕЛЕФОНА "+  ЛОГ.getAttribute("АдуДевайсяКлиента")+" +БуферОтветКлиентуОтСервера"+БуферОтветКлиентуОтСервера );
                                         }
                                     })
                                     .onErrorComplete(new Predicate<Throwable>() {
