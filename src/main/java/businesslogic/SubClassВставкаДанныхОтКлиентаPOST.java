@@ -37,7 +37,8 @@ public class SubClassВставкаДанныхОтКлиентаPOST {
             @NotNull ServletContext ЛОГ,
             @NotNull CopyOnWriteArrayList<Map<String, String>> БуферJSONJackson
             , @NotNull String ПараметрИмяТаблицыОтАндройдаPost) throws SQLException {
-        StringBuffer БуферОтветКлиентуОтСервера=new StringBuffer();
+        final String[] РезультатСовершнойОперации = {null};
+        StringBuffer  БуферОтветКлиентуОперации=new StringBuffer();
         try {
             this.ЛОГ=ЛОГ;
             // TODO: 11.03.2023  Получении Сесии Hiberrnate
@@ -100,30 +101,20 @@ public class SubClassВставкаДанныхОтКлиентаPOST {
                                         public void run() throws Throwable {
                                             queryprocedure.registerStoredProcedureParameter("SrabnitUUIDOrID", String.class, ParameterMode.IN).setParameter("SrabnitUUIDOrID", UUIDСотсыковочныйХранимойПроцедуры[0]);
                                             queryprocedure.registerStoredProcedureParameter("ResultatMERGE", String.class, ParameterMode.INOUT).setParameter("ResultatMERGE", "complete merge");
-
                                             Integer РезультатОперацииВставкииОбновлениея=  МетодСамогоВыполенияУдаленнойПроцедуры(queryprocedure,ЛОГ,ПараметрИмяТаблицыОтАндройдаPost);
-                                            String РезультатСовершнойОперации= null;
-
                                             if (РезультатОперацииВставкииОбновлениея>0) {
                                                 //TODO получаем ответный результат
-                                                РезультатСовершнойОперации = (String) queryprocedure.getOutputParameterValue("ResultatMERGE");
+                                                РезультатСовершнойОперации[0] = (String) queryprocedure.getOutputParameterValue("ResultatMERGE");
                                                 ЛОГ.log("\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                                         " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                                                         " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
-                                                        + " РезультатОперацииВставкииОбновлениея " + РезультатОперацииВставкииОбновлениея + " РезультатСовершнойОперации " + РезультатСовершнойОперации);
-                                                if (РезультатСовершнойОперации.matches("(.*)OriginalVesion(.*)")) {
-                                                    РезультатСовершнойОперации=   РезультатСовершнойОперации.replaceAll("[^0-9]","");
-                                                    // TODO: 18.04.2023  ответ клиенту
-                                                    БуферОтветКлиентуОтСервера.append(РезультатСовершнойОперации);
-                                                }else {
-                                                    БуферОтветКлиентуОтСервера.append("0");
-                                                }
+                                                        + " РезультатОперацииВставкииОбновлениея " + РезультатОперацииВставкииОбновлениея + " РезультатСовершнойОперации " + РезультатСовершнойОперации[0]);
                                             }
                                             ЛОГ.log("\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                                                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
                                                     "  UUIDСотсыковочныйХранимойПроцедуры[0] " + UUIDСотсыковочныйХранимойПроцедуры[0]  + " ЛОГИН "+ЛОГ.getAttribute("ЛогинПолученныйОтКлиента")+
-                                                    " ID ТЕЛЕФОНА "+  ЛОГ.getAttribute("АдуДевайсяКлиента")+" +БуферОтветКлиентуОтСервера"+БуферОтветКлиентуОтСервера );
+                                                    " ID ТЕЛЕФОНА "+  ЛОГ.getAttribute("АдуДевайсяКлиента")+" + РезультатСовершнойОперации[0] "+ РезультатСовершнойОперации[0]  );
                                         }
                                     })
                                     .onErrorComplete(new Predicate<Throwable>() {
@@ -151,10 +142,20 @@ public class SubClassВставкаДанныхОтКлиентаPOST {
                                 @Override
                                 public void run() throws Throwable {
                                     //TODO после цикла всех строк выключаем менеджеры сущностей  ПОСЛЕ ЦИКЛА С ДАННЫМИ
+                                    if (РезультатСовершнойОперации[0].matches("(.*)OriginalVesion(.*)")) {
+                                        int indexbegin = РезультатСовершнойОперации[0].indexOf("OriginalVesion");
+                                        РезультатСовершнойОперации[0]=РезультатСовершнойОперации[0].substring(indexbegin,РезультатСовершнойОперации[0].length());
+                                        РезультатСовершнойОперации[0] =   РезультатСовершнойОперации[0].replaceAll("[^0-9]","");
+                                    }else {
+                                        РезультатСовершнойОперации[0]="0";
+                                    }
+                                    БуферОтветКлиентуОперации.append(РезультатСовершнойОперации[0]);
+                                    // TODO: 18.04.2023
                                     МетодЗавершенияСеанса();
                                     ЛОГ.log("\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
+                                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"  + " РезультатСовершнойОперации[0] " +РезультатСовершнойОперации[0]+
+                                            " БуферОтветКлиентуОперации " +БуферОтветКлиентуОперации);
                                 }
                             })
                             .blockingSubscribe();
@@ -166,7 +167,7 @@ public class SubClassВставкаДанныхОтКлиентаPOST {
                             " session  " + session + " sessionSousJboss " + sessionSousJboss);
                 }
             //TODO
-            ЛОГ.log("БуферОтветКлиентуОтСервера  "+ БуферОтветКлиентуОтСервера.toString());
+            ЛОГ.log("РезультатСовершнойОперации[0]  "+ РезультатСовершнойОперации[0].toString());
         } catch (Exception   e) {
             sessionTransaction.rollback();
             session.close();
@@ -178,7 +179,7 @@ public class SubClassВставкаДанныхОтКлиентаPOST {
                                     getStackTrace(),
                             ЛОГ,"ErrorsLogs/ErrorJbossServletDSU1.txt");
         }
-        return БуферОтветКлиентуОтСервера;
+        return БуферОтветКлиентуОперации;
     }
 
 
