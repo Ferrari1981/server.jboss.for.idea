@@ -50,7 +50,7 @@ public class BEANCallsBack {
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
                     + " ГлавныйБуферОтправкиДанныхНААндройд " + ГлавныйБуферОтправкиДанныхНААндройд.toString() + "  response.isCommitted() "
                     + response.isCommitted() + "   ((HttpServletResponse) response).getStatus() " +
-                    ((HttpServletResponse) response).getStatus());
+                    ((HttpServletResponse) response).getStatus()+"POOL CURRENT Thread "+Thread.currentThread().getName());
 
         } catch (IOException e) {
             response.resetBuffer();
