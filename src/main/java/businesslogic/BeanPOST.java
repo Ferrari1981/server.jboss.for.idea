@@ -6,6 +6,7 @@ import java.util.concurrent.ExecutionException;
 
 import javax.ejb.*;
 import javax.inject.Inject;
+import javax.servlet.AsyncContext;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -42,12 +43,14 @@ public class BeanPOST {
 
     public void МетодБинаPOST(@NotNull ServletContext ЛОГ,
                                @NotNull HttpServletRequest request,
-                               @NotNull  HttpServletResponse response) throws InterruptedException, ExecutionException {;
+                               @NotNull  HttpServletResponse response,
+                               @NotNull       AsyncContext asy ) throws InterruptedException, ExecutionException {;
         try {
             ///Todo  получаем данные от клиента
           StringBuffer  БуферРезультатPOST=		subClassSessionBeanPOST.МетодЗапускаPOST(request, response, ЛОГ);
             ///Todo получаем данные от Клиента на Сервер
                 bEANCallsBack.МетодBackДанныеКлиенту(response, БуферРезультатPOST, ЛОГ);
+            asy.complete();
             ЛОГ.log("\n"+" Starting.... class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
                     " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
                     " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n");

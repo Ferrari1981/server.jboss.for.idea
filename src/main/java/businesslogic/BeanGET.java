@@ -10,6 +10,7 @@ import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 import javax.inject.Inject;
+import javax.servlet.AsyncContext;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -50,12 +51,14 @@ public class BeanGET {
     @SuppressWarnings("unused")
     public void  МетодБинаGET(@NotNull ServletContext ЛОГ,
                               @NotNull HttpServletRequest request,
-                              @NotNull  HttpServletResponse response) throws InterruptedException, ExecutionException {
+                              @NotNull  HttpServletResponse response,
+                              @NotNull AsyncContext asy  ) throws InterruptedException, ExecutionException {
         try {
             // TODO: 10.03.2023  данные от GET метода
         StringBuffer    БуферРезультатGET=		subClassSessionBeanМетодаGET.ГлавныйМетод_МетодаGET(request,  ЛОГ);
             ///Todo отправляем  клиенту ответ от серверац
                 bEANCallsBack.МетодBackДанныеКлиенту(response, БуферРезультатGET, ЛОГ);
+            asy.complete();
             ЛОГ.log( " Класс"+Thread.currentThread().getStackTrace()[2].getClassName()
                     +"\n"+
                     " метод "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"

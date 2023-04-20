@@ -3,6 +3,7 @@ package businesslogic;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.servlet.AsyncContext;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.ServletResponse;
@@ -69,5 +70,6 @@ public class BEANCallsBack {
                     ((HttpServletResponse) response).getStatus());
         }
     }
+    // TODO МетодКласса отправки данных андройду
 
 }

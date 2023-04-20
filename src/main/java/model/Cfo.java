@@ -47,7 +47,7 @@ private String name;
 
 private int organization;
 
-private int region;
+private Integer region;
 
 @Column(name="user_update")
 private int userUpdate;
@@ -121,11 +121,15 @@ public void setOrganization(int organization) {
         this.organization = organization;
         }
 
-public int getRegion() {
-        return this.region;
+public Integer getRegion() {
+        if(this.region==null) {
+                return 0;
+        }else {
+                return this.region;
+        }
         }
 
-public void setRegion(int region) {
+public void setRegion(Integer region) {
         this.region = region;
         }
 
