@@ -49,7 +49,7 @@ public class DSU1JsonServlet extends HttpServlet {
           req.setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
           resp.setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
            ЛОГ = getServletContext();
-            AsyncContext  asy = req.startAsync(req, resp);
+            final        AsyncContext  asy = req.startAsync(req, resp);
             HttpServletRequest asyrequest = (HttpServletRequest) asy.getRequest();
             HttpServletResponse asyresponse = (HttpServletResponse) asy.getResponse();
             asy.start(()->{
@@ -94,7 +94,7 @@ public class DSU1JsonServlet extends HttpServlet {
            ЛОГ = getServletContext();
             req.setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
             resp.setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
-            AsyncContext    asy = req.startAsync(req, resp);
+            final    AsyncContext    asy = req.startAsync(req, resp);
             HttpServletRequest asyrequest = (HttpServletRequest) asy.getRequest();
             HttpServletResponse asyresponse = (HttpServletResponse) asy.getResponse();
             asy.start(()->{
