@@ -8,7 +8,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.security.NoSuchAlgorithmException;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.*;
@@ -126,13 +125,17 @@ public class SubClassSessionBeanPOST {//extends    DSU1JsonServlet
             // convert JSON string to Map
          CopyOnWriteArrayList<Map<String, String>> БуферJSONJackson = getGeneratorJackson.readValue(БуферJSONотAndroid.toString(),
                  new TypeReference<CopyOnWriteArrayList<Map<String, String>>>() {});
+
+            CopyOnWriteArrayList<model.DataTabel> БуферJSONJackson1 = getGeneratorJackson.readValue(БуферJSONотAndroid.toString(),
+                    new TypeReference<CopyOnWriteArrayList<model.DataTabel>>() {});
+
             //TODO ГЛАВНЫЙ МЕТОДА POST() КОТОРЫЙ ВСТАВЛЯЕТ  И/ИЛИ ОБНОВЛЕНИЯ ДАННЫХ
-           БуферОтветаПослеОперацииДаннымиОтАндройда = subClassВставкаДанныхОтКлиентаPOST.методВставкаИлиОбновлениеДаннымиОтАкдройда(ЛОГ, БуферJSONJackson
-                            , ТаблицаPOST);
+           БуферОтветаПослеОперацииДаннымиОтАндройда = subClassВставкаДанныхОтКлиентаPOST.методCompleteInsertorUpdateData(ЛОГ, БуферJSONJackson
+                            , ТаблицаPOST,БуферJSONJackson1);
             ЛОГ.log( " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+
-                    " БуферJSONJackson " + БуферJSONJackson.size());
+                    " БуферJSONJackson " + БуферJSONJackson.size()+ " БуферJSONJackson1 " +БуферJSONJackson1);
         } catch (Exception e) {
             subClassWriterErros.
                     МетодаЗаписиОшибкиВЛог(e,

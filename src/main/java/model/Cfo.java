@@ -23,7 +23,6 @@ import java.util.Date;
         type = OptimisticLockType.DIRTY)
 @org.hibernate.annotations.DynamicUpdate
 
-
 public class Cfo  implements Serializable {
 private static final long serialVersionUID = 1L;
 

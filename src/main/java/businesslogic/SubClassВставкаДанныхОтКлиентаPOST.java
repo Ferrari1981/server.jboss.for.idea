@@ -1,10 +1,14 @@
 package businesslogic;
 
 
+import java.math.BigDecimal;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.*;
 import java.util.Map.Entry;
 import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.stream.Stream;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.persistence.ParameterMode;
@@ -17,6 +21,8 @@ import io.reactivex.rxjava3.core.Flowable;
 import io.reactivex.rxjava3.functions.Action;
 import io.reactivex.rxjava3.functions.Consumer;
 import io.reactivex.rxjava3.functions.Predicate;
+import model.DataTabel;
+import model.Settingtab;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -33,10 +39,11 @@ public class SubClassВставкаДанныхОтКлиентаPOST {
     @Inject
     SubClassWriterErros subClassWriterErros;
     // TODO: 09.03.2023
-    StringBuffer методВставкаИлиОбновлениеДаннымиОтАкдройда(
+    StringBuffer методCompleteInsertorUpdateData(
             @NotNull ServletContext ЛОГ,
             @NotNull CopyOnWriteArrayList<Map<String, String>> БуферJSONJackson
-            , @NotNull String ПараметрИмяТаблицыОтАндройдаPost) throws SQLException {
+            , @NotNull String ТаблицаPOST,
+            @javax.validation.constraints.NotNull CopyOnWriteArrayList<model.DataTabel> БуферJSONJackson1) throws SQLException {
         final String[] РезультатСовершнойОперации = {null};
         StringBuffer  БуферОтветКлиентуОперации=new StringBuffer();
         try {
@@ -49,12 +56,58 @@ public class SubClassВставкаДанныхОтКлиентаPOST {
             if (sessionTransaction.getStatus()== TransactionStatus.NOT_ACTIVE) {
                 sessionTransaction.begin();
             }
+        // Integer dd=   session.createNativeQuery("SET IDENTITY_INSERT settings_tabels  ON").executeUpdate();
+
+            ЛОГ.log("\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
+                    " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
+                    " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+
+                    " БуферJSONJackson "+БуферJSONJackson.toString()  +
+                    " session  " +session);
+
+
+
+
+            model.Settingtab settingtab=new model.Settingtab();
+
+
+
+             settingtab.setOrganizations(255);
+
+              session.persist(settingtab);
+
+            //session.flush();
+
+
+            sessionTransaction.commit();
+
+            //session.persist(data);
+
+       /*     БуферJSONJackson1.forEach(new Stream.Builder<DataTabel>() {
+                @Override
+                public void accept(DataTabel dataTabel) {
+                    session.saveOrUpdate(dataTabel);
+                    ЛОГ.log("\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
+                            " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
+                            " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+
+                            " БуферJSONJackson "+БуферJSONJackson.toString()  +
+                            " session  " +session + " sessionSousJboss " +sessionSousJboss);
+                }
+
+                @Override
+                public Stream<DataTabel> build() {
+                    return null;
+                }
+            });*/
+            // TODO: 18.04.2023
+            МетодЗавершенияСеанса();
+
+
             ЛОГ.log("\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
                     " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
                     " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+
                     " БуферJSONJackson "+БуферJSONJackson.toString()  +
                     " session  " +session + " sessionSousJboss " +sessionSousJboss);
-                //TODO определем если в таблицы есть поле  UUID или ID
+/*                //TODO определем если в таблицы есть поле  UUID или ID
                 StoredProcedureQuery queryprocedure = МетодПолучениеХранимойПроцедуры(ЛОГ, ПараметрИмяТаблицыОтАндройдаPost);
                 ЛОГ.log("\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
                         " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
@@ -63,7 +116,7 @@ public class SubClassВставкаДанныхОтКлиентаPOST {
                 if(queryprocedure!=null) {
                     ЛОГ.log(" NOT NULL queryprocedure " + queryprocedure);
                     //TODO ГЛАВЕНЫЙ ЦИКЛ ОБРАБОТКИ ДАННЫХ В МЕТОДЕ  POST
-                    final String[] UUIDСотсыковочныйХранимойПроцедуры = {null};
+                    final Long[] UUIDСотсыковочныйХранимойПроцедуры = {0l};
                     Flowable.fromIterable(БуферJSONJackson)
                             .onBackpressureBuffer(true)
                             .doOnNext(new Consumer<Map<String, String>>() {
@@ -75,7 +128,7 @@ public class SubClassВставкаДанныхОтКлиентаPOST {
                                         @Override
                                         public void accept(Entry<String, String> stringStringEntry) throws Throwable {
                                             if (stringStringEntry.getKey().equalsIgnoreCase("uuid")) {
-                                                UUIDСотсыковочныйХранимойПроцедуры[0] = stringStringEntry.getValue().trim();
+                                                UUIDСотсыковочныйХранимойПроцедуры[0] =Long.parseLong(stringStringEntry.getValue().trim()) ;
                                             }
                                             // TODO заполенем JSonValue
                                             queryprocedure.registerStoredProcedureParameter(stringStringEntry.getKey(), String.class, ParameterMode.IN)
@@ -99,9 +152,11 @@ public class SubClassВставкаДанныхОтКлиентаPOST {
                                     .doOnComplete(new Action() {
                                         @Override
                                         public void run() throws Throwable {
-                                            queryprocedure.registerStoredProcedureParameter("SrabnitUUIDOrID", String.class, ParameterMode.IN).setParameter("SrabnitUUIDOrID", UUIDСотсыковочныйХранимойПроцедуры[0]);
-                                            queryprocedure.registerStoredProcedureParameter("ResultatMERGE", String.class, ParameterMode.INOUT).setParameter("ResultatMERGE", "complete merge");
-                                            Integer РезультатОперацииВставкииОбновлениея=  МетодСамогоВыполенияУдаленнойПроцедуры(queryprocedure,ЛОГ,ПараметрИмяТаблицыОтАндройдаPost);
+                                            queryprocedure.registerStoredProcedureParameter("SrabnitUUIDOrID", String.class, ParameterMode.IN)
+                                                    .setParameter("SrabnitUUIDOrID", UUIDСотсыковочныйХранимойПроцедуры[0].toString());
+                                            queryprocedure.registerStoredProcedureParameter("ResultatMERGE", String.class, ParameterMode.INOUT)
+                                                    .setParameter("ResultatMERGE", "complete merge");
+                                            Integer РезультатОперацииВставкииОбновлениея=  МетодСамогоВыполенияУдаленнойПроцедуры(queryprocedure,ЛОГ);
                                             if (РезультатОперацииВставкииОбновлениея>0) {
                                                 //TODO получаем ответный результат
                                                 РезультатСовершнойОперации[0] = (String) queryprocedure.getOutputParameterValue("ResultatMERGE");
@@ -166,7 +221,7 @@ public class SubClassВставкаДанныхОтКлиентаPOST {
                             " БуферJSONJackson " + БуферJSONJackson.toString() +
                             " session  " + session + " sessionSousJboss " + sessionSousJboss);
                 }
-            //TODO
+            //TODO*/
             ЛОГ.log("РезультатСовершнойОперации[0]  "+ РезультатСовершнойОперации[0].toString());
         } catch (Exception   e) {
             sessionTransaction.rollback();
@@ -300,11 +355,10 @@ public class SubClassВставкаДанныхОтКлиентаPOST {
 
     // TODO: 14.03.2023  Метод Самого Выполениея Операции POST EXE
     private Integer МетодСамогоВыполенияУдаленнойПроцедуры(@NotNull  StoredProcedureQuery queryprocedure,
-                                                           @NotNull  ServletContext ЛОГ ,
-                                                           @NotNull String ПараметрИмяТаблицыОтАндройдаPost) {
+                                                           @NotNull  ServletContext ЛОГ) {
         Integer КоличестоУспешныхОперацийНаСервере=0;
         try {
-            ЛОГ.log(" queryprocedure " +queryprocedure + "  ПараметрИмяТаблицыОтАндройдаPost " +ПараметрИмяТаблицыОтАндройдаPost);
+            ЛОГ.log(" queryprocedure " +queryprocedure );
             ////todo выполения .EXE
             queryprocedure.execute();
             // TODO: 14.03.2023  Подсчитиваем КОличество спрешных Операций 

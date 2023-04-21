@@ -43,14 +43,13 @@ public class BeanPOST {
 
     public void МетодБинаPOST(@NotNull ServletContext ЛОГ,
                                @NotNull HttpServletRequest request,
-                               @NotNull  HttpServletResponse response,
-                               @NotNull       AsyncContext asy ) throws InterruptedException, ExecutionException {;
+                               @NotNull  HttpServletResponse response) throws InterruptedException, ExecutionException {;
         try {
             ///Todo  получаем данные от клиента
           StringBuffer  БуферРезультатPOST=		subClassSessionBeanPOST.МетодЗапускаPOST(request, response, ЛОГ);
             ///Todo получаем данные от Клиента на Сервер
                 bEANCallsBack.МетодBackДанныеКлиенту(response, БуферРезультатPOST, ЛОГ);
-            asy.complete();
+            //asy.complete();
             ЛОГ.log("\n"+" Starting.... class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
                     " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
                     " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n");

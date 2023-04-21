@@ -49,13 +49,9 @@ public class DSU1JsonServlet extends HttpServlet {
           req.setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
           resp.setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
            ЛОГ = getServletContext();
-            final        AsyncContext  asy = req.startAsync(req, resp);
-            HttpServletRequest asyrequest = (HttpServletRequest) asy.getRequest();
-            HttpServletResponse asyresponse = (HttpServletResponse) asy.getResponse();
-            asy.start(()->{
                 try{
                 //TODO ЗАПУСКАЕМ КОДЕ МЕТОДА GET()
-                СессионыйБинGET.МетодБинаGET(ЛОГ, asyrequest, asyresponse,asy);
+                СессионыйБинGET.МетодБинаGET(ЛОГ, req, resp);
                 ЛОГ.log("\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                         " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                         " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
@@ -72,8 +68,6 @@ public class DSU1JsonServlet extends HttpServlet {
 
 
             }
-            });
-
         } catch (Exception e) {
             ЛОГ.log( "ERROR class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -94,13 +88,9 @@ public class DSU1JsonServlet extends HttpServlet {
            ЛОГ = getServletContext();
             req.setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
             resp.setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
-            final    AsyncContext    asy = req.startAsync(req, resp);
-            HttpServletRequest asyrequest = (HttpServletRequest) asy.getRequest();
-            HttpServletResponse asyresponse = (HttpServletResponse) asy.getResponse();
-            asy.start(()->{
                 try{
                 //TODO ЗАПУСКАЕМ КОДЕ МЕТОДА POST()
-                СессионыйБинPOST.МетодБинаPOST(ЛОГ,asyrequest,asyresponse,asy);
+                СессионыйБинPOST.МетодБинаPOST(ЛОГ,req,resp);
                 ЛОГ.log("\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
                         " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
                         " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+((HttpServletRequest) req).getPathInfo());
@@ -116,8 +106,6 @@ public class DSU1JsonServlet extends HttpServlet {
 
 
             }
-            });
-
     } catch (Exception e) {
             ЛОГ.log( "ERROR class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
