@@ -1,24 +1,20 @@
 package businesslogic;
 
 
+import java.sql.Array;
 import java.sql.SQLException;
-import java.util.*;
+import java.util.ArrayList;
 import java.util.Map.Entry;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.persistence.ParameterMode;
 import javax.persistence.StoredProcedureQuery;
 import javax.servlet.ServletContext;
-import javax.swing.*;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sun.istack.NotNull;
 import dsu1glassfishatomic.workinterfaces.ProducedCard;
-import io.reactivex.rxjava3.core.Flowable;
-import io.reactivex.rxjava3.functions.Action;
-import io.reactivex.rxjava3.functions.Consumer;
-import io.reactivex.rxjava3.functions.Predicate;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -36,15 +32,15 @@ public class SubClassВставкаДанныхОтКлиентаPOST {
     private   SubClassWriterErros subClassWriterErros;
     @Inject
     private  ObjectMapper getGeneratorJackson;
-    private     StoredProcedureQuery queryprocedure;
+    private         Integer MaxOperations=0;
+
     // TODO: 09.03.2023
     StringBuffer методCompleteInsertorUpdateData(
             @NotNull ServletContext ЛОГ,
             @NotNull StringBuffer bufferОтКлиента
             , @NotNull String ТаблицаPOST) throws SQLException {
-
-        final StringBuffer[] bufferCallsBackFromAndroid = {new StringBuffer()};
         try {
+            ArrayList<Integer> arrayListMaxBackOperation=new ArrayList();
             this.ЛОГ=ЛОГ;
             session =sessionSousJboss.getCurrentSession();      // TODO: 11.03.2023  Получении Сесии Hiberrnate
             sessionTransaction =session.getTransaction() ;
@@ -58,13 +54,6 @@ public class SubClassВставкаДанныхОтКлиентаPOST {
                     " bufferОтКлиента "+bufferОтКлиента.toString()  +
                     " session  " +session + " sessionTransaction.getStatus() "+sessionTransaction.getStatus());
 
-
-                 queryprocedure = методgetStoredProcedure(ЛОГ, ТаблицаPOST);                //TODO Опередяем Хранимая ПРоцедура
-
-                ЛОГ.log("\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
-                        " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
-                        " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+" queryprocedure   " + queryprocedure );
-
             // TODO: 22.04.2023 Новый ПАРСИНГ ОТ JAKSON JSON
             JsonNode jsonNodeParent= getGeneratorJackson.readTree(bufferОтКлиента.toString());
             jsonNodeParent.fields().forEachRemaining(new java.util.function.Consumer<Entry<String, JsonNode>>() {
@@ -72,34 +61,39 @@ public class SubClassВставкаДанныхОтКлиентаPOST {
                 public void accept(Entry<String, JsonNode> stringJsonNodeEntryOne) {
                     String Key=stringJsonNodeEntryOne.getKey().trim();
                     JsonNode jsonNodeChild = jsonNodeParent.get(Key);
+                    // TODO: 22.04.2023 КАКАЯ ТАБЛИЦА
+                    final StoredProcedureQuery[] queryprocedure = {методgetStoredProcedure(ЛОГ, ТаблицаPOST)};
+                    // TODO: 22.04.2023 LOCK TIMEOUT
+                    queryprocedure[0].setHint("javax.persistence.lock.timeout",20000);//TODO Опередяем Хранимая ПРоцедура
+                    ЛОГ.log("\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
+                            " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
+                            " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+" queryprocedure   " + queryprocedure[0]);
+
                     ЛОГ.log("stringJsonNodeEntryOne.getKey() "  + stringJsonNodeEntryOne.getKey() + " stringJsonNodeEntryOne.getValue() " +stringJsonNodeEntryOne.getValue()+  "Key "+Key );
                     jsonNodeChild.fields().forEachRemaining(new java.util.function.Consumer<Entry<String, JsonNode>>() {
                         @Override
                         public void accept(Entry<String, JsonNode> stringJsonNodeEntryTwo) {
-                            ЛОГ.log("stringJsonNodeEntryTwo.getKey() "  + stringJsonNodeEntryTwo.getKey() + " stringJsonNodeEntryTwo.getValue() " +stringJsonNodeEntryTwo.getValue() );
                             // TODO: 22.04.2023  Парсинг Rows JSON 
-                                  методFillingValuesRows(stringJsonNodeEntryTwo);
-
-                            ЛОГ.log("stringJsonNodeEntryTwo.getKey() "  + stringJsonNodeEntryTwo.getKey() + " stringJsonNodeEntryTwo.getValue() " +stringJsonNodeEntryTwo.getValue()+
-                                    "queryprocedure " + queryprocedure);
+                            queryprocedure[0] =      методFillingValuesRows(stringJsonNodeEntryTwo, queryprocedure[0]);
+                            ЛОГ.log("stringJsonNodeEntryTwo.getKey() "  + stringJsonNodeEntryTwo.getKey() + " stringJsonNodeEntryTwo.getValue() " +stringJsonNodeEntryTwo.getValue() +
+                                    "   queryprocedure[0]  " +  queryprocedure[0] );
 
                         }
                     });
                     // TODO: 22.04.2023  После Запоеление ПОЛНОЙ СТРОЧКИ ROW JSON
-                    queryprocedure.registerStoredProcedureParameter("SrabnitUUIDOrID", String.class, ParameterMode.IN)
+                    queryprocedure[0].registerStoredProcedureParameter("SrabnitUUIDOrID", String.class, ParameterMode.IN)
                             .setParameter("SrabnitUUIDOrID", Key);
-                    queryprocedure.registerStoredProcedureParameter("ResultatMERGE", String.class, ParameterMode.INOUT)
+                    queryprocedure[0].registerStoredProcedureParameter("ResultatMERGE", String.class, ParameterMode.INOUT)
                             .setParameter("ResultatMERGE", "complete merge");
 
-
-                    // TODO: 22.04.2023 ВЫПОЛЕНИЕ САМОЙ ОПЕРАЦИИ MERGE 
-                    
-                    Integer РезультатОперацииВставкииОбновлениея=  МетодСамогоВыполенияУдаленнойПроцедуры(queryprocedure,ЛОГ);
+                    // TODO: 22.04.2023 ВЫПОЛЕНИЕ САМОЙ ОПЕРАЦИИ MERGE
+                    Integer РезультатОперацииВставкииОбновлениея=  МетодВыполениеУдаленнойПроцедуры(queryprocedure[0],ЛОГ);
                     
                     String РезультатСовершнойОперации = null;
                     if (РезультатОперацииВставкииОбновлениея>0) {
 
-                        РезультатСовершнойОперации = (String) queryprocedure.getOutputParameterValue("ResultatMERGE");
+                        РезультатСовершнойОперации = (String) queryprocedure[0].getOutputParameterValue("ResultatMERGE");
+                        // TODO: 22.04.2023 clear
 
                         ЛОГ.log("\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -114,21 +108,25 @@ public class SubClassВставкаДанныхОтКлиентаPOST {
                     }else {
                         РезультатСовершнойОперации="0";
                     }
-                    bufferCallsBackFromAndroid[0].append(РезультатСовершнойОперации);
-
+                    // TODO: 22.04.2023 записываем новую версию после успешной вставки
+                    arrayListMaxBackOperation.add(Integer.parseInt(РезультатСовершнойОперации));
                     ЛОГ.log("\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
                             " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
-                            " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n" + " bufferCallsBackFromAndroid[0] " +bufferCallsBackFromAndroid[0]);
+                            " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n" + " arrayListMaxBackOperation" + arrayListMaxBackOperation.size());
 
                 }
             });
             // TODO: 18.04.2023 ЗАВЕРШЕНИ СЕАНСА ПОСЛЕ ВЫПОЛЕНИЕ
             МетодЗавершенияСеанса();
             // TODO: 22.04.2023
+            MaxOperations = arrayListMaxBackOperation
+                    .stream()
+                    .mapToInt(v -> v)
+                    .max().orElse(0);
             ЛОГ.log("\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
                     " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
                     " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+
-                    " bufferCallsBackFromAndroid "+ bufferCallsBackFromAndroid[0].toString());
+                    " arrayListMaxBackOperation "+ arrayListMaxBackOperation);
         } catch (Exception   e) {
             sessionTransaction.rollback();
             session.close();
@@ -140,12 +138,20 @@ public class SubClassВставкаДанныхОтКлиентаPOST {
                                     getStackTrace(),
                             ЛОГ,"ErrorsLogs/ErrorJbossServletDSU1.txt");
         }
-        return bufferCallsBackFromAndroid[0];
+        return new StringBuffer(MaxOperations);
     }
 
 
+
+
+
+
+
+
+
+
     // TODO: 22.04.2023  парсинг ROWs
-    private void методFillingValuesRows(@NotNull Entry<String, JsonNode> stringJsonNodeEntryTwo) {
+    private StoredProcedureQuery методFillingValuesRows(@NotNull Entry<String, JsonNode> stringJsonNodeEntryTwo,@NotNull  StoredProcedureQuery       queryprocedure) {
         try{
             ЛОГ.log("stringJsonNodeEntryTwo.getKey() "  + stringJsonNodeEntryTwo.getKey() + " stringJsonNodeEntryTwo.getValue() " +stringJsonNodeEntryTwo.getValue()  );
             String  getKey=   stringJsonNodeEntryTwo.getKey().trim();
@@ -169,6 +175,7 @@ public class SubClassВставкаДанныхОтКлиентаPOST {
                             getStackTrace(),
                     ЛОГ,"ErrorsLogs/ErrorJbossServletDSU1.txt");
         }
+        return queryprocedure;
     }
     
     
@@ -285,8 +292,8 @@ public class SubClassВставкаДанныхОтКлиентаPOST {
 
 
     // TODO: 14.03.2023  Метод Самого Выполениея Операции POST EXE
-    private Integer МетодСамогоВыполенияУдаленнойПроцедуры(@NotNull  StoredProcedureQuery queryprocedure,
-                                                           @NotNull  ServletContext ЛОГ) {
+    private Integer МетодВыполениеУдаленнойПроцедуры(@NotNull  StoredProcedureQuery queryprocedure,
+                                                     @NotNull  ServletContext ЛОГ) {
         Integer КоличестоУспешныхОперацийНаСервере=0;
         try {
             ЛОГ.log(" queryprocedure " +queryprocedure );
