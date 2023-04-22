@@ -65,15 +65,36 @@ public class SubClassВставкаДанныхОтКлиентаPOST {
                     " session  " +session);
 
 
+            model.Settingtab settingtab1 = session.load( model.Settingtab.class,UUID.fromString("uuid"));
+            if (settingtab1 != null) {
+                settingtab1.setUserUpdate(18);
 
+                session.saveOrUpdate(settingtab1);
+            }else {
+                settingtab1.setUserUpdate(18);
+                session.persist(settingtab1);
+            }
 
-            model.Settingtab settingtab=new model.Settingtab();
+            /*model.Settingtab settingtab=new model.Settingtab();
 
 
 
              settingtab.setOrganizations(255);
 
-              session.persist(settingtab);
+
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS", new Locale("ru"));
+            String dateInString = "2023-04-21 15:35:47.712";
+            Date date = dateFormat.parse(dateInString);
+
+            settingtab.setDateUpdate(date);
+
+            settingtab.setUserUpdate(17);
+            settingtab.setOnesignal("fffgfgfgfg");*/
+
+
+             // session.saveOrUpdate(settingtab);
+
+
 
             //session.flush();
 
@@ -98,7 +119,7 @@ public class SubClassВставкаДанныхОтКлиентаPOST {
                     return null;
                 }
             });*/
-            // TODO: 18.04.2023
+        /*    // TODO: 18.04.2023
             МетодЗавершенияСеанса();
 
 
@@ -106,7 +127,7 @@ public class SubClassВставкаДанныхОтКлиентаPOST {
                     " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
                     " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+
                     " БуферJSONJackson "+БуферJSONJackson.toString()  +
-                    " session  " +session + " sessionSousJboss " +sessionSousJboss);
+                    " session  " +session + " sessionSousJboss " +sessionSousJboss);*/
 /*                //TODO определем если в таблицы есть поле  UUID или ID
                 StoredProcedureQuery queryprocedure = МетодПолучениеХранимойПроцедуры(ЛОГ, ПараметрИмяТаблицыОтАндройдаPost);
                 ЛОГ.log("\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
@@ -222,7 +243,7 @@ public class SubClassВставкаДанныхОтКлиентаPOST {
                             " session  " + session + " sessionSousJboss " + sessionSousJboss);
                 }
             //TODO*/
-            ЛОГ.log("РезультатСовершнойОперации[0]  "+ РезультатСовершнойОперации[0].toString());
+         ///   ЛОГ.log("РезультатСовершнойОперации[0]  "+ РезультатСовершнойОперации[0].toString());
         } catch (Exception   e) {
             sessionTransaction.rollback();
             session.close();

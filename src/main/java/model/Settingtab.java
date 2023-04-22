@@ -5,6 +5,7 @@ import org.hibernate.annotations.OptimisticLockType;
 import org.hibernate.annotations.OptimisticLocking;
 
 import java.io.Serializable;
+import javax.ejb.Lock;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Date;

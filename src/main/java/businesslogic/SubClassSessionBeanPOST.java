@@ -3,6 +3,7 @@ package businesslogic;
 
 
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.*;
@@ -14,6 +15,8 @@ import java.util.*;
 import java.util.concurrent.BrokenBarrierException;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.ExecutionException;
+import java.util.function.Consumer;
+import java.util.stream.Stream;
 import java.util.zip.GZIPInputStream;
 
 import javax.enterprise.context.RequestScoped;
@@ -149,18 +152,51 @@ public class SubClassSessionBeanPOST {//extends    DSU1JsonServlet
     protected StringBuffer МетодПолучениеJSONОтКлиента(@NotNull HttpServletRequest request)
             throws IOException, InterruptedException, ExecutionException {
         //TODO ПОЛУЧАЕМ ДАННЫЕ ОТ КЛИЕНТА
-        StringBuffer БуферJSONОтАндройда = new StringBuffer();
+        StringBuffer буферJSONОтАндройда = new StringBuffer();
         try (ServletInputStream ОткрываемПотокДляПолученогоJSONотАндройда = request.getInputStream();) {
             ЛОГ.log("Выполяеться метод  МетодПолучениеJSONОтКлиента пришел JSON-поток от клитента на Сервера ");
-            BufferedReader БуферJsonОтКлиента = new BufferedReader(
+            BufferedReader bufferedReader = new BufferedReader(
                     new InputStreamReader(new GZIPInputStream(ОткрываемПотокДляПолученогоJSONотАндройда), StandardCharsets.UTF_16));//// ПРИШЕЛ
-            БуферJSONОтАндройда = БуферJsonОтКлиента.lines().parallel()
-                    .collect(StringBuffer::new, (sb, i) -> sb.append(i), StringBuffer::append);
-            int РазмерJSONФайлаПришедшегоОтАндройда = БуферJSONОтАндройда.toString().toCharArray().length;
-            ЛОГ.log("Выполяеться метод  МетодПолучениеJSONОтКлиента пришел JSON-поток от клитента на Сервера  + БуферJSONОтАндройда.toString())"
-                    + "" + БуферJSONОтАндройда.toString() + " РазмерJSONФайлаПришедшегоОтАндройда " + РазмерJSONФайлаПришедшегоОтАндройда);
-            // TODO закрываем поторк
-            БуферJsonОтКлиента.close();
+            буферJSONОтАндройда = bufferedReader.lines().parallel().collect(StringBuffer::new, (sb, i) -> sb.append(i), StringBuffer::append);
+
+
+            List<String> keys = new ArrayList<>();
+            JsonNode jsonNode3= getGeneratorJackson.readTree(буферJSONОтАндройда.toString());
+            Iterator<String> iterator = jsonNode3.fieldNames();
+            while (iterator.hasNext()){
+                ЛОГ.log("Выполяеться метод  МетодПолучениеJSONОтКлиента пришел JSON-поток от клитента на Сервера  + буферJSONОтАндройда.toString())"
+                        + "" + iterator + "Iteraortt2 "+iterator);
+            }
+           String Iteraortt= iterator.next();
+           String Iteraortt2= iterator.next();
+            ЛОГ.log("Выполяеться метод  МетодПолучениеJSONОтКлиента пришел JSON-поток от клитента на Сервера  + буферJSONОтАндройда.toString())"
+                    + "" + Iteraortt + "Iteraortt2 "+Iteraortt2);
+          JsonNode jsonNode4=  jsonNode3.get(Iteraortt);
+          JsonNode jsonNode5=  jsonNode3.get(Iteraortt2);
+
+
+
+       JsonNode jsonNode= getGeneratorJackson.readTree(bufferedReader);
+
+            Iterator<Map.Entry<String, JsonNode>> fields = jsonNode.fields();
+            while (fields.hasNext()){
+                ЛОГ.log("Выполяеться метод  МетодПолучениеJSONОтКлиента пришел JSON-поток от клитента на Сервера  + буферJSONОтАндройда.toString())"
+                        + "" + fields.toString() + " fields " + fields);
+            }
+
+            Map.Entry<String, JsonNode> Iteraortt22= fields.next();
+            Map.Entry<String, JsonNode> Iteraortt23333= fields.next();
+
+            JsonNode jsonNode4Reade=  jsonNode3.get(Iteraortt22.getKey());
+            JsonNode jsonNode5Reade=  jsonNode3.get(Iteraortt23333.getKey());
+            ЛОГ.log("Выполяеться метод  МетодПолучениеJSONОтКлиента пришел JSON-поток от клитента на Сервера  + буферJSONОтАндройда.toString())"
+                    + "" + jsonNode4Reade.toString() + " jsonNode5Reade " + jsonNode5Reade);
+
+
+            ЛОГ.log("Выполяеться метод  МетодПолучениеJSONОтКлиента пришел JSON-поток от клитента на Сервера  + буферJSONОтАндройда.toString())"
+                    + "" + буферJSONОтАндройда.toString() + " jsonNode " + jsonNode);
+
+         //   bufferedReader.close();
         } catch (Exception e) {
             subClassWriterErros.
                     МетодаЗаписиОшибкиВЛог(e,
@@ -168,6 +204,6 @@ public class SubClassSessionBeanPOST {//extends    DSU1JsonServlet
                                     getStackTrace(),
                             ЛОГ,"ErrorsLogs/ErrorJbossServletDSU1.txt");
         }
-        return БуферJSONОтАндройда;
+        return буферJSONОтАндройда;
     }
 }
