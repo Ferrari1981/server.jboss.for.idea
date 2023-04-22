@@ -1,5 +1,6 @@
 package model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import org.hibernate.annotations.OptimisticLockType;
 
 import java.io.Serializable;
@@ -18,6 +19,7 @@ import java.util.Date;
 @org.hibernate.annotations.OptimisticLocking(
         type = OptimisticLockType.DIRTY)
 @org.hibernate.annotations.DynamicUpdate
+
 
 public class Depatment implements Serializable {
     private static final long serialVersionUID = 1L;

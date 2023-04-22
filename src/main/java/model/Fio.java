@@ -20,6 +20,7 @@ import javax.validation.constraints.NotNull;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.hibernate.annotations.OptimisticLockType;
+import  model.*;
 
 
 /**
@@ -28,10 +29,11 @@ import org.hibernate.annotations.OptimisticLockType;
  */
 @Entity
 @Table(name="fio",catalog="storage",schema="dbo")
-@NamedQuery(name="Fio.findAll", query="SELECT f FROM Fio f")
+@NamedQuery(name="Fio.findAll", query="SELECT f FROM model.Fio f")
 @org.hibernate.annotations.OptimisticLocking(
         type = OptimisticLockType.DIRTY)
 @org.hibernate.annotations.DynamicUpdate
+
 
 public class Fio implements Serializable {
     private static final long serialVersionUID = 1L;

@@ -17,6 +17,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.hibernate.annotations.OptimisticLockType;
 
@@ -30,6 +31,7 @@ import org.hibernate.annotations.OptimisticLockType;
 @org.hibernate.annotations.OptimisticLocking(
         type = OptimisticLockType.DIRTY)
 @org.hibernate.annotations.DynamicUpdate
+
 
 public class Organization implements Serializable {
     private static final long serialVersionUID = 1L;

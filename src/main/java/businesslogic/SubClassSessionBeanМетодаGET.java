@@ -31,6 +31,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.sun.istack.NotNull;
 import org.hibernate.resource.transaction.spi.TransactionStatus;
+import  model.*;
 
 @RequestScoped
 @Produces
