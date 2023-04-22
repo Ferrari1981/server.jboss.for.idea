@@ -41,67 +41,26 @@ public class SubClassВставкаДанныхОтКлиентаPOST {
     // TODO: 09.03.2023
     StringBuffer методCompleteInsertorUpdateData(
             @NotNull ServletContext ЛОГ,
-            @NotNull CopyOnWriteArrayList<Map<String, String>> БуферJSONJackson
-            , @NotNull String ТаблицаPOST,
-            @javax.validation.constraints.NotNull CopyOnWriteArrayList<model.DataTabel> БуферJSONJackson1) throws SQLException {
+            @NotNull StringBuffer bufferОтКлиента
+            , @NotNull String ТаблицаPOST) throws SQLException {
+
         final String[] РезультатСовершнойОперации = {null};
         StringBuffer  БуферОтветКлиентуОперации=new StringBuffer();
         try {
             this.ЛОГ=ЛОГ;
-            // TODO: 11.03.2023  Получении Сесии Hiberrnate
-            session =sessionSousJboss.getCurrentSession();
-            // TODO: 14.03.2023  Запускает Транзакции
-            // TODO: 14.03.2023  Запускаем Транзакцию
+            session =sessionSousJboss.getCurrentSession();      // TODO: 11.03.2023  Получении Сесии Hiberrnate
             sessionTransaction =session.getTransaction() ;
             if (sessionTransaction.getStatus()== TransactionStatus.NOT_ACTIVE) {
-                sessionTransaction.begin();
+                sessionTransaction.begin();   // TODO: 14.03.2023  Запускаем Транзакцию
             }
-        // Integer dd=   session.createNativeQuery("SET IDENTITY_INSERT settings_tabels  ON").executeUpdate();
-
+            // TODO: 22.04.2023  Логирование 
             ЛОГ.log("\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
                     " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
                     " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+
-                    " БуферJSONJackson "+БуферJSONJackson.toString()  +
-                    " session  " +session);
+                    " bufferОтКлиента "+bufferОтКлиента.toString()  +
+                    " session  " +session + " sessionTransaction.getStatus() "+sessionTransaction.getStatus());
 
 
-            model.Settingtab settingtab1 = session.load( model.Settingtab.class,UUID.fromString("uuid"));
-            if (settingtab1 != null) {
-                settingtab1.setUserUpdate(18);
-
-                session.saveOrUpdate(settingtab1);
-            }else {
-                settingtab1.setUserUpdate(18);
-                session.persist(settingtab1);
-            }
-
-            /*model.Settingtab settingtab=new model.Settingtab();
-
-
-
-             settingtab.setOrganizations(255);
-
-
-            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS", new Locale("ru"));
-            String dateInString = "2023-04-21 15:35:47.712";
-            Date date = dateFormat.parse(dateInString);
-
-            settingtab.setDateUpdate(date);
-
-            settingtab.setUserUpdate(17);
-            settingtab.setOnesignal("fffgfgfgfg");*/
-
-
-             // session.saveOrUpdate(settingtab);
-
-
-
-            //session.flush();
-
-
-            sessionTransaction.commit();
-
-            //session.persist(data);
 
        /*     БуферJSONJackson1.forEach(new Stream.Builder<DataTabel>() {
                 @Override
@@ -110,7 +69,7 @@ public class SubClassВставкаДанныхОтКлиентаPOST {
                     ЛОГ.log("\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
                             " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
                             " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+
-                            " БуферJSONJackson "+БуферJSONJackson.toString()  +
+                            " buffer "+buffer.toString()  +
                             " session  " +session + " sessionSousJboss " +sessionSousJboss);
                 }
 
@@ -126,7 +85,7 @@ public class SubClassВставкаДанныхОтКлиентаPOST {
             ЛОГ.log("\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
                     " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
                     " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+
-                    " БуферJSONJackson "+БуферJSONJackson.toString()  +
+                    " buffer "+buffer.toString()  +
                     " session  " +session + " sessionSousJboss " +sessionSousJboss);*/
 /*                //TODO определем если в таблицы есть поле  UUID или ID
                 StoredProcedureQuery queryprocedure = МетодПолучениеХранимойПроцедуры(ЛОГ, ПараметрИмяТаблицыОтАндройдаPost);
@@ -138,7 +97,7 @@ public class SubClassВставкаДанныхОтКлиентаPOST {
                     ЛОГ.log(" NOT NULL queryprocedure " + queryprocedure);
                     //TODO ГЛАВЕНЫЙ ЦИКЛ ОБРАБОТКИ ДАННЫХ В МЕТОДЕ  POST
                     final Long[] UUIDСотсыковочныйХранимойПроцедуры = {0l};
-                    Flowable.fromIterable(БуферJSONJackson)
+                    Flowable.fromIterable(buffer)
                             .onBackpressureBuffer(true)
                             .doOnNext(new Consumer<Map<String, String>>() {
                         @Override
@@ -239,7 +198,7 @@ public class SubClassВставкаДанныхОтКлиентаPOST {
                     ЛОГ.log("\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                             " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
-                            " БуферJSONJackson " + БуферJSONJackson.toString() +
+                            " buffer " + buffer.toString() +
                             " session  " + session + " sessionSousJboss " + sessionSousJboss);
                 }
             //TODO*/

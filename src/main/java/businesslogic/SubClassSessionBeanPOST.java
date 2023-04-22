@@ -56,9 +56,6 @@ public class SubClassSessionBeanPOST {//extends    DSU1JsonServlet
     @Inject
     SubClassWriterErros subClassWriterErros;
 
-    @Inject
-    ObjectMapper getGeneratorJackson;
-
     public SubClassSessionBeanPOST() throws ClassNotFoundException, SQLException, NoSuchAlgorithmException {
         System.out.println("Конструктор  SubClassМетодаBeanSessionPOST");
     }
@@ -121,24 +118,16 @@ public class SubClassSessionBeanPOST {//extends    DSU1JsonServlet
     protected StringBuffer МетодПарсингаJSONФайлПришелОтКлиента(
             @NotNull HttpServletResponse response,
             @NotNull String ТаблицаPOST,
-            @NotNull StringBuffer БуферJSONотAndroid)
+            @NotNull StringBuffer bufferОтКлиента)
             throws InterruptedException, SQLException, BrokenBarrierException, IOException {
-        StringBuffer БуферОтветаПослеОперацииДаннымиОтАндройда = new StringBuffer();
+        StringBuffer bufferCallsBackToServer = new StringBuffer();
         try {
-            // convert JSON string to Map
-         CopyOnWriteArrayList<Map<String, String>> БуферJSONJackson = getGeneratorJackson.readValue(БуферJSONотAndroid.toString(),
-                 new TypeReference<CopyOnWriteArrayList<Map<String, String>>>() {});
+            bufferCallsBackToServer = subClassВставкаДанныхОтКлиентаPOST.методCompleteInsertorUpdateData(ЛОГ, bufferОтКлиента, ТаблицаPOST);  //TODO Пришли ДАнные От  Клиента
 
-            CopyOnWriteArrayList<model.DataTabel> БуферJSONJackson1 = getGeneratorJackson.readValue(БуферJSONотAndroid.toString(),
-                    new TypeReference<CopyOnWriteArrayList<model.DataTabel>>() {});
-
-            //TODO ГЛАВНЫЙ МЕТОДА POST() КОТОРЫЙ ВСТАВЛЯЕТ  И/ИЛИ ОБНОВЛЕНИЯ ДАННЫХ
-           БуферОтветаПослеОперацииДаннымиОтАндройда = subClassВставкаДанныхОтКлиентаPOST.методCompleteInsertorUpdateData(ЛОГ, БуферJSONJackson
-                            , ТаблицаPOST,БуферJSONJackson1);
             ЛОГ.log( " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+
-                    " БуферJSONJackson " + БуферJSONJackson.size()+ " БуферJSONJackson1 " +БуферJSONJackson1);
+                    " БуферJSONJackson " + bufferОтКлиента.length()+ " bufferCallsBackToServer " +bufferCallsBackToServer.toString());
         } catch (Exception e) {
             subClassWriterErros.
                     МетодаЗаписиОшибкиВЛог(e,
@@ -146,43 +135,22 @@ public class SubClassSessionBeanPOST {//extends    DSU1JsonServlet
                                     getStackTrace(),
                             ЛОГ,"ErrorsLogs/ErrorJbossServletDSU1.txt");
         }
-        return БуферОтветаПослеОперацииДаннымиОтАндройда;
+        return bufferCallsBackToServer;
     }
 
+    // TODO: 22.04.2023 ПОЛУЧАЕМ JSON ОТ КЛИЕНТА
     protected StringBuffer МетодПолучениеJSONОтКлиента(@NotNull HttpServletRequest request)
             throws IOException, InterruptedException, ExecutionException {
-        //TODO ПОЛУЧАЕМ ДАННЫЕ ОТ КЛИЕНТА
         StringBuffer buffer = new StringBuffer();
-        try (ServletInputStream ОткрываемПотокДляПолученогоJSONотАндройда = request.getInputStream();) {
-            ЛОГ.log("Выполяеться метод  МетодПолучениеJSONОтКлиента пришел JSON-поток от клитента на Сервера ");
-            BufferedReader bufferedReader = new BufferedReader(
-                    new InputStreamReader(new GZIPInputStream(ОткрываемПотокДляПолученогоJSONотАндройда), StandardCharsets.UTF_16));//// ПРИШЕЛ
-            buffer = bufferedReader.lines().parallel().collect(StringBuffer::new, (sb, i) -> sb.append(i), StringBuffer::append);
+        try (ServletInputStream ОткрываемПотокДляПолученогоJSONотАндройда = request.getInputStream();
+             BufferedReader bufferedReader = new BufferedReader(
+                     new InputStreamReader(new GZIPInputStream(ОткрываемПотокДляПолученогоJSONотАндройда), StandardCharsets.UTF_16))) {
+            buffer = bufferedReader.lines().parallel().collect(StringBuffer::new, (sb, i) -> sb.append(i), StringBuffer::append);            // TODO: 22.04.2023 ПОЛУЧАЕМ ДАННЫЕ ОТ КЛИЕНТА
 
-
-       JsonNode jsonNodeParent= getGeneratorJackson.readTree(buffer.toString());
-
-            jsonNodeParent.fields().forEachRemaining(new Consumer<Map.Entry<String, JsonNode>>() {
-             @Override
-             public void accept(Map.Entry<String, JsonNode> stringJsonNodeEntryOne) {
-                 JsonNode jsonNodeChild = jsonNodeParent.get(stringJsonNodeEntryOne.getKey());
-                 ЛОГ.log("stringJsonNodeEntryOne.getKey() "  + stringJsonNodeEntryOne.getKey() + " IstringJsonNodeEntryOne.getValue() " +stringJsonNodeEntryOne.getValue() );
-                 ЛОГ.log("stringJsonNodeEntryOne.getKey() "  + stringJsonNodeEntryOne.getKey() + " IstringJsonNodeEntryOne.getValue() " +stringJsonNodeEntryOne.getValue() );
-                 jsonNodeChild.fields().forEachRemaining(new Consumer<Map.Entry<String, JsonNode>>() {
-                     @Override
-                     public void accept(Map.Entry<String, JsonNode> stringJsonNodeEntryTwo) {
-                         ЛОГ.log("stringJsonNodeEntryTwo.getKey() "  + stringJsonNodeEntryTwo.getKey() + " stringJsonNodeEntryTwo.getValue() " +stringJsonNodeEntryTwo.getValue() );
-                         ЛОГ.log("stringJsonNodeEntryTwo.getKey() "  + stringJsonNodeEntryTwo.getKey() + " stringJsonNodeEntryTwo.getValue() " +stringJsonNodeEntryTwo.getValue() );
-                     }
-                 });
-
-             }
-         });
-
-            ЛОГ.log("Выполяеться метод  МетодПолучениеJSONОтКлиента пришел JSON-поток от клитента на Сервера  + buffer.toString())"
-                    + "" + buffer.toString() + " jsonNodeParent " + jsonNodeParent);
-
-         //   bufferedReader.close();
+            ЛОГ.log("\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
+                    " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
+                    " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+
+                    " buffer "+buffer.toString());
         } catch (Exception e) {
             subClassWriterErros.
                     МетодаЗаписиОшибкиВЛог(e,
