@@ -160,38 +160,33 @@ public class SubClassSessionBeanPOST {//extends    DSU1JsonServlet
             буферJSONОтАндройда = bufferedReader.lines().parallel().collect(StringBuffer::new, (sb, i) -> sb.append(i), StringBuffer::append);
 
 
-            List<String> keys = new ArrayList<>();
+/*            List<String> keys = new ArrayList<>();
             JsonNode jsonNode3= getGeneratorJackson.readTree(буферJSONОтАндройда.toString());
             Iterator<String> iterator = jsonNode3.fieldNames();
             while (iterator.hasNext()){
+                String Iterator1= iterator.next();
+                JsonNode arrayElement = jsonNode3.get(Iterator1);
                 ЛОГ.log("Выполяеться метод  МетодПолучениеJSONОтКлиента пришел JSON-поток от клитента на Сервера  + буферJSONОтАндройда.toString())"
-                        + "" + iterator + "Iteraortt2 "+iterator);
-            }
-           String Iteraortt= iterator.next();
-           String Iteraortt2= iterator.next();
-            ЛОГ.log("Выполяеться метод  МетодПолучениеJSONОтКлиента пришел JSON-поток от клитента на Сервера  + буферJSONОтАндройда.toString())"
-                    + "" + Iteraortt + "Iteraortt2 "+Iteraortt2);
-          JsonNode jsonNode4=  jsonNode3.get(Iteraortt);
-          JsonNode jsonNode5=  jsonNode3.get(Iteraortt2);
+                        + "" + Iterator1 + "Iterator1 "+  "arrayElement "+ arrayElement);
+            }*/
 
-
-
-       JsonNode jsonNode= getGeneratorJackson.readTree(bufferedReader);
+       JsonNode jsonNode= getGeneratorJackson.readTree(буферJSONОтАндройда.toString());
 
             Iterator<Map.Entry<String, JsonNode>> fields = jsonNode.fields();
             while (fields.hasNext()){
+                Map.Entry<String, JsonNode> Iterator2= fields.next();
+                JsonNode arrayElement = jsonNode.get(Iterator2.getKey());
                 ЛОГ.log("Выполяеться метод  МетодПолучениеJSONОтКлиента пришел JSON-поток от клитента на Сервера  + буферJSONОтАндройда.toString())"
-                        + "" + fields.toString() + " fields " + fields);
+                        + "" + Iterator2 + "Iterator2 "+ " Iterator2.getKey() " +Iterator2.getKey()  + " Iterator2 " +Iterator2.getValue());
+                // TODO: 22.04.2023
+                arrayElement.fields().forEachRemaining(new Consumer<Map.Entry<String, JsonNode>>() {
+                    @Override
+                    public void accept(Map.Entry<String, JsonNode> stringJsonNodeEntry) {
+                        ЛОГ.log("Выполяеться метод  МетодПолучениеJSONОтКлиента пришел JSON-поток от клитента на Сервера  + буферJSONОтАндройда.toString())"
+                                + "" + stringJsonNodeEntry + "stringJsonNodeEntry "+ " Iterator2.getKey() " +Iterator2.getKey()  + " Iterator2 " +Iterator2.getValue());
+                    }
+                });
             }
-
-            Map.Entry<String, JsonNode> Iteraortt22= fields.next();
-            Map.Entry<String, JsonNode> Iteraortt23333= fields.next();
-
-            JsonNode jsonNode4Reade=  jsonNode3.get(Iteraortt22.getKey());
-            JsonNode jsonNode5Reade=  jsonNode3.get(Iteraortt23333.getKey());
-            ЛОГ.log("Выполяеться метод  МетодПолучениеJSONОтКлиента пришел JSON-поток от клитента на Сервера  + буферJSONОтАндройда.toString())"
-                    + "" + jsonNode4Reade.toString() + " jsonNode5Reade " + jsonNode5Reade);
-
 
             ЛОГ.log("Выполяеться метод  МетодПолучениеJSONОтКлиента пришел JSON-поток от клитента на Сервера  + буферJSONОтАндройда.toString())"
                     + "" + буферJSONОтАндройда.toString() + " jsonNode " + jsonNode);
