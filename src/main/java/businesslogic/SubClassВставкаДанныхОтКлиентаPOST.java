@@ -9,6 +9,7 @@ import javax.inject.Inject;
 import javax.persistence.ParameterMode;
 import javax.persistence.StoredProcedureQuery;
 import javax.servlet.ServletContext;
+import javax.swing.*;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -29,12 +30,13 @@ public class SubClassВставкаДанныхОтКлиентаPOST {
     private   ServletContext ЛОГ;
     private Transaction sessionTransaction;
     @Inject @ProducedCard
-    SessionFactory sessionSousJboss;
-    Session    session;
+    private  SessionFactory sessionSousJboss;
+    private  Session    session;
     @Inject
-    SubClassWriterErros subClassWriterErros;
+    private   SubClassWriterErros subClassWriterErros;
     @Inject
-    ObjectMapper getGeneratorJackson;
+    private  ObjectMapper getGeneratorJackson;
+    private     StoredProcedureQuery queryprocedure;
     // TODO: 09.03.2023
     StringBuffer методCompleteInsertorUpdateData(
             @NotNull ServletContext ЛОГ,
@@ -57,35 +59,70 @@ public class SubClassВставкаДанныхОтКлиентаPOST {
                     " session  " +session + " sessionTransaction.getStatus() "+sessionTransaction.getStatus());
 
 
-                StoredProcedureQuery queryprocedure = методgetStoredProcedure(ЛОГ, ТаблицаPOST);                //TODO Опередяем Хранимая ПРоцедура
+                 queryprocedure = методgetStoredProcedure(ЛОГ, ТаблицаPOST);                //TODO Опередяем Хранимая ПРоцедура
 
                 ЛОГ.log("\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
                         " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
-                        " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+" queryprocedure " +queryprocedure);
+                        " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+" queryprocedure   " + queryprocedure );
 
             // TODO: 22.04.2023 Новый ПАРСИНГ ОТ JAKSON JSON
             JsonNode jsonNodeParent= getGeneratorJackson.readTree(bufferОтКлиента.toString());
             jsonNodeParent.fields().forEachRemaining(new java.util.function.Consumer<Entry<String, JsonNode>>() {
                 @Override
                 public void accept(Entry<String, JsonNode> stringJsonNodeEntryOne) {
-                    JsonNode jsonNodeChild = jsonNodeParent.get(stringJsonNodeEntryOne.getKey());
-                    ЛОГ.log("stringJsonNodeEntryOne.getKey() "  + stringJsonNodeEntryOne.getKey() + " stringJsonNodeEntryOne.getValue() " +stringJsonNodeEntryOne.getValue() );
+                    String Key=stringJsonNodeEntryOne.getKey().trim();
+                    JsonNode jsonNodeChild = jsonNodeParent.get(Key);
+                    ЛОГ.log("stringJsonNodeEntryOne.getKey() "  + stringJsonNodeEntryOne.getKey() + " stringJsonNodeEntryOne.getValue() " +stringJsonNodeEntryOne.getValue()+  "Key "+Key );
                     jsonNodeChild.fields().forEachRemaining(new java.util.function.Consumer<Entry<String, JsonNode>>() {
                         @Override
                         public void accept(Entry<String, JsonNode> stringJsonNodeEntryTwo) {
                             ЛОГ.log("stringJsonNodeEntryTwo.getKey() "  + stringJsonNodeEntryTwo.getKey() + " stringJsonNodeEntryTwo.getValue() " +stringJsonNodeEntryTwo.getValue() );
                             // TODO: 22.04.2023  Парсинг Rows JSON 
-                            bufferCallsBackFromAndroid[0] =       методParserRows(stringJsonNodeEntryTwo,queryprocedure,stringJsonNodeEntryOne.getKey());
+                                  методFillingValuesRows(stringJsonNodeEntryTwo);
 
                             ЛОГ.log("stringJsonNodeEntryTwo.getKey() "  + stringJsonNodeEntryTwo.getKey() + " stringJsonNodeEntryTwo.getValue() " +stringJsonNodeEntryTwo.getValue()+
-                                    " bufferCallsBackFromAndroid[0] " +bufferCallsBackFromAndroid[0]);
+                                    "queryprocedure " + queryprocedure);
 
                         }
                     });
+                    // TODO: 22.04.2023  После Запоеление ПОЛНОЙ СТРОЧКИ ROW JSON
+                    queryprocedure.registerStoredProcedureParameter("SrabnitUUIDOrID", String.class, ParameterMode.IN)
+                            .setParameter("SrabnitUUIDOrID", Key);
+                    queryprocedure.registerStoredProcedureParameter("ResultatMERGE", String.class, ParameterMode.INOUT)
+                            .setParameter("ResultatMERGE", "complete merge");
+
+
+                    // TODO: 22.04.2023 ВЫПОЛЕНИЕ САМОЙ ОПЕРАЦИИ MERGE 
+                    
+                    Integer РезультатОперацииВставкииОбновлениея=  МетодСамогоВыполенияУдаленнойПроцедуры(queryprocedure,ЛОГ);
+                    
+                    String РезультатСовершнойОперации = null;
+                    if (РезультатОперацииВставкииОбновлениея>0) {
+
+                        РезультатСовершнойОперации = (String) queryprocedure.getOutputParameterValue("ResultatMERGE");
+
+                        ЛОГ.log("\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
+                                + " РезультатОперацииВставкииОбновлениея " + РезультатОперацииВставкииОбновлениея + " РезультатСовершнойОперации " + РезультатСовершнойОперации);
+                    }
+
+                    if (РезультатСовершнойОперации.matches("(.*)OriginalVesion(.*)")) {
+                        int indexbegin =РезультатСовершнойОперации.indexOf("OriginalVesion");
+                        РезультатСовершнойОперации=РезультатСовершнойОперации.substring(indexbegin,РезультатСовершнойОперации.length());
+                        РезультатСовершнойОперации =   РезультатСовершнойОперации.replaceAll("[^0-9]","");
+                    }else {
+                        РезультатСовершнойОперации="0";
+                    }
+                    bufferCallsBackFromAndroid[0].append(РезультатСовершнойОперации);
+
+                    ЛОГ.log("\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
+                            " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
+                            " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n" + " bufferCallsBackFromAndroid[0] " +bufferCallsBackFromAndroid[0]);
 
                 }
             });
-            // TODO: 18.04.2023
+            // TODO: 18.04.2023 ЗАВЕРШЕНИ СЕАНСА ПОСЛЕ ВЫПОЛЕНИЕ
             МетодЗавершенияСеанса();
             // TODO: 22.04.2023
             ЛОГ.log("\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
@@ -108,56 +145,19 @@ public class SubClassВставкаДанныхОтКлиентаPOST {
 
 
     // TODO: 22.04.2023  парсинг ROWs
-    private StringBuffer методParserRows(@NotNull Entry<String, JsonNode> stringJsonNodeEntryTwo,
-                                         @NotNull     StoredProcedureQuery queryprocedure,
-                                         @NotNull String Key) {
-        StringBuffer bufferBackOperations=new StringBuffer();
+    private void методFillingValuesRows(@NotNull Entry<String, JsonNode> stringJsonNodeEntryTwo) {
         try{
-            ЛОГ.log("stringJsonNodeEntryTwo.getKey() "  + stringJsonNodeEntryTwo.getKey() + " stringJsonNodeEntryTwo.getValue() " +stringJsonNodeEntryTwo.getValue()  + "  Key " + Key);
-
+            ЛОГ.log("stringJsonNodeEntryTwo.getKey() "  + stringJsonNodeEntryTwo.getKey() + " stringJsonNodeEntryTwo.getValue() " +stringJsonNodeEntryTwo.getValue()  );
+            String  getKey=   stringJsonNodeEntryTwo.getKey().trim();
+            String  getvalue=     stringJsonNodeEntryTwo.getValue().asText().trim();
             // TODO заполенем JSonValue ДАННЫМИ
-            queryprocedure.registerStoredProcedureParameter(stringJsonNodeEntryTwo.getKey(), String.class, ParameterMode.IN)
-                    .setParameter(stringJsonNodeEntryTwo.getKey(), stringJsonNodeEntryTwo.getValue());
+            queryprocedure.registerStoredProcedureParameter(getKey, String.class, ParameterMode.IN)
+                    .setParameter(getKey,getvalue);
 
             ЛОГ.log("\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
-                    " stringJsonNodeEntryTwo.getKey()" + stringJsonNodeEntryTwo.getKey() + " stringJsonNodeEntryTwo.getValue()  " + stringJsonNodeEntryTwo.getValue() + "  Key " + Key);
-
-
-
-
-            queryprocedure.registerStoredProcedureParameter("SrabnitUUIDOrID", String.class, ParameterMode.IN)
-                    .setParameter("SrabnitUUIDOrID", Key);
-            queryprocedure.registerStoredProcedureParameter("ResultatMERGE", String.class, ParameterMode.INOUT)
-                    .setParameter("ResultatMERGE", "complete merge");
-            Integer РезультатОперацииВставкииОбновлениея=  МетодСамогоВыполенияУдаленнойПроцедуры(queryprocedure,ЛОГ);
-
-
-
-            String РезультатСовершнойОперации = null;
-            if (РезультатОперацииВставкииОбновлениея>0) {
-
-                 РезультатСовершнойОперации = (String) queryprocedure.getOutputParameterValue("ResultatMERGE");
-
-                ЛОГ.log("\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
-                        + " РезультатОперацииВставкииОбновлениея " + РезультатОперацииВставкииОбновлениея + " РезультатСовершнойОперации " + РезультатСовершнойОперации);
-            }
-
-            if (РезультатСовершнойОперации.matches("(.*)OriginalVesion(.*)")) {
-                int indexbegin =РезультатСовершнойОперации.indexOf("OriginalVesion");
-                РезультатСовершнойОперации=РезультатСовершнойОперации.substring(indexbegin,РезультатСовершнойОперации.length());
-                РезультатСовершнойОперации =   РезультатСовершнойОперации.replaceAll("[^0-9]","");
-            }else {
-                РезультатСовершнойОперации="0";
-            }
-            bufferBackOperations.append(РезультатСовершнойОперации);
-
-            ЛОГ.log("\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
-                    " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
-                    " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n" + " bufferBackOperations " +bufferBackOperations);
+                    " getvalue" + getvalue + " getKey " + getKey  );
         } catch (Exception   e) {
             sessionTransaction.rollback();
             session.close();
@@ -169,7 +169,6 @@ public class SubClassВставкаДанныхОтКлиентаPOST {
                             getStackTrace(),
                     ЛОГ,"ErrorsLogs/ErrorJbossServletDSU1.txt");
         }
-        return  bufferBackOperations;
     }
     
     
