@@ -39,6 +39,7 @@ public class SubClassВставкаДанныхОтКлиентаPOST {
             @NotNull ServletContext ЛОГ,
             @NotNull StringBuffer bufferОтКлиента
             , @NotNull String ТаблицаPOST) throws SQLException {
+        StringBuffer bufferCallsBackToAndroid=new StringBuffer();
         try {
             ArrayList<Integer> arrayListMaxBackOperation=new ArrayList();
             this.ЛОГ=ЛОГ;
@@ -54,7 +55,25 @@ public class SubClassВставкаДанныхОтКлиентаPOST {
                     " bufferОтКлиента "+bufferОтКлиента.toString()  +
                     " session  " +session + " sessionTransaction.getStatus() "+sessionTransaction.getStatus());
 
-            // TODO: 22.04.2023 Новый ПАРСИНГ ОТ JAKSON JSON
+
+            model.DataTabel dataTabels=session.get(model.DataTabel.class,190);
+            if(dataTabels!=null){
+                dataTabels.setD1("52");
+                session.merge(dataTabels);
+                session.saveOrUpdate(dataTabels);
+            }else{
+                session.persist(dataTabels);
+            }
+
+            sessionTransaction.commit();
+
+            ЛОГ.log("\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
+                    + " dataTabels " + dataTabels);
+            // TODO: 22.04.2023 текст код
+
+        /*    // TODO: 22.04.2023 Новый ПАРСИНГ ОТ JAKSON JSON
             JsonNode jsonNodeParent= getGeneratorJackson.readTree(bufferОтКлиента.toString());
             jsonNodeParent.fields().forEachRemaining(new java.util.function.Consumer<Entry<String, JsonNode>>() {
                 @Override
@@ -123,10 +142,12 @@ public class SubClassВставкаДанныхОтКлиентаPOST {
                     .stream()
                     .mapToInt(v -> v)
                     .max().orElse(0);
+            // TODO: 22.04.2023 ОТВЕТ
+            bufferCallsBackToAndroid.append(MaxOperations.toString());
             ЛОГ.log("\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
                     " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
                     " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+
-                    " arrayListMaxBackOperation "+ arrayListMaxBackOperation);
+                    " arrayListMaxBackOperation "+ arrayListMaxBackOperation);*/
         } catch (Exception   e) {
             sessionTransaction.rollback();
             session.close();
@@ -138,7 +159,7 @@ public class SubClassВставкаДанныхОтКлиентаPOST {
                                     getStackTrace(),
                             ЛОГ,"ErrorsLogs/ErrorJbossServletDSU1.txt");
         }
-        return new StringBuffer(MaxOperations);
+        return bufferCallsBackToAndroid;
     }
 
 
