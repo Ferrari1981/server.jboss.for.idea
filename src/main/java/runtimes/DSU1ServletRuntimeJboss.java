@@ -53,7 +53,6 @@ public class DSU1ServletRuntimeJboss extends HttpServlet {
                             +"  POOL  THREAD "+Thread.currentThread().getName());
                     // TODO: 23.04.2023 clears Async
                     req.getAsyncContext().dispatch();
-                    req.getAsyncContext().complete();
                 } catch (Exception e) {
                     subClassWriterErros.
                             МетодаЗаписиОшибкиВЛог(e,

@@ -48,12 +48,12 @@ public class FilterPublic implements Filter {
             asyresponse.setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
                     // TODO: 10.03.2023  проверем статус логин и пароль
             //Object ЛогинОтAndroid=      ((HttpServletRequest)request).getHeaders("identifier").nextElement()
-            Object IDДевайсаКлиентаPUBLIC=        Optional.ofNullable(((HttpServletRequest)asyrequest).getHeaders("id_device_androis").nextElement()).orElse("");
+            Object IDДевайсаЛогин=        Optional.ofNullable(((HttpServletRequest)asyrequest).getHeaders("identifier").nextElement()).orElse("");
             ЛОГ.log("\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
                     " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
                     " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+
-                    "  ЛогинОтAndroid    doFilter doFilter doFilter IDДевайсаКлиентаPUBLIC " +IDДевайсаКлиентаPUBLIC);
-            if (IDДевайсаКлиентаPUBLIC.toString().length()>5) {
+                    "  ЛогинОтAndroid    doFilter doFilter doFilter IDДевайсаЛогин " +IDДевайсаЛогин);
+            if (IDДевайсаЛогин.toString().length()>5) {
 
                     СтатусаАунтификацииПользователя = beanGetLoginAndPasswords.МетодGetLoginAndPassword(ЛОГ, ((HttpServletRequest)asyrequest),
                             ((HttpServletRequest)asyrequest) .getSession());
@@ -85,7 +85,7 @@ public class FilterPublic implements Filter {
                     " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
                     " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+
                     " Success    doFilter doFilter doFilter СтатусаАунтификацииПользователя " +СтатусаАунтификацииПользователя+
-                     " IDДевайсаКлиентаPUBLIC " +IDДевайсаКлиентаPUBLIC);
+                     " IDДевайсаЛогин " +IDДевайсаЛогин);
         } catch (Exception e) {
             subClassWriterErros.
                     МетодаЗаписиОшибкиВЛог(e,

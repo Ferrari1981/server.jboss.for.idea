@@ -3,6 +3,11 @@ package runtimes;
 import businesslogic.BEANCallsBack;
 import businesslogic.StreamJSONJacksons;
 import businesslogic.SubClassWriterErros;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.core.JsonFactory;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectWriter;
+import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.sun.istack.NotNull;
 import dsu1glassfishatomic.workinterfaces.ProducedCard;
 import org.hibernate.*;
@@ -18,6 +23,8 @@ import javax.transaction.Transactional;
 import java.io.IOException;
 import java.io.StringWriter;
 import java.sql.*;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.*;
 import java.util.concurrent.ExecutionException;
@@ -101,6 +108,7 @@ public class SessionBeanGETRuntimeJboss {// extends WITH
         StringBuffer БуферCallsBackДляAndroid = null;
         try  {
             List<?>         ЛистДанныеОтHibenide = null;
+            Integer ПубличныйID=0;
             this.ЛОГ = ЛОГ;
             // TODO
             this.request = request;
@@ -113,6 +121,18 @@ public class SessionBeanGETRuntimeJboss {// extends WITH
             // TODO получаем session
             ЛОГ.log("ЗАПУСКАЕТСЯ....... ГЛАВНЫЙ МЕТОД GET() СЕРВЛЕТА " + new Date() + "\n" + ЛОГ.getServerInfo()
                     + "  request " + request + " response " + response + " ЛОГ" + ЛОГ);
+
+            Object IdUser = Optional.ofNullable(ЛОГ.getAttribute("IdUser")).orElse("");
+            if(IdUser.toString().length()>0){
+                ПубличныйID=Integer.parseInt(IdUser.toString());
+            }
+
+            /// TODO ПАРАМЕНТ #2
+            Object     NameTable = Optional.ofNullable(request.getParameter("NameTable")).orElse("");
+            /// TODO ПАРАМЕНТ #4
+            Object VersionData = Optional.ofNullable(request.getParameter("VersionData")).orElse("");
+
+
             // TODO ГАЛВНЫЙ МЕТОД GET НАЧИНАЕТ РАБОТАТЬ
             String   JobForServer = Optional.ofNullable(request.getParameter("JobForServer")).orElse("");
             if (JobForServer.length()>0) {
@@ -135,12 +155,39 @@ public class SessionBeanGETRuntimeJboss {// extends WITH
                             + ЛистДанныеОтHibenide.size());
                     break;
                 // TODO ЗАДАНИЯ ДЛЯ СЕРВЕРА НЕТУ
+                // TODO ЗАДАНИЕ ДЛЯ СЕРВЕР JOBSERVERTASK #1
+                case "Хотим Получить Версию Данных Сервера":
+                    ЛистДанныеОтHibenide = МетодДляКлиентаMODIFITATION_Server(session);
+                    ЛОГ.log("Хотим Получить Версию Данных Сервера" + new Date() + " ПараметрФильтрЗадааниеДляСервлета "
+                            + ЛистДанныеОтHibenide + "  ЛистДанныеОтHibenide ");
+                    break;
+                // TODO ЗАДАНИЕ ДЛЯ СЕРВЕР JOBSERVERTASK #3
+                case "Хотим Получить ID для Генерации  UUID":
+                    БуферCallsBackДляAndroid = Метод_МетодаGETОтпалавляемПубличныйIDПользователюАндройду(
+                            response, ПубличныйID);
+                    ЛОГ.log(" БуферCallsBackДляAndroid "
+                            + БуферCallsBackДляAndroid.toString());
+                    break;
+                // TODO ЗАДАНИЕ ДЛЯ СЕРВЕР JOBSERVERTASK #4
+                case "Хотим Получить Статус Блокировки Пользователя по ID":
+                    // TODO ОПРЕДЕЛЯЕМ СТАТУС ПОЛЬЗОВАТЕЛЯ
+                    ЛистДанныеОтHibenide = Метод_МетодаСтатусЗаблорированогоКлиента( ПубличныйID,session);
+                    ЛОГ.log(" Отправили  Хотим Получить Статус Блокировки Пользователя по ID "
+                            + JobForServer + " ЛистДанныеОтHibenide " + ЛистДанныеОтHibenide.size() + " IDПолученныйИзSQlServerПосик "+IdUser);
+                    break;
+                // TODO ЗАДАНИЯ ДЛЯ СЕРВЕРА НЕТУ
                 default:
+                    ЛОГ.log("\n"+"  default:  Starting.... class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
+                            " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
+                            " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+
+                            "Метод_РеальнаяСтатусSqlServer  ЛистДанныеОтHibenide ");
                     break;
             }
-            БуферCallsBackДляAndroid= streamJSONJacksons.getStreamJacksons(ЛистДанныеОтHibenide);
+            if (ЛистДанныеОтHibenide.size()>0) {
+                БуферCallsBackДляAndroid = streamJSONJacksons.getStreamJacksons(ЛистДанныеОтHibenide);
+            }
             // TODO
-            ЛОГ.log("БуферCallsBackДляAndroid.toString() " + "" + БуферCallsBackДляAndroid.toString());
+            ЛОГ.log("БуферCallsBackДляAndroid.toString() " + "" + БуферCallsBackДляAndroid.toString() + " ЛистДанныеОтHibenide " +ЛистДанныеОтHibenide);
 
             МетодЗакрываемСессиюHibernate(ЛОГ);
             /////// ошибки метода doGET
@@ -204,4 +251,114 @@ public class SessionBeanGETRuntimeJboss {// extends WITH
                             ЛОГ,"ErrorsLogs/ErrorJbossServletDSU1.txt");
         }
     }
+
+    // TODO еще один перенесенный в метод GEt метод
+
+
+    protected StringBuffer Метод_МетодаGETОтпалавляемПубличныйIDПользователюАндройду(HttpServletResponse response,
+                                                                                     Integer IDПолученныйИзSQlServerПосик) throws IOException {
+        StringBuffer ПолученныйИзSqlServerПубличныйIDДляОтправкиНААндройд = new StringBuffer();
+        try {
+            System.out.println("ИмяПолученныйИзSQlServerПосик			 " + ИмяПолученныйИзSQlServerПосик);
+            /// TODO проверяем если мся и пароль н
+            ПолученныйИзSqlServerПубличныйIDДляОтправкиНААндройд.append(IDПолученныйИзSQlServerПосик);
+            ЛОГ.log("ИмяПолученныйИзSQlServerПосик			 " + ИмяПолученныйИзSQlServerПосик
+                    + " ПолученныйИзSqlServerПубличныйIDДляОтправкиНААндройд "
+                    + ПолученныйИзSqlServerПубличныйIDДляОтправкиНААндройд.toString()
+                    + " finalIDПолученныйИзSQlServerПосик " + IDПолученныйИзSQlServerПосик);
+        } catch (Exception e) {
+            subClassWriterErros.
+                    МетодаЗаписиОшибкиВЛог(e,
+                            Thread.currentThread().
+                                    getStackTrace(),
+                            ЛОГ,"ErrorsLogs/ErrorJbossServletAuntification.txt");
+        }
+        return ПолученныйИзSqlServerПубличныйIDДляОтправкиНААндройд;
+    }
+
+    // TODO ГЕНЕРАЦИЯ JSON ПО  НОВОМУ Jackson
+    StringBuffer МетодГенерацияJSONJackson(@javax.validation.constraints.NotNull List<?> listОтHiberideДляГенерации)
+            throws SQLException, SecurityException {
+        StringBuffer БуферСозданогоJSONJackson = new StringBuffer();
+        try {
+            ЛОГ.log(" listОтHiberideДляГенерации" + listОтHiberideДляГенерации );
+            //TODO Jacson парсинг JSON
+            JsonFactory factory = new JsonFactory();
+            DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS", new Locale("ru"));
+            final ObjectMapper mapperJackson = new ObjectMapper(factory);
+            mapperJackson.setDateFormat(df);
+            mapperJackson.setLocale(new Locale("ru"));
+            mapperJackson.setSerializationInclusion(JsonInclude.Include.NON_NULL);
+            mapperJackson.setPropertyNamingStrategy(PropertyNamingStrategy.CAMEL_CASE_TO_LOWER_CASE_WITH_UNDERSCORES);
+            ObjectWriter writer = mapperJackson.writerWithDefaultPrettyPrinter();
+            String Сгенерированыйjson = 	  writer.writeValueAsString(listОтHiberideДляГенерации);
+            ЛОГ.  log(" Сгенерированыйjson "+Сгенерированыйjson.length());//gson
+            БуферСозданогоJSONJackson.append(Сгенерированыйjson);
+            ЛОГ.log(" заработал  Jackson ...  МетодГенерацияJSONJackson --->  БуферСозданогоJSONJackson " + БуферСозданогоJSONJackson.toString() );
+            /*
+             * // Create custom configuration JsonbConfig nillableConfig = new
+             * JsonbConfig().withNullValues(true);
+             * nillableConfig.withDateFormat("yyyy-MM-dd HH:mm:ss.SSS", new Locale("ru"));
+             * Jsonb jsonb = JsonbBuilder.create(nillableConfig); String resultjsonb =
+             * jsonb.toJson(listОтHiberideДляГенерации); ЛОГ.
+             * log(" resultjsonb "+resultjsonb.length());//gson
+             */
+        } catch (Exception e) {
+            subClassWriterErros.
+                    МетодаЗаписиОшибкиВЛог(e,
+                            Thread.currentThread().
+                                    getStackTrace(),
+                            ЛОГ,"ErrorsLogs/ErrorJbossServletAuntification.txt");
+        }
+        return БуферСозданогоJSONJackson;
+    }
+
+
+    // todo МЕТОД генерируем для килента MODIFITATIONServer
+    protected    List<model.ModificationServerEntity> МетодДляКлиентаMODIFITATION_Server(@javax.validation.constraints.NotNull Session session) {
+        /////// ВЕРСИЮ ДАННЫХ НА СЕРВЕРЕ
+        List<model.ModificationServerEntity> ЛистДанныеОтHibenide  = new ArrayList<>();
+        try {
+            org.hibernate.Query queryДляHiberite   = session.createQuery(
+                    "SELECT vd FROM model.ModificationServerEntity  vd ");
+            ЛистДанныеОтHibenide =( List<model.ModificationServerEntity>) queryДляHiberite.getResultList();
+
+            ЛОГ.log("\n"+" Starting.... class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
+                    " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
+                    " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+
+                    " ЛистДанныеОтHibenide " +ЛистДанныеОтHibenide.toString());
+        } catch (Exception e) {
+            subClassWriterErros.
+                    МетодаЗаписиОшибкиВЛог(e,
+                            Thread.currentThread().
+                                    getStackTrace(),
+                            ЛОГ,"ErrorsLogs/ErrorJbossServletDSU1.txt");
+        }
+        return ЛистДанныеОтHibenide;
+
+    }
+    // TODO еще генерируем заблокирваный статус клиента
+    protected List<model.UsersEntity> Метод_МетодаСтатусЗаблорированогоКлиента(@javax.validation.constraints.NotNull   Integer  IDПолученныйИзSQlServerПосик,
+                                                                               @javax.validation.constraints.NotNull Session session ) {
+        List<model.UsersEntity> ЛистДанныеОтHibenide  = new ArrayList<>();
+        try {
+            org.hibernate.Query queryДляHiberite   = session.createQuery("SELECT us  FROM model.UsersEntity  us WHERE us.id  = :id ");
+            queryДляHiberite.setParameter("id",new Integer(IDПолученныйИзSQlServerПосик));//8641 8625
+            ЛистДанныеОтHibenide =( List<model.UsersEntity>) queryДляHiberite.getResultList();
+            ЛОГ.log("\n"+" Starting.... class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
+                    " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
+                    " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+
+                    " ЛистДанныеОтHibenide " +ЛистДанныеОтHibenide.toString());
+        } catch (Exception e) {
+            subClassWriterErros.
+                    МетодаЗаписиОшибкиВЛог(e,
+                            Thread.currentThread().
+                                    getStackTrace(),
+                            ЛОГ,"ErrorsLogs/ErrorJbossServletDSU1.txt");
+        }
+        return ЛистДанныеОтHibenide  ;
+
+    }
+
+    // TODO: 23.04.2023 end test code
 }
