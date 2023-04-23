@@ -62,6 +62,8 @@ public class DSU1DonwloadsServlet extends HttpServlet {
                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                             " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
                             + " ((HttpServletRequest) req).getPathInfo() " + ((HttpServletRequest) req).getPathInfo());
+                    // TODO: 23.04.2023 clears Async
+                    req.getAsyncContext().dispatch();
                 } catch (Exception e) {
                     subClassWriterErros.
                             МетодаЗаписиОшибкиВЛог(e,
@@ -70,8 +72,6 @@ public class DSU1DonwloadsServlet extends HttpServlet {
                                     ЛОГ, "ErrorsLogs/ErrorJbossServletUpdatePO.txt");
 
                 }
-                // TODO: 23.04.2023 clears Async
-                req.getAsyncContext().dispatch();
             });
         }
     }
