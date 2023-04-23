@@ -33,12 +33,19 @@ public class DSU1ScannerServlet extends HttpServlet {
             req.setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
             resp.setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
             ЛОГ = getServletContext();
-            //TODO ЗАПУСКАЕМ КОДЕ МЕТОДА GET()
-            // СессионыйБинGET.МетодБинаGET(ЛОГ, req, resp,sessionSousJbossRuntime);
-            ЛОГ.log("\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
-                    + " ((HttpServletRequest) req).getPathInfo() " +((HttpServletRequest) req).getPathInfo());
+            if(req.isAsyncStarted()) {
+                req.getAsyncContext().start(() -> {
+                    //TODO ЗАПУСКАЕМ КОДЕ МЕТОДА GET()
+                    // СессионыйБинGET.МетодБинаGET(ЛОГ, req, resp,sessionSousJbossRuntime);
+
+                    // TODO: 23.04.2023 clears Async
+                    req.getAsyncContext().dispatch();
+                    ЛОГ.log("\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
+                            + " ((HttpServletRequest) req).getPathInfo() " + ((HttpServletRequest) req).getPathInfo());
+                });
+            }
         } catch (Exception e) {
             subClassWriterErros.
                     МетодаЗаписиОшибкиВЛог(e,

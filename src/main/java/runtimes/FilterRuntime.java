@@ -32,18 +32,22 @@ public class FilterRuntime implements Filter {
 
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         // TODO Auto-generated method stub
+        final AsyncContext     asy = request.startAsync(request, response);
+        HttpServletRequest asyrequest = (HttpServletRequest) asy.getRequest();
+        HttpServletResponse asyresponse = (HttpServletResponse) asy.getResponse();
         try {
-            request.setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
-            response.setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
+            asyrequest.setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
+            asyresponse.setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
                     // TODO: 10.03.2023  ТОЛЬКО ID DEVICE
-            Object IDДевайсаКлиентаRuntime=        Optional.ofNullable(((HttpServletRequest)request).getHeaders("id_device_androis").nextElement()).orElse("");
+            Object IDДевайсаКлиентаRuntime=        Optional.ofNullable(((HttpServletRequest)asyrequest)
+                    .getHeaders("id_device_androis").nextElement()).orElse("");
             ЛОГ.log("\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
                     " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
                     " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+
                     "  ЛогинОтAndroid    doFilter doFilter doFilter IDДевайсаКлиентаRuntime " +IDДевайсаКлиентаRuntime);
             if (IDДевайсаКлиентаRuntime.toString().length()>5) {
                     // TODO: 11.03.2023 ГЛАВНАЯ СТРОЧКА ПЕРЕНАРАВЛЕНИЕ НА СЕВРЕЛТЫ НА ГЛАВНЫЙ КОД
-                    chain.doFilter(request,response);
+                    chain.doFilter(asyrequest,asyresponse);
                     ЛОГ.log("\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
                             " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
                             " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+
@@ -52,7 +56,7 @@ public class FilterRuntime implements Filter {
                 // TODO: 11.03.2023  нет не имени не пароля
              /*   RequestDispatcher requestDispatcher = request.getRequestDispatcher("/index.jsp");
                 requestDispatcher.forward(request, response);*/
-                МетодФильтраНеПрошлаАунтификацию(response);
+                МетодФильтраНеПрошлаАунтификацию(asyrequest,asyresponse);
             }
             ЛОГ.log("\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
                     " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
@@ -69,13 +73,13 @@ public class FilterRuntime implements Filter {
         }
     }
 
-    private void МетодФильтраНеПрошлаАунтификацию(ServletResponse response)
+    private void МетодФильтраНеПрошлаАунтификацию( HttpServletRequest asyrequest,HttpServletResponse asyresponse)
             throws IOException, ServletException {
         try {
         StringBuffer СерверРаботаетБезПараметров=new StringBuffer("Server Running...... Don't Login and Password"+new Date().toGMTString().toString());
-        ((HttpServletResponse) response)  .addHeader("stream_size", String.valueOf(СерверРаботаетБезПараметров.length()));
+        ((HttpServletResponse) asyresponse)  .addHeader("stream_size", String.valueOf(СерверРаботаетБезПараметров.length()));
         // TODO: 10.03.2023 Ответ От Сервера
-        bEANCallsBack.МетодBackДанныеКлиенту(response, СерверРаботаетБезПараметров, ЛОГ);
+        bEANCallsBack.МетодBackДанныеКлиенту(asyresponse, СерверРаботаетБезПараметров, ЛОГ );
     } catch (Exception e) {
             subClassWriterErros.
                     МетодаЗаписиОшибкиВЛог(e,

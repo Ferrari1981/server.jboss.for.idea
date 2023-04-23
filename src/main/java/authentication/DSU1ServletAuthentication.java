@@ -31,23 +31,29 @@ public class DSU1ServletAuthentication extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
      // super.doGet(req, resp);
-        try{
-          req.setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
-          resp.setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
-           ЛОГ = getServletContext();
+        req.setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
+        resp.setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
+        ЛОГ = getServletContext();
+        if(req.isAsyncStarted()) {
+            req.getAsyncContext().start(() -> {
+                try {
                     //TODO ЗАПУСКАЕМ КОДЕ МЕТОДА GET()
-            sessionBeanGETAuthentication.МетодГлавныйАунтиикации(ЛОГ, req, resp);
+                    sessionBeanGETAuthentication.МетодГлавныйАунтиикации(ЛОГ, req, resp);
                     ЛОГ.log("\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                             " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
-                            + " ((HttpServletRequest) req).getPathInfo() " +((HttpServletRequest) req).getPathInfo());
-        } catch (Exception e) {
-            subClassWriterErros.
-                    МетодаЗаписиОшибкиВЛог(e,
-                            Thread.currentThread().
-                                    getStackTrace(),
-                            ЛОГ,"ErrorsLogs/ErrorJbossServletAuntification.txt");
+                            + " ((HttpServletRequest) req).getPathInfo() " + ((HttpServletRequest) req).getPathInfo());
+                } catch (Exception e) {
+                    subClassWriterErros.
+                            МетодаЗаписиОшибкиВЛог(e,
+                                    Thread.currentThread().
+                                            getStackTrace(),
+                                    ЛОГ, "ErrorsLogs/ErrorJbossServletAuntification.txt");
 
+                }
+                // TODO: 23.04.2023 clears Async
+                req.getAsyncContext().dispatch();
+            });
         }
 
     }

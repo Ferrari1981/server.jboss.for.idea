@@ -8,10 +8,7 @@ import com.sun.istack.NotNull;
 
 import javax.ejb.*;
 import javax.inject.Inject;
-import javax.servlet.ServletContext;
-import javax.servlet.ServletException;
-import javax.servlet.ServletOutputStream;
-import javax.servlet.ServletResponse;
+import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.transaction.TransactionScoped;
@@ -54,7 +51,7 @@ public class SessionBeanDownloadPO {
         try {
             // TODO: 10.03.2023  данные от JSON ANALIZE
           File ПолучаемJSONФайл= 	 МетодДляJSONФайла(ЛОГ,request,response);
-            МетодBackДанныеКлиентуНовоеПО(response ,ПолучаемJSONФайл,ЛОГ);
+            МетодBackДанныеКлиентуНовоеПО(response ,ПолучаемJSONФайл,ЛОГ );
             ЛОГ.log("\n"+" Starting.... class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
                     " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
                     " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+  "  ПолучаемJSONФайл " +ПолучаемJSONФайл);
@@ -73,7 +70,7 @@ public class SessionBeanDownloadPO {
         try {
             // TODO: 10.03.2023  данные от .APK Download
            File ПолучаемAPKФайл= 	 МетодДляAPKФайла(ЛОГ,request,response);
-            МетодBackДанныеКлиентуНовоеПО(response ,ПолучаемAPKФайл,ЛОГ);
+            МетодBackДанныеКлиентуНовоеПО(response ,ПолучаемAPKФайл,ЛОГ );
             ЛОГ.log("\n"+" Starting.... class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
                     " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
                     " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+  "  ПолучаемAPKФайл " +ПолучаемAPKФайл);
@@ -179,7 +176,7 @@ public class SessionBeanDownloadPO {
                 БуферДанныеДляОбновлениеПО.write(fis.readAllBytes());
                 БуферДанныеДляОбновлениеПО.flush();
                 response.flushBuffer();
-                while (!response.isCommitted()) ;
+                // TODO: 23.04.2023 async compilte
                 ЛОГ.log("\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                         " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                         " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"

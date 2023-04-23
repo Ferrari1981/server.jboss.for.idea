@@ -84,7 +84,7 @@ public class SessionBeanGETAuthentication {// extends WITH
             StringBuffer БуферРезультатАунтифиация= 	 МетодЗапускаАунтификации(request,ЛОГ);
             //  ЛОГ.log("  БуферРезультатGET  " + БуферРезультатPOST.get());
             ///Todo получаем данные от Клиента на Сервер
-            bEANCallsBack.МетодBackДанныеКлиенту(response, БуферРезультатАунтифиация, ЛОГ);
+            bEANCallsBack.МетодBackДанныеКлиенту(response, БуферРезультатАунтифиация, ЛОГ );
             ЛОГ.log("\n"+" Starting.... class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
                     " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
                     " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+"  БуферРезультатАунтифиация  " + БуферРезультатАунтифиация );

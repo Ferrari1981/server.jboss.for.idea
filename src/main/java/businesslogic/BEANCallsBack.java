@@ -7,6 +7,7 @@ import javax.servlet.AsyncContext;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.constraints.NotNull;
 import java.io.BufferedWriter;
@@ -45,7 +46,7 @@ public class BEANCallsBack {
             МеханизмОтправкиДанныхКлиенту.write(ГлавныйБуферОтправкиДанныхНААндройд.toString());
             МеханизмОтправкиДанныхКлиенту.flush();
             response.flushBuffer();
-            МеханизмОтправкиДанныхКлиенту.close();
+            // TODO: 23.04.2023
             ЛОГ.log("\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"

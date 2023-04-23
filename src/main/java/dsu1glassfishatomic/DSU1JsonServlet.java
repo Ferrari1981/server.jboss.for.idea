@@ -45,21 +45,22 @@ public class DSU1JsonServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
      // super.doGet(req, resp);
+        ЛОГ = getServletContext();
           req.setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
           resp.setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
-        final        AsyncContext  asy = req.startAsync(req, resp);
-        HttpServletRequest asyrequest = (HttpServletRequest) asy.getRequest();
-        HttpServletResponse asyresponse = (HttpServletResponse) asy.getResponse();
-        asy.start(()->{
-           ЛОГ = getServletContext();
+        if(req.isAsyncStarted()){
+        req.getAsyncContext().start(()->{
                 try{
                 //TODO ЗАПУСКАЕМ КОДЕ МЕТОДА GET()
-                СессионыйБинGET.МетодБинаGET(ЛОГ, asyrequest, asyresponse,asy);
+                СессионыйБинGET.МетодБинаGET(ЛОГ, req, resp);
                 ЛОГ.log("\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                         " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                         " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
                         + " ((HttpServletRequest) req).getPathInfo() " +((HttpServletRequest) req).getPathInfo()+
-                        " POOL CURRENT  "+Thread.currentThread().getName());
+                        " POOL CURRENT  "+Thread.currentThread().getName()+ " req.isAsyncStarted() " +req.isAsyncStarted());
+
+                    // TODO: 23.04.2023 clears Async
+                        req.getAsyncContext().dispatch();
             } catch (Exception e) {
                 ЛОГ.log( "ERROR class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                         " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -71,8 +72,7 @@ public class DSU1JsonServlet extends HttpServlet {
                                 ЛОГ,"ErrorsLogs/ErrorJbossServletDSU1.txt");
             }
         });
-
-
+        }
     }
 
     @Override
@@ -81,17 +81,18 @@ public class DSU1JsonServlet extends HttpServlet {
            ЛОГ = getServletContext();
             req.setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
             resp.setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
-        final        AsyncContext  asy = req.startAsync(req, resp);
-        HttpServletRequest asyrequest = (HttpServletRequest) asy.getRequest();
-        HttpServletResponse asyresponse = (HttpServletResponse) asy.getResponse();
-        asy.start(()-> {
+        if(req.isAsyncStarted()){
+        req.getAsyncContext().start(()-> {
             try {
                 //TODO ЗАПУСКАЕМ КОДЕ МЕТОДА POST()
-                СессионыйБинPOST.МетодБинаPOST(ЛОГ, asyrequest, asyresponse,asy);
+                СессионыйБинPOST.МетодБинаPOST(ЛОГ, req, resp);
                 ЛОГ.log("\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                         " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + ((HttpServletRequest) req).getPathInfo()+
-                        " POOL CURRENT  "+Thread.currentThread().getName());
+                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + ((HttpServletRequest) req).getPathInfo() +
+                        " POOL CURRENT  " + Thread.currentThread().getName()+ " req.isAsyncStarted() " +req.isAsyncStarted());
+
+                // TODO: 23.04.2023 clears Async
+                    req.getAsyncContext().dispatch();
             } catch (Exception e) {
                 ЛОГ.log("ERROR class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                         " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -102,9 +103,9 @@ public class DSU1JsonServlet extends HttpServlet {
                                         getStackTrace(),
                                 ЛОГ, "ErrorsLogs/ErrorJbossServletDSU1.txt");
 
-
             }
         });
+        }
         }
 
     @Override

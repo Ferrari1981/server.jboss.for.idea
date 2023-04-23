@@ -25,6 +25,7 @@ public class FilterPublic implements Filter {
     private BEANCallsBack bEANCallsBack;
     private ServletContext ЛОГ;
 
+
     @Inject
     SubClassWriterErros subClassWriterErros;
 
@@ -39,31 +40,35 @@ public class FilterPublic implements Filter {
 
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         // TODO Auto-generated method stub
+        final AsyncContext     asy = request.startAsync(request, response);
+        HttpServletRequest asyrequest = (HttpServletRequest) asy.getRequest();
+        HttpServletResponse asyresponse = (HttpServletResponse) asy.getResponse();
         try {
             Boolean СтатусаАунтификацииПользователя= false;
-            request.setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
-            response.setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
+            asyrequest.setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
+            asyresponse.setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
                     // TODO: 10.03.2023  проверем статус логин и пароль
             //Object ЛогинОтAndroid=      ((HttpServletRequest)request).getHeaders("identifier").nextElement()
-            Object IDДевайсаКлиентаPUBLIC=        Optional.ofNullable(((HttpServletRequest)request).getHeaders("id_device_androis").nextElement()).orElse("");
+            Object IDДевайсаКлиентаPUBLIC=        Optional.ofNullable(((HttpServletRequest)asyrequest).getHeaders("id_device_androis").nextElement()).orElse("");
             ЛОГ.log("\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
                     " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
                     " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+
                     "  ЛогинОтAndroid    doFilter doFilter doFilter IDДевайсаКлиентаPUBLIC " +IDДевайсаКлиентаPUBLIC);
             if (IDДевайсаКлиентаPUBLIC.toString().length()>5) {
 
-                    СтатусаАунтификацииПользователя = beanAuntifications.МетодАунтификация(ЛОГ, ((HttpServletRequest)request),  ((HttpServletRequest)request) .getSession());
+                    СтатусаАунтификацииПользователя = beanAuntifications.МетодАунтификация(ЛОГ, ((HttpServletRequest)asyrequest),
+                            ((HttpServletRequest)asyrequest) .getSession());
 
                 if (СтатусаАунтификацииПользователя==true) { // pass the request along the filter
                     // TODO: 11.03.2023 ГЛАВНАЯ СТРОЧКА ПЕРЕНАРАВЛЕНИЕ НА СЕВРЕЛТЫ НА ГЛАВНЫЙ КОД
-                    chain.doFilter(request,response);
+                    chain.doFilter(asyrequest,asyresponse);
                     ЛОГ.log("\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
                             " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
                             " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+
                             " Success    doFilter doFilter doFilter СтатусаАунтификацииПользователя " +СтатусаАунтификацииПользователя);
                 }else {
                     // TODO: 11.03.2023 ИМя и Пароль не Правильный
-                    МетодФильтраНеПрошлаАунтификацию(response);
+                    МетодФильтраНеПрошлаАунтификацию(asyresponse,asyrequest);
                     ЛОГ.log("\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
                             " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
                             " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+
@@ -72,9 +77,8 @@ public class FilterPublic implements Filter {
                 
             }else{
                 // TODO: 11.03.2023  нет не имени не пароля
-                RequestDispatcher requestDispatcher = request.getRequestDispatcher("/indexfilterpublic.jsp");
-                requestDispatcher.forward(request, response);
-
+                RequestDispatcher requestDispatcher = asyrequest.getRequestDispatcher("/indexfilterpublic.jsp");
+                requestDispatcher.forward(asyrequest, asyresponse);
                 /// requestФильтра.getRequestDispatcher("/index.jsp").forward(requestФильтра, responseОтветКлиенту);
               //  МетодФильтраНеПрошлаАунтификацию(response, СтатусаАунтификацииПользователя);
             }
@@ -90,15 +94,16 @@ public class FilterPublic implements Filter {
                                     getStackTrace(),
                             ЛОГ,"ErrorsLogs/ErrorJbossServletDSU1.txt");
         }
+            // TODO: 23.04.2023  end
     }
 
-    private void МетодФильтраНеПрошлаАунтификацию(ServletResponse response)
+    private void МетодФильтраНеПрошлаАунтификацию(HttpServletResponse asyresponse,  HttpServletRequest asyrequest)
             throws IOException, ServletException {
         try {
         StringBuffer СерверРаботаетБезПараметров=new StringBuffer("Server Running...... Don't Login and Password"+new Date().toGMTString().toString());
-        ((HttpServletResponse) response)  .addHeader("stream_size", String.valueOf(СерверРаботаетБезПараметров.length()));
+        ((HttpServletResponse) asyresponse)  .addHeader("stream_size", String.valueOf(СерверРаботаетБезПараметров.length()));
         // TODO: 10.03.2023 Ответ От Сервера
-        bEANCallsBack.МетодBackДанныеКлиенту(response, СерверРаботаетБезПараметров, ЛОГ);
+        bEANCallsBack.МетодBackДанныеКлиенту(asyresponse, СерверРаботаетБезПараметров, ЛОГ );
     } catch (Exception e) {
             subClassWriterErros.
                     МетодаЗаписиОшибкиВЛог(e,
@@ -106,6 +111,7 @@ public class FilterPublic implements Filter {
                                     getStackTrace(),
                             ЛОГ,"ErrorsLogs/ErrorJbossServletDSU1.txt");
     }
+            // TODO: 23.04.2023
     }
 
 
