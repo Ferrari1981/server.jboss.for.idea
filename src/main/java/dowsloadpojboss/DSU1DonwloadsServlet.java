@@ -46,7 +46,8 @@ public class DSU1DonwloadsServlet extends HttpServlet {
                     ЛОГ.log("\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                             " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
-                            "  ЛогинОтAndroid    ЗаданиеДляСервераЗагрузкиНовогоПо " + ЗаданиеДляСервераЗагрузкиНовогоПо + " req.isAsyncStarted() " + req.isAsyncStarted());
+                            "  ЛогинОтAndroid    ЗаданиеДляСервераЗагрузкиНовогоПо " + ЗаданиеДляСервераЗагрузкиНовогоПо
+                            + " req.isAsyncStarted() " + req.isAsyncStarted()+"  POOL  THREAD "+Thread.currentThread().getName());
                     switch (ЗаданиеДляСервераЗагрузкиНовогоПо.toString()) {
                         case "FileJsonUpdatePO":
                             // TODO: 13.03.2023  запуск Кода пополучениею File JSON Для Обнолвенеи ПО

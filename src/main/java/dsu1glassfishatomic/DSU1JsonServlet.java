@@ -57,7 +57,8 @@ public class DSU1JsonServlet extends HttpServlet {
                         " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                         " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
                         + " ((HttpServletRequest) req).getPathInfo() " +((HttpServletRequest) req).getPathInfo()+
-                        " POOL CURRENT  "+Thread.currentThread().getName()+ " req.isAsyncStarted() " +req.isAsyncStarted());
+                        " POOL CURRENT  "+Thread.currentThread().getName()+ " req.isAsyncStarted() " +req.isAsyncStarted()
+                        +"  POOL  THREAD "+Thread.currentThread().getName());
 
                     // TODO: 23.04.2023 clears Async
                         req.getAsyncContext().dispatch();
