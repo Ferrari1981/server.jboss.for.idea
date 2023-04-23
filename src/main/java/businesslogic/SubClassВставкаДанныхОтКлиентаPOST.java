@@ -46,21 +46,14 @@ public class SubClassВставкаДанныхОтКлиентаPOST {
             this.ЛОГ=ЛОГ;
             session =sessionSousJboss.getCurrentSession();      // TODO: 11.03.2023  Получении Сесии Hiberrnate
             sessionTransaction =session.getTransaction() ;
-            if (sessionTransaction.getStatus()== TransactionStatus.NOT_ACTIVE) {
-                sessionTransaction.begin();   // TODO: 14.03.2023  Запускаем Транзакцию
-            }
-            // TODO: 22.04.2023  Логирование
-            ЛОГ.log("\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
-                    " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
-                    " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+
-                    " bufferОтКлиента "+bufferОтКлиента.toString()  +
-                    " session  " +session + " sessionTransaction.getStatus() "+sessionTransaction.getStatus());
 
             // TODO: 22.04.2023 Новый ПАРСИНГ ОТ JAKSON JSON
             JsonNode jsonNodeParent= getGeneratorJackson.readTree(bufferОтКлиента.toString());
             jsonNodeParent.fields().forEachRemaining(new java.util.function.Consumer<Entry<String, JsonNode>>() {
                 @Override
                 public void accept(Entry<String, JsonNode> stringJsonNodeEntryOne) {
+                    // TODO: 23.04.2023 ЗапускТарнзакции
+                    методЗапускТранзакции(ЛОГ, bufferОтКлиента);
                     String Key=stringJsonNodeEntryOne.getKey().trim();
                     JsonNode jsonNodeChild = jsonNodeParent.get(Key);
                     // TODO: 22.04.2023 КАКАЯ ТАБЛИЦА
@@ -115,11 +108,11 @@ public class SubClassВставкаДанныхОтКлиентаPOST {
                     ЛОГ.log("\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
                             " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
                             " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n" + " arrayListMaxBackOperation" + arrayListMaxBackOperation.size());
+                    // TODO: 18.04.2023 ЗАВЕРШЕНИ СЕАНСА ПОСЛЕ ВЫПОЛЕНИЕ
+                    МетодЗавершенияСеанса();
 
                 }
             });
-            // TODO: 18.04.2023 ЗАВЕРШЕНИ СЕАНСА ПОСЛЕ ВЫПОЛЕНИЕ
-            МетодЗавершенияСеанса();
             // TODO: 22.04.2023
             MaxOperations = arrayListMaxBackOperation
                     .stream()
@@ -145,13 +138,31 @@ public class SubClassВставкаДанныхОтКлиентаPOST {
         return bufferCallsBackToAndroid;
     }
 
+    // TODO: 23.04.2023  запуск ТРАНЗАКЦИИ
 
-
-
-
-
-
-
+    private void методЗапускТранзакции(ServletContext ЛОГ, StringBuffer bufferОтКлиента) {
+        try{
+        if (sessionTransaction.getStatus()== TransactionStatus.NOT_ACTIVE) {
+            sessionTransaction.begin();   // TODO: 14.03.2023  Запускаем Транзакцию
+        }
+        // TODO: 22.04.2023  Логирование
+        ЛОГ.log("\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
+                " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
+                " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+
+                " bufferОтКлиента "+ bufferОтКлиента.toString()  +
+                " session  " +session + " sessionTransaction.getStatus() "+sessionTransaction.getStatus());
+    } catch (Exception   e) {
+        sessionTransaction.rollback();
+        session.close();
+        ЛОГ.log( "ERROR class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber()  + " e " +e.getMessage() );
+        subClassWriterErros.МетодаЗаписиОшибкиВЛог(e,
+                Thread.currentThread().
+                        getStackTrace(),
+                ЛОГ,"ErrorsLogs/ErrorJbossServletDSU1.txt");
+    }
+    }
 
 
     // TODO: 22.04.2023  парсинг ROWs
