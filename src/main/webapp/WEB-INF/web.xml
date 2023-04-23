@@ -62,17 +62,6 @@
         <url-pattern>/sous.jboss.runtimejboss</url-pattern>
     </servlet-mapping>
 
-    <servlet>
-        <servlet-name>DSU1ServletAuthentication</servlet-name>
-        <servlet-class>authentication.DSU1ServletAuthentication</servlet-class>
-        <async-supported>true</async-supported>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>DSU1ServletAuthentication</servlet-name>
-        <url-pattern>/sous.jboss.authentication</url-pattern>
-    </servlet-mapping>
-
-
 
 
 
@@ -87,7 +76,6 @@
         <url-pattern>/DSU1JsonServlet</url-pattern>
         <url-pattern>/DSU1DonwloadsServlet</url-pattern>
         <url-pattern>/DSU1ScannerServlet</url-pattern>
-        <url-pattern>/DSU1ServletAuthentication</url-pattern>
         <dispatcher>REQUEST</dispatcher>
         <dispatcher>FORWARD</dispatcher>
         <dispatcher>ASYNC</dispatcher>

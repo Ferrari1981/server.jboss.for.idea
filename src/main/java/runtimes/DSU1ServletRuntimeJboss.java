@@ -52,6 +52,7 @@ public class DSU1ServletRuntimeJboss extends HttpServlet {
                             + " ((HttpServletRequest) req).getPathInfo() " + ((HttpServletRequest) req).getPathInfo());
                     // TODO: 23.04.2023 clears Async
                     req.getAsyncContext().dispatch();
+                    req.getAsyncContext().complete();
                 } catch (Exception e) {
                     subClassWriterErros.
                             МетодаЗаписиОшибкиВЛог(e,

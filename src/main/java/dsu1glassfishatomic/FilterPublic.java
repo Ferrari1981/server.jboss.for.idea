@@ -1,9 +1,8 @@
 package dsu1glassfishatomic;
 
 import businesslogic.BEANCallsBack;
-import businesslogic.BeanAuntifications;
+import runtimejboss.BeanGetLoginAndPasswords;
 import businesslogic.SubClassWriterErros;
-import dowsloadpojboss.SessionBeanDownloadPO;
 
 import javax.ejb.EJB;
 import javax.inject.Inject;
@@ -17,10 +16,10 @@ import java.util.Date;
 import java.util.Optional;
 
 
-@WebFilter(value={ "/sous.jboss.tabel", "/sous.jboss.download" ,"/sous.jboss.scanner","/sous.jboss.authentication"},asyncSupported = true)
+@WebFilter(value={ "/sous.jboss.tabel", "/sous.jboss.download" ,"/sous.jboss.scanner"},asyncSupported = true)
 public class FilterPublic implements Filter {
     @EJB
-    private BeanAuntifications beanAuntifications;
+    private BeanGetLoginAndPasswords beanGetLoginAndPasswords;
     @Inject
     private BEANCallsBack bEANCallsBack;
     private ServletContext ЛОГ;
@@ -56,7 +55,7 @@ public class FilterPublic implements Filter {
                     "  ЛогинОтAndroid    doFilter doFilter doFilter IDДевайсаКлиентаPUBLIC " +IDДевайсаКлиентаPUBLIC);
             if (IDДевайсаКлиентаPUBLIC.toString().length()>5) {
 
-                    СтатусаАунтификацииПользователя = beanAuntifications.МетодАунтификация(ЛОГ, ((HttpServletRequest)asyrequest),
+                    СтатусаАунтификацииПользователя = beanGetLoginAndPasswords.МетодGetLoginAndPassword(ЛОГ, ((HttpServletRequest)asyrequest),
                             ((HttpServletRequest)asyrequest) .getSession());
 
                 if (СтатусаАунтификацииПользователя==true) { // pass the request along the filter
