@@ -54,8 +54,6 @@ public class FilterRuntime implements Filter {
                             " Success    doFilter doFilter doFilter IDДевайсаКлиента " +IDДевайсаКлиентаRuntime);
             }else{
                 // TODO: 11.03.2023  нет не имени не пароля
-             /*   RequestDispatcher requestDispatcher = request.getRequestDispatcher("/index.jsp");
-                requestDispatcher.forward(request, response);*/
                 МетодФильтраНеПрошлаАунтификацию(asyrequest,asyresponse);
             }
             ЛОГ.log("\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+

@@ -19,6 +19,14 @@
 
     }
 
+
+    String getTheadPool()
+    {
+        System.out.println( "Pool Thread  "+Thread.currentThread().getName());
+        return Thread.currentThread().getName();
+
+    }
+
     String getSessions()
     {
         String ПолученныеОшибки=null;
@@ -75,15 +83,18 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>Insert title here dsu-1 glassfish 4.1</title>
 </head>
-<body style="background-color:aquamarine;" >
+<body style="background-color:khaki;" >
 
 <label for="range-1">Slider:</label>
 <input name="range-1" id="range-1" data-highlight="true" min="0" max="100" value="40" type="range"/>
 <br><i>---------------------------------------------------------------------------------------------------------</i><br>
-<h2>Добро пожаловать я страница (indexruntime.jsp) JSP Red Hat Jboss 7 на intellij idea </h2>
+<h2>Добро пожаловать я страница (indexfilterpo.jsp) JSP Red Hat Jboss 7 на intellij idea </h2>
 <h1> ООО "Союз Автодор Иваново "</h1>
 
 <h1><i>Сегодня <%= getFormattedDate() %></i></h1>
+<br><i>----------------------------------------------------------------------------------------------------</i><br>
+<h1><i>ПОТОК <%= getTheadPool() %></i></h1>
+<br><i>----------------------------------------------------------------------------------------------------</i><br>
 <h1><i>Ошибки на Сервере: <%= getSessions() %></i></h1>
 <h1><i> Request Context Path: <%= request.getContextPath() %></i></h1>
 <h1><i> Request RequestURI: <%= request.getRequestURI() %></i></h1>
@@ -122,8 +133,6 @@
 <a href="sous.jboss.scanner">Нажми Пинг dsu1glassfishatomic.glassfish.scanner  </a>
 <br><i>----------------------------------------------------------------------------------------------------</i><br>
 <a href="sous.jboss.runtimejboss">Нажми Пинг dsu1glassfishatomic.glassfish.runtimejboss </a>
-<br><i>----------------------------------------------------------------------------------------------------</i><br>
-<a href="sous.jboss.authentication">Нажми Пинг dsu1glassfishatomic.glassfish.authentication  </a>
 <br><i>----------------------------------------------------------------------------------------------------</i><br>
 <input type="hidden" name="ipaddress" value="<%=request.getRemoteAddr()%>"/>
 <br><i>----------------------------------------------------------------------------------------------------</i><br>

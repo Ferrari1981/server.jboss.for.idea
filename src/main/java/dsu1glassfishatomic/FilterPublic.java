@@ -77,10 +77,9 @@ public class FilterPublic implements Filter {
                 
             }else{
                 // TODO: 11.03.2023  нет не имени не пароля
-                RequestDispatcher requestDispatcher = asyrequest.getRequestDispatcher("/indexfilterpublic.jsp");
+                RequestDispatcher requestDispatcher = asyrequest.getRequestDispatcher("/indexfiltetuntime.jsp");
+                requestDispatcher.forward(request, response);
                 asyrequest.getAsyncContext().dispatch();
-                /// requestФильтра.getRequestDispatcher("/index.jsp").forward(requestФильтра, responseОтветКлиенту);
-              //  МетодФильтраНеПрошлаАунтификацию(response, СтатусаАунтификацииПользователя);
             }
             ЛОГ.log("\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
                     " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+

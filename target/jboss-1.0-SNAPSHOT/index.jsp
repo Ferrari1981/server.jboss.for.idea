@@ -19,6 +19,14 @@
 
     }
 
+    String getTheadPool()
+    {
+        System.out.println( "Pool Thread  "+Thread.currentThread().getName());
+        return Thread.currentThread().getName();
+
+    }
+
+
     String getSessions()
     {
         String ПолученныеОшибки=null;
@@ -84,6 +92,9 @@
 <h1> ООО "Союз Автодор Иваново "</h1>
 
 <h1><i>Сегодня <%= getFormattedDate() %></i></h1>
+<br><i>----------------------------------------------------------------------------------------------------</i><br>
+<h1><i>ПОТОК <%= getTheadPool() %></i></h1>
+<br><i>----------------------------------------------------------------------------------------------------</i><br>
 <h1><i>Ошибки на Сервере: <%= getSessions() %></i></h1>
 <h1><i> Request Context Path: <%= request.getContextPath() %></i></h1>
 <h1><i> Request RequestURI: <%= request.getRequestURI() %></i></h1>
@@ -122,8 +133,6 @@
 <a href="sous.jboss.scanner">Нажми Пинг dsu1glassfishatomic.glassfish.scanner  </a>
 <br><i>----------------------------------------------------------------------------------------------------</i><br>
 <a href="sous.jboss.runtimejboss">Нажми Пинг dsu1glassfishatomic.glassfish.runtimejboss </a>
-<br><i>----------------------------------------------------------------------------------------------------</i><br>
-<a href="sous.jboss.authentication">Нажми Пинг dsu1glassfishatomic.glassfish.authentication  </a>
 <br><i>----------------------------------------------------------------------------------------------------</i><br>
 <input type="hidden" name="ipaddress" value="<%=request.getRemoteAddr()%>"/>
 <br><i>----------------------------------------------------------------------------------------------------</i><br>
