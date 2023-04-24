@@ -11,6 +11,7 @@ import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
 import java.util.Date;
 import java.util.Optional;
@@ -77,7 +78,7 @@ public class FilterPublic implements Filter {
             }else{
                 // TODO: 11.03.2023  нет не имени не пароля
                 RequestDispatcher requestDispatcher = asyrequest.getRequestDispatcher("/indexfilterpublic.jsp");
-                requestDispatcher.forward(asyrequest, asyresponse);
+                asyrequest.getAsyncContext().dispatch();
                 /// requestФильтра.getRequestDispatcher("/index.jsp").forward(requestФильтра, responseОтветКлиенту);
               //  МетодФильтраНеПрошлаАунтификацию(response, СтатусаАунтификацииПользователя);
             }
