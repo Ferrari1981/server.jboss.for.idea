@@ -41,7 +41,7 @@ public class FilterPublic implements Filter {
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         // TODO Auto-generated method stub
         final AsyncContext     asy = request.startAsync(request, response);
-        asy.setTimeout(500000);
+       ///asy.setTimeout(500000);
         HttpServletRequest asyrequest = (HttpServletRequest) asy.getRequest();
         HttpServletResponse asyresponse = (HttpServletResponse) asy.getResponse();
         try {
@@ -87,6 +87,9 @@ public class FilterPublic implements Filter {
                     " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+
                     " Success    doFilter doFilter doFilter СтатусаАунтификацииПользователя " +СтатусаАунтификацииПользователя+
                      " IDДевайсаЛогин " +IDДевайсаЛогин);
+
+            // TODO: 26.04.2023
+            методСлушатель(asy );
         } catch (Exception e) {
             subClassWriterErros.
                     МетодаЗаписиОшибкиВЛог(e,
@@ -95,6 +98,52 @@ public class FilterPublic implements Filter {
                             ЛОГ,"ErrorsLogs/ErrorJbossServletDSU1.txt");
         }
             // TODO: 23.04.2023  end
+    }
+
+    private void методСлушатель(AsyncContext asy) {
+        try{
+        asy.addListener(new AsyncListener() {
+            @Override
+            public void onComplete(AsyncEvent asyncEvent) throws IOException {
+                ЛОГ.log("\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
+                        " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
+                        " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+
+                        " Success    doFilter doFilter doFilter СтатусаАунтификацииПользователя ");
+            }
+
+            @Override
+            public void onTimeout(AsyncEvent asyncEvent) throws IOException {
+                asyncEvent.getAsyncContext().dispatch();
+                ЛОГ.log("\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
+                        " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
+                        " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+
+                        " asyncEvent " +asyncEvent);
+            }
+
+            @Override
+            public void onError(AsyncEvent asyncEvent) throws IOException {
+                asyncEvent.getAsyncContext().dispatch();
+                ЛОГ.log("\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
+                        " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
+                        " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+
+                        " asyncEvent " +asyncEvent);
+            }
+
+            @Override
+            public void onStartAsync(AsyncEvent asyncEvent) throws IOException {
+                ЛОГ.log("\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
+                        " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
+                        " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+
+                        " Success    doFilter doFilter doFilter СтатусаАунтификацииПользователя "  );
+            }
+        });
+    } catch (Exception e) {
+        subClassWriterErros.
+                МетодаЗаписиОшибкиВЛог(e,
+                        Thread.currentThread().
+                                getStackTrace(),
+                        ЛОГ,"ErrorsLogs/ErrorJbossServletDSU1.txt");
+    }
     }
 
     private void МетодФильтраНеПрошлаАунтификацию(HttpServletResponse asyresponse,  HttpServletRequest asyrequest)
