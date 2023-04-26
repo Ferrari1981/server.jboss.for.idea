@@ -33,17 +33,20 @@ public class BEANCallsBack {
                 " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n");
     }
     // TODO МетодКласса отправки данных андройду
-    public void МетодBackДанныеКлиенту(@NotNull ServletResponse response,
+    public void МетодBackДанныеКлиенту(@NotNull  HttpServletResponse response,
                                        @NotNull StringBuffer ГлавныйБуферОтправкиДанныхНААндройд,
                                        @NotNull ServletContext ЛОГ) throws IOException, ServletException {
 
-        if (  response.isCommitted()==false) {
+        if (  response.isCommitted() ==false &&
+                response.getStatus()==HttpServletResponse.SC_OK ) {
         try  ( BufferedWriter БуферДанныеДляКлиента = new BufferedWriter(
                 new OutputStreamWriter(new GZIPOutputStream(response.getOutputStream()), StandardCharsets.UTF_16));) {
             int ОбщийРазмерЗаписываемогоФайла = ГлавныйБуферОтправкиДанныхНААндройд.toString().toCharArray().length;
-            ((HttpServletResponse) response).addHeader("stream_size", String.valueOf(ОбщийРазмерЗаписываемогоФайла));
+             response.addHeader("stream_size", String.valueOf(ОбщийРазмерЗаписываемогоФайла));
+             response.addHeader("stream_status", String.valueOf(response.getStatus()));
             PrintWriter МеханизмОтправкиДанныхКлиенту = new PrintWriter(БуферДанныеДляКлиента, true);
             МеханизмОтправкиДанныхКлиенту.write(ГлавныйБуферОтправкиДанныхНААндройд.toString());
+            // TODO: 26.04.2023 fluf
             МеханизмОтправкиДанныхКлиенту.flush();
             response.flushBuffer();
             // TODO: 23.04.2023
