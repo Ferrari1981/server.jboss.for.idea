@@ -36,6 +36,8 @@ public class FilterRuntime implements Filter {
         asy.setTimeout(60000);
         HttpServletRequest asyrequest = (HttpServletRequest) asy.getRequest();
         HttpServletResponse asyresponse = (HttpServletResponse) asy.getResponse();
+        // TODO: 26.04.2023 Слушатель
+        методСлушатель(asy);
         try {
             asyrequest.setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
             asyresponse.setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
@@ -56,14 +58,14 @@ public class FilterRuntime implements Filter {
             }else{
                 // TODO: 11.03.2023  нет не имени не пароля
                 МетодФильтраНеПрошлаАунтификацию(asyrequest,asyresponse);
+                // TODO: 27.04.2023 exit
+                asy.dispatch();
             }
             ЛОГ.log("\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
                     " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
                     " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+
                     " Success    doFilter doFilter doFilter IDДевайсаКлиентаRuntime " +IDДевайсаКлиентаRuntime+
                      " IDДевайсаКлиентаRuntime " +IDДевайсаКлиентаRuntime);
-            // TODO: 26.04.2023
-            методСлушатель(asy);
         } catch (Exception e) {
             subClassWriterErros.
                     МетодаЗаписиОшибкиВЛог(e,

@@ -44,6 +44,8 @@ public class FilterPublic implements Filter {
         asy.setTimeout(60000);
         HttpServletRequest asyrequest = (HttpServletRequest) asy.getRequest();
         HttpServletResponse asyresponse = (HttpServletResponse) asy.getResponse();
+        // TODO: 26.04.2023 Слушатель
+        методСлушатель(asy );
         try {
             Boolean СтатусаАунтификацииПользователя= false;
             asyrequest.setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
@@ -81,6 +83,8 @@ public class FilterPublic implements Filter {
                     // TODO: 11.03.2023  нет не имени не пароля
                     RequestDispatcher requestDispatcher = asyrequest.getRequestDispatcher("/indexfiltetuntime.jsp");
                     requestDispatcher.forward(asyrequest, asyresponse);
+                    // TODO: 27.04.2023 exit
+                    asy.dispatch();
                 }
             }
             ЛОГ.log("\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
@@ -88,9 +92,6 @@ public class FilterPublic implements Filter {
                     " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+
                     " Success    doFilter doFilter doFilter СтатусаАунтификацииПользователя " +СтатусаАунтификацииПользователя+
                      " IDДевайсаЛогин " +IDДевайсаЛогин);
-
-            // TODO: 26.04.2023
-            методСлушатель(asy );
         } catch (Exception e) {
             subClassWriterErros.
                     МетодаЗаписиОшибкиВЛог(e,
