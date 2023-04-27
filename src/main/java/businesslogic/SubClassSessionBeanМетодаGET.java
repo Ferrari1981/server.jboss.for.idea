@@ -424,15 +424,20 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
                             "Метод_РеальнаяСтатусSqlServer  ЛистДанныеОтHibenide " +ЛистДанныеОтHibenide.size());
                     break;
             }
+
+
+            ЛОГ.log(" ОТВЕТ КЛИЕНТУ OTBEN LKIENTYY JobForServer " + JobForServer
+                    + " БуферCallsBackДляAndroid " + БуферCallsBackДляAndroid.toString()+  "ЛистДанныеОтHibenide "+ ЛистДанныеОтHibenide);
+            // TODO КОГДА ЛОГИН И ПАРОЛЬ НЕТ ДОСТУПА
+            МетодЗакрываемСессиюHibernate();
+
+
             //TODO ГЕНЕРАЦИЯ JSON ПО НОВОМУ
             if (ЛистДанныеОтHibenide.size()>0) {
                 БуферCallsBackДляAndroid = МетодГенерацияJSONJackson(ЛистДанныеОтHibenide);
             }
 
-            ЛОГ.log(" ОТВЕТ КЛИЕНТУ OTBEN LKIENTYY JobForServer " + JobForServer
-                    + " БуферCallsBackДляAndroid " + БуферCallsBackДляAndroid.toString()+  "ЛистДанныеОтHibenide "+ ЛистДанныеОтHibenide);
-            // TODO КОГДА ЛОГИН И ПАРОЛЬ НЕТ ДОСТУПА
-              МетодЗакрываемСессиюHibernate();
+
             //// TODO ЗАКРЫЫВАЕМ КУРСОРЫ ПОСЛЕ ГЕНЕРАЦИИ JSON ДЛЯ КЛИЕНТА
             // TODO
             ЛОГ.log("\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +

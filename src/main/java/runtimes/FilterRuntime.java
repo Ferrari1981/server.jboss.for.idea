@@ -33,7 +33,6 @@ public class FilterRuntime implements Filter {
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         // TODO Auto-generated method stub
         final AsyncContext     asy = request.startAsync(request, response);
-        asy.setTimeout(60000);
         HttpServletRequest asyrequest = (HttpServletRequest) asy.getRequest();
         HttpServletResponse asyresponse = (HttpServletResponse) asy.getResponse();
         // TODO: 26.04.2023 Слушатель
