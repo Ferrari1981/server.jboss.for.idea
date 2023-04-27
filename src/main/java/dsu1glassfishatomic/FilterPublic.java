@@ -41,7 +41,7 @@ public class FilterPublic implements Filter {
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         // TODO Auto-generated method stub
         final AsyncContext     asy = request.startAsync(request, response);
-       ///asy.setTimeout(500000);
+        asy.setTimeout(60000);
         HttpServletRequest asyrequest = (HttpServletRequest) asy.getRequest();
         HttpServletResponse asyresponse = (HttpServletResponse) asy.getResponse();
         try {
@@ -80,7 +80,6 @@ public class FilterPublic implements Filter {
                 // TODO: 11.03.2023  нет не имени не пароля
                 RequestDispatcher requestDispatcher = asyrequest.getRequestDispatcher("/indexfiltetuntime.jsp");
                 requestDispatcher.forward(asyrequest, asyresponse);
-                asyrequest.getAsyncContext().dispatch();
             }
             ЛОГ.log("\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
                     " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
@@ -136,7 +135,7 @@ public class FilterPublic implements Filter {
                         " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+
                         " Success    doFilter doFilter doFilter СтатусаАунтификацииПользователя "  );
             }
-        });
+        }, asy.getRequest(), asy.getResponse());
     } catch (Exception e) {
         subClassWriterErros.
                 МетодаЗаписиОшибкиВЛог(e,

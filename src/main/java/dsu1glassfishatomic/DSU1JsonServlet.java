@@ -61,7 +61,7 @@ public class DSU1JsonServlet extends HttpServlet {
                         +"  POOL  THREAD "+Thread.currentThread().getName());
 
                     // TODO: 23.04.2023 clears Async
-                        req.getAsyncContext().dispatch();
+                       /// req.getAsyncContext().dispatch();
             } catch (Exception e) {
                 ЛОГ.log( "ERROR class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                         " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
