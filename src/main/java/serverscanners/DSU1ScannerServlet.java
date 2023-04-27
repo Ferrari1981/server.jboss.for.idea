@@ -45,7 +45,7 @@ public class DSU1ScannerServlet extends HttpServlet {
                             + " ((HttpServletRequest) req).getPathInfo() " + ((HttpServletRequest) req).getPathInfo()+
                             "  POOL  THREAD "+Thread.currentThread().getName());
                     // TODO: 23.04.2023 clears Async
-                  //  req.getAsyncContext().dispatch();
+                    req.getAsyncContext().dispatch();
                 });
             }
         } catch (Exception e) {
