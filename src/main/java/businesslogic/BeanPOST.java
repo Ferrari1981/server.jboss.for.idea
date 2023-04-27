@@ -48,7 +48,7 @@ public class BeanPOST {
             ///Todo  получаем данные от клиента
           StringBuffer  БуферРезультатPOST=		subClassSessionBeanPOST.МетодЗапускаPOST(request, response, ЛОГ);
             ///Todo получаем данные от Клиента на Сервер
-                bEANCallsBack.МетодBackДанныеКлиенту(response, БуферРезультатPOST, ЛОГ,request );
+                bEANCallsBack.МетодBackДанныеКлиенту(response, БуферРезультатPOST, ЛОГ  );
             ЛОГ.log("\n"+" Starting.... class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
                     " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
                     " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n");

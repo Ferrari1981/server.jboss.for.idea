@@ -35,8 +35,7 @@ public class BEANCallsBack {
     // TODO МетодКласса отправки данных андройду
     public void МетодBackДанныеКлиенту(@NotNull  HttpServletResponse response,
                                        @NotNull StringBuffer ГлавныйБуферОтправкиДанныхНААндройд,
-                                       @NotNull ServletContext ЛОГ,
-                                       @NotNull  HttpServletRequest request ) throws IOException, ServletException {
+                                       @NotNull ServletContext ЛОГ) throws IOException, ServletException {
 
         if (  response.isCommitted() ==false &&
                 response.getStatus()==HttpServletResponse.SC_OK ) {
@@ -60,7 +59,6 @@ public class BEANCallsBack {
 
         } catch (IOException e) {
             // TODO: 27.04.2023
-            request.getAsyncContext().complete();
             subClassWriterErros.
                     МетодаЗаписиОшибкиВЛог(e,
                             Thread.currentThread().

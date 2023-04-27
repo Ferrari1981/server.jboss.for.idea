@@ -56,7 +56,7 @@ public class BeanGET {
             // TODO: 10.03.2023  данные от GET метода
         StringBuffer    БуферРезультатGET=		subClassSessionBeanМетодаGET.ГлавныйМетод_МетодаGET(request,  ЛОГ);
             ///Todo отправляем  клиенту ответ от серверац
-                bEANCallsBack.МетодBackДанныеКлиенту(response, БуферРезультатGET, ЛОГ,request );
+                bEANCallsBack.МетодBackДанныеКлиенту(response, БуферРезультатGET, ЛОГ  );
             ЛОГ.log( " Класс"+Thread.currentThread().getStackTrace()[2].getClassName()
                     +"\n"+
                     " метод "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"

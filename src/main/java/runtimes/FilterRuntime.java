@@ -98,7 +98,7 @@ public class FilterRuntime implements Filter {
 
                 @Override
                 public void onError(AsyncEvent asyncEvent) throws IOException {
-                    asyncEvent.getAsyncContext().dispatch();
+                    asyncEvent.getAsyncContext().complete();
                     ЛОГ.log("\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
                             " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
                             " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+
@@ -129,7 +129,7 @@ public class FilterRuntime implements Filter {
         asyresponse .addHeader("stream_size", String.valueOf(СерверРаботаетБезПараметров.length()));
         asyresponse.addHeader("stream_status", String.valueOf(asyresponse.getStatus()));
         // TODO: 10.03.2023 Ответ От Сервера
-        bEANCallsBack.МетодBackДанныеКлиенту(asyresponse, СерверРаботаетБезПараметров, ЛОГ ,asyrequest);
+        bEANCallsBack.МетодBackДанныеКлиенту(asyresponse, СерверРаботаетБезПараметров, ЛОГ  );
     } catch (Exception e) {
             subClassWriterErros.
                     МетодаЗаписиОшибкиВЛог(e,
