@@ -4,6 +4,7 @@ package businesslogic;
 import java.sql.Array;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map.Entry;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
@@ -15,6 +16,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sun.istack.NotNull;
 import dsu1glassfishatomic.workinterfaces.ProducedCard;
+import model.UsersEntity;
 import org.hibernate.LockOptions;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -63,14 +65,16 @@ public class SubClassВставкаДанныхОтКлиентаPOST {
                             " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
                             " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+" queryprocedure   " + queryprocedure[0]);
 
+                    // TODO: 27.04.2023  заплянем ДАННЫМИ
                     ЛОГ.log("stringJsonNodeEntryOne.getKey() "  + stringJsonNodeEntryOne.getKey() + " stringJsonNodeEntryOne.getValue() " +stringJsonNodeEntryOne.getValue()+  "Key "+Key );
                     jsonNodeChild.fields().forEachRemaining(new java.util.function.Consumer<Entry<String, JsonNode>>() {
                         @Override
                         public void accept(Entry<String, JsonNode> stringJsonNodeEntryTwo) {
                             // TODO: 22.04.2023  Парсинг Rows JSON 
-                            queryprocedure[0] =      методFillingValuesRows(stringJsonNodeEntryTwo, queryprocedure[0]);
-                            ЛОГ.log("stringJsonNodeEntryTwo.getKey() "  + stringJsonNodeEntryTwo.getKey() + " stringJsonNodeEntryTwo.getValue() " +stringJsonNodeEntryTwo.getValue() +
-                                    "   queryprocedure[0]  " +  queryprocedure[0] );
+                            queryprocedure[0] =      методFillingValuesRows(stringJsonNodeEntryTwo, queryprocedure[0],ТаблицаPOST);
+                            ЛОГ.log("stringJsonNodeEntryTwo.getKey() "  + stringJsonNodeEntryTwo.getKey() + " stringJsonNodeEntryTwo.getValue() "
+                                    +stringJsonNodeEntryTwo.getValue() +
+                                    "   queryprocedure[0]  " +  queryprocedure[0] + " ТаблицаPOST " +ТаблицаPOST);
 
                         }
                     });
@@ -163,11 +167,33 @@ public class SubClassВставкаДанныхОтКлиентаPOST {
 
 
     // TODO: 22.04.2023  парсинг ROWs
-    private StoredProcedureQuery методFillingValuesRows(@NotNull Entry<String, JsonNode> stringJsonNodeEntryTwo,@NotNull  StoredProcedureQuery       queryprocedure) {
+    private StoredProcedureQuery методFillingValuesRows(@NotNull Entry<String, JsonNode> stringJsonNodeEntryTwo
+            ,@NotNull  StoredProcedureQuery       queryprocedure, @NotNull String ТаблицаPOST) {
         try{
             ЛОГ.log("stringJsonNodeEntryTwo.getKey() "  + stringJsonNodeEntryTwo.getKey() + " stringJsonNodeEntryTwo.getValue() " +stringJsonNodeEntryTwo.getValue()  );
             String  getKey=   stringJsonNodeEntryTwo.getKey().trim();
             String  getvalue=     stringJsonNodeEntryTwo.getValue().asText().trim();
+
+            if(getKey.equalsIgnoreCase("current_table")){
+                org.hibernate.Query queryДляHiberite   = session.createNativeQuery("SELECT MAX(vers.current_table)    FROM "+ТаблицаPOST+" as vers");
+                Object ВерсияДанныхServer =  queryДляHiberite.setMaxResults(1).getSingleResult();
+                // TODO: 27.04.2023 Оцениваем
+                Long ВерсияДанныхКлиента=Long.parseLong(getvalue);
+                Long ВерсияДанныхSQLServer=Long.parseLong(ВерсияДанныхServer.toString());
+                if (ВерсияДанныхКлиента<=ВерсияДанныхSQLServer){
+                    ВерсияДанныхSQLServer=ВерсияДанныхSQLServer+1;
+                    getvalue=String.valueOf(ВерсияДанныхSQLServer.toString());
+                    ЛОГ.log("\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
+                            " getvalue" + getvalue + " getKey " + getKey  );
+                }
+
+            }
+
+
+
+
             // TODO заполенем JSonValue ДАННЫМИ
             queryprocedure.registerStoredProcedureParameter(getKey, String.class, ParameterMode.IN)
                     .setParameter(getKey,getvalue);

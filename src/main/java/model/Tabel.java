@@ -23,7 +23,6 @@ import java.util.Date;
 
 public class Tabel implements Serializable {
     private static final long serialVersionUID = 1L;
-
     @Id
     private Integer id;
 
