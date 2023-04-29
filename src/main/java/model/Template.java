@@ -17,7 +17,7 @@ import java.util.List;
  */
 @Entity
 @Table(name="templates",catalog="storage",schema="dbo")
-@NamedQuery(name="Template.findAll", query="SELECT t FROM Template t")
+@NamedQuery(name="Template.findAll", query="SELECT t FROM  model. Template t")
 @DynamicUpdate
 @OptimisticLocking(type=OptimisticLockType.DIRTY)
 

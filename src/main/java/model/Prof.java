@@ -11,7 +11,7 @@ import java.util.Date;
 
 @Entity
 @Table(name = "prof", schema = "dbo", catalog = "storage")
-@NamedQuery(name="Prof.findAll", query="SELECT pr FROM Prof pr")
+@NamedQuery(name="Prof.findAll", query="SELECT pr FROM  model. Prof pr")
 @DynamicUpdate
 @OptimisticLocking(type=OptimisticLockType.DIRTY)
 

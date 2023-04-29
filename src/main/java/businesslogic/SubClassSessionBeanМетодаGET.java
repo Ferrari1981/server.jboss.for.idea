@@ -1,15 +1,11 @@
 package businesslogic;
 
-import java.io.IOException;
-import java.io.StringWriter;
-import java.math.BigDecimal;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.*;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectWriter;
+import com.sun.istack.NotNull;
+import dsu1glassfishatomic.workinterfaces.ProducedCard;
+import org.hibernate.*;
+import org.hibernate.resource.transaction.spi.TransactionStatus;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
@@ -20,20 +16,18 @@ import javax.persistence.StoredProcedureQuery;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import javax.ws.rs.Produces;
+import java.io.IOException;
+import java.io.StringWriter;
+import java.math.BigDecimal;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Optional;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.core.JsonFactory;
-import com.fasterxml.jackson.databind.PropertyNamingStrategy;
-import dsu1glassfishatomic.workinterfaces.ProducedCard;
-import org.hibernate.*;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.ObjectWriter;
-import com.sun.istack.NotNull;
-import org.hibernate.resource.transaction.spi.TransactionStatus;
-import  model.*;
 
 @RequestScoped
 @Produces
@@ -287,9 +281,10 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
                         case "tabel":
                             // TODO
                             queryДляHiberite = session.createQuery(
-                                    "SELECT  tab FROM Tabel tab  WHERE tab .currentTable > :id  AND tab.userUpdate=:user_update ");
+                                    "SELECT  tab FROM Tabel tab  WHERE tab .currentTable > :id  AND tab.userUpdate=:user_update AND status_send<>:status_send");
                             queryДляHiberite.setParameter("id",new BigDecimal(VersionData));//8641 8625
                             queryДляHiberite.setParameter("user_update",IdUser);//8641 8625
+                            queryДляHiberite.setParameter("status_send","Удаленная");//8641 8625
                             ЛистДанныеОтHibenide =( List<model.Tabel>)  queryДляHiberite.getResultList();
                             ЛОГ.  log(" ЛистДанныеОтHibenide "+ЛистДанныеОтHibenide+ " ЛистДанныеОтHibenide.size() " +ЛистДанныеОтHibenide.size()+
                                     "  queryДляHiberite  " +queryДляHiberite);//gson Gson
@@ -297,9 +292,11 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
                         case "data_tabels":
                             // TODO
                             queryДляHiberite = session.createQuery(
-                                    "SELECT  dat FROM DataTabel dat WHERE dat .currentTable > :id  AND dat.userUpdate=:user_update  ");
+                                    "SELECT  dat FROM DataTabel dat WHERE dat .currentTable > :id  AND dat.userUpdate=:user_update" +
+                                            "  AND dat.status_send<>:status_send ");
                             queryДляHiberite.setParameter("id",new BigDecimal(VersionData));//8641 8625
                             queryДляHiberite.setParameter("user_update",IdUser);//8641 8625
+                            queryДляHiberite.setParameter("status_send","Удаленная");//8641 8625
                             ЛистДанныеОтHibenide =( List<model.DataTabel>)  queryДляHiberite.getResultList();
                             ЛОГ.  log(" ЛистДанныеОтHibenide "+ЛистДанныеОтHibenide+ " ЛистДанныеОтHibenide.size() " +ЛистДанныеОтHibenide.size()+
                                     "  queryДляHiberite  " +queryДляHiberite);//gson Gson

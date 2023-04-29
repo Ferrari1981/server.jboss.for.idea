@@ -27,7 +27,7 @@ import org.hibernate.annotations.OptimisticLockType;
  */
 @Entity
 @Table(name="organization",catalog="storage",schema="dbo")
-@NamedQuery(name="Organization.findAll", query="SELECT o FROM Organization o")
+@NamedQuery(name="Organization.findAll", query="SELECT o FROM  model. Organization o")
 @org.hibernate.annotations.OptimisticLocking(
         type = OptimisticLockType.DIRTY)
 @org.hibernate.annotations.DynamicUpdate

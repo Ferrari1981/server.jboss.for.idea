@@ -17,7 +17,7 @@ import java.util.Date;
  */
 @Entity
 @Table(name="settings_tabels",catalog="storage",schema="dbo")
-@NamedQuery(name="Settingtab.findAll", query="SELECT s FROM Settingtab s")
+@NamedQuery(name="Settingtab.findAll", query="SELECT s FROM   model. Settingtab s")
 @DynamicUpdate
 @OptimisticLocking(type=OptimisticLockType.DIRTY)
 

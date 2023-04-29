@@ -26,7 +26,7 @@ import javax.persistence.TemporalType;
  */
 @Entity
 @Table(name = "data_chat", catalog = "storage", schema = "dbo")
-@NamedQuery(name = "DataChat.findAll", query = "SELECT d FROM DataChat d")
+@NamedQuery(name = "DataChat.findAll", query = "SELECT d FROM   model.DataChat d")
 @org.hibernate.annotations.OptimisticLocking(
         type = OptimisticLockType.DIRTY)
 @org.hibernate.annotations.DynamicUpdate

@@ -14,7 +14,7 @@ import java.util.Date;
  */
 @Entity
 @Table(name="data_tabels",catalog="storage",schema="dbo")
-@NamedQuery(name="DataTabel.findAll", query="SELECT d FROM DataTabel d")
+@NamedQuery(name="DataTabel.findAll", query="SELECT d FROM  model. DataTabel d")
 @org.hibernate.annotations.OptimisticLocking(
         type = OptimisticLockType.DIRTY)
 @org.hibernate.annotations.DynamicUpdate

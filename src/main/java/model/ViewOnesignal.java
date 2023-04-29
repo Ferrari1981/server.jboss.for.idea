@@ -16,7 +16,7 @@ import java.util.Date;
  */
 @Entity
 @Table(name="view_onesignal",catalog="storage",schema="dbo")
-@NamedQuery(name="ViewOnesignal.findAll", query="SELECT v FROM ViewOnesignal v")
+@NamedQuery(name="ViewOnesignal.findAll", query="SELECT v FROM  model. ViewOnesignal v")
 @DynamicUpdate
 @OptimisticLocking(type=OptimisticLockType.DIRTY)
 
