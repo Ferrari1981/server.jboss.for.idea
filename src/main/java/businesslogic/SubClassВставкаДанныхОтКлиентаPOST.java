@@ -170,30 +170,10 @@ public class SubClassВставкаДанныхОтКлиентаPOST {
     private StoredProcedureQuery методFillingValuesRows(@NotNull Entry<String, JsonNode> stringJsonNodeEntryTwo
             ,@NotNull  StoredProcedureQuery       queryprocedure, @NotNull String ТаблицаPOST) {
         try{
-            ЛОГ.log("stringJsonNodeEntryTwo.getKey() "  + stringJsonNodeEntryTwo.getKey() + " stringJsonNodeEntryTwo.getValue() " +stringJsonNodeEntryTwo.getValue()  );
+            ЛОГ.log("stringJsonNodeEntryTwo.getKey() "  + stringJsonNodeEntryTwo.getKey()
+                    + " stringJsonNodeEntryTwo.getValue() " +stringJsonNodeEntryTwo.getValue()  );
             String  getKey=   stringJsonNodeEntryTwo.getKey().trim();
             String  getvalue=     stringJsonNodeEntryTwo.getValue().asText().trim();
-
-            if(getKey.equalsIgnoreCase("current_table")){
-                org.hibernate.Query queryДляHiberite   = session.createNativeQuery("SELECT MAX(vers.current_table)    FROM "+ТаблицаPOST+" as vers");
-                Object ВерсияДанныхServer =  queryДляHiberite.setMaxResults(1).getSingleResult();
-                // TODO: 27.04.2023 Оцениваем
-                Long ВерсияДанныхКлиента=Long.parseLong(getvalue);
-                Long ВерсияДанныхSQLServer=Long.parseLong(ВерсияДанныхServer.toString());
-                if (ВерсияДанныхКлиента<=ВерсияДанныхSQLServer){
-                    ВерсияДанныхSQLServer=ВерсияДанныхSQLServer+1;
-                    getvalue=String.valueOf(ВерсияДанныхSQLServer.toString());
-                    ЛОГ.log("\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
-                            " getvalue" + getvalue + " getKey " + getKey  );
-                }
-
-            }
-
-
-
-
             // TODO заполенем JSonValue ДАННЫМИ
             queryprocedure.registerStoredProcedureParameter(getKey, String.class, ParameterMode.IN)
                     .setParameter(getKey,getvalue);
