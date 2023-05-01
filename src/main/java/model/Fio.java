@@ -91,15 +91,7 @@ public class Fio implements Serializable {
     }
 
     public Date getBirthDate() throws ParseException {
-        DateFormat	dateFormat =   new SimpleDateFormat("yyyy-MM-dd",new Locale("ru"));
-        if ( this.birthDate==null) {
-            Date date = dateFormat.parse("1900-01-01");
-            return date;
-
-        }else {
-            Date date = dateFormat.parse(this.birthDate.toString());
-            return date;
-        }
+        return this.birthDate;
     }
 
     public void setBirthDate(Date birthDate) {
