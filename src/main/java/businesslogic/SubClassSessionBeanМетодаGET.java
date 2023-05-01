@@ -12,6 +12,7 @@ import javax.inject.Inject;
 import javax.json.Json;
 import javax.json.JsonObjectBuilder;
 import javax.json.JsonWriter;
+import javax.persistence.LockModeType;
 import javax.persistence.StoredProcedureQuery;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -281,10 +282,11 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
                         case "tabel":
                             // TODO
                             queryДляHiberite = session.createQuery(
-                                    "SELECT  tab FROM Tabel tab  WHERE tab .currentTable > :id  AND tab.userUpdate=:user_update AND tab.status_send<>:status_send");
+                                    "SELECT  tab FROM Tabel tab  WHERE tab .currentTable > :id  AND tab.userUpdate=:user_update AND tab.statusSend!=:statusSend ");
                             queryДляHiberite.setParameter("id",new BigDecimal(VersionData));//8641 8625
                             queryДляHiberite.setParameter("user_update",IdUser);//8641 8625
-                            queryДляHiberite.setParameter("status_send","Удаленная");//8641 8625
+                            queryДляHiberite.setParameter("statusSend","Удаленная");//8641 8625
+                            queryДляHiberite.setLockOptions(LockOptions.UPGRADE);
                             ЛистДанныеОтHibenide =( List<model.Tabel>)  queryДляHiberite.getResultList();
                             ЛОГ.  log(" ЛистДанныеОтHibenide "+ЛистДанныеОтHibenide+ " ЛистДанныеОтHibenide.size() " +ЛистДанныеОтHibenide.size()+
                                     "  queryДляHiberite  " +queryДляHiberite);//gson Gson
@@ -293,10 +295,11 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
                             // TODO
                             queryДляHiberite = session.createQuery(
                                     "SELECT  dat FROM DataTabel dat WHERE dat .currentTable > :id  AND dat.userUpdate=:user_update" +
-                                            "  AND dat.status_send<>:status_send ");
+                                            "  AND dat.statusSend!=:statusSend  ");
                             queryДляHiberite.setParameter("id",new BigDecimal(VersionData));//8641 8625
                             queryДляHiberite.setParameter("user_update",IdUser);//8641 8625
-                            queryДляHiberite.setParameter("status_send","Удаленная");//8641 8625
+                            queryДляHiberite.setParameter("statusSend","Удаленная");//8641 8625
+                            queryДляHiberite.setLockOptions(LockOptions.UPGRADE);
                             ЛистДанныеОтHibenide =( List<model.DataTabel>)  queryДляHiberite.getResultList();
                             ЛОГ.  log(" ЛистДанныеОтHibenide "+ЛистДанныеОтHibenide+ " ЛистДанныеОтHibenide.size() " +ЛистДанныеОтHibenide.size()+
                                     "  queryДляHiberite  " +queryДляHiberite);//gson Gson

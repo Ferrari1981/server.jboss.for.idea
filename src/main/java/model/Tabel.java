@@ -93,10 +93,12 @@ public class Tabel implements Serializable {
     }
 
     public String getStatusSend() {
+
         return this.statusSend;
     }
 
     public void setStatusSend(String statusSend) {
+
         this.statusSend = statusSend;
     }
 
