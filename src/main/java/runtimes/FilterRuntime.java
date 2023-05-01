@@ -58,7 +58,7 @@ public class FilterRuntime implements Filter {
                 // TODO: 11.03.2023  нет не имени не пароля
                 МетодФильтраНеПрошлаАунтификацию(asyrequest,asyresponse);
                 // TODO: 27.04.2023 exit
-                asy.dispatch();
+                asyrequest.getAsyncContext().dispatch();
             }
             ЛОГ.log("\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
                     " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+

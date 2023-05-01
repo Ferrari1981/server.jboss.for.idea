@@ -281,7 +281,7 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
                         case "tabel":
                             // TODO
                             queryДляHiberite = session.createQuery(
-                                    "SELECT  tab FROM Tabel tab  WHERE tab .currentTable > :id  AND tab.userUpdate=:user_update AND status_send<>:status_send");
+                                    "SELECT  tab FROM Tabel tab  WHERE tab .currentTable > :id  AND tab.userUpdate=:user_update AND tab.status_send<>:status_send");
                             queryДляHiberite.setParameter("id",new BigDecimal(VersionData));//8641 8625
                             queryДляHiberite.setParameter("user_update",IdUser);//8641 8625
                             queryДляHiberite.setParameter("status_send","Удаленная");//8641 8625
