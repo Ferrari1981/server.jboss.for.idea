@@ -91,7 +91,15 @@ public class Fio implements Serializable {
     }
 
     public Date getBirthDate() throws ParseException {
-        return this.birthDate;
+        DateFormat	dateFormat =   new SimpleDateFormat("yyyy-MM-dd",new Locale("ru"));
+        if ( this.birthDate==null) {
+            this.birthDate = dateFormat.parse("1900-01-01");
+            return this.birthDate;
+
+        }else {
+            this.birthDate = dateFormat.parse(this.birthDate.toString());
+            return this.birthDate;
+        }
     }
 
     public void setBirthDate(Date birthDate) {
@@ -119,6 +127,13 @@ public class Fio implements Serializable {
     }
 
     public Date getDateUpdate() {
+        DateFormat	dateFormat =   new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS",new Locale("ru"));
+        String Дата = dateFormat.format(this.dateUpdate);
+        try {
+            this.dateUpdate= dateFormat.parse(Дата);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
         return this.dateUpdate;
     }
 
