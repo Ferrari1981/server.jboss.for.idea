@@ -286,7 +286,6 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
                             queryДляHiberite.setParameter("id",new BigDecimal(VersionData));//8641 8625
                             queryДляHiberite.setParameter("user_update",IdUser);//8641 8625
                             queryДляHiberite.setParameter("statusSend","Удаленная");//8641 8625
-                            queryДляHiberite.setLockOptions(LockOptions.UPGRADE);
                             ЛистДанныеОтHibenide =( List<model.Tabel>)  queryДляHiberite.getResultList();
                             ЛОГ.  log(" ЛистДанныеОтHibenide "+ЛистДанныеОтHibenide+ " ЛистДанныеОтHibenide.size() " +ЛистДанныеОтHibenide.size()+
                                     "  queryДляHiberite  " +queryДляHiberite);//gson Gson
@@ -299,7 +298,6 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
                             queryДляHiberite.setParameter("id",new BigDecimal(VersionData));//8641 8625
                             queryДляHiberite.setParameter("user_update",IdUser);//8641 8625
                             queryДляHiberite.setParameter("statusSend","Удаленная");//8641 8625
-                            queryДляHiberite.setLockOptions(LockOptions.UPGRADE);
                             ЛистДанныеОтHibenide =( List<model.DataTabel>)  queryДляHiberite.getResultList();
                             ЛОГ.  log(" ЛистДанныеОтHibenide "+ЛистДанныеОтHibenide+ " ЛистДанныеОтHibenide.size() " +ЛистДанныеОтHibenide.size()+
                                     "  queryДляHiberite  " +queryДляHiberite);//gson Gson
@@ -368,6 +366,28 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
                             queryДляHiberite = session.createQuery(
                                     " SELECT  pr FROM Prof pr  WHERE pr .currentTable > :id");
                       
+                            queryДляHiberite.setParameter("id",new BigDecimal(VersionData));//8641 8625
+                            ЛистДанныеОтHibenide =( List<model.Prof>)  queryДляHiberite.getResultList();
+                            ЛОГ.  log(" ЛистДанныеОтHibenide "+ЛистДанныеОтHibenide+ " ЛистДанныеОтHibenide.size() " +ЛистДанныеОтHibenide.size()+
+                                    "  queryДляHiberite  " +queryДляHiberite);//gson Gson
+                            break;
+
+                        case "order_tc":
+                            // TODO
+                            queryДляHiberite = session.createQuery(
+                                    " SELECT  ort FROM OrderTransport  ort  WHERE ort .currentTable > :id");
+
+                            queryДляHiberite.setParameter("id",new BigDecimal(VersionData));//8641 8625
+                            ЛистДанныеОтHibenide =( List<model.Prof>)  queryДляHiberite.getResultList();
+                            ЛОГ.  log(" ЛистДанныеОтHibenide "+ЛистДанныеОтHibenide+ " ЛистДанныеОтHibenide.size() " +ЛистДанныеОтHibenide.size()+
+                                    "  queryДляHiberite  " +queryДляHiberite);//gson Gson
+                            break;
+
+                        case "vid_tc":
+                            // TODO
+                            queryДляHiberite = session.createQuery(
+                                    " SELECT  vt FROM VidTansport vt  WHERE vt .currentTable > :id");
+
                             queryДляHiberite.setParameter("id",new BigDecimal(VersionData));//8641 8625
                             ЛистДанныеОтHibenide =( List<model.Prof>)  queryДляHiberite.getResultList();
                             ЛОГ.  log(" ЛистДанныеОтHibenide "+ЛистДанныеОтHibenide+ " ЛистДанныеОтHibenide.size() " +ЛистДанныеОтHibenide.size()+
