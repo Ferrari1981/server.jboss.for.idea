@@ -11,10 +11,10 @@ import java.util.Date;
 
 @Entity
 @Table(name = "prof", schema = "dbo", catalog = "storage")
-@NamedQuery(name="Prof.findAll", query="SELECT pr FROM  model. Prof pr")
+
+@NamedQuery(name="Prof.findAll", query="SELECT pr FROM  model.Prof pr")
 @DynamicUpdate
 @OptimisticLocking(type=OptimisticLockType.DIRTY)
-
 
 public class Prof implements Serializable {
     private static final long serialVersionUID = 1L;
