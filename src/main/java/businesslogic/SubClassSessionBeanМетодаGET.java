@@ -4,8 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.sun.istack.NotNull;
 import dsu1glassfishatomic.workinterfaces.ProducedCard;
-import model.OrderTransport;
-import model.Prof;
+import model.OrderTc;
 import org.hibernate.*;
 import org.hibernate.resource.transaction.spi.TransactionStatus;
 
@@ -14,7 +13,6 @@ import javax.inject.Inject;
 import javax.json.Json;
 import javax.json.JsonObjectBuilder;
 import javax.json.JsonWriter;
-import javax.persistence.LockModeType;
 import javax.persistence.StoredProcedureQuery;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -34,7 +32,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Stream;
 
 
 @RequestScoped
@@ -388,13 +385,13 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
                            List  ЛистДанныеОтHibenide2 =   query.list();*/
 
                             CriteriaBuilder cb = session.getCriteriaBuilder();
-                            CriteriaQuery<Prof> criteria = cb.createQuery(Prof.class);
-                            Root<Prof> i = criteria.from(Prof.class);
+                            CriteriaQuery<OrderTc> criteria = cb.createQuery( OrderTc.class);
+                            Root<OrderTc> i = criteria.from( OrderTc.class);
                             criteria.select(i).where(cb.gt(i.get("currentTable"), new BigDecimal(0)));
-                            TypedQuery<Prof> query = session.createQuery(criteria);
+                            TypedQuery<OrderTc> query = session.createQuery(criteria);
                             ЛистДанныеОтHibenide = query.getResultList();
 
-                              cb = session.getCriteriaBuilder();
+                       /*       cb = session.getCriteriaBuilder();
                             CriteriaQuery<OrderTransport> criteria2 = cb.createQuery(OrderTransport.class);
                             Root<OrderTransport> i2 = criteria2.from(OrderTransport.class);
                             criteria.select(i).where(cb.gt(i2.get("currentTable"), new BigDecimal(0)));
@@ -407,12 +404,12 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
                             ЛистДанныеОтHibenide =( List<model.Prof>)  session.createQuery(" SELECT  ort FROM  model.Prof   ort    ", Prof.class).getResultList();
 
                            // queryДляHiberite.setParameter("version",new BigDecimal(0));//8641 8625VersionData
-                            ЛистДанныеОтHibenide =( List<model.OrderTransport>)  queryДляHiberite.getResultList();
+                            ЛистДанныеОтHibenide =( List<model.OrderTransport>)  queryДляHiberite.getResultList();*/
                             ЛОГ.  log(" ЛистДанныеОтHibenide "+ЛистДанныеОтHibenide+ " ЛистДанныеОтHibenide.size() " +ЛистДанныеОтHibenide.size()+
                                     "  queryДляHiberite  " +queryДляHiberite);//gson Gson
                             break;
 
-                        case "vid_tc":
+                  /*      case "vid_tc":
                             // TODO
                             queryДляHiberite = session.createQuery(
                                     " SELECT  vt FROM model.VidTansport  vt  WHERE vt.currentTable > :version");
@@ -421,7 +418,7 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
                             ЛистДанныеОтHibenide =( List<model.VidTansport>)  queryДляHiberite.getResultList();
                             ЛОГ.  log(" ЛистДанныеОтHibenide "+ЛистДанныеОтHibenide+ " ЛистДанныеОтHibenide.size() " +ЛистДанныеОтHibenide.size()+
                                     "  queryДляHiberite  " +queryДляHiberite);//gson Gson
-                            break;
+                            break;*/
 
                     }//TODO КОНЕЦ РАСПРЕДЕНИЕ ТАБЛИЦ 	switch (NameTable.trim()) {
 
