@@ -382,6 +382,7 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
                             // TODO
                             criteriaquery = session.createCriteria(OrderTc.class);
                             criteriaquery.add(org.hibernate.criterion.Restrictions.gt("currentTable", new BigDecimal(VersionData)));
+                            criteriaquery.add(org.hibernate.criterion.Restrictions.eq("userUpdate", IdUser));
                             ЛистДанныеОтHibenide = ( List<model.OrderTc>)   criteriaquery.list();
                             ЛОГ.  log(" ЛистДанныеОтHibenide "+ЛистДанныеОтHibenide+ " ЛистДанныеОтHibenide.size() " +ЛистДанныеОтHibenide.size()+
                                     "  queryДляHiberite  " +queryДляHiberite);//gson Gson
