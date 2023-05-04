@@ -382,16 +382,16 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
                             // TODO
                             criteriaquery = session.createCriteria(OrderTc.class);
                             criteriaquery.add(org.hibernate.criterion.Restrictions.gt("currentTable", new BigDecimal(VersionData)));
-                            ЛистДанныеОтHibenide =   criteriaquery.list();
+                            ЛистДанныеОтHibenide = ( List<model.OrderTc>)   criteriaquery.list();
                             ЛОГ.  log(" ЛистДанныеОтHibenide "+ЛистДанныеОтHibenide+ " ЛистДанныеОтHibenide.size() " +ЛистДанныеОтHibenide.size()+
                                     "  queryДляHiberite  " +queryДляHiberite);//gson Gson
                             break;
 
                        case "vid_tc":
                             // TODO
-                           org.hibernate.Criteria     criteriaquery2 = session.createCriteria(VidTc.class);
-                           criteriaquery2.add(org.hibernate.criterion.Restrictions.gt("currentTable", new BigDecimal(VersionData)));
-                           ЛистДанныеОтHibenide =   criteriaquery2.list();
+                           criteriaquery= session.createCriteria(VidTc.class);
+                           criteriaquery.add(org.hibernate.criterion.Restrictions.gt("currentTable", new BigDecimal(VersionData)));
+                           ЛистДанныеОтHibenide =  ( List<model.VidTc>)     criteriaquery.list();
                            ЛОГ.  log(" ЛистДанныеОтHibenide "+ЛистДанныеОтHibenide+ " ЛистДанныеОтHibenide.size() " +ЛистДанныеОтHibenide.size()+
                                    "  queryДляHiberite  " +queryДляHiberite);//gson Gson
                             break;
