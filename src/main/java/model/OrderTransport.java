@@ -1,6 +1,6 @@
 package model;
 
-import io.reactivex.rxjava3.core.Flowable;
+
 import jakarta.persistence.*;
 import org.hibernate.annotations.OptimisticLockType;
 
@@ -10,7 +10,7 @@ import java.sql.Date;
 @Entity
 @Table(name = "order_tc", schema = "dbo", catalog = "storage")
 
-@javax.persistence.NamedQuery(name="OrderTransport.findAll", query="SELECT ort FROM model.OrderTransport  ort")
+ @NamedQuery(name="OrderTransport.findAll", query="SELECT ort FROM model.OrderTransport  ort")
 @org.hibernate.annotations.OptimisticLocking(
         type = OptimisticLockType.DIRTY)
 @org.hibernate.annotations.DynamicUpdate
@@ -47,13 +47,13 @@ public class OrderTransport {
     @Column(name = "summacina", nullable = true)
     private float summacina;
     @Basic
-    @Column(name = "uuid", nullable = true, precision = 0)
+    @Column(name = "uuid", nullable = true )
     private BigDecimal uuid;
     @Basic
     @Column(name = "user_update", nullable = true)
     private Integer userUpdate;
     @Basic
-    @Column(name = "current_table", nullable = true, precision = 0)
+    @Column(name = "current_table", nullable = true )
     private BigDecimal currentTable;
 
     public int getId() {

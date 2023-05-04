@@ -28,13 +28,13 @@ public class VidTansport {
     @Column(name = "date_update", nullable = true)
     private Date dateUpdate;
     @Basic
-    @Column(name = "uuid", nullable = true, precision = 0)
+    @Column(name = "uuid", nullable = true )
     private BigDecimal uuid;
     @Basic
     @Column(name = "user_update", nullable = true)
     private Integer userUpdate;
     @Basic
-    @Column(name = "current_table", nullable = true, precision = 0)
+    @Column(name = "current_table", nullable = true )
     private BigDecimal currentTable;
 
     public int getId() {

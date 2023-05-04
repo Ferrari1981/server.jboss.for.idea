@@ -98,5 +98,7 @@
     <mapping class="model.UsersEntity"/>
     <mapping class="model.UsersEntitySuccess"/>
     <mapping class="model.ModificationServerEntity"/>
+    <mapping class="model.OrderTransport"/>
+    <mapping class="model.VidTansport"/>
   </session-factory>
 </hibernate-configuration>
