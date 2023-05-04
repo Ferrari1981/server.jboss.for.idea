@@ -378,7 +378,7 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
                                     " SELECT  ort FROM OrderTransport  ort  WHERE ort .currentTable > :id");
 
                             queryДляHiberite.setParameter("id",new BigDecimal(VersionData));//8641 8625
-                            ЛистДанныеОтHibenide =( List<model.Prof>)  queryДляHiberite.getResultList();
+                            ЛистДанныеОтHibenide =( List<model.OrderTransport>)  queryДляHiberite.getResultList();
                             ЛОГ.  log(" ЛистДанныеОтHibenide "+ЛистДанныеОтHibenide+ " ЛистДанныеОтHibenide.size() " +ЛистДанныеОтHibenide.size()+
                                     "  queryДляHiberite  " +queryДляHiberite);//gson Gson
                             break;
@@ -389,7 +389,7 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
                                     " SELECT  vt FROM VidTansport vt  WHERE vt .currentTable > :id");
 
                             queryДляHiberite.setParameter("id",new BigDecimal(VersionData));//8641 8625
-                            ЛистДанныеОтHibenide =( List<model.Prof>)  queryДляHiberite.getResultList();
+                            ЛистДанныеОтHibenide =( List<model.VidTansport>)  queryДляHiberite.getResultList();
                             ЛОГ.  log(" ЛистДанныеОтHibenide "+ЛистДанныеОтHibenide+ " ЛистДанныеОтHibenide.size() " +ЛистДанныеОтHibenide.size()+
                                     "  queryДляHiberite  " +queryДляHiberite);//gson Gson
                             break;

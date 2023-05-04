@@ -15,7 +15,6 @@ import java.sql.Date;
 @org.hibernate.annotations.DynamicUpdate
 
 public class VidTansport {
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "id", nullable = false)
     private int id;
@@ -24,7 +23,7 @@ public class VidTansport {
     private String name;
 
 
-    @javax.persistence.Temporal(javax.persistence.TemporalType.TIMESTAMP)
+    @Temporal( TemporalType.TIMESTAMP)
     @Basic
     @Column(name = "date_update", nullable = true)
     private Date dateUpdate;
@@ -90,31 +89,4 @@ public class VidTansport {
         this.currentTable = currentTable;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        VidTansport that = (VidTansport) o;
-
-        if (id != that.id) return false;
-        if (name != null ? !name.equals(that.name) : that.name != null) return false;
-        if (dateUpdate != null ? !dateUpdate.equals(that.dateUpdate) : that.dateUpdate != null) return false;
-        if (uuid != null ? !uuid.equals(that.uuid) : that.uuid != null) return false;
-        if (userUpdate != null ? !userUpdate.equals(that.userUpdate) : that.userUpdate != null) return false;
-        if (currentTable != null ? !currentTable.equals(that.currentTable) : that.currentTable != null) return false;
-
-        return true;
-    }
-
-    @Override
-    public int hashCode() {
-        int result = id;
-        result = 31 * result + (name != null ? name.hashCode() : 0);
-        result = 31 * result + (dateUpdate != null ? dateUpdate.hashCode() : 0);
-        result = 31 * result + (uuid != null ? uuid.hashCode() : 0);
-        result = 31 * result + (userUpdate != null ? userUpdate.hashCode() : 0);
-        result = 31 * result + (currentTable != null ? currentTable.hashCode() : 0);
-        return result;
-    }
 }
