@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectWriter;
 import com.sun.istack.NotNull;
 import dsu1glassfishatomic.workinterfaces.ProducedCard;
 import model.OrderTc;
+import model.VidTc;
 import org.hibernate.*;
 import org.hibernate.resource.transaction.spi.TransactionStatus;
 
@@ -113,6 +114,7 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
 
             System.out.println("  IdUser " + IdUser);
             org.hibernate.Query queryДляHiberite = null;
+            org.hibernate.Criteria criteriaquery=null;
             List<?> ЛистДанныеОтHibenide  = new ArrayList<>();
 
             if (IdUser>0) {
@@ -378,47 +380,21 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
 
                         case "order_tc":
                             // TODO
-
-
-                        /*            org.hibernate.Criteria query = session.createCriteria(OrderTransport.class);
-                           // query.add(org.hibernate.criterion.Restrictions.gt("ort.currentTable", new BigDecimal(0)));
-                           List  ЛистДанныеОтHibenide2 =   query.list();*/
-
-                            CriteriaBuilder cb = session.getCriteriaBuilder();
-                            CriteriaQuery<OrderTc> criteria = cb.createQuery( OrderTc.class);
-                            Root<OrderTc> i = criteria.from( OrderTc.class);
-                            criteria.select(i).where(cb.gt(i.get("currentTable"), new BigDecimal(0)));
-                            TypedQuery<OrderTc> query = session.createQuery(criteria);
-                            ЛистДанныеОтHibenide = query.getResultList();
-
-                       /*       cb = session.getCriteriaBuilder();
-                            CriteriaQuery<OrderTransport> criteria2 = cb.createQuery(OrderTransport.class);
-                            Root<OrderTransport> i2 = criteria2.from(OrderTransport.class);
-                            criteria.select(i).where(cb.gt(i2.get("currentTable"), new BigDecimal(0)));
-                            TypedQuery<OrderTransport> query2 = session.createQuery(criteria2);
-                            ЛистДанныеОтHibenide = query2.getResultList();
-
-
-                            ЛистДанныеОтHibenide =( List<model.OrderTransport>)  session.createQuery(" SELECT  ort FROM  model.OrderTransport   ort    ", OrderTransport.class).getResultList();
-
-                            ЛистДанныеОтHibenide =( List<model.Prof>)  session.createQuery(" SELECT  ort FROM  model.Prof   ort    ", Prof.class).getResultList();
-
-                           // queryДляHiberite.setParameter("version",new BigDecimal(0));//8641 8625VersionData
-                            ЛистДанныеОтHibenide =( List<model.OrderTransport>)  queryДляHiberite.getResultList();*/
+                            criteriaquery = session.createCriteria(OrderTc.class);
+                            criteriaquery.add(org.hibernate.criterion.Restrictions.gt("currentTable", new BigDecimal(VersionData)));
+                            ЛистДанныеОтHibenide =   criteriaquery.list();
                             ЛОГ.  log(" ЛистДанныеОтHibenide "+ЛистДанныеОтHibenide+ " ЛистДанныеОтHibenide.size() " +ЛистДанныеОтHibenide.size()+
                                     "  queryДляHiberite  " +queryДляHiberite);//gson Gson
                             break;
 
-                  /*      case "vid_tc":
+                       case "vid_tc":
                             // TODO
-                            queryДляHiberite = session.createQuery(
-                                    " SELECT  vt FROM model.VidTansport  vt  WHERE vt.currentTable > :version");
-
-                            queryДляHiberite.setParameter("version",new BigDecimal(0));//8641 8625 VersionData
-                            ЛистДанныеОтHibenide =( List<model.VidTansport>)  queryДляHiberite.getResultList();
-                            ЛОГ.  log(" ЛистДанныеОтHibenide "+ЛистДанныеОтHibenide+ " ЛистДанныеОтHibenide.size() " +ЛистДанныеОтHibenide.size()+
-                                    "  queryДляHiberite  " +queryДляHiberite);//gson Gson
-                            break;*/
+                           org.hibernate.Criteria     criteriaquery2 = session.createCriteria(VidTc.class);
+                           criteriaquery2.add(org.hibernate.criterion.Restrictions.gt("currentTable", new BigDecimal(VersionData)));
+                           ЛистДанныеОтHibenide =   criteriaquery2.list();
+                           ЛОГ.  log(" ЛистДанныеОтHibenide "+ЛистДанныеОтHibenide+ " ЛистДанныеОтHibenide.size() " +ЛистДанныеОтHibenide.size()+
+                                   "  queryДляHiberite  " +queryДляHiberite);//gson Gson
+                            break;
 
                     }//TODO КОНЕЦ РАСПРЕДЕНИЕ ТАБЛИЦ 	switch (NameTable.trim()) {
 
