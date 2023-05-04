@@ -55,6 +55,7 @@
     <mapping class="model.UsersEntitySuccess"/>
     <mapping class="model.ModificationServerEntity"/>
     <mapping class="model.OrderTc"/>
+    <mapping class="model.VidTc"/>
 
 
   </session-factory>
