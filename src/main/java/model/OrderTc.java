@@ -1,6 +1,5 @@
 package model;
 
-
 import org.hibernate.annotations.OptimisticLockType;
 
 import java.io.Serializable;
@@ -14,17 +13,22 @@ import java.util.Date;
  *
  */
 @Entity
-@Table(name="order_tc",catalog="storage",schema="dbo")
+@Table(name="order_tc")
 @NamedQuery(name="OrderTc.findAll", query="SELECT o FROM model.OrderTc o")
+
 @org.hibernate.annotations.OptimisticLocking(
         type = OptimisticLockType.DIRTY)
 @org.hibernate.annotations.DynamicUpdate
+
+
 public class OrderTc implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
     @Column(unique=true, nullable=false)
     private int id;
+
+    private Integer cfo;
 
     @Column(name="current_table", precision=38)
     private BigDecimal currentTable;
@@ -37,27 +41,22 @@ public class OrderTc implements Serializable {
     @Column(length=1)
     private Date dateorders;
 
-    private Integer kolich;
+    @Column(name="gos_nomer")
+    private Integer gosNomer;
 
-    @Column(precision=38)
-    private BigDecimal machall;
+    @Column(name="number_order")
+    private Integer numberOrder;
 
-    @Column(length=300)
-    private String machina;
-
-    @Column(nullable=false)
-    private Integer machinaexp;
-
-    @Column(length=300)
-    private String orders;
-
-    private float summacina;
+    private Integer status;
 
     @Column(name="user_update")
     private Integer userUpdate;
 
     @Column(precision=38)
     private BigDecimal uuid;
+
+    @Column(name="vid_trasport")
+    private Integer vidTrasport;
 
     public OrderTc() {
     }
@@ -68,6 +67,15 @@ public class OrderTc implements Serializable {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public Integer getCfo() {
+
+        return this.cfo;
+    }
+
+    public void setCfo(Integer cfo) {
+        this.cfo = cfo;
     }
 
     public BigDecimal getCurrentTable() {
@@ -94,52 +102,30 @@ public class OrderTc implements Serializable {
         this.dateorders = dateorders;
     }
 
-    public Integer getKolich() {
-        return this.kolich;
+    public Integer getGosNomer() {
+
+        return this.gosNomer;
     }
 
-    public void setKolich(Integer kolich) {
-        this.kolich = kolich;
+    public void setGosNomer(Integer gosNomer) {
+
+        this.gosNomer = gosNomer;
     }
 
-    public BigDecimal getMachall() {
-        return this.machall;
+    public Integer getNumberOrder() {
+        return this.numberOrder;
     }
 
-    public void setMachall(BigDecimal machall) {
-        this.machall = machall;
+    public void setNumberOrder(Integer numberOrder) {
+        this.numberOrder = numberOrder;
     }
 
-    public String getMachina() {
-        return this.machina;
+    public Integer getStatus() {
+        return this.status;
     }
 
-    public void setMachina(String machina) {
-        this.machina = machina;
-    }
-
-    public Integer getMachinaexp() {
-        return this.machinaexp;
-    }
-
-    public void setMachinaexp(Integer machinaexp) {
-        this.machinaexp = machinaexp;
-    }
-
-    public String getOrders() {
-        return this.orders;
-    }
-
-    public void setOrders(String orders) {
-        this.orders = orders;
-    }
-
-    public float getSummacina() {
-        return this.summacina;
-    }
-
-    public void setSummacina(float summacina) {
-        this.summacina = summacina;
+    public void setStatus(Integer status) {
+        this.status = status;
     }
 
     public Integer getUserUpdate() {
@@ -156,6 +142,15 @@ public class OrderTc implements Serializable {
 
     public void setUuid(BigDecimal uuid) {
         this.uuid = uuid;
+    }
+
+    public Integer getVidTrasport() {
+        return this.vidTrasport;
+    }
+
+    public void setVidTrasport(Integer vidTrasport) {
+
+        this.vidTrasport = vidTrasport;
     }
 
 }
