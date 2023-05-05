@@ -252,7 +252,6 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
                             // TODO
                             queryДляHiberite = session.createQuery(
                                     " SELECT  ca FROM ChatUser ca  WHERE ca .currentTable > :id");
-                            queryДляHiberite.setLockOptions(new LockOptions(LockMode.PESSIMISTIC_READ));
                             queryДляHiberite.setParameter("id",new BigDecimal(VersionData));//8641 8625
                             ЛистДанныеОтHibenide =( List<model.ChatUser>)  queryДляHiberite.getResultList();
                             ЛОГ.  log(" ЛистДанныеОтHibenide "+ЛистДанныеОтHibenide+ " ЛистДанныеОтHibenide.size() " +ЛистДанныеОтHibenide.size()+
