@@ -165,18 +165,22 @@ public class SessionBeanDownloadPO {
 
 
     // TODO МетодКласса отправки данных андройду
-    public void МетодBackДанныеКлиентуНовоеПО(@NotNull ServletResponse response,
+    public void МетодBackДанныеКлиентуНовоеПО(@NotNull HttpServletResponse response,
                                               @NotNull File ОтправкаФайлаJsonAPK,
                                               @NotNull ServletContext ЛОГ) throws IOException, ServletException {
 
-        if (  response.isCommitted()==false && ОтправкаФайлаJsonAPK.isFile()) {
+        if (  response.isCommitted()==false && ОтправкаФайлаJsonAPK.isFile() &&
+                response.getStatus()==HttpServletResponse.SC_OK) {
             try  (ServletOutputStream БуферДанныеДляОбновлениеПО = response.getOutputStream();
-                  InputStream fis = new FileInputStream(ОтправкаФайлаJsonAPK);) {
-                ((HttpServletResponse) response).addHeader("stream_size", String.valueOf(ОтправкаФайлаJsonAPK.length()));
-                ((HttpServletResponse) response).addHeader("stream_status", String.valueOf( ((HttpServletResponse) response).getStatus()));
-                БуферДанныеДляОбновлениеПО.write(fis.readAllBytes());
-                БуферДанныеДляОбновлениеПО.flush();
-                response.flushBuffer();
+                  FileInputStream fis = new FileInputStream(ОтправкаФайлаJsonAPK);) {
+                response.addHeader("stream_size", String.valueOf(ОтправкаФайлаJsonAPK.length()));
+                response.addHeader("stream_status", String.valueOf( ((HttpServletResponse) response).getStatus()));
+                response.setBufferSize(fis.available());
+                if (fis.available()>0) {
+                    БуферДанныеДляОбновлениеПО.write(fis.readAllBytes());
+                    БуферДанныеДляОбновлениеПО.flush();
+                    response.flushBuffer();
+                }
                 // TODO: 23.04.2023 async compilte
                 ЛОГ.log("\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                         " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
