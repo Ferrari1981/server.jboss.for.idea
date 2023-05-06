@@ -4,6 +4,7 @@ package dowsloadpojboss;
 
 
 import businesslogic.SubClassWriterErros;
+import com.fasterxml.jackson.annotation.JsonUnwrapped;
 import com.sun.istack.NotNull;
 
 import javax.ejb.*;
@@ -172,10 +173,9 @@ public class SessionBeanDownloadPO {
         if (  response.isCommitted()==false && ОтправкаФайлаJsonAPK.isFile() &&
                 response.getStatus()==HttpServletResponse.SC_OK) {
             try  (ServletOutputStream БуферДанныеДляОбновлениеПО = response.getOutputStream();
-                  FileInputStream fis = new FileInputStream(ОтправкаФайлаJsonAPK);) {
+                  InputStream fis = new FileInputStream(ОтправкаФайлаJsonAPK);) {
                 response.addHeader("stream_size", String.valueOf(ОтправкаФайлаJsonAPK.length()));
                 response.addHeader("stream_status", String.valueOf( ((HttpServletResponse) response).getStatus()));
-                response.setBufferSize(fis.available());
                 if (fis.available()>0) {
                     БуферДанныеДляОбновлениеПО.write(fis.readAllBytes());
                     БуферДанныеДляОбновлениеПО.flush();

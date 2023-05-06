@@ -51,10 +51,12 @@ public class DSU1DonwloadsServlet extends HttpServlet {
                     switch (ЗаданиеДляСервераЗагрузкиНовогоПо.toString()) {
                         case "FileJsonUpdatePO":
                             // TODO: 13.03.2023  запуск Кода пополучениею File JSON Для Обнолвенеи ПО
+                            resp.setContentType("application/json");
                             sessionBeanDownloadPO.МетодЗапускаДляФайлаJSON(ЛОГ, req, resp);
                             break;
                         case "FileAPKUpdatePO":
                             // TODO: 13.03.2023  запуск Кода пополучениею File .APK Для Обнолвенеи ПО
+                            resp.setContentType("application/octet-stream");
                             sessionBeanDownloadPO.МетодЗапускаДляФайлаAPK(ЛОГ, req, resp);
                             break;
                     }
