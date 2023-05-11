@@ -24,7 +24,7 @@ import java.util.concurrent.Future;
 /**
  * Session Bean implementation class SessionBeanDownloadPO
  */
-@Stateless(mappedName = "SessionBeanDownloadPO")
+@Singleton(mappedName = "SessionBeanDownloadPO")
 @LocalBean
 @TransactionAttribute(TransactionAttributeType.REQUIRED)
 public class SessionBeanDownloadPO {
