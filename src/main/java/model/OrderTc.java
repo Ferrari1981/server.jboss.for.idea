@@ -45,7 +45,7 @@ public class OrderTc implements Serializable {
     private Integer gosNomer;
 
     @Column(name="number_order")
-    private Integer numberOrder;
+    private String numberOrder;
 
     private Integer status;
 
@@ -112,11 +112,13 @@ public class OrderTc implements Serializable {
         this.gosNomer = gosNomer;
     }
 
-    public Integer getNumberOrder() {
+    public String getNumberOrder() {
+
         return this.numberOrder;
     }
 
-    public void setNumberOrder(Integer numberOrder) {
+    public void setNumberOrder(String numberOrder) {
+
         this.numberOrder = numberOrder;
     }
 
