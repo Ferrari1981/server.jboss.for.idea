@@ -40,13 +40,13 @@ public class FilterPublic implements Filter {
 
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         // TODO Auto-generated method stub
-        final AsyncContext     asy = request.startAsync();
+        final AsyncContext     asy = request.startAsync(request,response);
         asy.setTimeout(280000);
         HttpServletRequest asyrequest = (HttpServletRequest) asy.getRequest();
         HttpServletResponse asyresponse = (HttpServletResponse) asy.getResponse();
-        // TODO: 26.04.2023 Слушатель
-        методСлушатель(asy );
         try {
+            // TODO: 26.04.2023 Слушатель
+            методСлушатель(asy );
             Boolean СтатусаАунтификацииПользователя= false;
             asyrequest.setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
             asyresponse.setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
@@ -64,11 +64,13 @@ public class FilterPublic implements Filter {
 
                 if (СтатусаАунтификацииПользователя==true) { // pass the request along the filter
                     // TODO: 11.03.2023 ГЛАВНАЯ СТРОЧКА ПЕРЕНАРАВЛЕНИЕ НА СЕВРЕЛТЫ НА ГЛАВНЫЙ КОД
-                    chain.doFilter(asyrequest,asyresponse);
-                    ЛОГ.log("\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
-                            " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
-                            " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+
-                            " Success    doFilter doFilter doFilter СтатусаАунтификацииПользователя " +СтатусаАунтификацииПользователя);
+                    if(asyrequest.isAsyncStarted()) {
+                        chain.doFilter(asyrequest, asyresponse);
+                        ЛОГ.log("\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
+                                " Success    doFilter doFilter doFilter СтатусаАунтификацииПользователя " + СтатусаАунтификацииПользователя);
+                    }
                 }else {
                     // TODO: 11.03.2023 ИМя и Пароль не Правильный
                     МетодФильтраНеПрошлаАунтификацию(asyresponse,asyrequest);

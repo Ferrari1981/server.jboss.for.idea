@@ -39,8 +39,7 @@ public class DSU1DonwloadsServlet extends HttpServlet {
           req.setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
           resp.setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
            ЛОГ = getServletContext();
-        if(req.isAsyncStarted()) {
-            req.getAsyncContext().start(() -> {
+           req.getAsyncContext().start(() -> {
                 try {
                     Object ЗаданиеДляСервераЗагрузкиНовогоПо = ((HttpServletRequest) req).getHeaders("task_downlonupdatepo").nextElement();
                     ЛОГ.log("\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -75,7 +74,7 @@ public class DSU1DonwloadsServlet extends HttpServlet {
 
                 }
             });
-        }
+
     }
 
 

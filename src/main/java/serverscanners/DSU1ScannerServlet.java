@@ -33,8 +33,7 @@ public class DSU1ScannerServlet extends HttpServlet {
             req.setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
             resp.setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
             ЛОГ = getServletContext();
-            if(req.isAsyncStarted()) {
-                req.getAsyncContext().start(() -> {
+               req.getAsyncContext().start(() -> {
                     //TODO ЗАПУСКАЕМ КОДЕ МЕТОДА GET()
                     // СессионыйБинGET.МетодБинаGET(ЛОГ, req, resp,sessionSousJbossRuntime);
 
@@ -47,7 +46,6 @@ public class DSU1ScannerServlet extends HttpServlet {
                     // TODO: 23.04.2023 clears Async
                     req.getAsyncContext().dispatch();
                 });
-            }
         } catch (Exception e) {
             subClassWriterErros.
                     МетодаЗаписиОшибкиВЛог(e,

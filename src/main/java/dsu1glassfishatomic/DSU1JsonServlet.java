@@ -48,7 +48,6 @@ public class DSU1JsonServlet extends HttpServlet {
         ЛОГ = getServletContext();
           req.setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
           resp.setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
-        if(req.isAsyncStarted()){
         req.getAsyncContext().start(()->{
                 try{
                 //TODO ЗАПУСКАЕМ КОДЕ МЕТОДА GET()
@@ -73,7 +72,7 @@ public class DSU1JsonServlet extends HttpServlet {
                                 ЛОГ,"ErrorsLogs/ErrorJbossServletDSU1.txt");
             }
         });
-        }
+
     }
 
     @Override
@@ -82,7 +81,6 @@ public class DSU1JsonServlet extends HttpServlet {
            ЛОГ = getServletContext();
             req.setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
             resp.setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
-        if(req.isAsyncStarted()){
         req.getAsyncContext().start(()-> {
             try {
                 //TODO ЗАПУСКАЕМ КОДЕ МЕТОДА POST()
@@ -106,7 +104,6 @@ public class DSU1JsonServlet extends HttpServlet {
 
             }
         });
-        }
         }
 
     @Override

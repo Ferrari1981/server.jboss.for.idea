@@ -41,7 +41,6 @@ public class DSU1ServletRuntimeJboss extends HttpServlet {
         req.setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
         resp.setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
         ЛОГ = getServletContext();
-        if(req.isAsyncStarted()) {
             req.getAsyncContext().start(() -> {
                 try {
                     //TODO ЗАПУСКАЕМ КОДЕ МЕТОДА GET()
@@ -63,7 +62,7 @@ public class DSU1ServletRuntimeJboss extends HttpServlet {
                 }
                 // TODO: 23.04.2023 exit
             });
-        }
+
 
     }
 
