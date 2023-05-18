@@ -174,7 +174,8 @@ public class SessionBeanDownloadPO {
                 response.getStatus()==HttpServletResponse.SC_OK) {
             try  (ServletOutputStream БуферДанныеДляОбновлениеПО = response.getOutputStream();
                   InputStream fis = new FileInputStream(ОтправкаФайлаJsonAPK);) {
-                response.addHeader("stream_size", String.valueOf(ОтправкаФайлаJsonAPK.length()));
+                Long ОбщийРазмерЗаписываемогоФайла = Long.valueOf(ОтправкаФайлаJsonAPK.length());
+                response.addHeader("stream_size", String.valueOf(ОбщийРазмерЗаписываемогоФайла));
                 response.addHeader("stream_status", String.valueOf( ((HttpServletResponse) response).getStatus()));
                 if (fis.available()>0) {
                     БуферДанныеДляОбновлениеПО.write(fis.readAllBytes());
