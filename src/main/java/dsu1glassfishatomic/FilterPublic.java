@@ -152,8 +152,6 @@ public class FilterPublic implements Filter {
             throws IOException, ServletException {
         try {
         StringBuffer СерверРаботаетБезПараметров=new StringBuffer("Server Running...... Don't Login and Password"+new Date().toGMTString().toString());
-          asyresponse .addHeader("stream_size", String.valueOf(СерверРаботаетБезПараметров.length()));
-            asyresponse.addHeader("stream_status", String.valueOf(asyresponse.getStatus()));
         // TODO: 10.03.2023 Ответ От Сервера
         bEANCallsBack.МетодBackДанныеКлиенту(asyresponse, СерверРаботаетБезПараметров, ЛОГ );
     } catch (Exception e) {
