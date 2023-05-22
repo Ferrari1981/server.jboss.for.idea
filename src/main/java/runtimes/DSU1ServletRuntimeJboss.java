@@ -1,11 +1,13 @@
 package runtimes;
 
 
+import businesslogic.Filters.SubClassAllFilers;
 import businesslogic.SubClassWriterErros;
 import org.hibernate.Session;
 
 import javax.ejb.EJB;
 import javax.inject.Inject;
+import javax.servlet.AsyncContext;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -38,10 +40,16 @@ public class DSU1ServletRuntimeJboss extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
      // super.doGet(req, resp);
-        req.setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
-        resp.setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
         ЛОГ = getServletContext();
-            req.getAsyncContext().start(() -> {
+        final AsyncContext asy = req.startAsync(req,resp);
+        asy.setTimeout(2000000);
+        // TODO: 22.05.2023 Слушатель
+        new SubClassAllFilers().методСлушатель(asy,ЛОГ);
+        HttpServletRequest asyrequest = (HttpServletRequest) asy.getRequest();
+        HttpServletResponse asyresponse = (HttpServletResponse) asy.getResponse();
+        asyrequest.setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
+        asyrequest.setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
+        asyrequest.getAsyncContext().start(()->{
                 try {
                     //TODO ЗАПУСКАЕМ КОДЕ МЕТОДА GET()
                     sessionBeanGETRuntimeJboss.МетодГлавныйRuntimeJboss(ЛОГ, req, resp);

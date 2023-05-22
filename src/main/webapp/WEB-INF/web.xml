@@ -69,7 +69,7 @@
 
     <filter>
         <filter-name>FilterForGET</filter-name>
-        <filter-class>dsu1glassfishatomic.FilterPublic</filter-class>
+        <filter-class>businesslogic.Filters.FilterTabel</filter-class>
         <async-supported>true</async-supported>
     </filter>
     <filter-mapping>
@@ -86,7 +86,7 @@
 
     <filter>
         <filter-name>FilterForGETRuntimeJboss</filter-name>
-        <filter-class>runtimes.FilterRuntime</filter-class>
+        <filter-class>businesslogic.Filters.FilterRuntime</filter-class>
         <async-supported>true</async-supported>
     </filter>
     <filter-mapping>
@@ -97,6 +97,24 @@
         <dispatcher>ASYNC</dispatcher>
         <dispatcher>INCLUDE</dispatcher>
     </filter-mapping>
+
+
+
+
+    <filter>
+        <filter-name>FilterForUpdatePO</filter-name>
+        <filter-class>businesslogic.Filters.FilterUpdatePO</filter-class>
+        <async-supported>true</async-supported>
+    </filter>
+    <filter-mapping>
+        <filter-name>FilterForUpdatePO</filter-name>
+        <url-pattern>/DSU1DonwloadsServlet</url-pattern>
+        <dispatcher>REQUEST</dispatcher>
+        <dispatcher>FORWARD</dispatcher>
+        <dispatcher>ASYNC</dispatcher>
+        <dispatcher>INCLUDE</dispatcher>
+    </filter-mapping>
+
 
 
 </web-app>

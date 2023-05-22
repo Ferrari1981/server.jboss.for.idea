@@ -3,6 +3,7 @@ package dsu1glassfishatomic;
 
 import businesslogic.BeanGET;
 import businesslogic.BeanPOST;
+import businesslogic.Filters.SubClassAllFilers;
 import businesslogic.SubClassWriterErros;
 import dsu1glassfishatomic.workinterfaces.ProducedCard;
 import org.hibernate.SessionFactory;
@@ -46,21 +47,24 @@ public class DSU1JsonServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
      // super.doGet(req, resp);
         ЛОГ = getServletContext();
-          req.setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
-          resp.setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
-        req.getAsyncContext().start(()->{
+        final AsyncContext     asy = req.startAsync(req,resp);
+        // TODO: 22.05.2023 Слушатель
+        new SubClassAllFilers().методСлушатель(asy,ЛОГ);
+        asy.setTimeout(2000000);
+        HttpServletRequest asyrequest = (HttpServletRequest) asy.getRequest();
+        HttpServletResponse asyresponse = (HttpServletResponse) asy.getResponse();
+        asyrequest.setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
+        asyrequest.setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
+        asyrequest.getAsyncContext().start(()->{
                 try{
                 //TODO ЗАПУСКАЕМ КОДЕ МЕТОДА GET()
-                СессионыйБинGET.МетодБинаGET(ЛОГ, req, resp);
+                СессионыйБинGET.МетодБинаGET(ЛОГ, asyrequest, asyresponse);
                 ЛОГ.log("\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                         " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                         " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
                         + " ((HttpServletRequest) req).getPathInfo() " +((HttpServletRequest) req).getPathInfo()+
                         " POOL CURRENT  "+Thread.currentThread().getName()+ " req.isAsyncStarted() " +req.isAsyncStarted()
                         +"  POOL  THREAD "+Thread.currentThread().getName());
-
-                    // TODO: 23.04.2023 clears Async
-                     req.getAsyncContext().dispatch();
             } catch (Exception e) {
                 ЛОГ.log( "ERROR class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                         " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -79,19 +83,20 @@ public class DSU1JsonServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         //super.doPost(req, resp);
            ЛОГ = getServletContext();
-            req.setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
-            resp.setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
-        req.getAsyncContext().start(()-> {
+        final AsyncContext     asy = req.startAsync(req,resp);
+        asy.setTimeout(2000000);
+        HttpServletRequest asyrequest = (HttpServletRequest) asy.getRequest();
+        HttpServletResponse asyresponse = (HttpServletResponse) asy.getResponse();
+        asyrequest.setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
+        asyrequest.setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
+        asyrequest.getAsyncContext().start(()-> {
             try {
                 //TODO ЗАПУСКАЕМ КОДЕ МЕТОДА POST()
-                СессионыйБинPOST.МетодБинаPOST(ЛОГ, req, resp);
+                СессионыйБинPOST.МетодБинаPOST(ЛОГ, asyrequest, asyresponse);
                 ЛОГ.log("\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                         " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                         " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + ((HttpServletRequest) req).getPathInfo() +
                         " POOL CURRENT  " + Thread.currentThread().getName()+ " req.isAsyncStarted() " +req.isAsyncStarted());
-
-                // TODO: 23.04.2023 clears Async
-                    req.getAsyncContext().dispatch();
             } catch (Exception e) {
                 ЛОГ.log("ERROR class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                         " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +

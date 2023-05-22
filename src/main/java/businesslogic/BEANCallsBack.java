@@ -35,7 +35,8 @@ public class BEANCallsBack {
     // TODO МетодКласса отправки данных андройду
     public void МетодBackДанныеКлиенту(@NotNull  HttpServletResponse response,
                                        @NotNull StringBuffer ГлавныйБуферОтправкиДанныхНААндройд,
-                                       @NotNull ServletContext ЛОГ) throws IOException, ServletException {
+                                       @NotNull ServletContext ЛОГ,
+                                       @NotNull  HttpServletRequest request) throws IOException, ServletException {
 
         if (  response.isCommitted() ==false &&
                 response.getStatus()==HttpServletResponse.SC_OK ) {
@@ -48,7 +49,12 @@ public class BEANCallsBack {
             МеханизмОтправкиДанныхКлиенту.write(ГлавныйБуферОтправкиДанныхНААндройд.toString());
             // TODO: 26.04.2023 fluf
             МеханизмОтправкиДанныхКлиенту.flush();
-            response.flushBuffer();
+            БуферДанныеДляКлиента.flush();
+            БуферДанныеДляКлиента.close();
+
+            if(   request.isAsyncStarted()){
+                request.getAsyncContext().complete();
+            }
             // TODO: 23.04.2023
             ЛОГ.log("\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +

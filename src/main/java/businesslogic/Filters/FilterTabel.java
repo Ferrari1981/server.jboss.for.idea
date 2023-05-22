@@ -1,4 +1,4 @@
-package dsu1glassfishatomic;
+package businesslogic.Filters;
 
 import businesslogic.BEANCallsBack;
 import runtimejboss.BeanGetLoginAndPasswords;
@@ -11,14 +11,13 @@ import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
 import java.util.Date;
 import java.util.Optional;
 
 
-@WebFilter(value={ "/sous.jboss.tabel", "/sous.jboss.download" ,"/sous.jboss.scanner"},asyncSupported = true)
-public class FilterPublic implements Filter {
+@WebFilter(value={ "/sous.jboss.tabel" ,"/sous.jboss.scanner"},asyncSupported = true)
+public class FilterTabel implements Filter {
     @EJB
     private BeanGetLoginAndPasswords beanGetLoginAndPasswords;
     @Inject
@@ -40,13 +39,9 @@ public class FilterPublic implements Filter {
 
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         // TODO Auto-generated method stub
-        final AsyncContext     asy = request.startAsync(request,response);
-        asy.setTimeout(280000);
-        HttpServletRequest asyrequest = (HttpServletRequest) asy.getRequest();
-        HttpServletResponse asyresponse = (HttpServletResponse) asy.getResponse();
+        HttpServletRequest asyrequest = (HttpServletRequest) request;
+        HttpServletResponse asyresponse = (HttpServletResponse) response;
         try {
-            // TODO: 26.04.2023 Слушатель
-            методСлушатель(asy );
             Boolean СтатусаАунтификацииПользователя= false;
             asyrequest.setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
             asyresponse.setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
@@ -64,13 +59,11 @@ public class FilterPublic implements Filter {
 
                 if (СтатусаАунтификацииПользователя==true) { // pass the request along the filter
                     // TODO: 11.03.2023 ГЛАВНАЯ СТРОЧКА ПЕРЕНАРАВЛЕНИЕ НА СЕВРЕЛТЫ НА ГЛАВНЫЙ КОД
-                    if(asyrequest.isAsyncStarted()) {
                         chain.doFilter(asyrequest, asyresponse);
                         ЛОГ.log("\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                                 " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
                                 " Success    doFilter doFilter doFilter СтатусаАунтификацииПользователя " + СтатусаАунтификацииПользователя);
-                    }
                 }else {
                     // TODO: 11.03.2023 ИМя и Пароль не Правильный
                     МетодФильтраНеПрошлаАунтификацию(asyresponse,asyrequest);
@@ -85,7 +78,7 @@ public class FilterPublic implements Filter {
                     RequestDispatcher requestDispatcher = asyrequest.getRequestDispatcher("/indexfiltetuntime.jsp");
                     requestDispatcher.forward(asyrequest, asyresponse);
                     // TODO: 27.04.2023 exit
-                    asyrequest.getAsyncContext().dispatch();
+                    asyrequest.getAsyncContext().complete();
             }
             ЛОГ.log("\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
                     " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
@@ -102,58 +95,12 @@ public class FilterPublic implements Filter {
             // TODO: 23.04.2023  end
     }
 
-    private void методСлушатель(AsyncContext asy) {
-        try{
-        asy.addListener(new AsyncListener() {
-            @Override
-            public void onComplete(AsyncEvent asyncEvent) throws IOException {
-                ЛОГ.log("\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
-                        " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
-                        " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+
-                        " Success    doFilter doFilter doFilter СтатусаАунтификацииПользователя ");
-            }
-
-            @Override
-            public void onTimeout(AsyncEvent asyncEvent) throws IOException {
-                asyncEvent.getAsyncContext().dispatch();
-                ЛОГ.log("\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
-                        " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
-                        " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+
-                        " asyncEvent " +asyncEvent);
-            }
-
-            @Override
-            public void onError(AsyncEvent asyncEvent) throws IOException {
-                asyncEvent.getAsyncContext().complete();
-                ЛОГ.log("\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
-                        " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
-                        " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+
-                        " asyncEvent " +asyncEvent);
-            }
-
-            @Override
-            public void onStartAsync(AsyncEvent asyncEvent) throws IOException {
-                ЛОГ.log("\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
-                        " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
-                        " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+
-                        " Success    doFilter doFilter doFilter СтатусаАунтификацииПользователя "  );
-            }
-        }, asy.getRequest(), asy.getResponse());
-    } catch (Exception e) {
-        subClassWriterErros.
-                МетодаЗаписиОшибкиВЛог(e,
-                        Thread.currentThread().
-                                getStackTrace(),
-                        ЛОГ,"ErrorsLogs/ErrorJbossServletDSU1.txt");
-    }
-    }
-
     private void МетодФильтраНеПрошлаАунтификацию(HttpServletResponse asyresponse,  HttpServletRequest asyrequest)
             throws IOException, ServletException {
         try {
         StringBuffer СерверРаботаетБезПараметров=new StringBuffer("Server Running...... Don't Login and Password"+new Date().toGMTString().toString());
         // TODO: 10.03.2023 Ответ От Сервера
-        bEANCallsBack.МетодBackДанныеКлиенту(asyresponse, СерверРаботаетБезПараметров, ЛОГ );
+        bEANCallsBack.МетодBackДанныеКлиенту(asyresponse, СерверРаботаетБезПараметров, ЛОГ,asyrequest );
     } catch (Exception e) {
             subClassWriterErros.
                     МетодаЗаписиОшибкиВЛог(e,

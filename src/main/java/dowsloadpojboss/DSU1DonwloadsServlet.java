@@ -1,6 +1,7 @@
 package dowsloadpojboss;
 
 
+import businesslogic.Filters.SubClassAllFilers;
 import businesslogic.SubClassWriterErros;
 
 import javax.ejb.EJB;
@@ -36,10 +37,16 @@ public class DSU1DonwloadsServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
      // super.doGet(req, resp);
-          req.setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
-          resp.setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
-           ЛОГ = getServletContext();
-           req.getAsyncContext().start(() -> {
+        ЛОГ = getServletContext();
+        final AsyncContext     asy = req.startAsync(req,resp);
+        // TODO: 22.05.2023 Слушатель
+        new SubClassAllFilers().методСлушатель(asy,ЛОГ);
+        asy.setTimeout(-1);
+        HttpServletRequest asyrequest = (HttpServletRequest) asy.getRequest();
+        HttpServletResponse asyresponse = (HttpServletResponse) asy.getResponse();
+        asyrequest.setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
+        asyrequest.setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
+        asyrequest.getAsyncContext().start(()->{
                 try {
                     Object ЗаданиеДляСервераЗагрузкиНовогоПо = ((HttpServletRequest) req).getHeaders("task_downlonupdatepo").nextElement();
                     ЛОГ.log("\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -63,8 +70,6 @@ public class DSU1DonwloadsServlet extends HttpServlet {
                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                             " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
                             + " ((HttpServletRequest) req).getPathInfo() " + ((HttpServletRequest) req).getPathInfo());
-                    // TODO: 23.04.2023 clears Async
-                    req.getAsyncContext().dispatch();
                 } catch (Exception e) {
                     subClassWriterErros.
                             МетодаЗаписиОшибкиВЛог(e,

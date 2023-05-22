@@ -52,7 +52,7 @@ public class SessionBeanDownloadPO {
         try {
             // TODO: 10.03.2023  данные от JSON ANALIZE
           File ПолучаемJSONФайл= 	 МетодДляJSONФайла(ЛОГ,request,response);
-            МетодBackДанныеКлиентуНовоеПО(response ,ПолучаемJSONФайл,ЛОГ );
+            МетодBackДанныеКлиентуНовоеПО(response ,ПолучаемJSONФайл,ЛОГ ,request);
             ЛОГ.log("\n"+" Starting.... class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
                     " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
                     " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+  "  ПолучаемJSONФайл " +ПолучаемJSONФайл);
@@ -71,7 +71,7 @@ public class SessionBeanDownloadPO {
         try {
             // TODO: 10.03.2023  данные от .APK Download
            File ПолучаемAPKФайл= 	 МетодДляAPKФайла(ЛОГ,request,response);
-            МетодBackДанныеКлиентуНовоеПО(response ,ПолучаемAPKФайл,ЛОГ );
+            МетодBackДанныеКлиентуНовоеПО(response ,ПолучаемAPKФайл,ЛОГ,request );
             ЛОГ.log("\n"+" Starting.... class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
                     " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
                     " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+  "  ПолучаемAPKФайл " +ПолучаемAPKФайл);
@@ -168,7 +168,8 @@ public class SessionBeanDownloadPO {
     // TODO МетодКласса отправки данных андройду
     public void МетодBackДанныеКлиентуНовоеПО(@NotNull HttpServletResponse response,
                                               @NotNull File ОтправкаФайлаJsonAPK,
-                                              @NotNull ServletContext ЛОГ) throws IOException, ServletException {
+                                              @NotNull ServletContext ЛОГ,
+                                              @NotNull HttpServletRequest request) throws IOException, ServletException {
 
         if (  response.isCommitted()==false && ОтправкаФайлаJsonAPK.isFile() &&
                 response.getStatus()==HttpServletResponse.SC_OK) {
@@ -180,7 +181,10 @@ public class SessionBeanDownloadPO {
                 if (fis.available()>0) {
                     БуферДанныеДляОбновлениеПО.write(fis.readAllBytes());
                     БуферДанныеДляОбновлениеПО.flush();
-                    response.flushBuffer();
+                    БуферДанныеДляОбновлениеПО.close();
+                }
+                if(   request.isAsyncStarted()){
+                    request.getAsyncContext().complete();
                 }
                 // TODO: 23.04.2023 async compilte
                 ЛОГ.log("\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
