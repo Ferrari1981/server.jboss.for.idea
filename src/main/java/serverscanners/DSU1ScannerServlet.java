@@ -51,8 +51,6 @@ public class DSU1ScannerServlet extends HttpServlet {
                             " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
                             + " ((HttpServletRequest) req).getPathInfo() " + ((HttpServletRequest) req).getPathInfo()+
                             "  POOL  THREAD "+Thread.currentThread().getName());
-                    // TODO: 23.04.2023 clears Async
-                    req.getAsyncContext().dispatch();
                 });
         } catch (Exception e) {
             subClassWriterErros.

@@ -48,7 +48,7 @@ public class DSU1DonwloadsServlet extends HttpServlet {
         asyrequest.setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
         asyrequest.getAsyncContext().start(()->{
                 try {
-                    Object ЗаданиеДляСервераЗагрузкиНовогоПо = ((HttpServletRequest) req).getHeaders("task_downlonupdatepo").nextElement();
+                    Object ЗаданиеДляСервераЗагрузкиНовогоПо = asyrequest.getHeaders("task_downlonupdatepo").nextElement();
                     ЛОГ.log("\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                             " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
@@ -58,12 +58,12 @@ public class DSU1DonwloadsServlet extends HttpServlet {
                         case "FileJsonUpdatePO":
                             // TODO: 13.03.2023  запуск Кода пополучениею File JSON Для Обнолвенеи ПО
                             resp.setContentType("application/json");
-                            sessionBeanDownloadPO.МетодЗапускаДляФайлаJSON(ЛОГ, req, resp);
+                            sessionBeanDownloadPO.МетодЗапускаДляФайлаJSON(ЛОГ, asyrequest, asyresponse);
                             break;
                         case "FileAPKUpdatePO":
                             // TODO: 13.03.2023  запуск Кода пополучениею File .APK Для Обнолвенеи ПО
                             resp.setContentType("application/octet-stream");
-                            sessionBeanDownloadPO.МетодЗапускаДляФайлаAPK(ЛОГ, req, resp);
+                            sessionBeanDownloadPO.МетодЗапускаДляФайлаAPK(ЛОГ, asyrequest, asyresponse);
                             break;
                     }
                     ЛОГ.log("\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
