@@ -12,7 +12,6 @@ import javax.ejb.EJB;
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.inject.Produces;
 import javax.inject.Inject;
-import javax.servlet.AsyncContext;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.ServletResponse;
@@ -47,18 +46,12 @@ public class DSU1JsonServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
      // super.doGet(req, resp);
         ЛОГ = getServletContext();
-        final AsyncContext     asy = req.startAsync(req,resp);
-        // TODO: 22.05.2023 Слушатель
-        new SubClassAllFilers().методСлушатель(asy,ЛОГ);
-        asy.setTimeout(2000000);
-        HttpServletRequest asyrequest = (HttpServletRequest) asy.getRequest();
-        HttpServletResponse asyresponse = (HttpServletResponse) asy.getResponse();
-        asyrequest.setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
-        asyrequest.setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
-        asyrequest.getAsyncContext().start(()->{
+        if(req.isAsyncSupported() && req.isAsyncStarted()) {
+            req.getAsyncContext().start(()->{
+
                 try{
                 //TODO ЗАПУСКАЕМ КОДЕ МЕТОДА GET()
-                СессионыйБинGET.МетодБинаGET(ЛОГ, asyrequest, asyresponse);
+                СессионыйБинGET.МетодБинаGET(ЛОГ, req, resp);
                 ЛОГ.log("\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                         " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                         " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
@@ -75,24 +68,19 @@ public class DSU1JsonServlet extends HttpServlet {
                                         getStackTrace(),
                                 ЛОГ,"ErrorsLogs/ErrorJbossServletDSU1.txt");
             }
-        });
-
+            });
+        }
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         //super.doPost(req, resp);
            ЛОГ = getServletContext();
-        final AsyncContext     asy = req.startAsync(req,resp);
-        asy.setTimeout(2000000);
-        HttpServletRequest asyrequest = (HttpServletRequest) asy.getRequest();
-        HttpServletResponse asyresponse = (HttpServletResponse) asy.getResponse();
-        asyrequest.setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
-        asyrequest.setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
-        asyrequest.getAsyncContext().start(()-> {
-            try {
+        if(req.isAsyncSupported() && req.isAsyncStarted()) {
+            req.getAsyncContext().start(()->{
+                try {
                 //TODO ЗАПУСКАЕМ КОДЕ МЕТОДА POST()
-                СессионыйБинPOST.МетодБинаPOST(ЛОГ, asyrequest, asyresponse);
+                СессионыйБинPOST.МетодБинаPOST(ЛОГ, req, resp);
                 ЛОГ.log("\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                         " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                         " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + ((HttpServletRequest) req).getPathInfo() +
@@ -108,7 +96,8 @@ public class DSU1JsonServlet extends HttpServlet {
                                 ЛОГ, "ErrorsLogs/ErrorJbossServletDSU1.txt");
 
             }
-        });
+            });
+        }
         }
 
     @Override

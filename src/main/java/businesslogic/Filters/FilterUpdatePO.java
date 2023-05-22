@@ -52,8 +52,8 @@ public class FilterUpdatePO implements Filter {
                     "  ЛогинОтAndroid    doFilter doFilter doFilter IDДевайсаЛогин " +IDДевайсаЛогин);
             if (IDДевайсаЛогин.toString().length()>5) {
 
-                    СтатусаАунтификацииПользователя = beanGetLoginAndPasswords.МетодGetLoginAndPassword(ЛОГ, ((HttpServletRequest)asyrequest),
-                            ((HttpServletRequest)asyrequest) .getSession());
+                    СтатусаАунтификацииПользователя = beanGetLoginAndPasswords.МетодGetLoginAndPassword(ЛОГ, asyrequest,
+                            asyrequest .getSession());
 
                 if (СтатусаАунтификацииПользователя==true) { // pass the request along the filter
                     // TODO: 11.03.2023 ГЛАВНАЯ СТРОЧКА ПЕРЕНАРАВЛЕНИЕ НА СЕВРЕЛТЫ НА ГЛАВНЫЙ КОД

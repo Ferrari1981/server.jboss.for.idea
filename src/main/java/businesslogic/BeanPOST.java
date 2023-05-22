@@ -6,7 +6,6 @@ import java.util.concurrent.ExecutionException;
 
 import javax.ejb.*;
 import javax.inject.Inject;
-import javax.servlet.AsyncContext;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

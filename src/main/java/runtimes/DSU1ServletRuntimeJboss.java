@@ -7,7 +7,6 @@ import org.hibernate.Session;
 
 import javax.ejb.EJB;
 import javax.inject.Inject;
-import javax.servlet.AsyncContext;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -41,23 +40,16 @@ public class DSU1ServletRuntimeJboss extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
      // super.doGet(req, resp);
         ЛОГ = getServletContext();
-        final AsyncContext asy = req.startAsync(req,resp);
-        asy.setTimeout(2000000);
-        // TODO: 22.05.2023 Слушатель
-        new SubClassAllFilers().методСлушатель(asy,ЛОГ);
-        HttpServletRequest asyrequest = (HttpServletRequest) asy.getRequest();
-        HttpServletResponse asyresponse = (HttpServletResponse) asy.getResponse();
-        asyrequest.setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
-        asyrequest.setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
-        asyrequest.getAsyncContext().start(()->{
+        if(req.isAsyncSupported() && req.isAsyncStarted()) {
+            req.getAsyncContext().start(()->{
                 try {
                     //TODO ЗАПУСКАЕМ КОДЕ МЕТОДА GET()
-                    sessionBeanGETRuntimeJboss.МетодГлавныйRuntimeJboss(ЛОГ, asyrequest, asyresponse);
+                    sessionBeanGETRuntimeJboss.МетодГлавныйRuntimeJboss(ЛОГ, req, resp);
                     ЛОГ.log("\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                             " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
                             + " ((HttpServletRequest) req).getPathInfo() " + ((HttpServletRequest) req).getPathInfo()
-                            +"  POOL  THREAD "+Thread.currentThread().getName());
+                            + "  POOL  THREAD " + Thread.currentThread().getName());
                     // TODO: 23.04.2023 clears Async
                 } catch (Exception e) {
                     subClassWriterErros.
@@ -65,12 +57,10 @@ public class DSU1ServletRuntimeJboss extends HttpServlet {
                                     Thread.currentThread().
                                             getStackTrace(),
                                     ЛОГ, "ErrorsLogs/ErrorJbossServletRuntime.txt");
-
                 }
-                // TODO: 23.04.2023 exit
             });
-
-
+        }
+                // TODO: 23.04.2023 exit
     }
 
 

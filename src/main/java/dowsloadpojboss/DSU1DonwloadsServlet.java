@@ -6,7 +6,6 @@ import businesslogic.SubClassWriterErros;
 
 import javax.ejb.EJB;
 import javax.inject.Inject;
-import javax.servlet.AsyncContext;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -38,17 +37,10 @@ public class DSU1DonwloadsServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
      // super.doGet(req, resp);
         ЛОГ = getServletContext();
-        final AsyncContext     asy = req.startAsync(req,resp);
-        // TODO: 22.05.2023 Слушатель
-        new SubClassAllFilers().методСлушатель(asy,ЛОГ);
-        asy.setTimeout(-1);
-        HttpServletRequest asyrequest = (HttpServletRequest) asy.getRequest();
-        HttpServletResponse asyresponse = (HttpServletResponse) asy.getResponse();
-        asyrequest.setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
-        asyrequest.setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
-        asyrequest.getAsyncContext().start(()->{
+        if(req.isAsyncSupported() && req.isAsyncStarted()) {
+            req.getAsyncContext().start(()->{
                 try {
-                    Object ЗаданиеДляСервераЗагрузкиНовогоПо = asyrequest.getHeaders("task_downlonupdatepo").nextElement();
+                    Object ЗаданиеДляСервераЗагрузкиНовогоПо = req.getHeaders("task_downlonupdatepo").nextElement();
                     ЛОГ.log("\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                             " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
@@ -58,12 +50,12 @@ public class DSU1DonwloadsServlet extends HttpServlet {
                         case "FileJsonUpdatePO":
                             // TODO: 13.03.2023  запуск Кода пополучениею File JSON Для Обнолвенеи ПО
                             resp.setContentType("application/json");
-                            sessionBeanDownloadPO.МетодЗапускаДляФайлаJSON(ЛОГ, asyrequest, asyresponse);
+                            sessionBeanDownloadPO.МетодЗапускаДляФайлаJSON(ЛОГ, req, resp);
                             break;
                         case "FileAPKUpdatePO":
                             // TODO: 13.03.2023  запуск Кода пополучениею File .APK Для Обнолвенеи ПО
                             resp.setContentType("application/octet-stream");
-                            sessionBeanDownloadPO.МетодЗапускаДляФайлаAPK(ЛОГ, asyrequest, asyresponse);
+                            sessionBeanDownloadPO.МетодЗапускаДляФайлаAPK(ЛОГ, req, resp);
                             break;
                     }
                     ЛОГ.log("\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -79,7 +71,7 @@ public class DSU1DonwloadsServlet extends HttpServlet {
 
                 }
             });
-
+        }
     }
 
 
