@@ -75,7 +75,7 @@ public class FilterTabel implements Filter {
                 
             }else{
                     // TODO: 11.03.2023  нет не имени не пароля
-                    RequestDispatcher requestDispatcher = asyrequest.getRequestDispatcher("/indexfiltetuntime.jsp");
+                    RequestDispatcher requestDispatcher = asyrequest.getRequestDispatcher("/indexfiltetabel.jsp");
                     requestDispatcher.forward(asyrequest, asyresponse);
             }
             ЛОГ.log("\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+

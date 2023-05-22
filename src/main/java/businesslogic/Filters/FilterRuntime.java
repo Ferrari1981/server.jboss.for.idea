@@ -56,8 +56,10 @@ public class FilterRuntime implements Filter {
                 МетодФильтраНеПрошлаАунтификацию(asyrequest,asyresponse);
 
                 // TODO: 11.03.2023  нет не имени не пароля
-                RequestDispatcher requestDispatcher = asyrequest.getRequestDispatcher("/indexfiltetuntime.jsp");
-                requestDispatcher.forward(asyrequest, asyresponse);
+          /*      RequestDispatcher requestDispatcher = asyrequest.getRequestDispatcher("/indexfiltetuntime.jsp");
+                requestDispatcher.forward(asyrequest, asyresponse);*/
+           /*     asyresponse.sendRedirect("/indexfiltetuntime.jsp");*/
+
             }
             ЛОГ.log("\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
                     " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
