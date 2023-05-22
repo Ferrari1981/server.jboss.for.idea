@@ -38,6 +38,9 @@ public class DSU1DonwloadsServlet extends HttpServlet {
      // super.doGet(req, resp);
         ЛОГ = getServletContext();
         if(req.isAsyncSupported() && req.isAsyncStarted()) {
+            // TODO: 22.05.2023 lister asynccontext
+            new SubClassAllFilers().методСлушатель(     req.getAsyncContext(),ЛОГ);
+            // TODO: 22.05.2023  start working...
             req.getAsyncContext().start(()->{
                 try {
                     Object ЗаданиеДляСервераЗагрузкиНовогоПо = req.getHeaders("task_downlonupdatepo").nextElement();

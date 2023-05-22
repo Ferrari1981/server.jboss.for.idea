@@ -31,6 +31,9 @@ public class DSU1ScannerServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         // super.doGet(req, resp);
         if(req.isAsyncSupported() && req.isAsyncStarted()) {
+            // TODO: 22.05.2023 lister asynccontext
+            new SubClassAllFilers().методСлушатель(     req.getAsyncContext(),ЛОГ);
+            // TODO: 22.05.2023  start working...
             req.getAsyncContext().start(()->{
                 try{
             ЛОГ = getServletContext();
@@ -61,6 +64,9 @@ public class DSU1ScannerServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         //super.doPost(req, resp);
         if(req.isAsyncSupported() && req.isAsyncStarted()) {
+            // TODO: 22.05.2023 lister asynccontext
+            new SubClassAllFilers().методСлушатель(     req.getAsyncContext(),ЛОГ);
+            // TODO: 22.05.2023  start working...
             req.getAsyncContext().start(()->{
                 try{
             ЛОГ = getServletContext();

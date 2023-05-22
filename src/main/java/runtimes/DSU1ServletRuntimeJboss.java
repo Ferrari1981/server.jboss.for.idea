@@ -41,6 +41,9 @@ public class DSU1ServletRuntimeJboss extends HttpServlet {
      // super.doGet(req, resp);
         ЛОГ = getServletContext();
         if(req.isAsyncSupported() && req.isAsyncStarted()) {
+            // TODO: 22.05.2023 lister asynccontext
+            new SubClassAllFilers().методСлушатель(     req.getAsyncContext(),ЛОГ);
+            // TODO: 22.05.2023  start working...
             req.getAsyncContext().start(()->{
                 try {
                     //TODO ЗАПУСКАЕМ КОДЕ МЕТОДА GET()
