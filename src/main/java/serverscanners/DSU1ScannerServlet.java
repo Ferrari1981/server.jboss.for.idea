@@ -70,14 +70,20 @@ public class DSU1ScannerServlet extends HttpServlet {
         //super.doPost(req, resp);
         try{
             ЛОГ = getServletContext();
-            req.setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
-            resp.setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
-            //TODO ЗАПУСКАЕМ КОДЕ МЕТОДА POST()
-            //СессионыйБинPOST.МетодБинаPOST(ЛОГ,req,resp,sessionSousJbossRuntime);
-            ЛОГ.log("\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
-                    " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
-                    " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()
-                    +"\n"+((HttpServletRequest) req).getPathInfo());
+            final AsyncContext     asy = req.startAsync(req,resp);
+            asy.setTimeout(2000000);
+            HttpServletRequest asyrequest = (HttpServletRequest) asy.getRequest();
+            HttpServletResponse asyresponse = (HttpServletResponse) asy.getResponse();
+            asyrequest.setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
+            asyrequest.setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
+            asyrequest.getAsyncContext().start(()-> {
+                //TODO ЗАПУСКАЕМ КОДЕ МЕТОДА POST()
+                //СессионыйБинPOST.МетодБинаPOST(ЛОГ,req,resp,sessionSousJbossRuntime);
+                ЛОГ.log("\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber()
+                        + "\n" + ((HttpServletRequest) req).getPathInfo());
+            });
         } catch (Exception e) {
             subClassWriterErros.
                     МетодаЗаписиОшибкиВЛог(e,

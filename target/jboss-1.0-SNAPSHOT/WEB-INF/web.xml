@@ -116,5 +116,18 @@
     </filter-mapping>
 
 
+    <filter>
+        <filter-name>FilterForScanner</filter-name>
+        <filter-class>businesslogic.Filters.FilterScanner</filter-class>
+        <async-supported>true</async-supported>
+    </filter>
+    <filter-mapping>
+        <filter-name>FilterForScanner</filter-name>
+        <url-pattern>/DSU1ScannerServlet</url-pattern>
+        <dispatcher>REQUEST</dispatcher>
+        <dispatcher>FORWARD</dispatcher>
+        <dispatcher>ASYNC</dispatcher>
+        <dispatcher>INCLUDE</dispatcher>
+    </filter-mapping>
 
 </web-app>

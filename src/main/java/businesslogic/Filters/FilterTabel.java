@@ -16,7 +16,7 @@ import java.util.Date;
 import java.util.Optional;
 
 
-@WebFilter(value={ "/sous.jboss.tabel" ,"/sous.jboss.scanner"},asyncSupported = true)
+@WebFilter(value={ "/sous.jboss.tabel"},asyncSupported = true)
 public class FilterTabel implements Filter {
     @EJB
     private BeanGetLoginAndPasswords beanGetLoginAndPasswords;
@@ -77,8 +77,6 @@ public class FilterTabel implements Filter {
                     // TODO: 11.03.2023  нет не имени не пароля
                     RequestDispatcher requestDispatcher = asyrequest.getRequestDispatcher("/indexfiltetuntime.jsp");
                     requestDispatcher.forward(asyrequest, asyresponse);
-                    // TODO: 27.04.2023 exit
-                    asyrequest.getAsyncContext().complete();
             }
             ЛОГ.log("\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
                     " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+

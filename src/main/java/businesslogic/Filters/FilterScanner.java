@@ -16,13 +16,15 @@ import java.util.Date;
 import java.util.Optional;
 
 
-@WebFilter(value={   "/sous.jboss.download" },asyncSupported = true)
-public class FilterUpdatePO implements Filter {
+@WebFilter(value={ "/sous.jboss.scanner"},asyncSupported = true)
+public class FilterScanner implements Filter {
     @EJB
     private BeanGetLoginAndPasswords beanGetLoginAndPasswords;
     @Inject
     private BEANCallsBack bEANCallsBack;
     private ServletContext ЛОГ;
+
+
     @Inject
     SubClassWriterErros subClassWriterErros;
 
@@ -73,7 +75,7 @@ public class FilterUpdatePO implements Filter {
                 
             }else{
                     // TODO: 11.03.2023  нет не имени не пароля
-                    RequestDispatcher requestDispatcher = asyrequest.getRequestDispatcher("/indexfiltepo.jsp");
+                    RequestDispatcher requestDispatcher = asyrequest.getRequestDispatcher("/indexscanner.jsp");
                     requestDispatcher.forward(asyrequest, asyresponse);
             }
             ЛОГ.log("\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
@@ -90,8 +92,6 @@ public class FilterUpdatePO implements Filter {
         }
             // TODO: 23.04.2023  end
     }
-
-
 
     private void МетодФильтраНеПрошлаАунтификацию(HttpServletResponse asyresponse,  HttpServletRequest asyrequest)
             throws IOException, ServletException {
