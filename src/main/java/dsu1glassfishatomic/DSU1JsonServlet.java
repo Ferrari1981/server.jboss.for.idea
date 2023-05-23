@@ -51,9 +51,6 @@ public class DSU1JsonServlet extends HttpServlet {
             new SubClassAllFilers().методСлушатель(     req.getAsyncContext(),ЛОГ);
             // TODO: 22.05.2023  start working...
             req.getAsyncContext().start(()->{
-                // TODO: 22.05.2023 lister asynccontext
-                new SubClassAllFilers().методСлушатель(     req.getAsyncContext(),ЛОГ);
-                // TODO: 22.05.2023  start working...
                 try{
                 //TODO ЗАПУСКАЕМ КОДЕ МЕТОДА GET()
                 СессионыйБинGET.МетодБинаGET(ЛОГ, req, resp);

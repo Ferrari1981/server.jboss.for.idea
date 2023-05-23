@@ -20,6 +20,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Session Bean implementation class SessionBeanDownloadPO
@@ -27,6 +28,8 @@ import java.util.concurrent.Future;
 @Singleton(mappedName = "SessionBeanDownloadPO")
 @LocalBean
 @TransactionAttribute(TransactionAttributeType.REQUIRED)
+@AccessTimeout(value = 20, unit = TimeUnit.MINUTES)
+@Lock(LockType.READ)
 public class SessionBeanDownloadPO {
 @Inject
     SubClassWriterErros subClassWriterErros;
