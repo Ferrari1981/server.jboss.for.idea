@@ -181,8 +181,9 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
                         case "cfo":
                             // TODO
                             queryДляHiberite = session.createQuery(
-                                    "SELECT c FROM Cfo  c  WHERE c.currentTable > :id ");
+                                    "SELECT c FROM Cfo  c  WHERE c.currentTable > :id  AND c.closed=:closed");
                             queryДляHiberite.setParameter("id",new BigDecimal(VersionData ));//
+                            queryДляHiberite.setParameter("closed",   new Boolean(false));//
                             ЛистДанныеОтHibenide =( List<model.Cfo>)  queryДляHiberite.getResultList();
                             ЛОГ.  log(" ЛистДанныеОтHibenide "+ЛистДанныеОтHibenide+ " ЛистДанныеОтHibenide.size() " +ЛистДанныеОтHibenide.size()+
                                     "  queryДляHiberite  " +queryДляHiberite);//gson Gson

@@ -31,7 +31,7 @@ private Integer id;
 
 private int boss;
 
-private boolean closed;
+private Boolean closed;
 
 @Column(name="current_table")
 private BigDecimal currentTable;
@@ -72,11 +72,13 @@ public void setBoss(int boss) {
         this.boss = boss;
         }
 
-public boolean getClosed() {
+public Boolean getClosed() {
+
         return this.closed;
         }
 
-public void setClosed(boolean closed) {
+public void setClosed(Boolean closed) {
+
         this.closed = closed;
         }
 
