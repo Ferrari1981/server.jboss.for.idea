@@ -38,8 +38,8 @@ public class FilterRuntime implements Filter {
             asyrequest.setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
             asyresponse.setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
                     // TODO: 10.03.2023  ТОЛЬКО ID DEVICE
-            Object IDДевайсаКлиентаRuntime=        Optional.ofNullable(((HttpServletRequest)asyrequest)
-                    .getHeaders("id_device_androis").nextElement()).orElse("");
+            Object IDДевайсаКлиентаRuntime=
+                    Optional.ofNullable(( asyrequest).getHeaders("id_device_androis").nextElement()).orElse("");
             ЛОГ.log("\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
                     " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
                     " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+

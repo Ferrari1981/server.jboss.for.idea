@@ -31,11 +31,8 @@ public class DSU1ScannerServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         // super.doGet(req, resp);
         ЛОГ = getServletContext();
-        if(req.isAsyncSupported() && req.isAsyncStarted()) {
             // TODO: 22.05.2023 lister asynccontext
             new SubClassAllFilers().методСлушатель(     req.getAsyncContext(),ЛОГ);
-            // TODO: 22.05.2023  start working...
-            req.getAsyncContext().start(()->{
                 try{
                     //TODO ЗАПУСКАЕМ КОДЕ МЕТОДА GET()
                     // СессионыйБинGET.МетодБинаGET(ЛОГ, req, resp,sessionSousJbossRuntime);
@@ -54,8 +51,7 @@ public class DSU1ScannerServlet extends HttpServlet {
                             ЛОГ,"ErrorsLogs/ErrorJbossServletScanner.txt");
 
         }
-            });
-        }
+
 
 
     }
@@ -64,11 +60,8 @@ public class DSU1ScannerServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         //super.doPost(req, resp);
         ЛОГ = getServletContext();
-        if(req.isAsyncSupported() && req.isAsyncStarted()) {
             // TODO: 22.05.2023 lister asynccontext
             new SubClassAllFilers().методСлушатель(     req.getAsyncContext(),ЛОГ);
-            // TODO: 22.05.2023  start working...
-            req.getAsyncContext().start(()->{
                 try{
                 //TODO ЗАПУСКАЕМ КОДЕ МЕТОДА POST()
                 //СессионыйБинPOST.МетодБинаPOST(ЛОГ,req,resp,sessionSousJbossRuntime);
@@ -84,8 +77,7 @@ public class DSU1ScannerServlet extends HttpServlet {
                             ЛОГ,"ErrorsLogs/ErrorJbossServletScanner.txt");
 
         }
-            });
-        }
+
     }
 
     public void destroy() {

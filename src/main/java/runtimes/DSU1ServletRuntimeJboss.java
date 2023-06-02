@@ -23,7 +23,7 @@ public class DSU1ServletRuntimeJboss extends HttpServlet {
     @EJB
     private SessionBeanGETRuntimeJboss sessionBeanGETRuntimeJboss;
     @Inject
-    SubClassWriterErros subClassWriterErros;
+    private SubClassWriterErros subClassWriterErros;
 
 
     DSU1ServletRuntimeJboss(){
@@ -40,11 +40,9 @@ public class DSU1ServletRuntimeJboss extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
      // super.doGet(req, resp);
         ЛОГ = getServletContext();
-        if(req.isAsyncSupported() && req.isAsyncStarted()) {
             // TODO: 22.05.2023 lister asynccontext
             new SubClassAllFilers().методСлушатель(     req.getAsyncContext(),ЛОГ);
             // TODO: 22.05.2023  start working...
-            req.getAsyncContext().start(()->{
                 try {
                     //TODO ЗАПУСКАЕМ КОДЕ МЕТОДА GET()
                     sessionBeanGETRuntimeJboss.МетодГлавныйRuntimeJboss(ЛОГ, req, resp);
@@ -61,8 +59,6 @@ public class DSU1ServletRuntimeJboss extends HttpServlet {
                                             getStackTrace(),
                                     ЛОГ, "ErrorsLogs/ErrorJbossServletRuntime.txt");
                 }
-            });
-        }
                 // TODO: 23.04.2023 exit
     }
 
