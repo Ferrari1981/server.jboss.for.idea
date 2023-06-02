@@ -50,7 +50,11 @@ public class BEANCallsBack {
             МеханизмОтправкиДанныхКлиенту.flush();
             БуферДанныеДляКлиента.flush();
             БуферДанныеДляКлиента.close();
-            // TODO: 23.04.2023
+
+            // TODO: 23.04.2023 exit asynccontext
+            if(request.isAsyncStarted()){
+                request.getAsyncContext().complete();
+            }
             ЛОГ.log("\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
@@ -73,9 +77,6 @@ public class BEANCallsBack {
                     + " ГлавныйБуферОтправкиДанныхНААндройд " + ГлавныйБуферОтправкиДанныхНААндройд.toString() + "  response.isCommitted() " + response.isCommitted()
                     + "   ((HttpServletResponse) response).getStatus() " +
                     ((HttpServletResponse) response).getStatus());
-        }
-        if(   request.isAsyncStarted()){
-            request.getAsyncContext().complete();
         }
     }
     // TODO МетодКласса отправки данных андройду

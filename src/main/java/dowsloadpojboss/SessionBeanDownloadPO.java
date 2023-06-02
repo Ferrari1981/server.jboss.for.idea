@@ -186,6 +186,10 @@ public class SessionBeanDownloadPO {
                     БуферДанныеДляОбновлениеПО.flush();
                     БуферДанныеДляОбновлениеПО.close();
                 }
+                // TODO: 23.04.2023 exit asynccontext
+                if(request.isAsyncStarted()){
+                    request.getAsyncContext().complete();
+                }
                 // TODO: 23.04.2023 async compilte
                 ЛОГ.log("\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                         " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -208,9 +212,6 @@ public class SessionBeanDownloadPO {
                     + "  ОтправкаФайлаJsonAPK.length() " + ОтправкаФайлаJsonAPK.length() + "  response.isCommitted() " + response.isCommitted()
                     + "   ((HttpServletResponse) response).getStatus() " +
                     ((HttpServletResponse) response).getStatus());
-        }
-        if(   request.isAsyncStarted()){
-            request.getAsyncContext().complete();
         }
     }
 
