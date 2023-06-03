@@ -61,8 +61,6 @@ public class SessionBeanGETRuntimeJboss {// extends WITH
     SessionFactory sessionSousJboss;
 
     private Session session;
-    private Transaction sessionTransaction  ;
-
     @Inject
     StreamJSONJacksons streamJSONJacksons ;
 
@@ -138,10 +136,8 @@ public class SessionBeanGETRuntimeJboss {// extends WITH
             if (JobForServer.length()>0) {
                 // TODO: 10.03.2023 получение сессиии HIREBIANTE
                 session=   sessionSousJboss.getCurrentSession();
-                // TODO: 10.03.2023 получение сессиии Transaction
-                sessionTransaction = session.getTransaction();
-                if (sessionTransaction.getStatus()== TransactionStatus.NOT_ACTIVE) {
-                    sessionTransaction.begin();
+                if (session.getTransaction().getStatus()== TransactionStatus.NOT_ACTIVE) {
+                    session.getTransaction().begin();
                 }
             }
 
@@ -171,7 +167,7 @@ public class SessionBeanGETRuntimeJboss {// extends WITH
             МетодЗакрываемСессиюHibernate(ЛОГ);
             /////// ошибки метода doGET
         } catch (Exception e) {
-            sessionTransaction.rollback();
+            session.getTransaction().rollback();
             session.close();
             subClassWriterErros.
                     МетодаЗаписиОшибкиВЛог(e,
@@ -207,8 +203,8 @@ public class SessionBeanGETRuntimeJboss {// extends WITH
     private void МетодЗакрываемСессиюHibernate(@javax.validation.constraints.NotNull ServletContext ЛОГ) {
         try{
             if (session!=null) {
-                if (sessionTransaction.getStatus()== TransactionStatus.ACTIVE) {
-                    sessionTransaction.commit();
+                if (session.getTransaction().getStatus()== TransactionStatus.ACTIVE) {
+                    session.getTransaction().commit();
                 }
                 if (session.isOpen()   || session.isConnected()) {
                     session.close();
@@ -221,7 +217,7 @@ public class SessionBeanGETRuntimeJboss {// extends WITH
             ЛОГ.log( "ERROR class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber()  + " e " +e.getMessage() );
-            sessionTransaction.rollback();
+            session.getTransaction().rollback();
             session.close();
             subClassWriterErros.
                     МетодаЗаписиОшибкиВЛог(e,

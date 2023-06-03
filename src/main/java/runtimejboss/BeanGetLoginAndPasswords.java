@@ -31,7 +31,6 @@ public class BeanGetLoginAndPasswords {
     @Inject
     SubClassWriterErros subClassWriterErros;
     private Session session;
-    private Transaction sessionTransaction  ;
     @Inject @ProducedCard
     SessionFactory sessionSousJboss;
     @Inject
@@ -64,9 +63,8 @@ public class BeanGetLoginAndPasswords {
                 // TODO: 10.03.2023 получение сессиии HIREBIANTE
                 session = sessionSousJboss.getCurrentSession();
                 // TODO: 10.03.2023 получение сессиии Transaction
-                sessionTransaction = session.getTransaction();
-                if (sessionTransaction.getStatus()== TransactionStatus.NOT_ACTIVE) {
-                    sessionTransaction.begin();
+                if (session.getTransaction().getStatus()== TransactionStatus.NOT_ACTIVE) {
+                    session.getTransaction().begin();
                 }
                 // TODO: 02.04.2023 Проводим Аунтификаций через пароли логин
                 org.hibernate.Query queryДляHiberite   = session.createQuery("SELECT " +
@@ -139,7 +137,7 @@ public class BeanGetLoginAndPasswords {
             // TODO: 02.04.2023 закрываем сессию
             МетодЗакрываемСессиюHibernate(ЛОГ);
         } catch (Exception e) {
-            sessionTransaction.rollback();
+            session.getTransaction().rollback();
             subClassWriterErros.
                     МетодаЗаписиОшибкиВЛог(e,
                             Thread.currentThread().
@@ -164,7 +162,7 @@ public class BeanGetLoginAndPasswords {
                     "БуферСозданогоJSONJackson " + БуферСозданогоJSONJackson.toString());
 
         } catch (Exception e) {
-            sessionTransaction.rollback();
+            session.getTransaction().rollback();
             session.close();
             subClassWriterErros.
                     МетодаЗаписиОшибкиВЛог(e,
@@ -177,8 +175,8 @@ public class BeanGetLoginAndPasswords {
     private void МетодЗакрываемСессиюHibernate(@NotNull ServletContext ЛОГ) {
         try{
             if (session!=null) {
-                if (sessionTransaction.getStatus()== TransactionStatus.ACTIVE) {
-                    sessionTransaction.commit();
+                if (session.getTransaction().getStatus()== TransactionStatus.ACTIVE) {
+                    session.getTransaction().commit();
                 }
 
                 if (session.isOpen()   || session.isConnected()) {
@@ -192,7 +190,7 @@ public class BeanGetLoginAndPasswords {
             ЛОГ.log( "ERROR class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber()  + " e " +e.getMessage() );
-            sessionTransaction.rollback();
+            session.getTransaction().rollback();
             session.close();
             subClassWriterErros.
                     МетодаЗаписиОшибкиВЛог(e,

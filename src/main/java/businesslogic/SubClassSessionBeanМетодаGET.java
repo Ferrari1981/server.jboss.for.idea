@@ -61,8 +61,6 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
 
 
     private    Session session;
-    private    Transaction sessionTransaction  ;
-
     @Inject @ProducedCard
     SessionFactory sessionSousJboss;
 
@@ -120,15 +118,13 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
             if (IdUser>0) {
                 // TODO: 10.03.2023 получение сессиии HIREBIANTE
                 session=   sessionSousJboss.getCurrentSession();
-                // TODO: 10.03.2023 получение сессиии Transaction
-                sessionTransaction = session.getTransaction();
                 // TODO: 17.03.2023 ЗАПУСКАЕТ ТРАНЗАКЦИЮ BEGIN
-                if (sessionTransaction.getStatus()== TransactionStatus.NOT_ACTIVE) {
-                    sessionTransaction.begin();
+                if (session.getTransaction().getStatus()== TransactionStatus.NOT_ACTIVE) {
+                    session.getTransaction().begin();
                 }
                 ЛОГ.log("\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
                         " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
-                        " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+ " session " +session  + " sessionTransaction " +sessionTransaction);
+                        " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+ " session " +session  + " session.getTransaction() " +session.getTransaction());
                 /// TODO КОНЕЦ  НОВЫЕ ПАРАМЕТРЫ HIREBIANTE
             }
 
@@ -475,7 +471,7 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
             ЛОГ.log("\n" + " ERROR class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
-            sessionTransaction.rollback();
+            session.getTransaction().rollback();
             session.close();
             subClassWriterErros.
                     МетодаЗаписиОшибкиВЛог(e,
@@ -490,8 +486,8 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
     private void МетодЗакрываемСессиюHibernate() {
         try{
             if (session!=null) {
-                if (sessionTransaction.getStatus()== TransactionStatus.ACTIVE) {
-                    sessionTransaction.commit();
+                if (session.getTransaction().getStatus()== TransactionStatus.ACTIVE) {
+                    session.getTransaction().commit();
                 }
 
                 if (session.isOpen()   || session.isConnected()) {
@@ -505,7 +501,7 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
             ЛОГ.log( "ERROR class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber()  + " e " +e.getMessage() );
-            sessionTransaction.rollback();
+            session.getTransaction().rollback();
             session.close();
             subClassWriterErros.
                     МетодаЗаписиОшибкиВЛог(e,
@@ -660,8 +656,8 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
     private void МетодЗакрываемСессиюHibernate(@javax.validation.constraints.NotNull ServletContext ЛОГ) {
         try{
             if (session!=null) {
-                if (sessionTransaction.getStatus()== TransactionStatus.ACTIVE) {
-                    sessionTransaction.commit();
+                if (session.getTransaction().getStatus()== TransactionStatus.ACTIVE) {
+                    session.getTransaction().commit();
                 }
                 if (session.isOpen()   || session.isConnected()) {
                     session.close();
@@ -674,7 +670,7 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
             ЛОГ.log( "ERROR class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber()  + " e " +e.getMessage() );
-            sessionTransaction.rollback();
+            session.getTransaction().rollback();
             session.close();
             subClassWriterErros.
                     МетодаЗаписиОшибкиВЛог(e,

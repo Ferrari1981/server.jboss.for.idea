@@ -24,10 +24,8 @@ import org.hibernate.Transaction;
 import org.hibernate.resource.transaction.spi.TransactionStatus;
 
 //TODO
-@RequestScoped
 public class SubClassВставкаДанныхОтКлиентаPOST {
     private   ServletContext ЛОГ;
-    private Transaction sessionTransaction;
     @Inject @ProducedCard
     private  SessionFactory sessionSousJboss;
     private  Session    session;
@@ -47,7 +45,9 @@ public class SubClassВставкаДанныхОтКлиентаPOST {
             ArrayList<Integer> arrayListMaxBackOperation=new ArrayList();
             this.ЛОГ=ЛОГ;
             session =sessionSousJboss.getCurrentSession();      // TODO: 11.03.2023  Получении Сесии Hiberrnate
-            sessionTransaction =session.getTransaction() ;
+            if (session.getTransaction().getStatus()== TransactionStatus.NOT_ACTIVE) {
+                session.getTransaction().begin();
+            }
             // TODO: 23.04.2023 ЗапускТарнзакции
             методЗапускТранзакции(ЛОГ );
             // TODO: 22.04.2023 Новый ПАРСИНГ ОТ JAKSON JSON
@@ -99,11 +99,7 @@ public class SubClassВставкаДанныхОтКлиентаPOST {
                                 + " РезультатОперацииВставкииОбновлениея " + РезультатОперацииВставкииОбновлениея + " РезультатСовершнойОперации " + РезультатСовершнойОперации);
                     }
 
-                    if (РезультатСовершнойОперации.matches("(.*)OriginalVesion(.*)")) {
-                        int indexbegin =РезультатСовершнойОперации.indexOf("OriginalVesion");
-                        РезультатСовершнойОперации=РезультатСовершнойОперации.substring(indexbegin,РезультатСовершнойОперации.length());
-                        РезультатСовершнойОперации =   РезультатСовершнойОперации.replaceAll("[^0-9]","");
-                    }else {
+                    if (РезультатСовершнойОперации==null) {
                         РезультатСовершнойОперации="0";
                     }
                     // TODO: 22.04.2023 записываем новую версию после успешной вставки
@@ -127,7 +123,7 @@ public class SubClassВставкаДанныхОтКлиентаPOST {
                     " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+
                     " arrayListMaxBackOperation "+ arrayListMaxBackOperation);
         } catch (Exception   e) {
-            sessionTransaction.rollback();
+            session.getTransaction().rollback();
             session.close();
             ЛОГ.log( "ERROR class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -144,16 +140,16 @@ public class SubClassВставкаДанныхОтКлиентаPOST {
 
     private void методЗапускТранзакции(ServletContext ЛОГ) {
         try{
-        if (sessionTransaction.getStatus()== TransactionStatus.NOT_ACTIVE) {
-            sessionTransaction.begin();   // TODO: 14.03.2023  Запускаем Транзакцию
+        if (session.getTransaction().getStatus()== TransactionStatus.NOT_ACTIVE) {
+            session.getTransaction().begin();   // TODO: 14.03.2023  Запускаем Транзакцию
         }
         // TODO: 22.04.2023  Логирование
         ЛОГ.log("\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
                 " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
                 " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+
-                " session  " +session + " sessionTransaction.getStatus() "+sessionTransaction.getStatus());
+                " session  " +session + " session.getTransaction().getStatus() "+session.getTransaction().getStatus());
     } catch (Exception   e) {
-        sessionTransaction.rollback();
+            session.getTransaction().rollback();
         session.close();
         ЛОГ.log( "ERROR class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -183,7 +179,7 @@ public class SubClassВставкаДанныхОтКлиентаPOST {
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
                     " getvalue" + getvalue + " getKey " + getKey  );
         } catch (Exception   e) {
-            sessionTransaction.rollback();
+            session.getTransaction().rollback();
             session.close();
             ЛОГ.log( "ERROR class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -285,8 +281,8 @@ public class SubClassВставкаДанныхОтКлиентаPOST {
     private void МетодЗавершенияСеанса() {
         try{
             if (session!=null) {
-                if (sessionTransaction.getStatus()== TransactionStatus.ACTIVE) {
-                    sessionTransaction.commit();
+                if (session.getTransaction().getStatus()== TransactionStatus.ACTIVE) {
+                    session.getTransaction().commit();
                 }
 
                 if (session.isOpen() || session.isConnected() ) {
@@ -300,7 +296,7 @@ public class SubClassВставкаДанныхОтКлиентаPOST {
             ЛОГ.log( "ERROR class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber()  + " e " +e.getMessage() );
-            sessionTransaction.rollback();
+            session.getTransaction().rollback();
             session.close();
             subClassWriterErros.
                     МетодаЗаписиОшибкиВЛог(e,
