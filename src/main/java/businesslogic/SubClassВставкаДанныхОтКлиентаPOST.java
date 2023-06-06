@@ -87,19 +87,20 @@ public class SubClassВставкаДанныхОтКлиентаPOST {
                     // TODO: 22.04.2023 ВЫПОЛЕНИЕ САМОЙ ОПЕРАЦИИ MERGE
                     Integer РезультатОперацииВставкииОбновлениея=  МетодВыполениеУдаленнойПроцедуры(queryprocedure[0],ЛОГ);
                     
-                    Integer РезультатСовершнойОперации = 0;
+                    Integer РезультатСовершнойОперацииФинал = 0;
                     if (РезультатОперацииВставкииОбновлениея>0) {
-
-                        РезультатСовершнойОперации = (Integer) queryprocedure[0].getOutputParameterValue("ResultatMERGE");
+                        String     РезультатСовершнойОперации = (String) queryprocedure[0].getOutputParameterValue("ResultatMERGE");
                         // TODO: 22.04.2023 clear
-
+                        if (РезультатСовершнойОперации!=null){
+                            РезультатСовершнойОперацииФинал=Integer.parseInt(РезультатСовершнойОперации);
+                        }
                         ЛОГ.log("\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                                 " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
                                 + " РезультатОперацииВставкииОбновлениея " + РезультатОперацииВставкииОбновлениея + " РезультатСовершнойОперации " + РезультатСовершнойОперации);
                     }
                     // TODO: 22.04.2023 записываем новую версию после успешной вставки
-                    arrayListMaxBackOperation.add(РезультатСовершнойОперации);
+                    arrayListMaxBackOperation.add(РезультатСовершнойОперацииФинал);
                     ЛОГ.log("\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
                             " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
                             " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n" + " arrayListMaxBackOperation" + arrayListMaxBackOperation.size());
