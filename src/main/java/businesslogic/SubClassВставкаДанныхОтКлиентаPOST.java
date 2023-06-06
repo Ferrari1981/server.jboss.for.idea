@@ -87,10 +87,10 @@ public class SubClassВставкаДанныхОтКлиентаPOST {
                     // TODO: 22.04.2023 ВЫПОЛЕНИЕ САМОЙ ОПЕРАЦИИ MERGE
                     Integer РезультатОперацииВставкииОбновлениея=  МетодВыполениеУдаленнойПроцедуры(queryprocedure[0],ЛОГ);
                     
-                    String РезультатСовершнойОперации = null;
+                    Integer РезультатСовершнойОперации = 0;
                     if (РезультатОперацииВставкииОбновлениея>0) {
 
-                        РезультатСовершнойОперации = (String) queryprocedure[0].getOutputParameterValue("ResultatMERGE");
+                        РезультатСовершнойОперации = (Integer) queryprocedure[0].getOutputParameterValue("ResultatMERGE");
                         // TODO: 22.04.2023 clear
 
                         ЛОГ.log("\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -98,12 +98,8 @@ public class SubClassВставкаДанныхОтКлиентаPOST {
                                 " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
                                 + " РезультатОперацииВставкииОбновлениея " + РезультатОперацииВставкииОбновлениея + " РезультатСовершнойОперации " + РезультатСовершнойОперации);
                     }
-
-                    if (РезультатСовершнойОперации==null) {
-                        РезультатСовершнойОперации="0";
-                    }
                     // TODO: 22.04.2023 записываем новую версию после успешной вставки
-                    arrayListMaxBackOperation.add(Integer.parseInt(РезультатСовершнойОперации));
+                    arrayListMaxBackOperation.add(РезультатСовершнойОперации);
                     ЛОГ.log("\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
                             " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
                             " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n" + " arrayListMaxBackOperation" + arrayListMaxBackOperation.size());
