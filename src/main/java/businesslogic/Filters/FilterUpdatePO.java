@@ -37,9 +37,9 @@ public class FilterUpdatePO implements Filter {
 
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         // TODO Auto-generated method stub
-        HttpServletRequest asyrequest = (HttpServletRequest) request;
-        HttpServletResponse asyresponse = (HttpServletResponse) response;
         try {
+            HttpServletRequest asyrequest = (HttpServletRequest) request;
+            HttpServletResponse asyresponse = (HttpServletResponse) response;
             Boolean СтатусаАунтификацииПользователя= false;
             asyrequest.setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
             asyresponse.setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));

@@ -32,9 +32,9 @@ public class FilterRuntime implements Filter {
 
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         // TODO Auto-generated method stub
-        HttpServletRequest asyrequest = (HttpServletRequest) request;
-        HttpServletResponse asyresponse = (HttpServletResponse) response;
         try {
+            HttpServletRequest asyrequest = (HttpServletRequest) request;
+            HttpServletResponse asyresponse = (HttpServletResponse) response;
             asyrequest.setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
             asyresponse.setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
                     // TODO: 10.03.2023  ТОЛЬКО ID DEVICE
