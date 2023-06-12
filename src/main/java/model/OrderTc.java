@@ -1,5 +1,6 @@
 package model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import org.hibernate.annotations.OptimisticLockType;
 
 import java.io.Serializable;
@@ -37,8 +38,7 @@ public class OrderTc implements Serializable {
     @Column(name="date_update", length=1)
     private Date dateUpdate;
 
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(length=1)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd",locale = "ru")
     private Date dateorders;
 
     @Column(name="gos_nomer")
