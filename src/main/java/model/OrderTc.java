@@ -1,6 +1,7 @@
 package model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.OptBoolean;
 import org.hibernate.annotations.OptimisticLockType;
 
 import java.io.Serializable;
@@ -38,7 +39,7 @@ public class OrderTc implements Serializable {
     @Column(name="date_update", length=1)
     private Date dateUpdate;
 
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd",locale = "ru")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", locale = "ru", timezone="Russia/Moscow")
     private Date dateorders;
 
     @Column(name="gos_nomer")
