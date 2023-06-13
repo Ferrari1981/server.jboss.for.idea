@@ -2,6 +2,8 @@ package model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.OptBoolean;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import model.Desialis.UtcCalendarDeserializer;
 import org.hibernate.annotations.OptimisticLockType;
 
 import java.io.Serializable;
@@ -30,32 +32,46 @@ public class OrderTc implements Serializable {
     @Column(unique=true, nullable=false)
     private int id;
 
+
+    @Basic
     private Integer cfo;
 
+    @Basic
     @Column(name="current_table", precision=38)
     private BigDecimal currentTable;
 
+    @Basic
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name="date_update", length=1)
     private Date dateUpdate;
 
+
+
+    @Basic
+    @Column(name = "dateorders", nullable = false)
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", locale = "ru", timezone="Russia/Moscow")
     private Date dateorders;
 
+    @Basic
     @Column(name="gos_nomer")
     private Integer gosNomer;
 
+    @Basic
     @Column(name="number_order")
     private String numberOrder;
 
+    @Basic
     private Integer status;
 
+    @Basic
     @Column(name="user_update")
     private Integer userUpdate;
 
+    @Basic
     @Column(precision=38)
     private BigDecimal uuid;
 
+    @Basic
     @Column(name="vid_trasport")
     private Integer vidTrasport;
 
@@ -96,10 +112,12 @@ public class OrderTc implements Serializable {
     }
 
     public Date getDateorders() {
+
         return this.dateorders;
     }
 
     public void setDateorders(Date dateorders) {
+
         this.dateorders = dateorders;
     }
 

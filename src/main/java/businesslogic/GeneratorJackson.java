@@ -6,6 +6,7 @@ import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import dsu1glassfishatomic.workinterfaces.ProducedJacson;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -18,6 +19,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Locale;
+import java.util.TimeZone;
 
 
 @ApplicationScoped
@@ -37,6 +39,9 @@ public class GeneratorJackson {
             mapperJackson.writerWithDefaultPrettyPrinter();
             mapperJackson.setPropertyNamingStrategy(PropertyNamingStrategy.CAMEL_CASE_TO_LOWER_CASE_WITH_UNDERSCORES);
             DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS", new Locale("ru"));
+            mapperJackson.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
+            df.setTimeZone(TimeZone.getTimeZone("UTC"));
+            //df.setTimeZone(TimeZone.getTimeZone("Russia/Moscow"));
             mapperJackson.setDateFormat(df);
             mapperJackson.setLocale(new Locale("ru"));
             mapperJackson.setSerializationInclusion(JsonInclude.Include.NON_NULL);
