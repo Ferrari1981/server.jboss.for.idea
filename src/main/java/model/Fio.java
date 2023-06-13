@@ -37,9 +37,9 @@ public class Fio implements Serializable {
 
 
     @Basic
-    @NotNull
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd" )
-    @Column(name="BirthDate")
+    @JsonProperty("BirthDate")
+/*    @Column(name="BirthDate")*/
     private Date birthDate;
 
 
