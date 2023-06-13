@@ -40,8 +40,7 @@ public class Organization implements Serializable {
     private BigDecimal currentTable;
 
     @Basic
-    @Temporal(TemporalType.TIMESTAMP)
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern ="yyyy-MM-dd HH:mm:ss.SSS", locale = "ru", timezone="Russia/Moscow")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern ="yyyy-MM-dd HH:mm:ss.SSS")
     @Column(name="date_update", nullable = true)
     private Date dateUpdate;
 

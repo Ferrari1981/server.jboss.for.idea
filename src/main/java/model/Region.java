@@ -30,10 +30,10 @@ public class Region implements Serializable {
     @Column(name="current_table")
     private BigDecimal currentTable;
 
-    @Temporal(TemporalType.TIMESTAMP)
+
     @Column(name="date_update", nullable = true)
     @Basic
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern ="yyyy-MM-dd HH:mm:ss.SSS", locale = "ru", timezone="Russia/Moscow")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern ="yyyy-MM-dd HH:mm:ss.SSS" )
     private Date dateUpdate;
 
     private String name;

@@ -24,8 +24,7 @@ public class ModificationServerEntity {
 
     @Basic
     @Column(name = "versionserver", nullable = false)
-    @Temporal(TemporalType.TIMESTAMP)
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", locale = "ru", timezone="Russia/Moscow")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd" )
     private Date versionserver;
     @Basic
     @Column(name = "type_query", nullable = false, length = 100)

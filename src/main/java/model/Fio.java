@@ -38,8 +38,7 @@ public class Fio implements Serializable {
 
     @Basic
     @NotNull
-    @Temporal(TemporalType.TIMESTAMP)
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone= "Europe/Moscow")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd" )
     @Column(name="BirthDate")
     private Date birthDate;
 
@@ -57,9 +56,8 @@ public class Fio implements Serializable {
 
 
     @Basic
-    @Temporal(TemporalType.TIMESTAMP)
     @Column(name="date_update", nullable = true)
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss.SSS", timezone= "Europe/Moscow")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss.SSS" )
     private Date dateUpdate;
 
     private String f;

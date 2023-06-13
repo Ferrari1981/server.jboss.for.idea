@@ -33,9 +33,8 @@ public class Prof implements Serializable {
 
 
     @Basic
-    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "date_update", nullable = false)
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern ="yyyy-MM-dd HH:mm:ss.SSS", locale = "ru", timezone="Russia/Moscow")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern ="yyyy-MM-dd HH:mm:ss.SSS" )
     private Date dateUpdate;
 
     @Column(name = "current_table", nullable = true, precision = 0)

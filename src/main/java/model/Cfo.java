@@ -1,6 +1,7 @@
 package model;
 
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import org.hibernate.annotations.OptimisticLockType;
 
 import java.io.Serializable;
@@ -36,8 +37,9 @@ private Boolean closed;
 @Column(name="current_table")
 private BigDecimal currentTable;
 
-@Temporal(TemporalType.TIMESTAMP)
-@Column(name="date_update")
+        @Basic
+        @Column(name = "date_update", nullable = false)
+        @JsonFormat(shape = JsonFormat.Shape.STRING, pattern ="yyyy-MM-dd HH:mm:ss.SSS" )
 private Date dateUpdate;
 
 private String kod;

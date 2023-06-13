@@ -39,6 +39,11 @@ public class GeneratorJackson {
             mapperJackson.writerWithDefaultPrettyPrinter();
             mapperJackson.setPropertyNamingStrategy(PropertyNamingStrategy.CAMEL_CASE_TO_LOWER_CASE_WITH_UNDERSCORES);
             //df.setTimeZone(TimeZone.getTimeZone("Russia/Moscow"));
+      /*      DateFormat df = new SimpleDateFormat("yyyy-MM-dd", new Locale("ru"));
+            df.setTimeZone(TimeZone.getTimeZone("Russia/Moscow"));
+            mapperJackson.setDateFormat(df);*/
+          // mapperJackson.setTimeZone(TimeZone.getTimeZone("UTC+3"));
+            mapperJackson.setTimeZone(TimeZone.getTimeZone("Europe/Moscow"));
             mapperJackson.setLocale(new Locale("ru"));
             mapperJackson.setSerializationInclusion(JsonInclude.Include.NON_NULL);
             mapperJackson.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
