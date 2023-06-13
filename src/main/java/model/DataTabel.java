@@ -1,5 +1,6 @@
 package model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import org.hibernate.annotations.OptimisticLockType;
 
 import java.io.Serializable;
@@ -90,8 +91,12 @@ public class DataTabel implements Serializable {
 
     private String d9;
 
+
+
+    @Basic
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name="date_update")
+    @Column(name="date_update", nullable = true)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern ="yyyy-MM-dd HH:mm:ss.SSS", locale = "ru", timezone="Russia/Moscow")
     private Date dateUpdate;
 
     private BigDecimal fio;

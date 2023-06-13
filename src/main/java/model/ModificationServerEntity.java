@@ -1,5 +1,6 @@
 package model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.OptimisticLockType;
 import org.hibernate.annotations.OptimisticLocking;
@@ -19,8 +20,12 @@ public class ModificationServerEntity {
     @Basic
     @Column(name = "name", nullable = false, length = 2147483647)
     private String name;
+
+
     @Basic
     @Column(name = "versionserver", nullable = false)
+    @Temporal(TemporalType.TIMESTAMP)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", locale = "ru", timezone="Russia/Moscow")
     private Date versionserver;
     @Basic
     @Column(name = "type_query", nullable = false, length = 100)

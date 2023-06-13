@@ -8,13 +8,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.NamedQuery;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -42,10 +36,10 @@ public class Fio implements Serializable {
     private int id;
 
 
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone= "Europe/Moscow")
+    @Basic
     @NotNull
     @Temporal(TemporalType.TIMESTAMP)
-    @JsonProperty("BirthDate")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone= "Europe/Moscow")
     @Column(name="BirthDate")
     private Date birthDate;
 
@@ -55,11 +49,17 @@ public class Fio implements Serializable {
     @Column(name="current_organization")
     private Integer currentOrganization;
 
+
+
+    @Basic
     @Column(name="current_table")
     private BigDecimal currentTable;
 
+
+    @Basic
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name="date_update")
+    @Column(name="date_update", nullable = true)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss.SSS", timezone= "Europe/Moscow")
     private Date dateUpdate;
 
     private String f;

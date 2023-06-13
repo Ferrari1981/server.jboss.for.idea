@@ -8,13 +8,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.NamedQuery;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -45,8 +39,10 @@ public class Organization implements Serializable {
     @Column(name="current_table")
     private BigDecimal currentTable;
 
+    @Basic
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name="date_update")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern ="yyyy-MM-dd HH:mm:ss.SSS", locale = "ru", timezone="Russia/Moscow")
+    @Column(name="date_update", nullable = true)
     private Date dateUpdate;
 
     private String fullname;

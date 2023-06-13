@@ -2,23 +2,14 @@ package model;
 
 
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import org.hibernate.annotations.OptimisticLockType;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.NamedQuery;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.persistence.*;
 
 
 /**
@@ -38,11 +29,15 @@ public class Chat implements Serializable {
     @Id
     private Integer id;
 
+    @Basic
     @Column(name="current_table")
     private BigDecimal currentTable;
 
+
+    @Basic
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name="date_update")
+    @Column(name="date_update", nullable = true)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern ="yyyy-MM-dd HH:mm:ss.SSS", locale = "ru", timezone="Russia/Moscow")
     private Date dateUpdate;
 
     @Column(name="id_user")

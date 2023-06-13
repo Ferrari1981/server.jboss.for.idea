@@ -42,14 +42,16 @@ public class OrderTc implements Serializable {
 
     @Basic
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name="date_update", length=1)
+    @Column(name="date_update", nullable = true)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern ="yyyy-MM-dd HH:mm:ss.SSS", locale = "ru", timezone="Russia/Moscow")
     private Date dateUpdate;
 
 
 
     @Basic
     @Column(name = "dateorders", nullable = false)
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", locale = "ru", timezone="Russia/Moscow")
+    @Temporal(TemporalType.TIMESTAMP)
+     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", locale = "ru", timezone="Russia/Moscow")
     private Date dateorders;
 
     @Basic

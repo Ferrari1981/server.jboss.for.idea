@@ -1,5 +1,6 @@
 package model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.OptimisticLockType;
 import org.hibernate.annotations.OptimisticLocking;
@@ -40,8 +41,14 @@ public class UsersEntity {
     @Basic
     @Column(name = "telephone", nullable = true, length = 255)
     private String telephone;
+
+
+
+
     @Basic
     @Column(name = "date_update", nullable = true)
+    @Temporal(TemporalType.TIMESTAMP)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern ="yyyy-MM-dd HH:mm:ss.SSS", locale = "ru", timezone="Russia/Moscow")
     private Date dateUpdate;
     @Transient
     @Basic

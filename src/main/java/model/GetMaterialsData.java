@@ -4,6 +4,7 @@ import java.io.Serializable;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.OptimisticLockType;
 
@@ -34,14 +35,26 @@ public class GetMaterialsData implements Serializable {
 
     private BigDecimal count;
 
+
+
+
+
     @Column(name="current_table")
     private BigDecimal currentTable;
 
+
+
+    @Basic
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern ="yyyy-MM-dd HH:mm:ss.SSS", locale = "ru", timezone="Russia/Moscow")
     @Temporal(TemporalType.TIMESTAMP)
     private Date datattn;
 
+
+
+    @Basic
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern ="yyyy-MM-dd HH:mm:ss.SSS", locale = "ru", timezone="Russia/Moscow")
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name="date_update")
+    @Column(name="date_update", nullable = true)
     private Date dateUpdate;
 
     @Column(name="nomen_vesov")

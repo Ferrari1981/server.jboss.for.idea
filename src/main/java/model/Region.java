@@ -1,5 +1,6 @@
 package model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.OptimisticLockType;
 import org.hibernate.annotations.OptimisticLocking;
@@ -30,7 +31,9 @@ public class Region implements Serializable {
     private BigDecimal currentTable;
 
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name="date_update")
+    @Column(name="date_update", nullable = true)
+    @Basic
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern ="yyyy-MM-dd HH:mm:ss.SSS", locale = "ru", timezone="Russia/Moscow")
     private Date dateUpdate;
 
     private String name;

@@ -1,5 +1,6 @@
 package model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.OptimisticLockType;
 import org.hibernate.annotations.OptimisticLocking;
@@ -25,11 +26,16 @@ public class Prof implements Serializable {
     @Column(name = "name", nullable = false, length = 50)
     private String name;
 
+
+    @Basic
     @Column(name = "user_update", nullable = false)
     private int userUpdate;
 
+
+    @Basic
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "date_update", nullable = false)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern ="yyyy-MM-dd HH:mm:ss.SSS", locale = "ru", timezone="Russia/Moscow")
     private Date dateUpdate;
 
     @Column(name = "current_table", nullable = true, precision = 0)

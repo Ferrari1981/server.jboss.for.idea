@@ -38,13 +38,12 @@ public class GeneratorJackson {
             mapperJackson = new ObjectMapper(factory);
             mapperJackson.writerWithDefaultPrettyPrinter();
             mapperJackson.setPropertyNamingStrategy(PropertyNamingStrategy.CAMEL_CASE_TO_LOWER_CASE_WITH_UNDERSCORES);
-            DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS", new Locale("ru"));
-            mapperJackson.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
-            df.setTimeZone(TimeZone.getTimeZone("UTC"));
             //df.setTimeZone(TimeZone.getTimeZone("Russia/Moscow"));
-            mapperJackson.setDateFormat(df);
             mapperJackson.setLocale(new Locale("ru"));
             mapperJackson.setSerializationInclusion(JsonInclude.Include.NON_NULL);
+            mapperJackson.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+            mapperJackson.enable(SerializationFeature.FLUSH_AFTER_WRITE_VALUE);
+            mapperJackson .enable(SerializationFeature.INDENT_OUTPUT);
 
           System.out.println( " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +

@@ -2,6 +2,7 @@ package model;
 
 
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import org.hibernate.annotations.OptimisticLockType;
 
 import java.io.Serializable;
@@ -34,15 +35,27 @@ public class DataNotification implements Serializable {
 
     private int clock;
 
+
+
+    @Basic
     @Column(name="current_table")
     private BigDecimal currentTable;
 
+
+
+    @Basic
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name="date_start")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern ="yyyy-MM-dd HH:mm:ss.SSS", locale = "ru", timezone="Russia/Moscow")
     private Date dateStart;
 
+
+
+
+    @Basic
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name="date_update")
+    @Column(name="date_update", nullable = true)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern ="yyyy-MM-dd HH:mm:ss.SSS", locale = "ru", timezone="Russia/Moscow")
     private Date dateUpdate;
 
     @Column(name="head_message")

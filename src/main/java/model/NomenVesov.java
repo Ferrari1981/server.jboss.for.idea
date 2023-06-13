@@ -1,5 +1,6 @@
 package model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import org.hibernate.annotations.OptimisticLockType;
 
 import java.io.Serializable;
@@ -27,11 +28,19 @@ public class NomenVesov implements Serializable {
 
     private String articul;
 
+
+    @Basic
     @Column(name="current_table")
     private BigDecimal currentTable;
 
+
+
+
+
+    @Basic
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name="date_update")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern ="yyyy-MM-dd HH:mm:ss.SSS", locale = "ru", timezone="Russia/Moscow")
+    @Column(name="date_update", nullable = true)
     private Date dateUpdate;
 
     private Integer edizm;
