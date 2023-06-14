@@ -56,7 +56,7 @@ public class SubClassAllFilers {
                                 " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
                                 " Success    doFilter doFilter doFilter СтатусаАунтификацииПользователя ");
                     }
-                }, asy.getRequest(), asy.getResponse());
+                });
             }
             } catch(Exception e){
                 subClassWriterErros.
