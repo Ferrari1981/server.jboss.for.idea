@@ -82,6 +82,10 @@ public class DSU1JsonServlet extends HttpServlet {
            ЛОГ = getServletContext();
             // TODO: 22.05.2023 lister asynccontext
             new SubClassAllFilers().методСлушатель(     req.getAsyncContext(),ЛОГ);
+            //TODO ПОТОК ДЛЯ МЕТОДА POST
+        req.getAsyncContext().start(new Runnable() {
+            @Override
+            public void run() {
                 try {
                 //TODO ЗАПУСКАЕМ КОДЕ МЕТОДА POST()
                 СессионыйБинPOST.МетодБинаPOST(ЛОГ, req, resp);
@@ -100,6 +104,8 @@ public class DSU1JsonServlet extends HttpServlet {
                                 ЛОГ, "ErrorsLogs/ErrorJbossServletDSU1.txt");
 
             }
+            }
+        });
 
         }
 
