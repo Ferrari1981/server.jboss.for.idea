@@ -44,6 +44,7 @@ public class BEANCallsBack {
             Long ОбщийРазмерЗаписываемогоФайла = Long.valueOf(ГлавныйБуферОтправкиДанныхНААндройд.toString().toCharArray().length);
              response.addHeader("stream_size", String.valueOf(ОбщийРазмерЗаписываемогоФайла));
              response.addHeader("stream_status", String.valueOf(response.getStatus()));
+            response.addHeader("pool", String.valueOf( Thread.currentThread().getName()));
             PrintWriter МеханизмОтправкиДанныхКлиенту = new PrintWriter(БуферДанныеДляКлиента, true);
             МеханизмОтправкиДанныхКлиенту.write(ГлавныйБуферОтправкиДанныхНААндройд.toString());
             // TODO: 26.04.2023 fluf

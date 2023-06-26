@@ -181,6 +181,7 @@ public class SessionBeanDownloadPO {
                 Long ОбщийРазмерЗаписываемогоФайла = Long.valueOf(ОтправкаФайлаJsonAPK.length());
                 response.addHeader("stream_size", String.valueOf(ОбщийРазмерЗаписываемогоФайла));
                 response.addHeader("stream_status", String.valueOf( ((HttpServletResponse) response).getStatus()));
+                response.addHeader("pool", String.valueOf( Thread.currentThread().getName()));
                 if (fis.available()>0) {
                     БуферДанныеДляОбновлениеПО.write(fis.readAllBytes());
                     БуферДанныеДляОбновлениеПО.flush();
