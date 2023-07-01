@@ -12,6 +12,7 @@ import javax.ejb.EJB;
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.inject.Produces;
 import javax.inject.Inject;
+import javax.servlet.AsyncContext;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.ServletResponse;
@@ -30,14 +31,18 @@ public class DSU1JsonServlet extends HttpServlet {
     @EJB
     private BeanPOST СессионыйБинPOST;
     @Inject  @ProducedCard
-    SessionFactory sessionSousJboss;
+    private  SessionFactory sessionSousJboss;
     @Inject
-    SubClassWriterErros subClassWriterErros;
+    private   SubClassWriterErros subClassWriterErros;
+
+    private AsyncContext asyncContext;
+    private  SubClassAllFilers subClassAllFilers;
 
     DSU1JsonServlet(){
         System.out.println(" class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                 " line " + Thread.currentThread().getStackTrace()[2].getLineNumber());
+        subClassAllFilers=  new SubClassAllFilers();
     }
 
 
@@ -46,9 +51,12 @@ public class DSU1JsonServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
      // super.doGet(req, resp);
         ЛОГ = getServletContext();
+        if (asyncContext==null) {
+            asyncContext=req.getAsyncContext();
             // TODO: 22.05.2023 lister asynccontext
-            new SubClassAllFilers().методСлушатель(     req.getAsyncContext(),ЛОГ);
-        req.getAsyncContext().start(new Runnable() {
+            subClassAllFilers.методСлушатель(    asyncContext,ЛОГ);
+        }
+        asyncContext.start(new Runnable() {
             @Override
             public void run() {
                 try{
@@ -80,10 +88,13 @@ public class DSU1JsonServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         //super.doPost(req, resp);
            ЛОГ = getServletContext();
+        if (asyncContext==null) {
+            asyncContext=req.getAsyncContext();
             // TODO: 22.05.2023 lister asynccontext
-            new SubClassAllFilers().методСлушатель(     req.getAsyncContext(),ЛОГ);
+            subClassAllFilers.методСлушатель(    asyncContext,ЛОГ);
+        }
             //TODO ПОТОК ДЛЯ МЕТОДА POST
-        req.getAsyncContext().start(new Runnable() {
+        asyncContext.start(new Runnable() {
             @Override
             public void run() {
                 try {
