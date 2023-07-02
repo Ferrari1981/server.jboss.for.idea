@@ -28,7 +28,7 @@ public class SubClassAllFilers {
                         ЛОГ.log("\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                                 " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
-                                " Success    doFilter doFilter doFilter СтатусаАунтификацииПользователя ");
+                                " OTRABOTAL onComplete onComplete onComplete onComplete !!!!!!!!!!!!!!!  "+ "\n");
                     }
 
                     @Override
@@ -37,7 +37,8 @@ public class SubClassAllFilers {
                         ЛОГ.log("\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                                 " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
-                                " asyncEvent " + asyncEvent);
+                                " asyncEvent " + asyncEvent+ "\n" +
+                                " OTRABOTAL onTimeout onTimeout onTimeout onTimeout !!!!!!!!!!!!!!!  "+ "\n");
                     }
 
                     @Override
@@ -46,7 +47,8 @@ public class SubClassAllFilers {
                         ЛОГ.log("\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                                 " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
-                                " asyncEvent " + asyncEvent);
+                                " asyncEvent " + asyncEvent+ "\n" +
+                                " OTRABOTAL onError onError onError onError !!!!!!!!!!!!!!!  "+ "\n");
                     }
 
                     @Override
@@ -54,7 +56,8 @@ public class SubClassAllFilers {
                         ЛОГ.log("\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                                 " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
-                                " Success    doFilter doFilter doFilter СтатусаАунтификацииПользователя ");
+                                " Success    doFilter doFilter doFilter СтатусаАунтификацииПользователя " + "\n" +
+                                " OTRABOTAL onStartAsync onStartAsync onStartAsync onStartAsync !!!!!!!!!!!!!!!  "+ "\n");
                     }
                 });
             }
