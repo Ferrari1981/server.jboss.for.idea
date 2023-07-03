@@ -41,8 +41,6 @@ public class DSU1ServletRuntimeJboss extends HttpServlet {
      // super.doGet(req, resp);
         ЛОГ = getServletContext();
             // TODO: 22.05.2023 lister asynccontext
-            new SubClassAllFilers().методСлушатель(     req.getAsyncContext(),ЛОГ);
-            // TODO: 22.05.2023  start working...
                 try {
                     //TODO ЗАПУСКАЕМ КОДЕ МЕТОДА GET()
                     sessionBeanGETRuntimeJboss.МетодГлавныйRuntimeJboss(ЛОГ, req, resp);
