@@ -45,7 +45,7 @@ public class GeneratorJackson {
           // mapperJackson.setTimeZone(TimeZone.getTimeZone("UTC+3"));
             mapperJackson.setTimeZone(TimeZone.getTimeZone("Europe/Moscow"));
             mapperJackson.setLocale(new Locale("ru"));
-            mapperJackson.setSerializationInclusion(JsonInclude.Include.NON_NULL);
+            mapperJackson.setSerializationInclusion(JsonInclude.Include.ALWAYS);
             mapperJackson.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
             mapperJackson.enable(SerializationFeature.FLUSH_AFTER_WRITE_VALUE);
             mapperJackson .enable(SerializationFeature.INDENT_OUTPUT);

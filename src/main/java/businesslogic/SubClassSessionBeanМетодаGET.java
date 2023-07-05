@@ -335,9 +335,11 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
                         case "get_materials_data":
                             // TODO
                             queryДляHiberite = session.createQuery(
-                                    " SELECT  getmat FROM  GetMaterialsData  getmat  WHERE getmat .currentTable > :id  AND getmat.userUpdate=:user_update ");
+                                    " SELECT  getmat FROM  GetMaterialsData  getmat  WHERE getmat .currentTable > :id  AND getmat.userUpdate=:user_update  " +
+                                            " AND getmat.statusSend!=:statusSend ");
                             queryДляHiberite.setParameter("id",new BigDecimal(VersionData));//8641 8625
                             queryДляHiberite.setParameter("user_update",IdUser);//8641 8625
+                            queryДляHiberite.setParameter("statusSend","Удаленная");//8641 8625
                             ЛистДанныеОтHibenide =( List<model.GetMaterialsData>)  queryДляHiberite.getResultList();
                             ЛОГ.  log(" ЛистДанныеОтHibenide "+ЛистДанныеОтHibenide+ " ЛистДанныеОтHibenide.size() " +ЛистДанныеОтHibenide.size()+
                                     "  queryДляHiberite  " +queryДляHiberite);//gson Gson
