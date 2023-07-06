@@ -26,15 +26,17 @@ public class NomenVesov implements Serializable {
     @Id
     private Integer id;
 
+    private String name;
+
+    private String namefull;
+
     private String articul;
 
-
-    @Basic
-    @Column(name="current_table")
-    private BigDecimal currentTable;
+    private BigDecimal koeff;
 
 
-
+    @Column(name="type_material")
+    private int typeMaterial;
 
 
     @Basic
@@ -42,21 +44,22 @@ public class NomenVesov implements Serializable {
     @Column(name="date_update", nullable = true)
     private Date dateUpdate;
 
-    private Integer edizm;
-
-    private BigDecimal koeff;
-
-    private String name;
-
-    private String namefull;
-
-    @Column(name="type_material")
-    private int typeMaterial;
 
     @Column(name="user_update")
     private int userUpdate;
 
+
+    private Integer edizm;
+
+
     private BigDecimal uuid;
+
+
+    @Basic
+    @Column(name="current_table")
+    private BigDecimal currentTable;
+
+
 
     public NomenVesov() {
     }

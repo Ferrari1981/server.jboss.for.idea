@@ -26,17 +26,8 @@ public class FioTemplate implements Serializable {
     @Id
     private Integer id;
 
+    private BigDecimal uuid;
 
-    @Basic
-    @Column(name="current_table")
-    private BigDecimal currentTable;
-
-
-
-    @Basic
-    @Column(name="date_update", nullable = true)
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss.SSS" )
-    private Date dateUpdate;
 
     @Column(name="fio_template")
     private BigDecimal fioTemplate;
@@ -44,13 +35,25 @@ public class FioTemplate implements Serializable {
     @Column(name="fio_uuid")
     private BigDecimal fioUuid;
 
-    @Column(name="status_send")
-    private String statusSend;
+    @Basic
+    @Column(name="date_update", nullable = true)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss.SSS" )
+    private Date dateUpdate;
 
     @Column(name="user_update")
     private int userUpdate;
 
-    private BigDecimal uuid;
+    @Basic
+    @Column(name="current_table")
+    private BigDecimal currentTable;
+
+
+    @Column(name="status_send")
+    private String statusSend;
+
+
+
+
 
     public FioTemplate() {
     }

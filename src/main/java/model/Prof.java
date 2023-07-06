@@ -43,6 +43,10 @@ public class Prof implements Serializable {
     @Column(name = "uuid", nullable = true, precision = 0)
     private BigDecimal uuid;
 
+
+
+
+
     public int getId() {
         return id;
     }

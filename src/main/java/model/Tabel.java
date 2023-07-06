@@ -27,6 +27,7 @@ public class Tabel implements Serializable {
     @Id
     private Integer id;
 
+
     private int cfo;
 
 
@@ -57,6 +58,11 @@ public class Tabel implements Serializable {
 
     @Column(name="current_table")
     private BigDecimal currentTable;
+
+
+
+
+
 
     public Tabel() {
     }

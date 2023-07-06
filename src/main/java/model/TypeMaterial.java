@@ -28,22 +28,29 @@ public class TypeMaterial implements Serializable {
     @Id
     private Integer id;
 
-    @Column(name="current_table")
-    private BigDecimal currentTable;
-
-
+    private String name;
 
     @Basic
     @Column(name="date_update", nullable = true)
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern ="yyyy-MM-dd HH:mm:ss.SSS" )
     private Date dateUpdate;
 
-    private String name;
-
     @Column(name="user_update")
     private int userUpdate;
 
+
     private BigDecimal uuid;
+
+
+    @Column(name="current_table")
+    private BigDecimal currentTable;
+
+
+
+
+
+
+
 
     public TypeMaterial() {
     }

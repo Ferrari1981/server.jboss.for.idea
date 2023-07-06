@@ -29,25 +29,21 @@ public class GetMaterialsData implements Serializable {
     @Id
     private Integer id;
 
-    private int cfo;
+
+    @Column(name="type_material")
+    private int typeMaterial;
+
+
+    @Column(name="nomen_vesov")
+    private int nomenVesov;
+
+
+    @ColumnDefault("0")
+    private Integer tracks;
 
     private Integer companys;
 
     private BigDecimal count;
-
-
-
-
-
-    @Column(name="current_table")
-    private BigDecimal currentTable;
-
-
-
-    @Basic
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern ="yyyy-MM-dd HH:mm:ss.SSS" )
-    private Date datattn;
-
 
 
     @Basic
@@ -55,25 +51,38 @@ public class GetMaterialsData implements Serializable {
     @Column(name="date_update", nullable = true)
     private Date dateUpdate;
 
-    @Column(name="nomen_vesov")
-    private int nomenVesov;
+    private BigDecimal uuid;
+
+    @Column(name="user_update")
+    private int userUpdate;
+
+    private int cfo;
+
+    @Column(name="current_table")
+    private BigDecimal currentTable;
 
     @Column(name="status_send")
     private String statusSend;
 
 
-    @ColumnDefault("0")
-    private Integer tracks;
-
     private String ttn;
 
-    @Column(name="type_material")
-    private int typeMaterial;
+    @Basic
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern ="yyyy-MM-dd HH:mm:ss.SSS" )
+    private Date datattn;
 
-    @Column(name="user_update")
-    private int userUpdate;
 
-    private BigDecimal uuid;
+
+
+
+
+
+
+
+
+
+
+
 
     public GetMaterialsData() {
     }

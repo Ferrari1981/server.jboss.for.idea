@@ -26,34 +26,44 @@ public class Notification implements Serializable {
     @Id
     private Integer id;
 
-    private Integer clock;
-
-    @Column(name="current_table")
-    private BigDecimal currentTable;
-
-
-
     @Basic
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd" )
     @Column(name="date_start")
     private Date dateStart;
 
-
+    private Integer clock;
 
     @Basic
     @Column(name="date_update", nullable = true)
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern ="yyyy-MM-dd HH:mm:ss.SSS" )
     private Date dateUpdate;
 
-    @Column(name="id_user")
-    private int idUser;
-
-    private Integer rights;
 
     @Column(name="user_update")
     private int userUpdate;
 
+    private Integer rights;
+
+
     private BigDecimal uuid;
+
+    @Column(name="current_table")
+    private BigDecimal currentTable;
+
+    @Column(name="id_user")
+    private int idUser;
+
+
+
+
+
+
+
+
+
+
+
+
 
     public Notification() {
     }

@@ -67,6 +67,13 @@ public class UsersEntitySuccess {
     @Column(name = "kod", nullable = true, length = 255)
     private String kod;
 
+
+
+
+
+
+
+
     public int getId() {
         return id;
     }

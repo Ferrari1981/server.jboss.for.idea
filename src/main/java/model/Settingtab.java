@@ -29,26 +29,31 @@ public class Settingtab implements Serializable {
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private int id;
 
-    @Column(name="current_table")
-    private BigDecimal currentTable;
-
-
     @Basic
     @Column(name="date_update", nullable = true)
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern ="yyyy-MM-dd HH:mm:ss.SSS" )
     private Date dateUpdate;
 
-    private String onesignal;
-
-    private Integer organizations;
-
     @Column(name="user_update")
     private Integer userUpdate;
 
-    private BigDecimal uuid;
-
     @Column(name="version_dsu1")
     private Integer versionDsu1;
+
+
+    private Integer organizations;
+
+    private BigDecimal uuid;
+
+    @Column(name="current_table")
+    private BigDecimal currentTable;
+
+
+    private String onesignal;
+
+
+
+
 
     public Settingtab() {
     }

@@ -36,6 +36,9 @@ public class ModificationServerEntity {
     @Column(name = "versionserverversion", nullable = true, precision = 0)
     private Long versionserverversion;
 
+
+
+
     public int getId() {
         return id;
     }

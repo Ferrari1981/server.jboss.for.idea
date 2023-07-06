@@ -28,8 +28,11 @@ public class Template implements Serializable {
     @Id
     private Integer id;
 
-    @Column(name="current_table")
-    private BigDecimal currentTable;
+    @Column(name="name_templates")
+    private String nameTemplates;
+
+    @Column(name="user_update")
+    private int userUpdate;
 
 
     @Basic
@@ -37,16 +40,21 @@ public class Template implements Serializable {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern ="yyyy-MM-dd HH:mm:ss.SSS" )
     private Date dateUpdate;
 
-    @Column(name="name_templates")
-    private String nameTemplates;
+
+    private BigDecimal uuid;
 
     @Column(name="status_send")
     private String statusSend;
 
-    @Column(name="user_update")
-    private int userUpdate;
 
-    private BigDecimal uuid;
+    @Column(name="current_table")
+    private BigDecimal currentTable;
+
+
+
+
+
+
 
     public Template() {
     }

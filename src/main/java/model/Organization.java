@@ -33,29 +33,38 @@ public class Organization implements Serializable {
     @Id
     private int id;
 
-    @Column(name="chosen_organization")
-    private Integer chosenOrganization;
+    private String name;
 
-    @Column(name="current_table")
-    private BigDecimal currentTable;
+
+    private String fullname;
+
+
+    private String inn;
+
+    private String kpp;
+
 
     @Basic
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern ="yyyy-MM-dd HH:mm:ss.SSS")
     @Column(name="date_update", nullable = true)
     private Date dateUpdate;
 
-    private String fullname;
-
-    private String inn;
-
-    private String kpp;
-
-    private String name;
-
     @Column(name="user_update")
     private int userUpdate;
 
+
+    @Column(name="chosen_organization")
+    private Integer chosenOrganization;
+
+
+    @Column(name="current_table")
+    private BigDecimal currentTable;
+
+
     private BigDecimal uuid;
+
+
+
 
 
     public int getId() {

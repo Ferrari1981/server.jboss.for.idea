@@ -29,10 +29,17 @@ public class ViewOnesignal implements Serializable {
     @Id
     private Integer id;
 
+
+    private BigDecimal uuid;
+
+    private String onesignal;
+
+
     @Column(name="current_table")
     private BigDecimal currentTable;
 
-
+    @Column(name="user_update")
+    private int userUpdate;
 
     @Basic
     @Column(name="date_update", nullable = true)
@@ -40,12 +47,11 @@ public class ViewOnesignal implements Serializable {
     private Date dateUpdate;
 
 
-    private String onesignal;
 
-    @Column(name="user_update")
-    private int userUpdate;
 
-    private BigDecimal uuid;
+
+
+
 
     public ViewOnesignal() {
     }

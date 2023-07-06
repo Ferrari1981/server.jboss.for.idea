@@ -27,21 +27,25 @@ public class Region implements Serializable {
     @Id
     private Integer id;
 
-    @Column(name="current_table")
-    private BigDecimal currentTable;
 
+    private String name;
 
     @Column(name="date_update", nullable = true)
     @Basic
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern ="yyyy-MM-dd HH:mm:ss.SSS" )
     private Date dateUpdate;
 
-    private String name;
-
     @Column(name="user_update")
     private int userUpdate;
 
+    @Column(name="current_table")
+    private BigDecimal currentTable;
+
+
     private BigDecimal uuid;
+
+
+
 
     public Region() {
     }
