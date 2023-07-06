@@ -36,20 +36,16 @@ public class OrderTc implements Serializable {
     @Basic
     private Integer cfo;
 
-    @Basic
-    @Column(name="current_table", precision=38)
-    private BigDecimal currentTable;
 
     @Basic
-    @Column(name="date_update", nullable = true)
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern ="yyyy-MM-dd HH:mm:ss.SSS" )
-    private Date dateUpdate;
+    @Column(name="vid_trasport")
+    private Integer vidTrasport;
 
 
 
     @Basic
     @Column(name = "dateorders", nullable = false)
-     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd" )
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd" )
     private Date dateorders;
 
     @Basic
@@ -60,20 +56,33 @@ public class OrderTc implements Serializable {
     @Column(name="number_order")
     private String numberOrder;
 
+
     @Basic
     private Integer status;
 
     @Basic
-    @Column(name="user_update")
-    private Integer userUpdate;
+    @Column(name="date_update", nullable = true)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern ="yyyy-MM-dd HH:mm:ss.SSS" )
+    private Date dateUpdate;
 
     @Basic
     @Column(precision=38)
     private BigDecimal uuid;
 
+
+
     @Basic
-    @Column(name="vid_trasport")
-    private Integer vidTrasport;
+    @Column(name="user_update")
+    private Integer userUpdate;
+
+
+
+    @Basic
+    @Column(name="current_table", precision=38)
+    private BigDecimal currentTable;
+
+
+
 
     public OrderTc() {
     }

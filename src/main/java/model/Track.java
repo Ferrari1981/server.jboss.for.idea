@@ -27,26 +27,33 @@ public class Track implements Serializable {
     @Id
     private Integer id;
 
-    @Column(name="current_table")
-    private BigDecimal currentTable;
+    private String name;
 
-
+    private String fullname;
 
     @Basic
     @Column(name="date_update", nullable = true)
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern ="yyyy-MM-dd HH:mm:ss.SSS" )
     private Date dateUpdate;
 
-    private int dir;
-
-    private String fullname;
-
-    private String name;
-
     @Column(name="user_update")
-    private int userUpdate;
+    private Integer userUpdate;
+
+
+    private Integer dir;
+
 
     private BigDecimal uuid;
+
+    @Column(name="current_table")
+    private BigDecimal currentTable;
+
+
+
+
+    private Integer owner;
+
+    private Integer vid_tc;
 
     public Track() {
     }
@@ -79,7 +86,7 @@ public class Track implements Serializable {
         return this.dir;
     }
 
-    public void setDir(int dir) {
+    public void setDir(Integer dir) {
         this.dir = dir;
     }
 
@@ -99,11 +106,11 @@ public class Track implements Serializable {
         this.name = name;
     }
 
-    public int getUserUpdate() {
+    public Integer getUserUpdate() {
         return this.userUpdate;
     }
 
-    public void setUserUpdate(int userUpdate) {
+    public void setUserUpdate(Integer userUpdate) {
         this.userUpdate = userUpdate;
     }
 
@@ -115,4 +122,18 @@ public class Track implements Serializable {
         this.uuid = uuid;
     }
 
+    public void setOwner(Integer owner) {
+        this.owner = owner;
+    }
+
+    public Integer getVid_tc() {
+        return vid_tc;
+    }
+
+    public void setVid_tc(Integer vid_tc) {
+        this.vid_tc = vid_tc;
+    }
+    public Integer getOwner() {
+        return owner;
+    }
 }
