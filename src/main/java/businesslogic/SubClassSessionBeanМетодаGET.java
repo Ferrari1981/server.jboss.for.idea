@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.sun.istack.NotNull;
 import dsu1glassfishatomic.workinterfaces.ProducedCard;
+import model.MaterialsDatabinary;
 import model.OrderTc;
 import model.VidTc;
 import org.hibernate.*;
@@ -394,6 +395,16 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
                            ЛистДанныеОтHibenide =  ( List<model.VidTc>)     criteriaquery.list();
                            ЛОГ.  log(" ЛистДанныеОтHibenide "+ЛистДанныеОтHibenide+ " ЛистДанныеОтHibenide.size() " +ЛистДанныеОтHibenide.size()+
                                    "  queryДляHiberite  " +queryДляHiberite);//gson Gson
+                            break;
+
+                        case "materials_databinary":
+                            // TODO
+                            criteriaquery = session.createCriteria(MaterialsDatabinary.class);
+                            criteriaquery.add(org.hibernate.criterion.Restrictions.gt("currentTable", new BigDecimal(VersionData)));
+                            criteriaquery.add(org.hibernate.criterion.Restrictions.eq("userUpdate", IdUser));
+                            ЛистДанныеОтHibenide = ( List<model.MaterialsDatabinary>)   criteriaquery.list();
+                            ЛОГ.  log(" ЛистДанныеОтHibenide "+ЛистДанныеОтHibenide+ " ЛистДанныеОтHibenide.size() " +ЛистДанныеОтHibenide.size()+
+                                    "  queryДляHiberite  " +queryДляHiberite);//gson Gson
                             break;
 
                     }//TODO КОНЕЦ РАСПРЕДЕНИЕ ТАБЛИЦ 	switch (NameTable.trim()) {
