@@ -28,24 +28,32 @@ public class VidTc implements Serializable {
     @Column(unique=true, nullable=false)
     private int id;
 
-    @Column(name="current_table", precision=38)
-    private BigDecimal currentTable;
 
-
-
+    private String name;
 
     @Basic
     @Column(name="date_update" , nullable = true)
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern ="yyyy-MM-dd HH:mm:ss.SSS" )
     private Date dateUpdate;
 
-    private String name;
+
+    @Column(precision=38)
+    private BigDecimal uuid;
+
 
     @Column(name="user_update")
     private Integer userUpdate;
 
-    @Column(precision=38)
-    private BigDecimal uuid;
+    @Column(name="current_table", precision=38)
+    private BigDecimal currentTable;
+
+
+
+
+
+
+
+
 
     public VidTc() {
     }
