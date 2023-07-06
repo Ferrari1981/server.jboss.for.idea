@@ -35,6 +35,14 @@ public class Fio implements Serializable {
     @Id
     private int id;
 
+    private String name;
+
+    private String f;
+
+    private String n;
+
+    private String o;
+
 
     @Basic
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd" )
@@ -42,38 +50,26 @@ public class Fio implements Serializable {
 /*    @Column(name="BirthDate")*/
     private Date birthDate;
 
-
-
-    @NotNull
-    @Column(name="current_organization")
-    private Integer currentOrganization;
-
-
-
-    @Basic
-    @Column(name="current_table")
-    private BigDecimal currentTable;
-
+    private String snils;
 
     @Basic
     @Column(name="date_update", nullable = true)
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss.SSS" )
     private Date dateUpdate;
 
-    private String f;
-
-    private String n;
-
-    private String name;
-
-    private String o;
-
-    private String snils;
-
     @Column(name="user_update")
     private int userUpdate;
 
     private BigDecimal uuid;
+
+    @NotNull
+    @Column(name="current_organization")
+    private Integer currentOrganization;
+
+    @Basic
+    @Column(name="current_table")
+    private BigDecimal currentTable;
+
 
     private Integer prof;
 

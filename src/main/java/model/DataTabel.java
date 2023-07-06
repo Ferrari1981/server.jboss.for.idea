@@ -26,10 +26,25 @@ public class DataTabel implements Serializable {
     @Id
     private Integer id;
 
-    @Column(name="current_table")
-    private BigDecimal currentTable;
+    private BigDecimal fio;
 
     private String d1;
+
+    private String d2;
+
+    private String d3;
+
+    private String d4;
+
+    private String d5;
+
+    private String d6;
+
+    private String d7;
+
+    private String d8;
+
+    private String d9;
 
     private String d10;
 
@@ -51,8 +66,6 @@ public class DataTabel implements Serializable {
 
     private String d19;
 
-    private String d2;
-
     private String d20;
 
     private String d21;
@@ -73,23 +86,9 @@ public class DataTabel implements Serializable {
 
     private String d29;
 
-    private String d3;
-
     private String d30;
 
     private String d31;
-
-    private String d4;
-
-    private String d5;
-
-    private String d6;
-
-    private String d7;
-
-    private String d8;
-
-    private String d9;
 
 
 
@@ -98,21 +97,24 @@ public class DataTabel implements Serializable {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern ="yyyy-MM-dd HH:mm:ss.SSS" )
     private Date dateUpdate;
 
-    private BigDecimal fio;
+    @Column(name="uuid_tabel")
+    private BigDecimal uuidTabel;
 
-    @Column(name="status_carried_out")
-    private boolean statusCarriedOut;
 
-    @Column(name="status_send")
-    private String statusSend;
+    @Column(name="current_table")
+    private BigDecimal currentTable;
+
+
+    private BigDecimal uuid;
 
     @Column(name="user_update")
     private int userUpdate;
 
-    private BigDecimal uuid;
+    @Column(name="status_send")
+    private String statusSend;
 
-    @Column(name="uuid_tabel")
-    private BigDecimal uuidTabel;
+    @Column(name="status_carried_out")
+    private boolean statusCarriedOut;
 
     private Integer prof;
 

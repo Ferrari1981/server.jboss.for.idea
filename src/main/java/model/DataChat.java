@@ -32,36 +32,36 @@ public class DataChat implements Serializable {
     @Id
     private Integer id;
 
-    private Integer alreadyshownnotifications;
+    private BigDecimal uuid;
+
+    private String message;
+
+    @Column(name = "image_chat")
+    private String imageChat;
+
+    @Column(name = "status_write")
+    private boolean statusWrite;
+
 
     @Column(name = "chat_uuid")
     private BigDecimal chatUuid;
 
-
-
-    @Basic
-    @Column(name = "current_table")
-    private BigDecimal currentTable;
-
-
+    @Column(name = "user_update")
+    private int userUpdate;
 
     @Basic
     @Column(name = "date_update", nullable = true)
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern ="yyyy-MM-dd HH:mm:ss.SSS" )
     private Date dateUpdate;
 
-    @Column(name = "image_chat")
-    private String imageChat;
+    @Basic
+    @Column(name = "current_table")
+    private BigDecimal currentTable;
 
-    private String message;
 
-    @Column(name = "status_write")
-    private boolean statusWrite;
+    private Integer alreadyshownnotifications;
 
-    @Column(name = "user_update")
-    private int userUpdate;
 
-    private BigDecimal uuid;
 
     public DataChat() {
     }

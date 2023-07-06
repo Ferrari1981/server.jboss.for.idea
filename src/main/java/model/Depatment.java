@@ -27,28 +27,26 @@ public class Depatment implements Serializable {
     @Id
     private int id;
 
+    private String name;
 
 
-    @Basic
-    @Column(name="current_table")
-    private BigDecimal currentTable;
-
-
+    private int organization;
 
     @Basic
     @Column(name="date_update", nullable = true)
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern ="yyyy-MM-dd HH:mm:ss.SSS" )
     private Date dateUpdate;
 
-    private String name;
-
-    private int organization;
 
     @Column(name="user_update")
     private int userUpdate;
 
-    private BigDecimal uuid;
+    @Basic
+    @Column(name="current_table")
+    private BigDecimal currentTable;
 
+
+    private BigDecimal uuid;
 
 
     public int getId() {

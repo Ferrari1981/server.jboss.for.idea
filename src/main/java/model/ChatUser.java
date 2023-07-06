@@ -29,27 +29,34 @@ public class ChatUser implements Serializable {
     private Integer id;
 
 
-    @Basic
-    @Column(name="current_table")
-    private BigDecimal currentTable;
+    private String name;
 
+    private int rights;
+
+
+    private String telephone;
 
     @Basic
     @Column(name="date_update", nullable = true)
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern ="yyyy-MM-dd HH:mm:ss.SSS" )
     private Date dateUpdate;
 
+    @Basic
+    @Column(name="current_table")
+    private BigDecimal currentTable;
 
 
     private boolean locked;
 
-    private String name;
-
-    private int rights;
-
-    private String telephone;
-
     private BigDecimal uuid;
+
+
+
+
+
+
+
+
 
     public ChatUser() {
     }

@@ -28,27 +28,14 @@ public class DataNotification implements Serializable {
     @Id
     private Integer id;
 
-    private Integer alreadyshownnotifications;
-
-    @Column(name="callsback_note_task")
-    private String callsbackNoteTask;
-
-    private int clock;
-
-
-
-    @Basic
-    @Column(name="current_table")
-    private BigDecimal currentTable;
-
-
+    private String message;
 
     @Basic
     @Column(name="date_start")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern ="yyyy-MM-dd HH:mm:ss.SSS" )
     private Date dateStart;
 
-
+    private int clock;
 
 
     @Basic
@@ -56,23 +43,35 @@ public class DataNotification implements Serializable {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern ="yyyy-MM-dd HH:mm:ss.SSS" )
     private Date dateUpdate;
 
-    @Column(name="head_message")
-    private String headMessage;
-
-    private String message;
 
     private int rights;
+
+    private BigDecimal uuid;
+
+    @Basic
+    @Column(name="current_table")
+    private BigDecimal currentTable;
+
+
+    @Column(name="uuid_notifications")
+    private BigDecimal uuidNotifications;
 
     @Column(name="status_write")
     private int statusWrite;
 
+
     @Column(name="type_tasks")
     private String typeTasks;
 
-    private BigDecimal uuid;
+    @Column(name="head_message")
+    private String headMessage;
 
-    @Column(name="uuid_notifications")
-    private BigDecimal uuidNotifications;
+
+    @Column(name="callsback_note_task")
+    private String callsbackNoteTask;
+
+    private Integer alreadyshownnotifications;
+
 
     public DataNotification() {
     }

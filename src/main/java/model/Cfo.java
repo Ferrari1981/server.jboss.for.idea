@@ -30,30 +30,42 @@ private static final long serialVersionUID = 1L;
 @Id
 private Integer id;
 
-private int boss;
 
-private Boolean closed;
+        private String name;
 
-@Column(name="current_table")
-private BigDecimal currentTable;
+        private Integer region;
+
+        private int boss;
+
+        private String kod;
+
 
         @Basic
         @Column(name = "date_update", nullable = false)
         @JsonFormat(shape = JsonFormat.Shape.STRING, pattern ="yyyy-MM-dd HH:mm:ss.SSS" )
-private Date dateUpdate;
+        private Date dateUpdate;
 
-private String kod;
 
-private String name;
+        @Column(name="user_update")
+        private int userUpdate;
 
-private int organization;
 
-private Integer region;
+        private Boolean closed;
 
-@Column(name="user_update")
-private int userUpdate;
+        @Column(name="current_table")
+        private BigDecimal currentTable;
 
-private BigDecimal uuid;
+
+        private int organization;
+
+        private BigDecimal uuid;
+
+
+
+
+
+
+
 
 public Cfo() {
         }

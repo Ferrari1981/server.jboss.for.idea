@@ -29,28 +29,39 @@ public class Chat implements Serializable {
     @Id
     private Integer id;
 
-    @Basic
-    @Column(name="current_table")
-    private BigDecimal currentTable;
-
+    @Column(name="user_update")
+    private int userUpdate;
 
     @Basic
     @Column(name="date_update", nullable = true)
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern ="yyyy-MM-dd HH:mm:ss.SSS" )
     private Date dateUpdate;
 
+
+    private BigDecimal uuid;
+
     @Column(name="id_user")
     private int idUser;
 
     private String name;
 
-    @Column(name="user_update")
-    private int userUpdate;
 
-    private BigDecimal uuid;
+    @Basic
+    @Column(name="current_table")
+    private BigDecimal currentTable;
+
+
+
+
 
     @Column(name="uuid_parent")
     private BigDecimal uuidParent;
+
+
+
+
+
+
 
 
     /*

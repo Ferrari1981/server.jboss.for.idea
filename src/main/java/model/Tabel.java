@@ -29,29 +29,34 @@ public class Tabel implements Serializable {
 
     private int cfo;
 
-    @Column(name="current_table")
-    private BigDecimal currentTable;
+
+    @Column(name="month_tabels")
+    private int monthTabels;
 
 
+    @Column(name="year_tabels")
+    private int yearTabels;
 
     @Basic
     @Column(name="date_update", nullable = true)
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern ="yyyy-MM-dd HH:mm:ss.SSS" )
     private Date dateUpdate;
 
-    @Column(name="month_tabels")
-    private int monthTabels;
+
+    private BigDecimal uuid;
 
     @Column(name="status_send")
     private String statusSend;
 
+
+
+
     @Column(name="user_update")
     private int userUpdate;
 
-    private BigDecimal uuid;
 
-    @Column(name="year_tabels")
-    private int yearTabels;
+    @Column(name="current_table")
+    private BigDecimal currentTable;
 
     public Tabel() {
     }

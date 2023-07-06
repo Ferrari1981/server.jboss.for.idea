@@ -28,17 +28,7 @@ public class Company implements Serializable {
     @Id
     private Integer id;
 
-
-
-    @Basic
-    @Column(name="current_table")
-    private BigDecimal currentTable;
-
-
-    @Basic
-    @Column(name="date_update", nullable = true)
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern ="yyyy-MM-dd HH:mm:ss.SSS" )
-    private Date dateUpdate;
+    private String name;
 
     private String fullname;
 
@@ -46,12 +36,20 @@ public class Company implements Serializable {
 
     private String kpp;
 
-    private String name;
+    @Basic
+    @Column(name="date_update", nullable = true)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern ="yyyy-MM-dd HH:mm:ss.SSS" )
+    private Date dateUpdate;
 
     @Column(name="user_update")
     private int userUpdate;
 
     private BigDecimal uuid;
+
+    @Basic
+    @Column(name="current_table")
+    private BigDecimal currentTable;
+
 
     public Company() {
     }
