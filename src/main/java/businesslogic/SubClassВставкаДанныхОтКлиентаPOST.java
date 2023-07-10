@@ -165,8 +165,8 @@ public class SubClassВставкаДанныхОтКлиентаPOST {
         try{
             ЛОГ.log("stringJsonNodeEntryTwo.getKey() "  + stringJsonNodeEntryTwo.getKey()
                     + " stringJsonNodeEntryTwo.getValue() " +stringJsonNodeEntryTwo.getValue()  );
-            String  getKey=   stringJsonNodeEntryTwo.getKey().trim();
-            String  getvalue=     stringJsonNodeEntryTwo.getValue().asText().trim();
+            String  getKey=   stringJsonNodeEntryTwo.getKey().trim().toLowerCase();
+            String  getvalue=     stringJsonNodeEntryTwo.getValue().asText().trim().toLowerCase();
             // TODO заполенем JSonValue ДАННЫМИ
             queryprocedure.registerStoredProcedureParameter(getKey, String.class, ParameterMode.IN)
                     .setParameter(getKey,getvalue);
@@ -251,6 +251,9 @@ public class SubClassВставкаДанныхОтКлиентаPOST {
                 break;
             case	"order_tc":
                 queryprocedure = session.createStoredProcedureQuery( "ProcedureExistsMERGEorder_tc#31");//TODO ProcedureExistsMERGE_fio
+                break;
+            case	"errordsu1":
+                queryprocedure = session.createStoredProcedureQuery( "ProcedureExistsMERGEerrordsu1#37");//TODO ProcedureExistsMERGE_fio
                 break;
             default:
                 ЛОГ.log("\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
