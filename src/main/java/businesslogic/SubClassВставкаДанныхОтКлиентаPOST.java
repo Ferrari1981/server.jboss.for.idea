@@ -165,8 +165,8 @@ public class SubClassВставкаДанныхОтКлиентаPOST {
         try{
             ЛОГ.log("stringJsonNodeEntryTwo.getKey() "  + stringJsonNodeEntryTwo.getKey()
                     + " stringJsonNodeEntryTwo.getValue() " +stringJsonNodeEntryTwo.getValue()  );
-            String  getKey=   stringJsonNodeEntryTwo.getKey().trim().toLowerCase();
-            String  getvalue=     stringJsonNodeEntryTwo.getValue().asText().trim().toLowerCase();
+            String  getKey=   stringJsonNodeEntryTwo.getKey().trim();
+            String  getvalue=     stringJsonNodeEntryTwo.getValue().asText().trim();
             // TODO заполенем JSonValue ДАННЫМИ
             queryprocedure.registerStoredProcedureParameter(getKey, String.class, ParameterMode.IN)
                     .setParameter(getKey,getvalue);
