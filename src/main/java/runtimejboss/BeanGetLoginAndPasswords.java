@@ -74,7 +74,9 @@ public class BeanGetLoginAndPasswords {
                 queryДляHiberite.setParameter("login",new String(ЛогинОтКлиента));//8641 8625
                 queryДляHiberite.setParameter("password",new String(ПарольОтКлиента));//8641 8625
            List<model.UsersEntitySuccess>    ЛистДанныеОтHibenide =( List<model.UsersEntitySuccess>) queryДляHiberite.setMaxResults(1).getResultList();
-                if (ЛистДанныеОтHibenide.size() > 0) {
+
+                // TODO: 11.07.2023 ЕСЛИ ЕСТь ЧТо то создаем JSON
+                if (ЛистДанныеОтHibenide !=null && ЛистДанныеОтHibenide.size() > 0) {
                     // TODO: 02.04.2023 Вытаскиваем Из ПРишедзиъ данных логин и пароль
                     StringBuffer БуферСозданогоJSONJacksonАунтификация = МетодГенерацияJSONJackson(ЛОГ, ЛистДанныеОтHibenide);
 
