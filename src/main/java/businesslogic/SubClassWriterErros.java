@@ -104,6 +104,7 @@ public class SubClassWriterErros {
             pw.append("\n");
             /// todo close message send
             pw.flush();
+            pw.close();
         } catch (IOException ex) {
             ex.printStackTrace();
             System.err.println(

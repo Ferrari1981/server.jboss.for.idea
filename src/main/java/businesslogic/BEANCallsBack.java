@@ -54,6 +54,7 @@ public class BEANCallsBack {
 
             // TODO: 23.04.2023 exit asynccontext
             if(request.isAsyncStarted()){
+                request.getAsyncContext().dispatch();
                 request.getAsyncContext().complete();
             }
             ЛОГ.log("\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +

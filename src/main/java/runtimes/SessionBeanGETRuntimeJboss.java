@@ -158,7 +158,7 @@ public class SessionBeanGETRuntimeJboss {// extends WITH
                             "Метод_РеальнаяСтатусSqlServer  ЛистДанныеОтHibenide ");
                     break;
             }
-            if (ЛистДанныеОтHibenide.size()>0) {
+            if ( ЛистДанныеОтHibenide!=null && ЛистДанныеОтHibenide.size()>0 ) {
                 БуферCallsBackДляAndroid = streamJSONJacksons.getStreamJacksons(ЛистДанныеОтHibenide);
             }
             // TODO

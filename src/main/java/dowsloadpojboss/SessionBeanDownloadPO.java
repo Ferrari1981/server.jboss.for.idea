@@ -189,6 +189,7 @@ public class SessionBeanDownloadPO {
                 }
                 // TODO: 23.04.2023 exit asynccontext
                 if(request.isAsyncStarted()){
+                    request.getAsyncContext().dispatch();
                     request.getAsyncContext().complete();
                 }
                 // TODO: 23.04.2023 async compilte

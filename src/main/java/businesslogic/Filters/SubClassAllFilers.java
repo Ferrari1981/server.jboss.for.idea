@@ -33,6 +33,7 @@ public class SubClassAllFilers {
 
                     @Override
                     public void onTimeout(AsyncEvent asyncEvent) throws IOException {
+                        asyncEvent.getAsyncContext().dispatch();
                         asyncEvent.getAsyncContext().complete();
                         ЛОГ.log("\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -43,6 +44,7 @@ public class SubClassAllFilers {
 
                     @Override
                     public void onError(AsyncEvent asyncEvent) throws IOException {
+                        asyncEvent.getAsyncContext().dispatch();
                         asyncEvent.getAsyncContext().complete();
                         ЛОГ.log("\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +

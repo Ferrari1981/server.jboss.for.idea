@@ -466,7 +466,7 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
 
 
             //TODO ГЕНЕРАЦИЯ JSON ПО НОВОМУ
-            if (ЛистДанныеОтHibenide.size()>0) {
+            if (ЛистДанныеОтHibenide!=null && ЛистДанныеОтHibenide.size()>0) {
                 БуферCallsBackДляAndroid = МетодГенерацияJSONJackson(ЛистДанныеОтHibenide);
             }
 
@@ -480,7 +480,6 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
                     " session  " + session + " sessionSousJboss " + sessionSousJboss
                     + " ЛОГИН "+ЛОГ.getAttribute("ЛогинПолученныйОтКлиента")+
                     " ID ТЕЛЕФОНА "+  ЛОГ.getAttribute("АдуДевайсяКлиента"));
-            /////// ошибки метода doGET
         } catch (Exception e) {
             ЛОГ.log("\n" + " ERROR class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
