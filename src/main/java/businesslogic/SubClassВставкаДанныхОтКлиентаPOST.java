@@ -255,6 +255,9 @@ public class SubClassВставкаДанныхОтКлиентаPOST {
             case	"errordsu1":
                 queryprocedure = session.createStoredProcedureQuery( "ProcedureExistsMERGEerrordsu1#37");//TODO ProcedureExistsMERGE_fio
                 break;
+            case	"materials_databinary":
+                queryprocedure = session.createStoredProcedureQuery( "ProcedureMaterials_databinary#38");//TODO ProcedureExistsMERGE_fio
+                break;
             default:
                 ЛОГ.log("\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
                         " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+

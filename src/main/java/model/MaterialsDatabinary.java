@@ -9,21 +9,20 @@ import java.util.Arrays;
 
 @Entity
 @Table(name = "materials_databinary", schema = "dbo", catalog = "storage")
-@javax.persistence.NamedQuery(name="MaterialsDatabinary.findAll", query="SELECT mat_binary FROM  model. MaterialsDatabinary mat_binary")
 @org.hibernate.annotations.OptimisticLocking(
         type = OptimisticLockType.DIRTY)
 @org.hibernate.annotations.DynamicUpdate
 public class MaterialsDatabinary   implements Serializable  {
     private static final long serialVersionUID = 1L;
 
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+
     @Id
     @Column(name = "id", nullable = false)
     private Integer id;
-    @Basic
+
     @Column(name = "image", nullable = true)
     private byte[] image;
-    @Basic
+
     @Column(name = "files", nullable = true)
     private byte[] files;
     @Basic
@@ -42,11 +41,15 @@ public class MaterialsDatabinary   implements Serializable  {
     @Column(name = "current_table", nullable = true, precision = 0)
     private Long currentTable;
 
+
+
     public Integer getId() {
+
         return id;
     }
 
     public void setId(Integer id) {
+
         this.id = id;
     }
 

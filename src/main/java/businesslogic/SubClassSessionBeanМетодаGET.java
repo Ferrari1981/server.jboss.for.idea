@@ -4,9 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.sun.istack.NotNull;
 import dsu1glassfishatomic.workinterfaces.ProducedCard;
-import model.MaterialsDatabinary;
-import model.OrderTc;
-import model.VidTc;
+import model.*;
 import org.hibernate.*;
 import org.hibernate.resource.transaction.spi.TransactionStatus;
 
@@ -16,10 +14,6 @@ import javax.json.Json;
 import javax.json.JsonObjectBuilder;
 import javax.json.JsonWriter;
 import javax.persistence.StoredProcedureQuery;
-import javax.persistence.TypedQuery;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -399,13 +393,19 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
 
                         case "materials_databinary":
                             // TODO
-                            criteriaquery = session.createCriteria(MaterialsDatabinary.class);
+                       /*     criteriaquery = session.createCriteria(MaterialsDatabinary.class);
                             criteriaquery.add(org.hibernate.criterion.Restrictions.gt("currentTable", new BigDecimal(VersionData)));
                             criteriaquery.add(org.hibernate.criterion.Restrictions.eq("userUpdate", IdUser));
-                            ЛистДанныеОтHibenide = ( List<model.MaterialsDatabinary>)   criteriaquery.list();
+                            ЛистДанныеОтHibenide = ( List<model.MaterialsDatabinary>)   criteriaquery.list();*/
+                            // TODO: 13.07.2023  test коде
+                            criteriaquery = session.createCriteria(MateriBinary.class);
+                          /*  criteriaquery.add(org.hibernate.criterion.Restrictions.gt("currentTable", new BigDecimal(VersionData)));
+                            criteriaquery.add(org.hibernate.criterion.Restrictions.eq("userUpdate", IdUser));*/
+                            ЛистДанныеОтHibenide = ( List<MateriBinary>)   criteriaquery.list();
                             ЛОГ.  log(" ЛистДанныеОтHibenide "+ЛистДанныеОтHibenide+ " ЛистДанныеОтHibenide.size() " +ЛистДанныеОтHibenide.size()+
                                     "  queryДляHiberite  " +queryДляHiberite);//gson Gson
                             break;
+
 
                     }//TODO КОНЕЦ РАСПРЕДЕНИЕ ТАБЛИЦ 	switch (NameTable.trim()) {
 
