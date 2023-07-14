@@ -167,8 +167,10 @@ public class SessionBeanGETRuntimeJboss {// extends WITH
             МетодЗакрываемСессиюHibernate(ЛОГ);
             /////// ошибки метода doGET
         } catch (Exception e) {
-            session.getTransaction().rollback();
-            session.close();
+            if (session!=null) {
+                session.getTransaction().rollback();
+                session.close();
+            }
             subClassWriterErros.
                     МетодаЗаписиОшибкиВЛог(e,
                             Thread.currentThread().
@@ -217,8 +219,10 @@ public class SessionBeanGETRuntimeJboss {// extends WITH
             ЛОГ.log( "ERROR class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber()  + " e " +e.getMessage() );
-            session.getTransaction().rollback();
-            session.close();
+            if (session!=null) {
+                session.getTransaction().rollback();
+                session.close();
+            }
             subClassWriterErros.
                     МетодаЗаписиОшибкиВЛог(e,
                             Thread.currentThread().

@@ -392,15 +392,10 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
                             break;
 
                         case "materials_databinary":
-                            // TODO
-                       /*     criteriaquery = session.createCriteria(MaterialsDatabinary.class);
+                            // TODO  byte
+                            criteriaquery = session.createCriteria(MateriBinary.class);
                             criteriaquery.add(org.hibernate.criterion.Restrictions.gt("currentTable", new BigDecimal(VersionData)));
                             criteriaquery.add(org.hibernate.criterion.Restrictions.eq("userUpdate", IdUser));
-                            ЛистДанныеОтHibenide = ( List<model.MaterialsDatabinary>)   criteriaquery.list();*/
-                            // TODO: 13.07.2023  test коде
-                            criteriaquery = session.createCriteria(MateriBinary.class);
-                          /*  criteriaquery.add(org.hibernate.criterion.Restrictions.gt("currentTable", new BigDecimal(VersionData)));
-                            criteriaquery.add(org.hibernate.criterion.Restrictions.eq("userUpdate", IdUser));*/
                             ЛистДанныеОтHibenide = ( List<MateriBinary>)   criteriaquery.list();
                             ЛОГ.  log(" ЛистДанныеОтHibenide "+ЛистДанныеОтHibenide+ " ЛистДанныеОтHibenide.size() " +ЛистДанныеОтHibenide.size()+
                                     "  queryДляHiberite  " +queryДляHiberite);//gson Gson
@@ -484,8 +479,10 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
             ЛОГ.log("\n" + " ERROR class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
-            session.getTransaction().rollback();
-            session.close();
+            if (session!=null) {
+                session.getTransaction().rollback();
+                session.close();
+            }
             subClassWriterErros.
                     МетодаЗаписиОшибкиВЛог(e,
                             Thread.currentThread().
@@ -514,8 +511,10 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
             ЛОГ.log( "ERROR class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber()  + " e " +e.getMessage() );
-            session.getTransaction().rollback();
-            session.close();
+            if (session!=null) {
+                session.getTransaction().rollback();
+                session.close();
+            }
             subClassWriterErros.
                     МетодаЗаписиОшибкиВЛог(e,
                             Thread.currentThread().
@@ -683,8 +682,10 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
             ЛОГ.log( "ERROR class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber()  + " e " +e.getMessage() );
-            session.getTransaction().rollback();
-            session.close();
+            if (session!=null) {
+                session.getTransaction().rollback();
+                session.close();
+            }
             subClassWriterErros.
                     МетодаЗаписиОшибкиВЛог(e,
                             Thread.currentThread().

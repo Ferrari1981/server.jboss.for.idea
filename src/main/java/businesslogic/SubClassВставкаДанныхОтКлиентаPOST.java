@@ -120,8 +120,10 @@ public class SubClassВставкаДанныхОтКлиентаPOST {
                     " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+
                     " arrayListMaxBackOperation "+ arrayListMaxBackOperation);
         } catch (Exception   e) {
-            session.getTransaction().rollback();
-            session.close();
+            if (session!=null) {
+                session.getTransaction().rollback();
+                session.close();
+            }
             ЛОГ.log( "ERROR class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber()  + " e " +e.getMessage() );
@@ -146,9 +148,11 @@ public class SubClassВставкаДанныхОтКлиентаPOST {
                 " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+
                 " session  " +session + " session.getTransaction().getStatus() "+session.getTransaction().getStatus());
     } catch (Exception   e) {
-            session.getTransaction().rollback();
-        session.close();
-        ЛОГ.log( "ERROR class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+            if (session!=null) {
+                session.getTransaction().rollback();
+                session.close();
+            }
+            ЛОГ.log( "ERROR class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                 " line " + Thread.currentThread().getStackTrace()[2].getLineNumber()  + " e " +e.getMessage() );
         subClassWriterErros.МетодаЗаписиОшибкиВЛог(e,
@@ -176,8 +180,10 @@ public class SubClassВставкаДанныхОтКлиентаPOST {
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
                     " getvalue" + getvalue + " getKey " + getKey  );
         } catch (Exception   e) {
-            session.getTransaction().rollback();
-            session.close();
+            if (session!=null) {
+                session.getTransaction().rollback();
+                session.close();
+            }
             ЛОГ.log( "ERROR class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber()  + " e " +e.getMessage() );
@@ -299,8 +305,10 @@ public class SubClassВставкаДанныхОтКлиентаPOST {
             ЛОГ.log( "ERROR class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber()  + " e " +e.getMessage() );
-            session.getTransaction().rollback();
-            session.close();
+            if (session!=null) {
+                session.getTransaction().rollback();
+                session.close();
+            }
             subClassWriterErros.
                     МетодаЗаписиОшибкиВЛог(e,
                             Thread.currentThread().

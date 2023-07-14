@@ -139,7 +139,10 @@ public class BeanGetLoginAndPasswords {
             // TODO: 02.04.2023 закрываем сессию
             МетодЗакрываемСессиюHibernate(ЛОГ);
         } catch (Exception e) {
-            session.getTransaction().rollback();
+            if (session!=null) {
+                session.getTransaction().rollback();
+                session.close();
+            }
             subClassWriterErros.
                     МетодаЗаписиОшибкиВЛог(e,
                             Thread.currentThread().
@@ -164,8 +167,10 @@ public class BeanGetLoginAndPasswords {
                     "БуферСозданогоJSONJackson " + БуферСозданогоJSONJackson.toString());
 
         } catch (Exception e) {
-            session.getTransaction().rollback();
-            session.close();
+            if (session!=null) {
+                session.getTransaction().rollback();
+                session.close();
+            }
             subClassWriterErros.
                     МетодаЗаписиОшибкиВЛог(e,
                             Thread.currentThread().
@@ -192,8 +197,10 @@ public class BeanGetLoginAndPasswords {
             ЛОГ.log( "ERROR class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber()  + " e " +e.getMessage() );
-            session.getTransaction().rollback();
-            session.close();
+            if (session!=null) {
+                session.getTransaction().rollback();
+                session.close();
+            }
             subClassWriterErros.
                     МетодаЗаписиОшибкиВЛог(e,
                             Thread.currentThread().
