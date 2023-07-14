@@ -6,6 +6,7 @@ import org.hibernate.annotations.OptimisticLockType;
 import org.hibernate.annotations.Type;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.sql.Blob;
 import java.sql.Date;
 import javax.persistence.*;
@@ -41,7 +42,7 @@ public class MateriBinary implements Serializable {
     protected java.sql.Blob image;*/
 
     @Lob
-    @Column(name = "image", columnDefinition="BLOB")
+    @Column(name = "image", columnDefinition="varbinary(MAX)")
     private byte[] image;
 
 
@@ -53,7 +54,7 @@ public class MateriBinary implements Serializable {
 
 
     @Lob
-    @Column(name = "files", columnDefinition="BLOB")
+    @Column(name = "files", columnDefinition="varbinary(MAX)")
     private byte[] files;
 
 
@@ -65,11 +66,11 @@ public class MateriBinary implements Serializable {
 
     @Basic
     @Column(name = "uuid", nullable = false, precision = 0)
-    private long uuid;
+    private BigDecimal uuid;
 
     @Basic
     @Column(name = "parent_uuid", nullable = true, precision = 0)
-    private Long parentUuid;
+    private BigDecimal parentUuid;
 
     @Basic
     @Column(name = "user_update", nullable = true)
@@ -77,7 +78,7 @@ public class MateriBinary implements Serializable {
 
     @Basic
     @Column(name = "current_table", nullable = true, precision = 0)
-    private Long currentTable;
+    private BigDecimal currentTable;
 
 
 
@@ -94,11 +95,12 @@ public class MateriBinary implements Serializable {
         this.id = id;
     }
 
-    public long getUuid() {
+    public BigDecimal getUuid() {
+
         return uuid;
     }
 
-    public void setUuid(long uuid) {
+    public void setUuid(BigDecimal uuid) {
 
         this.uuid = uuid;
     }
@@ -127,11 +129,12 @@ public class MateriBinary implements Serializable {
         this.dateUpdate = dateUpdate;
     }
 
-    public Long getParentUuid() {
+    public BigDecimal getParentUuid() {
         return parentUuid;
     }
 
-    public void setParentUuid(Long parentUuid) {
+    public void setParentUuid(BigDecimal parentUuid) {
+
         this.parentUuid = parentUuid;
     }
 
@@ -143,11 +146,12 @@ public class MateriBinary implements Serializable {
         this.userUpdate = userUpdate;
     }
 
-    public Long getCurrentTable() {
+    public BigDecimal getCurrentTable() {
+
         return currentTable;
     }
 
-    public void setCurrentTable(Long currentTable) {
+    public void setCurrentTable(BigDecimal currentTable) {
         this.currentTable = currentTable;
     }
 }

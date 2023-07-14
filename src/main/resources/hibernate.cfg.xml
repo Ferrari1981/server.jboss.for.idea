@@ -100,7 +100,6 @@
     <mapping class="model.ModificationServerEntity"/>
     <mapping class="model.OrderTc"/>
     <mapping class="model.VidTc"/>
-    <mapping class="model.MaterialsDatabinary"/>
     <mapping class="model.MateriBinary"/>
   </session-factory>
 </hibernate-configuration>
