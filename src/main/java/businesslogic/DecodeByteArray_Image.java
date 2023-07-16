@@ -10,6 +10,7 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.InputStream;
 import java.util.List;
 import java.util.function.Consumer;
 
@@ -23,10 +24,18 @@ public class DecodeByteArray_Image {
             List<MateriBinary> mat=( List<MateriBinary>)ЛистДанныеОтHibenide;
             byte[] РИсунов=     mat.get(0).getImage();
 
+
+            final BufferedImage bufferedImage = ImageIO.read(new ByteArrayInputStream(РИсунов));
+            final BufferedImage bufferedImage2 = ImageIO.read(new ByteArrayInputStream(РИсунов));
+
+            InputStream is = new ByteArrayInputStream(РИсунов);
+            BufferedImage bi = ImageIO.read(is);
+
 // TODO: 14.07.2023 #1
-            ByteArrayInputStream input_stream= new ByteArrayInputStream(РИсунов);
+          //  ByteArrayInputStream input_stream= new ByteArrayInputStream(РИсунов);
+            ByteArrayInputStream input_stream= new ByteArrayInputStream(РИсунов );
             BufferedImage final_buffered_image = ImageIO.read(input_stream);
-            ImageIO.write(final_buffered_image , "jpg", new File("final_file.jpg") );
+            ImageIO.write(final_buffered_image , "jpg", new File("C:\\final_file.jpg") );
             System.out.println("Converted Successfully!");
 
 
