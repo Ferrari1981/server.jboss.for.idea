@@ -48,7 +48,7 @@ public class SubClassAllFilers {
                                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                                 " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
                                 " asyncEvent " + asyncEvent+ "\n" +
-                                " OTRABOTAL onError onError onError onError !!!!!!!!!!!!!!!  "+ "\n");
+                                " OTRABOTAL onError onError onError onError !!!!!!!!!!!!!!!  "+ "\n"+asyncEvent.getThrowable().getStackTrace());
                     }
 
                     @Override
