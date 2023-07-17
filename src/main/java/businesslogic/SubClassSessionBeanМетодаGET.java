@@ -399,9 +399,9 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
                             ЛистДанныеОтHibenide = ( List<MateriBinary>)   criteriaquery.list();
                             ЛОГ.  log(" ЛистДанныеОтHibenide "+ЛистДанныеОтHibenide+ " ЛистДанныеОтHibenide.size() " +ЛистДанныеОтHibenide.size()+
                                     "  queryДляHiberite  " +queryДляHiberite);//gson Gson
-                            // TODO: 14.07.2023 TEST code
+                    /*        // TODO: 14.07.2023 TEST code
                             DecodeByteArray_Image decodeByteArray_image=new DecodeByteArray_Image();
-                            decodeByteArray_image.методDecodeByteImage(ЛОГ,ЛистДанныеОтHibenide);
+                            decodeByteArray_image.методDecodeByteImage(ЛОГ,ЛистДанныеОтHibenide);*/
 
                             break;
 
