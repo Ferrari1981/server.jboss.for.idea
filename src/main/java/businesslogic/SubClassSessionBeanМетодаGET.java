@@ -397,7 +397,7 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
                             criteriaquery.add(org.hibernate.criterion.Restrictions.gt("currentTable", new BigDecimal(VersionData)));
                             criteriaquery.add(org.hibernate.criterion.Restrictions.eq("userUpdate", IdUser));
                             ЛистДанныеОтHibenide = ( List<MateriBinary>)   criteriaquery.list();
-                            ЛОГ.  log(" ЛистДанныеОтHibenide "+ЛистДанныеОтHibenide+ " ЛистДанныеОтHibenide.size() " +ЛистДанныеОтHibenide.size()+
+                             ЛОГ.  log(" ЛистДанныеОтHibenide "+ЛистДанныеОтHibenide+ " ЛистДанныеОтHibenide.size() " +ЛистДанныеОтHibenide.size()+
                                     "  queryДляHiberite  " +queryДляHiberite);//gson Gson
                     /*        // TODO: 14.07.2023 TEST code
                             DecodeByteArray_Image decodeByteArray_image=new DecodeByteArray_Image();
