@@ -176,14 +176,15 @@ public class SessionBeanDownloadPO {
 
         if (  response.isCommitted()==false && ОтправкаФайлаJsonAPK.isFile() &&
                 response.getStatus()==HttpServletResponse.SC_OK) {
-            try  (ServletOutputStream БуферДанныеДляОбновлениеПО = response.getOutputStream();
-                  InputStream fis = new FileInputStream(ОтправкаФайлаJsonAPK);) {
+            try  (ServletOutputStream БуферДанныеДляОбновлениеПО = response.getOutputStream();) {
                 Long ОбщийРазмерЗаписываемогоФайла = Long.valueOf(ОтправкаФайлаJsonAPK.length());
                 response.addHeader("stream_size", String.valueOf(ОбщийРазмерЗаписываемогоФайла));
-                response.addHeader("stream_status", String.valueOf( ((HttpServletResponse) response).getStatus()));
+                response.addHeader("stream_status", String.valueOf( (  response).getStatus()));
                 response.addHeader("pool", String.valueOf( Thread.currentThread().getName()));
+                InputStream fis = new FileInputStream(ОтправкаФайлаJsonAPK);
                 if (fis.available()>0) {
                     БуферДанныеДляОбновлениеПО.write(fis.readAllBytes());
+                    // TODO: 18.07.2023 fulsh
                     БуферДанныеДляОбновлениеПО.flush();
                     БуферДанныеДляОбновлениеПО.close();
                 }

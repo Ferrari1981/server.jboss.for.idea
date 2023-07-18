@@ -15,7 +15,7 @@ C:\Users\moraru_pi\AndroidStudioProjectsSERVER\sous.jboss.idea\src\main\java\mod
 C:\Users\moraru_pi\AndroidStudioProjectsSERVER\sous.jboss.idea\src\main\java\model\ChatUser.java
 C:\Users\moraru_pi\AndroidStudioProjectsSERVER\sous.jboss.idea\src\main\java\model\Prof.java
 C:\Users\moraru_pi\AndroidStudioProjectsSERVER\sous.jboss.idea\src\main\java\model\DataChat.java
-C:\Users\moraru_pi\AndroidStudioProjectsSERVER\sous.jboss.idea\src\main\java\model\MaterialsDatabinary.java
+C:\Users\moraru_pi\AndroidStudioProjectsSERVER\sous.jboss.idea\src\main\java\model\MateriBinary.java
 C:\Users\moraru_pi\AndroidStudioProjectsSERVER\sous.jboss.idea\src\main\java\businesslogic\SubClassSessionBeanМетодаGET.java
 C:\Users\moraru_pi\AndroidStudioProjectsSERVER\sous.jboss.idea\src\main\java\model\Track.java
 C:\Users\moraru_pi\AndroidStudioProjectsSERVER\sous.jboss.idea\src\main\java\model\VidTc.java
@@ -45,6 +45,7 @@ C:\Users\moraru_pi\AndroidStudioProjectsSERVER\sous.jboss.idea\src\main\java\bus
 C:\Users\moraru_pi\AndroidStudioProjectsSERVER\sous.jboss.idea\src\main\java\serverscanners\DSU1ScannerServlet.java
 C:\Users\moraru_pi\AndroidStudioProjectsSERVER\sous.jboss.idea\src\main\java\model\Settingtab.java
 C:\Users\moraru_pi\AndroidStudioProjectsSERVER\sous.jboss.idea\src\main\java\dsu1glassfishatomic\workinterfaces\ProducedStreamJacsons.java
+C:\Users\moraru_pi\AndroidStudioProjectsSERVER\sous.jboss.idea\src\main\java\businesslogic\DecodeByteArray_Image.java
 C:\Users\moraru_pi\AndroidStudioProjectsSERVER\sous.jboss.idea\src\main\java\model\Chat.java
 C:\Users\moraru_pi\AndroidStudioProjectsSERVER\sous.jboss.idea\src\main\java\model\Desialis\UtcCalendarDeserializer.java
 C:\Users\moraru_pi\AndroidStudioProjectsSERVER\sous.jboss.idea\src\main\java\model\Organization.java

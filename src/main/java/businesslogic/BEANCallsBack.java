@@ -41,16 +41,19 @@ public class BEANCallsBack {
                 response.getStatus()==HttpServletResponse.SC_OK ) {
         try  ( BufferedWriter БуферДанныеДляКлиента = new BufferedWriter(
                 new OutputStreamWriter(new GZIPOutputStream(response.getOutputStream()), StandardCharsets.UTF_16));) {
+            // TODO: 18.07.2023 send
             Long ОбщийРазмерЗаписываемогоФайла = Long.valueOf(ГлавныйБуферОтправкиДанныхНААндройд.toString().toCharArray().length);
              response.addHeader("stream_size", String.valueOf(ОбщийРазмерЗаписываемогоФайла));
              response.addHeader("stream_status", String.valueOf(response.getStatus()));
             response.addHeader("pool", String.valueOf( Thread.currentThread().getName()));
+
             PrintWriter МеханизмОтправкиДанныхКлиенту = new PrintWriter(БуферДанныеДляКлиента, true);
             МеханизмОтправкиДанныхКлиенту.write(ГлавныйБуферОтправкиДанныхНААндройд.toString());
             // TODO: 26.04.2023 fluf
             МеханизмОтправкиДанныхКлиенту.flush();
             БуферДанныеДляКлиента.flush();
             БуферДанныеДляКлиента.close();
+
 
             // TODO: 23.04.2023 exit asynccontext
             if(request.isAsyncStarted() && request.isAsyncSupported()){
