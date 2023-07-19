@@ -172,11 +172,13 @@ public class BeanCallsBackDownloadPO {
 
         if (  response.isCommitted()==false && ОтправкаФайлаJsonAPK.isFile() &&
                 response.getStatus()==HttpServletResponse.SC_OK) {
-            try  (GZIPOutputStream БуферДанныеДляОбновлениеПО =new GZIPOutputStream( response.getOutputStream(),true)) {
+            //try  (GZIPOutputStream БуферДанныеДляОбновлениеПО =new GZIPOutputStream( response.getOutputStream(),true)) {
+            try  (ServletOutputStream БуферДанныеДляОбновлениеПО =  ( response.getOutputStream() )) {
                 Long ОбщийРазмерЗаписываемогоФайла = Long.valueOf(ОтправкаФайлаJsonAPK.length());
                 response.addHeader("stream_size", String.valueOf(ОбщийРазмерЗаписываемогоФайла));
                 response.addHeader("stream_status", String.valueOf( (  response).getStatus()));
                 response.addHeader("pool", String.valueOf( Thread.currentThread().getName()));
+                response.addHeader("GZIPOutputStream", String.valueOf("false"));
                 InputStream fis = new FileInputStream(ОтправкаФайлаJsonAPK);
                 if (fis.available()>0) {
                     // TODO: 19.07.2023  writing
@@ -186,7 +188,10 @@ public class BeanCallsBackDownloadPO {
                     БуферДанныеДляОбновлениеПО.flush();
 
                     // TODO: 18.07.2023 finish
-                    БуферДанныеДляОбновлениеПО.finish();
+                    //БуферДанныеДляОбновлениеПО.finish();
+
+                    // TODO: 19.07.2023 close
+                    БуферДанныеДляОбновлениеПО.close();
                 }
                 // TODO: 23.04.2023 exit asynccontext
                 if(request.isAsyncStarted() && request.isAsyncSupported()){

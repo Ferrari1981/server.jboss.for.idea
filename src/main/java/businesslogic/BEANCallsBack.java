@@ -59,7 +59,9 @@ public class BEANCallsBack {
             // TODO: 26.04.2023 finish
             МеханизмОтправкиДанныхКлиенту.finish();
 
-
+            // TODO: 19.07.2023 close
+            БуферДанныеДляКлиента.close();
+            МеханизмОтправкиДанныхКлиенту.close();
             // TODO: 23.04.2023 exit asynccontext
             if(request.isAsyncStarted() && request.isAsyncSupported()){
                 request.getAsyncContext().complete();
