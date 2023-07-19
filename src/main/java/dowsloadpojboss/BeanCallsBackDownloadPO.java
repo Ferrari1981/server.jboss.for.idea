@@ -182,6 +182,8 @@ public class BeanCallsBackDownloadPO {
                     БуферДанныеДляОбновлениеПО.write(fis.readAllBytes());
                     // TODO: 18.07.2023 fulsh
                     БуферДанныеДляОбновлениеПО.flush();
+                    БуферДанныеДляОбновлениеПО.finish();
+                    БуферДанныеДляОбновлениеПО.close();
                 }
                 // TODO: 23.04.2023 exit asynccontext
                 if(request.isAsyncStarted() && request.isAsyncSupported()){
