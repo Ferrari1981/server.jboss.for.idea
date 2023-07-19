@@ -49,11 +49,9 @@ public class BEANCallsBack {
 
             PrintWriter МеханизмОтправкиДанныхКлиенту = new PrintWriter(БуферДанныеДляКлиента, true);
             МеханизмОтправкиДанныхКлиенту.write(ГлавныйБуферОтправкиДанныхНААндройд.toString());
-            // TODO: 26.04.2023 fluf
+            // TODO: 26.04.2023 flushing
             МеханизмОтправкиДанныхКлиенту.flush();
             БуферДанныеДляКлиента.flush();
-            БуферДанныеДляКлиента.close();
-
 
             // TODO: 23.04.2023 exit asynccontext
             if(request.isAsyncStarted() && request.isAsyncSupported()){

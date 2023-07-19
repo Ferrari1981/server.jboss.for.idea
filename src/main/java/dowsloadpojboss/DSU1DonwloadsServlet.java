@@ -14,13 +14,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 
 @WebServlet( value="/sous.jboss.download",asyncSupported = true)
 public class DSU1DonwloadsServlet extends HttpServlet {
     private      ServletContext    ЛОГ;
     @EJB
-    private  SessionBeanDownloadPO sessionBeanDownloadPO;
+    private BeanCallsBackDownloadPO beanCallsBackDownloadPO;
     @Inject
     private  SubClassWriterErros subClassWriterErros;
 
@@ -61,12 +60,12 @@ public class DSU1DonwloadsServlet extends HttpServlet {
                                     case "FileJsonUpdatePO":
                                         // TODO: 13.03.2023  запуск Кода пополучениею File JSON Для Обнолвенеи ПО
                                         resp.setContentType("application/json");
-                                        sessionBeanDownloadPO.МетодЗапускаДляФайлаJSON(ЛОГ, req, resp);
+                                        beanCallsBackDownloadPO.МетодЗапускаДляФайлаJSON(ЛОГ, req, resp);
                                         break;
                                     case "FileAPKUpdatePO":
                                         // TODO: 13.03.2023  запуск Кода пополучениею File .APK Для Обнолвенеи ПО
                                         resp.setContentType("application/octet-stream");
-                                        sessionBeanDownloadPO.МетодЗапускаДляФайлаAPK(ЛОГ, req, resp);
+                                        beanCallsBackDownloadPO.МетодЗапускаДляФайлаAPK(ЛОГ, req, resp);
                                         break;
                                 }
                                 ЛОГ.log("\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
