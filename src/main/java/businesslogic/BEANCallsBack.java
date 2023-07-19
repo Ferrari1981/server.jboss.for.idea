@@ -49,14 +49,16 @@ public class BEANCallsBack {
              response.addHeader("stream_status", String.valueOf(response.getStatus()));
             response.addHeader("pool", String.valueOf( Thread.currentThread().getName()));
 
-
+            // TODO: 19.07.2023  writeing
             БуферДанныеДляКлиента.write(ГлавныйБуферОтправкиДанныхНААндройд.toString());
+
+
             // TODO: 26.04.2023 flushing
             БуферДанныеДляКлиента.flush();
-            МеханизмОтправкиДанныхКлиенту.flush();
+
+            // TODO: 26.04.2023 finish
             МеханизмОтправкиДанныхКлиенту.finish();
-            БуферДанныеДляКлиента.close();
-            МеханизмОтправкиДанныхКлиенту.close();
+
 
             // TODO: 23.04.2023 exit asynccontext
             if(request.isAsyncStarted() && request.isAsyncSupported()){

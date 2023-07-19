@@ -179,11 +179,14 @@ public class BeanCallsBackDownloadPO {
                 response.addHeader("pool", String.valueOf( Thread.currentThread().getName()));
                 InputStream fis = new FileInputStream(ОтправкаФайлаJsonAPK);
                 if (fis.available()>0) {
+                    // TODO: 19.07.2023  writing
                     БуферДанныеДляОбновлениеПО.write(fis.readAllBytes());
+
                     // TODO: 18.07.2023 fulsh
                     БуферДанныеДляОбновлениеПО.flush();
+
+                    // TODO: 18.07.2023 finish
                     БуферДанныеДляОбновлениеПО.finish();
-                    БуферДанныеДляОбновлениеПО.close();
                 }
                 // TODO: 23.04.2023 exit asynccontext
                 if(request.isAsyncStarted() && request.isAsyncSupported()){
