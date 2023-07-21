@@ -6,6 +6,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map.Entry;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.persistence.ParameterMode;
@@ -91,13 +93,25 @@ public class SubClassВставкаДанныхОтКлиентаPOST {
                     if (РезультатОперацииВставкииОбновлениея>0) {
                         String     РезультатСовершнойОперации = (String) queryprocedure[0].getOutputParameterValue("ResultatMERGE");
                         // TODO: 22.04.2023 clear
-                        if (РезультатСовершнойОперации!=null){
-                            РезультатСовершнойОперацииФинал=Integer.parseInt(РезультатСовершнойОперации);
+                        if (РезультатСовершнойОперации!=null  ){
+                            // TODO: 21.07.2023 после успешно обнолвние вставки
+                           Integer РезультатБезОшибок= РезультатСовершнойОперации.length();
+                            if (РезультатБезОшибок< 150) {
+                                РезультатСовершнойОперацииФинал=Integer.parseInt(РезультатСовершнойОперации);
+                                // TODO: 20.07.2023
+                                ЛОГ.log("\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
+                                        + " РезультатСовершнойОперацииФинал " + РезультатСовершнойОперацииФинал);
+                            }
+
+
                         }
                         ЛОГ.log("\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                                 " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
-                                + " РезультатОперацииВставкииОбновлениея " + РезультатОперацииВставкииОбновлениея + " РезультатСовершнойОперации " + РезультатСовершнойОперации);
+                                + " РезультатОперацииВставкииОбновлениея " + РезультатОперацииВставкииОбновлениея 
+                                + " РезультатСовершнойОперации " + РезультатСовершнойОперации);
                     }
                     // TODO: 22.04.2023 записываем новую версию после успешной вставки
                     arrayListMaxBackOperation.add(РезультатСовершнойОперацииФинал);
