@@ -21,7 +21,6 @@ C:\Users\moraru_pi\AndroidStudioProjectsSERVER\sous.jboss.idea\src\main\java\mod
 C:\Users\moraru_pi\AndroidStudioProjectsSERVER\sous.jboss.idea\src\main\java\model\VidTc.java
 C:\Users\moraru_pi\AndroidStudioProjectsSERVER\sous.jboss.idea\src\main\java\model\ModificationServerEntity.java
 C:\Users\moraru_pi\AndroidStudioProjectsSERVER\sous.jboss.idea\src\main\java\businesslogic\SubClassВставкаДанныхОтКлиентаPOST.java
-C:\Users\moraru_pi\AndroidStudioProjectsSERVER\sous.jboss.idea\src\main\java\dowsloadpojboss\SessionBeanDownloadPO.java
 C:\Users\moraru_pi\AndroidStudioProjectsSERVER\sous.jboss.idea\src\main\java\dsu1glassfishatomic\SubClassGeneratorDate.java
 C:\Users\moraru_pi\AndroidStudioProjectsSERVER\sous.jboss.idea\src\main\java\model\DataTabel.java
 C:\Users\moraru_pi\AndroidStudioProjectsSERVER\sous.jboss.idea\src\main\java\runtimes\DSU1ServletRuntimeJboss.java
@@ -33,6 +32,7 @@ C:\Users\moraru_pi\AndroidStudioProjectsSERVER\sous.jboss.idea\src\main\java\mod
 C:\Users\moraru_pi\AndroidStudioProjectsSERVER\sous.jboss.idea\src\main\java\model\NomenVesov.java
 C:\Users\moraru_pi\AndroidStudioProjectsSERVER\sous.jboss.idea\src\main\java\businesslogic\Filters\FilterRuntime.java
 C:\Users\moraru_pi\AndroidStudioProjectsSERVER\sous.jboss.idea\src\main\java\model\DataNotification.java
+C:\Users\moraru_pi\AndroidStudioProjectsSERVER\sous.jboss.idea\src\main\java\dowsloadpojboss\BeanCallsBackDownloadPO.java
 C:\Users\moraru_pi\AndroidStudioProjectsSERVER\sous.jboss.idea\src\main\java\model\TypeMaterial.java
 C:\Users\moraru_pi\AndroidStudioProjectsSERVER\sous.jboss.idea\src\main\java\businesslogic\BeanPOST.java
 C:\Users\moraru_pi\AndroidStudioProjectsSERVER\sous.jboss.idea\src\main\java\businesslogic\BeanGET.java

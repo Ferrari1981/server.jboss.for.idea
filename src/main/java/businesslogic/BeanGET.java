@@ -47,8 +47,9 @@ public class BeanGET {
                     " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+e.getMessage().toString());
         }
     }
-    @SuppressWarnings("unused")
-    public void  МетодБинаGET(@NotNull ServletContext ЛОГ,
+
+    @Asynchronous
+    public void   МетодБинаGET(@NotNull ServletContext ЛОГ,
                               @NotNull HttpServletRequest request,
                               @NotNull  HttpServletResponse response) throws InterruptedException, ExecutionException {
         try {
@@ -67,7 +68,8 @@ public class BeanGET {
                                     getStackTrace(),
                             ЛОГ,"ErrorsLogs/ErrorJbossServletDSU1.txt");
         }
-    }
+
+}
 
 
 

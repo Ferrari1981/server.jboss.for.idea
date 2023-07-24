@@ -3,6 +3,7 @@ package businesslogic;
 
 
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
 
 import javax.ejb.*;
 import javax.inject.Inject;
@@ -38,11 +39,11 @@ public class BeanPOST {
 
 
 
-    @SuppressWarnings("unused")
 
+   @Asynchronous
     public void МетодБинаPOST(@NotNull ServletContext ЛОГ,
-                               @NotNull HttpServletRequest request,
-                               @NotNull  HttpServletResponse response) throws InterruptedException, ExecutionException {;
+                                      @NotNull HttpServletRequest request,
+                                      @NotNull  HttpServletResponse response) throws InterruptedException, ExecutionException {;
         try {
             ///Todo  получаем данные от клиента
           StringBuffer  БуферРезультатPOST=		subClassSessionBeanPOST.МетодЗапускаPOST(request, response, ЛОГ);

@@ -28,6 +28,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.*;
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
 
 @Stateless(mappedName = "SessionBeanGETRuntimeJboss")
 @LocalBean
@@ -70,10 +71,10 @@ public class SessionBeanGETRuntimeJboss {// extends WITH
 
     }
 
-
+     @Asynchronous
     public void МетодГлавныйRuntimeJboss(@NotNull ServletContext ЛОГ,
-                                         @NotNull HttpServletRequest request,
-                                         @NotNull  HttpServletResponse response) throws InterruptedException, ExecutionException {;
+                                                 @NotNull HttpServletRequest request,
+                                                 @NotNull  HttpServletResponse response) throws InterruptedException, ExecutionException {;
         try {
             ///Todo  получаем данные от клиента
            StringBuffer БуферРезультатRuntime= 	 МетодЗапускаRuntime(request,ЛОГ,response);

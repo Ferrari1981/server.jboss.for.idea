@@ -15,6 +15,7 @@ import java.io.*;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 import java.util.zip.GZIPOutputStream;
 
@@ -44,10 +45,10 @@ public class BeanCallsBackDownloadPO {
                     " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+e.getMessage().toString());
         }
     }
-
-    public void  МетодЗапускаДляФайлаJSON(@NotNull ServletContext ЛОГ,
-                                          @NotNull HttpServletRequest request,
-                                          @NotNull HttpServletResponse response) throws InterruptedException, ExecutionException {
+   @Asynchronous
+    public void МетодЗапускаДляФайлаJSON(@NotNull ServletContext ЛОГ,
+                                                 @NotNull HttpServletRequest request,
+                                                 @NotNull HttpServletResponse response) throws InterruptedException, ExecutionException {
         try {
             // TODO: 10.03.2023  данные от JSON ANALIZE
           File ПолучаемJSONФайл= 	 МетодДляJSONФайла(ЛОГ,request,response);

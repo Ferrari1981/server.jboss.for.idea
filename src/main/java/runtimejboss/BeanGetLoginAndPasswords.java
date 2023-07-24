@@ -9,16 +9,14 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.resource.transaction.spi.TransactionStatus;
 
-import javax.ejb.LocalBean;
-import javax.ejb.Stateless;
-import javax.ejb.TransactionAttribute;
-import javax.ejb.TransactionAttributeType;
+import javax.ejb.*;
 import javax.inject.Inject;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.constraints.NotNull;
 import java.util.*;
+import java.util.concurrent.Future;
 
 /**
  * Session Bean implementation class BeanGetLoginAndPasswords
@@ -44,9 +42,9 @@ public class BeanGetLoginAndPasswords {
 
 
     @SuppressWarnings("unused")
-    public Boolean МетодGetLoginAndPassword(@NotNull ServletContext ЛОГ,
-                                            @NotNull HttpServletRequest request,
-                                            @NotNull HttpSession sessionEJB) {
+    public  Boolean МетодGetLoginAndPassword(@NotNull ServletContext ЛОГ,
+                                                    @NotNull HttpServletRequest request,
+                                                    @NotNull HttpSession sessionEJB) {
         int РазрешонныеПрава = 2;
         Boolean РезультатАунтификацииПользователя=false;
         try {
@@ -149,7 +147,7 @@ public class BeanGetLoginAndPasswords {
                                     getStackTrace(),
                             ЛОГ,"ErrorsLogs/ErrorJbossServletDSU1.txt");
         }
-        return РезультатАунтификацииПользователя;
+        return     РезультатАунтификацииПользователя ;
     }
     public StringBuffer МетодГенерацияJSONJackson(@NotNull ServletContext ЛОГ,
                                              @javax.validation.constraints.NotNull List<?> listОтHiberideДляГенерации) {
