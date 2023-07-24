@@ -18,13 +18,14 @@ import java.io.IOException;
 @WebServlet( value="/sous.jboss.download",asyncSupported = true)
 public class DSU1DonwloadsServlet extends HttpServlet {
     private      ServletContext    ЛОГ;
-    @EJB
-    private BeanCallsBackDownloadPO beanCallsBackDownloadPO;
+
     @Inject
     private  SubClassWriterErros subClassWriterErros;
 
     private AsyncContext asyncContext;
     private  SubClassAllFilers subClassAllFilers;
+    @EJB
+    private BeanCallsBackDownloadPO beanCallsBackDownloadPO;
 
     DSU1DonwloadsServlet(){
         System.out.println(" class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -41,33 +42,17 @@ public class DSU1DonwloadsServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
      // super.doGet(req, resp);
                     ЛОГ = getServletContext();
-                    if (asyncContext==null) {
                         asyncContext=req.getAsyncContext();
                         // TODO: 22.05.2023 lister asynccontext
                         subClassAllFilers.методСлушатель(    asyncContext,ЛОГ);
-                    }
+
                     asyncContext.start(new Runnable() {
                         @Override
                         public void run() {
                             try {
-                                Object ЗаданиеДляСервераЗагрузкиНовогоПо = req.getHeaders("task_downlonupdatepo").nextElement();
-                                ЛОГ.log("\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
-                                        "  ЛогинОтAndroid    ЗаданиеДляСервераЗагрузкиНовогоПо " + ЗаданиеДляСервераЗагрузкиНовогоПо
-                                        + " req.isAsyncStarted() " + req.isAsyncStarted()+"  POOL  THREAD "+Thread.currentThread().getName());
-                                switch (ЗаданиеДляСервераЗагрузкиНовогоПо.toString()) {
-                                    case "FileJsonUpdatePO":
-                                        // TODO: 13.03.2023  запуск Кода пополучениею File JSON Для Обнолвенеи ПО
-                                        resp.setContentType("application/json");
-                                        beanCallsBackDownloadPO.МетодЗапускаДляФайлаJSON(ЛОГ, req, resp);
-                                        break;
-                                    case "FileAPKUpdatePO":
-                                        // TODO: 13.03.2023  запуск Кода пополучениею File .APK Для Обнолвенеи ПО
-                                        resp.setContentType("application/octet-stream");
-                                        beanCallsBackDownloadPO.МетодЗапускаДляФайлаAPK(ЛОГ, req, resp);
-                                        break;
-                                }
+                                // TODO: 24.07.2023 запуск обновение ПО
+                            beanCallsBackDownloadPO.     МетодЗапускаОбновлениеПО(ЛОГ, (HttpServletRequest) asyncContext.getRequest(),  (HttpServletResponse) asyncContext.getResponse());
+                          //  beanCallsBackDownloadPO.     МетодЗапускаОбновлениеПО(ЛОГ, req,  resp);
                                 ЛОГ.log("\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                         " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                                         " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"

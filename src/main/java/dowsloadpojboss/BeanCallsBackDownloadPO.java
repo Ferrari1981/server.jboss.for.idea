@@ -28,8 +28,13 @@ import java.util.zip.GZIPOutputStream;
 @AccessTimeout(value = 20, unit = TimeUnit.MINUTES)
 @Lock(LockType.READ)
 public class BeanCallsBackDownloadPO {
-@Inject
-    SubClassWriterErros subClassWriterErros;
+
+
+   @Inject
+private   SubClassWriterErros subClassWriterErros;
+
+    @EJB
+    private BeanCallsBackDownloadPO beanCallsBackDownloadPO;
 
     public BeanCallsBackDownloadPO() {
         // TODO Auto-generated constructor stub
@@ -45,7 +50,49 @@ public class BeanCallsBackDownloadPO {
                     " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+e.getMessage().toString());
         }
     }
-   @Asynchronous
+
+
+
+
+    @Asynchronous
+    public void МетодЗапускаОбновлениеПО(@NotNull ServletContext ЛОГ,
+                                         @NotNull HttpServletRequest request,
+                                         @NotNull HttpServletResponse response) throws InterruptedException, ExecutionException {
+        try {
+            Object ЗаданиеДляСервераЗагрузкиНовогоПо = request.getHeaders("task_downlonupdatepo").nextElement();
+            ЛОГ.log("\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
+                    "  ЛогинОтAndroid    ЗаданиеДляСервераЗагрузкиНовогоПо " + ЗаданиеДляСервераЗагрузкиНовогоПо
+                    + " req.isAsyncStarted() " + request.isAsyncStarted()+"  POOL  THREAD "+Thread.currentThread().getName());
+            switch (ЗаданиеДляСервераЗагрузкиНовогоПо.toString()) {
+                case "FileJsonUpdatePO":
+                    // TODO: 13.03.2023  запуск Кода пополучениею File JSON Для Обнолвенеи ПО
+                    response.setContentType("application/json");
+                    beanCallsBackDownloadPO.МетодЗапускаДляФайлаJSON(ЛОГ, request, response);
+                    break;
+                case "FileAPKUpdatePO":
+                    // TODO: 13.03.2023  запуск Кода пополучениею File .APK Для Обнолвенеи ПО
+                    response.setContentType("application/octet-stream");
+                    beanCallsBackDownloadPO.МетодЗапускаДляФайлаAPK(ЛОГ, request, response);
+                    break;
+            }
+            ЛОГ.log("\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
+                    + " ((HttpServletRequest) req).getPathInfo() " + ((HttpServletRequest) request).getPathInfo());
+        } catch (Exception e) {
+            subClassWriterErros.
+                    МетодаЗаписиОшибкиВЛог(e,
+                            Thread.currentThread().
+                                    getStackTrace(),
+                            ЛОГ, "ErrorsLogs/ErrorJbossServletUpdatePO.txt");
+
+        }
+    }
+
+
+
     public void МетодЗапускаДляФайлаJSON(@NotNull ServletContext ЛОГ,
                                                  @NotNull HttpServletRequest request,
                                                  @NotNull HttpServletResponse response) throws InterruptedException, ExecutionException {

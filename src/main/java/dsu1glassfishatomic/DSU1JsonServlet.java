@@ -51,17 +51,17 @@ public class DSU1JsonServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
      // super.doGet(req, resp);
         ЛОГ = getServletContext();
-        if (asyncContext==null) {
+
             asyncContext=req.getAsyncContext();
             // TODO: 22.05.2023 lister asynccontext
             subClassAllFilers.методСлушатель(    asyncContext,ЛОГ);
-        }
+
         asyncContext.start(new Runnable() {
             @Override
             public void run() {
                 try{
                 //TODO ЗАПУСКАЕМ КОДЕ МЕТОДА GET()
-                СессионыйБинGET.МетодБинаGET(ЛОГ, req, resp);
+                СессионыйБинGET.МетодБинаGET(ЛОГ, (HttpServletRequest) asyncContext.getRequest(),  (HttpServletResponse) asyncContext.getResponse());
                 ЛОГ.log("\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                         " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                         " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
@@ -99,7 +99,7 @@ public class DSU1JsonServlet extends HttpServlet {
             public void run() {
                 try {
                 //TODO ЗАПУСКАЕМ КОДЕ МЕТОДА POST()
-                СессионыйБинPOST.МетодБинаPOST(ЛОГ, req, resp);
+                СессионыйБинPOST.МетодБинаPOST(ЛОГ, (HttpServletRequest) asyncContext.getRequest(),  (HttpServletResponse) asyncContext.getResponse());
                 ЛОГ.log("\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                         " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                         " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + ((HttpServletRequest) req).getPathInfo() +
