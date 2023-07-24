@@ -88,11 +88,9 @@ public class DSU1JsonServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         //super.doPost(req, resp);
            ЛОГ = getServletContext();
-        if (asyncContext==null) {
             asyncContext=req.getAsyncContext();
             // TODO: 22.05.2023 lister asynccontext
             subClassAllFilers.методСлушатель(    asyncContext,ЛОГ);
-        }
             //TODO ПОТОК ДЛЯ МЕТОДА POST
         asyncContext.start(new Runnable() {
             @Override
