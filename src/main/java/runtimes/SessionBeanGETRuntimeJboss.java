@@ -33,6 +33,7 @@ import java.util.concurrent.Future;
 @Stateless(mappedName = "SessionBeanGETRuntimeJboss")
 @LocalBean
 @TransactionAttribute(TransactionAttributeType.REQUIRED)
+
 public class SessionBeanGETRuntimeJboss {// extends WITH
 
     private ServletContext ЛОГ;
@@ -71,7 +72,7 @@ public class SessionBeanGETRuntimeJboss {// extends WITH
 
     }
 
-     @Asynchronous
+    @Asynchronous
     public void МетодГлавныйRuntimeJboss(@NotNull ServletContext ЛОГ,
                                                  @NotNull HttpServletRequest request,
                                                  @NotNull  HttpServletResponse response) throws InterruptedException, ExecutionException {;

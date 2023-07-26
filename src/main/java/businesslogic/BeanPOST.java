@@ -40,7 +40,7 @@ public class BeanPOST {
 
 
 
-   @Asynchronous
+    @Asynchronous
     public void МетодБинаPOST(@NotNull ServletContext ЛОГ,
                                       @NotNull HttpServletRequest request,
                                       @NotNull  HttpServletResponse response) throws InterruptedException, ExecutionException {;
