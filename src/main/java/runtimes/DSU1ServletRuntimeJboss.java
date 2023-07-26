@@ -7,6 +7,7 @@ import org.hibernate.Session;
 
 import javax.ejb.EJB;
 import javax.inject.Inject;
+import javax.servlet.AsyncContext;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -18,18 +19,21 @@ import java.nio.charset.StandardCharsets;
 
 @WebServlet( value="/sous.jboss.runtimejboss",asyncSupported = true)
 public class DSU1ServletRuntimeJboss extends HttpServlet {
-    private     Session getSession;
-    private      ServletContext    ЛОГ;
     @EJB
     private SessionBeanGETRuntimeJboss sessionBeanGETRuntimeJboss;
     @Inject
     private SubClassWriterErros subClassWriterErros;
+
+    private  SubClassAllFilers subClassAllFilers;
+
+    private  ServletContext   ЛОГ;
 
 
     DSU1ServletRuntimeJboss(){
         System.out.println(" class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                 " line " + Thread.currentThread().getStackTrace()[2].getLineNumber());
+        subClassAllFilers=  new SubClassAllFilers();
     }
 
 
@@ -39,11 +43,16 @@ public class DSU1ServletRuntimeJboss extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
      // super.doGet(req, resp);
-        ЛОГ = getServletContext();
+           ЛОГ = getServletContext();
+        final AsyncContext asyncContext=req.getAsyncContext();
             // TODO: 22.05.2023 lister asynccontext
+        subClassAllFilers.методСлушатель(    asyncContext,ЛОГ);
+        asyncContext.start(new Runnable() {
+            @Override
+            public void run() {
                 try {
                     //TODO ЗАПУСКАЕМ КОДЕ МЕТОДА GET()
-                    sessionBeanGETRuntimeJboss.МетодГлавныйRuntimeJboss(ЛОГ, req, resp);
+                    sessionBeanGETRuntimeJboss.МетодГлавныйRuntimeJboss(ЛОГ,  (HttpServletRequest) asyncContext.getRequest(),  (HttpServletResponse) asyncContext.getResponse());
                     ЛОГ.log("\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                             " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
@@ -57,6 +66,10 @@ public class DSU1ServletRuntimeJboss extends HttpServlet {
                                             getStackTrace(),
                                     ЛОГ, "ErrorsLogs/ErrorJbossServletRuntime.txt");
                 }
+
+            }
+            });
+
                 // TODO: 23.04.2023 exit
     }
 

@@ -17,15 +17,13 @@ import java.io.IOException;
 
 @WebServlet( value="/sous.jboss.download",asyncSupported = true)
 public class DSU1DonwloadsServlet extends HttpServlet {
-    private      ServletContext    ЛОГ;
-
     @Inject
     private  SubClassWriterErros subClassWriterErros;
-
-    private AsyncContext asyncContext;
     private  SubClassAllFilers subClassAllFilers;
     @EJB
     private BeanCallsBackDownloadPO beanCallsBackDownloadPO;
+
+    private  ServletContext   ЛОГ;
 
     DSU1DonwloadsServlet(){
         System.out.println(" class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -41,11 +39,10 @@ public class DSU1DonwloadsServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
      // super.doGet(req, resp);
-                    ЛОГ = getServletContext();
-                        asyncContext=req.getAsyncContext();
+           ЛОГ = getServletContext();
+        final AsyncContext     asyncContext=req.getAsyncContext();
                         // TODO: 22.05.2023 lister asynccontext
                         subClassAllFilers.методСлушатель(    asyncContext,ЛОГ);
-
                     asyncContext.start(new Runnable() {
                         @Override
                         public void run() {

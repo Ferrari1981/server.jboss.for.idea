@@ -25,7 +25,7 @@ import java.nio.charset.StandardCharsets;
 
 @WebServlet( value="/sous.jboss.tabel",asyncSupported = true)
 public class DSU1JsonServlet extends HttpServlet {
-    private      ServletContext    ЛОГ;
+
     @EJB
     private BeanGET СессионыйБинGET;
     @EJB
@@ -35,8 +35,9 @@ public class DSU1JsonServlet extends HttpServlet {
     @Inject
     private   SubClassWriterErros subClassWriterErros;
 
-    private AsyncContext asyncContext;
     private  SubClassAllFilers subClassAllFilers;
+
+    private  ServletContext   ЛОГ;
 
     DSU1JsonServlet(){
         System.out.println(" class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -50,9 +51,8 @@ public class DSU1JsonServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
      // super.doGet(req, resp);
-        ЛОГ = getServletContext();
-
-            asyncContext=req.getAsyncContext();
+       ЛОГ = getServletContext();
+       final AsyncContext     asyncContext=req.getAsyncContext();
             // TODO: 22.05.2023 lister asynccontext
             subClassAllFilers.методСлушатель(    asyncContext,ЛОГ);
 
@@ -88,7 +88,7 @@ public class DSU1JsonServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         //super.doPost(req, resp);
            ЛОГ = getServletContext();
-            asyncContext=req.getAsyncContext();
+        final AsyncContext     asyncContext=req.getAsyncContext();
             // TODO: 22.05.2023 lister asynccontext
             subClassAllFilers.методСлушатель(    asyncContext,ЛОГ);
             //TODO ПОТОК ДЛЯ МЕТОДА POST
@@ -118,24 +118,7 @@ public class DSU1JsonServlet extends HttpServlet {
 
         }
 
-    @Override
-    public void init() throws ServletException {
-        super.init();
-        try{
-            ЛОГ = getServletContext();
-            ЛОГ.log("\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
-                    " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
-                    " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+"   sessionSousJboss.isOpen() " +  sessionSousJboss.isOpen());
-    } catch (Exception e) {
-            subClassWriterErros.
-                    МетодаЗаписиОшибкиВЛог(e,
-                            Thread.currentThread().
-                                    getStackTrace(),
-                            ЛОГ,"ErrorsLogs/ErrorJbossServletDSU1.txt");
 
-
-        }
-    }
 
     public void destroy() {
       try{
