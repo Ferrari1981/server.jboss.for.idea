@@ -13,6 +13,7 @@ import javax.inject.Inject;
 import javax.persistence.ParameterMode;
 import javax.persistence.StoredProcedureQuery;
 import javax.servlet.ServletContext;
+import javax.swing.*;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -36,13 +37,16 @@ public class SubClassВставкаДанныхОтКлиентаPOST {
     @Inject
     private  ObjectMapper getGeneratorJackson;
     private         Integer MaxOperations=0;
+    private StoredProcedureQuery queryprocedure=null;
 
     // TODO: 09.03.2023
     StringBuffer методCompleteInsertorUpdateData(
             @NotNull ServletContext ЛОГ,
             @NotNull StringBuffer bufferОтКлиента
             , @NotNull String ТаблицаPOST) throws SQLException {
+        // TODO: 06.08.2023  вставкялем POST на сервер  
         StringBuffer bufferCallsBackToAndroid=new StringBuffer();
+      
         try {
             ArrayList<Integer> arrayListMaxBackOperation=new ArrayList();
             this.ЛОГ=ЛОГ;
@@ -54,44 +58,56 @@ public class SubClassВставкаДанныхОтКлиентаPOST {
             методЗапускТранзакции(ЛОГ );
             // TODO: 22.04.2023 Новый ПАРСИНГ ОТ JAKSON JSON
             JsonNode jsonNodeParent= getGeneratorJackson.readTree(bufferОтКлиента.toString());
+            // TODO: 06.08.2023 ГЛАВНЫЙ ЦЦМИКЛ РАСПАРСИВАНИЯ
             jsonNodeParent.fields().forEachRemaining(new java.util.function.Consumer<Entry<String, JsonNode>>() {
                 @Override
                 public void accept(Entry<String, JsonNode> stringJsonNodeEntryOne) {
                     String Key=stringJsonNodeEntryOne.getKey().trim();
                     JsonNode jsonNodeChild = jsonNodeParent.get(Key);
                     // TODO: 22.04.2023 КАКАЯ ТАБЛИЦА
-                    final StoredProcedureQuery[] queryprocedure = {методgetStoredProcedure(ЛОГ, ТаблицаPOST)};
+                      queryprocedure = методgetStoredProcedure(ЛОГ, ТаблицаPOST);
                     // TODO: 22.04.2023 LOCK TIMEOUT
-                    queryprocedure[0].setHint("javax.persistence.lock.timeout",20000);//TODO Опередяем Хранимая ПРоцедура
+                    queryprocedure.setHint("javax.persistence.lock.timeout",20000);//TODO Опередяем Хранимая ПРоцедура
                     ЛОГ.log("\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
                             " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
-                            " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+" queryprocedure   " + queryprocedure[0]);
+                            " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+" queryprocedure   " + queryprocedure);
 
                     // TODO: 27.04.2023  заплянем ДАННЫМИ
-                    ЛОГ.log("stringJsonNodeEntryOne.getKey() "  + stringJsonNodeEntryOne.getKey() + " stringJsonNodeEntryOne.getValue() " +stringJsonNodeEntryOne.getValue()+  "Key "+Key );
+                    ЛОГ.log("stringJsonNodeEntryOne.getKey() "  + stringJsonNodeEntryOne.getKey() + " stringJsonNodeEntryOne.getValue() " 
+                            +stringJsonNodeEntryOne.getValue()+  "Key "+Key );
                     jsonNodeChild.fields().forEachRemaining(new java.util.function.Consumer<Entry<String, JsonNode>>() {
                         @Override
                         public void accept(Entry<String, JsonNode> stringJsonNodeEntryTwo) {
-                            // TODO: 22.04.2023  Парсинг Rows JSON 
-                            queryprocedure[0] =      методFillingValuesRows(stringJsonNodeEntryTwo, queryprocedure[0],ТаблицаPOST);
+                            // TODO: 22.04.2023  Парсинг Rows JSON
                             ЛОГ.log("stringJsonNodeEntryTwo.getKey() "  + stringJsonNodeEntryTwo.getKey() + " stringJsonNodeEntryTwo.getValue() "
                                     +stringJsonNodeEntryTwo.getValue() +
-                                    "   queryprocedure[0]  " +  queryprocedure[0] + " ТаблицаPOST " +ТаблицаPOST);
+                                    "   queryprocedure  " +  queryprocedure + " ТаблицаPOST " +ТаблицаPOST);
+                            switch (ТаблицаPOST.trim()){
+                                case  "materials_databinary":
+                                    queryprocedure =      методFillingBinaryValuRows(stringJsonNodeEntryTwo, queryprocedure,ТаблицаPOST);
+                                    break;
+                                default:
+                                    queryprocedure =      методFillingValuesRows(stringJsonNodeEntryTwo, queryprocedure,ТаблицаPOST);
+                                    break;
 
+                            }
+                            ЛОГ.log("stringJsonNodeEntryTwo.getKey() "  + stringJsonNodeEntryTwo.getKey() + " stringJsonNodeEntryTwo.getValue() "
+                                    +stringJsonNodeEntryTwo.getValue() +
+                                    "   queryprocedure[0]  " +  queryprocedure+ " ТаблицаPOST " +ТаблицаPOST);
                         }
                     });
                     // TODO: 22.04.2023  После Запоеление ПОЛНОЙ СТРОЧКИ ROW JSON
-                    queryprocedure[0].registerStoredProcedureParameter("SrabnitUUIDOrID", String.class, ParameterMode.IN)
+                    queryprocedure.registerStoredProcedureParameter("SrabnitUUIDOrID", String.class, ParameterMode.IN)
                             .setParameter("SrabnitUUIDOrID", Key);
-                    queryprocedure[0].registerStoredProcedureParameter("ResultatMERGE", String.class, ParameterMode.INOUT)
+                    queryprocedure.registerStoredProcedureParameter("ResultatMERGE", String.class, ParameterMode.INOUT)
                             .setParameter("ResultatMERGE", "complete merge");
 
                     // TODO: 22.04.2023 ВЫПОЛЕНИЕ САМОЙ ОПЕРАЦИИ MERGE
-                    Integer РезультатОперацииВставкииОбновлениея=  МетодВыполениеУдаленнойПроцедуры(queryprocedure[0],ЛОГ);
+                    Integer РезультатОперацииВставкииОбновлениея=  МетодВыполениеУдаленнойПроцедуры(queryprocedure,ЛОГ);
                     
                     Integer РезультатСовершнойОперацииФинал = 0;
                     if (РезультатОперацииВставкииОбновлениея>0) {
-                        String     РезультатСовершнойОперации = (String) queryprocedure[0].getOutputParameterValue("ResultatMERGE");
+                        String     РезультатСовершнойОперации = (String) queryprocedure.getOutputParameterValue("ResultatMERGE");
                         // TODO: 22.04.2023 clear
                         if (РезультатСовершнойОперации!=null  ){
                             // TODO: 21.07.2023 после успешно обнолвние вставки
@@ -208,9 +224,53 @@ public class SubClassВставкаДанныхОтКлиентаPOST {
         }
         return queryprocedure;
     }
-    
-    
-    
+
+
+    // TODO: 05.08.2023 FOR METODONLY BINARY DATA
+    private StoredProcedureQuery методFillingBinaryValuRows(@NotNull Entry<String, JsonNode> stringJsonNodeEntryTwo
+            ,@NotNull  StoredProcedureQuery       queryprocedure, @NotNull String ТаблицаPOST) {
+        try{
+            ЛОГ.log("stringJsonNodeEntryTwo.getKey() "  + stringJsonNodeEntryTwo.getKey()
+                    + " stringJsonNodeEntryTwo.getValue() " +stringJsonNodeEntryTwo.getValue()  );
+            String  getKey=   stringJsonNodeEntryTwo.getKey().trim();
+
+            // TODO заполенем JSonValue ДАННЫМИ
+            if ( stringJsonNodeEntryTwo.getValue().isBinary()) {
+                byte[]  getvalue=     stringJsonNodeEntryTwo.getValue().binaryValue();
+                queryprocedure.registerStoredProcedureParameter(getKey, byte[].class, ParameterMode.IN)
+                        .setParameter(getKey,getvalue);
+                ЛОГ.log("\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
+                        " getvalue" + getvalue + " getKey " + getKey  );
+            } else {
+                String  getvalue=     stringJsonNodeEntryTwo.getValue().asText().trim();
+                queryprocedure.registerStoredProcedureParameter(getKey, String.class, ParameterMode.IN)
+                        .setParameter(getKey,getvalue);
+                ЛОГ.log("\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
+                        " getvalue" + getvalue + " getKey " + getKey  );
+            }
+
+            ЛОГ.log("\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" );
+        } catch (Exception   e) {
+            if (session!=null) {
+                session.getTransaction().rollback();
+                session.close();
+            }
+            ЛОГ.log( "ERROR class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber()  + " e " +e.getMessage() );
+            subClassWriterErros.МетодаЗаписиОшибкиВЛог(e,
+                    Thread.currentThread().
+                            getStackTrace(),
+                    ЛОГ,"ErrorsLogs/ErrorJbossServletDSU1.txt");
+        }
+        return queryprocedure;
+    }
     
     
     
