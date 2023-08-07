@@ -24,6 +24,7 @@ import org.hibernate.LockOptions;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.hibernate.query.Query;
 import org.hibernate.resource.transaction.spi.TransactionStatus;
 
 //TODO
@@ -104,6 +105,7 @@ public class SubClassВставкаДанныхОтКлиентаPOST {
 
                     // TODO: 22.04.2023 ВЫПОЛЕНИЕ САМОЙ ОПЕРАЦИИ MERGE
                     Integer РезультатОперацииВставкииОбновлениея=  МетодВыполениеУдаленнойПроцедуры(queryprocedure,ЛОГ);
+
                     
                     Integer РезультатСовершнойОперацииФинал = 0;
                     if (РезультатОперацииВставкииОбновлениея>0) {
@@ -235,22 +237,24 @@ public class SubClassВставкаДанныхОтКлиентаPOST {
             String  getKey=   stringJsonNodeEntryTwo.getKey().trim();
 
             // TODO заполенем JSonValue ДАННЫМИ
-            if ( stringJsonNodeEntryTwo.getValue().isBinary()) {
-                byte[]  getvalue=     stringJsonNodeEntryTwo.getValue().binaryValue();
-                queryprocedure.registerStoredProcedureParameter(getKey, byte[].class, ParameterMode.IN)
-                        .setParameter(getKey,getvalue);
-                ЛОГ.log("\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
-                        " getvalue" + getvalue + " getKey " + getKey  );
-            } else {
-                String  getvalue=     stringJsonNodeEntryTwo.getValue().asText().trim();
-                queryprocedure.registerStoredProcedureParameter(getKey, String.class, ParameterMode.IN)
-                        .setParameter(getKey,getvalue);
-                ЛОГ.log("\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
-                        " getvalue" + getvalue + " getKey " + getKey  );
+            if (! getKey.equalsIgnoreCase("file") ) {
+                if ( getKey.equalsIgnoreCase("image")  ) {
+                    byte[]  getvalue=     stringJsonNodeEntryTwo.getValue().binaryValue();
+                    queryprocedure.registerStoredProcedureParameter(getKey, byte[].class, ParameterMode.IN)
+                            .setParameter(getKey,getvalue);
+                    ЛОГ.log("\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
+                            " getvalue" + getvalue + " getKey " + getKey  );
+                } else {
+                    String  getvalue=     stringJsonNodeEntryTwo.getValue().asText().trim();
+                    queryprocedure.registerStoredProcedureParameter(getKey, String.class, ParameterMode.IN)
+                            .setParameter(getKey,getvalue);
+                    ЛОГ.log("\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
+                            " getvalue" + getvalue + " getKey " + getKey  );
+                }
             }
 
             ЛОГ.log("\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -336,7 +340,7 @@ public class SubClassВставкаДанныхОтКлиентаPOST {
                 queryprocedure = session.createStoredProcedureQuery( "ProcedureExistsMERGEerrordsu1#37");//TODO ProcedureExistsMERGE_fio
                 break;
             case	"materials_databinary":
-                queryprocedure = session.createStoredProcedureQuery( "ProcedureMaterials_databinary#38");//TODO ProcedureExistsMERGE_fio
+                queryprocedure = session.createStoredProcedureQuery( "ProcedureMaterials_databinary#39");//TODO ProcedureExistsMERGE_fio
                 break;
             default:
                 ЛОГ.log("\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
