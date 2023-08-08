@@ -238,11 +238,10 @@ public class SubClassВставкаДанныхОтКлиентаPOST {
 
             // TODO заполенем JSonValue ДАННЫМИ
 
-            if (! getKey.equalsIgnoreCase("file") ) {
-                if (getKey.equalsIgnoreCase("image")) {
 
-                     //  byte[]  getvalue=     stringJsonNodeEntryTwo.getValue().binaryValue();
-                        byte[]  getvalue=     null;
+                if (getKey.equalsIgnoreCase("image") || getKey.equalsIgnoreCase("files")) {
+                       byte[]  getvalue=     stringJsonNodeEntryTwo.getValue().binaryValue();
+                       /* byte[]  getvalue=     null;*/
                         queryprocedure.registerStoredProcedureParameter(getKey, byte[].class, ParameterMode.IN)
                                 .setParameter(getKey,getvalue);
                         ЛОГ.log("\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -258,7 +257,7 @@ public class SubClassВставкаДанныхОтКлиентаPOST {
                                 " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
                                 " getvalue" + getvalue + " getKey " + getKey  );
                     }
-            }
+
 
 
             ЛОГ.log("\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -344,7 +343,7 @@ public class SubClassВставкаДанныхОтКлиентаPOST {
                 queryprocedure = session.createStoredProcedureQuery( "ProcedureExistsMERGEerrordsu1#37");//TODO ProcedureExistsMERGE_fio
                 break;
             case	"materials_databinary":
-                queryprocedure = session.createStoredProcedureQuery( "ProcedureMaterials_databinary#39");//TODO ProcedureExistsMERGE_fio
+                queryprocedure = session.createStoredProcedureQuery( "ProcedureMaterials_databinary#38");//TODO ProcedureMaterials_databinary#38
                 break;
             default:
                 ЛОГ.log("\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+

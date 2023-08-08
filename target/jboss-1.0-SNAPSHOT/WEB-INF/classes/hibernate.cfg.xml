@@ -69,6 +69,8 @@
     <property name="hibernate.transaction.auto_close_session">true</property>
     <property name="hibernate.generate_statistics=true">true</property>
 
+    <property name="hibernate.proc.param_null_passing">true</property>
+
     <property name="hibernate.c3p0.preferredTestQuery">select 1</property>
 
     <property name = "hibernate.transaction.manager_lookup_class" >org.hibernate.engine.transaction.jta.platform.internal.JBossAppServerJtaPlatform</property>
