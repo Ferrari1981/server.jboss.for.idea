@@ -6,13 +6,15 @@ import org.hibernate.annotations.OptimisticLockType;
 import org.hibernate.annotations.OptimisticLocking;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.sql.Date;
 
 @Entity
 @Table(name = "users", schema = "dbo", catalog = "storage")
 @DynamicUpdate
 @OptimisticLocking(type=OptimisticLockType.DIRTY)
-public class UsersEntity {
+public class UsersEntity implements Serializable {
+    private static final long serialVersionUID = 1L;
     @Id
     @Column(name = "id", nullable = false)
     private int id;
