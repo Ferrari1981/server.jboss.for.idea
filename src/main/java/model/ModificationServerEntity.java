@@ -11,8 +11,11 @@ import java.sql.Date;
 
 @Entity
 @Table(name = "modificationserver", schema = "dbo", catalog = "storage")
-@DynamicUpdate
-@OptimisticLocking(type= OptimisticLockType.DIRTY)
+@NamedQuery(name="ModificationServerEntity.findAll", query="SELECT modif FROM model.ModificationServerEntity modif")
+@org.hibernate.annotations.OptimisticLocking(
+        type = OptimisticLockType.DIRTY)
+@org.hibernate.annotations.DynamicUpdate
+
 public class ModificationServerEntity implements Serializable {
     private static final long serialVersionUID = 1L;
 
@@ -26,7 +29,7 @@ public class ModificationServerEntity implements Serializable {
 
     @Basic
     @Column(name = "versionserver", nullable = false)
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss.SSS" )//  @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd" )
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss.SSS" )
     private Date versionserver;
     @Basic
     @Column(name = "type_query", nullable = false, length = 100)

@@ -460,8 +460,7 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
 
             ЛОГ.log(" ОТВЕТ КЛИЕНТУ OTBEN LKIENTYY JobForServer " + JobForServer
                     + " БуферCallsBackДляAndroid " + БуферCallsBackДляAndroid.toString()+  "ЛистДанныеОтHibenide "+ ЛистДанныеОтHibenide);
-            // TODO КОГДА ЛОГИН И ПАРОЛЬ НЕТ ДОСТУПА
-            МетодЗакрываемСессиюHibernate();
+
 
 
             //TODO ГЕНЕРАЦИЯ JSON ПО НОВОМУ
@@ -469,7 +468,8 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
                 БуферCallsBackДляAndroid = МетодГенерацияJSONJackson(ЛистДанныеОтHibenide);
             }
 
-
+            // TODO КОГДА ЛОГИН И ПАРОЛЬ НЕТ ДОСТУПА
+            МетодЗакрываемСессиюHibernate();
             //// TODO ЗАКРЫЫВАЕМ КУРСОРЫ ПОСЛЕ ГЕНЕРАЦИИ JSON ДЛЯ КЛИЕНТА
             // TODO
             ЛОГ.log("\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
