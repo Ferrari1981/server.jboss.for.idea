@@ -123,7 +123,7 @@ try{
     new Class_Generation_Errors(getApplicationContext()).методСозданиеФайлаДляОшибки();//
     logicBinessMainActivity_face_startl. методMessage();
     logicBinessMainActivity_face_startl. МетодДополнительнойНастрокиАвтоЗапуска();
-    logicBinessMainActivity_face_startl.   методДаемПраваНаCameraPermissions(this);
+    logicBinessMainActivity_face_startl.   методДаемПраваНаCameraPermissions(this);///
     logicBinessMainActivity_face_startl. методАнимацииЗагрузкиЗначка();
 
     Log.d(this.getClass().getName(),
