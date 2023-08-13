@@ -120,7 +120,7 @@ try{
 
     logicBinessMainActivity_face_startl=new LogicBinessMainActivity_Face_Start();
     // TODO: 24.02.2022
-    new Class_Generation_Errors(getApplicationContext()).методСозданиеФайлаДляОшибки();
+    new Class_Generation_Errors(getApplicationContext()).методСозданиеФайлаДляОшибки();//
     logicBinessMainActivity_face_startl. методMessage();
     logicBinessMainActivity_face_startl. МетодДополнительнойНастрокиАвтоЗапуска();
     logicBinessMainActivity_face_startl.   методДаемПраваНаCameraPermissions(this);
