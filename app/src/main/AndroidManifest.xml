@@ -1172,7 +1172,7 @@
             android:configChanges="orientation|screenSize|keyboardHidden|screenSize|screenLayout"
             android:exported="true"
             android:grantUriPermissions="true"
-            android:launchMode="singleTop"
+            android:launchMode="singleTask"
             android:label=" ПО Союз-Автодор "
             android:requestLegacyExternalStorage="true"
             android:showOnLockScreen="true"
