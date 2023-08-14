@@ -82,7 +82,7 @@ public class MainActivity_Face_App extends AppCompatActivity {
     private Context context;
     private TextView КнопкаТабель, КнопкаСогласование, КнопкаПоступлениеМатериалов,КнопкаЗаявкаНаТранспорт;
     private ProgressBar progressBarTabel, progressCommitpay,prograessbarOrderTransport,prograessbarControlAccess;
-    private Handler handlerFaceAPP;
+
     private final String ИмяСлужбыСинхронизацииОдноразовая = "WorkManager Synchronizasiy_Data Disposable";//"WorkManager Synchronizasiy_Data";//  "WorkManager Synchronizasiy_Data"; ///"WorkManager Synchronizasiy_Data";
     private DrawerLayout drawerLayoutFaceApp;
     private NavigationView navigationViewFaceApp;
@@ -444,7 +444,7 @@ public class MainActivity_Face_App extends AppCompatActivity {
                         case R.id.sedmoy:
                             item.setChecked(true);
                             Log.w(getPackageName().getClass().getName(), "item.getItemId() МЕНЮ ОБНОВЛЕНИЕ ПО    " + item.getItemId() + "\n" + item);/////////
-                            handlerFaceAPP.post(()->{
+                            handlerAsync.post(()->{
                                 try {
                                     localBinderОбновлениеПО.getService().МетодГлавныйОбновленияПО(true, activity,handlerAsync);
                                     Log.i(this.getClass().getName(), " Из меню установкаОбновление ПО "
@@ -518,7 +518,7 @@ public class MainActivity_Face_App extends AppCompatActivity {
                         Интент_ЗапускТабельногоУчётаПервыйШаг.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         Log.d(this.getClass().getName(), "" + "    КнопкаТабельныйУчёт.setOnClickListener(new View.OnClickListener() {");
                         startActivity(Интент_ЗапускТабельногоУчётаПервыйШаг);
-                        handlerFaceAPP.postDelayed(() -> {
+                        handlerAsync.postDelayed(() -> {
                             progressBarTabel.setVisibility(View.INVISIBLE);
                             КнопкаТабель.setBackgroundColor(Color.parseColor("#FFFFFF"));
                         }, 3000);
@@ -548,7 +548,7 @@ public class MainActivity_Face_App extends AppCompatActivity {
                         intentЗапускСогласования1C.setClass(getApplicationContext(), MainActivity_CommitPay.class);//рабочий
                         intentЗапускСогласования1C.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         startActivity(intentЗапускСогласования1C);
-                        handlerFaceAPP.postDelayed(() -> {
+                        handlerAsync.postDelayed(() -> {
                             progressCommitpay.setVisibility(View.INVISIBLE);
                             КнопкаСогласование.setBackgroundColor(Color.parseColor("#FFFFFF"));
                         }, 3000);
@@ -578,7 +578,7 @@ public class MainActivity_Face_App extends AppCompatActivity {
                                 ИнтентДляЗапускаПолуступлениеМатериалов.setClass(getApplicationContext(), MainActivity_AdmissionMaterials.class);//рабочий
                                 ИнтентДляЗапускаПолуступлениеМатериалов.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                                 startActivity(ИнтентДляЗапускаПолуступлениеМатериалов);
-                                handlerFaceAPP.postDelayed(() -> {
+                                handlerAsync.postDelayed(() -> {
                                     prograessbarControlAccess.setVisibility(View.INVISIBLE);
                                     КнопкаПоступлениеМатериалов.setBackgroundColor(Color.parseColor("#FFFFFF"));
                                 }, 3000);
@@ -609,7 +609,7 @@ public class MainActivity_Face_App extends AppCompatActivity {
                         ИнтентЗаявкаНаТранспорт.setClass(getApplicationContext(), MainActivityOrdersTransports.class);//рабочий
                         ИнтентЗаявкаНаТранспорт.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         startActivity(ИнтентЗаявкаНаТранспорт);
-                        handlerFaceAPP.postDelayed(() -> {
+                        handlerAsync.postDelayed(() -> {
                             prograessbarOrderTransport.setVisibility(View.INVISIBLE);
                             КнопкаЗаявкаНаТранспорт.setBackgroundColor(Color.parseColor("#FFFFFF"));
                         }, 3000);
@@ -652,7 +652,7 @@ public class MainActivity_Face_App extends AppCompatActivity {
             progressDialogДляСинхронизации.setMessage("Обмен данными ....");
             progressDialogДляСинхронизации.show();
 
-            handlerFaceAPP.post(() -> {
+            handlerAsync.post(() -> {
                 boolean СтатусСетиВыбранныйПользователем =
                         new Class_Find_Setting_User_Network(getApplicationContext()).МетодПроветяетКакуюУстановкуВыбралПользовательСети();
                 Log.d(this.getClass().getName(), "  РезультатПроВеркиУстановкиПользователяРежимРаботыСети "
@@ -680,7 +680,7 @@ public class MainActivity_Face_App extends AppCompatActivity {
                                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                                 " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
                                 + " ПубличныйIDДляОдноразовойСинхрониазции " + ПубличныйIDДляОдноразовойСинхрониазции);
-                        handlerFaceAPP.postDelayed(() -> {
+                        handlerAsync.postDelayed(() -> {
                             progressDialogДляСинхронизации.dismiss();
                             progressDialogДляСинхронизации.cancel();
                         }, 3000);
@@ -780,7 +780,7 @@ public class MainActivity_Face_App extends AppCompatActivity {
                                         try{
                                         PUBLIC_CONTENT Class_Engine_SQLГдеНаходитьсяМенеджерПотоков = new PUBLIC_CONTENT(activity);
                                             Class_Clears_Tables class_clears_tables=     new Class_Clears_Tables(activity,
-                                                    handlerFaceAPP,
+                                                    handlerAsync,
                                                     prograssbarСменаДанныхПользователя);
 
                                         Integer    РезультатОчистикТАблицИДобалениеДаты = class_clears_tables
@@ -939,6 +939,38 @@ public class MainActivity_Face_App extends AppCompatActivity {
                 public void dispatchMessage(@NonNull Message msg) {
                     super.dispatchMessage(msg);
                     try {
+                        Bundle bundleCallsBackAsynsService=msg.getData();
+                        switch (msg.what){
+                            case 20:// процеессе
+
+                                        Toast toast = Toast.makeText(getApplicationContext(), "У Вас последняя версия ПО !!! ", Toast.LENGTH_LONG);
+                                        toast.setGravity(Gravity.BOTTOM, 0, 40);
+                                        toast.show();
+
+
+
+                                Log.d(this.getClass().getName(), "\n" + " class " +
+                                        Thread.currentThread().getStackTrace()[2].getClassName()
+                                        + "\n" +
+                                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
+                                break;
+
+                            case 34:// процеессе
+
+                                Toast toast3 = Toast.makeText(getApplicationContext(), "Нет связи c Cервер ПО !!!", Toast.LENGTH_LONG);
+                                toast3.setGravity(Gravity.BOTTOM, 0, 40);
+                                toast3.show();
+
+                                Log.d(this.getClass().getName(), "\n" + " class " +
+                                        Thread.currentThread().getStackTrace()[2].getClassName()
+                                        + "\n" +
+                                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
+                                break;
+                        }
+
+
                         Log.d(this.getClass().getName(), "\n" + " class " +
                                 Thread.currentThread().getStackTrace()[2].getClassName()
                                 + "\n" +

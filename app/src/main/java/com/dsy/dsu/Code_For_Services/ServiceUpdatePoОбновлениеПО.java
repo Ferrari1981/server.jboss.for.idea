@@ -184,10 +184,10 @@ public class ServiceUpdatePoОбновлениеПО extends IntentService {////
                     @Override
                     public void run() {
                         if (РежимРаботыСлужбыОбновлениеПО == true) {
-                            Toast toast = Toast.makeText(getApplicationContext(), "Нет связи c Cервер ПО !!!", Toast.LENGTH_LONG);
-                            toast.setGravity(Gravity.BOTTOM, 0, 40);
-                            toast.show();
-                            Log.i(this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName() + " время " + new Date().toLocaleString());
+                            Message message = handlerAsync.obtainMessage();
+                            message.what = 34;
+                            message.sendToTarget();
+
                         }
                     }
                 });
@@ -236,9 +236,9 @@ public class ServiceUpdatePoОбновлениеПО extends IntentService {////
                     @Override
                     public void run() {
                         if (РежимРаботыСлужбыОбновлениеПО == true) {
-                            Toast toast = Toast.makeText(  getApplicationContext(), "Нет связи c Cервер ПО !!!", Toast.LENGTH_LONG);
-                            toast.setGravity(Gravity.BOTTOM, 0, 40);
-                            toast.show();
+                            Message message = handlerAsync.obtainMessage();
+                            message.what = 20;
+                            message.sendToTarget();
                             Log.i(this.getClass().getName(),  Thread.currentThread().getStackTrace()[2].getMethodName()+ " время " +new Date().toLocaleString() );
                         }
                     }
@@ -686,13 +686,11 @@ try{
                 Log.w(getApplicationContext().getClass().getName(),    Thread.currentThread().getStackTrace()[2].getMethodName()+
                         " ЛокальнаяВерсияПО "+ЛокальнаяВерсияПО+  " СервернаяВерсияПОВнутри  "+СервернаяВерсияПОВнутри + " POOLS" + Thread.currentThread().getName());
                 if (ФлагПоказыватьИлиНЕтСообзение==true) {
-                    activity.runOnUiThread(()->{
-                        if (РежимРаботыСлужбыОбновлениеПО==true) {
-                            Toast toast = Toast.makeText(getApplicationContext(), "У Вас последняя версия ПО !!! ", Toast.LENGTH_LONG);
-                            toast.setGravity(Gravity.BOTTOM, 0, 40);
-                            toast.show();
-                        }
-                    });
+                    if (РежимРаботыСлужбыОбновлениеПО==true) {
+                        Message message = handlerAsync.obtainMessage();
+                        message.what = 20;
+                        message.sendToTarget();
+                    }
                 }
                 // TODO: 10.07.2023
                 ФлагЗАпускатьСинхронизациюПотосучтоВерсияРавна=true;
