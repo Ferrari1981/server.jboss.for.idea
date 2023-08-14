@@ -67,7 +67,7 @@ public class ServiceUpdatePoОбновлениеПО extends IntentService {////
     private   AlertDialog alertDialogУстановкаПО=null;
     private    File FileAPK = null;
 
-    private Handler handlerAsync;
+    private Handler handlerUpdatePO;
     /**
      * Creates an IntentService.  Invoked by your subclass's constructor.
      *
@@ -137,7 +137,7 @@ public class ServiceUpdatePoОбновлениеПО extends IntentService {////
     @Override
     protected void onHandleIntent(@Nullable Intent intent) {
         try{
-            МетодГлавныйОбновленияПО(false,activity,handlerAsync);
+            МетодГлавныйОбновленияПО(false,activity,handlerUpdatePO);
             Log.i(getApplicationContext().getClass().getName(), " ServiceUpdatePoОбновлениеПО  МетодГлавныйЗапускаОбновлениеПО  " + " время запуска  " + new Date());
         } catch (Exception e) {
             e.printStackTrace();
@@ -153,13 +153,13 @@ public class ServiceUpdatePoОбновлениеПО extends IntentService {////
 
     public Boolean   МетодГлавныйОбновленияПО(@NonNull Boolean РежимРаботыСлужбыОбновлениеПО ,
                                               @NonNull Activity  activity,
-                                              @NonNull Handler handlerAsync){
+                                              @NonNull Handler handlerUpdatePO){
         Boolean ФлагЗАпускатьСинхронизациюПотосучтоВерсияРавна=false;
         try {
             this.activity=activity;
             this.РежимРаботыСлужбыОбновлениеПО=РежимРаботыСлужбыОбновлениеПО;
             final Integer[] ВерсияПООтСервере = {0};
-            this.handlerAsync=handlerAsync;
+            this.handlerUpdatePO=handlerUpdatePO;
 
             String  РежимРаботыСети = МетодУзнаемРежимСетиWIFiMobile(getApplicationContext());
             preferences = getApplicationContext().getSharedPreferences("sharedPreferencesХранилище", Context.MODE_MULTI_PROCESS);
@@ -184,7 +184,7 @@ public class ServiceUpdatePoОбновлениеПО extends IntentService {////
                     @Override
                     public void run() {
                         if (РежимРаботыСлужбыОбновлениеПО == true) {
-                            Message message = handlerAsync.obtainMessage();
+                            Message message = handlerUpdatePO.obtainMessage();
                             message.what = 34;
                             message.sendToTarget();
 
@@ -210,7 +210,7 @@ public class ServiceUpdatePoОбновлениеПО extends IntentService {////
         try {
             this.activity=activity;
             this.РежимРаботыСлужбыОбновлениеПО=РежимРаботыСлужбыОбновлениеПО;
-            this.handlerAsync=handlerAsync;
+            this.handlerUpdatePO=handlerUpdatePO;
             final Integer[] ВерсияПООтСервере = {0};
             String  РежимРаботыСети = МетодУзнаемРежимСетиWIFiMobile(getApplicationContext());
             preferences = getApplicationContext().getSharedPreferences("sharedPreferencesХранилище", Context.MODE_MULTI_PROCESS);
@@ -356,10 +356,10 @@ public class ServiceUpdatePoОбновлениеПО extends IntentService {////
     void МетодСообщениеЗапускАнализВерсииДанныхПО(@NonNull Integer СервернаяВерсияПОВнутри) {
         try {
         View  promptsViewАнализПО=   методЗагрузкиСвоегоВидаДлAliadDialod(R.layout.activity_insertdata);
-            ProgressBar progressBar=promptsViewАнализПО.findViewById(R.id.prograssbarupdatepo);
+            ProgressBar progressBarOnlyDownloadPO=promptsViewАнализПО.findViewById(R.id.prograssbarupdatepo);
             MaterialButton bottom_alaliz_and_dwonloadupdatepo=promptsViewАнализПО.findViewById(R.id.bottom_alaliz_and_dwonloadupdatepo);
-            progressBar.setIndeterminate(false);
-            progressBar.setVisibility(View.GONE);
+            progressBarOnlyDownloadPO.setIndeterminate(false);
+            progressBarOnlyDownloadPO.setVisibility(View.GONE);
             promptsViewАнализПО.forceLayout();
             promptsViewАнализПО.refreshDrawableState();
 
@@ -370,8 +370,8 @@ public class ServiceUpdatePoОбновлениеПО extends IntentService {////
 
                     try {
                         // TODO: 18.02.2023 Загрузка Нового файла APK
-                        progressBar.setVisibility(View.VISIBLE);
-                        progressBar.setIndeterminate(true);
+                        progressBarOnlyDownloadPO.setVisibility(View.VISIBLE);
+                        progressBarOnlyDownloadPO.setIndeterminate(true);
                         bottom_alaliz_and_dwonloadupdatepo.setEnabled(false);
                         bottom_alaliz_and_dwonloadupdatepo.setBackgroundColor(Color.GRAY);
                         promptsViewАнализПО.forceLayout();
@@ -382,7 +382,7 @@ public class ServiceUpdatePoОбновлениеПО extends IntentService {////
 
                         Log.i(this.getClass().getName(),  "Установщик ПО..." + Thread.currentThread().getStackTrace()[2].getMethodName()+ " время " +new Date().toLocaleString() );
                         // TODO: 29.07.2023 анаиз глаыйн метож
-                        методАнализJSONВерсииПО(СервернаяВерсияПОВнутри,progressBar);
+                        методАнализJSONВерсииПО(СервернаяВерсияПОВнутри,progressBarOnlyDownloadPO);
                         Log.w(getApplicationContext().getClass().getName(),    Thread.currentThread().getStackTrace()[2].getMethodName()+
                                 " ЛокальнаяВерсияПО "+ЛокальнаяВерсияПО+  " СервернаяВерсияПОВнутри  "+СервернаяВерсияПОВнутри + " POOLS" );
                     } catch (Exception e) {
@@ -432,7 +432,7 @@ public class ServiceUpdatePoОбновлениеПО extends IntentService {////
     View методЗагрузкиСвоегоВидаДлAliadDialod(@NonNull Integer Вид)  {
         View promptsView=null;
    try{
-        LayoutInflater li = LayoutInflater.from(getApplicationContext());
+        LayoutInflater li = LayoutInflater.from(activity);
         promptsView = li.inflate(Вид, null);
     } catch (Exception e) {
         e.printStackTrace();
@@ -447,7 +447,7 @@ public class ServiceUpdatePoОбновлениеПО extends IntentService {////
 
 
     private void методАнализJSONВерсииПО(@NonNull Integer СервернаяВерсияПОВнутри,@NonNull ProgressBar progressBar) {
-        handlerAsync.post(()-> {
+        handlerUpdatePO.post(()-> {
             try{
                 FileAPK = МетодЗагрузкиAPK();
                 Log.w(getApplicationContext().getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName() +
@@ -687,7 +687,7 @@ try{
                         " ЛокальнаяВерсияПО "+ЛокальнаяВерсияПО+  " СервернаяВерсияПОВнутри  "+СервернаяВерсияПОВнутри + " POOLS" + Thread.currentThread().getName());
                 if (ФлагПоказыватьИлиНЕтСообзение==true) {
                     if (РежимРаботыСлужбыОбновлениеПО==true) {
-                        Message message = handlerAsync.obtainMessage();
+                        Message message = handlerUpdatePO.obtainMessage();
                         message.what = 20;
                         message.sendToTarget();
                     }
