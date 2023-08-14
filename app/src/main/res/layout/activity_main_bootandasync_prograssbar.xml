@@ -9,14 +9,14 @@
     android:visibility="visible"
     android:background="#FFFFFF"
     android:backgroundTint="@color/cardview_light_background"
-    tools:context=".For_Code_Settings_DSU1.MainActivity_Visible_Async">
+    tools:context=".BootAndAsync.MainActivityBootAndAsync">
 
 <!--//TODO Начало Основного Экрана-->
 
 
 
 
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <RelativeLayout
         android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -36,6 +36,7 @@
             android:layout_height="100dp"
             android:layout_centerInParent="true"
             android:adjustViewBounds="false"
+            android:layout_marginBottom="200dp"
             android:textSize="26sp"
             android:textStyle="bold"
             android:typeface="monospace"
@@ -44,24 +45,22 @@
 
 
 
+
+
         <ProgressBar
             android:id="@+id/progressbarbootandasync"
-            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
-            android:layout_width="200dp"
-            android:layout_height="20dp"
-
-            android:layout_above="@+id/imageviewbootlogo"
-          android:transformPivotY="10dp"
-            android:layout_alignParentBottom="true"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/imageviewbootlogo"
             android:layout_centerHorizontal="true"
-            android:layout_marginBottom="80dp"
-            android:foregroundGravity="center"
-            android:indeterminate="false"
-            android:indeterminateTint="#0A524B"
+            android:layout_margin="10dp"
+            android:indeterminate="true"
             android:max="100"
-            android:padding="5dip"
+            android:indeterminateTint="#0A524B"
             android:progress="0"
-      />
+            android:scaleY="1.5" />
+
 
     </RelativeLayout>
 
@@ -71,7 +70,6 @@
 
     <!--TODO НАчало Боллоковой Панели-->
     <com.google.android.material.navigation.NavigationView
-        tools:context=".For_Code_Settings_DSU1.MainActivity_Visible_Async"
         android:id="@+id/navigator_asyncapp"
         android:layout_width="230dp"
         android:layout_height="match_parent"
