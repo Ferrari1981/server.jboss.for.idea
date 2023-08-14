@@ -1172,8 +1172,13 @@
             android:configChanges="orientation|screenSize|keyboardHidden|screenSize|screenLayout"
             android:exported="true"
             android:grantUriPermissions="true"
-            android:label="Boot and Async"
-            android:launchMode="singleTask"
+            android:launchMode="singleTop"
+            android:label=" ПО Союз-Автодор "
+            android:requestLegacyExternalStorage="true"
+            android:showOnLockScreen="true"
+
+
+
             android:theme="@style/Theme.MaterialComponents.DayNight.DarkActionBar">
 
             <intent-filter>

@@ -55,7 +55,7 @@
             android:layout_below="@+id/imageviewbootlogo"
             android:layout_centerHorizontal="true"
             android:layout_margin="10dp"
-            android:indeterminate="true"
+            android:indeterminate="false"
             android:max="100"
             android:indeterminateTint="#0A524B"
             android:progress="0"
@@ -79,7 +79,7 @@
         android:fitsSystemWindows="true"
         app:itemIconSize="35dp"
         app:itemIconTint="#00ACC1"
-        android:visibility="gone"
+        android:visibility="visible"
         android:backgroundTint="@color/cardview_light_background"
         app:itemTextColor="@color/cardview_dark_background"
         app:menu="@menu/menu_for_asynsapp_navigationview">

@@ -30,6 +30,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import com.dsy.dsu.AllDatabases.CREATE_DATABASE;
+import com.dsy.dsu.BootAndAsync.MainActivityBootAndAsync;
 import com.dsy.dsu.Business_logic_Only_Class.Class_Clears_Tables;
 import com.dsy.dsu.Business_logic_Only_Class.Class_Connections_Server;
 import com.dsy.dsu.Business_logic_Only_Class.Class_Find_Setting_User_Network;
@@ -339,7 +340,7 @@ public class MainActivity_Tabels_Users_And_Passwords extends AppCompatActivity {
             Интент_ЗапускСамогоПриложенияЕслиПользовательПослеУспешнойаунтификации.putExtra("ID",ПубличноеIDПолученныйИзСервлетаДляUUID);
             Интент_ЗапускСамогоПриложенияЕслиПользовательПослеУспешнойаунтификации.putExtra("ПубличноеИмяПользовательДлСервлета", ПубличноеЛогин);
             Интент_ЗапускСамогоПриложенияЕслиПользовательПослеУспешнойаунтификации.putExtra("ПубличноеПарольДлСервлета", ПубличноеПароль);
-            Интент_ЗапускСамогоПриложенияЕслиПользовательПослеУспешнойаунтификации.setClass(getApplication(), MainActivity_Visible_Async.class);
+            Интент_ЗапускСамогоПриложенияЕслиПользовательПослеУспешнойаунтификации.setClass(getApplication(), MainActivityBootAndAsync.class);
             Интент_ЗапускСамогоПриложенияЕслиПользовательПослеУспешнойаунтификации.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);/// FLAG_ACTIVITY_SINGLE_TOP
 
             editor.putInt("ПубличноеID", ПубличноеIDПолученныйИзСервлетаДляUUID);
