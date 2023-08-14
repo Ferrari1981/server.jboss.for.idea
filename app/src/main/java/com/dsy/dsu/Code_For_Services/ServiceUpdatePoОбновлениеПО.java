@@ -14,6 +14,7 @@ import android.net.Uri;
 import android.os.Binder;
 import android.os.Build;
 import android.os.Environment;
+import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
 import android.os.VibrationEffect;
@@ -66,7 +67,7 @@ public class ServiceUpdatePoОбновлениеПО extends IntentService {////
     private   AlertDialog alertDialogУстановкаПО=null;
     private    File FileAPK = null;
 
-    private Message message;
+    private Handler handlerAsync;
     /**
      * Creates an IntentService.  Invoked by your subclass's constructor.
      *
@@ -136,7 +137,7 @@ public class ServiceUpdatePoОбновлениеПО extends IntentService {////
     @Override
     protected void onHandleIntent(@Nullable Intent intent) {
         try{
-            МетодГлавныйОбновленияПО(false,activity,message);
+            МетодГлавныйОбновленияПО(false,activity,handlerAsync);
             Log.i(getApplicationContext().getClass().getName(), " ServiceUpdatePoОбновлениеПО  МетодГлавныйЗапускаОбновлениеПО  " + " время запуска  " + new Date());
         } catch (Exception e) {
             e.printStackTrace();
@@ -152,13 +153,13 @@ public class ServiceUpdatePoОбновлениеПО extends IntentService {////
 
     public Boolean   МетодГлавныйОбновленияПО(@NonNull Boolean РежимРаботыСлужбыОбновлениеПО ,
                                               @NonNull Activity  activity,
-                                              @NonNull Message message){
+                                              @NonNull Handler handlerAsync){
         Boolean ФлагЗАпускатьСинхронизациюПотосучтоВерсияРавна=false;
         try {
             this.activity=activity;
             this.РежимРаботыСлужбыОбновлениеПО=РежимРаботыСлужбыОбновлениеПО;
             final Integer[] ВерсияПООтСервере = {0};
-            this.message=message;
+            this.handlerAsync=handlerAsync;
 
             String  РежимРаботыСети = МетодУзнаемРежимСетиWIFiMobile(getApplicationContext());
             preferences = getApplicationContext().getSharedPreferences("sharedPreferencesХранилище", Context.MODE_MULTI_PROCESS);
@@ -204,12 +205,12 @@ public class ServiceUpdatePoОбновлениеПО extends IntentService {////
 
     public Boolean МетодГлавныйОбновленияПОДоAsync(@NonNull Boolean РежимРаботыСлужбыОбновлениеПО ,
                                                    @NonNull Activity  activity,
-                                                   @NonNull Message message){
+                                                   @NonNull Handler handlerAsync){
         Boolean ФлагЗАпускатьСинхронизациюПотосучтоВерсияРавна=false;
         try {
             this.activity=activity;
             this.РежимРаботыСлужбыОбновлениеПО=РежимРаботыСлужбыОбновлениеПО;
-            this.message=message;
+            this.handlerAsync=handlerAsync;
             final Integer[] ВерсияПООтСервере = {0};
             String  РежимРаботыСети = МетодУзнаемРежимСетиWIFiMobile(getApplicationContext());
             preferences = getApplicationContext().getSharedPreferences("sharedPreferencesХранилище", Context.MODE_MULTI_PROCESS);
@@ -446,7 +447,7 @@ public class ServiceUpdatePoОбновлениеПО extends IntentService {////
 
 
     private void методАнализJSONВерсииПО(@NonNull Integer СервернаяВерсияПОВнутри,@NonNull ProgressBar progressBar) {
-        message.getTarget().post(()-> {
+        handlerAsync.post(()-> {
             try{
                 FileAPK = МетодЗагрузкиAPK();
                 Log.w(getApplicationContext().getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName() +

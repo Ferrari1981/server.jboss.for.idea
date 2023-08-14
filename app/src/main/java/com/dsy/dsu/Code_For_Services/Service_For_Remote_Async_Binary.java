@@ -100,7 +100,7 @@ public class Service_For_Remote_Async_Binary extends IntentService {
 
     private     String НазваниеСервернойТаблицы=new String();
 
-private  Message message;
+private  Handler handlerAsync;
     private  String КлючДляFirebaseNotification = "2a1819db-60c8-4ca3-a752-1b6cd9cadfa1";
     public Service_For_Remote_Async_Binary() {
         super("Service_For_Remote_Async");
@@ -147,7 +147,7 @@ private  Message message;
       reply.writeSerializable( (Serializable) new Handler(getMainLooper()));
             Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "  message " +message);
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "  handlerAsync " +handlerAsync);
             ///return super.onTransact(code, data, reply, flags);
         } catch (Exception e) {
             e.printStackTrace();
@@ -251,13 +251,14 @@ try{
 
 @BinderThread
 @Background
-    public void metodStartingSync(@NonNull Context context , @NonNull Message messageback) {
-        try{
-            if (messageback!=null) {
-                this.message=messageback;
+    public Integer metodStartingSync(@NonNull Context context , @NonNull Handler handlerAsync) {
+    Integer       ФинальныйРезультатAsyncBackgroud=0;
+    try{
+            if (handlerAsync!=null) {
+                this.handlerAsync=handlerAsync;
             }
             // TODO: 25.03.2023 ДОПОЛНИТЕОТНЕ УДЛАНИЕ СТАТУСА УДАЛЕНИЕ ПОСЛЕ СИНХРОНИАЗЦИИ
-            Integer       ФинальныйРезультатAsyncBackgroud  = new Class_Engine_SQL(context).МетодЗАпускаФоновойСинхронизации(context);
+                ФинальныйРезультатAsyncBackgroud  = new Class_Engine_SQL(context).МетодЗАпускаФоновойСинхронизации(context);
 
             МетодПослеAsyncTaskЗавершающий( context,ФинальныйРезультатAsyncBackgroud);
 
@@ -283,6 +284,7 @@ try{
             new Class_Generation_Errors(context).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(),
                     Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
+    return ФинальныйРезультатAsyncBackgroud;
     }
 
 
@@ -1322,22 +1324,24 @@ try{
                                                ,@NonNull String имяТаблицаAsync,
                                                @NonNull Integer ПозицияТекущейТаблицы)  {
             try {
-                if (message!=null) {
+                if (handlerAsync!=null) {
                     Bundle bundleCallsBackAsync=new Bundle();
                     bundleCallsBackAsync.putInt("Проценны" ,Проценны);
                     bundleCallsBackAsync.putString("имятаблицы" ,имяТаблицаAsync);
                     bundleCallsBackAsync.putInt("maxtables" ,public_contentДатыДляГлавныхТаблицСинхронизации.ИменаТаблицыОтАндройда.size());
                     bundleCallsBackAsync.putInt("currentposition" ,ПозицияТекущейТаблицы);
+
+                    Message message = handlerAsync.obtainMessage();
                     message.what=CurrentProssesing;
                     message.setData(bundleCallsBackAsync);
-                    message.getTarget().dispatchMessage(message);
+                    message.sendToTarget();
                 }
                 Log.d(this.getClass().getName(), "\n" + " class " +
                             Thread.currentThread().getStackTrace()[2].getClassName()
                             + "\n" +
                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                             " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
-                            + " message " +message);
+                            + " handlerAsync " +handlerAsync);
             } catch (Exception e) {
             e.printStackTrace();
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +

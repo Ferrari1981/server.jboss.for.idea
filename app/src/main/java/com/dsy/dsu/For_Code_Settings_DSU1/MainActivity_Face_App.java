@@ -448,7 +448,7 @@ public class MainActivity_Face_App extends AppCompatActivity {
                             Log.w(getPackageName().getClass().getName(), "item.getItemId() МЕНЮ ОБНОВЛЕНИЕ ПО    " + item.getItemId() + "\n" + item);/////////
                             handlerFaceAPP.post(()->{
                                 try {
-                                    localBinderОбновлениеПО.getService().МетодГлавныйОбновленияПО(true, activity,message);
+                                    //localBinderОбновлениеПО.getService().МетодГлавныйОбновленияПО(true, activity,message);
                                     Log.i(this.getClass().getName(), " Из меню установкаОбновление ПО "
                                             + Thread.currentThread().getStackTrace()[2].getMethodName()
                                             + " время " + new Date().toLocaleString());
