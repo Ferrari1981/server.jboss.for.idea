@@ -1499,6 +1499,10 @@
             android:name=".For_Code_Settings_DSU1.MainActivity_Errors"
             android:exported="true"
             android:label="Ошибки приложения ДСУ-1"
+            android:grantUriPermissions="true"
+            android:launchMode="singleTop"
+            android:requestLegacyExternalStorage="true"
+
             android:theme="@style/Theme.MaterialComponents.DayNight.DarkActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
