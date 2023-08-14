@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawerLayout_async_prograsser"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:openDrawer="left"
+    android:visibility="visible"
+    android:background="#FFFFFF"
+    android:backgroundTint="@color/cardview_light_background"
+    tools:context=".For_Code_Settings_DSU1.MainActivity_Visible_Async">
+
+<!--//TODO Начало Основного Экрана-->
+
+
+
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#FFFFFF"
+        android:clickable="false"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
+        android:paddingTop="?attr/actionBarSize"
+        android:theme="@style/Theme.AppCompat.DayNight"
+        android:touchscreenBlocksFocus="false"
+        android:visibility="visible">
+
+
+        <ImageView
+            android:id="@+id/imageviewbootlogo"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_centerInParent="true"
+            android:layout_marginBottom="220dp"
+            android:adjustViewBounds="false"
+            android:textSize="26sp"
+            android:textStyle="bold"
+            android:typeface="monospace"
+            app:srcCompat="@mipmap/icon_boot_dsu1_1" />
+
+
+        <ProgressBar
+            android:id="@+id/progressBar4ПоКругуСинхронизации"
+            style="@android:style/Widget.DeviceDefault.Light.ProgressBar.Inverse"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_below="@+id/imageviewbootlogo"
+            android:layout_marginStart="140dp"
+            android:layout_marginEnd="140dp"
+            android:layout_marginBottom="20dp"
+            android:foregroundGravity="center"
+            android:indeterminate="true"
+            android:indeterminateTint="#0A524B"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:max="100"
+            android:progress="0"
+            android:progressTint="#FFFFFF"
+            android:textAlignment="center"
+            android:textDirection="firstStrong"
+            android:visibility="visible" />
+
+    </RelativeLayout>
+
+
+
+
+
+    <!--TODO НАчало Боллоковой Панели-->
+    <com.google.android.material.navigation.NavigationView
+        tools:context=".For_Code_Settings_DSU1.MainActivity_Visible_Async"
+        android:id="@+id/navigator_asyncapp"
+        android:layout_width="230dp"
+        android:layout_height="match_parent"
+        android:background="#FFFFFF"
+        android:layout_gravity="left"
+        android:layout_marginRight="160dp"
+        android:fitsSystemWindows="true"
+        app:itemIconSize="35dp"
+        app:itemIconTint="#00ACC1"
+        android:visibility="gone"
+        android:backgroundTint="@color/cardview_light_background"
+        app:itemTextColor="@color/cardview_dark_background"
+        app:menu="@menu/menu_for_asynsapp_navigationview">
+    </com.google.android.material.navigation.NavigationView>
+
+</androidx.drawerlayout.widget.DrawerLayout>

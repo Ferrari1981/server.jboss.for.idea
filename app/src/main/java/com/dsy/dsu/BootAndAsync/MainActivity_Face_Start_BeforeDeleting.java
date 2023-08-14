@@ -72,7 +72,7 @@ public class MainActivity_Face_Start_BeforeDeleting extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 try{
-    setContentView(R.layout.activity_main__face);
+    setContentView(R.layout.activity_main_facebootandasync);
     // TODO: 26.06.2023 БАЗА ДАННЫХ ОСНОВНАЯ
     Create_Database_СсылкаНАБазовыйКласс=new CREATE_DATABASE(getApplicationContext());
     // TODO: 26.06.2023 БАЗА ДАННЫХ ВСТМПОГАТЕЛЬЫНЕ
