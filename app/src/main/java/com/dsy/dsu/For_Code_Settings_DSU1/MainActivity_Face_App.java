@@ -89,7 +89,7 @@ public class MainActivity_Face_App extends AppCompatActivity {
     private ConstraintLayout constraintLayoutFaceApp;
     private Animation animation;
     protected SharedPreferences preferences;
-    private Message message;
+    private  Handler handlerAsync;
     private ServiceUpdatePoОбновлениеПО.localBinderОбновлениеПО localBinderОбновлениеПО;//TODO новаЯ
 
     private    ServiceConnection connectionОбновлениеПО;
@@ -141,10 +141,8 @@ public class MainActivity_Face_App extends AppCompatActivity {
             prograessbarOrderTransport.setVisibility(View.INVISIBLE);
             prograessbarControlAccess.setVisibility(View.INVISIBLE);
 
-            // TODO: 27.03.2023 inisial message
-            МетодИнициализацияMessager();
             // TODO: 18.02.2023   Инициализация Хандлера
-            HadlerИнициализация();
+            МетодИнициализацияHandler();
             // TODO: 18.02.2023 установки для Обновленеи ПО
             МЕтодУстанавливаемРазрешенияДляОновлениеПО();
             // TODO: 06.04.2022
@@ -448,7 +446,7 @@ public class MainActivity_Face_App extends AppCompatActivity {
                             Log.w(getPackageName().getClass().getName(), "item.getItemId() МЕНЮ ОБНОВЛЕНИЕ ПО    " + item.getItemId() + "\n" + item);/////////
                             handlerFaceAPP.post(()->{
                                 try {
-                                    //localBinderОбновлениеПО.getService().МетодГлавныйОбновленияПО(true, activity,message);
+                                    localBinderОбновлениеПО.getService().МетодГлавныйОбновленияПО(true, activity,handlerAsync);
                                     Log.i(this.getClass().getName(), " Из меню установкаОбновление ПО "
                                             + Thread.currentThread().getStackTrace()[2].getMethodName()
                                             + " время " + new Date().toLocaleString());
@@ -499,27 +497,7 @@ public class MainActivity_Face_App extends AppCompatActivity {
                     Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
     }
-    private void МетодИнициализацияMessager() {
-            message=Message.obtain(new Handler(Looper.myLooper()),()->{
-                try {
-                    Bundle bundleCallsBackAsynsService=message.getData();
-                    Log.d(this.getClass().getName(), "\n" + " class " +
-                            Thread.currentThread().getStackTrace()[2].getClassName()
-                            + "\n" +
-                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
-                            + " message.what " +message.what  + "bundleCallsBackAsynsService "+bundleCallsBackAsynsService);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
-                            + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                    new   Class_Generation_Errors(getApplicationContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(),
-                            this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
-                            Thread.currentThread().getStackTrace()[2].getLineNumber());
-                }
 
-            });
-    }
 
 
 
@@ -942,15 +920,61 @@ public class MainActivity_Face_App extends AppCompatActivity {
         }
     }
 
-    void HadlerИнициализация() {
-        handlerFaceAPP = new Handler(Looper.myLooper(), new Handler.Callback() {
-            @Override
-            public boolean handleMessage(@NonNull Message msg) {
-                return true;
-            }
-        });
 
+
+
+
+    // TODO: 02.09.2021  метод Визуализация
+    private void МетодИнициализацияHandler() {
+        try{
+            handlerAsync=new Handler(Looper.getMainLooper()){
+
+
+                @Override
+                public void handleMessage(@NonNull Message msg) {
+                    super.handleMessage(msg);
+                }
+
+                @Override
+                public void dispatchMessage(@NonNull Message msg) {
+                    super.dispatchMessage(msg);
+                    try {
+                        Log.d(this.getClass().getName(), "\n" + " class " +
+                                Thread.currentThread().getStackTrace()[2].getClassName()
+                                + "\n" +
+                                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                                + Thread.currentThread().getStackTrace()[2].getLineNumber());
+                        new   Class_Generation_Errors(getApplicationContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+                                this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
+                                Thread.currentThread().getStackTrace()[2].getLineNumber());
+                    }
+
+
+                }
+            };
+
+            Log.i(getApplicationContext().getClass().getName(),  " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"  );
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                    + Thread.currentThread().getStackTrace()[2].getLineNumber());
+            new   Class_Generation_Errors(getApplicationContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+                    this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
+                    Thread.currentThread().getStackTrace()[2].getLineNumber());
+        }
     }
+
+
+
+
+
+
     private void методДляТетсирования1С() {
         try{
             Log.d(this.getClass().getName(), "   методДляТетсирования1С");
