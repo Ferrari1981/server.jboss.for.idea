@@ -68,90 +68,48 @@ import java.util.Date;
 
 /////////////////////////////////////////////////////////////////////////
 public class MainActivity_Dashboard extends AppCompatActivity {
-    private ImageView imageView_ЗначекApp;
-    private CREATE_DATABASE Create_Database_СсылкаНАБазовыйКласс;
-    private LinearLayout LinearLayoutFaceApp;
-    private ScrollView ScrollFaceAppСкорол;
-    private Observer observerОдноразоваяFACEAPP;
-    private Activity activity;
-    private PUBLIC_CONTENT Class_Engine_SQLГдеНаходитьсяМенеджерПотоков = null;
-    private boolean РежимыПросмотраДанныхЭкрана;
-    private Context context;
-    private TextView КнопкаТабель, КнопкаСогласование, КнопкаПоступлениеМатериалов,КнопкаЗаявкаНаТранспорт;
-    private ProgressBar progressBarTabel, progressCommitpay,prograessbarOrderTransport,prograessbarControlAccess;
 
-    private final String ИмяСлужбыСинхронизацииОдноразовая = "WorkManager Synchronizasiy_Data Disposable";//"WorkManager Synchronizasiy_Data";//  "WorkManager Synchronizasiy_Data"; ///"WorkManager Synchronizasiy_Data";
+ private    LinearLayout linearLayout_dashboard;
+    private   Activity activity;
     private DrawerLayout drawerLayoutFaceApp;
-    private NavigationView navigationViewFaceApp;
-    private ConstraintLayout constraintLayoutFaceApp;
-    private Animation animation;
-    protected SharedPreferences preferences;
+    private  NavigationView navigationViewFaceApp;
+
+    private  BuniccessLogicaActivityDashboard buniccessLogicaActivityDashboard;
+
     private  Handler handlerAsync;
-    private ServiceUpdatePoОбновлениеПО.localBinderОбновлениеПО localBinderОбновлениеПО;//TODO новаЯ
 
-    private    ServiceConnection connectionОбновлениеПО;
-
+    public static final int CAMERA_PERSSION_CODE=1;
     // TODO: 03.11.2022 FaceApp
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         try {
             super.onCreate(savedInstanceState);
-            setContentView(R.layout.activity_main_face_app);
-            Log.w(getPackageName().getClass().getName(), "Сработал  protected void onCreate(Bundle savedInstanceState)  в MainActivity_Face_App");
-            LinearLayoutFaceApp = (LinearLayout) findViewById(R.id.LineLayFaceApp); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
-            context = this;
+            setContentView(R.layout.activity_main_dashboard);
+
+
+            // TODO: 15.08.2023 Инициализация перменных
+            linearLayout_dashboard = (LinearLayout) findViewById(R.id.linearLayout_dashboard); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
+            drawerLayoutFaceApp = (DrawerLayout) findViewById(R.id.drawerLayout_faceapp_menu); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
+            navigationViewFaceApp = (NavigationView) findViewById(R.id.navigator_faceapp_main); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
+   
             activity = this;
             getSupportActionBar().hide(); ///скрывать тул бар
-            ((Activity) context).setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-            ((Activity) context).setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LOCKED);
-            Class_Engine_SQLГдеНаходитьсяМенеджерПотоков = new PUBLIC_CONTENT(getApplicationContext());
-            Create_Database_СсылкаНАБазовыйКласс = new CREATE_DATABASE(getApplicationContext());
+            ((Activity) getApplicationContext()).setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+            ((Activity) getApplicationContext()).setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LOCKED);
 
-            // TODO: 19.05.2023  Кнопки
-            КнопкаТабель = (TextView) findViewById(R.id.textViewtabel); ///// TODO КНОПКА ТАБЕЛЬНОГО УЧЕТА
-            КнопкаСогласование = (TextView) findViewById(R.id.textViewsogsovanie); ///// TODO КНОПКА ТАБЕЛЬНОГО УЧЕТА
-            КнопкаПоступлениеМатериалов = (TextView) findViewById(R.id.textViewGetMaretial); /////TODO КОНТРОЛЬ ДОСТУПА
-            КнопкаЗаявкаНаТранспорт = (TextView) findViewById(R.id.textViewZakazTrasport); /////TODO КОНТРОЛЬ ДОСТУПА
-            // TODO: 19.05.2023  ПрограссБары
-            progressBarTabel = (ProgressBar) findViewById(R.id.progressBarTabel); ///// TODO КНОПКА ТАБЕЛЬНОГО УЧЕТА
-            progressCommitpay = (ProgressBar) findViewById(R.id.progressCommitpay); ///// TODO КНОПКА ТАБЕЛЬНОГО УЧЕТА
-            prograessbarControlAccess  = (ProgressBar) findViewById(R.id.prograessbarOrderTransport); /////TODO КОНТРОЛЬ ДОСТУПА
-            prograessbarOrderTransport      = (ProgressBar) findViewById(R.id.prograessbarControlAccess); /////TODO КОНТРОЛЬ ДОСТУПА
 
-            Log.d(this.getClass().getName(), "КнопкаЧат " + " КнопкаЗадачи "
-                    + " КнопкаТабель " + КнопкаТабель + " КнопкаСогласование " + КнопкаСогласование + " КнопкаКонтрольДоступа " + КнопкаПоступлениеМатериалов);
-            imageView_ЗначекApp = (ImageView) findViewById(R.id.imageView_ЗначекApp); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
-            Drawable drawable = getResources().getDrawable(R.mipmap.icon_dsu1_for_mains_menu_faceapp111);///
-            imageView_ЗначекApp.setImageDrawable(drawable);
-            drawerLayoutFaceApp = (DrawerLayout) findViewById(R.id.drawerLayout_faceapp_menu); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
-            constraintLayoutFaceApp = (ConstraintLayout) findViewById(R.id.constraintLayout_faceapp22); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
-            navigationViewFaceApp = (NavigationView) findViewById(R.id.navigator_faceapp_main); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
-            drawerLayoutFaceApp.setBackgroundColor(Color.WHITE);         //TODO устанвливает цвета
-            constraintLayoutFaceApp.setBackgroundColor(Color.WHITE);
-            drawerLayoutFaceApp.setBackgroundColor(Color.WHITE);
-            drawerLayoutFaceApp.setDrawingCacheBackgroundColor(Color.RED);//todo
-            //    animation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.slide_in_row_tabel);//TODO animation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.slide_in_row_vibrator1);
-            animation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.slide_in_row);//TODO animation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.slide_in_row_vibrator1);
-            preferences = getSharedPreferences("sharedPreferencesХранилище", Context.MODE_MULTI_PROCESS);
-            progressBarTabel.setVisibility(View.INVISIBLE);
-            progressCommitpay.setVisibility(View.INVISIBLE);
-            prograessbarOrderTransport.setVisibility(View.INVISIBLE);
-            prograessbarControlAccess.setVisibility(View.INVISIBLE);
 
-            // TODO: 18.02.2023   Инициализация Хандлера
-            МетодИнициализацияHandler();
+
+            // TODO: 15.08.2023 Начинается Пользовательский КОд
+            buniccessLogicaActivityDashboard=new BuniccessLogicaActivityDashboard();
+            buniccessLogicaActivityDashboard.  МетодИнициализацияHandler();
             // TODO: 18.02.2023 установки для Обновленеи ПО
-            МЕтодУстанавливаемРазрешенияДляОновлениеПО();
-            // TODO: 06.04.2022
-            МетодДляСлушательБоковойПанелиFaceApp();
+            buniccessLogicaActivityDashboard.    МЕтодУстанавливаемРазрешенияДляОновлениеПО();
 
-            // TODO: 03.08.2023 слушатели
-            МетодFaceApp_СлушательПриНажатииНаКнопки();
-
-            // TODO: 27.03.2023 Бинлинг Обновление ПО
-            МетодБиндингаОбновлениеПО();
             // TODO: 16.11.2022  ПОСЛЕ УСТАНОВКИ РАБОТАЕТ ОДИН РАЗ ПРИ СТАРТЕ ЗАРУСК ОБЩЕГО WORK MANAGER
             new Class_Generation_SendBroadcastReceiver_And_Firebase_OneSignal(getApplicationContext()).МетодЗапускаетОБЩУЮСинхронизацию();
+
+
             // TODO: 06.04.2023  ТЕСТ КОД для 1С
             ///методДляТетсирования1С();
 
@@ -173,68 +131,15 @@ public class MainActivity_Dashboard extends AppCompatActivity {
 
 
 
-
-
-    private void МетодБиндингаОбновлениеПО() {
-        try {
-                     connectionОбновлениеПО = new ServiceConnection() {
-                        @Override
-                        public void onServiceConnected(ComponentName name, IBinder service) {
-                            try {
-                                if (service.isBinderAlive()) {
-                                            localBinderОбновлениеПО = (ServiceUpdatePoОбновлениеПО.localBinderОбновлениеПО) service;
-                                    Log.i(context.getClass().getName(), "    onServiceConnected  service)"
-                                            + service.isBinderAlive());
-                                    //localBinderОбновлениеПО.getService().МетодГлавныйОбновленияПО(false, activity);
-                                }
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                                Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
-                                        " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                                new Class_Generation_Errors(context).МетодЗаписиВЖурналНовойОшибки(e.toString(),
-                                        this.getClass().getName(),
-                                        Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
-                            }
-                        }
-                        @Override
-                        public void onServiceDisconnected(ComponentName name) {
-                            try {
-                                Log.i(context.getClass().getName(), "    onServiceDisconnected  binder.isBinderAlive()");
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                                Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
-                                        " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                                new Class_Generation_Errors(context).МетодЗаписиВЖурналНовойОшибки(e.toString(),
-                                        this.getClass().getName(),
-                                        Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
-                            }
-                        }
-                    };
-                    Intent intentЗапускСлужбыОбновлениеПО = new Intent(context, ServiceUpdatePoОбновлениеПО.class);
-                    intentЗапускСлужбыОбновлениеПО.setAction("com.ServiceUpdatePoОбновлениеПО");
-                     bindService(intentЗапускСлужбыОбновлениеПО ,  connectionОбновлениеПО,Context.BIND_AUTO_CREATE );
-
-    } catch (Exception e) {
-        e.printStackTrace();
-        Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
-                + Thread.currentThread().getStackTrace()[2].getLineNumber());
-        new Class_Generation_Errors(getApplicationContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(),
-                this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
-                Thread.currentThread().getStackTrace()[2].getLineNumber());
-        Log.d(this.getClass().getName(), "  Полусаем Ошибку e.toString() " + e.toString());
-    }
-
-    }
-
     @Override
     protected void onStart() {
         super.onStart();
         try {
-// TODO: 06.06.2021 ЗАПУСК ТРЕХ СЛУЖБ
-            Log.w(getPackageName().getClass().getName(), "drawerLayoutFaceApp    " + drawerLayoutFaceApp +
-                    "  navigationViewFaceApp " + navigationViewFaceApp);/////////
-            МетодПовторныйЗапускУведомений();
-            МетодБоковаяПанельОткрытьЗАкрыть();
+            Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"  );
+
+            buniccessLogicaActivityDashboard.  МетодБоковаяПанельОткрытьЗАкрыть();
             // TODO: 17.02.2023 ЗапускАнализа Наличитие Новой Версии ПО
         } catch (Exception e) {
             e.printStackTrace();
@@ -250,10 +155,7 @@ public class MainActivity_Dashboard extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         try {
-            КнопкаТабель.setAnimation(animation);
-            КнопкаСогласование.setAnimation(animation);
-            КнопкаПоступлениеМатериалов.setAnimation(animation);
-            КнопкаЗаявкаНаТранспорт   .setAnimation(animation);
+
         } catch (Exception e) {
             e.printStackTrace();
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
@@ -263,182 +165,169 @@ public class MainActivity_Dashboard extends AppCompatActivity {
         }
     }
 
-    private void МетодБоковаяПанельОткрытьЗАкрыть() {
-        try {
-            if (drawerLayoutFaceApp.isDrawerOpen(Gravity.LEFT)) {
-                drawerLayoutFaceApp.closeDrawer(Gravity.LEFT);
+
+    // TODO: 15.08.2023 НачинаетсяБизнеЛОгика Активтив Dashboard
+
+    class BuniccessLogicaActivityDashboard {
+
+        private void МетодБоковаяПанельОткрытьЗАкрыть() {
+            try {
+                if (drawerLayoutFaceApp.isDrawerOpen(Gravity.LEFT)) {
+                    drawerLayoutFaceApp.closeDrawer(Gravity.LEFT);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+                ///метод запись ошибок в таблицу
+                Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                        + Thread.currentThread().getStackTrace()[2].getLineNumber());
+                new Class_Generation_Errors(getApplicationContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
+                        Thread.currentThread().getStackTrace()[2].getLineNumber());
             }
-        } catch (Exception e) {
-            e.printStackTrace();
-            ///метод запись ошибок в таблицу
-            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
-                    + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            new Class_Generation_Errors(getApplicationContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
-                    Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
-    }
 
-    // TODO: 03.04.2022
-    private void МетодДляСлушательБоковойПанелиFaceApp() {
-        // TODO: 06.04.2022
-        try {
-            imageView_ЗначекApp.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (navigationViewFaceApp.isShown()) {
-                        navigationViewFaceApp.setVisibility(View.GONE);
-                        if (drawerLayoutFaceApp.isDrawerOpen(Gravity.LEFT)) {
-                            drawerLayoutFaceApp.closeDrawer(Gravity.LEFT);
-                        }
-                    } else {
+        // TODO: 03.04.2022
+        private void МетодДляСлушательБоковойПанелиFaceApp() {
+            // TODO: 06.04.2022
+            try {
+                drawerLayoutFaceApp.addDrawerListener(new DrawerLayout.SimpleDrawerListener() {
+                    @Override
+                    public void onDrawerOpened(View drawerView) {
+                        Drawable drawable = getResources().getDrawable(R.mipmap.icon_dsu1_for_mains_menu_faceapp_close222);///
                         navigationViewFaceApp.setVisibility(View.VISIBLE);
-                        if (!drawerLayoutFaceApp.isDrawerOpen(Gravity.LEFT)) {
-                            drawerLayoutFaceApp.openDrawer(Gravity.LEFT);
-                        }
+                        super.onDrawerOpened(drawerView);
                     }
-                }
-            });
-            drawerLayoutFaceApp.addDrawerListener(new DrawerLayout.SimpleDrawerListener() {
-                @Override
-                public void onDrawerOpened(View drawerView) {
-                    Drawable drawable = getResources().getDrawable(R.mipmap.icon_dsu1_for_mains_menu_faceapp_close222);///
-                    imageView_ЗначекApp.setImageDrawable(drawable);
-                    navigationViewFaceApp.setVisibility(View.VISIBLE);
-                    super.onDrawerOpened(drawerView);
-                }
 
-                @Override
-                public void onDrawerClosed(View drawerView) {
-                    Drawable drawable = getResources().getDrawable(R.mipmap.icon_dsu1_for_mains_menu_faceapp111);///
-                    imageView_ЗначекApp.setImageDrawable(drawable);
-                    navigationViewFaceApp.setVisibility(View.GONE);
-                    super.onDrawerClosed(drawerView);
-                }
-            });
-            navigationViewFaceApp.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-                @Override
-                public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                    switch (item.getItemId()) {
-                        // TODO: 06.04.2022
-                        case R.id.one:
-                            item.setChecked(true);
-                            Log.w(getPackageName().getClass().getName(), "item.getItemId() Посмотреть ошибки   " + item.getItemId() + "\n");//////////
-                            try {
-                                Intent Интент_Меню = new Intent(getApplication(), MainActivity_Errors.class);
-                                Интент_Меню.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);//////FLAG_ACTIVITY_SINGLE_TOP
-                                Log.d(this.getClass().getName(), "" +
-                                        "                     case R.id.ПунктМенюПервый:");
-                                startActivity(Интент_Меню);
-                            } catch (Exception e) {
-                                //  Block of code to handle errors
-                                e.printStackTrace();
-                                ///метод запись ошибок в таблицу
-                                Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
-                                        + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                                new Class_Generation_Errors(getApplicationContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
-                                        Thread.currentThread().getStackTrace()[2].getLineNumber());
-                            }
-                            break;
-                        case R.id.two:
-                            item.setChecked(true);
-                            Log.w(getPackageName().getClass().getName(), "item.getItemId() Хотите перерйти в натройки    " + item.getItemId() + "\n");/////////
-                            try {
-                                МетодЗапускаИзМенюНастроек();
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                                ///метод запись ошибок в таблицу
-                                Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
-                                        + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                                new Class_Generation_Errors(getApplicationContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
-                                        Thread.currentThread().getStackTrace()[2].getLineNumber());
-                            }
-                            break;
-                        case R.id.tree:
-                            item.setChecked(true);
-                            Log.w(getPackageName().getClass().getName(), "item.getItemId() Сменить пользователя и смена данных    " + item.getItemId() + "\n");/////////
-                            try {
-                                Boolean ЕслиСвязьсСервером =
-                                        new Class_Connections_Server(getApplicationContext()).МетодПингаСервераРаботаетИлиНет(getApplicationContext());
+                    @Override
+                    public void onDrawerClosed(View drawerView) {
+                        Drawable drawable = getResources().getDrawable(R.mipmap.icon_dsu1_for_mains_menu_faceapp111);///
+                        navigationViewFaceApp.setVisibility(View.GONE);
+                        super.onDrawerClosed(drawerView);
+                    }
+                });
+                navigationViewFaceApp.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+                    @Override
+                    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                        switch (item.getItemId()) {
+                            // TODO: 06.04.2022
+                            case R.id.one:
+                                item.setChecked(true);
+                                Log.w(getPackageName().getClass().getName(), "item.getItemId() Посмотреть ошибки   " + item.getItemId() + "\n");//////////
+                                try {
+                                    Intent Интент_Меню = new Intent(getApplication(), MainActivity_Errors.class);
+                                    Интент_Меню.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);//////FLAG_ACTIVITY_SINGLE_TOP
+                                    Log.d(this.getClass().getName(), "" +
+                                            "                     case R.id.ПунктМенюПервый:");
+                                    startActivity(Интент_Меню);
+                                } catch (Exception e) {
+                                    //  Block of code to handle errors
+                                    e.printStackTrace();
+                                    ///метод запись ошибок в таблицу
+                                    Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                                            + Thread.currentThread().getStackTrace()[2].getLineNumber());
+                                    new Class_Generation_Errors(getApplicationContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
+                                            Thread.currentThread().getStackTrace()[2].getLineNumber());
+                                }
+                                break;
+                            case R.id.two:
+                                item.setChecked(true);
+                                Log.w(getPackageName().getClass().getName(), "item.getItemId() Хотите перерйти в натройки    " + item.getItemId() + "\n");/////////
+                                try {
+                                    МетодЗапускаИзМенюНастроек();
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                    ///метод запись ошибок в таблицу
+                                    Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                                            + Thread.currentThread().getStackTrace()[2].getLineNumber());
+                                    new Class_Generation_Errors(getApplicationContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
+                                            Thread.currentThread().getStackTrace()[2].getLineNumber());
+                                }
+                                break;
+                            case R.id.tree:
+                                item.setChecked(true);
+                                Log.w(getPackageName().getClass().getName(), "item.getItemId() Сменить пользователя и смена данных    " + item.getItemId() + "\n");/////////
+                                try {
+                                    Boolean ЕслиСвязьсСервером =
+                                            new Class_Connections_Server(getApplicationContext()).МетодПингаСервераРаботаетИлиНет(getApplicationContext());
 
-                                if (ЕслиСвязьсСервером == true) {
-                                    String ПолученыйТекущееИмяПользователя = new Class_MODEL_synchronized(getApplicationContext())
-                                            .МетодПолучениеИмяСистемыДляСменыПользователя(getApplicationContext());
-                                    Log.d(this.getClass().getName(), "  ПолученыйТекущееИмяПользователя " +
-                                            ПолученыйТекущееИмяПользователя);
-                                    МетодДиалогаДляМеню("Пользователи Системы", "При смене пользователя,"
-                                            + "\n" + " поменяються и данные системы." + "\n"
-                                            + "Поменять пользователя ?" + "\n"
-                                            + " (текущий пользователь : ) " + ПолученыйТекущееИмяПользователя.toUpperCase());
-                                } else {
-                                    Toast.makeText(getApplicationContext(), "Для смены данных, нужно подключение к серверу !!! "
-                                            + "\n", Toast.LENGTH_LONG).show();
+                                    if (ЕслиСвязьсСервером == true) {
+                                        String ПолученыйТекущееИмяПользователя = new Class_MODEL_synchronized(getApplicationContext())
+                                                .МетодПолучениеИмяСистемыДляСменыПользователя(getApplicationContext());
+                                        Log.d(this.getClass().getName(), "  ПолученыйТекущееИмяПользователя " +
+                                                ПолученыйТекущееИмяПользователя);
+                                        МетодДиалогаДляМеню("Пользователи Системы", "При смене пользователя,"
+                                                + "\n" + " поменяються и данные системы." + "\n"
+                                                + "Поменять пользователя ?" + "\n"
+                                                + " (текущий пользователь : ) " + ПолученыйТекущееИмяПользователя.toUpperCase());
+                                    } else {
+                                        Toast.makeText(getApplicationContext(), "Для смены данных, нужно подключение к серверу !!! "
+                                                + "\n", Toast.LENGTH_LONG).show();
+                                    }
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                    ///метод запись ошибок в таблицу
+                                    Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                                            + Thread.currentThread().getStackTrace()[2].getLineNumber());
+                                    new Class_Generation_Errors(getApplicationContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
+                                            Thread.currentThread().getStackTrace()[2].getLineNumber());
                                 }
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                                ///метод запись ошибок в таблицу
-                                Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
-                                        + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                                new Class_Generation_Errors(getApplicationContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
-                                        Thread.currentThread().getStackTrace()[2].getLineNumber());
-                            }
-                            break;
-                        case R.id.four:
-                            item.setChecked(true);
-                            Log.w(getPackageName().getClass().getName(), "item.getItemId()  Синхронизация Данных с WebSocketListener-сервера ДСУ-1  " + item.getItemId() + "\n");/////////
-                            try {
-                                Boolean ЕслиСвязьсСервером =
-                                        new Class_Connections_Server(getApplicationContext()).МетодПингаСервераРаботаетИлиНет(getApplicationContext());
-                                if (ЕслиСвязьсСервером == true) {
-                                    // TODO: 28.09.2022 ЗАпускаем синхронизацию
-                                    МетодЗапускаСинихрниазцииИзМенюНаАктивтиFACEAPP();
-                                    Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
-                                            + " ЕслиСвязьсСервером " + ЕслиСвязьсСервером);
-                                } else {
-                                    activity.runOnUiThread(new Runnable() {
-                                        @Override
-                                        public void run() {
-                                            Toast toast = Toast.makeText(getApplicationContext(), "Нет связи c Cервером !!!", Toast.LENGTH_LONG);
-                                            toast.setGravity(Gravity.BOTTOM, 0, 40);
-                                            toast.show();
-                                            Log.i(this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName() + " время " + new Date().toLocaleString());
-                                        }
-                                    });
-                                    Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
-                                            + " ЕслиСвязьсСервером " + ЕслиСвязьсСервером);
+                                break;
+                            case R.id.four:
+                                item.setChecked(true);
+                                Log.w(getPackageName().getClass().getName(), "item.getItemId()  Синхронизация Данных с WebSocketListener-сервера ДСУ-1  " + item.getItemId() + "\n");/////////
+                                try {
+                                    Boolean ЕслиСвязьсСервером =
+                                            new Class_Connections_Server(getApplicationContext()).МетодПингаСервераРаботаетИлиНет(getApplicationContext());
+                                    if (ЕслиСвязьсСервером == true) {
+                                        // TODO: 28.09.2022 ЗАпускаем синхронизацию
+                                        МетодЗапускаСинихрниазцииИзМенюНаАктивтиFACEAPP();
+                                        Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
+                                                + " ЕслиСвязьсСервером " + ЕслиСвязьсСервером);
+                                    } else {
+                                        activity.runOnUiThread(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                Toast toast = Toast.makeText(getApplicationContext(), "Нет связи c Cервером !!!", Toast.LENGTH_LONG);
+                                                toast.setGravity(Gravity.BOTTOM, 0, 40);
+                                                toast.show();
+                                                Log.i(this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName() + " время " + new Date().toLocaleString());
+                                            }
+                                        });
+                                        Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
+                                                + " ЕслиСвязьсСервером " + ЕслиСвязьсСервером);
+                                    }
+                                    Log.d(this.getClass().getName(), "Отработала синх.. Из Меню Активти FACEAPP Синхронизация Данных с WebSocketListener-сервера ДСУ-1 ?");
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                    Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                                            + Thread.currentThread().getStackTrace()[2].getLineNumber());
+                                    new Class_Generation_Errors(getApplicationContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
+                                            Thread.currentThread().getStackTrace()[2].getLineNumber());
                                 }
-                                Log.d(this.getClass().getName(), "Отработала синх.. Из Меню Активти FACEAPP Синхронизация Данных с WebSocketListener-сервера ДСУ-1 ?");
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                                Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
-                                        + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                                new Class_Generation_Errors(getApplicationContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
-                                        Thread.currentThread().getStackTrace()[2].getLineNumber());
-                            }
-                            break;
-                        case R.id.shestoy:
-                            item.setChecked(true);
-                            Log.w(getPackageName().getClass().getName(), "item.getItemId()  Шаблоны из меню  " + item.getItemId() + "\n");/////////
-                            try {
-                                Intent Интент_BackВозвращаемАктивти = new Intent();
-                                Интент_BackВозвращаемАктивти.setClass(getApplicationContext(), MainActivity_New_Templates.class); // Т
-                                Интент_BackВозвращаемАктивти.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                                Интент_BackВозвращаемАктивти.putExtra("ЗапускШаблоновFaceAppБлокировкаКнопкиДа", true);
-                                startActivity(Интент_BackВозвращаемАктивти);
-                            } catch (Exception e) {
-                                //  Block of code to handle errors
-                                e.printStackTrace();
-                                ///метод запись ошибок в таблицу
-                                Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
-                                        + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                                new Class_Generation_Errors(getApplicationContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
-                                        Thread.currentThread().getStackTrace()[2].getLineNumber());
-                            }
-                            break;
-                        case R.id.sedmoy:
+                                break;
+                            case R.id.shestoy:
+                                item.setChecked(true);
+                                Log.w(getPackageName().getClass().getName(), "item.getItemId()  Шаблоны из меню  " + item.getItemId() + "\n");/////////
+                                try {
+                                    Intent Интент_BackВозвращаемАктивти = new Intent();
+                                    Интент_BackВозвращаемАктивти.setClass(getApplicationContext(), MainActivity_New_Templates.class); // Т
+                                    Интент_BackВозвращаемАктивти.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                    Интент_BackВозвращаемАктивти.putExtra("ЗапускШаблоновFaceAppБлокировкаКнопкиДа", true);
+                                    startActivity(Интент_BackВозвращаемАктивти);
+                                } catch (Exception e) {
+                                    //  Block of code to handle errors
+                                    e.printStackTrace();
+                                    ///метод запись ошибок в таблицу
+                                    Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                                            + Thread.currentThread().getStackTrace()[2].getLineNumber());
+                                    new Class_Generation_Errors(getApplicationContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
+                                            Thread.currentThread().getStackTrace()[2].getLineNumber());
+                                }
+                                break;
+                 /*       case R.id.sedmoy:
                             item.setChecked(true);
                             Log.w(getPackageName().getClass().getName(), "item.getItemId() МЕНЮ ОБНОВЛЕНИЕ ПО    " + item.getItemId() + "\n" + item);/////////
                             handlerAsync.post(()->{
@@ -457,43 +346,164 @@ public class MainActivity_Dashboard extends AppCompatActivity {
                                             Thread.currentThread().getStackTrace()[2].getLineNumber());
                                 }
                             });
-                            break;
+                            break;*/
 
-                        default:
-                            // TODO: 06.04.2022
-                            return false;
+                            default:
+                                // TODO: 06.04.2022
+                                return false;
+                        }
+                        if (drawerLayoutFaceApp.isDrawerOpen(Gravity.LEFT)) {
+                            drawerLayoutFaceApp.closeDrawer(Gravity.LEFT);
+                        }
+                        return true;
                     }
-                    if (drawerLayoutFaceApp.isDrawerOpen(Gravity.LEFT)) {
-                        drawerLayoutFaceApp.closeDrawer(Gravity.LEFT);
+                });
+            } catch (Exception e) {
+                e.printStackTrace();
+                Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                        + Thread.currentThread().getStackTrace()[2].getLineNumber());
+                new Class_Generation_Errors(getApplicationContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
+                        Thread.currentThread().getStackTrace()[2].getLineNumber());
+            }
+            // TODO: 04.04.2022
+        }
+
+
+
+        // TODO: 02.09.2021  метод Визуализация
+        private void МетодИнициализацияHandler() {
+            try{
+                handlerAsync=new Handler(Looper.getMainLooper()){
+
+
+                    @Override
+                    public void handleMessage(@NonNull Message msg) {
+                        super.handleMessage(msg);
                     }
-                    return true;
-                }
-            });
-        } catch (Exception e) {
-            e.printStackTrace();
-            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
-                    + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            new Class_Generation_Errors(getApplicationContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
-                    Thread.currentThread().getStackTrace()[2].getLineNumber());
-        }
-        // TODO: 04.04.2022
-    }
+
+                    @Override
+                    public void dispatchMessage(@NonNull Message msg) {
+                        super.dispatchMessage(msg);
+                        try {
+                            Bundle bundleCallsBackAsynsService=msg.getData();
+                            switch (msg.what){
+                                case 20:// процеессе
+
+                                    Toast toast = Toast.makeText(getApplicationContext(), "У Вас последняя версия ПО !!! ", Toast.LENGTH_LONG);
+                                    toast.setGravity(Gravity.BOTTOM, 0, 40);
+                                    toast.show();
 
 
-    private void МетодПовторныйЗапускУведомений() {
-        try {
-            new Class_Generation_SendBroadcastReceiver_And_Firebase_OneSignal(getApplicationContext()).МетодЗапускаУведомленияДляЗАДАЧ();
-            new Class_Generation_SendBroadcastReceiver_And_Firebase_OneSignal(getApplicationContext()).МетодЗапускаУведомленияЧАТА();
-            Log.w(getPackageName().getClass().getName(), "  " +
-                    " new Class_Generation_SendBroadcastReceiver_And_Firebase_OneSignal(getApplicationContext()).МетодПовторногоЗапускаУведомленияДляОдноразовойСинхрониазации()");
-        } catch (Exception e) {
-            e.printStackTrace();
-            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
-                    + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            new Class_Generation_Errors(getApplicationContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
-                    Thread.currentThread().getStackTrace()[2].getLineNumber());
+
+                                    Log.d(this.getClass().getName(), "\n" + " class " +
+                                            Thread.currentThread().getStackTrace()[2].getClassName()
+                                            + "\n" +
+                                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
+                                    break;
+
+                                case 34:// процеессе
+
+                                    Toast toast3 = Toast.makeText(getApplicationContext(), "Нет связи c Cервер ПО !!!", Toast.LENGTH_LONG);
+                                    toast3.setGravity(Gravity.BOTTOM, 0, 40);
+                                    toast3.show();
+
+                                    Log.d(this.getClass().getName(), "\n" + " class " +
+                                            Thread.currentThread().getStackTrace()[2].getClassName()
+                                            + "\n" +
+                                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
+                                    break;
+                            }
+
+
+                            Log.d(this.getClass().getName(), "\n" + " class " +
+                                    Thread.currentThread().getStackTrace()[2].getClassName()
+                                    + "\n" +
+                                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                                    + Thread.currentThread().getStackTrace()[2].getLineNumber());
+                            new   Class_Generation_Errors(getApplicationContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+                                    this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
+                                    Thread.currentThread().getStackTrace()[2].getLineNumber());
+                        }
+
+
+                    }
+                };
+
+                Log.i(getApplicationContext().getClass().getName(),  " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"  );
+            } catch (Exception e) {
+                e.printStackTrace();
+                Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                        + Thread.currentThread().getStackTrace()[2].getLineNumber());
+                new   Class_Generation_Errors(getApplicationContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+                        this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
+                        Thread.currentThread().getStackTrace()[2].getLineNumber());
+            }
         }
-    }
+
+
+        public void МЕтодУстанавливаемРазрешенияДляОновлениеПО() {
+            try {
+                //////////////////////TODO SERVICE
+                String[] permissions = new String[]{
+                        Manifest.permission.INTERNET,
+                        Manifest.permission.READ_PHONE_STATE,
+                        Manifest.permission.READ_EXTERNAL_STORAGE,
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                        Manifest.permission.VIBRATE,
+                        Manifest.permission.RECORD_AUDIO,
+                        Manifest.permission.RECORD_AUDIO,
+                        Manifest.permission.REQUEST_INSTALL_PACKAGES,
+                        Manifest.permission.ACCESS_FINE_LOCATION,
+                        Manifest.permission.ACCESS_LOCATION_EXTRA_COMMANDS,
+                        Manifest.permission.MANAGE_EXTERNAL_STORAGE,
+                        Manifest.permission.ACCESS_BACKGROUND_LOCATION,
+                        Manifest.permission.ACCESS_NETWORK_STATE,
+                        Manifest.permission.ACCESS_MEDIA_LOCATION,
+                        Manifest.permission.INSTALL_PACKAGES,
+                        Manifest.permission.WRITE_SETTINGS,
+                        Manifest.permission.WRITE_SECURE_SETTINGS
+                };
+                ActivityCompat.requestPermissions(activity, permissions, CAMERA_PERSSION_CODE);
+            } catch (Exception e) {
+                e.printStackTrace();
+                Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                        + Thread.currentThread().getStackTrace()[2].getLineNumber());
+                new Class_Generation_Errors(getApplicationContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
+                        Thread.currentThread().getStackTrace()[2].getLineNumber());
+
+            }
+        }
+
+
+
+
+    }//TODO END BUNIVEESS Logic
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -884,120 +894,9 @@ public class MainActivity_Dashboard extends AppCompatActivity {
         }
     }
 
-    public void МЕтодУстанавливаемРазрешенияДляОновлениеПО() {
-        try {
-            //////////////////////TODO SERVICE
-            String[] permissions = new String[]{
-                    Manifest.permission.INTERNET,
-                    Manifest.permission.READ_PHONE_STATE,
-                    Manifest.permission.READ_EXTERNAL_STORAGE,
-                    Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                    Manifest.permission.VIBRATE,
-                    Manifest.permission.RECORD_AUDIO,
-                    Manifest.permission.RECORD_AUDIO,
-                    Manifest.permission.REQUEST_INSTALL_PACKAGES,
-                    Manifest.permission.ACCESS_FINE_LOCATION,
-                    Manifest.permission.ACCESS_LOCATION_EXTRA_COMMANDS,
-                    Manifest.permission.MANAGE_EXTERNAL_STORAGE,
-                    Manifest.permission.ACCESS_BACKGROUND_LOCATION,
-                    Manifest.permission.ACCESS_NETWORK_STATE,
-                    Manifest.permission.ACCESS_MEDIA_LOCATION,
-                    Manifest.permission.INSTALL_PACKAGES,
-                    Manifest.permission.WRITE_SETTINGS,
-                    Manifest.permission.WRITE_SECURE_SETTINGS
-            };
-            ActivityCompat.requestPermissions(activity, permissions, 1);
-        } catch (Exception e) {
-            e.printStackTrace();
-            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
-                    + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            new Class_Generation_Errors(context).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
-                    Thread.currentThread().getStackTrace()[2].getLineNumber());
-
-        }
-    }
 
 
 
-
-
-    // TODO: 02.09.2021  метод Визуализация
-    private void МетодИнициализацияHandler() {
-        try{
-            handlerAsync=new Handler(Looper.getMainLooper()){
-
-
-                @Override
-                public void handleMessage(@NonNull Message msg) {
-                    super.handleMessage(msg);
-                }
-
-                @Override
-                public void dispatchMessage(@NonNull Message msg) {
-                    super.dispatchMessage(msg);
-                    try {
-                        Bundle bundleCallsBackAsynsService=msg.getData();
-                        switch (msg.what){
-                            case 20:// процеессе
-
-                                        Toast toast = Toast.makeText(getApplicationContext(), "У Вас последняя версия ПО !!! ", Toast.LENGTH_LONG);
-                                        toast.setGravity(Gravity.BOTTOM, 0, 40);
-                                        toast.show();
-
-
-
-                                Log.d(this.getClass().getName(), "\n" + " class " +
-                                        Thread.currentThread().getStackTrace()[2].getClassName()
-                                        + "\n" +
-                                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
-                                break;
-
-                            case 34:// процеессе
-
-                                Toast toast3 = Toast.makeText(getApplicationContext(), "Нет связи c Cервер ПО !!!", Toast.LENGTH_LONG);
-                                toast3.setGravity(Gravity.BOTTOM, 0, 40);
-                                toast3.show();
-
-                                Log.d(this.getClass().getName(), "\n" + " class " +
-                                        Thread.currentThread().getStackTrace()[2].getClassName()
-                                        + "\n" +
-                                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
-                                break;
-                        }
-
-
-                        Log.d(this.getClass().getName(), "\n" + " class " +
-                                Thread.currentThread().getStackTrace()[2].getClassName()
-                                + "\n" +
-                                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                        Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
-                                + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                        new   Class_Generation_Errors(getApplicationContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(),
-                                this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
-                                Thread.currentThread().getStackTrace()[2].getLineNumber());
-                    }
-
-
-                }
-            };
-
-            Log.i(getApplicationContext().getClass().getName(),  " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"  );
-        } catch (Exception e) {
-            e.printStackTrace();
-            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
-                    + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            new   Class_Generation_Errors(getApplicationContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(),
-                    this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
-                    Thread.currentThread().getStackTrace()[2].getLineNumber());
-        }
-    }
 
 
 
