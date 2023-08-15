@@ -26,6 +26,7 @@ import com.dsy.dsu.Business_logic_Only_Class.Class_Generation_Errors;
 import com.dsy.dsu.Code_For_Services.ServiceUpdatePoОбновлениеПО;
 import com.dsy.dsu.R;
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 /**
@@ -39,6 +40,7 @@ public class DashboardFragment extends DialogFragment {
     private  BuniccessLogicFra4gmentDashboard buniccessLogicFra4gmentDashboard;
 
     private     MaterialAlertDialogBuilder materialAlertDialogBuilder=null;
+    private MaterialCardView materialcardview_dashboard=null;
     public DashboardFragment() {
         // Required empty public constructor
     }
@@ -55,6 +57,7 @@ public class DashboardFragment extends DialogFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         buniccessLogicFra4gmentDashboard=new BuniccessLogicFra4gmentDashboard();
+        // TODO: 15.08.2023
         Log.d(this.getClass().getName(),"\n" + " class "
                 + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -65,7 +68,7 @@ public class DashboardFragment extends DialogFragment {
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
         try{
-       materialAlertDialogBuilder=    new MaterialAlertDialogBuilder(getActivity(),android.R.style.Theme_Dialog)
+       materialAlertDialogBuilder=    new MaterialAlertDialogBuilder(getActivity(),android.R.style.Theme_Dialog)//android.R.style.Theme_Dialog
                     .setCancelable(false)
                  .setCancelable(false)
                   .setView(R.layout.simple_dashbord_fragment1);
@@ -131,11 +134,19 @@ public class DashboardFragment extends DialogFragment {
             try{
                 WindowManager.LayoutParams layoutParams = new WindowManager.LayoutParams();
                 layoutParams.copyFrom(    getDialog().getWindow().getAttributes());
-                layoutParams.gravity = Gravity.CENTER_HORIZONTAL | Gravity.CENTER_VERTICAL;
+                layoutParams.gravity = Gravity.TOP | Gravity.BOTTOM;
                 layoutParams.width = WindowManager.LayoutParams.WRAP_CONTENT;
-                layoutParams.height =WindowManager.LayoutParams.WRAP_CONTENT;
+                layoutParams.height =WindowManager.LayoutParams.MATCH_PARENT;///WindowManager.LayoutParams.MATCH_PARENT;
                 getDialog().getWindow() .setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 getDialog().getWindow().setAttributes(layoutParams);
+
+                materialcardview_dashboard=    getDialog().getWindow().findViewById(R.id.materialcardview_dashboard);
+               // materialcardview_dashboard.setCardBackgroundColor(Color.TRANSPARENT);
+                      //  materialcardview_dashboard.setCardElevation(10);
+
+
+
+
                     /*         layoutParams.width = WindowManager.LayoutParams.MATCH_PARENT;
                 layoutParams.height =WindowManager.LayoutParams.WRAP_CONTENT;*/
              /*        layoutParams.width = WindowManager.LayoutParams.WRAP_CONTENT;

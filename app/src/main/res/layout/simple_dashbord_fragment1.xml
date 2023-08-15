@@ -4,35 +4,33 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/relativelayout_dashboard"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_margin="1dp"
-    android:padding="1dp"
+    android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".Dashboard.MainActivity_Dashboard">
-
-
-
-
-
-
-
 
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/materialcardview_dashboard"
         android:layout_width="match_parent"
-        android:layout_height="550dp"
+        android:layout_height="600dp"
+        android:background="@drawable/dialog_bg"
         android:animateLayoutChanges="true"
+        android:layout_centerInParent="true"
         android:checkable="false"
         android:clickable="false"
         android:focusable="true"
         android:gravity="center"
-        android:padding="1dp"
-        android:translationZ="15dp"
-        app:cardBackgroundColor="#6200EA"
-        app:cardCornerRadius="50dp"
+        app:cardBackgroundColor="#512DA8"
+        app:cardCornerRadius="20dp"
         app:cardElevation="2dp"
-        app:cardMaxElevation="10dp">
+        app:cardMaxElevation="10dp"
+        android:theme="@style/Theme.MaterialComponents.DayNight.DarkActionBar"
+        android:translationZ="10dp"
+        app:strokeColor="#4822A3"
+        app:strokeWidth="2dp">
+
+
+
     </com.google.android.material.card.MaterialCardView>
 
 
