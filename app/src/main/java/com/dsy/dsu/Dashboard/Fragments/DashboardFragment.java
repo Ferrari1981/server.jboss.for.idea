@@ -65,13 +65,7 @@ public class DashboardFragment extends DialogFragment {
         try{
        materialAlertDialogBuilder=    new MaterialAlertDialogBuilder(getActivity())
                     .setCancelable(false)
-                    .setTitle("Vtccf")
-                  .setView(R.layout.fragment_camera)
-                    .setMessage("СообщениеДиалога")
-                    .setPositiveButton("Да", null)
-                    .setNeutralButton("Ещё", null)
-                    .setNegativeButton("Очистить", null)
-                    .setIcon(R.mipmap.icon_bootasynctabel1 );
+                  .setView(R.layout.simple_dashbord_fragment1);
         Log.d(this.getClass().getName(),"\n" + " class "
                 + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -132,11 +126,12 @@ public class DashboardFragment extends DialogFragment {
             try{
                 WindowManager.LayoutParams layoutParams = new WindowManager.LayoutParams();
                 layoutParams.copyFrom(    getDialog().getWindow().getAttributes());
-                layoutParams.width = WindowManager.LayoutParams.MATCH_PARENT;
+       /*         layoutParams.width = WindowManager.LayoutParams.MATCH_PARENT;
+                layoutParams.height =WindowManager.LayoutParams.WRAP_CONTENT;*/
+
+                     layoutParams.width = WindowManager.LayoutParams.WRAP_CONTENT;
                 layoutParams.height =WindowManager.LayoutParams.WRAP_CONTENT;
-                //layoutParams.height =1350;
                 layoutParams.gravity = Gravity.CENTER;
-                layoutParams.setColorMode(Color.TRANSPARENT);
                 getDialog().getWindow() .setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 getDialog().getWindow().setAttributes(layoutParams);
                 getDialog().setCancelable(false);
