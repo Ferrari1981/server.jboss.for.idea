@@ -9,6 +9,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.content.pm.ActivityInfo;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
@@ -17,6 +18,7 @@ import android.os.Looper;
 import android.os.Message;
 import android.text.Spannable;
 import android.text.SpannableString;
+import android.text.style.ForegroundColorSpan;
 import android.text.style.RelativeSizeSpan;
 import android.util.Log;
 import android.view.Gravity;
@@ -380,10 +382,10 @@ public class MainActivity_Dashboard extends AppCompatActivity {
 
                             case R.id.    faur_abount:
                                 item.setChecked(true);
-                                Log.w(getPackageName().getClass().getName(), "item.getItemId() МЕНЮ ОБНОВЛЕНИЕ ПО    " + item.getItemId() + "\n" + item);/////////
-
                                 item.setTooltipText("ПО Союз-Автодор 2023 г.");
-
+                                Log.i(this.getClass().getName(), " Из меню установкаОбновление ПО "
+                                        + Thread.currentThread().getStackTrace()[2].getMethodName()
+                                        + " время " + new Date().toLocaleString());
                                 break;
 
 
