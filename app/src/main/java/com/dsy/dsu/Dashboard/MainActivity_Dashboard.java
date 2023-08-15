@@ -36,6 +36,10 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.dsy.dsu.Business_logic_Only_Class.Class_Clears_Tables;
 import com.dsy.dsu.Business_logic_Only_Class.Class_Connections_Server;
@@ -47,8 +51,10 @@ import com.dsy.dsu.Business_logic_Only_Class.Class_MODEL_synchronized;
 import com.dsy.dsu.Business_logic_Only_Class.PUBLIC_CONTENT;
 import com.dsy.dsu.Business_logic_Only_Class.Websocet.WebSocketss;
 import com.dsy.dsu.Code_ForTABEL.MainActivity_New_Templates;
+import com.dsy.dsu.Code_For_AdmissionMaterials.Window.FragmentCamera;
 import com.dsy.dsu.Code_For_Firebase_AndOneSignal_Здесь_КодДЛяСлужбыУведомленияFirebase.Class_Generation_SendBroadcastReceiver_And_Firebase_OneSignal;
 import com.dsy.dsu.Code_For_Services.ServiceUpdatePoОбновлениеПО;
+import com.dsy.dsu.Dashboard.Fragments.DashboardFragment;
 import com.dsy.dsu.For_Code_Settings_DSU1.MainActivity_Errors;
 import com.dsy.dsu.For_Code_Settings_DSU1.MainActivity_Settings;
 import com.dsy.dsu.R;
@@ -73,6 +79,8 @@ public class MainActivity_Dashboard extends AppCompatActivity {
     private ServiceUpdatePoОбновлениеПО.localBinderОбновлениеПО localBinderОбновлениеПО;//TODO новаЯ
 
     private      AlertDialog DialogBox=null;
+    private FragmentManager fragmentManager;
+    private FragmentTransaction fragmentTransaction;
     // TODO: 03.11.2022 FaceApp
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,6 +99,8 @@ public class MainActivity_Dashboard extends AppCompatActivity {
             ((Activity)activity).setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
             ((Activity) activity).setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LOCKED);
 
+            fragmentManager =  getSupportFragmentManager();
+            fragmentTransaction = fragmentManager.beginTransaction();
 
 
 
@@ -133,12 +143,13 @@ public class MainActivity_Dashboard extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         try {
+            buniccessLogicaActivityDashboard.  МетодБоковаяПанельОткрытьЗАкрыть();
+
+            buniccessLogicaActivityDashboard.     методStartingDashboardFragment();
+
             Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"  );
-
-            buniccessLogicaActivityDashboard.  МетодБоковаяПанельОткрытьЗАкрыть();
-            // TODO: 17.02.2023 ЗапускАнализа Наличитие Новой Версии ПО
         } catch (Exception e) {
             e.printStackTrace();
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
@@ -800,7 +811,35 @@ public class MainActivity_Dashboard extends AppCompatActivity {
 
         }
 
+        void методStartingDashboardFragment(){
+            try{
+                // TODO Запусукаем Фргамент DdshBoard
+                DashboardFragment dashboardFragment= DashboardFragment.newInstance();
+                Bundle data=new Bundle();
+                data.putBinder("binder",localBinderОбновлениеПО);
+                dashboardFragment.setArguments(data);
+                String fragmentNewImageNameaddToBackStack=   dashboardFragment.getClass().getName();
+                Fragment FragmentУжеЕСтьИлиНЕт=     fragmentManager.findFragmentByTag(fragmentNewImageNameaddToBackStack);
+                if (FragmentУжеЕСтьИлиНЕт==null) {
+                    fragmentTransaction.addToBackStack(fragmentNewImageNameaddToBackStack);
+                    dashboardFragment.show(getSupportFragmentManager(), "dashboardFragment");
+                    // TODO: 01.08.2023
+                }
+                Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
+                        + " FragmentУжеЕСтьИлиНЕт " +FragmentУжеЕСтьИлиНЕт );
+            } catch (Exception e) {
+                e.printStackTrace();
+                Log.e(getApplicationContext().getClass().getName(),
+                        "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
+                                " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
+                new   Class_Generation_Errors(getApplicationContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+                        this.getClass().getName().toString(), Thread.currentThread().getStackTrace()[2].getMethodName().toString(),
+                        Thread.currentThread().getStackTrace()[2].getLineNumber());
+            }
 
+        }
 
 
 
