@@ -116,7 +116,7 @@ public class MainActivity_Dashboard extends AppCompatActivity {
             buniccessLogicaActivityDashboard=new BuniccessLogicaActivityDashboard();
 
 
-           // buniccessLogicaActivityDashboard.  методСитсменыйхНастрокеДляActivity();
+            buniccessLogicaActivityDashboard.  методСитсменыйхНастрокеДляActivity();
             buniccessLogicaActivityDashboard. МетодБиндингаОбновлениеПО();
             buniccessLogicaActivityDashboard.  МетодИнициализацияHandler();
             // TODO: 18.02.2023 установки для Обновленеи ПО
@@ -187,6 +187,36 @@ public class MainActivity_Dashboard extends AppCompatActivity {
 
 
 
+
+
+    @Override
+    public void onBackPressed() {
+        try{
+            int count = getSupportFragmentManager().getBackStackEntryCount();
+   /*         int count = getSupportFragmentManager().getBackStackEntryCount();
+
+            if (count == 0) {
+                super.onBackPressed();
+                //additional code
+            } else {
+                getSupportFragmentManager().popBackStack();
+            }
+*/
+
+             finishAndRemoveTask();
+            Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"  );
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                    + Thread.currentThread().getStackTrace()[2].getLineNumber());
+            new Class_Generation_Errors(getApplicationContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
+                    Thread.currentThread().getStackTrace()[2].getLineNumber());
+            Log.d(this.getClass().getName(), "  Полусаем Ошибку e.toString() " + e.toString());
+        }
+    }
 
 
 
@@ -843,6 +873,7 @@ public class MainActivity_Dashboard extends AppCompatActivity {
                 Fragment FragmentУжеЕСтьИлиНЕт=     fragmentManager.findFragmentByTag(fragmentNewImageNameaddToBackStack);
                 if (FragmentУжеЕСтьИлиНЕт==null) {
                     fragmentTransaction.disallowAddToBackStack();
+                    fragmentManager.popBackStackImmediate();
 
                     dashboardFragmentTwo.show(getSupportFragmentManager(), "dashboardFragmentTwo");
                     // TODO: 01.08.2023
