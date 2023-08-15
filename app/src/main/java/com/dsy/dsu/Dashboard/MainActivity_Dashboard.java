@@ -55,10 +55,12 @@ import com.dsy.dsu.Business_logic_Only_Class.Class_MODEL_synchronized;
 import com.dsy.dsu.Business_logic_Only_Class.PUBLIC_CONTENT;
 import com.dsy.dsu.Business_logic_Only_Class.Websocet.WebSocketss;
 import com.dsy.dsu.Code_ForTABEL.MainActivity_New_Templates;
+import com.dsy.dsu.Code_For_AdmissionMaterials.Window.FragmentAdmissionMaterials;
 import com.dsy.dsu.Code_For_AdmissionMaterials.Window.FragmentCamera;
 import com.dsy.dsu.Code_For_Firebase_AndOneSignal_Здесь_КодДЛяСлужбыУведомленияFirebase.Class_Generation_SendBroadcastReceiver_And_Firebase_OneSignal;
 import com.dsy.dsu.Code_For_Services.ServiceUpdatePoОбновлениеПО;
 import com.dsy.dsu.Dashboard.Fragments.DashboardFragment;
+import com.dsy.dsu.Dashboard.Fragments.DashboardFragmentTwo;
 import com.dsy.dsu.For_Code_Settings_DSU1.MainActivity_Errors;
 import com.dsy.dsu.For_Code_Settings_DSU1.MainActivity_Settings;
 import com.dsy.dsu.R;
@@ -70,7 +72,6 @@ import java.util.Date;
 /////////////////////////////////////////////////////////////////////////
 public class MainActivity_Dashboard extends AppCompatActivity {
 
- private    LinearLayout linearLayout_dashboard;
     private   Activity activity;
     private DrawerLayout drawerLayout_dashboard;
     private  NavigationView navigator_dashboard;
@@ -95,8 +96,7 @@ public class MainActivity_Dashboard extends AppCompatActivity {
             setContentView(R.layout.activity_main_dashboard);
 
 
-            // TODO: 15.08.2023 Инициализация перменных
-            linearLayout_dashboard = (LinearLayout) findViewById(R.id.linearLayout_dashboard); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
+            // TODO: 15.08.2023 Инициализация перменных/////КНОПКА ТАБЕЛЬНОГО УЧЕТА
             drawerLayout_dashboard = (DrawerLayout) findViewById(R.id.drawerLayout_dashboard); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
             navigator_dashboard = (NavigationView) findViewById(R.id.navigator_dashboard); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
    
@@ -116,7 +116,7 @@ public class MainActivity_Dashboard extends AppCompatActivity {
             buniccessLogicaActivityDashboard=new BuniccessLogicaActivityDashboard();
 
 
-            buniccessLogicaActivityDashboard.  методСитсменыйхНастрокеДляActivity();
+           // buniccessLogicaActivityDashboard.  методСитсменыйхНастрокеДляActivity();
             buniccessLogicaActivityDashboard. МетодБиндингаОбновлениеПО();
             buniccessLogicaActivityDashboard.  МетодИнициализацияHandler();
             // TODO: 18.02.2023 установки для Обновленеи ПО
@@ -148,35 +148,6 @@ public class MainActivity_Dashboard extends AppCompatActivity {
 
 
 
-    @Override
-    public void onBackPressed() {
-        try{
-            int count = getSupportFragmentManager().getBackStackEntryCount();
-   /*         int count = getSupportFragmentManager().getBackStackEntryCount();
-
-            if (count == 0) {
-                super.onBackPressed();
-                //additional code
-            } else {
-                getSupportFragmentManager().popBackStack();
-            }
-*/
-
-            finishAndRemoveTask();
-        Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"  );
-
-    } catch (Exception e) {
-        e.printStackTrace();
-        Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
-                + Thread.currentThread().getStackTrace()[2].getLineNumber());
-        new Class_Generation_Errors(getApplicationContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
-                Thread.currentThread().getStackTrace()[2].getLineNumber());
-        Log.d(this.getClass().getName(), "  Полусаем Ошибку e.toString() " + e.toString());
-    }
-    }
-
 
     @Override
     protected void onStart() {
@@ -184,6 +155,7 @@ public class MainActivity_Dashboard extends AppCompatActivity {
         try {
           //  buniccessLogicaActivityDashboard.  МетодБоковаяПанельОткрытьЗАкрыть();
 
+          //  buniccessLogicaActivityDashboard.     методStartingDashboardFragmentAleaiDialog();
             buniccessLogicaActivityDashboard.     методStartingDashboardFragment();
 
             Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -849,7 +821,79 @@ public class MainActivity_Dashboard extends AppCompatActivity {
 
         }
 
+
+
+
+
+
+
+
+
+
+
+
         void методStartingDashboardFragment(){
+            try{
+                // TODO Запусукаем Фргамент DdshBoard
+                DashboardFragmentTwo dashboardFragmentTwo= DashboardFragmentTwo.newInstance();
+                Bundle data=new Bundle();
+                data.putBinder("binder",localBinderОбновлениеПО);
+                dashboardFragmentTwo.setArguments(data);
+                String fragmentNewImageNameaddToBackStack=   dashboardFragmentTwo.getClass().getName();
+                Fragment FragmentУжеЕСтьИлиНЕт=     fragmentManager.findFragmentByTag(fragmentNewImageNameaddToBackStack);
+                if (FragmentУжеЕСтьИлиНЕт==null) {
+                    fragmentTransaction.disallowAddToBackStack();
+
+                    dashboardFragmentTwo.show(getSupportFragmentManager(), "dashboardFragmentTwo");
+                    // TODO: 01.08.2023
+                    fragmentManager.setFragmentResultListener("CallBackDashborndFragment", lifecycleOwner, new FragmentResultListener() {
+                        @Override
+                        public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle result) {
+                            if (requestKey.equalsIgnoreCase("CallBackDashborndFragment")) {
+                                try{
+                                    onBackPressed();
+                                    Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
+                                            + " FragmentУжеЕСтьИлиНЕт " +FragmentУжеЕСтьИлиНЕт );
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                    Log.e(getApplicationContext().getClass().getName(),
+                                            "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
+                                                    " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
+                                    new   Class_Generation_Errors(getApplicationContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+                                            this.getClass().getName().toString(), Thread.currentThread().getStackTrace()[2].getMethodName().toString(),
+                                            Thread.currentThread().getStackTrace()[2].getLineNumber());
+                                }
+
+                            }
+                        }
+                    });
+                }
+                Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
+                        + " FragmentУжеЕСтьИлиНЕт " +FragmentУжеЕСтьИлиНЕт );
+            } catch (Exception e) {
+                e.printStackTrace();
+                Log.e(getApplicationContext().getClass().getName(),
+                        "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
+                                " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
+                new   Class_Generation_Errors(getApplicationContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+                        this.getClass().getName().toString(), Thread.currentThread().getStackTrace()[2].getMethodName().toString(),
+                        Thread.currentThread().getStackTrace()[2].getLineNumber());
+            }
+
+        }
+
+
+
+
+
+
+
+
+        void методStartingDashboardFragmentAleaiDialog(){
             try{
                 // TODO Запусукаем Фргамент DdshBoard
                 DashboardFragment dashboardFragment= DashboardFragment.newInstance();
