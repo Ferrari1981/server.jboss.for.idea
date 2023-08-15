@@ -18,6 +18,7 @@ import android.view.ViewGroup;
 import com.dsy.dsu.Business_logic_Only_Class.Class_Generation_Errors;
 import com.dsy.dsu.Code_For_Services.ServiceUpdatePoОбновлениеПО;
 import com.dsy.dsu.R;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -26,6 +27,8 @@ import com.dsy.dsu.R;
  */
 public class DashboardFragment extends DialogFragment {
     // TODO: Rename parameter arguments, choose names that match
+
+    private     MaterialAlertDialogBuilder materialAlertDialogBuilder=null;
     public DashboardFragment() {
         // Required empty public constructor
     }
@@ -46,14 +49,22 @@ public class DashboardFragment extends DialogFragment {
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
-        AlertDialog.Builder alertDialog=null;
         try{
-           alertDialog= new AlertDialog.Builder(getActivity())
+       materialAlertDialogBuilder=    new MaterialAlertDialogBuilder(getActivity())
+                    .setTitle("Фрагмент Дашборд")
+                    .setCancelable(false)
+                    .setMessage("СообщениеДиалога")
+                    .setPositiveButton("Да", null)
+                    .setNeutralButton("Ещё", null)
+                    .setNegativeButton("Очистить", null)
+                    .setIcon(R.mipmap.icon_bootasynctabel1 );
+
+  /*         alertDialog= new AlertDialog.Builder(getActivity())
                 .setTitle("Важное сообщение!")
                 .setMessage("Покормите кота!")
                 .setTitle("Союх Автодор")
                 .setIcon(R.drawable.icon_dowload_new_packagepo)
-                .setCancelable(true)
+                .setCancelable(false)
                 .setPositiveButton("ff", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -62,7 +73,7 @@ public class DashboardFragment extends DialogFragment {
                                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                                 " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
                     }
-                });
+                });*/
         Log.d(this.getClass().getName(),"\n" + " class "
                 + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -77,7 +88,7 @@ public class DashboardFragment extends DialogFragment {
                 Thread.currentThread().getStackTrace()[2].getLineNumber());
     }
 
-        return  alertDialog.create();
+        return    materialAlertDialogBuilder.create();
         //return super.onCreateDialog(savedInstanceState);
     }
 
