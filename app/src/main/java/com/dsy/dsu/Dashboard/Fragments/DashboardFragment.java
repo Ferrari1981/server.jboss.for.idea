@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.graphics.Color;
+import android.graphics.PixelFormat;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 
@@ -18,6 +19,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.view.animation.AlphaAnimation;
 import android.widget.ImageButton;
 
 import com.dsy.dsu.Business_logic_Only_Class.Class_Generation_Errors;
@@ -66,6 +68,7 @@ public class DashboardFragment extends DialogFragment {
        materialAlertDialogBuilder=    new MaterialAlertDialogBuilder(getActivity())
                     .setCancelable(false)
                   .setView(R.layout.simple_dashbord_fragment1);
+            materialAlertDialogBuilder.create();
         Log.d(this.getClass().getName(),"\n" + " class "
                 + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -80,7 +83,8 @@ public class DashboardFragment extends DialogFragment {
                 Thread.currentThread().getStackTrace()[2].getLineNumber());
     }
 
-        return    materialAlertDialogBuilder.create();
+
+        return    materialAlertDialogBuilder.show();
         //return super.onCreateDialog(savedInstanceState);
     }
 
@@ -128,10 +132,13 @@ public class DashboardFragment extends DialogFragment {
                 layoutParams.copyFrom(    getDialog().getWindow().getAttributes());
        /*         layoutParams.width = WindowManager.LayoutParams.MATCH_PARENT;
                 layoutParams.height =WindowManager.LayoutParams.WRAP_CONTENT;*/
-
-                     layoutParams.width = WindowManager.LayoutParams.WRAP_CONTENT;
+             /*        layoutParams.width = WindowManager.LayoutParams.WRAP_CONTENT;
+                layoutParams.height =WindowManager.LayoutParams.WRAP_CONTENT;*/
+                      /*layoutParams.x = 0;
+                layoutParams.y = 0;*/
+                layoutParams.gravity = Gravity.CENTER_HORIZONTAL | Gravity.CENTER_VERTICAL;
+                layoutParams.width = WindowManager.LayoutParams.WRAP_CONTENT;
                 layoutParams.height =WindowManager.LayoutParams.WRAP_CONTENT;
-                layoutParams.gravity = Gravity.CENTER;
                 getDialog().getWindow() .setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 getDialog().getWindow().setAttributes(layoutParams);
                 getDialog().setCancelable(false);
