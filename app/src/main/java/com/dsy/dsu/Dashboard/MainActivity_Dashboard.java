@@ -5,13 +5,11 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.ComponentName;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.ServiceConnection;
-import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
-import android.graphics.Color;
 import android.graphics.drawable.Drawable;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
@@ -21,27 +19,16 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
-import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ProgressBar;
-import android.widget.ScrollView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
 import androidx.annotation.UiThread;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.lifecycle.Observer;
 
-import com.dsy.dsu.AllDatabases.CREATE_DATABASE;
 import com.dsy.dsu.Business_logic_Only_Class.Class_Clears_Tables;
 import com.dsy.dsu.Business_logic_Only_Class.Class_Connections_Server;
 import com.dsy.dsu.Business_logic_Only_Class.Class_Find_Setting_User_Network;
@@ -51,11 +38,7 @@ import com.dsy.dsu.Business_logic_Only_Class.Class_Generator_One_WORK_MANAGER;
 import com.dsy.dsu.Business_logic_Only_Class.Class_MODEL_synchronized;
 import com.dsy.dsu.Business_logic_Only_Class.PUBLIC_CONTENT;
 import com.dsy.dsu.Business_logic_Only_Class.Websocet.WebSocketss;
-import com.dsy.dsu.CodeOrdersAnTransports.Window.MainActivityOrdersTransports;
-import com.dsy.dsu.Code_ForTABEL.MainActivity_List_Tabels;
 import com.dsy.dsu.Code_ForTABEL.MainActivity_New_Templates;
-import com.dsy.dsu.Code_For_AdmissionMaterials.Window.MainActivity_AdmissionMaterials;
-import com.dsy.dsu.Code_For_Commit_Payments_КодДля_Согласование.MainActivity_CommitPay;
 import com.dsy.dsu.Code_For_Firebase_AndOneSignal_Здесь_КодДЛяСлужбыУведомленияFirebase.Class_Generation_SendBroadcastReceiver_And_Firebase_OneSignal;
 import com.dsy.dsu.Code_For_Services.ServiceUpdatePoОбновлениеПО;
 import com.dsy.dsu.For_Code_Settings_DSU1.MainActivity_Errors;
@@ -71,14 +54,17 @@ public class MainActivity_Dashboard extends AppCompatActivity {
 
  private    LinearLayout linearLayout_dashboard;
     private   Activity activity;
-    private DrawerLayout drawerLayoutFaceApp;
-    private  NavigationView navigationViewFaceApp;
+    private DrawerLayout drawerLayout_dashboard;
+    private  NavigationView navigator_dashboard;
 
     private  BuniccessLogicaActivityDashboard buniccessLogicaActivityDashboard;
 
     private  Handler handlerAsync;
 
     public static final int CAMERA_PERSSION_CODE=1;
+    private ServiceUpdatePoОбновлениеПО.localBinderОбновлениеПО localBinderОбновлениеПО;//TODO новаЯ
+
+    private      AlertDialog DialogBox=null;
     // TODO: 03.11.2022 FaceApp
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,22 +75,26 @@ public class MainActivity_Dashboard extends AppCompatActivity {
 
             // TODO: 15.08.2023 Инициализация перменных
             linearLayout_dashboard = (LinearLayout) findViewById(R.id.linearLayout_dashboard); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
-            drawerLayoutFaceApp = (DrawerLayout) findViewById(R.id.drawerLayout_faceapp_menu); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
-            navigationViewFaceApp = (NavigationView) findViewById(R.id.navigator_faceapp_main); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
+            drawerLayout_dashboard = (DrawerLayout) findViewById(R.id.drawerLayout_dashboard); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
+            navigator_dashboard = (NavigationView) findViewById(R.id.navigator_dashboard); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
    
             activity = this;
             getSupportActionBar().hide(); ///скрывать тул бар
-            ((Activity) getApplicationContext()).setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-            ((Activity) getApplicationContext()).setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LOCKED);
+            ((Activity)activity).setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+            ((Activity) activity).setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LOCKED);
 
 
 
 
             // TODO: 15.08.2023 Начинается Пользовательский КОд
             buniccessLogicaActivityDashboard=new BuniccessLogicaActivityDashboard();
+
+            buniccessLogicaActivityDashboard. МетодБиндингаОбновлениеПО();
             buniccessLogicaActivityDashboard.  МетодИнициализацияHandler();
             // TODO: 18.02.2023 установки для Обновленеи ПО
             buniccessLogicaActivityDashboard.    МЕтодУстанавливаемРазрешенияДляОновлениеПО();
+
+            buniccessLogicaActivityDashboard.       МетодДляСлушательБоковойПанелиFaceApp();
 
             // TODO: 16.11.2022  ПОСЛЕ УСТАНОВКИ РАБОТАЕТ ОДИН РАЗ ПРИ СТАРТЕ ЗАРУСК ОБЩЕГО WORK MANAGER
             new Class_Generation_SendBroadcastReceiver_And_Firebase_OneSignal(getApplicationContext()).МетодЗапускаетОБЩУЮСинхронизацию();
@@ -166,14 +156,46 @@ public class MainActivity_Dashboard extends AppCompatActivity {
     }
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    // TODO: 15.08.2023 НачинаетсяБизнеЛОгика Активтив Dashboard
+    // TODO: 15.08.2023 НачинаетсяБизнеЛОгика Активтив Dashboard
+    // TODO: 15.08.2023 НачинаетсяБизнеЛОгика Активтив Dashboard
+    // TODO: 15.08.2023 НачинаетсяБизнеЛОгика Активтив Dashboard
+    // TODO: 15.08.2023 НачинаетсяБизнеЛОгика Активтив Dashboard
     // TODO: 15.08.2023 НачинаетсяБизнеЛОгика Активтив Dashboard
 
     class BuniccessLogicaActivityDashboard {
 
         private void МетодБоковаяПанельОткрытьЗАкрыть() {
             try {
-                if (drawerLayoutFaceApp.isDrawerOpen(Gravity.LEFT)) {
-                    drawerLayoutFaceApp.closeDrawer(Gravity.LEFT);
+                if (drawerLayout_dashboard.isDrawerOpen(Gravity.LEFT)) {
+                    drawerLayout_dashboard.closeDrawer(Gravity.LEFT);
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -189,22 +211,22 @@ public class MainActivity_Dashboard extends AppCompatActivity {
         private void МетодДляСлушательБоковойПанелиFaceApp() {
             // TODO: 06.04.2022
             try {
-                drawerLayoutFaceApp.addDrawerListener(new DrawerLayout.SimpleDrawerListener() {
+                drawerLayout_dashboard.addDrawerListener(new DrawerLayout.SimpleDrawerListener() {
                     @Override
                     public void onDrawerOpened(View drawerView) {
                         Drawable drawable = getResources().getDrawable(R.mipmap.icon_dsu1_for_mains_menu_faceapp_close222);///
-                        navigationViewFaceApp.setVisibility(View.VISIBLE);
+                        navigator_dashboard.setVisibility(View.VISIBLE);
                         super.onDrawerOpened(drawerView);
                     }
 
                     @Override
                     public void onDrawerClosed(View drawerView) {
                         Drawable drawable = getResources().getDrawable(R.mipmap.icon_dsu1_for_mains_menu_faceapp111);///
-                        navigationViewFaceApp.setVisibility(View.GONE);
+                        navigator_dashboard.setVisibility(View.GONE);
                         super.onDrawerClosed(drawerView);
                     }
                 });
-                navigationViewFaceApp.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+                navigator_dashboard.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
                     @Override
                     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                         switch (item.getItemId()) {
@@ -219,9 +241,7 @@ public class MainActivity_Dashboard extends AppCompatActivity {
                                             "                     case R.id.ПунктМенюПервый:");
                                     startActivity(Интент_Меню);
                                 } catch (Exception e) {
-                                    //  Block of code to handle errors
                                     e.printStackTrace();
-                                    ///метод запись ошибок в таблицу
                                     Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
                                             + Thread.currentThread().getStackTrace()[2].getLineNumber());
                                     new Class_Generation_Errors(getApplicationContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
@@ -235,7 +255,6 @@ public class MainActivity_Dashboard extends AppCompatActivity {
                                     МетодЗапускаИзМенюНастроек();
                                 } catch (Exception e) {
                                     e.printStackTrace();
-                                    ///метод запись ошибок в таблицу
                                     Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
                                             + Thread.currentThread().getStackTrace()[2].getLineNumber());
                                     new Class_Generation_Errors(getApplicationContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
@@ -254,7 +273,7 @@ public class MainActivity_Dashboard extends AppCompatActivity {
                                                 .МетодПолучениеИмяСистемыДляСменыПользователя(getApplicationContext());
                                         Log.d(this.getClass().getName(), "  ПолученыйТекущееИмяПользователя " +
                                                 ПолученыйТекущееИмяПользователя);
-                                        МетодДиалогаДляМеню("Пользователи Системы", "При смене пользователя,"
+                                        СообщениеДляСменыДанныхПользователя(  "При смене пользователя,"
                                                 + "\n" + " поменяються и данные системы." + "\n"
                                                 + "Поменять пользователя ?" + "\n"
                                                 + " (текущий пользователь : ) " + ПолученыйТекущееИмяПользователя.toUpperCase());
@@ -264,7 +283,6 @@ public class MainActivity_Dashboard extends AppCompatActivity {
                                     }
                                 } catch (Exception e) {
                                     e.printStackTrace();
-                                    ///метод запись ошибок в таблицу
                                     Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
                                             + Thread.currentThread().getStackTrace()[2].getLineNumber());
                                     new Class_Generation_Errors(getApplicationContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
@@ -327,7 +345,7 @@ public class MainActivity_Dashboard extends AppCompatActivity {
                                             Thread.currentThread().getStackTrace()[2].getLineNumber());
                                 }
                                 break;
-                 /*       case R.id.sedmoy:
+                        case R.id.sedmoy:
                             item.setChecked(true);
                             Log.w(getPackageName().getClass().getName(), "item.getItemId() МЕНЮ ОБНОВЛЕНИЕ ПО    " + item.getItemId() + "\n" + item);/////////
                             handlerAsync.post(()->{
@@ -346,14 +364,14 @@ public class MainActivity_Dashboard extends AppCompatActivity {
                                             Thread.currentThread().getStackTrace()[2].getLineNumber());
                                 }
                             });
-                            break;*/
+                            break;
 
                             default:
                                 // TODO: 06.04.2022
                                 return false;
                         }
-                        if (drawerLayoutFaceApp.isDrawerOpen(Gravity.LEFT)) {
-                            drawerLayoutFaceApp.closeDrawer(Gravity.LEFT);
+                        if (drawerLayout_dashboard.isDrawerOpen(Gravity.LEFT)) {
+                            drawerLayout_dashboard.closeDrawer(Gravity.LEFT);
                         }
                         return true;
                     }
@@ -482,298 +500,88 @@ public class MainActivity_Dashboard extends AppCompatActivity {
             }
         }
 
+        private void МетодЗапускаСинихрниазцииИзМенюНаАктивтиFACEAPP() {
+            try {
+                final Integer[] ФинальныйРезультатФоновойСинхронизации = {0};
+                ProgressDialog progressDialogДляСинхронизации;
+                progressDialogДляСинхронизации = new ProgressDialog(activity);
+                progressDialogДляСинхронизации.setTitle("Синхронизация");
+                progressDialogДляСинхронизации.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+                progressDialogДляСинхронизации.setProgress(0);
+                progressDialogДляСинхронизации.setCanceledOnTouchOutside(false);
+                progressDialogДляСинхронизации.setMessage("Обмен данными ....");
+                progressDialogДляСинхронизации.show();
+
+                handlerAsync.post(() -> {
+                    boolean СтатусСетиВыбранныйПользователем =
+                            new Class_Find_Setting_User_Network(getApplicationContext()).МетодПроветяетКакуюУстановкуВыбралПользовательСети();
+                    Log.d(this.getClass().getName(), "  РезультатПроВеркиУстановкиПользователяРежимРаботыСети "
+                            + СтатусСетиВыбранныйПользователем);
+                    Class_Connections_Server class_connections_serverПингаСерераИзАктивтиМеню = new Class_Connections_Server(getApplicationContext());
+                    PUBLIC_CONTENT public_contentЗапусСинхрониазцииИМеню = new PUBLIC_CONTENT(getApplicationContext());
+
+                    if (СтатусСетиВыбранныйПользователем == true) {
+                        Boolean СтатусСервераСоюзаВключенИлиНЕт =
+                                class_connections_serverПингаСерераИзАктивтиМеню.МетодПингаСервераРаботаетИлиНет(getApplicationContext());
+                        if (СтатусСервераСоюзаВключенИлиНЕт == true) {
+                            Integer ПубличныйIDДляОдноразовойСинхрониазции =
+                                    new Class_Generations_PUBLIC_CURRENT_ID().ПолучениеПубличногоТекущегоПользователяID(getApplicationContext());
+
+                            Bundle bundleДляПЕредачи = new Bundle();
+                            bundleДляПЕредачи.putInt("IDПубличныйНеМойАСкемБылаПереписака", ПубличныйIDДляОдноразовойСинхрониазции);
+                            bundleДляПЕредачи.putBoolean("StatusOneWokManagers", true);
+                            Intent intentЗапускОднорworkanager = new Intent();
+                            intentЗапускОднорworkanager.putExtras(bundleДляПЕредачи);
+                            // TODO: 02.08.2022
+                            // TODO: 02.08.2022
+                            new Class_Generator_One_WORK_MANAGER(getApplicationContext()).МетодОдноразовыйЗапускВоерМенеджера(getApplicationContext(),intentЗапускОднорworkanager);
+                            // TODO: 26.06.2022
+                            Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
+                                    + " ПубличныйIDДляОдноразовойСинхрониазции " + ПубличныйIDДляОдноразовойСинхрониазции);
+                            handlerAsync.postDelayed(() -> {
+                                progressDialogДляСинхронизации.dismiss();
+                                progressDialogДляСинхронизации.cancel();
+                            }, 3000);
 
 
-
-    }//TODO END BUNIVEESS Logic
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    void МетодFaceApp_СлушательПриНажатииНаКнопки() {
-        try {
-            КнопкаТабель.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    try {
-                        // TODO: 23.03.2022
-                        progressBarTabel.setVisibility(View.VISIBLE);
-                        // TODO: 23.03.2022
-                        КнопкаТабель.setBackgroundColor(Color.parseColor("#F0FFFF"));
-                        Intent Интент_ЗапускТабельногоУчётаПервыйШаг = new Intent();
-                        Bundle data = new Bundle();
-                        Интент_ЗапускТабельногоУчётаПервыйШаг.putExtras(data);
-                        Интент_ЗапускТабельногоУчётаПервыйШаг.setClass(getApplication(), MainActivity_List_Tabels.class); //  ТЕСТ КОД КОТОРЫЙ ЗАПУСКАЕТ ACTIVITY VIEWDATA  ПРОВЕРИТЬ ОБМЕН
-                        Интент_ЗапускТабельногоУчётаПервыйШаг.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                        Log.d(this.getClass().getName(), "" + "    КнопкаТабельныйУчёт.setOnClickListener(new View.OnClickListener() {");
-                        startActivity(Интент_ЗапускТабельногоУчётаПервыйШаг);
-                        handlerAsync.postDelayed(() -> {
-                            progressBarTabel.setVisibility(View.INVISIBLE);
-                            КнопкаТабель.setBackgroundColor(Color.parseColor("#FFFFFF"));
-                        }, 3000);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                        ///метод запись ошибок в таблицу
-                        Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
-                                + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                        new Class_Generation_Errors(getApplicationContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
-                                Thread.currentThread().getStackTrace()[2].getLineNumber());
-                    }
-                }
-
-
-            });
-
-            КнопкаСогласование.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    try {
-                        progressCommitpay.setVisibility(View.VISIBLE);
-                        КнопкаСогласование.setBackgroundColor(Color.parseColor("#F0FFFF"));
-                        Log.d(this.getClass().getName(), "Запускает Согласния   ");
-                        Intent intentЗапускСогласования1C = new Intent();
-                        Bundle data = new Bundle();
-                        intentЗапускСогласования1C.putExtras(data);
-                        intentЗапускСогласования1C.setClass(getApplicationContext(), MainActivity_CommitPay.class);//рабочий
-                        intentЗапускСогласования1C.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                        startActivity(intentЗапускСогласования1C);
-                        handlerAsync.postDelayed(() -> {
-                            progressCommitpay.setVisibility(View.INVISIBLE);
-                            КнопкаСогласование.setBackgroundColor(Color.parseColor("#FFFFFF"));
-                        }, 3000);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                        Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
-                                + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                        new Class_Generation_Errors(getApplicationContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(),
-                                Thread.currentThread().getStackTrace()[2].getMethodName(),
-                                Thread.currentThread().getStackTrace()[2].getLineNumber());
-                    }
-                }
-
-
-            });
-            // TODO: 14.04.2023 Запускаем получение материалов
-                    КнопкаПоступлениеМатериалов.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            try {
-                                prograessbarControlAccess.setVisibility(View.VISIBLE);
-                                КнопкаПоступлениеМатериалов.setBackgroundColor(Color.parseColor("#F0FFFF"));
-                                Log.d(this.getClass().getName(), "Запускает Согласния   ");
-                                Intent ИнтентДляЗапускаПолуступлениеМатериалов = new Intent();
-                                Bundle data = new Bundle();
-                                ИнтентДляЗапускаПолуступлениеМатериалов.putExtras(data);
-                                ИнтентДляЗапускаПолуступлениеМатериалов.setClass(getApplicationContext(), MainActivity_AdmissionMaterials.class);//рабочий
-                                ИнтентДляЗапускаПолуступлениеМатериалов.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                                startActivity(ИнтентДляЗапускаПолуступлениеМатериалов);
-                                handlerAsync.postDelayed(() -> {
-                                    prograessbarControlAccess.setVisibility(View.INVISIBLE);
-                                    КнопкаПоступлениеМатериалов.setBackgroundColor(Color.parseColor("#FFFFFF"));
-                                }, 3000);
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                                Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
-                                        + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                                new Class_Generation_Errors(getApplicationContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(),
-                                        Thread.currentThread().getStackTrace()[2].getMethodName(),
-                                        Thread.currentThread().getStackTrace()[2].getLineNumber());
-                            }
-
-
+                        } else {
+                            activity.runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    Toast toast = Toast.makeText(getApplicationContext(), "Сервер выкл. !!!", Toast.LENGTH_LONG);
+                                    toast.setGravity(Gravity.BOTTOM, 0, 40);
+                                    toast.show();
+                                }
+                            });
                         }
-                    });
-            // TODO: 14.04.2023 Запускаем Заявка НА Транспорт
-            КнопкаЗаявкаНаТранспорт.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    try {
-                        // TODO: 23.05.2023 тест код
-                        prograessbarOrderTransport.setVisibility(View.VISIBLE);
-                        КнопкаЗаявкаНаТранспорт.setBackgroundColor(Color.parseColor("#F0FFFF"));
-                        Log.d(this.getClass().getName(), "Запускает Согласния   ");
-                        Intent ИнтентЗаявкаНаТранспорт = new Intent();
-                        Bundle data = new Bundle();
-                        ИнтентЗаявкаНаТранспорт.putExtras(data);
-                        ИнтентЗаявкаНаТранспорт.setClass(getApplicationContext(), MainActivityOrdersTransports.class);//рабочий
-                        ИнтентЗаявкаНаТранспорт.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                        startActivity(ИнтентЗаявкаНаТранспорт);
-                        handlerAsync.postDelayed(() -> {
-                            prograessbarOrderTransport.setVisibility(View.INVISIBLE);
-                            КнопкаЗаявкаНаТранспорт.setBackgroundColor(Color.parseColor("#FFFFFF"));
-                        }, 3000);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                        Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
-                                + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                        new Class_Generation_Errors(getApplicationContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(),
-                                Thread.currentThread().getStackTrace()[2].getMethodName(),
-                                Thread.currentThread().getStackTrace()[2].getLineNumber());
                     }
+                });
 
 
-                }
-            });
+            } catch (Exception e) {
+                e.printStackTrace();
+                Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
+                        " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
+                new Class_Generation_Errors(getApplicationContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(),
+                        Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
 
-
-
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
-                    + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            new Class_Generation_Errors(getApplicationContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
-                    Thread.currentThread().getStackTrace()[2].getLineNumber());
+            }
         }
-
-    }
-
-
-    private void МетодЗапускаСинихрниазцииИзМенюНаАктивтиFACEAPP() {
-        try {
-            final Integer[] ФинальныйРезультатФоновойСинхронизации = {0};
-            ProgressDialog progressDialogДляСинхронизации;
-            progressDialogДляСинхронизации = new ProgressDialog(activity);
-            progressDialogДляСинхронизации.setTitle("Синхронизация");
-            progressDialogДляСинхронизации.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-            progressDialogДляСинхронизации.setProgress(0);
-            progressDialogДляСинхронизации.setCanceledOnTouchOutside(false);
-            progressDialogДляСинхронизации.setMessage("Обмен данными ....");
-            progressDialogДляСинхронизации.show();
-
-            handlerAsync.post(() -> {
-                boolean СтатусСетиВыбранныйПользователем =
-                        new Class_Find_Setting_User_Network(getApplicationContext()).МетодПроветяетКакуюУстановкуВыбралПользовательСети();
-                Log.d(this.getClass().getName(), "  РезультатПроВеркиУстановкиПользователяРежимРаботыСети "
-                        + СтатусСетиВыбранныйПользователем);
-                Class_Connections_Server class_connections_serverПингаСерераИзАктивтиМеню = new Class_Connections_Server(getApplicationContext());
-                PUBLIC_CONTENT public_contentЗапусСинхрониазцииИМеню = new PUBLIC_CONTENT(getApplicationContext());
-
-                if (СтатусСетиВыбранныйПользователем == true) {
-                    Boolean СтатусСервераСоюзаВключенИлиНЕт =
-                            class_connections_serverПингаСерераИзАктивтиМеню.МетодПингаСервераРаботаетИлиНет(getApplicationContext());
-                    if (СтатусСервераСоюзаВключенИлиНЕт == true) {
-                        Integer ПубличныйIDДляОдноразовойСинхрониазции =
-                                new Class_Generations_PUBLIC_CURRENT_ID().ПолучениеПубличногоТекущегоПользователяID(getApplicationContext());
-
-                        Bundle bundleДляПЕредачи = new Bundle();
-                        bundleДляПЕредачи.putInt("IDПубличныйНеМойАСкемБылаПереписака", ПубличныйIDДляОдноразовойСинхрониазции);
-                        bundleДляПЕредачи.putBoolean("StatusOneWokManagers", true);
-                        Intent intentЗапускОднорworkanager = new Intent();
-                        intentЗапускОднорworkanager.putExtras(bundleДляПЕредачи);
-                        // TODO: 02.08.2022
-                        // TODO: 02.08.2022
-                        new Class_Generator_One_WORK_MANAGER(getApplicationContext()).МетодОдноразовыйЗапускВоерМенеджера(getApplicationContext(),intentЗапускОднорworkanager);
-                        // TODO: 26.06.2022
-                        Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
-                                + " ПубличныйIDДляОдноразовойСинхрониазции " + ПубличныйIDДляОдноразовойСинхрониазции);
-                        handlerAsync.postDelayed(() -> {
-                            progressDialogДляСинхронизации.dismiss();
-                            progressDialogДляСинхронизации.cancel();
-                        }, 3000);
-
-
-                    } else {
-                        activity.runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                Toast toast = Toast.makeText(getApplicationContext(), "Сервер выкл. !!!", Toast.LENGTH_LONG);
-                                toast.setGravity(Gravity.BOTTOM, 0, 40);
-                                toast.show();
-                            }
-                        });
-                    }
-                }
-            });
-
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
-                    " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            new Class_Generation_Errors(getApplicationContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(),
-                    Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
-
-        }
-    }
-
-    ///MESSGABOX ДЛЯ ГЛАВНОГО МЕНЮ    ///MESSGABOX ДЛЯ ГЛАВНОГО МЕНЮ    ///MESSGABOX ДЛЯ ГЛАВНОГО МЕНЮ    ///MESSGABOX ДЛЯ ГЛАВНОГО МЕНЮ    ///MESSGABOX ДЛЯ ГЛАВНОГО МЕНЮ    ///MESSGABOX ДЛЯ ГЛАВНОГО МЕНЮ    ///MESSGABOX ДЛЯ ГЛАВНОГО МЕНЮ
-    @UiThread
-    protected void МетодДиалогаДляМеню(String ШаблонСообщения, String Самообщение) {
-        try {
+        @UiThread
+        protected void СообщениеДляСменыДанныхПользователя(String Самообщение) {
+            try {
 //////сам вид
-            final AlertDialog DialogBox = new MaterialAlertDialogBuilder(activity)
-                    .setTitle(ШаблонСообщения)
-                    .setMessage(Самообщение)
-                    .setPositiveButton("Да", null)
-                    .setNegativeButton("Нет", null)
-                    .setIcon(R.drawable.icon_dsu1_web_success)
-                    .show();
-            final Button MessageBox = DialogBox.getButton(AlertDialog.BUTTON_POSITIVE);
-            MessageBox.setOnClickListener(new View.OnClickListener() {
-                @RequiresApi(api = Build.VERSION_CODES.O)
-                @Override
-                public void onClick(View v) {
-                    try {
-                        DialogBox.dismiss();
-                        Intent Интент_Меню = new Intent();
-                        switch (ШаблонСообщения.trim()) {
-                            case "Ошибки системы":
+
+                MaterialAlertDialogBuilder materialAlertDialogBuilder= new MaterialAlertDialogBuilder(activity)
+                        .setTitle("Смена пользователя")
+                        .setMessage(Самообщение)
+                        .setPositiveButton("Да", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                Intent Интент_Меню = new Intent();
                                 try {
-                                    Интент_Меню = new Intent(getApplication(), MainActivity_Errors.class);
-                                    Интент_Меню.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);//////FLAG_ACTIVITY_SINGLE_TOP
-                                    startActivity(Интент_Меню);
-                                } catch (Exception e) {
-                                    e.printStackTrace();
-                                    Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
-                                            + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                                    new Class_Generation_Errors(getApplicationContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(),
-                                            this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
-                                            Thread.currentThread().getStackTrace()[2].getLineNumber());
-                                }
-                                break;
-                            case "Данных системы":
-                                try {
-                                    Integer ПубличныйIDДляФрагмента = new Class_Generations_PUBLIC_CURRENT_ID().ПолучениеПубличногоТекущегоПользователяID(getApplicationContext());
-                                    if (ПубличныйIDДляФрагмента == null) {
-                                        ПубличныйIDДляФрагмента = 0;
-                                    }
-                                   /* new Class_Generation_SendBroadcastReceiver_And_Firebase_OneSignal(getApplicationContext()).
-                                            МетодЗапускаетОДНОРАЗОВУЮСинхронизациюВнутриWorkManager(getApplicationContext(),
-                                                    Integer.parseInt(ПубличныйIDДляФрагмента.toString()));*/
-                                    Log.d(this.getClass().getName(), "    case \"Данных системы\": запуск синхрониазции из активти Одноразвой Службой  " + ПубличныйIDДляФрагмента);
-                                } catch (Exception e) {
-                                    e.printStackTrace();
-                                    Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
-                                            " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                                    new Class_Generation_Errors(getApplicationContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(),
-                                            Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
-                                }
-                                break;
-                            case "Пользователи Системы":
-                                try {
-                                    // TODO: 24.04.2023  запускаем простую синхрониазцию
-                                  ///  методЗапускСинхронизацииДоСменыПользователя();
                                     // TODO: 24.04.2023  запуск смены Пользоватедя Данные
                                     ProgressDialog prograssbarСменаДанныхПользователя;
                                     prograssbarСменаДанныхПользователя = new ProgressDialog(activity);
@@ -784,17 +592,17 @@ public class MainActivity_Dashboard extends AppCompatActivity {
                                     prograssbarСменаДанныхПользователя.setMessage("в процессе...");
                                     prograssbarСменаДанныхПользователя.show();
 
-                                        try{
+                                    try{
                                         PUBLIC_CONTENT Class_Engine_SQLГдеНаходитьсяМенеджерПотоков = new PUBLIC_CONTENT(activity);
-                                            Class_Clears_Tables class_clears_tables=     new Class_Clears_Tables(activity,
-                                                    handlerAsync,
-                                                    prograssbarСменаДанныхПользователя);
+                                        Class_Clears_Tables class_clears_tables=     new Class_Clears_Tables(activity,
+                                                handlerAsync,
+                                                prograssbarСменаДанныхПользователя);
 
                                         Integer    РезультатОчистикТАблицИДобалениеДаты = class_clears_tables
-                                                        .методСменаДанныхПользователя(activity,
-                                                                Class_Engine_SQLГдеНаходитьсяМенеджерПотоков.МенеджерПотоков,
-                                                                activity);
-                                            Log.d(this.getClass().getName(), "   ЗАПУСК ФОНРезультатОчистикТАблицИДобалениеДаты " +
+                                                .методСменаДанныхПользователя(activity,
+                                                        Class_Engine_SQLГдеНаходитьсяМенеджерПотоков.МенеджерПотоков,
+                                                        activity);
+                                        Log.d(this.getClass().getName(), "   ЗАПУСК ФОНРезультатОчистикТАблицИДобалениеДаты " +
                                                 РезультатОчистикТАблицИДобалениеДаты);
                                     } catch (Exception e) {
                                         e.printStackTrace();
@@ -805,7 +613,11 @@ public class MainActivity_Dashboard extends AppCompatActivity {
                                                 this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
                                                 Thread.currentThread().getStackTrace()[2].getLineNumber());
                                     }
-
+                                    Log.d(this.getClass().getName(), "\n" + " class " +
+                                            Thread.currentThread().getStackTrace()[2].getClassName()
+                                            + "\n" +
+                                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
                                 } catch (Exception e) {
                                     e.printStackTrace();
                                     Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName()
@@ -816,124 +628,169 @@ public class MainActivity_Dashboard extends AppCompatActivity {
                                             Thread.currentThread().getStackTrace()[2].getLineNumber());
                                 }
 
+                            }
+                        })
+                        .setNegativeButton("Нет", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
 
-                                ////
-                                break;
-                            ///////
-                            case "Настройка системы":
-                                /////данные с потока
-                                /////TODO ЗАПУСКАМ ОБНОЛВЕНИЕ ДАННЫХ С СЕРВЕРА ПЕРЕРД ЗАПУСКОМ ПРИЛОЖЕНИЯ ВСЕ ПРИЛОЖЕНИЯ ДСУ-1
-                                Интент_Меню.setClass(getApplication(), MainActivity_Settings.class); //MainActivity_Visible_Async //MainActivity_Face_App
-                                Интент_Меню.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);//////FLAG_ACTIVITY_SINGLE_TOP
-                                startActivity(Интент_Меню);
-                                ////TODO ДАННАЯ КОМАНДА ПЕРЕКРЫВАЕТ НЕ ЗАПУСКАЕМОЕ АКТИВТИ А АКТИВТИ КОТОРЕ ЕГО ЗАПУСТИЛО
-                                finish();
-                                break;
-                        }
+                                dialog.cancel();
+                                dialog.dismiss();
+                                Log.d(this.getClass().getName(), "\n" + " class " +
+                                        Thread.currentThread().getStackTrace()[2].getClassName()
+                                        + "\n" +
+                                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
+                            }
+                        })
+                        .setIcon(R.drawable.icon_change_user1);
 
-//ловим ошибки
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                        ///метод запись ошибок в таблицу
-                        Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
-                                + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                        new Class_Generation_Errors(getApplicationContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
-                                Thread.currentThread().getStackTrace()[2].getLineNumber());
-                        // конец запись в файл
-                    }
 
+            if(    DialogBox==null ){
+                DialogBox=  materialAlertDialogBuilder.show();
+            }else {
+                if(!DialogBox.isShowing()){
+                    DialogBox=  materialAlertDialogBuilder.show();
                 }
+            }
 
-
-            });
-
-        } catch (Exception e) {
-            e.printStackTrace();
-///метод запись ошибок в таблицу
-            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            new Class_Generation_Errors(getApplicationContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
+                Log.d(this.getClass().getName(), "\n" + " class " +
+                        Thread.currentThread().getStackTrace()[2].getClassName()
+                        + "\n" +
+                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
+            } catch (Exception e) {
+                e.printStackTrace();
+                Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName()
+                        + " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
+                new Class_Generation_Errors(getApplicationContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(), 
+                        Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
+            }
         }
-        ///////////СЕРВЕР  ///////////СЕРВЕР  ///////////СЕРВЕР  ///////////СЕРВЕР  ///////////СЕРВЕР  ///////////СЕРВЕР  ///////////СЕРВЕР  ///////////СЕРВЕР  ///////////СЕРВЕР
 
-    }
 
-    private void методЗапускСинхронизацииДоСменыПользователя() {
-        try{
-        // TODO: 24.04.2023 Синхрониазция
-        Integer ПубличныйIDДляОдноразовойСинхрониазции =
-                new Class_Generations_PUBLIC_CURRENT_ID().ПолучениеПубличногоТекущегоПользователяID(getApplicationContext());
-        Bundle bundleДляПЕредачи = new Bundle();
-        bundleДляПЕредачи.putInt("IDПубличныйНеМойАСкемБылаПереписака", ПубличныйIDДляОдноразовойСинхрониазции);
-        bundleДляПЕредачи.putBoolean("StatusOneWokManagers", true);
-        Intent intentЗапускОднорworkanager = new Intent();
-        intentЗапускОднорworkanager.putExtras(bundleДляПЕредачи);
-        // TODO: 02.08.2022
-            // TODO: 02.08.2022
-            new Class_Generator_One_WORK_MANAGER(getApplicationContext()).МетодОдноразовыйЗапускВоерМенеджера(getApplicationContext(),intentЗапускОднорworkanager);
-    } catch (Exception e) {
-        e.printStackTrace();
-///метод запись ошибок в таблицу
-        Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-        new Class_Generation_Errors(getApplicationContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
-    }
-    }
 
-    protected void МетодЗапускаИзМенюНастроек() {
-        try {
-            Intent Интент_Меню = new Intent(context, MainActivity_Settings.class);
-            Интент_Меню.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);//////FLAG_ACTIVITY_SINGLE_TOP
-            Log.d(this.getClass().getName(), "" +
-                    "          case R.id.ПунктМенюВторой:");
-            context.startActivity(Интент_Меню);
-        } catch (Exception e) {
-            e.printStackTrace();
-            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
-                    + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            new Class_Generation_Errors(context).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
-                    Thread.currentThread().getStackTrace()[2].getLineNumber());
+
+
+
+
+        protected void МетодЗапускаИзМенюНастроек() {
+            try {
+                Intent Интент_Меню = new Intent(getApplicationContext(), MainActivity_Settings.class);
+                Интент_Меню.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);//////FLAG_ACTIVITY_SINGLE_TOP
+                Log.d(this.getClass().getName(), "" +
+                        "          case R.id.ПунктМенюВторой:");
+                activity.startActivity(Интент_Меню);
+            } catch (Exception e) {
+                e.printStackTrace();
+                Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                        + Thread.currentThread().getStackTrace()[2].getLineNumber());
+                new Class_Generation_Errors(getApplicationContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
+                        Thread.currentThread().getStackTrace()[2].getLineNumber());
+            }
         }
-    }
 
 
-
-
-
-
-
-
-
-
-    private void методДляТетсирования1С() {
-        try{
-            Log.d(this.getClass().getName(), "   методДляТетсирования1С");
-            WebSocketss webSocketListener=new WebSocketss();
+        // TODO: 15.08.2023 тест код для 1С
+        private void методДляТетсирования1С() {
+            try{
+                Log.d(this.getClass().getName(), "   методДляТетсирования1С");
+                WebSocketss webSocketListener=new WebSocketss();
 
 /*    WebSocketss.ClassOkHttpОбычныйПинг classOkHttpОбычныйПинг= webSocketListener.new ClassOkHttpОбычныйПинг();
 
             classOkHttpОбычныйПинг .методОбычногоПодключениявOkHttp(this);*/
 
 
-            // TODO: 06.06.2023
+                // TODO: 06.06.2023
 
-            WebSocketss.классИнициализацииКлиентаWebSocerts классИнициализацииКлиентаWebSocerts= webSocketListener.new классИнициализацииКлиентаWebSocerts();
+                WebSocketss.классИнициализацииКлиентаWebSocerts классИнициализацииКлиентаWebSocerts= webSocketListener.new классИнициализацииКлиентаWebSocerts();
 
-            классИнициализацииКлиентаWebSocerts.методИнициализацииwebsocets(this);
+                классИнициализацииКлиентаWebSocerts.методИнициализацииwebsocets(activity);
 
 
 /*  new Class_Get_Json_1C(getApplicationContext(),"http://uat.dsu1.ru:55080/dds/hs/apidrp/objects")
           .МетодОтправляемJSONОт1СТестирование("userapi","User4321api",new StringBuffer("[ {  \"id\" : null,  \"chosen_organization\" : 0,  \"current_table\" : 273,  \"date_update\" : \"2022-11-27 10:33:20.737\",  \"fullname\" : \"Общество с ограниченной ответственностью СОЮЗ АВТОДОР\",  \"inn\" : \"3711025287\",  \"kpp\" : \"371101001\",  \"name\" : \"ООО СОЮЗ АВТОДОР\",  \"user_update\" : 8,  \"uuid\" : 2} ]"));
             Log.i(this.getClass().getName(), "    holder. ФдагЧтоУжеОдинРАзБылПервыйПроход ");*/
 
-            Log.d(this.getClass().getName(), "   методДляТетсирования1С");
-    } catch (Exception e) {
-        e.printStackTrace();
-        Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
-                + Thread.currentThread().getStackTrace()[2].getLineNumber());
-        new Class_Generation_Errors(context).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
-                Thread.currentThread().getStackTrace()[2].getLineNumber());
+                Log.d(this.getClass().getName(), "   методДляТетсирования1С");
+            } catch (Exception e) {
+                e.printStackTrace();
+                Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                        + Thread.currentThread().getStackTrace()[2].getLineNumber());
+                new Class_Generation_Errors(getApplicationContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
+                        Thread.currentThread().getStackTrace()[2].getLineNumber());
 
-    }
-    }
+            }
+        }
+
+        private void МетодБиндингаОбновлениеПО() {
+            try {
+                ServiceConnection       connectionОбновлениеПО = new ServiceConnection() {
+                    @Override
+                    public void onServiceConnected(ComponentName name, IBinder service) {
+                        try {
+                            if (service.isBinderAlive()) {
+                                localBinderОбновлениеПО = (ServiceUpdatePoОбновлениеПО.localBinderОбновлениеПО) service;
+                                Log.i(getApplicationContext().getClass().getName(), "    onServiceConnected  service)"
+                                        + service.isBinderAlive());
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
+                                    " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
+                            new Class_Generation_Errors(getApplicationContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+                                    this.getClass().getName(),
+                                    Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
+                        }
+                    }
+                    @Override
+                    public void onServiceDisconnected(ComponentName name) {
+                        try {
+                            Log.i(getApplicationContext().getClass().getName(), "    onServiceDisconnected  binder.isBinderAlive()");
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
+                                    " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
+                            new Class_Generation_Errors(getApplicationContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+                                    this.getClass().getName(),
+                                    Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
+                        }
+                    }
+                };
+                Intent intentЗапускСлужбыОбновлениеПО = new Intent(getApplicationContext(), ServiceUpdatePoОбновлениеПО.class);
+                intentЗапускСлужбыОбновлениеПО.setAction("com.ServiceUpdatePoОбновлениеПО");
+                bindService(intentЗапускСлужбыОбновлениеПО ,  connectionОбновлениеПО,Context.BIND_AUTO_CREATE );
+
+            } catch (Exception e) {
+                e.printStackTrace();
+                Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                        + Thread.currentThread().getStackTrace()[2].getLineNumber());
+                new Class_Generation_Errors(getApplicationContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+                        this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
+                        Thread.currentThread().getStackTrace()[2].getLineNumber());
+                Log.d(this.getClass().getName(), "  Полусаем Ошибку e.toString() " + e.toString());
+            }
+
+        }
+
+
+
+
+
+//TODO END BUNIVEESS Logic//TODO END BUNIVEESS Logic//TODO END BUNIVEESS Logic//TODO END BUNIVEESS Logic//TODO END BUNIVEESS Logic//TODO END BUNIVEESS Logic//TODO END BUNIVEESS Logic//TODO END BUNIVEESS Logic
+    }//TODO END BUNIVEESS Logic //TODO END BUNIVEESS Logic//TODO END BUNIVEESS Logic//TODO END BUNIVEESS Logic//TODO END BUNIVEESS Logic//TODO END BUNIVEESS Logic//TODO END BUNIVEESS Logic
+
+
+
+
+
+
+
+
+
+
+
 
 }
 
