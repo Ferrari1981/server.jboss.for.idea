@@ -1480,7 +1480,7 @@
             android:theme="@style/Theme.MaterialComponents.DayNight.DarkActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.dsy.dsu.For_Code_Settings_DSU1.MainActivity_Face_Start" />
+                android:value=".BootAndAsync.MainActivityBootAndAsync" />
 
             <intent-filter>
                 <action android:name="android.intent.action.EDIT" />
@@ -1506,7 +1506,7 @@
             android:theme="@style/Theme.MaterialComponents.DayNight.DarkActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.dsy.dsu.For_Code_Settings_DSU1.MainActivity_Face_Start" />
+                android:value=".BootAndAsync.MainActivityBootAndAsync" />
 
             <intent-filter>
                 <action android:name="android.intent.action.EDIT" />
@@ -1536,7 +1536,49 @@
             android:theme="@style/Theme.MaterialComponents.DayNight.DarkActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.dsy.dsu.For_Code_Settings_DSU1.MainActivity_Face_Start" />
+                android:value=".BootAndAsync.MainActivityBootAndAsync" />
+
+            <intent-filter>
+                <action android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+                <action android:name="android.permission.READ_EXTERNAL_STORAGE" />
+                <action android:name="android.intent.action.EDIT" />
+                <action android:name="android.intent.action.INSERT" />
+                <action android:name="android.intent.action.DELETE" />
+                <action android:name="android.intent.action.WEB_SEARCH" />
+                <action android:name="android.intent.action.SEND" />
+                <action android:name="android.intent.action.APP_ERROR" />
+                <action android:name="android.intent.action.OPEN_DOCUMENT" />
+                <action android:name="android.intent.action.SYNC" />
+                <action android:name="android.intent.action.RUN" />
+                <action android:name="android.intent.action.INSTALL_PACKAGE" />
+                <action android:name="android.intent.action.UNINSTALL_PACKAGE" />
+                <action android:name="android.intent.action.ALL_APPS" />
+                <action android:name="android.intent.action.AUTO_REVOKE_PERMISSIONS" />
+                <action android:name="android.intent.action.INSTALL_FAILURE" />
+                <action android:name="android.intent.action.INSTALL_PACKAGE" />
+                <action android:name="android.intent.action.VIEW" />
+                <action android:name="android.intent.action.VIEW_PERMISSION_USAGE" />
+                <action android:name="android.intent.action.DELETE" />
+                <action android:name="android.intent.action.GET_CONTENT" />
+                <action android:name="android.hardware.usb.action.USB_DEVICE_ATTACHED" />
+                <action android:name="android.hardware.usb.action.REQUEST_INSTALL_PACKAGES" />
+                <action android:name="android.intent.action.SEND" />
+                <action android:name="android.intent.action.SENDTO" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".Dashboard.MainActivity_Dashboard"
+            android:exported="true"
+            android:grantUriPermissions="true"
+            android:label="Союз-Автодор"
+            android:launchMode="standard"
+            android:requestLegacyExternalStorage="true"
+            android:showOnLockScreen="true"
+            android:theme="@style/Theme.MaterialComponents.DayNight.DarkActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".BootAndAsync.MainActivityBootAndAsync" />
 
             <intent-filter>
                 <action android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -1601,7 +1643,7 @@
             android:theme="@style/Theme.MaterialComponents.DayNight.DarkActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.dsy.dsu.For_Code_Settings_DSU1.MainActivity_Face_Start" />
+                android:value=".BootAndAsync.MainActivityBootAndAsync" />
 
             <intent-filter>
                 <action android:name="android.intent.action.EDIT" />

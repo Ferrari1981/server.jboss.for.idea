@@ -75,6 +75,9 @@ public class MainActivity_Tabels_Users_And_Passwords extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         try {
             super.onCreate(savedInstanceState);
+            setContentView(R.layout.activity_main__authentication);
+
+
             КонтекстСинхроДляАунтификации = this;
             activity = this;
             ((Activity) КонтекстСинхроДляАунтификации).setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
@@ -84,7 +87,7 @@ public class MainActivity_Tabels_Users_And_Passwords extends AppCompatActivity {
              КакойРежимСинхрониазции = ИнтентКакаяПоСчетуСинхронизация.getStringExtra("РежимЗапускаСинхронизации");
             Log.d(this.getClass().getName(), " КакойРежимСинхрониазции "+КакойРежимСинхрониазции);
                Create_Database_СсылкаНАБазовыйКласс=new CREATE_DATABASE(getApplicationContext());
-            setContentView(R.layout.activity_main__authentication);
+
             getSupportActionBar().hide(); ///скрывать тул бар
             getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
             Log.d(this.getClass().getName(), "   ");
