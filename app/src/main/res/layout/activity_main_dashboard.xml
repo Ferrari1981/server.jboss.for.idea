@@ -8,7 +8,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:openDrawer="left"
-    android:background="#FFFFFF"
+    android:background="#F2F8F8"
     tools:context=".Dashboard.MainActivity_Dashboard">
             <LinearLayout
                 android:id="@+id/linearLayout_dashboard"
@@ -17,7 +17,7 @@
                 android:layout_marginTop="1dp"
                 android:layout_marginBottom="50dp"
                 android:gravity="center"
-                android:background="#FF0FFF"
+                android:background="#F2F8F8"
                 android:orientation="vertical"
                 android:visibility="visible">
 
@@ -34,14 +34,14 @@
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/navigator_dashboard"
         android:layout_width="200dp"
-        android:background="#FFFFFF"
+        android:background="#F2F8F8"
         android:layout_gravity="left"
         android:layout_height="match_parent"
         android:layout_marginRight="160dp"
         android:fitsSystemWindows="true"
         app:itemIconSize="35dp"
         app:itemIconTint="#00ACC1"
-        android:visibility="gone"
+        android:visibility="visible"
         app:itemTextColor="@color/cardview_dark_background"
         app:menu="@menu/menu_for_faceapp_navigationview"
         tools:ignore="MissingConstraints">

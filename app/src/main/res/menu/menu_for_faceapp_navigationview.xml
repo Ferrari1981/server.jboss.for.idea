@@ -12,13 +12,13 @@
         <item
             android:id="@+id/one"
             android:icon="@drawable/icon_sodergimoe"
-            android:title="Отчёт Ошибок" />
+            android:title="Ошибки" />
 
 
         <item
             android:id="@+id/two"
             android:icon="@drawable/icon_dsu1_for_menufacepp"
-            android:title="Настройка" />
+            android:title="Настройки" />
 
         <item
             android:id="@+id/tree"
@@ -29,7 +29,7 @@
         <item
             android:id="@+id/four"
             android:icon="@drawable/icon_dsu1_sucesss_fro_menus"
-            android:title="Обмен данными" />
+            android:title="Обмен" />
 
 
         <item
@@ -40,7 +40,7 @@
         <item
             android:id="@+id/sedmoy"
             android:icon="@drawable/icon_dsu1_download_formenu"
-            android:title="Обновление ПО" />
+            android:title="Обновление" />
     </group>
 
     <item android:title="">
@@ -49,7 +49,7 @@
                 android:checked="true"
                 android:id="@+id/faur_abount"
                 android:icon="@drawable/icon_dsu1_for_navigator_view_11"
-                android:title="ООО Союз Автодор" />
+                android:title="Союз-Автодор"  />
 
         </menu>
     </item>

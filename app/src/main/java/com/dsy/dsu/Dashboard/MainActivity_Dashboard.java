@@ -15,11 +15,17 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.os.Looper;
 import android.os.Message;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.style.RelativeSizeSpan;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -233,13 +239,14 @@ public class MainActivity_Dashboard extends AppCompatActivity {
                             // TODO: 06.04.2022
                             case R.id.one:
                                 item.setChecked(true);
+                                item.setTooltipText("Ошибки");
                                 Log.w(getPackageName().getClass().getName(), "item.getItemId() Посмотреть ошибки   " + item.getItemId() + "\n");//////////
                                 try {
-                                    Intent Интент_Меню = new Intent(getApplication(), MainActivity_Errors.class);
+                                  Intent Интент_Меню = new Intent(getApplication(), MainActivity_Errors.class);
                                     Интент_Меню.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);//////FLAG_ACTIVITY_SINGLE_TOP
+                                    startActivity(Интент_Меню);
                                     Log.d(this.getClass().getName(), "" +
                                             "                     case R.id.ПунктМенюПервый:");
-                                    startActivity(Интент_Меню);
                                 } catch (Exception e) {
                                     e.printStackTrace();
                                     Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
@@ -250,6 +257,7 @@ public class MainActivity_Dashboard extends AppCompatActivity {
                                 break;
                             case R.id.two:
                                 item.setChecked(true);
+                                item.setTooltipText("Настройки");
                                 Log.w(getPackageName().getClass().getName(), "item.getItemId() Хотите перерйти в натройки    " + item.getItemId() + "\n");/////////
                                 try {
                                     МетодЗапускаИзМенюНастроек();
@@ -263,6 +271,7 @@ public class MainActivity_Dashboard extends AppCompatActivity {
                                 break;
                             case R.id.tree:
                                 item.setChecked(true);
+                                item.setTooltipText("Пользователи");
                                 Log.w(getPackageName().getClass().getName(), "item.getItemId() Сменить пользователя и смена данных    " + item.getItemId() + "\n");/////////
                                 try {
                                     Boolean ЕслиСвязьсСервером =
@@ -291,6 +300,7 @@ public class MainActivity_Dashboard extends AppCompatActivity {
                                 break;
                             case R.id.four:
                                 item.setChecked(true);
+                                item.setTooltipText("Обмен");
                                 Log.w(getPackageName().getClass().getName(), "item.getItemId()  Синхронизация Данных с WebSocketListener-сервера ДСУ-1  " + item.getItemId() + "\n");/////////
                                 try {
                                     Boolean ЕслиСвязьсСервером =
@@ -328,6 +338,7 @@ public class MainActivity_Dashboard extends AppCompatActivity {
                                 break;
                             case R.id.shestoy:
                                 item.setChecked(true);
+                                item.setTooltipText("Шаблоны");
                                 Log.w(getPackageName().getClass().getName(), "item.getItemId()  Шаблоны из меню  " + item.getItemId() + "\n");/////////
                                 try {
                                     Intent Интент_BackВозвращаемАктивти = new Intent();
@@ -347,6 +358,7 @@ public class MainActivity_Dashboard extends AppCompatActivity {
                                 break;
                         case R.id.sedmoy:
                             item.setChecked(true);
+                            item.setTooltipText("Обновление ПО");
                             Log.w(getPackageName().getClass().getName(), "item.getItemId() МЕНЮ ОБНОВЛЕНИЕ ПО    " + item.getItemId() + "\n" + item);/////////
                             handlerAsync.post(()->{
                                 try {
@@ -365,6 +377,18 @@ public class MainActivity_Dashboard extends AppCompatActivity {
                                 }
                             });
                             break;
+
+                            case R.id.    faur_abount:
+                                item.setChecked(true);
+                                Log.w(getPackageName().getClass().getName(), "item.getItemId() МЕНЮ ОБНОВЛЕНИЕ ПО    " + item.getItemId() + "\n" + item);/////////
+
+                                item.setTooltipText("ПО Союз-Автодор 2023 г.");
+
+                                break;
+
+
+
+
 
                             default:
                                 // TODO: 06.04.2022
