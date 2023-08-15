@@ -92,8 +92,8 @@ public class MainActivity_Dashboard extends AppCompatActivity {
 
             // TODO: 15.08.2023 Инициализация перменных
             linearLayout_dashboard = (LinearLayout) findViewById(R.id.linearLayout_dashboard); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
-            //drawerLayout_dashboard = (DrawerLayout) findViewById(R.id.drawerLayout_dashboard); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
-           // navigator_dashboard = (NavigationView) findViewById(R.id.navigator_dashboard); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
+            drawerLayout_dashboard = (DrawerLayout) findViewById(R.id.drawerLayout_dashboard); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
+            navigator_dashboard = (NavigationView) findViewById(R.id.navigator_dashboard); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
    
             activity = this;
             getSupportActionBar().hide(); ///скрывать тул бар
@@ -113,10 +113,7 @@ public class MainActivity_Dashboard extends AppCompatActivity {
             // TODO: 18.02.2023 установки для Обновленеи ПО
             buniccessLogicaActivityDashboard.    МЕтодУстанавливаемРазрешенияДляОновлениеПО();
 
-
-
-
-          //  buniccessLogicaActivityDashboard.       МетодДляСлушательБоковойПанелиFaceApp();
+            buniccessLogicaActivityDashboard.       МетодДляСлушательБоковойПанелиFaceApp();
 
             // TODO: 16.11.2022  ПОСЛЕ УСТАНОВКИ РАБОТАЕТ ОДИН РАЗ ПРИ СТАРТЕ ЗАРУСК ОБЩЕГО WORK MANAGER
             new Class_Generation_SendBroadcastReceiver_And_Firebase_OneSignal(getApplicationContext()).МетодЗапускаетОБЩУЮСинхронизацию();
@@ -147,7 +144,7 @@ public class MainActivity_Dashboard extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         try {
-          //  buniccessLogicaActivityDashboard.  МетодБоковаяПанельОткрытьЗАкрыть();
+            buniccessLogicaActivityDashboard.  МетодБоковаяПанельОткрытьЗАкрыть();
 
             buniccessLogicaActivityDashboard.     методStartingDashboardFragment();
 

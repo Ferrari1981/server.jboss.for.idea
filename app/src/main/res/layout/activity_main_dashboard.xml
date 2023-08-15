@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+
 <androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -17,9 +19,26 @@
                 android:gravity="center"
                 android:orientation="vertical"
                 android:visibility="visible">
+
+
             </LinearLayout>
 
 
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/navigator_dashboard"
+        android:layout_width="200dp"
+        android:layout_gravity="left"
+        android:layout_height="match_parent"
+        android:layout_marginRight="160dp"
+        android:fitsSystemWindows="true"
+        app:itemIconSize="35dp"
+        app:itemIconTint="#00ACC1"
+        android:visibility="visible"
+        app:itemTextColor="@color/cardview_dark_background"
+        app:menu="@menu/menu_for_faceapp_navigationview"
+        tools:ignore="MissingConstraints">
+
+    </com.google.android.material.navigation.NavigationView>
 
 
 

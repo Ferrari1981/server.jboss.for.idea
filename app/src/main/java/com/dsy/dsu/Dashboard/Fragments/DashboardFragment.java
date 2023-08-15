@@ -65,8 +65,9 @@ public class DashboardFragment extends DialogFragment {
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
         try{
-       materialAlertDialogBuilder=    new MaterialAlertDialogBuilder(getActivity())
+       materialAlertDialogBuilder=    new MaterialAlertDialogBuilder(getActivity(),android.R.style.Theme_Dialog)
                     .setCancelable(false)
+                 .setCancelable(false)
                   .setView(R.layout.simple_dashbord_fragment1);
             materialAlertDialogBuilder.create();
         Log.d(this.getClass().getName(),"\n" + " class "
@@ -130,18 +131,17 @@ public class DashboardFragment extends DialogFragment {
             try{
                 WindowManager.LayoutParams layoutParams = new WindowManager.LayoutParams();
                 layoutParams.copyFrom(    getDialog().getWindow().getAttributes());
-       /*         layoutParams.width = WindowManager.LayoutParams.MATCH_PARENT;
-                layoutParams.height =WindowManager.LayoutParams.WRAP_CONTENT;*/
-             /*        layoutParams.width = WindowManager.LayoutParams.WRAP_CONTENT;
-                layoutParams.height =WindowManager.LayoutParams.WRAP_CONTENT;*/
-                      /*layoutParams.x = 0;
-                layoutParams.y = 0;*/
                 layoutParams.gravity = Gravity.CENTER_HORIZONTAL | Gravity.CENTER_VERTICAL;
                 layoutParams.width = WindowManager.LayoutParams.WRAP_CONTENT;
                 layoutParams.height =WindowManager.LayoutParams.WRAP_CONTENT;
                 getDialog().getWindow() .setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 getDialog().getWindow().setAttributes(layoutParams);
-                getDialog().setCancelable(false);
+                    /*         layoutParams.width = WindowManager.LayoutParams.MATCH_PARENT;
+                layoutParams.height =WindowManager.LayoutParams.WRAP_CONTENT;*/
+             /*        layoutParams.width = WindowManager.LayoutParams.WRAP_CONTENT;
+                layoutParams.height =WindowManager.LayoutParams.WRAP_CONTENT;*/
+                      /*layoutParams.x = 0;
+                layoutParams.y = 0;*/
                 // TODO: 20.07.2023
                 Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                         " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
