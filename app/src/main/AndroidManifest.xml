@@ -140,10 +140,10 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/icon_maim_forlainig"
+        android:icon="@mipmap/icon_bootasynctabel1"
         android:label="@string/name_dsu"
         android:requestLegacyExternalStorage="true"
-        android:roundIcon="@mipmap/icon_maim_forlainig_round"
+        android:roundIcon="@mipmap/icon_bootasynctabel1"
         android:screenOrientation="portrait"
         android:sharedUserId=" android.uid.system"
         android:showOnLockScreen="true"
@@ -1173,7 +1173,7 @@
             android:exported="true"
             android:grantUriPermissions="true"
             android:launchMode="singleTask"
-            android:label=" ПО Союз-Автодор "
+            android:label="Союз-Автодор"
             android:requestLegacyExternalStorage="true"
             android:showOnLockScreen="true"
 

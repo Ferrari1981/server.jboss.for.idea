@@ -30,7 +30,7 @@
         android:visibility="visible">
 
 
-        <ImageView
+ <!--       <ImageView
             android:id="@+id/imageviewbootlogo"
             android:layout_width="100dp"
             android:layout_height="100dp"
@@ -40,10 +40,22 @@
             android:textSize="26sp"
             android:textStyle="bold"
             android:typeface="monospace"
-            app:srcCompat="@mipmap/icon_boot_dsu1_1" />
+            app:srcCompat="@mipmap/icon_boot_dsu1_1" />-->
 
 
-
+        <ImageView
+            android:id="@+id/imageviewbootlogo"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:adjustViewBounds="false"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="250dp"
+            android:layout_marginBottom="280dp"
+            android:layout_centerHorizontal="true"
+            android:textSize="26sp"
+            android:textStyle="bold"
+            android:typeface="monospace"
+            app:srcCompat="@mipmap/icon_bootasynctabel1" />
 
 
 
@@ -51,6 +63,7 @@
             android:id="@+id/progressbarbootandasync"
             style="?android:attr/progressBarStyleHorizontal"
             android:layout_width="150dp"
+            android:layout_marginBottom="50dp"
             android:layout_height="wrap_content"
             android:layout_below="@+id/imageviewbootlogo"
             android:layout_centerHorizontal="true"
@@ -79,7 +92,7 @@
         android:fitsSystemWindows="true"
         app:itemIconSize="35dp"
         app:itemIconTint="#00ACC1"
-        android:visibility="visible"
+        android:visibility="gone"
         android:backgroundTint="@color/cardview_light_background"
         app:itemTextColor="@color/cardview_dark_background"
         app:menu="@menu/menu_for_asynsapp_navigationview">
