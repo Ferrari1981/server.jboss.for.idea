@@ -28,6 +28,7 @@ import android.widget.ImageButton;
 
 import com.dsy.dsu.Business_logic_Only_Class.Class_Generation_Errors;
 import com.dsy.dsu.Code_For_Services.ServiceUpdatePoОбновлениеПО;
+import com.dsy.dsu.Dashboard.MainActivity_Dashboard;
 import com.dsy.dsu.R;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.card.MaterialCardView;
@@ -84,16 +85,13 @@ public class DashboardFragment extends DialogFragment {
     }
 
 
-
-
-
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
         try{
        materialAlertDialogBuilder=    new MaterialAlertDialogBuilder(getActivity(),android.R.style.Theme_Dialog)//android.R.style.Theme_Dialog
                     .setCancelable(false)
-                 .setCancelable(false)
+               .setIconAttribute(R.mipmap.icon_bootasynctabel1)
                   .setView(R.layout.simple_dashbord_fragment1);
             materialAlertDialogBuilder.create();
         Log.d(this.getClass().getName(),"\n" + " class "
@@ -193,6 +191,7 @@ public class DashboardFragment extends DialogFragment {
                 getDialog().getWindow().setAttributes(layoutParams);
 
                 materialcardview_dashboard=    getDialog().getWindow().findViewById(R.id.materialcardview_dashboard);
+
                // materialcardview_dashboard.setCardBackgroundColor(Color.TRANSPARENT);
                       //  materialcardview_dashboard.setCardElevation(10);
 
