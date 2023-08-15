@@ -136,6 +136,7 @@ public class DashboardFragment extends DialogFragment {
                 layoutParams.height =WindowManager.LayoutParams.WRAP_CONTENT;
                 //layoutParams.height =1350;
                 layoutParams.gravity = Gravity.CENTER;
+                layoutParams.setColorMode(Color.TRANSPARENT);
                 getDialog().getWindow() .setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 getDialog().getWindow().setAttributes(layoutParams);
                 getDialog().setCancelable(false);
