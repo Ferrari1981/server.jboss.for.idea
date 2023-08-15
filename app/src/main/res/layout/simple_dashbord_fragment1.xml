@@ -12,7 +12,7 @@
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/materialcardview_dashboard"
         android:layout_width="match_parent"
-        android:layout_height="600dp"
+        android:layout_height="580dp"
         android:background="@drawable/dialog_bg"
         android:animateLayoutChanges="true"
         android:layout_centerInParent="true"
