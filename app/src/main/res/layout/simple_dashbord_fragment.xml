@@ -5,6 +5,7 @@
     android:id="@+id/relativelayout_dashboard"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#7CCAED"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".Dashboard.MainActivity_Dashboard">
 
@@ -13,26 +14,56 @@
         android:id="@+id/materialcardview_dashboard"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-
-        android:layout_marginTop="50dp"
-        android:layout_marginBottom="50dp"
-
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
-
-
+        android:layout_margin="5dp"
         android:background="@drawable/dialog_bg"
         android:animateLayoutChanges="true"
         android:layout_centerInParent="true"
         android:gravity="center"
-        app:cardBackgroundColor="#512DA8"
-        app:cardCornerRadius="40dp"
+        app:cardBackgroundColor="#7CCAED"
+        app:cardCornerRadius="1dp"
         app:cardElevation="2dp"
         app:cardMaxElevation="10dp"
-
         android:translationZ="10dp"
-        app:strokeColor="#512DA8"
-        app:strokeWidth="2dp">
+        app:strokeColor="#FCFAFA"
+        app:strokeWidth="1dp">
+
+
+        <RelativeLayout
+            android:id="@+id/relativelayout_container_dashboard"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="visible">
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/materialcardview_dashboard_inside1"
+                android:layout_width="200dp"
+                android:layout_height="150dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="50dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/dialog_bg"
+                android:animateLayoutChanges="true"
+                android:gravity="center"
+                app:cardBackgroundColor="#F2F8F8"
+                app:cardCornerRadius="15dp"
+                app:cardElevation="2dp"
+                app:cardMaxElevation="10dp"
+                android:translationZ="10dp"
+                app:strokeColor="#FCFAFA"
+                app:strokeWidth="1dp">
+
+            </com.google.android.material.card.MaterialCardView>
+
+
+        </RelativeLayout>
+
+
+
+
+
+
+
 
 
 
