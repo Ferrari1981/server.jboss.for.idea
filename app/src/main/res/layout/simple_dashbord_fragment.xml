@@ -494,12 +494,213 @@
 
 
 
+<!--//TODO-->
 
 
 
 
 
 
+
+    <!--   //TODO   # ЗАЯВКИ ТРАНПОРТА -->
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/materialcardview_dashboard_tasktrasport"
+        android:layout_below="@+id/materialcardview_dashboard_getmaterials"
+        android:layout_alignParentLeft="true"
+
+        android:layout_width="285dp"
+        android:layout_height="95dp"
+
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="5dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="5dp"
+
+
+        android:background="@drawable/dialog_bg"
+        android:animateLayoutChanges="true"
+        android:gravity="center"
+        app:cardBackgroundColor="#F2F8F8"
+        app:cardCornerRadius="15dp"
+        app:cardElevation="20dp"
+        app:cardMaxElevation="10dp"
+        android:translationZ="10dp"
+        app:strokeColor="#E0DFE4"
+        app:strokeWidth="0dp">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="visible">
+
+            <ImageView
+                android:id="@+id/imageview_dashborn_tasktrasport"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_alignParentLeft="true"
+                android:layout_centerInParent="true"
+                android:layout_marginLeft="5dp"
+                android:translationZ="10dp"
+                android:visibility="visible"
+                app:cardElevation="1dp"
+                app:cardMaxElevation="10dp"
+                app:srcCompat="@mipmap/icon_new_dashboard_tasktrasport" />
+
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/materialtextview_dashborn_tasktrasport"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_centerInParent="true"
+                android:layout_marginLeft="10dp"
+                android:layout_toRightOf="@+id/imageview_dashborn_tasktrasport"
+                android:text="Заявки \n на траспорт"
+                android:textColor="#C0C0C0"
+                android:textSize="17dp"
+                android:textStyle="bold"
+                android:translationZ="10dp"
+                android:visibility="visible"
+                app:cardElevation="1dp"
+                app:cardMaxElevation="10dp" />
+
+
+        </RelativeLayout>
+    </com.google.android.material.card.MaterialCardView>
+    <!--   //TODO   #1  конец Заказы Траспорта  -->
+
+
+
+ <!--   //TODO ОБНОВЛЕНИЕ-->
+
+    <!--   //TODO   #3 ОШИБКА -->
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/materialcardview_dashboard_updatespo"
+        android:layout_below="@+id/materialcardview_dashboard_tasktrasport"
+        android:layout_width="95dp"
+        android:layout_height="95dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="5dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="5dp"
+
+
+
+        android:layout_alignParentLeft="true"
+        android:background="@drawable/dialog_bg"
+        android:animateLayoutChanges="true"
+        android:gravity="center"
+        app:cardBackgroundColor="#F2F8F8"
+        app:cardCornerRadius="15dp"
+        app:cardElevation="20dp"
+        app:cardMaxElevation="10dp"
+        android:translationZ="100dp"
+        app:strokeColor="#E0DFE4"
+        app:strokeWidth="0dp">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="visible">
+
+            <ImageView
+                android:id="@+id/imageview_dashborn_updatespo"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_centerInParent="true"
+                android:layout_marginLeft="20dp"
+                android:translationZ="10dp"
+                android:visibility="visible"
+                app:cardElevation="1dp"
+                app:cardMaxElevation="10dp"
+                app:srcCompat="@drawable/icon_newdashbord_newupdaepo" />
+
+        </RelativeLayout>
+    </com.google.android.material.card.MaterialCardView>
+    <!--   //TODO   #1  конец Настройки  -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--//TODO  ШАблоны-->
+
+
+    <!--   //TODO   #3 Настройки -->
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/materialcardview_dashboard_shablony"
+        android:layout_below="@+id/materialcardview_dashboard_getmaterials"
+        android:layout_toRightOf   ="@+id/materialcardview_dashboard_tasktrasport"
+
+        android:layout_width="95dp"
+        android:layout_height="95dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="5dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+
+
+
+
+        android:background="@drawable/dialog_bg"
+        android:animateLayoutChanges="true"
+        android:gravity="center"
+        app:cardBackgroundColor="#F2F8F8"
+        app:cardCornerRadius="15dp"
+        app:cardElevation="20dp"
+        app:cardMaxElevation="10dp"
+        android:translationZ="100dp"
+        app:strokeColor="#E0DFE4"
+        app:strokeWidth="0dp">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="visible">
+
+            <ImageView
+                android:id="@+id/imageview_dashborn_shablony"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_centerInParent="true"
+                android:layout_marginLeft="20dp"
+                android:translationZ="10dp"
+                android:visibility="visible"
+                app:cardElevation="1dp"
+                app:cardMaxElevation="10dp"
+                app:srcCompat="@drawable/icon_newdashboard_shabony" />
+
+        </RelativeLayout>
+    </com.google.android.material.card.MaterialCardView>
+    <!--   //TODO   #1  конец Настройки  -->
 
 
 
