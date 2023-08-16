@@ -8,6 +8,18 @@
     android:background="#C0C0C0"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".Dashboard.MainActivity_Dashboard">
+
+
+
+
+
+
+
+
+
+ <!--   //TODO табель -->
+
+
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/materialcardview_dashboard"
         android:layout_width="250dp"
@@ -24,8 +36,8 @@
         app:cardElevation="2dp"
         app:cardMaxElevation="10dp"
         android:translationZ="10dp"
-        app:strokeColor="#FCFAFA"
-        app:strokeWidth="1dp">
+        app:strokeColor="#E0DFE4"
+        app:strokeWidth="0dp">
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -33,7 +45,7 @@
 
 
             <ImageView
-                android:id="@+id/textview_newtabel"
+                android:id="@+id/imageview_dashborn_tabel"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_alignParentLeft="true"
@@ -43,8 +55,22 @@
                 android:visibility="visible"
                 app:cardElevation="1dp"
                 app:cardMaxElevation="10dp"
-                app:srcCompat="@mipmap/icon_dashdornd_tabel4" />
+                app:srcCompat="@mipmap/icon_dashdornd_tabel5" />
 
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/materialtextview_dashborn_tabel"
+                android:layout_width="100dp"
+                android:layout_height="25dp"
+                android:layout_centerInParent="true"
+                app:cardMaxElevation="10dp"
+                android:layout_marginLeft="20dp"
+                android:textColor="#000000"
+                android:text="Табель"
+                android:textSize="19dp"
+                android:translationZ="10dp"
+                android:visibility="visible"
+                android:layout_toRightOf="@+id/imageview_dashborn_tabel"
+                app:cardElevation="1dp" />
 
 
 
