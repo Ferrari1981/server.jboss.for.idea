@@ -100,7 +100,7 @@
                 android:visibility="visible"
                 app:cardElevation="1dp"
                 app:cardMaxElevation="10dp"
-                app:srcCompat="@mipmap/icon_dashdornd_tabel6" />
+                app:srcCompat="@mipmap/icon_new_dashboard_tabel_green" />
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/materialtextview_dashborn_tabel"
@@ -164,7 +164,7 @@
                 android:visibility="visible"
                 app:cardElevation="1dp"
                 app:cardMaxElevation="10dp"
-                app:srcCompat="@drawable/icon_new_dashaborad_settings" />
+                app:srcCompat="@drawable/icon_new_dashbord_settings_blue" />
 
         </RelativeLayout>
     </com.google.android.material.card.MaterialCardView>
@@ -213,7 +213,7 @@
                 android:visibility="visible"
                 app:cardElevation="1dp"
                 app:cardMaxElevation="10dp"
-                app:srcCompat="@drawable/icon_newdashboard_error" />
+                app:srcCompat="@drawable/icon_new_dashboad_error_green" />
 
         </RelativeLayout>
     </com.google.android.material.card.MaterialCardView>
@@ -265,7 +265,7 @@
                 android:visibility="visible"
                 app:cardElevation="1dp"
                 app:cardMaxElevation="10dp"
-                app:srcCompat="@drawable/icon_new_dashborads_peoples" />
+                app:srcCompat="@drawable/icon_new_dashaboad_changepeople_green" />
 
         </RelativeLayout>
     </com.google.android.material.card.MaterialCardView>
@@ -322,7 +322,7 @@
                 android:visibility="visible"
                 app:cardElevation="1dp"
                 app:cardMaxElevation="10dp"
-                app:srcCompat="@drawable/icon_new_dashbords_async" />
+                app:srcCompat="@drawable/icon_new_dashaboads_async_green" />
 
         </RelativeLayout>
     </com.google.android.material.card.MaterialCardView>
@@ -398,7 +398,7 @@
                 android:visibility="visible"
                 app:cardElevation="1dp"
                 app:cardMaxElevation="10dp"
-                app:srcCompat="@mipmap/icon_new_dashboard_completempnye" />
+                app:srcCompat="@mipmap/icon_new_dashboard_completemoney_green" />
 
 
             <com.google.android.material.textview.MaterialTextView
@@ -467,7 +467,7 @@
                 android:visibility="visible"
                 app:cardElevation="1dp"
                 app:cardMaxElevation="10dp"
-                app:srcCompat="@mipmap/icon_new_dashboard_getmaterialov" />
+                app:srcCompat="@mipmap/icon_new_dashboard_getmaterialov_green" />
 
 
             <com.google.android.material.textview.MaterialTextView
@@ -544,7 +544,7 @@
                 android:visibility="visible"
                 app:cardElevation="1dp"
                 app:cardMaxElevation="10dp"
-                app:srcCompat="@mipmap/icon_new_dashboard_tasktrasport" />
+                app:srcCompat="@mipmap/icon_new_dashboard_tasktrasport_green" />
 
 
             <com.google.android.material.textview.MaterialTextView
@@ -612,7 +612,7 @@
                 android:visibility="visible"
                 app:cardElevation="1dp"
                 app:cardMaxElevation="10dp"
-                app:srcCompat="@drawable/icon_newdashbord_newupdaepo" />
+                app:srcCompat="@drawable/icon_new_dashboard_updatepo_green" />
 
         </RelativeLayout>
     </com.google.android.material.card.MaterialCardView>
@@ -696,7 +696,7 @@
                 android:visibility="visible"
                 app:cardElevation="1dp"
                 app:cardMaxElevation="10dp"
-                app:srcCompat="@drawable/icon_newdashboard_shabony" />
+                app:srcCompat="@drawable/icon_new_dashbord_shablon_blue" />
 
         </RelativeLayout>
     </com.google.android.material.card.MaterialCardView>
