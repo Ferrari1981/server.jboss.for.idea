@@ -129,12 +129,15 @@
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/materialcardview_dashboard_settings"
         android:layout_below="@+id/materialcardview_dashboard_tabeль"
-        android:layout_width="120dp"
-        android:layout_height="120dp"
+        android:layout_width="100dp"
+        android:layout_height="95dp"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="5dp"
         android:layout_marginLeft="10dp"
-        android:layout_marginRight="5dp"
+        android:layout_marginRight="10dp"
+
+
+
         android:layout_alignParentLeft="true"
         android:background="@drawable/dialog_bg"
         android:animateLayoutChanges="true"
@@ -177,15 +180,16 @@
     <!--   //TODO   # Пользователи -->
 
     <com.google.android.material.card.MaterialCardView
-        android:id="@+id/materialcardview_dashboard_users"
+        android:id="@+id/materialcardview_dashboard_users333"
         android:layout_below="@+id/materialcardview_dashboard_tabeль"
         android:layout_toRightOf ="@+id/materialcardview_dashboard_settings"
-        android:layout_width="120dp"
-        android:layout_height="120dp"
+
+        android:layout_width="250dp"
+        android:layout_height="200dp"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="5dp"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
 
 
         android:background="@drawable/dialog_bg"
@@ -224,14 +228,16 @@
 
 
 
-    <!--   //TODO   # НАСТРОЙКИ -->
+
+    <!--   //TODO   # Пользователи -->
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/materialcardview_dashboard_settingss"
         android:layout_below="@+id/materialcardview_dashboard_faceapp"
         android:layout_toRightOf ="@+id/materialcardview_dashboard_tabeль"
-        android:layout_alignParentRight="true"
-        android:layout_width="120dp"
+
+
+        android:layout_width="100dp"
         android:layout_height="95dp"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="5dp"
@@ -255,7 +261,7 @@
             android:visibility="visible">
 
             <ImageView
-                android:id="@+id/imageview_dashborn_complitemoney"
+                android:id="@+id/imageview_dashborn_comple33"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 android:layout_centerInParent="true"
@@ -268,21 +274,32 @@
 
         </RelativeLayout>
     </com.google.android.material.card.MaterialCardView>
-    <!--   //TODO   #1  конец НАСТРОЙКИ  -->
+    <!--   //TODO   #1  конец Пользователи  -->
 
 
 
 
 
 
-    <!--   //TODO   # НАСТРОЙКИ -->
+
+
+
+
+
+
+
+
+
+
+    <!--   //TODO   # Пользователи -->
 
     <com.google.android.material.card.MaterialCardView
-        android:id="@+id/materialcardview_dashboard_peopless"
+        android:id="@+id/materialcardview_dashboard_users"
         android:layout_below="@+id/materialcardview_dashboard_settingss"
         android:layout_toRightOf ="@+id/materialcardview_dashboard_tabeль"
-        android:layout_alignParentRight="true"
-        android:layout_width="120dp"
+
+
+        android:layout_width="100dp"
         android:layout_height="95dp"
         android:layout_marginTop="5dp"
         android:layout_marginBottom="5dp"
@@ -306,7 +323,7 @@
             android:visibility="visible">
 
             <ImageView
-                android:id="@+id/imageview_dashborn_peopless"
+                android:id="@+id/imageview_dashborn_comple"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 android:layout_centerInParent="true"
@@ -319,7 +336,7 @@
 
         </RelativeLayout>
     </com.google.android.material.card.MaterialCardView>
-    <!--   //TODO   #1  конец НАСТРОЙКИ  -->
+    <!--   //TODO   #1  конец Пользователи  -->
 
 
 
