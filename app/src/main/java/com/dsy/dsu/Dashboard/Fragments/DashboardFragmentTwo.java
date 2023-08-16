@@ -162,7 +162,7 @@ public class DashboardFragmentTwo extends DialogFragment {
         super.onStart();
         try{
 
-     //  buniccessLogicFra4gmentDashboard.методНастройкиВнешнегоВида();
+       buniccessLogicFra4gmentDashboard.методНастройкиВнешнегоВида();
         // TODO: 20.07.2023
         Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -186,16 +186,24 @@ public class DashboardFragmentTwo extends DialogFragment {
 
         private void методНастройкиВнешнегоВида() {
             try{
+
+
                 WindowManager.LayoutParams layoutParams = new WindowManager.LayoutParams();
                 layoutParams.copyFrom(    getDialog().getWindow().getAttributes());
                 layoutParams.gravity = Gravity.CENTER;
-                layoutParams.width = WindowManager.LayoutParams.WRAP_CONTENT;
-                layoutParams.height =WindowManager.LayoutParams.MATCH_PARENT;///WindowManager.LayoutParams.MATCH_PARENT;
-                getDialog().getWindow() .setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                layoutParams.dimAmount=0.0f;
+
                 getDialog().getWindow().setAttributes(layoutParams);
+                getDialog().getWindow().addFlags(WindowManager.LayoutParams.FLAG_BLUR_BEHIND);
 
-                materialcardview_dashboard=    getDialog().getWindow().findViewById(R.id.materialcardview_dashboard);
 
+
+
+              ///  materialcardview_dashboard=    getDialog().getWindow().findViewById(R.id.materialcardview_dashboard);
+
+            /*    layoutParams.width = WindowManager.LayoutParams.WRAP_CONTENT;
+                layoutParams.height =WindowManager.LayoutParams.MATCH_PARENT;///WindowManager.LayoutParams.MATCH_PARENT;
+                getDialog().getWindow() .setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));*/
                // materialcardview_dashboard.setCardBackgroundColor(Color.TRANSPARENT);
                       //  materialcardview_dashboard.setCardElevation(10);
 

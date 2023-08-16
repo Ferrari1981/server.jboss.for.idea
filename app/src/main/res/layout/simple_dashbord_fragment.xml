@@ -5,7 +5,7 @@
     android:id="@+id/relativelayout_dashboard"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#7CCAED"
+    android:background="#FAFAD2"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".Dashboard.MainActivity_Dashboard">
 
@@ -19,11 +19,11 @@
         android:animateLayoutChanges="true"
         android:layout_centerInParent="true"
         android:gravity="center"
-        app:cardBackgroundColor="#7CCAED"
-        app:cardCornerRadius="1dp"
-        app:cardElevation="2dp"
+        app:cardBackgroundColor="#FFFFE0"
+        app:cardCornerRadius="5dp"
+        app:cardElevation="20dp"
         app:cardMaxElevation="10dp"
-        android:translationZ="10dp"
+        android:translationZ="1dp"
         app:strokeColor="#FCFAFA"
         app:strokeWidth="1dp">
 
