@@ -801,7 +801,7 @@
         android:id="@+id/navigator_faceapp_main"
         android:layout_width="80dp"
         android:background="@drawable/dialog_bg_dashbord_bokobvay_panel_up_grey"
-        android:layout_gravity="end|bottom"
+        android:layout_gravity="end|center"
         android:layout_height="match_parent"
         android:layout_margin="10dp"
         android:layout_marginRight="10dp"
