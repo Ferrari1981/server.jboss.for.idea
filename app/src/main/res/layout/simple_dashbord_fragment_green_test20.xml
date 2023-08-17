@@ -1,36 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/drawerLayout_faceapp_menu"
+    android:id="@+id/scrollview_dashboard"
+
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:openDrawer="end"
-    android:background="#FFFFFF"
+
+    android:background="#20B2AA"
+    android:scrollbars="horizontal|vertical"
+    android:layout_centerInParent="true"
+    app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
     tools:context=".Dashboard.MainActivity_Dashboard">
-
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraintLayout_faceapp22"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#FFFFFF"
-        android:foregroundGravity="center"
-        android:scrollbars="vertical">
-
-
-
-
-        <ScrollView
-            android:id="@+id/scrollview_dashboard"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="#C0C5C0"
-            android:scrollbars="horizontal|vertical"
-            android:layout_centerInParent="true"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
-            tools:context=".Dashboard.MainActivity_Dashboard">
 
 
 
@@ -782,9 +767,9 @@
 
 
 
-        </ScrollView>
 
 
+</ScrollView>
 
 
 
@@ -794,28 +779,22 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <com.google.android.material.navigation.NavigationView
-        android:id="@+id/navigator_faceapp_main"
-        android:layout_width="80dp"
-        android:background="@drawable/dialog_bg_dashbord_bokobvay_panel"
-        android:layout_gravity="end|bottom"
-        android:layout_height="match_parent"
-        android:layout_margin="10dp"
-        android:layout_marginRight="10dp"
-        android:fitsSystemWindows="true"
-        app:itemIconSize="30dp"
-        app:itemIconTint="#F2F8F8"
-        android:visibility="visible"
-        app:itemTextColor="@color/cardview_dark_background"
-        app:menu="@menu/menu_for_doadboard_navigationview"
-        tools:ignore="MissingConstraints">
+<com.google.android.material.navigation.NavigationView
+android:id="@+id/navigator_faceapp_main"
+android:layout_width="80dp"
+android:background="@drawable/dialog_bg_dashbord_bokobvay_panel"
+android:layout_gravity="end|bottom"
+android:layout_height="match_parent"
+android:layout_margin="10dp"
+android:layout_marginRight="10dp"
+android:fitsSystemWindows="true"
+app:itemIconSize="30dp"
+app:itemIconTint="#F2F8F8"
+android:visibility="visible"
+app:itemTextColor="@color/cardview_dark_background"
+app:menu="@menu/menu_for_doadboard_navigationview"
+tools:ignore="MissingConstraints">
 
-    </com.google.android.material.navigation.NavigationView>
+</com.google.android.material.navigation.NavigationView>
 
-</androidx.drawerlayout.widget.DrawerLayout>
-
-
-
-
-
-
+    </androidx.drawerlayout.widget.DrawerLayout>

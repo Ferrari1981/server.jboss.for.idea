@@ -7,9 +7,9 @@
     android:id="@+id/drawerLayout_faceapp_menu"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:openDrawer="left"
+    tools:openDrawer="end"
     android:background="#FFFFFF"
-    tools:context=".For_Code_Settings_DSU1.MainActivity_Face_App">
+    tools:context=".Dashboard.MainActivity_Dashboard">
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
