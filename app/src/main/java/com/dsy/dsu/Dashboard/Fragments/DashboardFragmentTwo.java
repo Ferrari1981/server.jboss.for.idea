@@ -77,7 +77,8 @@ public class DashboardFragmentTwo extends DialogFragment {
       //  setStyle(  DialogFragment.STYLE_NO_FRAME | DialogFragment.STYLE_NO_TITLE,android.R.style.Theme_DeviceDefault_Wallpaper_NoTitleBar);//Theme_Dialog
     //    setStyle(   DialogFragment.STYLE_NO_TITLE,android.R.style.Theme_DeviceDefault_Wallpaper_NoTitleBar);//Theme_Dialog
       //  setStyle(   DialogFragment.STYLE_NO_INPUT ,android.R.style.Theme_DeviceDefault_Light_NoActionBar_Fullscreen);//Theme_Dialog
-        setStyle(   DialogFragment.STYLE_NO_FRAME ,android.R.style.Theme_DeviceDefault_Light_NoActionBar);//Theme_Dialog
+       // setStyle(   DialogFragment.STYLE_NO_FRAME ,android.R.style.Theme_DeviceDefault_Light_NoActionBar_Overscan);//Theme_Dialog
+        setStyle(   DialogFragment.STYLE_NO_FRAME ,android.R.style.Theme_DeviceDefault_Light_NoActionBar_Overscan);//Theme_Dialog
             setCancelable(false);
         // TODO: 15.08.2023
         Log.d(this.getClass().getName(),"\n" + " class "
@@ -120,7 +121,10 @@ public class DashboardFragmentTwo extends DialogFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         try{
+       /*     ViewDashboart= inflater.inflate(R.layout.simple_dashbord_fragment_grey, container, false);
             ViewDashboart= inflater.inflate(R.layout.simple_dashbord_fragment_grey, container, false);
+            ViewDashboart= inflater.inflate(R.layout.simple_dashbord_fragment_grey, container, false);*/
+            ViewDashboart= inflater.inflate(R.layout.simple_dashbord_fragment_green, container, false);
             // TODO: 21.06.2023
             Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -144,7 +148,7 @@ public class DashboardFragmentTwo extends DialogFragment {
             fragmentManager = getActivity(). getSupportFragmentManager();
             fragmentTransaction = fragmentManager.beginTransaction();
             // TODO: 17.08.2023
-            buniccessLogicFra4gmentDashboard.new BunicessLogicTabel().методНАстройкиДизайнаТабеля();
+  /*          buniccessLogicFra4gmentDashboard.new BunicessLogicTabel().методНАстройкиДизайнаТабеля();*/
 
             Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -245,7 +249,7 @@ public class DashboardFragmentTwo extends DialogFragment {
 
         class BunicessLogicTabel{
             MaterialTextView materialtextview_dashborn_tabel;
-            void методНАстройкиДизайнаТабеля( ){
+/*            void методНАстройкиДизайнаТабеля( ){
                 materialtextview_dashborn_tabel=(MaterialTextView)      ViewDashboart.findViewById(R.id.materialtextview_dashborn_tabel);
 
                 Spannable wordtoSpan = new SpannableString(materialtextview_dashborn_tabel.getText().toString());
@@ -256,7 +260,7 @@ public class DashboardFragmentTwo extends DialogFragment {
 
 
 
-            }
+            }*/
 
 
 
