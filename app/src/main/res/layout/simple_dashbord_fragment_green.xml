@@ -7,7 +7,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:openDrawer="end"
-    android:background="#FFFFFF"
+    android:background="#20B2AA"
     tools:context=".Dashboard.MainActivity_Dashboard">
 
 
@@ -15,7 +15,7 @@
         android:id="@+id/constraintLayout_faceapp22"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#FFFFFF"
+        android:background="#20B2AA"
         android:foregroundGravity="center"
         android:scrollbars="vertical">
 
@@ -26,7 +26,7 @@
             android:id="@+id/scrollview_dashboard"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="#C0C5C0"
+            android:background="#20B2AA"
             android:scrollbars="horizontal|vertical"
             android:layout_centerInParent="true"
             app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
@@ -797,7 +797,7 @@
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/navigator_faceapp_main"
         android:layout_width="80dp"
-        android:background="@drawable/dialog_bg_dashbord_bokobvay_panel"
+        android:background="@drawable/dialog_bg_dashbord_bokobvay_panel_green"
         android:layout_gravity="end|bottom"
         android:layout_height="match_parent"
         android:layout_margin="10dp"
