@@ -800,7 +800,7 @@
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/navigator_faceapp_main"
         android:layout_width="80dp"
-        android:background="@drawable/dialog_bg_dashbord_bokobvay_panel"
+        android:background="@drawable/dialog_bg_dashbord_bokobvay_panel_up_grey"
         android:layout_gravity="end|bottom"
         android:layout_height="match_parent"
         android:layout_margin="10dp"
@@ -809,7 +809,7 @@
         app:itemIconSize="30dp"
         app:itemIconTint="#F2F8F8"
         android:visibility="visible"
-        app:itemBackground="@drawable/dialog_bg_dashbord_bokobvay_panel"
+        app:itemBackground="@drawable/dialog_bg_dashbord_bokobvay_panel_grey"
         app:itemTextColor="@color/cardview_dark_background"
         app:menu="@menu/menu_for_doadboard_navigationview"
         tools:ignore="MissingConstraints">
