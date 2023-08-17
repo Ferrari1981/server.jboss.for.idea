@@ -9,29 +9,16 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.content.pm.ActivityInfo;
-import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Looper;
 import android.os.Message;
-import android.text.Spannable;
-import android.text.SpannableString;
-import android.text.style.ForegroundColorSpan;
-import android.text.style.RelativeSizeSpan;
 import android.util.Log;
 import android.view.Gravity;
-import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
 import android.view.WindowManager;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.ScrollView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -39,8 +26,6 @@ import androidx.annotation.UiThread;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentResultListener;
@@ -53,23 +38,15 @@ import com.dsy.dsu.Business_logic_Only_Class.Class_Find_Setting_User_Network;
 import com.dsy.dsu.Business_logic_Only_Class.Class_Generation_Errors;
 import com.dsy.dsu.Business_logic_Only_Class.Class_Generations_PUBLIC_CURRENT_ID;
 import com.dsy.dsu.Business_logic_Only_Class.Class_Generator_One_WORK_MANAGER;
-import com.dsy.dsu.Business_logic_Only_Class.Class_MODEL_synchronized;
 import com.dsy.dsu.Business_logic_Only_Class.PUBLIC_CONTENT;
 import com.dsy.dsu.Business_logic_Only_Class.Websocet.WebSocketss;
-import com.dsy.dsu.Code_ForTABEL.MainActivity_New_Templates;
-import com.dsy.dsu.Code_For_AdmissionMaterials.Window.FragmentAdmissionMaterials;
-import com.dsy.dsu.Code_For_AdmissionMaterials.Window.FragmentCamera;
 import com.dsy.dsu.Code_For_Firebase_AndOneSignal_Здесь_КодДЛяСлужбыУведомленияFirebase.Class_Generation_SendBroadcastReceiver_And_Firebase_OneSignal;
 import com.dsy.dsu.Code_For_Services.ServiceUpdatePoОбновлениеПО;
+import com.dsy.dsu.Dashboard.Fragments.DashboardFragmentAliadDialog;
 import com.dsy.dsu.Dashboard.Fragments.DashboardFragment;
-import com.dsy.dsu.Dashboard.Fragments.DashboardFragmentTwo;
-import com.dsy.dsu.For_Code_Settings_DSU1.MainActivity_Errors;
 import com.dsy.dsu.For_Code_Settings_DSU1.MainActivity_Settings;
 import com.dsy.dsu.R;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
-import com.google.android.material.navigation.NavigationView;
-
-import java.util.Date;
 
 /////////////////////////////////////////////////////////////////////////
 public class MainActivity_Dashboard extends AppCompatActivity {
@@ -657,17 +634,17 @@ public class MainActivity_Dashboard extends AppCompatActivity {
         void методStartingDashboardFragment(){
             try{
                 // TODO Запусукаем Фргамент DdshBoard
-                DashboardFragmentTwo dashboardFragmentTwo= DashboardFragmentTwo.newInstance();
+                DashboardFragment dashboardFragment = DashboardFragment.newInstance();
                 Bundle data=new Bundle();
                 data.putBinder("binder",localBinderОбновлениеПО);
-                dashboardFragmentTwo.setArguments(data);
-                String fragmentNewImageNameaddToBackStack=   dashboardFragmentTwo.getClass().getName();
+                dashboardFragment.setArguments(data);
+                String fragmentNewImageNameaddToBackStack=   dashboardFragment.getClass().getName();
                 Fragment FragmentУжеЕСтьИлиНЕт=     fragmentManager.findFragmentByTag(fragmentNewImageNameaddToBackStack);
                 if (FragmentУжеЕСтьИлиНЕт==null) {
                     fragmentTransaction.disallowAddToBackStack();
                     fragmentManager.popBackStackImmediate();
 
-                    dashboardFragmentTwo.show(getSupportFragmentManager(), "dashboardFragmentTwo");
+                    dashboardFragment.show(getSupportFragmentManager(), "dashboardFragment");
                     // TODO: 01.08.2023
                     fragmentManager.setFragmentResultListener("CallBackDashborndFragment", lifecycleOwner, new FragmentResultListener() {
                         @Override
@@ -719,7 +696,7 @@ public class MainActivity_Dashboard extends AppCompatActivity {
         void методStartingDashboardFragmentAleaiDialog(){
             try{
                 // TODO Запусукаем Фргамент DdshBoard
-                DashboardFragment dashboardFragment= DashboardFragment.newInstance();
+                DashboardFragmentAliadDialog dashboardFragment= DashboardFragmentAliadDialog.newInstance();
                 Bundle data=new Bundle();
                 data.putBinder("binder",localBinderОбновлениеПО);
                 dashboardFragment.setArguments(data);
