@@ -809,6 +809,7 @@
         app:itemIconSize="30dp"
         app:itemIconTint="#F2F8F8"
         android:visibility="visible"
+        app:itemBackground="@drawable/dialog_bg_dashbord_bokobvay_panel"
         app:itemTextColor="@color/cardview_dark_background"
         app:menu="@menu/menu_for_doadboard_navigationview"
         tools:ignore="MissingConstraints">
