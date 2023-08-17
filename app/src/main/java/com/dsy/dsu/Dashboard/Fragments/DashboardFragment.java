@@ -1,6 +1,9 @@
 package com.dsy.dsu.Dashboard.Fragments;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -40,6 +43,8 @@ public class DashboardFragment extends DialogFragment {
 
     DrawerLayout navigator_dashboord;
     RelativeLayout relativelayout_dashboard;
+
+    private Handler handlerDashBord;
     public DashboardFragment() {
         // Required empty public constructor
     }
@@ -57,7 +62,9 @@ public class DashboardFragment extends DialogFragment {
         super.onCreate(savedInstanceState);
         try{
         buniccessLogicFra4gmentDashboard=new BuniccessLogicFra4gmentDashboard();
-      //  setStyle(DialogFragment.STYLE_NORMAL,android.R.style.Theme_Material_Dialog_Alert);//Theme_Dialog
+            // TODO: 17.08.2023 inizial message
+            buniccessLogicFra4gmentDashboard.  МетодИнициализацияMessager();
+            //  setStyle(DialogFragment.STYLE_NORMAL,android.R.style.Theme_Material_Dialog_Alert);//Theme_Dialog
        // setStyle(DialogFragment.STYLE_NORMAL,android.R.style.Theme_DeviceDefault_Light_NoActionBar_Fullscreen);//Theme_Dialog
       //  setStyle(DialogFragment.STYLE_NORMAL,android.R.style.Theme_DeviceDefault_Light_NoActionBar_TranslucentDecor);//Theme_Dialog
        // setStyle(DialogFragment.STYLE_NORMAL,android.R.style.Theme_DeviceDefault_Light_NoActionBar_Fullscreen);//Theme_Dialog
@@ -124,8 +131,8 @@ public class DashboardFragment extends DialogFragment {
             ViewDashboart= inflater.inflate(R.layout.simple_dashbord_fragment_grey, container, false);*/
            // ViewDashboart= inflater.inflate(R.layout.simple_dashbord_fragment_grey, container, false);
            // ViewDashboart= inflater.inflate(R.layout.simple_dashbord_fragment_blue, container, false);
-         //   view= inflater.inflate(R.layout.simple_dashbord_fragment_grey, container, false);
-            ViewDashboart= inflater.inflate(R.layout.simple_dashbord_fragment_green, container, false);
+            view= inflater.inflate(R.layout.simple_dashbord_fragment_grey, container, false);
+           // view= inflater.inflate(R.layout.simple_dashbord_fragment_green, container, false);
             // TODO: 21.06.2023
             Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -150,18 +157,9 @@ public class DashboardFragment extends DialogFragment {
             fragmentTransaction = fragmentManager.beginTransaction();
 
             ViewDashboart=view;
-
-
             DrawerLayout      drawerLayout_dashdord                  = (DrawerLayout) view.findViewById(R.id.drawerLayout_dashdord); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
-
             navigator_dashboord         = (DrawerLayout) drawerLayout_dashdord.findViewById(R.id.drawerLayout_dashdord); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
-
             // TODO: 17.08.2023
-            navigator_dashboord.open();
-
-            relativelayout_dashboard= (RelativeLayout) view.findViewById(R.id.relativelayout_dashboard); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
-
-
             Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
@@ -192,6 +190,9 @@ public class DashboardFragment extends DialogFragment {
 
 
             /*          buniccessLogicFra4gmentDashboard.new BunicessLogicTabel().методНАстройкиДизайнаТабеля();*/
+
+            buniccessLogicFra4gmentDashboard.new BuniccessLogicNavigarlaout().методНастройкиБоковойпанели();;
+
 
         // TODO: 20.07.2023
         Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -290,6 +291,96 @@ public class DashboardFragment extends DialogFragment {
 
 
 
+        // TODO: 17.08.2023  Класс Для Компонента Для  Боковой Панели
+
+                class BuniccessLogicNavigarlaout{
+                            void  методНастройкиБоковойпанели() {
+                                try{
+
+
+
+                                    handlerDashBord.postDelayed(()->{
+                                        navigator_dashboord.openDrawer(Gravity.END | Gravity.CENTER,true);
+
+                                    },250);
+
+                                handlerDashBord.postDelayed(()->{
+                                    if (  navigator_dashboord.isDrawerOpen(Gravity.END | Gravity.CENTER)) {
+                                        navigator_dashboord.closeDrawer(Gravity.END | Gravity.CENTER,true);
+                                    }
+
+                                },2000);
+
+                                    Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"  );
+                            } catch (Exception e) {
+                        e.printStackTrace();
+                        Log.e(getContext().getClass().getName(),
+                                "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
+                                        " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
+                        new Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+                                this.getClass().getName().toString(), Thread.currentThread().getStackTrace()[2].getMethodName().toString(),
+                                Thread.currentThread().getStackTrace()[2].getLineNumber());
+                    }
+
+                    }
+
+
+
+
+
+
+
+
+}
+
+
+
+        private void МетодИнициализацияMessager() {
+            try{
+
+                handlerDashBord=new Handler(Looper.getMainLooper()){
+
+
+                    @Override
+                    public void handleMessage(@NonNull Message msg) {
+                        super.handleMessage(msg);
+                    }
+
+                    @Override
+                    public void dispatchMessage(@NonNull Message msg) {
+                        super.dispatchMessage(msg);
+
+                        try {
+                            Bundle bundleCallsBackAsynsService=msg.getData();
+                            Log.d(this.getClass().getName(), "\n" + " class " +
+                                    Thread.currentThread().getStackTrace()[2].getClassName()
+                                    + "\n" +
+                                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
+                                    + " msg.what " +msg.what  + "bundleCallsBackAsynsService "+bundleCallsBackAsynsService);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                                    + Thread.currentThread().getStackTrace()[2].getLineNumber());
+                            new   Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+                                    this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
+                                    Thread.currentThread().getStackTrace()[2].getLineNumber());
+                        }
+
+                    }
+                };
+
+            } catch (Exception e) {
+                e.printStackTrace();
+                Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                        + Thread.currentThread().getStackTrace()[2].getLineNumber());
+                new   Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+                        this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
+                        Thread.currentThread().getStackTrace()[2].getLineNumber());
+            }
+        }
 
 
 
