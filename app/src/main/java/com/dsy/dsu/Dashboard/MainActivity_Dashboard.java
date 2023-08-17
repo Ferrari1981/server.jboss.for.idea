@@ -30,6 +30,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -74,7 +75,7 @@ import java.util.Date;
 public class MainActivity_Dashboard extends AppCompatActivity {
 
     private   Activity activity;
-    private RelativeLayout relativelayout_dashboard;
+    private ScrollView scrollview_dashboard;
     //private  NavigationView navigator_dashboard;
 
     private  BuniccessLogicaActivityDashboard buniccessLogicaActivityDashboard;
@@ -98,7 +99,7 @@ public class MainActivity_Dashboard extends AppCompatActivity {
 
 
             // TODO: 15.08.2023 Инициализация перменных/////КНОПКА ТАБЕЛЬНОГО УЧЕТА
-            relativelayout_dashboard = (RelativeLayout) findViewById(R.id.relativelayout_dashboard); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
+            scrollview_dashboard = (ScrollView) findViewById(R.id.scrollview_dashboard); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
          //   navigator_dashboard = (NavigationView) findViewById(R.id.navigator_dashboard); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
    
             activity = this;

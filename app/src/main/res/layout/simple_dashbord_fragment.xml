@@ -554,7 +554,7 @@
                 android:layout_centerInParent="true"
                 android:layout_marginLeft="10dp"
                 android:layout_toRightOf="@+id/imageview_dashborn_tasktrasport"
-                android:text="Заявки \n на траспорт"
+                android:text="Заявки \nна траспорт"
                 android:textColor="#C0C0C0"
                 android:textSize="17dp"
                 android:textStyle="bold"
