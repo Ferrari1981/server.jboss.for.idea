@@ -7,9 +7,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -34,6 +37,9 @@ public class DashboardFragment extends DialogFragment {
     private FragmentManager fragmentManager;
     private FragmentTransaction fragmentTransaction;
     private          View ViewDashboart=null;
+
+    DrawerLayout navigator_dashboord;
+    RelativeLayout relativelayout_dashboard;
     public DashboardFragment() {
         // Required empty public constructor
     }
@@ -111,14 +117,15 @@ public class DashboardFragment extends DialogFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        View view=null;
         try{
        /*     ViewDashboart= inflater.inflate(R.layout.simple_dashbord_fragment_grey, container, false);
             ViewDashboart= inflater.inflate(R.layout.simple_dashbord_fragment_grey, container, false);
             ViewDashboart= inflater.inflate(R.layout.simple_dashbord_fragment_grey, container, false);*/
            // ViewDashboart= inflater.inflate(R.layout.simple_dashbord_fragment_grey, container, false);
            // ViewDashboart= inflater.inflate(R.layout.simple_dashbord_fragment_blue, container, false);
-           ViewDashboart= inflater.inflate(R.layout.simple_dashbord_fragment_grey, container, false);
-          //  ViewDashboart= inflater.inflate(R.layout.simple_dashbord_fragment_green, container, false);
+         //   view= inflater.inflate(R.layout.simple_dashbord_fragment_grey, container, false);
+            ViewDashboart= inflater.inflate(R.layout.simple_dashbord_fragment_green, container, false);
             // TODO: 21.06.2023
             Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -132,7 +139,7 @@ public class DashboardFragment extends DialogFragment {
                     Thread.currentThread().getStackTrace()[2].getMethodName(),
                     Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
-        return  ViewDashboart; //TODO inflater.inflate(R.layout.activity_main__tabel_four_colums, container, false);
+        return  view; //TODO inflater.inflate(R.layout.activity_main__tabel_four_colums, container, false);
     }
 
     @Override
@@ -141,8 +148,19 @@ public class DashboardFragment extends DialogFragment {
             super.onViewCreated(view, savedInstanceState);
             fragmentManager = getActivity(). getSupportFragmentManager();
             fragmentTransaction = fragmentManager.beginTransaction();
+
+            ViewDashboart=view;
+
+
+            DrawerLayout      drawerLayout_dashdord                  = (DrawerLayout) view.findViewById(R.id.drawerLayout_dashdord); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
+
+            navigator_dashboord         = (DrawerLayout) drawerLayout_dashdord.findViewById(R.id.drawerLayout_dashdord); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
+
             // TODO: 17.08.2023
-  /*          buniccessLogicFra4gmentDashboard.new BunicessLogicTabel().методНАстройкиДизайнаТабеля();*/
+            navigator_dashboord.open();
+
+            relativelayout_dashboard= (RelativeLayout) view.findViewById(R.id.relativelayout_dashboard); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
+
 
             Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -169,6 +187,12 @@ public class DashboardFragment extends DialogFragment {
         try{
 
        buniccessLogicFra4gmentDashboard.методНастройкиВнешнегоВида();
+
+
+
+
+            /*          buniccessLogicFra4gmentDashboard.new BunicessLogicTabel().методНАстройкиДизайнаТабеля();*/
+
         // TODO: 20.07.2023
         Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
