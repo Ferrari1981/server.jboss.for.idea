@@ -42,8 +42,7 @@ import com.dsy.dsu.Business_logic_Only_Class.PUBLIC_CONTENT;
 import com.dsy.dsu.Business_logic_Only_Class.Websocet.WebSocketss;
 import com.dsy.dsu.Code_For_Firebase_AndOneSignal_Здесь_КодДЛяСлужбыУведомленияFirebase.Class_Generation_SendBroadcastReceiver_And_Firebase_OneSignal;
 import com.dsy.dsu.Code_For_Services.ServiceUpdatePoОбновлениеПО;
-import com.dsy.dsu.Dashboard.Fragments.DashboardFragmentAliadDialog;
-import com.dsy.dsu.Dashboard.Fragments.DashboardFragment;
+import com.dsy.dsu.Dashboard.Fragments.DashboardFragmentHarmonyOS;
 import com.dsy.dsu.For_Code_Settings_DSU1.MainActivity_Settings;
 import com.dsy.dsu.R;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
@@ -634,17 +633,17 @@ public class MainActivity_Dashboard extends AppCompatActivity {
         void методStartingDashboardFragment(){
             try{
                 // TODO Запусукаем Фргамент DdshBoard
-                DashboardFragment dashboardFragment = DashboardFragment.newInstance();
+                DashboardFragmentHarmonyOS dashboardFragmentHarmonyOS = DashboardFragmentHarmonyOS.newInstance();
                 Bundle data=new Bundle();
                 data.putBinder("binder",localBinderОбновлениеПО);
-                dashboardFragment.setArguments(data);
-                String fragmentNewImageNameaddToBackStack=   dashboardFragment.getClass().getName();
+                dashboardFragmentHarmonyOS.setArguments(data);
+                String fragmentNewImageNameaddToBackStack=   dashboardFragmentHarmonyOS.getClass().getName();
                 Fragment FragmentУжеЕСтьИлиНЕт=     fragmentManager.findFragmentByTag(fragmentNewImageNameaddToBackStack);
                 if (FragmentУжеЕСтьИлиНЕт==null) {
                     fragmentTransaction.disallowAddToBackStack();
                     fragmentManager.popBackStackImmediate();
 
-                    dashboardFragment.show(getSupportFragmentManager(), "dashboardFragment");
+                    dashboardFragmentHarmonyOS.show(getSupportFragmentManager(), "dashboardFragmentHarmonyOS");
                     // TODO: 01.08.2023
                     fragmentManager.setFragmentResultListener("CallBackDashborndFragment", lifecycleOwner, new FragmentResultListener() {
                         @Override
@@ -696,7 +695,7 @@ public class MainActivity_Dashboard extends AppCompatActivity {
         void методStartingDashboardFragmentAleaiDialog(){
             try{
                 // TODO Запусукаем Фргамент DdshBoard
-                DashboardFragmentAliadDialog dashboardFragment= DashboardFragmentAliadDialog.newInstance();
+                DashboardFragmentHarmonyOS dashboardFragment= DashboardFragmentHarmonyOS.newInstance();
                 Bundle data=new Bundle();
                 data.putBinder("binder",localBinderОбновлениеПО);
                 dashboardFragment.setArguments(data);

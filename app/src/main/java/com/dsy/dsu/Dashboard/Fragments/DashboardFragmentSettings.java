@@ -11,7 +11,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.RelativeLayout;
-import android.widget.ScrollView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -28,10 +27,10 @@ import com.google.android.material.textview.MaterialTextView;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link DashboardFragment#newInstance} factory method to
+ * Use the {@link DashboardFragmentSettings#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class DashboardFragment extends DialogFragment {
+public class DashboardFragmentSettings extends DialogFragment {
     // TODO: Rename parameter arguments, choose names that match
 
     private  BuniccessLogicFra4gmentDashboard buniccessLogicFra4gmentDashboard;
@@ -45,13 +44,13 @@ public class DashboardFragment extends DialogFragment {
     RelativeLayout relativelayout_dashboard;
 
     private Handler handlerDashBord;
-    public DashboardFragment() {
+    public DashboardFragmentSettings() {
         // Required empty public constructor
     }
 
     // TODO: Rename and change types and number of parameters
-    public static DashboardFragment newInstance( ) {
-        DashboardFragment fragment = new DashboardFragment();
+    public static DashboardFragmentSettings newInstance( ) {
+        DashboardFragmentSettings fragment = new DashboardFragmentSettings();
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
@@ -227,26 +226,6 @@ public class DashboardFragment extends DialogFragment {
                 getDialog().getWindow().setAttributes(layoutParams);
                 getDialog().getWindow().addFlags(WindowManager.LayoutParams.FLAG_BLUR_BEHIND);
 
-
-
-
-              ///  materialcardview_dashboard=    getDialog().getWindow().findViewById(R.id.materialcardview_dashboard);
-
-            /*    layoutParams.width = WindowManager.LayoutParams.WRAP_CONTENT;
-                layoutParams.height =WindowManager.LayoutParams.MATCH_PARENT;///WindowManager.LayoutParams.MATCH_PARENT;
-                getDialog().getWindow() .setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));*/
-               // materialcardview_dashboard.setCardBackgroundColor(Color.TRANSPARENT);
-                      //  materialcardview_dashboard.setCardElevation(10);
-
-
-
-
-                    /*         layoutParams.width = WindowManager.LayoutParams.MATCH_PARENT;
-                layoutParams.height =WindowManager.LayoutParams.WRAP_CONTENT;*/
-             /*        layoutParams.width = WindowManager.LayoutParams.WRAP_CONTENT;
-                layoutParams.height =WindowManager.LayoutParams.WRAP_CONTENT;*/
-                      /*layoutParams.x = 0;
-                layoutParams.y = 0;*/
                 // TODO: 20.07.2023
                 Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                         " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
