@@ -8,7 +8,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:openDrawer="end"
-    android:background="#FFFFFF"
+    android:background="#20B2AA"
     tools:context=".Dashboard.MainActivity_Dashboard">
 
 
@@ -16,7 +16,7 @@
         android:id="@+id/constraintLayout_faceapp22"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#FFFFFF"
+        android:background="#20B2AA"
         android:foregroundGravity="center"
         android:scrollbars="vertical">
 
@@ -809,6 +809,9 @@
         app:itemIconSize="30dp"
         app:itemIconTint="#F2F8F8"
         android:visibility="visible"
+        app:cardElevation="20dp"
+        app:cardMaxElevation="10dp"
+        android:translationZ="100dp"
         app:itemBackground="@drawable/dialog_bg_dashbord_bokobvay_panel_green"
         app:itemTextColor="@color/cardview_dark_background"
         app:menu="@menu/menu_for_doadboard_navigationview"
