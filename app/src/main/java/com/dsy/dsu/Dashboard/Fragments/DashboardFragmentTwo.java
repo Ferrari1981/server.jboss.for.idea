@@ -124,7 +124,7 @@ public class DashboardFragmentTwo extends DialogFragment {
        /*     ViewDashboart= inflater.inflate(R.layout.simple_dashbord_fragment_grey, container, false);
             ViewDashboart= inflater.inflate(R.layout.simple_dashbord_fragment_grey, container, false);
             ViewDashboart= inflater.inflate(R.layout.simple_dashbord_fragment_grey, container, false);*/
-            ViewDashboart= inflater.inflate(R.layout.simple_dashbord_fragment_green, container, false);
+            ViewDashboart= inflater.inflate(R.layout.simple_dashbord_fragment_grey, container, false);
             // TODO: 21.06.2023
             Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +

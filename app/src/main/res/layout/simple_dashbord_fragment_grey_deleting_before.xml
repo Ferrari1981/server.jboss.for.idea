@@ -42,7 +42,7 @@
             android:animateLayoutChanges="true"
             android:gravity="center"
             app:cardBackgroundColor="#F2F8F8"
-            app:cardCornerRadius="12dp"
+            app:cardCornerRadius="5dp"
             app:cardElevation="20dp"
             app:cardMaxElevation="10dp"
             android:translationZ="100dp"
@@ -84,7 +84,7 @@
             android:id="@+id/materialcardview_dashboard_tabeль"
             android:layout_below="@+id/materialcardview_dashboard_faceapp"
             android:layout_width="160dp"
-            android:layout_height="160dp"
+            android:layout_height="150dp"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="5dp"
             android:layout_marginLeft="10dp"
@@ -148,9 +148,7 @@
 
             android:layout_width="match_parent"
 
-            android:layout_height="160dp"
-
-
+            android:layout_height="150dp"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="5dp"
             android:layout_marginLeft="5dp"
@@ -480,7 +478,7 @@
             android:layout_alignParentRight="true"
 
             android:layout_width="match_parent"
-            android:layout_height="170dp"
+            android:layout_height="175dp"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="5dp"
             android:layout_marginLeft="5dp"
@@ -553,16 +551,13 @@
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/materialcardview_dashboard_tasktrasport"
             android:layout_below="@+id/materialcardview_dashboard_getmaterials"
-            android:layout_toLeftOf  ="@+id/materialcardview_dashboard_shablony"
-
-
             android:layout_alignParentLeft="true"
 
             android:layout_width="wrap_content"
-            android:layout_height="150dp"
+            android:layout_height="80dp"
             android:minWidth="250dp"
 
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="10dp"
             android:layout_marginBottom="5dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="5dp"
@@ -711,7 +706,7 @@
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/materialcardview_dashboard_shablony"
             android:layout_below="@+id/materialcardview_dashboard_getmaterials"
-
+            android:layout_toRightOf   ="@+id/materialcardview_dashboard_tasktrasport"
 
             android:layout_alignParentRight="true"
 
@@ -719,7 +714,7 @@
             android:layout_height="80dp"
 
 
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="10dp"
             android:layout_marginBottom="5dp"
             android:layout_marginLeft="5dp"
             android:layout_marginRight="10dp"
