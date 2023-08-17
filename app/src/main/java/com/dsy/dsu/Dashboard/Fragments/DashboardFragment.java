@@ -302,7 +302,7 @@ public class DashboardFragment extends DialogFragment {
                                     handlerDashBord.postDelayed(()->{
                                         navigator_dashboord.openDrawer(Gravity.END | Gravity.CENTER,true);
 
-                                    },250);
+                                    },500);
 
                                 handlerDashBord.postDelayed(()->{
                                     if (  navigator_dashboord.isDrawerOpen(Gravity.END | Gravity.CENTER)) {
