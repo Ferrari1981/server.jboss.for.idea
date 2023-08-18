@@ -104,7 +104,7 @@ public class DashboardFragmentMaterialDesign extends DialogFragment {
             //setCancelable(false);
 
          //   setStyle(DialogFragment.STYLE_NO_TITLE,android.R.style.Theme_Material_Dialog_Alert);
-            setStyle(DialogFragment.STYLE_NO_TITLE,android.R.style.Theme_Material_Dialog_Alert);
+             setStyle(   DialogFragment.STYLE_NO_FRAME ,android.R.style.Theme_DeviceDefault_Light_NoActionBar);//Theme_Dialog
         // TODO: 15.08.2023
         Log.d(this.getClass().getName(),"\n" + " class "
                 + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
