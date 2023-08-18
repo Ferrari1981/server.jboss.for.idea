@@ -16,12 +16,12 @@ import android.view.animation.AnimationUtils;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
-import android.widget.Toolbar;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
@@ -51,9 +51,11 @@ public class DashboardFragmentMaterialDesign extends DialogFragment {
 
 
     RelativeLayout relativelayout_dashboard;
+    Toolbar toolbarcamera_dashbord;
 
     private Handler handlerDashBord;
     private Animation animation;
+    private Animation animation2;
 
 
     public DashboardFragmentMaterialDesign() {
@@ -171,8 +173,10 @@ public class DashboardFragmentMaterialDesign extends DialogFragment {
             fragmentTransaction = fragmentManager.beginTransaction();
             ViewDashboart=view;
             relativelayout_dashboard         = (RelativeLayout) view.findViewById(R.id.relativelayout_dashboard); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
+            toolbarcamera_dashbord         = (androidx.appcompat.widget.Toolbar) view.findViewById(R.id.toolbarcamera_dashbord); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
 
             animation = AnimationUtils.loadAnimation(getContext(),R.anim.slide_singletable2);
+            animation2 = AnimationUtils.loadAnimation(getContext(),R.anim.slide_singletable3);
            /*     animationПрофессия300 = AnimationUtils.loadAnimation(getContext(),R.anim.slide_in_row2);
                 animationVibr1 = AnimationUtils.loadAnimation(getContext(),R.anim.slide_singletable);
                 animationVibr2 = AnimationUtils.loadAnimation(getContext(),R.anim.slide_singletable2);
@@ -247,6 +251,10 @@ public class DashboardFragmentMaterialDesign extends DialogFragment {
 
                 relativelayout_dashboard.startAnimation(animation);
                 relativelayout_dashboard.refreshDrawableState();
+
+
+                toolbarcamera_dashbord.startAnimation(animation2);
+                toolbarcamera_dashbord.refreshDrawableState();
 
                 // TODO: 20.07.2023
                 Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +

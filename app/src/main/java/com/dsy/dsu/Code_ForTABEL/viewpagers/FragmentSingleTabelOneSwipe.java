@@ -16,6 +16,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -25,8 +26,6 @@ import android.os.Message;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
 import android.text.Editable;
-import android.text.TextUtils;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
@@ -91,7 +90,6 @@ import com.google.android.material.button.MaterialButton;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textview.MaterialTextView;
-import com.jakewharton.rxbinding4.view.RxView;
 import com.jakewharton.rxbinding4.widget.RxTextView;
 import com.jakewharton.rxbinding4.widget.TextViewAfterTextChangeEvent;
 
@@ -99,7 +97,6 @@ import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEvent;
 import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEventListener;
 
 import org.jetbrains.annotations.NotNull;
-import org.reactivestreams.Subscription;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -122,8 +119,6 @@ import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.disposables.Disposable;
 import io.reactivex.rxjava3.functions.Action;
 import io.reactivex.rxjava3.functions.Consumer;
-import io.reactivex.rxjava3.functions.Predicate;
-import io.reactivex.rxjava3.observers.DisposableObserver;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -211,7 +206,8 @@ public class FragmentSingleTabelOneSwipe extends Fragment {
     private  Integer  CurrentFragmentGetCursor;
     private ScrollView scrollview_recycler_view_single_tabel;
     private  Integer GetPosition;
-  private      Animation   animationForTextView;
+  private      Animation animation1;
+  private      Animation animation2;
 
   private  Disposable disposableAfterTextChangeEvent;
 
@@ -391,7 +387,8 @@ public class FragmentSingleTabelOneSwipe extends Fragment {
                     scrollview_recycler_view_single_tabel.pageScroll(View.FOCUS_UP);
 
 
-                    animationForTextView = AnimationUtils.loadAnimation(getContext(),R.anim.slide_singletable2);
+                    animation1 = AnimationUtils.loadAnimation(getContext(),R.anim.slide_singletable2);
+                    animation1 = AnimationUtils.loadAnimation(getContext(),R.anim.slide_singletable3);
            /*     animationПрофессия300 = AnimationUtils.loadAnimation(getContext(),R.anim.slide_in_row2);
                 animationVibr1 = AnimationUtils.loadAnimation(getContext(),R.anim.slide_singletable);
                 animationVibr2 = AnimationUtils.loadAnimation(getContext(),R.anim.slide_singletable2);
@@ -1722,7 +1719,7 @@ public class FragmentSingleTabelOneSwipe extends Fragment {
 
                                                                     // TODO: 16.06.2023  после переполуение данныз перегрузка экрана
                                                                     message.getTarget().postDelayed(()->{
-                                                                        editextViewAfterTextChangeEvent.startAnimation(animationForTextView);
+                                                                        editextViewAfterTextChangeEvent.startAnimation(animation1);
                                                                     },100);
 
                                                                     //disposable.dispose();
@@ -1866,8 +1863,9 @@ public class FragmentSingleTabelOneSwipe extends Fragment {
 
             private void методКогдаДанныеНеСохранились(@NonNull EditText editTextRowКликПоДАнными,
                                                        @NonNull String После, @NonNull String До) {
-                    editTextRowКликПоДАнными.setBackgroundColor(Color.RED);
-                    editTextRowКликПоДАнными.setText(  После);
+                   // editTextRowКликПоДАнными.setBackgroundColor(Color.RED);
+                    editTextRowКликПоДАнными.setError(После);
+                   // editTextRowКликПоДАнными.setText(  После);
                     message.getTarget().postDelayed(()->{
                         try {
                             Bundle bundleперезаписьЯчейки = (Bundle) editTextRowКликПоДАнными.getTag();
@@ -1875,6 +1873,10 @@ public class FragmentSingleTabelOneSwipe extends Fragment {
                             editTextRowКликПоДАнными.setText(ЗначениеДня);
                             //editTextRowКликПоДАнными.setText(До);
                             editTextRowКликПоДАнными.setBackgroundColor(Color.WHITE);
+                            message.getTarget().postDelayed(()->{
+                                 editTextRowКликПоДАнными.setError(null);
+
+                            },300);
                             // TODO: 17.06.2023 КОГДА ОШИБКА ПРМ ЗАПОДЛЕН ЗНАЧЕНИМЕМ НЕ ПОРАВИЛЬНМ
                             Log.d(this.getClass().getName(), "\n" + "Start Update D1 class " +
                                     Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -2671,7 +2673,7 @@ public class FragmentSingleTabelOneSwipe extends Fragment {
                             simpleCursorAdapterЦФО.setViewBinder(БиндингДляНовогоПоиска);
                             simpleCursorAdapterЦФО.notifyDataSetChanged();
                             listViewДляНовыйПосик.setAdapter(simpleCursorAdapterЦФО);
-                            listViewДляНовыйПосик.startAnimation(animationForTextView);
+                            listViewДляНовыйПосик.startAnimation(animation1);
                             listViewДляНовыйПосик.setSelection(0);
                             listViewДляНовыйПосик.forceLayout();
 
@@ -2888,7 +2890,7 @@ public class FragmentSingleTabelOneSwipe extends Fragment {
             private void МетодПерегрузкаВидаПрофесии(@NonNull String Профессия) {
                 try {
                     TextViewФИОПрофессия.setText(ФИО.trim() + "\n"+ Профессия.trim());
-                    TextViewФИОПрофессия.startAnimation(animationForTextView);
+                    TextViewФИОПрофессия.startAnimation(animation1);
                     TextViewФИОПрофессия.refreshDrawableState();
                     TextViewФИОПрофессия.requestLayout();
                     Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
