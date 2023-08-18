@@ -11,6 +11,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -48,9 +50,12 @@ public class DashboardFragmentMaterialDesign extends DialogFragment {
     private          View ViewDashboart=null;
 
 
-    ScrollView scrollview_dashboard;
+    RelativeLayout relativelayout_dashboard;
 
     private Handler handlerDashBord;
+    private Animation animation;
+
+
     public DashboardFragmentMaterialDesign() {
         // Required empty public constructor
     }
@@ -92,7 +97,7 @@ public class DashboardFragmentMaterialDesign extends DialogFragment {
             //setCancelable(false);
 
          //   setStyle(DialogFragment.STYLE_NO_TITLE,android.R.style.Theme_Material_Dialog_Alert);
-            setStyle(DialogFragment.STYLE_NORMAL,android.R.style.Theme_Material_Dialog_Alert);
+            setStyle(DialogFragment.STYLE_NO_TITLE,android.R.style.Theme_Material_Dialog_Alert);
         // TODO: 15.08.2023
         Log.d(this.getClass().getName(),"\n" + " class "
                 + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -165,7 +170,15 @@ public class DashboardFragmentMaterialDesign extends DialogFragment {
             fragmentManager = getActivity(). getSupportFragmentManager();
             fragmentTransaction = fragmentManager.beginTransaction();
             ViewDashboart=view;
-            scrollview_dashboard         = (ScrollView) view.findViewById(R.id.scrollview_dashboard); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
+            relativelayout_dashboard         = (RelativeLayout) view.findViewById(R.id.relativelayout_dashboard); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
+
+            animation = AnimationUtils.loadAnimation(getContext(),R.anim.slide_singletable2);
+           /*     animationПрофессия300 = AnimationUtils.loadAnimation(getContext(),R.anim.slide_in_row2);
+                animationVibr1 = AnimationUtils.loadAnimation(getContext(),R.anim.slide_singletable);
+                animationVibr2 = AnimationUtils.loadAnimation(getContext(),R.anim.slide_singletable2);
+                animationRows = AnimationUtils.loadAnimation(getContext(),R.anim.slide_in_row_scroll_for_singletabel);
+                animationRich = AnimationUtils.loadAnimation(getContext(),R.anim.slide_in_swipe_r);//R.anim.slide_in_row)
+                animationLesft = AnimationUtils.loadAnimation(getContext(),R.anim.slide_in_swipe_l);//R.anim.slide_in_row)R.anim.slide_in_row_newscanner1*/
             // TODO: 17.08.2023
             Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -231,6 +244,9 @@ public class DashboardFragmentMaterialDesign extends DialogFragment {
 
                 getDialog().getWindow().setAttributes(layoutParams);
                 getDialog().getWindow().addFlags(WindowManager.LayoutParams.FLAG_BLUR_BEHIND);
+
+                relativelayout_dashboard.startAnimation(animation);
+                relativelayout_dashboard.refreshDrawableState();
 
                 // TODO: 20.07.2023
                 Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +

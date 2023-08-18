@@ -229,8 +229,20 @@ dependencies {
     implementation 'com.google.android.material:material:1.1.0-alpha09'
 
 
-    // https://mvnrepository.com/artifact/androidx.room/room-runtime
-    implementation 'androidx.room:room-runtime:2.4.0'
+
+
+
+
+    // https://mvnrepository.com/artifact/androidx.room/room-runtime ROOM
+
+    def room_version = "2.4.0"
+    implementation "androidx.room:room-runtime:$room_version"
+    annotationProcessor "androidx.room:room-compiler:$room_version"
+    // optional - RxJava3 support for Room
+    implementation "androidx.room:room-rxjava3:$room_version"
+    // optional - RxJava3 support for Room
+    implementation "androidx.room:room-rxjava3:$room_version"
+
 
 
 }
