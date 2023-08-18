@@ -228,4 +228,9 @@ dependencies {
 
     implementation 'com.google.android.material:material:1.1.0-alpha09'
 
+
+    // https://mvnrepository.com/artifact/androidx.room/room-runtime
+    implementation 'androidx.room:room-runtime:2.4.0'
+
+
 }
