@@ -148,7 +148,7 @@ public class DashboardFragmentMaterialDesign extends DialogFragment {
             ViewDashboart= inflater.inflate(R.layout.simple_dashbord_fragment_grey, container, false);*/
            // ViewDashboart= inflater.inflate(R.layout.simple_dashbord_fragment_grey, container, false);
            // ViewDashboart= inflater.inflate(R.layout.simple_dashbord_fragment_blue, container, false);
-            view= inflater.inflate(R.layout.simple_dashbord_fragment_grey_materialdisign, container, false);
+            view= inflater.inflate(R.layout.simple_dashbord_fragment_grey_materialdisign_3, container, false);
            // view= inflater.inflate(R.layout.simple_dashbord_fragment_green, container, false);
             // TODO: 21.06.2023
             Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
