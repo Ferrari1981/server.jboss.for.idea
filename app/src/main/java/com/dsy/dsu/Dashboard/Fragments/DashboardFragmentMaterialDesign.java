@@ -58,6 +58,7 @@ public class DashboardFragmentMaterialDesign extends DialogFragment {
     private Animation animation2;
 
 
+
     public DashboardFragmentMaterialDesign() {
         // Required empty public constructor
     }
@@ -175,8 +176,8 @@ public class DashboardFragmentMaterialDesign extends DialogFragment {
             relativelayout_dashboard         = (RelativeLayout) view.findViewById(R.id.relativelayout_dashboard); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
             toolbarcamera_dashbord         = (androidx.appcompat.widget.Toolbar) view.findViewById(R.id.toolbarcamera_dashbord); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
 
-            animation = AnimationUtils.loadAnimation(getContext(),R.anim.slide_singletable2);
-            animation2 = AnimationUtils.loadAnimation(getContext(),R.anim.slide_singletable3);
+            animation = AnimationUtils.loadAnimation(getContext(),R.anim.slide_in_row);
+            animation2 = AnimationUtils.loadAnimation(getContext(),R.anim.slide_in_row_dashboard);
            /*     animationПрофессия300 = AnimationUtils.loadAnimation(getContext(),R.anim.slide_in_row2);
                 animationVibr1 = AnimationUtils.loadAnimation(getContext(),R.anim.slide_singletable);
                 animationVibr2 = AnimationUtils.loadAnimation(getContext(),R.anim.slide_singletable2);
@@ -255,6 +256,8 @@ public class DashboardFragmentMaterialDesign extends DialogFragment {
 
                 toolbarcamera_dashbord.startAnimation(animation2);
                 toolbarcamera_dashbord.refreshDrawableState();
+
+
 
                 // TODO: 20.07.2023
                 Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +

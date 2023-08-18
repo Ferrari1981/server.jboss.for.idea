@@ -207,7 +207,8 @@ public class FragmentSingleTabelOneSwipe extends Fragment {
     private ScrollView scrollview_recycler_view_single_tabel;
     private  Integer GetPosition;
   private      Animation animation1;
-  private      Animation animation2;
+
+  private      Animation animationFromRecyReview;
 
   private  Disposable disposableAfterTextChangeEvent;
 
@@ -388,7 +389,7 @@ public class FragmentSingleTabelOneSwipe extends Fragment {
 
 
                     animation1 = AnimationUtils.loadAnimation(getContext(),R.anim.slide_singletable2);
-                    animation1 = AnimationUtils.loadAnimation(getContext(),R.anim.slide_singletable3);
+                    animationFromRecyReview= AnimationUtils.loadAnimation(getContext(),R.anim.slide_in_row);
            /*     animationПрофессия300 = AnimationUtils.loadAnimation(getContext(),R.anim.slide_in_row2);
                 animationVibr1 = AnimationUtils.loadAnimation(getContext(),R.anim.slide_singletable);
                 animationVibr2 = AnimationUtils.loadAnimation(getContext(),R.anim.slide_singletable2);
@@ -1266,7 +1267,6 @@ public class FragmentSingleTabelOneSwipe extends Fragment {
             @Override
             public void onBindViewHolder(@NonNull  MyViewHolder holder, int position) {
                 try {
-                    Animation animationFromRecyReview=AnimationUtils.loadAnimation(getContext(),R.anim.slide_in_row);
                     holder.itemView.startAnimation(animationFromRecyReview);
                     Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
