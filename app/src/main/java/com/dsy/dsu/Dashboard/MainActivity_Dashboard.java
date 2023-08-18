@@ -43,6 +43,7 @@ import com.dsy.dsu.Business_logic_Only_Class.Websocet.WebSocketss;
 import com.dsy.dsu.Code_For_Firebase_AndOneSignal_Здесь_КодДЛяСлужбыУведомленияFirebase.Class_Generation_SendBroadcastReceiver_And_Firebase_OneSignal;
 import com.dsy.dsu.Code_For_Services.ServiceUpdatePoОбновлениеПО;
 import com.dsy.dsu.Dashboard.Fragments.DashboardFragmentHarmonyOS;
+import com.dsy.dsu.Dashboard.Fragments.DashboardFragmentMaterialDesign;
 import com.dsy.dsu.For_Code_Settings_DSU1.MainActivity_Settings;
 import com.dsy.dsu.R;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
@@ -633,7 +634,7 @@ public class MainActivity_Dashboard extends AppCompatActivity {
         void методStartingDashboardFragment(){
             try{
                 // TODO Запусукаем Фргамент DdshBoard
-                DashboardFragmentHarmonyOS dashboardFragmentHarmonyOS = DashboardFragmentHarmonyOS.newInstance();
+                DashboardFragmentMaterialDesign dashboardFragmentHarmonyOS = DashboardFragmentMaterialDesign.newInstance();
                 Bundle data=new Bundle();
                 data.putBinder("binder",localBinderОбновлениеПО);
                 dashboardFragmentHarmonyOS.setArguments(data);

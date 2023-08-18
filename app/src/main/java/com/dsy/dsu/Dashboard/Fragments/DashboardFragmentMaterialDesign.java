@@ -1,5 +1,6 @@
 package com.dsy.dsu.Dashboard.Fragments;
 
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -11,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -40,8 +42,8 @@ public class DashboardFragmentMaterialDesign extends DialogFragment {
     private FragmentTransaction fragmentTransaction;
     private          View ViewDashboart=null;
 
-    DrawerLayout navigator_dashboord;
-    RelativeLayout relativelayout_dashboard;
+
+    ScrollView scrollview_dashboard;
 
     private Handler handlerDashBord;
     public DashboardFragmentMaterialDesign() {
@@ -63,7 +65,7 @@ public class DashboardFragmentMaterialDesign extends DialogFragment {
         buniccessLogicFra4gmentDashboard=new BuniccessLogicFra4gmentDashboard();
             // TODO: 17.08.2023 inizial message
             buniccessLogicFra4gmentDashboard.  МетодИнициализацияMessager();
-            //  setStyle(DialogFragment.STYLE_NORMAL,android.R.style.Theme_Material_Dialog_Alert);//Theme_Dialog
+              setStyle(DialogFragment.STYLE_NORMAL,android.R.style.Theme_Material_Dialog_Alert);//Theme_Dialog
        // setStyle(DialogFragment.STYLE_NORMAL,android.R.style.Theme_DeviceDefault_Light_NoActionBar_Fullscreen);//Theme_Dialog
       //  setStyle(DialogFragment.STYLE_NORMAL,android.R.style.Theme_DeviceDefault_Light_NoActionBar_TranslucentDecor);//Theme_Dialog
        // setStyle(DialogFragment.STYLE_NORMAL,android.R.style.Theme_DeviceDefault_Light_NoActionBar_Fullscreen);//Theme_Dialog
@@ -81,7 +83,7 @@ public class DashboardFragmentMaterialDesign extends DialogFragment {
     //    setStyle(   DialogFragment.STYLE_NO_TITLE,android.R.style.Theme_DeviceDefault_Wallpaper_NoTitleBar);//Theme_Dialog
       //  setStyle(   DialogFragment.STYLE_NO_INPUT ,android.R.style.Theme_DeviceDefault_Light_NoActionBar_Fullscreen);//Theme_Dialog
        // setStyle(   DialogFragment.STYLE_NO_FRAME ,android.R.style.Theme_DeviceDefault_Light_NoActionBar_Overscan);//Theme_Dialog
-        setStyle(   DialogFragment.STYLE_NO_FRAME ,android.R.style.Theme_DeviceDefault_Light_NoActionBar_Overscan);//Theme_Dialog
+       // setStyle(   DialogFragment.STYLE_NO_FRAME ,android.R.style.Theme_DeviceDefault_Light_NoActionBar_Overscan);//Theme_Dialog
             //setCancelable(false);
         // TODO: 15.08.2023
         Log.d(this.getClass().getName(),"\n" + " class "
@@ -130,7 +132,7 @@ public class DashboardFragmentMaterialDesign extends DialogFragment {
             ViewDashboart= inflater.inflate(R.layout.simple_dashbord_fragment_grey, container, false);*/
            // ViewDashboart= inflater.inflate(R.layout.simple_dashbord_fragment_grey, container, false);
            // ViewDashboart= inflater.inflate(R.layout.simple_dashbord_fragment_blue, container, false);
-            view= inflater.inflate(R.layout.simple_dashbord_fragment_grey, container, false);
+            view= inflater.inflate(R.layout.simple_dashbord_fragment_grey_materialdisign, container, false);
            // view= inflater.inflate(R.layout.simple_dashbord_fragment_green, container, false);
             // TODO: 21.06.2023
             Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -154,10 +156,8 @@ public class DashboardFragmentMaterialDesign extends DialogFragment {
             super.onViewCreated(view, savedInstanceState);
             fragmentManager = getActivity(). getSupportFragmentManager();
             fragmentTransaction = fragmentManager.beginTransaction();
-
             ViewDashboart=view;
-            DrawerLayout      drawerLayout_dashdord                  = (DrawerLayout) view.findViewById(R.id.drawerLayout_dashdord); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
-            navigator_dashboord         = (DrawerLayout) drawerLayout_dashdord.findViewById(R.id.drawerLayout_dashdord); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
+            scrollview_dashboard         = (ScrollView) view.findViewById(R.id.scrollview_dashboard); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
             // TODO: 17.08.2023
             Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -190,7 +190,7 @@ public class DashboardFragmentMaterialDesign extends DialogFragment {
 
             /*          buniccessLogicFra4gmentDashboard.new BunicessLogicTabel().методНАстройкиДизайнаТабеля();*/
 
-            buniccessLogicFra4gmentDashboard.new BuniccessLogicNavigarlaout().методНастройкиБоковойпанели();;
+           // buniccessLogicFra4gmentDashboard.new BuniccessLogicNavigarlaout().методНастройкиБоковойпанели();;
 
 
         // TODO: 20.07.2023
@@ -225,6 +225,13 @@ public class DashboardFragmentMaterialDesign extends DialogFragment {
 
                 getDialog().getWindow().setAttributes(layoutParams);
                 getDialog().getWindow().addFlags(WindowManager.LayoutParams.FLAG_BLUR_BEHIND);
+
+
+                getDialog().setTitle("dddddddddddddddddddddddddd");
+
+                getDialog().
+
+
 
                 // TODO: 20.07.2023
                 Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -278,17 +285,7 @@ public class DashboardFragmentMaterialDesign extends DialogFragment {
 
 
 
-                                    handlerDashBord.postDelayed(()->{
-                                        navigator_dashboord.openDrawer(Gravity.END | Gravity.CENTER,true);
 
-                                    },500);
-
-                                handlerDashBord.postDelayed(()->{
-                                    if (  navigator_dashboord.isDrawerOpen(Gravity.END | Gravity.CENTER)) {
-                                        navigator_dashboord.closeDrawer(Gravity.END | Gravity.CENTER,true);
-                                    }
-
-                                },2000);
 
                                     Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
