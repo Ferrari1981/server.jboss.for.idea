@@ -262,13 +262,14 @@
                             app:cardMaxElevation="10dp"
                             app:srcCompat="@mipmap/icon_new_dashboard_getmaterialov" />
 
+
                         <com.google.android.material.textview.MaterialTextView
                             android:id="@+id/materialtextview_dashborn3"
                             android:layout_width="wrap_content"
                             android:layout_height="25dp"
-                            android:layout_centerInParent="true"
 
-                            android:text="Поступление  материалов"
+                            android:layout_centerInParent="true"
+                            android:text="Поступление материалов"
                             android:textColor="#000000"
                             android:textSize="14dp"
                             android:textStyle="bold"
