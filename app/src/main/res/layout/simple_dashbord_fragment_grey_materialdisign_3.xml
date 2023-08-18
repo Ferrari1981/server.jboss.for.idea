@@ -31,7 +31,7 @@
                     android:layout_alignParentTop="true"
                     android:layout_centerInParent="true"
                     android:layout_marginBottom="5dp"
-                    android:background="#FBFBFB"
+                    android:background="#FFFFFF"
                     android:elevation="0dp"
                     android:padding="5dp"
                     app:showAsAction="always"
@@ -48,23 +48,17 @@
                         <com.google.android.material.card.MaterialCardView
                             android:id="@+id/materialcardview_dashboard5"
                             android:layout_alignParentTop="true"
-
                             android:layout_width="40dp"
                             android:layout_height="40dp"
                             android:layout_marginTop="5dp"
                             android:layout_marginBottom="10dp"
                             android:layout_marginRight="20dp"
                             android:layout_marginLeft="10dp"
-
-
-
                             android:layout_alignParentLeft="true"
                             android:background="@drawable/dialog_bg"
                             android:animateLayoutChanges="true"
                             android:gravity="center"
-                            app:cardBackgroundColor="#F2F8F8"
                             app:cardCornerRadius="15dp"
-                            app:strokeColor="#E0DFE4"
                             app:strokeWidth="0dp">
                             <RelativeLayout
                                 android:layout_width="match_parent"
@@ -191,7 +185,7 @@
                     android:layout_above="@+id/materialcardview_dashboard3"
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
-                    android:layout_marginTop="5dp"
+                    android:layout_marginTop="10dp"
                     android:layout_marginBottom="1dp"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
@@ -249,7 +243,7 @@
                     android:layout_above="@+id/materialcardview_dashboard4"
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
-                    android:layout_marginTop="5dp"
+                    android:layout_marginTop="10dp"
                     android:layout_marginBottom="1dp"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
@@ -311,8 +305,8 @@
                     android:id="@+id/materialcardview_dashboard4"
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginBottom="40dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="30dp"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
 
