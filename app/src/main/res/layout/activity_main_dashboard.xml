@@ -5,7 +5,7 @@
     android:id="@+id/scrollview_dashboard"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#C0C5C0"
+    android:background="#FFFFFF"
     android:scrollbars="horizontal|vertical"
     android:layout_centerInParent="true"
     app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"

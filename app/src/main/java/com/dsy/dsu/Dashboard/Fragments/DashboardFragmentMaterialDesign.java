@@ -54,7 +54,7 @@ public class DashboardFragmentMaterialDesign extends DialogFragment {
     Toolbar toolbarcamera_dashbord;
 
     private Handler handlerDashBord;
-    private Animation animation[]=new Animation[6];
+    private Animation animation1,animation2,animation3,animation4,animation5, animation6;
 
     private MaterialCardView materialcardview_dashboard5, materialcardview_dashboard1,
             materialcardview_dashboard2 ,
@@ -103,8 +103,8 @@ public class DashboardFragmentMaterialDesign extends DialogFragment {
        // setStyle(   DialogFragment.STYLE_NO_FRAME ,android.R.style.Theme_DeviceDefault_Light_NoActionBar_Overscan);//Theme_Dialog
             //setCancelable(false);
 
-         //  setStyle(DialogFragment.STYLE_NO_TITLE,android.R.style.Theme_Material_Dialog_Alert);
-             setStyle(   DialogFragment.STYLE_NO_FRAME ,android.R.style.Theme_DeviceDefault_Light_NoActionBar);//Theme_Dialog
+           setStyle(DialogFragment.STYLE_NO_TITLE,android.R.style.Theme_Material_Dialog_Presentation);
+             //setStyle(   DialogFragment.STYLE_NO_FRAME ,android.R.style.Theme_DeviceDefault_Light_NoActionBar);//Theme_Dialog
         // TODO: 15.08.2023
         Log.d(this.getClass().getName(),"\n" + " class "
                 + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -190,13 +190,12 @@ public class DashboardFragmentMaterialDesign extends DialogFragment {
 
 
 
-
-            animation[0] = AnimationUtils.loadAnimation(getContext(),R.anim.slide_in_row);
-            animation[1] = AnimationUtils.loadAnimation(getContext(),R.anim.slide_in_row2);
-            animation[2] = AnimationUtils.loadAnimation(getContext(),R.anim.slide_in_row3);
-            animation [3]= AnimationUtils.loadAnimation(getContext(),R.anim.slide_in_row5);
-            animation[4] = AnimationUtils.loadAnimation(getContext(),R.anim.slide_in_row6);
-            animation[5] = AnimationUtils.loadAnimation(getContext(),R.anim.slide_in_row7);
+             animation1= AnimationUtils.loadAnimation(getContext(),R.anim.slide_in_row3);
+            animation2= AnimationUtils.loadAnimation(getContext(),R.anim.slide_in_row5);
+            animation3 = AnimationUtils.loadAnimation(getContext(),R.anim.slide_in_row6);
+            animation4 = AnimationUtils.loadAnimation(getContext(),R.anim.slide_in_row7);
+            animation5 = AnimationUtils.loadAnimation(getContext(),R.anim.slide_in_row8);
+            animation6 = AnimationUtils.loadAnimation(getContext(),R.anim.slide_in_row9);
 
            /*     animationПрофессия300 = AnimationUtils.loadAnimation(getContext(),R.anim.slide_in_row2);
                 animationVibr1 = AnimationUtils.loadAnimation(getContext(),R.anim.slide_singletable);
@@ -272,30 +271,30 @@ public class DashboardFragmentMaterialDesign extends DialogFragment {
 
 
 
-                toolbarcamera_dashbord.startAnimation(animation[5]);
-                toolbarcamera_dashbord.refreshDrawableState();
 
 
-
-
-                materialcardview_dashboard1.startAnimation(animation[0]);
+                materialcardview_dashboard1.startAnimation(animation1);
                 materialcardview_dashboard1.refreshDrawableState();
 
 
 
-                        materialcardview_dashboard2.startAnimation(animation[1]);
+                        materialcardview_dashboard2.startAnimation(animation2);
                         materialcardview_dashboard2.refreshDrawableState();
 
-                materialcardview_dashboard3.startAnimation(animation[2]);
+                materialcardview_dashboard3.startAnimation(animation3);
                 materialcardview_dashboard3.refreshDrawableState();
 
-                        materialcardview_dashboard4.startAnimation(animation[3]);
+                        materialcardview_dashboard4.startAnimation(animation4);
                         materialcardview_dashboard4.refreshDrawableState();
 
 
-                materialcardview_dashboard5.startAnimation(animation[4]);
+                materialcardview_dashboard5.startAnimation(animation5);
                 materialcardview_dashboard5.refreshDrawableState();
 
+
+
+                toolbarcamera_dashbord.startAnimation(animation6);
+                toolbarcamera_dashbord.refreshDrawableState();
 
 
 

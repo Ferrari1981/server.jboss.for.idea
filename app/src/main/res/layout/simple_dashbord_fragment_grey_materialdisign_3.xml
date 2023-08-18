@@ -23,83 +23,62 @@
 
 
          <!--       ///TODO TOOLBAR  toolbarcamera_dashbord -->
-                <androidx.appcompat.widget.Toolbar
-                    android:id="@+id/toolbarcamera_dashbord"
-                    android:layout_above="@+id/materialcardview_dashboard1"
-                    android:layout_width="match_parent"
-                    android:layout_height="300dp"
-                    android:layout_alignParentTop="true"
-                    android:layout_centerInParent="true"
-                    android:layout_marginBottom="5dp"
-                    android:background="#FFFFFF"
-                    android:elevation="0dp"
-                    android:padding="5dp"
-                    app:showAsAction="always"
-                    app:theme="@style/AppTheme">
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbarcamera_dashbord"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:layout_above="@+id/materialcardview_dashboard1"
+        android:layout_alignParentTop="true"
+        android:layout_centerInParent="true"
+        android:layout_marginBottom="5dp"
+        android:background="#FFFFFF"
+        android:elevation="0dp"
+        android:padding="5dp"
+        app:showAsAction="always"
+        app:theme="@style/AppTheme">
 
 
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
 
-                        <!--   //TODO   #5 -->
-
-                        <com.google.android.material.card.MaterialCardView
-                            android:id="@+id/materialcardview_dashboard5"
-                            android:layout_alignParentTop="true"
-                            android:layout_width="40dp"
-                            android:layout_height="40dp"
-                            android:layout_marginTop="5dp"
-                            android:layout_marginBottom="10dp"
-                            android:layout_marginRight="20dp"
-                            android:layout_marginLeft="10dp"
-                            android:layout_alignParentLeft="true"
-                            android:background="@drawable/dialog_bg"
-                            android:animateLayoutChanges="true"
-                            android:gravity="center"
-                            app:cardCornerRadius="15dp"
-                            app:strokeWidth="0dp">
-                            <RelativeLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:visibility="visible">
-
-                                <ImageView
-                                    android:id="@+id/imageview_dashborn_settings"
-                                    android:layout_width="50dp"
-                                    android:layout_height="50dp"
-                                    android:layout_centerInParent="true"
-                                    android:layout_marginLeft="20dp"
-                                    android:visibility="visible"
-                                    app:srcCompat="@drawable/icon_new_dashaborad_settings" />
-
-                            </RelativeLayout>
-                        </com.google.android.material.card.MaterialCardView>
-                        <!--   //TODO   #1  конец Настройки  -->
+            <!--   //TODO   #5 -->
+            <ImageView
+                android:id="@+id/imageview_dashborn_settings"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_alignLeft="@+id/TextView"
+                android:layout_marginTop="10dp"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:layout_centerInParent="true"
+                android:layout_marginLeft="1dp"
+                android:visibility="visible"
+                app:srcCompat="@drawable/icon_new_dashaborad_settings" />
 
 
-                        <TextView
-                            android:id="@+id/TextView"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+            <TextView
+                android:id="@+id/TextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
 
-                            android:layout_centerInParent="true"
-                            android:fontFamily="@font/alegreya_sans_sc_thin"
-                            android:gravity="center"
-                            android:hint="КАМЕРА"
-                            android:text="Союз-Автодор"
-                            android:textAlignment="center"
-                            android:textColor="#000000"
-                            android:textSize="26sp"
-                            android:textStyle="bold"
-                            android:visibility="visible" />
-
-
-                    </RelativeLayout>
+                android:layout_centerInParent="true"
+                android:fontFamily="@font/alegreya_sans_sc_thin"
+                android:gravity="center"
+                android:hint="КАМЕРА"
+                android:text="Союз-Автодор"
+                android:textAlignment="center"
+                android:textColor="#000000"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:visibility="visible" />
 
 
-                </androidx.appcompat.widget.Toolbar>
+        </RelativeLayout>
+
+
+    </androidx.appcompat.widget.Toolbar>
 
 
 
@@ -162,12 +141,12 @@
                         <com.google.android.material.textview.MaterialTextView
                             android:id="@+id/materialtextview_dashborn1"
                             android:layout_width="wrap_content"
-                            android:layout_height="25dp"
+                            android:layout_height="wrap_content"
                             android:layout_centerInParent="true"
                             android:fontFamily="@font/alegreya_sans_sc_thin"
                             android:text="Заявки на траспорт"
                             android:textColor="#000000"
-                            android:textSize="20dp"
+                            android:textSize="16dp"
                             android:textStyle="bold"
                             android:translationZ="0dp"
                             android:visibility="visible"
@@ -220,12 +199,12 @@
                         <com.google.android.material.textview.MaterialTextView
                             android:id="@+id/materialtextview_dashborn2"
                             android:layout_width="wrap_content"
-                            android:layout_height="25dp"
+                            android:layout_height="wrap_content"
                             android:layout_centerInParent="true"
                             android:fontFamily="@font/alegreya_sans_sc_thin"
                             android:text="Согласование"
                             android:textColor="#000000"
-                            android:textSize="20dp"
+                            android:textSize="16dp"
                             android:textStyle="bold"
                             android:translationZ="0dp"
                             android:visibility="visible"
@@ -281,14 +260,14 @@
 
                         <com.google.android.material.textview.MaterialTextView
                             android:id="@+id/materialtextview_dashborn3"
-                            android:layout_width="175dp"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                             android:gravity="center"
                             android:layout_centerInParent="true"
                             android:fontFamily="@font/alegreya_sans_sc_thin"
-                            android:text="Поступление \n материалов"
+                            android:gravity="center"
+                            android:text="Поступление  материалов"
                             android:textColor="#000000"
-                            android:textSize="20dp"
+                            android:textSize="16dp"
                             android:textStyle="bold"
                             android:translationZ="0dp"
                             android:visibility="visible"
@@ -345,12 +324,12 @@
                         <com.google.android.material.textview.MaterialTextView
                             android:id="@+id/materialtextview_dashborn4"
                             android:layout_width="wrap_content"
-                            android:layout_height="25dp"
+                            android:layout_height="wrap_content"
                             android:layout_centerInParent="true"
                             android:fontFamily="@font/alegreya_sans_sc_thin"
                             android:text="Табель"
                             android:textColor="#000000"
-                            android:textSize="20dp"
+                            android:textSize="16dp"
                             android:textStyle="bold"
                             android:translationZ="0dp"
                             android:visibility="visible"
