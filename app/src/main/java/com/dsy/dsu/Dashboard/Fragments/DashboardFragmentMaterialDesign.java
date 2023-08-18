@@ -54,8 +54,12 @@ public class DashboardFragmentMaterialDesign extends DialogFragment {
     Toolbar toolbarcamera_dashbord;
 
     private Handler handlerDashBord;
-    private Animation animation;
-    private Animation animation2;
+    private Animation animation[]=new Animation[6];
+
+    private MaterialCardView materialcardview_dashboard5, materialcardview_dashboard1,
+            materialcardview_dashboard2 ,
+            materialcardview_dashboard3,materialcardview_dashboard4;
+
 
 
 
@@ -176,8 +180,24 @@ public class DashboardFragmentMaterialDesign extends DialogFragment {
             relativelayout_dashboard         = (RelativeLayout) view.findViewById(R.id.relativelayout_dashboard); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
             toolbarcamera_dashbord         = (androidx.appcompat.widget.Toolbar) view.findViewById(R.id.toolbarcamera_dashbord); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
 
-            animation = AnimationUtils.loadAnimation(getContext(),R.anim.slide_in_row);
-            animation2 = AnimationUtils.loadAnimation(getContext(),R.anim.slide_in_row_dashboard);
+
+            materialcardview_dashboard1         = (MaterialCardView) view.findViewById(R.id.materialcardview_dashboard1); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
+            materialcardview_dashboard2         = (MaterialCardView) view.findViewById(R.id.materialcardview_dashboard2); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
+            materialcardview_dashboard3         = (MaterialCardView) view.findViewById(R.id.materialcardview_dashboard3); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
+            materialcardview_dashboard4         = (MaterialCardView) view.findViewById(R.id.materialcardview_dashboard4); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
+            materialcardview_dashboard5         = (MaterialCardView) view.findViewById(R.id.materialcardview_dashboard5); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
+
+
+
+
+
+            animation[0] = AnimationUtils.loadAnimation(getContext(),R.anim.slide_in_row);
+            animation[1] = AnimationUtils.loadAnimation(getContext(),R.anim.slide_in_row2);
+            animation[2] = AnimationUtils.loadAnimation(getContext(),R.anim.slide_in_row3);
+            animation [3]= AnimationUtils.loadAnimation(getContext(),R.anim.slide_in_row5);
+            animation[4] = AnimationUtils.loadAnimation(getContext(),R.anim.slide_in_row6);
+            animation[5] = AnimationUtils.loadAnimation(getContext(),R.anim.slide_in_row7);
+
            /*     animationПрофессия300 = AnimationUtils.loadAnimation(getContext(),R.anim.slide_in_row2);
                 animationVibr1 = AnimationUtils.loadAnimation(getContext(),R.anim.slide_singletable);
                 animationVibr2 = AnimationUtils.loadAnimation(getContext(),R.anim.slide_singletable2);
@@ -250,12 +270,33 @@ public class DashboardFragmentMaterialDesign extends DialogFragment {
                 getDialog().getWindow().setAttributes(layoutParams);
                 getDialog().getWindow().addFlags(WindowManager.LayoutParams.FLAG_BLUR_BEHIND);
 
-                relativelayout_dashboard.startAnimation(animation);
-                relativelayout_dashboard.refreshDrawableState();
 
 
-                toolbarcamera_dashbord.startAnimation(animation2);
+                toolbarcamera_dashbord.startAnimation(animation[5]);
                 toolbarcamera_dashbord.refreshDrawableState();
+
+
+
+
+                materialcardview_dashboard1.startAnimation(animation[0]);
+                materialcardview_dashboard1.refreshDrawableState();
+
+
+
+                        materialcardview_dashboard2.startAnimation(animation[1]);
+                        materialcardview_dashboard2.refreshDrawableState();
+
+                materialcardview_dashboard3.startAnimation(animation[2]);
+                materialcardview_dashboard3.refreshDrawableState();
+
+                        materialcardview_dashboard4.startAnimation(animation[3]);
+                        materialcardview_dashboard4.refreshDrawableState();
+
+
+                materialcardview_dashboard5.startAnimation(animation[4]);
+                materialcardview_dashboard5.refreshDrawableState();
+
+
 
 
 
