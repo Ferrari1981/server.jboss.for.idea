@@ -47,16 +47,17 @@
 
                         <TextView
                             android:id="@+id/TextView"
-                            android:layout_width="120dp"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
 
                             android:layout_centerInParent="true"
+                            android:fontFamily="@font/alegreya_sans_sc_thin"
                             android:gravity="center"
                             android:hint="КАМЕРА"
                             android:text="Союз-Автодор"
                             android:textAlignment="center"
                             android:textColor="#000000"
-                            android:textSize="14sp"
+                            android:textSize="20sp"
                             android:textStyle="bold"
                             android:visibility="visible" />
 
@@ -122,13 +123,14 @@
                             android:visibility="visible"
                             app:cardElevation="1dp"
                             app:cardMaxElevation="10dp"
-                            app:srcCompat="@mipmap/icon_new_dashboard_tasktrasport" />
+                            app:srcCompat="@drawable/icon_task_transport_dashbord" />
 
                         <com.google.android.material.textview.MaterialTextView
                             android:id="@+id/materialtextview_dashborn1"
                             android:layout_width="wrap_content"
                             android:layout_height="25dp"
                             android:layout_centerInParent="true"
+                            android:fontFamily="@font/alegreya_sans_sc_thin"
                             android:text="Заявки на траспорт"
                             android:textColor="#000000"
                             android:textSize="14dp"
@@ -179,13 +181,13 @@
                             android:visibility="visible"
                             app:cardElevation="1dp"
                             app:cardMaxElevation="10dp"
-                            app:srcCompat="@mipmap/icon_new_dashboard_completempnye" />
+                            app:srcCompat="@drawable/icon_compelte_dashbord" />
 
                         <com.google.android.material.textview.MaterialTextView
                             android:id="@+id/materialtextview_dashborn2"
                             android:layout_width="wrap_content"
                             android:layout_height="25dp"
-
+                            android:fontFamily="@font/alegreya_sans_sc_thin"
                             android:layout_centerInParent="true"
                             android:text="Согласование"
                             android:textColor="#000000"
@@ -240,19 +242,16 @@
                             android:visibility="visible"
                             app:cardElevation="1dp"
                             app:cardMaxElevation="10dp"
-                            app:srcCompat="@mipmap/icon_new_dashboard_getmaterialov" />
+                            app:srcCompat="@drawable/icon_get_material_dashboard" />
 
 
                         <com.google.android.material.textview.MaterialTextView
                             android:id="@+id/materialtextview_dashborn3"
                             android:layout_width="175dp"
                             android:layout_height="25dp"
+                            android:fontFamily="@font/alegreya_sans_sc_thin"
 
-
-                            android:layout_toRightOf="@+id/imageview_dashborn3"
-                            android:layout_marginLeft="15dp"
-                            android:layout_centerVertical="true"
-
+                            android:layout_centerInParent="true"
                             android:text="Поступление материалов"
                             android:textColor="#000000"
                             android:textSize="14dp"
@@ -273,7 +272,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
                     android:layout_marginTop="5dp"
-                    android:layout_marginBottom="1dp"
+                    android:layout_marginBottom="40dp"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
 
@@ -307,21 +306,21 @@
                             android:visibility="visible"
                             app:cardElevation="1dp"
                             app:cardMaxElevation="10dp"
-                            app:srcCompat="@mipmap/icon_dashdornd_tabel6" />
+                            app:srcCompat="@drawable/icon_tabel_dashbord" />
 
                         <com.google.android.material.textview.MaterialTextView
                             android:id="@+id/materialtextview_dashborn4"
                             android:layout_width="wrap_content"
                             android:layout_height="25dp"
-
+                            android:fontFamily="@font/alegreya_sans_sc_thin"
                             android:layout_centerInParent="true"
+                            android:text="Табель"
                             android:textColor="#000000"
                             android:textSize="14dp"
-                            android:text="Табель"
                             android:textStyle="bold"
                             android:translationZ="0dp"
                             android:visibility="visible"
-                            app:cardElevation="1dp"
+                            app:cardElevation="0dp"
                             app:cardMaxElevation="10dp" />
                     </RelativeLayout>
                 </com.google.android.material.card.MaterialCardView>
