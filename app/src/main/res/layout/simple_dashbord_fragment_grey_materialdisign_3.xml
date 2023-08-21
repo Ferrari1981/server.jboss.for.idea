@@ -8,7 +8,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#FBFBFB"
-    android:tooltipText="Поступление  материалов"
+
     android:translationZ="0dp"
     app:cardElevation="0dp"
     app:cardMaxElevation="0dp"
@@ -28,6 +28,7 @@
         android:elevation="0dp"
         android:padding="5dp"
         app:showAsAction="always"
+
         app:theme="@style/AppTheme">
 
 
@@ -54,7 +55,7 @@
 
 
             <TextView
-                android:id="@+id/TextView"
+                android:id="@+id/TextViewLogo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
 
@@ -65,7 +66,7 @@
                 android:text="Союз-Автодор"
                 android:textAlignment="center"
                 android:textColor="#000000"
-                android:textSize="24sp"
+                android:textSize="32sp"
                 android:textStyle="bold"
                 android:visibility="visible" />
 
@@ -89,19 +90,19 @@
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:backgroundTint="#FFFFFF"
+
         android:drawableLeft="@drawable/icon_task_transport_dashbord"
         android:fontFamily="@font/alegreya_sans_sc_thin"
+
+
         android:gravity="center"
-        android:minHeight="60dp"
+
+        android:minHeight="70dp"
         android:paddingLeft="15dp"
         android:text="Заявки на траспорт"
-        android:tooltiptext="Заявки на траспорт"
         android:textColor="#000000"
-        android:textSize="16dp"
-
-
+        android:textSize="18sp"
         android:textStyle="bold"
-        android:tooltipText="Заявки на траспорт"
         android:translationZ="2dp"
         android:visibility="visible"
         app:cardElevation="2dp"
@@ -129,16 +130,16 @@
         android:drawableLeft="@drawable/icon_compelte_dashbord"
         android:fontFamily="@font/alegreya_sans_sc_thin"
         android:gravity="center"
-        android:minHeight="60dp"
+
+        android:minHeight="70dp"
         android:paddingLeft="15dp"
+
+
         android:text="Согласование"
-        android:tooltiptext="Согласование"
+
         android:textColor="#000000"
-        android:textSize="16dp"
-
-
+        android:textSize="18dp"
         android:textStyle="bold"
-        android:tooltipText="Согласование"
         android:translationZ="2dp"
         android:visibility="visible"
         app:cardElevation="2dp"
@@ -162,23 +163,22 @@
         android:layout_centerInParent="true"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
+
+
         android:backgroundTint="#FFFFFF"
         android:drawableLeft="@drawable/icon_get_material_dashboard"
 
 
         android:fontFamily="@font/alegreya_sans_sc_thin"
         android:gravity="center"
+        android:minHeight="70dp"
 
 
-        android:minHeight="60dp"
         android:paddingLeft="15dp"
         android:text="Поступление  материалов"
 
-        android:tooltiptext="Поступление  материалов"
-
         android:textColor="#000000"
-        android:textSize="16dp"
-
+        android:textSize="18dp"
         android:textStyle="bold"
         android:translationZ="2dp"
         android:visibility="visible"
@@ -195,6 +195,8 @@
     <com.google.android.material.button.MaterialButton
         android:id="@+id/materialcardview_dashboard4"
         style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
+
+
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
@@ -203,24 +205,22 @@
         android:layout_marginRight="20dp"
         android:layout_marginBottom="30dp"
         android:backgroundTint="#FFFFFF"
+
+
         android:drawableLeft="@drawable/icon_tabel_dashbord"
         android:fontFamily="@font/alegreya_sans_sc_thin"
 
 
-        android:tooltiptext="Табель"
-
         android:gravity="center"
-        android:minHeight="60dp"
-
-
+        android:minHeight="70dp"
         android:paddingLeft="15dp"
         android:text="Табель"
         android:textColor="#000000"
-        android:textSize="16dp"
+        android:textSize="18dp"
+
+
         android:textStyle="bold"
         android:translationZ="2dp"
-
-
         android:visibility="visible"
         app:cardElevation="2dp"
         app:cardMaxElevation="1dp"

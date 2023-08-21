@@ -1,10 +1,14 @@
 package com.dsy.dsu.Dashboard.Fragments;
 
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.style.ForegroundColorSpan;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -52,7 +56,7 @@ public class DashboardFragmentMaterialDesign extends DialogFragment {
 
 
     RelativeLayout relativelayout_dashboard;
-    Toolbar toolbarcamera_dashbord;
+    private  Toolbar toolbarcamera_dashbord;
 
     private Handler handlerDashBord;
     private Animation animation1,animation2,animation3,animation4,animation5;
@@ -61,7 +65,7 @@ public class DashboardFragmentMaterialDesign extends DialogFragment {
             materialcardview_dashboard2 ,
             materialcardview_dashboard3,materialcardview_dashboard4;
 
-
+private  TextView TextViewLogo;
 
 
     public DashboardFragmentMaterialDesign() {
@@ -188,7 +192,7 @@ public class DashboardFragmentMaterialDesign extends DialogFragment {
             materialcardview_dashboard4         = (MaterialButton) view.findViewById(R.id.materialcardview_dashboard4); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
 
 
-
+            TextViewLogo      = (TextView) view.findViewById(R.id.TextViewLogo); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
 
 
              animation1= AnimationUtils.loadAnimation(getContext(),R.anim.slide_in_row3);
@@ -196,6 +200,10 @@ public class DashboardFragmentMaterialDesign extends DialogFragment {
             animation3 = AnimationUtils.loadAnimation(getContext(),R.anim.slide_in_row6);
             animation4 = AnimationUtils.loadAnimation(getContext(),R.anim.slide_in_row7);
             animation5 = AnimationUtils.loadAnimation(getContext(),R.anim.slide_in_row8);
+
+
+
+
 
            /*     animationПрофессия300 = AnimationUtils.loadAnimation(getContext(),R.anim.slide_in_row2);
                 animationVibr1 = AnimationUtils.loadAnimation(getContext(),R.anim.slide_singletable);
@@ -294,9 +302,9 @@ public class DashboardFragmentMaterialDesign extends DialogFragment {
                 toolbarcamera_dashbord.refreshDrawableState();
 
 
-
-
-                // TODO: 20.07.2023
+                TextViewLogo.startAnimation(animation5);
+                TextViewLogo.refreshDrawableState();
+                // TODO: 21.08.2023
                 Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                         " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                         " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"  );
