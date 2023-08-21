@@ -54,9 +54,9 @@ public class DashboardFragmentMaterialDesign extends DialogFragment {
     Toolbar toolbarcamera_dashbord;
 
     private Handler handlerDashBord;
-    private Animation animation1,animation2,animation3,animation4,animation5, animation6;
+    private Animation animation1,animation2,animation3,animation4,animation5;
 
-    private MaterialCardView materialcardview_dashboard5, materialcardview_dashboard1,
+    private MaterialCardView   materialcardview_dashboard1,
             materialcardview_dashboard2 ,
             materialcardview_dashboard3,materialcardview_dashboard4;
 
@@ -185,7 +185,7 @@ public class DashboardFragmentMaterialDesign extends DialogFragment {
             materialcardview_dashboard2         = (MaterialCardView) view.findViewById(R.id.materialcardview_dashboard2); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
             materialcardview_dashboard3         = (MaterialCardView) view.findViewById(R.id.materialcardview_dashboard3); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
             materialcardview_dashboard4         = (MaterialCardView) view.findViewById(R.id.materialcardview_dashboard4); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
-            materialcardview_dashboard5         = (MaterialCardView) view.findViewById(R.id.materialcardview_dashboard5); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
+
 
 
 
@@ -195,7 +195,6 @@ public class DashboardFragmentMaterialDesign extends DialogFragment {
             animation3 = AnimationUtils.loadAnimation(getContext(),R.anim.slide_in_row6);
             animation4 = AnimationUtils.loadAnimation(getContext(),R.anim.slide_in_row7);
             animation5 = AnimationUtils.loadAnimation(getContext(),R.anim.slide_in_row8);
-            animation6 = AnimationUtils.loadAnimation(getContext(),R.anim.slide_in_row9);
 
            /*     animationПрофессия300 = AnimationUtils.loadAnimation(getContext(),R.anim.slide_in_row2);
                 animationVibr1 = AnimationUtils.loadAnimation(getContext(),R.anim.slide_singletable);
@@ -272,7 +271,6 @@ public class DashboardFragmentMaterialDesign extends DialogFragment {
 
 
 
-
                 materialcardview_dashboard1.startAnimation(animation1);
                 materialcardview_dashboard1.refreshDrawableState();
 
@@ -288,12 +286,10 @@ public class DashboardFragmentMaterialDesign extends DialogFragment {
                         materialcardview_dashboard4.refreshDrawableState();
 
 
-                materialcardview_dashboard5.startAnimation(animation5);
-                materialcardview_dashboard5.refreshDrawableState();
 
 
 
-                toolbarcamera_dashbord.startAnimation(animation6);
+                toolbarcamera_dashbord.startAnimation(animation5);
                 toolbarcamera_dashbord.refreshDrawableState();
 
 
