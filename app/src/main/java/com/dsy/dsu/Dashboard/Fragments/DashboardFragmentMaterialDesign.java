@@ -318,24 +318,6 @@ public class DashboardFragmentMaterialDesign extends DialogFragment {
         // TODO: 17.08.2023  Класс Для Компонента Табель
 
 
-        class BunicessLogicTabel{
-            MaterialTextView materialtextview_dashborn_tabel;
-/*            void методНАстройкиДизайнаТабеля( ){
-                materialtextview_dashborn_tabel=(MaterialTextView)      ViewDashboart.findViewById(R.id.materialtextview_dashborn_tabel);
-
-                Spannable wordtoSpan = new SpannableString(materialtextview_dashborn_tabel.getText().toString());
-
-                wordtoSpan.setSpan(new ForegroundColorSpan(Color.BLUE), 0, materialtextview_dashborn_tabel.getText().toString().length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-
-                materialtextview_dashborn_tabel.setText(wordtoSpan);
-
-
-
-            }*/
-
-
-
-        }
 
 
 

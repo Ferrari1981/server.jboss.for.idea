@@ -47,7 +47,7 @@ public  class PUBLIC_CONTENT extends SubClassCreatingMainAllTables {
                 public CopyOnWriteArrayList<String> ИменаТаблицыОтАндройда = new CopyOnWriteArrayList();
     public ArrayList<String> ИменаПроектовОтСервера = new ArrayList<String>(); ////список проектов
     ////ГЛАВНЫЙ СПИСОК ТАБЛИЦ ДЛЯ  ОБМЕНАМИ ДАННЫМИ ИЗ НЕГО БУДЕТ БРАТЬСЯ СПИСКО ТАБЛИЦ
-    public Map<String, Long> ВерсииВсехСерверныхТаблиц = Collections.synchronizedMap(new LinkedHashMap<String, Long>());
+    public LinkedHashMap<String, Long> ВерсииВсехСерверныхТаблиц =  new LinkedHashMap<String, Long>();
 
     public LinkedHashMap<String, String> ВерсииДатыСерверныхТаблиц =  new LinkedHashMap<>();
            public    CompletionService МенеджерПотоков;
