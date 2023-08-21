@@ -158,7 +158,7 @@ public class ServiceUpdatePoОбновлениеПО extends IntentService {////
         try {
             this.activity=activity;
             this.РежимРаботыСлужбыОбновлениеПО=РежимРаботыСлужбыОбновлениеПО;
-            final Integer[] ВерсияПООтСервере = {0};
+             Integer ВерсияПООтСервере = 0;
             this.handlerUpdatePO=handlerUpdatePO;
 
             String  РежимРаботыСети = МетодУзнаемРежимСетиWIFiMobile(getApplicationContext());
@@ -168,12 +168,12 @@ public class ServiceUpdatePoОбновлениеПО extends IntentService {////
                 // TODO: 18.02.2023 удаление перед анализо файлов json И .apk
                 МетодДополнительногоУдалениеФайлов();
                 // TODO: 18.02.2023 удаление перед анализо файлов json И .apk
-                ВерсияПООтСервере[0] =       МетодАнализаВерсииПОJSON();
+                ВерсияПООтСервере =       МетодАнализаВерсииПОJSON();
                 Log.i(this.getClass().getName(),  Thread.currentThread().getStackTrace()[2].getMethodName()+ " время "
-                        +new Date().toLocaleString() +  "ВерсияПООтСервере " + ВерсияПООтСервере[0]);
+                        +new Date().toLocaleString() +  "ВерсияПООтСервере " + ВерсияПООтСервере);
                 // TODO: 18.02.2023 Анализ Версии
-                ФлагЗАпускатьСинхронизациюПотосучтоВерсияРавна=               МетодАнализВерсийЛокальнаяИСерверная(ВерсияПООтСервере[0],true);
-                Log.d(getApplicationContext().getClass().getName(), "\n" + "   ФинальныйРезультатAsyncBackgroud ВерсияПООтСервере[0]"+ВерсияПООтСервере[0]+
+                ФлагЗАпускатьСинхронизациюПотосучтоВерсияРавна=               МетодАнализВерсийЛокальнаяИСерверная(ВерсияПООтСервере,true);
+                Log.d(getApplicationContext().getClass().getName(), "\n" + "   ФинальныйРезультатAsyncBackgroud ВерсияПООтСервере"+ВерсияПООтСервере+
                         " ФлагЗАпускатьСинхронизациюПотосучтоВерсияРавна " +ФлагЗАпускатьСинхронизациюПотосучтоВерсияРавна);
                 // TODO: 24.04.2023 останаливаем службу
 
@@ -685,13 +685,13 @@ try{
             }else{
                 Log.w(getApplicationContext().getClass().getName(),    Thread.currentThread().getStackTrace()[2].getMethodName()+
                         " ЛокальнаяВерсияПО "+ЛокальнаяВерсияПО+  " СервернаяВерсияПОВнутри  "+СервернаяВерсияПОВнутри + " POOLS" + Thread.currentThread().getName());
-                if (ФлагПоказыватьИлиНЕтСообзение==true) {
+
                     if (РежимРаботыСлужбыОбновлениеПО==true) {
                         Message message = handlerUpdatePO.obtainMessage();
                         message.what = 20;
                         message.sendToTarget();
                     }
-                }
+
                 // TODO: 10.07.2023
                 ФлагЗАпускатьСинхронизациюПотосучтоВерсияРавна=true;
                 // TODO: 10.07.2023 запускаем синхрониазцуию

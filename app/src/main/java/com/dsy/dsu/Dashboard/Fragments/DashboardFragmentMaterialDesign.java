@@ -1,14 +1,10 @@
 package com.dsy.dsu.Dashboard.Fragments;
 
-import android.graphics.Color;
-import android.graphics.drawable.Drawable;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
-import android.text.Spannable;
-import android.text.SpannableString;
-import android.text.style.ForegroundColorSpan;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -18,16 +14,12 @@ import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.RelativeLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -36,13 +28,12 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.LifecycleOwner;
 
 import com.dsy.dsu.Business_logic_Only_Class.Class_Generation_Errors;
+import com.dsy.dsu.Code_ForTABEL.MainActivity_List_Tabels;
 import com.dsy.dsu.Code_For_Firebase_AndOneSignal_Здесь_КодДЛяСлужбыУведомленияFirebase.Class_Generation_SendBroadcastReceiver_And_Firebase_OneSignal;
 import com.dsy.dsu.Code_For_Services.ServiceUpdatePoОбновлениеПО;
-import com.dsy.dsu.Dashboard.MainActivity_Dashboard;
 import com.dsy.dsu.R;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.card.MaterialCardView;
-import com.google.android.material.textview.MaterialTextView;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -61,14 +52,12 @@ public class DashboardFragmentMaterialDesign extends DialogFragment {
 
 
     RelativeLayout relativelayout_dashboard;
-    private  Toolbar toolbarcamera_dashbord;
+
 
     private Handler handlerAsync;
     private Animation animation1,animation2,animation3,animation4,animation5,animation6;
 
-    private MaterialButton materialcardview_dashboard1,
-            materialcardview_dashboard2 ,
-            materialcardview_dashboard3,materialcardview_dashboard4;
+    private MaterialButton КнопкаТабель, КнопкаСогласование ,  КнопкаПоступлениеМатериалов,КнопкаЗаявкаНаТранспорт;
 
         private  TextView TextViewLogo;
     private LifecycleOwner lifecycleOwner;
@@ -95,14 +84,14 @@ public class DashboardFragmentMaterialDesign extends DialogFragment {
             fragmentManager = getActivity(). getSupportFragmentManager();
             fragmentTransaction = fragmentManager.beginTransaction();
 
-        buniccessLogicFra4gmentDashboard=new BuniccessLogicFra4gmentDashboard();
+              buniccessLogicFra4gmentDashboard=new BuniccessLogicFra4gmentDashboard();
             // TODO: 17.08.2023 inizial message
             buniccessLogicFra4gmentDashboard.   МетодИнициализацияHandler();
             lifecycleOwner=getActivity();
             buniccessLogicFra4gmentDashboard. методСлушательФрагментовBinder( );
             new Class_Generation_SendBroadcastReceiver_And_Firebase_OneSignal(getContext()).МетодЗапускаетОБЩУЮСинхронизацию();
 
-
+            // TODO: 21.08.2023 насйтироки Разые дизайна Фрагмента
             /*setStyle(DialogFragment.STYLE_NORMAL,android.R.style.Theme_Material_Dialog_Alert);//Theme_Dialog*/
             // setStyle(DialogFragment.STYLE_NORMAL,android.R.style.Theme_DeviceDefault_Light_NoActionBar_Fullscreen);//Theme_Dialog
             //  setStyle(DialogFragment.STYLE_NORMAL,android.R.style.Theme_DeviceDefault_Light_NoActionBar_TranslucentDecor);//Theme_Dialog
@@ -202,15 +191,18 @@ public class DashboardFragmentMaterialDesign extends DialogFragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         try{
             super.onViewCreated(view, savedInstanceState);
+
+
+
             ViewDashboart=view;
             relativelayout_dashboard         = (RelativeLayout) view.findViewById(R.id.relativelayout_dashboard); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
-            toolbarcamera_dashbord         = (androidx.appcompat.widget.Toolbar) view.findViewById(R.id.toolbarcamera_dashbord); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
 
 
-            materialcardview_dashboard1         = (MaterialButton) view.findViewById(R.id.materialcardview_dashboard1); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
-            materialcardview_dashboard2         = (MaterialButton) view.findViewById(R.id.materialcardview_dashboard2); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
-            materialcardview_dashboard3         = (MaterialButton) view.findViewById(R.id.materialcardview_dashboard3); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
-            materialcardview_dashboard4         = (MaterialButton) view.findViewById(R.id.materialcardview_dashboard4); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
+
+            КнопкаЗаявкаНаТранспорт   = (MaterialButton) view.findViewById(R.id.materialcardview_dashboard1); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
+            КнопкаСогласование         = (MaterialButton) view.findViewById(R.id.materialcardview_dashboard2); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
+            КнопкаПоступлениеМатериалов         = (MaterialButton) view.findViewById(R.id.materialcardview_dashboard3); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
+            КнопкаТабель          = (MaterialButton) view.findViewById(R.id.materialcardview_dashboard4); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
 
 
             TextViewLogo      = (TextView) view.findViewById(R.id.TextViewLogo); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
@@ -223,17 +215,9 @@ public class DashboardFragmentMaterialDesign extends DialogFragment {
             animation5 = AnimationUtils.loadAnimation(getContext(),R.anim.slide_in_row8);
             animation6 = AnimationUtils.loadAnimation(getContext(),R.anim.slide_in_row9);
 
+            buniccessLogicFra4gmentDashboard.new ClassButtonsApp().методStartingAllButtonApp();;
 
 
-
-
-           /*     animationПрофессия300 = AnimationUtils.loadAnimation(getContext(),R.anim.slide_in_row2);
-                animationVibr1 = AnimationUtils.loadAnimation(getContext(),R.anim.slide_singletable);
-                animationVibr2 = AnimationUtils.loadAnimation(getContext(),R.anim.slide_singletable2);
-                animationRows = AnimationUtils.loadAnimation(getContext(),R.anim.slide_in_row_scroll_for_singletabel);
-                animationRich = AnimationUtils.loadAnimation(getContext(),R.anim.slide_in_swipe_r);//R.anim.slide_in_row)
-                animationLesft = AnimationUtils.loadAnimation(getContext(),R.anim.slide_in_swipe_l);//R.anim.slide_in_row)R.anim.slide_in_row_newscanner1*/
-            // TODO: 17.08.2023
             Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
@@ -259,14 +243,6 @@ public class DashboardFragmentMaterialDesign extends DialogFragment {
         try{
 
        buniccessLogicFra4gmentDashboard.методНастройкиВнешнегоВида();
-
-
-
-
-            /*          buniccessLogicFra4gmentDashboard.new BunicessLogicTabel().методНАстройкиДизайнаТабеля();*/
-
-           // buniccessLogicFra4gmentDashboard.new BuniccessLogicNavigarlaout().методНастройкиБоковойпанели();;
-
 
         // TODO: 20.07.2023
         Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -305,29 +281,26 @@ public class DashboardFragmentMaterialDesign extends DialogFragment {
 
 
 
-                materialcardview_dashboard1.startAnimation(animation1);
-                materialcardview_dashboard1.refreshDrawableState();
+
+
+                КнопкаЗаявкаНаТранспорт.startAnimation(animation1);
+                КнопкаЗаявкаНаТранспорт.refreshDrawableState();
+
+
+                КнопкаСогласование.startAnimation(animation2);
+                КнопкаСогласование.refreshDrawableState();
 
 
 
-                        materialcardview_dashboard2.startAnimation(animation2);
-                        materialcardview_dashboard2.refreshDrawableState();
-
-                materialcardview_dashboard3.startAnimation(animation3);
-                materialcardview_dashboard3.refreshDrawableState();
-
-                        materialcardview_dashboard4.startAnimation(animation4);
-                        materialcardview_dashboard4.refreshDrawableState();
+                КнопкаПоступлениеМатериалов.startAnimation(animation3);
+                КнопкаПоступлениеМатериалов.refreshDrawableState();
 
 
+                КнопкаТабель.startAnimation(animation4);
+                КнопкаТабель.refreshDrawableState();
 
-
-
-                toolbarcamera_dashbord.startAnimation(animation5);
-                toolbarcamera_dashbord.refreshDrawableState();
-
-
-                TextViewLogo.startAnimation(animation6);
+                // TODO: 21.08.2023  ЛОГОТИП
+                TextViewLogo.startAnimation(animation5);
                 TextViewLogo.refreshDrawableState();
                 // TODO: 21.08.2023
                 Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -438,6 +411,7 @@ public class DashboardFragmentMaterialDesign extends DialogFragment {
                         if (requestKey.equalsIgnoreCase("callbackbinderdashbord")) {
                             try{
                                 localBinderОбновлениеПО=(ServiceUpdatePoОбновлениеПО.localBinderОбновлениеПО)       result.getBinder("callbackbinderdashbord");
+                                // TODO: 21.08.2023
 
                                 Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                         " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -471,13 +445,39 @@ public class DashboardFragmentMaterialDesign extends DialogFragment {
         }
 
 
+        // TODO: 21.08.2023 Класс с бизнес логикой Кнопки
+
+            class ClassButtonsApp {
+                void методStartingAllButtonApp() {
+                    КнопкаТабель.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            try {
+                                Intent Интент_ЗапускТабельногоУчётаПервыйШаг = new Intent();
+                                Bundle data = new Bundle();
+                                Интент_ЗапускТабельногоУчётаПервыйШаг.putExtras(data);
+                                Интент_ЗапускТабельногоУчётаПервыйШаг.setClass(getContext(), MainActivity_List_Tabels.class); //  ТЕСТ КОД КОТОРЫЙ ЗАПУСКАЕТ ACTIVITY VIEWDATA  ПРОВЕРИТЬ ОБМЕН
+                                Интент_ЗапускТабельногоУчётаПервыйШаг.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                Log.d(this.getClass().getName(), "" + "    КнопкаТабельныйУчёт.setOnClickListener(new View.OnClickListener() {");
+                                startActivity(Интент_ЗапускТабельногоУчётаПервыйШаг);
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                                Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                                        + Thread.currentThread().getStackTrace()[2].getLineNumber());
+                                new Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(),
+                                        Thread.currentThread().getStackTrace()[2].getMethodName(),
+                                        Thread.currentThread().getStackTrace()[2].getLineNumber());
+                            }
+                        }
+
+
+                    });
+                }
+            }
 
 
 
-
-
-
-
+                      //TODO end Buniceess Lofic for Activity//TODO end Buniceess Lofic for Activity//TODO end Buniceess Lofic for Activity//TODO end Buniceess Lofic for Activity//TODO end Buniceess Lofic for Activity
 
     }//TODO end Buniceess Lofic for Activity
 

@@ -20,7 +20,7 @@
         android:id="@+id/toolbarcamera_dashbord"
         android:layout_width="match_parent"
         android:layout_height="300dp"
-        android:layout_above="@+id/materialcardview_dashboard1"
+        android:layout_above="@+id/КнопкаЗаявкаНаТранспорт"
         android:layout_alignParentTop="true"
         android:layout_centerInParent="true"
         android:layout_marginBottom="5dp"
@@ -81,11 +81,11 @@
 
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/materialcardview_dashboard1"
+        android:id="@+id/КнопкаЗаявкаНаТранспорт"
         style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/materialcardview_dashboard2"
+        android:layout_above="@+id/КнопкаСогласование"
         android:layout_centerInParent="true"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
@@ -118,25 +118,25 @@
 
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/materialcardview_dashboard2"
+        android:id="@+id/КнопкаСогласование"
         style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/materialcardview_dashboard3"
+        android:layout_above="@+id/КнопкаПоступлениеМатериалов"
         android:layout_centerInParent="true"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:backgroundTint="#FFFFFF"
         android:drawableLeft="@drawable/icon_compelte_dashbord"
         android:fontFamily="@font/alegreya_sans_sc_thin"
-        android:gravity="center"
 
+        android:gravity="center"
         android:minHeight="70dp"
+
+
         android:paddingLeft="15dp"
 
-
         android:text="Согласование"
-
         android:textColor="#000000"
         android:textSize="18dp"
         android:textStyle="bold"
@@ -155,28 +155,28 @@
 
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/materialcardview_dashboard3"
+        android:id="@+id/КнопкаПоступлениеМатериалов"
         style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/materialcardview_dashboard4"
+        android:layout_above="@+id/КнопкаТабель"
         android:layout_centerInParent="true"
         android:layout_marginLeft="20dp"
+
+
         android:layout_marginRight="20dp"
-
-
         android:backgroundTint="#FFFFFF"
+
+
         android:drawableLeft="@drawable/icon_get_material_dashboard"
-
-
         android:fontFamily="@font/alegreya_sans_sc_thin"
         android:gravity="center"
+
+
         android:minHeight="70dp"
-
-
         android:paddingLeft="15dp"
-        android:text="Поступление  материалов"
 
+        android:text="Поступление  материалов"
         android:textColor="#000000"
         android:textSize="18dp"
         android:textStyle="bold"
@@ -193,7 +193,7 @@
 
     <!--   //TODO   #4 -->
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/materialcardview_dashboard4"
+        android:id="@+id/КнопкаТабель"
         style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
 
 
@@ -204,21 +204,21 @@
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:layout_marginBottom="30dp"
+
+
         android:backgroundTint="#FFFFFF"
-
-
         android:drawableLeft="@drawable/icon_tabel_dashbord"
+
+
         android:fontFamily="@font/alegreya_sans_sc_thin"
-
-
         android:gravity="center"
         android:minHeight="70dp"
         android:paddingLeft="15dp"
         android:text="Табель"
         android:textColor="#000000"
+
+
         android:textSize="18dp"
-
-
         android:textStyle="bold"
         android:translationZ="2dp"
         android:visibility="visible"
