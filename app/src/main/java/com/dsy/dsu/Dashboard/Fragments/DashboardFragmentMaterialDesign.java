@@ -59,7 +59,7 @@ public class DashboardFragmentMaterialDesign extends DialogFragment {
     private  Toolbar toolbarcamera_dashbord;
 
     private Handler handlerDashBord;
-    private Animation animation1,animation2,animation3,animation4,animation5;
+    private Animation animation1,animation2,animation3,animation4,animation5,animation6;
 
     private MaterialButton materialcardview_dashboard1,
             materialcardview_dashboard2 ,
@@ -200,6 +200,7 @@ private  TextView TextViewLogo;
             animation3 = AnimationUtils.loadAnimation(getContext(),R.anim.slide_in_row6);
             animation4 = AnimationUtils.loadAnimation(getContext(),R.anim.slide_in_row7);
             animation5 = AnimationUtils.loadAnimation(getContext(),R.anim.slide_in_row8);
+            animation6 = AnimationUtils.loadAnimation(getContext(),R.anim.slide_in_row9);
 
 
 
@@ -302,7 +303,7 @@ private  TextView TextViewLogo;
                 toolbarcamera_dashbord.refreshDrawableState();
 
 
-                TextViewLogo.startAnimation(animation5);
+                TextViewLogo.startAnimation(animation6);
                 TextViewLogo.refreshDrawableState();
                 // TODO: 21.08.2023
                 Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
