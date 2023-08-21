@@ -159,6 +159,7 @@ public class ContentProviderSynsInsertOnlyAsync extends ContentProvider {
                 Log.w(getContext().getClass().getName(), " table  " + table);/////
             }
             if (Create_Database_СамаБАзаSQLite.inTransaction()) {
+                Create_Database_СамаБАзаSQLite.yieldIfContendedSafely();
                 Create_Database_СамаБАзаSQLite.setTransactionSuccessful();
             }
             if (Create_Database_СамаБАзаSQLite.inTransaction()) {
@@ -230,6 +231,7 @@ public class ContentProviderSynsInsertOnlyAsync extends ContentProvider {
             ОтветВставкиДанных = Uri.parse("content://" + РезультатВставкиДанных.toString());
             if (РезультатВставкиДанных > 0) {
                 if (Create_Database_СамаБАзаSQLite.inTransaction()) {
+                    Create_Database_СамаБАзаSQLite.yieldIfContendedSafely();
                     Create_Database_СамаБАзаSQLite.setTransactionSuccessful();
                     // TODO: 22.09.2022 увеличивает версию данных
                 }
@@ -324,6 +326,7 @@ public class ContentProviderSynsInsertOnlyAsync extends ContentProvider {
                             if (Create_Database_СамаБАзаSQLite.inTransaction()) {
                                 // TODO: 09.11.2022 закрывает ТРАНЗАКЦИИ ВНУТРИ
                                 if (РезультатПовышенииВерсииДанных > 0) {
+                                    Create_Database_СамаБАзаSQLite.yieldIfContendedSafely();
                                     Create_Database_СамаБАзаSQLite.setTransactionSuccessful();
                                 }
                                 Create_Database_СамаБАзаSQLite.endTransaction();
@@ -508,6 +511,7 @@ public class ContentProviderSynsInsertOnlyAsync extends ContentProvider {
                 Log.w(getContext().getClass().getName(), " table  " + table);/////
             }
             if (Create_Database_СамаБАзаSQLite.inTransaction()) {
+                Create_Database_СамаБАзаSQLite.yieldIfContendedSafely();
                 Create_Database_СамаБАзаSQLite.setTransactionSuccessful();
             }
             if (Create_Database_СамаБАзаSQLite.inTransaction()) {

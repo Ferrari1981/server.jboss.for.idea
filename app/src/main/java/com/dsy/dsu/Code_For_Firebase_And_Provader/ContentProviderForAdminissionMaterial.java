@@ -157,6 +157,7 @@ public class ContentProviderForAdminissionMaterial extends ContentProvider {
                 РезультатУдалениеСтатуса= Integer.parseInt(ответОперцииВставки);
                 if (РезультатУдаления> 0) {
                     if (Create_Database_СамаБАзаSQLite.inTransaction()) {
+                        Create_Database_СамаБАзаSQLite.yieldIfContendedSafely();
                         Create_Database_СамаБАзаSQLite.setTransactionSuccessful();
                         getContext().getContentResolver().notifyChange(uri, null);
                         // TODO: 22.09.2022 увеличивает версию данных
@@ -227,6 +228,7 @@ public class ContentProviderForAdminissionMaterial extends ContentProvider {
             ОтветВставкиДанных  = Uri.parse("content://"+РезультатВставкиДанных.toString());
             if (РезультатВставкиДанных> 0) {
                 if (Create_Database_СамаБАзаSQLite.inTransaction()) {
+                    Create_Database_СамаБАзаSQLite.yieldIfContendedSafely();
                     Create_Database_СамаБАзаSQLite.setTransactionSuccessful();
                     // TODO: 22.09.2022 увеличивает версию данных
                 }
@@ -447,6 +449,7 @@ public class ContentProviderForAdminissionMaterial extends ContentProvider {
                             public void run() throws Throwable {
                                 // TODO: 09.11.2022 закрывает ТРАНЗАКЦИИ ВНУТРИ
                                 if (Create_Database_СамаБАзаSQLite.inTransaction()) {
+                                    Create_Database_СамаБАзаSQLite.yieldIfContendedSafely();
                                     Create_Database_СамаБАзаSQLite.setTransactionSuccessful();
                                     Create_Database_СамаБАзаSQLite.endTransaction();
                                 }
