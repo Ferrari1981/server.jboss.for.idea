@@ -54,8 +54,9 @@
                 android:layout_centerInParent="true"
                 android:layout_marginLeft="1dp"
                 android:layout_marginTop="10dp"
-                android:visibility="visible"
                 android:backgroundTint="#FFFFFF"
+                android:visibility="visible"
+                app:rippleColor="@color/colorAccent"
                 app:srcCompat="@drawable/icon_new_dashaborad_settings" />
 
 
@@ -102,99 +103,73 @@
 
                 <!--   //TODO   #1 -->
 
-                <com.google.android.material.card.MaterialCardView
-                    android:id="@+id/materialcardview_dashboard1"
-                    android:layout_above="@+id/materialcardview_dashboard2"
-                    android:layout_width="match_parent"
-                    android:layout_height="60dp"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginBottom="1dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:layout_alignParentLeft="true"
-                    android:background="@drawable/dialog_bg"
-                    android:animateLayoutChanges="true"
-                    android:gravity="center"
-                    app:cardBackgroundColor="#FFFFFF"
-                    app:cardCornerRadius="20dp"
-                    app:cardElevation="0dp"
-                    app:cardMaxElevation="0dp"
-                    android:translationZ="0dp"
-                    app:strokeColor="#988F8F"
-                    app:strokeWidth="1dp">
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:visibility="visible">
-                        <ImageView
-                            android:id="@+id/imageview_dashborn1"
-                            android:layout_width="40dp"
-                            android:layout_height="40dp"
-                            android:layout_alignParentLeft="true"
-                            android:layout_centerVertical="true"
-                            android:layout_marginLeft="20dp"
-                            android:translationZ="0dp"
-                            android:visibility="visible"
-                            app:cardElevation="1dp"
-                            app:cardMaxElevation="10dp"
-                            app:srcCompat="@drawable/icon_task_transport_dashbord" />
 
-                        <com.google.android.material.button.MaterialButton
-                            android:id="@+id/materialtextview_dashborn1"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerInParent="true"
-                            android:fontFamily="@font/alegreya_sans_sc_thin"
-                            android:text="Заявки на траспорт"
-                            android:textColor="#000000"
-                            android:textSize="16dp"
-                            android:textStyle="bold"
-                            android:translationZ="0dp"
-                            android:visibility="visible"
-                            app:cardElevation="1dp"
-                            android:backgroundTint="#FFFFFF"
-                            app:cardMaxElevation="10dp" />
-                    </RelativeLayout>
-                </com.google.android.material.card.MaterialCardView>
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/materialcardview_dashboard1"
+        style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/materialcardview_dashboard2"
+
+        android:layout_centerInParent="true"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:backgroundTint="#FFFFFF"
+        android:fontFamily="@font/alegreya_sans_sc_thin"
+        android:gravity="center"
+        android:minHeight="60dp"
+        android:text="Заявки на траспорт"
+        android:textColor="#000000"
+        android:textSize="16dp"
+        android:textStyle="bold"
+        android:translationZ="2dp"
+        android:visibility="visible"
+        app:cardElevation="2dp"
+        app:cardMaxElevation="1dp"
+        app:cornerRadius="15dp"
+        app:icon="@drawable/icon_task_transport_dashbord"
+        app:iconGravity="textStart"
+        app:strokeColor="#EEEDEF"
+        app:rippleColor="@color/colorPrimaryDark"
+        app:strokeWidth="1dp" />
+
+
+
+
+
 
 
 
                 <!--   //TODO   #2 -->
 
 
-
-
-
-
-
-
-
-
-
-
     <com.google.android.material.button.MaterialButton
         android:id="@+id/materialcardview_dashboard2"
-        android:layout_above="@+id/materialcardview_dashboard3"
+        style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginRight="20dp"
-        android:layout_marginLeft="20dp"
+        android:layout_above="@+id/materialcardview_dashboard3"
         android:layout_centerInParent="true"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:backgroundTint="#FFFFFF"
         android:fontFamily="@font/alegreya_sans_sc_thin"
-        app:cornerRadius="15dp"
+        android:gravity="center"
+        android:minHeight="60dp"
         android:text="Согласование"
         android:textColor="#000000"
         android:textSize="16dp"
         android:textStyle="bold"
-        android:translationZ="0dp"
+        android:translationZ="2dp"
         android:visibility="visible"
         app:cardElevation="2dp"
-        android:backgroundTint="#FFFFFF"
-        style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
+        app:cardMaxElevation="1dp"
+        app:cornerRadius="15dp"
         app:icon="@drawable/icon_compelte_dashbord"
         app:iconGravity="textStart"
-        android:gravity="center"
-        app:cardMaxElevation="10dp" />
+        app:strokeColor="#EEEDEF"
+        app:rippleColor="@color/colorPrimaryDark"
+        app:strokeWidth="1dp" />
 
 
 
@@ -208,27 +183,31 @@
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/materialcardview_dashboard3"
-        android:layout_above="@+id/materialcardview_dashboard4"
+        style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginRight="20dp"
-        android:layout_marginLeft="20dp"
+        android:layout_above="@+id/materialcardview_dashboard4"
         android:layout_centerInParent="true"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:backgroundTint="#FFFFFF"
         android:fontFamily="@font/alegreya_sans_sc_thin"
-        app:cornerRadius="15dp"
+        android:gravity="center"
+        android:minHeight="60dp"
         android:text="Поступление  материалов"
         android:textColor="#000000"
         android:textSize="16dp"
         android:textStyle="bold"
-        android:translationZ="0dp"
+        android:translationZ="2dp"
         android:visibility="visible"
         app:cardElevation="2dp"
-        android:backgroundTint="#FFFFFF"
-        style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
+        app:cardMaxElevation="1dp"
+        app:cornerRadius="15dp"
         app:icon="@drawable/icon_get_material_dashboard"
         app:iconGravity="textStart"
-        android:gravity="center"
-        app:cardMaxElevation="10dp" />
+        app:strokeColor="#EEEDEF"
+        app:rippleColor="@color/colorPrimaryDark"
+        app:strokeWidth="1dp" />
 
 
 
@@ -238,28 +217,34 @@
 
 
                 <!--   //TODO   #4 -->
-                        <com.google.android.material.button.MaterialButton
-                            android:id="@+id/materialcardview_dashboard4"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginRight="20dp"
-                            android:layout_marginLeft="20dp"
-                            android:layout_centerInParent="true"
-                            android:fontFamily="@font/alegreya_sans_sc_thin"
-                            app:cornerRadius="15dp"
-                            android:text="Табель"
-                            android:textColor="#000000"
-                            android:textSize="16dp"
-                            android:textStyle="bold"
-                            android:translationZ="0dp"
-                            android:visibility="visible"
-                            app:cardElevation="2dp"
-                            android:backgroundTint="#FFFFFF"
-                            style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
-                            app:icon="@drawable/icon_tabel_dashbord"
-                            app:iconGravity="textStart"
-                            android:gravity="center"
-                            app:cardMaxElevation="10dp" />
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/materialcardview_dashboard4"
+        style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerInParent="true"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="30dp"
+        android:backgroundTint="#FFFFFF"
+        android:fontFamily="@font/alegreya_sans_sc_thin"
+        android:gravity="center"
+        android:minHeight="60dp"
+        android:text="Табель"
+        android:textColor="#000000"
+        android:textSize="16dp"
+        android:textStyle="bold"
+        android:visibility="visible"
+        app:cornerRadius="15dp"
+        app:icon="@drawable/icon_tabel_dashbord"
+        app:cardElevation="2dp"
+        app:cardMaxElevation="1dp"
+        android:translationZ="2dp"
+        app:strokeColor="#EEEDEF"
+        app:strokeWidth="1dp"
+        app:rippleColor="@color/colorPrimaryDark"
+        app:iconGravity="textStart" />
 
                 <!--      //TODO конец всех данных-->
 

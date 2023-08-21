@@ -31,6 +31,7 @@ import androidx.fragment.app.FragmentTransaction;
 import com.dsy.dsu.Business_logic_Only_Class.Class_Generation_Errors;
 import com.dsy.dsu.Dashboard.MainActivity_Dashboard;
 import com.dsy.dsu.R;
+import com.google.android.material.button.MaterialButton;
 import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.textview.MaterialTextView;
 
@@ -56,7 +57,7 @@ public class DashboardFragmentMaterialDesign extends DialogFragment {
     private Handler handlerDashBord;
     private Animation animation1,animation2,animation3,animation4,animation5;
 
-    private MaterialCardView   materialcardview_dashboard1,
+    private MaterialButton materialcardview_dashboard1,
             materialcardview_dashboard2 ,
             materialcardview_dashboard3,materialcardview_dashboard4;
 
@@ -181,10 +182,10 @@ public class DashboardFragmentMaterialDesign extends DialogFragment {
             toolbarcamera_dashbord         = (androidx.appcompat.widget.Toolbar) view.findViewById(R.id.toolbarcamera_dashbord); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
 
 
-            materialcardview_dashboard1         = (MaterialCardView) view.findViewById(R.id.materialcardview_dashboard1); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
-            materialcardview_dashboard2         = (MaterialCardView) view.findViewById(R.id.materialcardview_dashboard2); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
-            materialcardview_dashboard3         = (MaterialCardView) view.findViewById(R.id.materialcardview_dashboard3); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
-            materialcardview_dashboard4         = (MaterialCardView) view.findViewById(R.id.materialcardview_dashboard4); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
+            materialcardview_dashboard1         = (MaterialButton) view.findViewById(R.id.materialcardview_dashboard1); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
+            materialcardview_dashboard2         = (MaterialButton) view.findViewById(R.id.materialcardview_dashboard2); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
+            materialcardview_dashboard3         = (MaterialButton) view.findViewById(R.id.materialcardview_dashboard3); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
+            materialcardview_dashboard4         = (MaterialButton) view.findViewById(R.id.materialcardview_dashboard4); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
 
 
 
