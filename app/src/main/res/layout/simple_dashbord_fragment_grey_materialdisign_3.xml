@@ -26,7 +26,6 @@
         android:layout_marginBottom="5dp"
         android:background="#FFFFFF"
         android:elevation="0dp"
-        android:padding="5dp"
         app:showAsAction="always"
 
         app:theme="@style/AppTheme">
@@ -45,9 +44,8 @@
                 android:layout_alignLeft="@+id/TextViewLogo"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentTop="true"
-                android:layout_centerInParent="true"
-                android:layout_marginLeft="1dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginLeft="0dp"
+                android:layout_marginTop="1dp"
                 android:alpha="0.5"
                 android:backgroundTint="#FFFFFF"
                 android:visibility="visible"
