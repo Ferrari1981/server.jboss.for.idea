@@ -95,7 +95,7 @@ public class MainActivity_Dashboard extends AppCompatActivity {
             buniccessLogicaActivityDashboard=new BuniccessLogicaActivityDashboard();
 
 
-            buniccessLogicaActivityDashboard.  методСитсменыйхНастрокеДляActivity();
+        //    buniccessLogicaActivityDashboard.  методСитсменыйхНастрокеДляActivity();
             buniccessLogicaActivityDashboard. МетодБиндингаОбновлениеПО();
             buniccessLogicaActivityDashboard.  МетодИнициализацияHandler();
             // TODO: 18.02.2023 установки для Обновленеи ПО

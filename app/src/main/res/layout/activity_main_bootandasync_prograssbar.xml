@@ -45,8 +45,8 @@
 
         <ImageView
             android:id="@+id/imageviewbootlogo"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
             android:adjustViewBounds="false"
             android:layout_alignParentTop="true"
             android:layout_marginTop="270dp"
@@ -55,7 +55,7 @@
             android:textSize="26sp"
             android:textStyle="bold"
             android:typeface="monospace"
-            app:srcCompat="@mipmap/icon_bootasynctabel1" />
+            app:srcCompat="@mipmap/icon_new_main_logo12" />
 
 
 
