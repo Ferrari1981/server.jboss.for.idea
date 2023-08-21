@@ -37,7 +37,6 @@ public class GeneratorJSONSerializer extends JsonSerializer<Cursor> {
             // TODO: 20.07.2023 Строки 
             Flowable.range(0,КурсорДляОтправкиДанныхНаСерверОтАндройда.getCount())
                     .onBackpressureBuffer()
-                    .subscribeOn(Schedulers.single())
                     .doOnNext(new Consumer<Integer>() {
                         @Override
                         public void accept(Integer integer) throws Throwable {

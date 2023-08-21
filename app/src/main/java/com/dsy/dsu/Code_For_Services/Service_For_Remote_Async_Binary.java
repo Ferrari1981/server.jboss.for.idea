@@ -77,6 +77,7 @@ import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.functions.Action;
 import io.reactivex.rxjava3.functions.Function;
 import io.reactivex.rxjava3.functions.Predicate;
+import io.reactivex.rxjava3.parallel.ParallelFlowable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
 
@@ -1318,11 +1319,18 @@ try{
 
                         Log.d(this.getClass().getName(), " имяТаблицыОтАндройда_локальноая Все остальные  _id " + имяТаблицыОтАндройда_локальноая);
                         break;
+                    case "chat_users":
+                    case "data_notification":
+                        data=new Bundle();
+                        data.putString("query"," SELECT DISTINCT  * FROM " +имяТаблицыОтАндройда_локальноая+" as gett" +
+                                " WHERE   gett.current_table >  "+ВерсияДанныхДляСравения+"" );
+
+                        Log.d(this.getClass().getName(), " имяТаблицыОтАндройда_локальноая Все остальные  _id " + имяТаблицыОтАндройда_локальноая);
+                        break;
 
                     // TODO: 23.03.2023 ТАБЛИЦЫ С ПОЛЕМ ID   // TODO: 23.03.2023 ТАБЛИЦЫ С ПОЛЕМ ID // TODO: 23.03.2023 ТАБЛИЦЫ С ПОЛЕМ ID // TODO: 23.03.2023 ТАБЛИЦЫ С ПОЛЕМ ID
                     // TODO: 23.03.2023 ТАБЛИЦЫ С ПОЛЕМ ID // TODO: 23.03.2023 ТАБЛИЦЫ С ПОЛЕМ ID // TODO: 23.03.2023 ТАБЛИЦЫ С ПОЛЕМ ID // TODO: 23.03.2023 ТАБЛИЦЫ С ПОЛЕМ ID
                     default:
-
                         data=new Bundle();
                         data.putString("query"," SELECT DISTINCT  * FROM " +имяТаблицыОтАндройда_локальноая+" as gett" +
                                 " WHERE   gett.current_table >  "+ВерсияДанныхДляСравения+
@@ -1496,10 +1504,22 @@ try{
 // TODO: 21.08.2023 ГЛАВНЫЙ ЦИКЛ СИХРОНИАЗЦИИ
 
 
-
                     // TODO: 01.12.2022  еще один тест
-                    Flowable.fromIterable( public_contentДатыДляГлавныхТаблицСинхронизации.ВерсииВсехСерверныхТаблиц.keySet())
+                   Flowable.fromIterable( public_contentДатыДляГлавныхТаблицСинхронизации.ВерсииВсехСерверныхТаблиц.keySet())
                             .onBackpressureBuffer()
+                           .onErrorComplete(new Predicate<Throwable>() {
+                               @Override
+                               public boolean test(Throwable throwable) throws Throwable {
+                                   throwable.printStackTrace();
+                                   Log.e(this.getClass().getName(), "Ошибка " + throwable + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
+                                           " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
+                                   // TODO: 01.09.2021 метод вызова
+                                   new   Class_Generation_Errors(context).МетодЗаписиВЖурналНовойОшибки(throwable.toString(), this.getClass().getName(),
+                                           Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
+
+                                   return false;
+                               }
+                           })
                             .blockingIterable()
                             .forEach(new Consumer<String>() {
                                 @Override
@@ -1547,11 +1567,6 @@ try{
                                     }
                                 }
                             });
-
-
-                    if (СсылкаНаБазуSqlite.isOpen()) {
-                        СсылкаНаБазуSqlite.close();
-                    }
                     Log.w(this.getClass().getName(), " doOnTerminate ОБРАБОТКА ВСЕХ ТАБЛИЦ ЛистТаблицыОбмена.stream().reduce(0, (a, b) -> a + b).intValue()"
                             + ЛистТаблицыОбмена.stream().reduce(0, (a, b) -> a + b).intValue()+ " СсылкаНаБазуSqlite.isOpen() "
                             +СсылкаНаБазуSqlite.isOpen());

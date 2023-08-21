@@ -70,8 +70,9 @@
             android:layout_margin="10dp"
             android:indeterminate="false"
             android:max="100"
+            android:visibility="visible"
             android:indeterminateTint="@color/colorPrimaryDark"
-            android:progress="0"
+            android:progress="10"
             android:scaleY="1.5" />
 
 

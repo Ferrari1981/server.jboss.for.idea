@@ -149,7 +149,7 @@ public class ContentProvider extends android.content.ContentProvider {
             ОтветВставкиДанных  = Uri.parse("content://"+РезультатВставкиДанныхСканирование.toString());
             if (РезультатВставкиДанныхСканирование> 0) {
                 if (Create_Database_СамаБАзаSQLite.inTransaction()) {
-                    Create_Database_СамаБАзаSQLite.yieldIfContendedSafely();
+                     
                     Create_Database_СамаБАзаSQLite.setTransactionSuccessful();
                     // TODO: 22.09.2022 увеличивает версию данных
                 }
@@ -201,7 +201,7 @@ public class ContentProvider extends android.content.ContentProvider {
                 Log.w(getContext().getClass().getName(), " table  " + table);/////
             }
             if (Create_Database_СамаБАзаSQLite.inTransaction()) {
-                Create_Database_СамаБАзаSQLite.yieldIfContendedSafely();
+                 
                 Create_Database_СамаБАзаSQLite.setTransactionSuccessful();
             }
             if (Create_Database_СамаБАзаSQLite.inTransaction()) {

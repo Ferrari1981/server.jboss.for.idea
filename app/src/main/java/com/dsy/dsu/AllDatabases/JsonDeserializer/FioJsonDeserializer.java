@@ -124,7 +124,6 @@ this.context=context;
                          Log.d(this.getClass().getName(), " РезультатПовышенииВерсииДанных  " + РезультатПовышенииВерсииДанных);
                          // TODO: 04.07.2023 ЗАВЕРШАЕТ ТРНЗАКЦИЮ НА 50 СТРОЧКЕ
 
-                         Create_Database_СамаБАзаSQLite.yieldIfContendedSafely();
                          Create_Database_СамаБАзаSQLite.setTransactionSuccessful();
                          if (Create_Database_СамаБАзаSQLite.inTransaction()) {
                              Create_Database_СамаБАзаSQLite.endTransaction();

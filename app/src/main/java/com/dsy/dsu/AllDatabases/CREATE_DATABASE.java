@@ -21,30 +21,25 @@ import java.util.function.Consumer;
 public class CREATE_DATABASE extends SQLiteOpenHelper{ ///SQLiteOpenHelper
      static final int VERSION =              1069;//ПРИ ЛЮБОМ ИЗМЕНЕНИЕ В СТРУКТУРЕ БАЗЫ ДАННЫХ НУЖНО ДОБАВИТЬ ПЛЮС ОДНУ ЦИФРУ К ВЕРСИИ 1=1+1=2 ИТД.1
    private   Context context;
-    private      SQLiteDatabase ССылкаНаСозданнуюБазу;
+    private  static      SQLiteDatabase ССылкаНаСозданнуюБазу;
     private     CopyOnWriteArrayList<String> ИменаТаблицыОтАндройда;
 
-    public SQLiteDatabase getССылкаНаСозданнуюБазу() {
-        Log.d(this.getClass().getName()," get () БАЗА  ДАННЫХ   ДСУ-1 ОТКРЫТА ССылкаНаСозданнуюБазу.isOpen()  " +ССылкаНаСозданнуюБазу);
+    public static synchronized SQLiteDatabase getССылкаНаСозданнуюБазу() {
         return ССылкаНаСозданнуюБазу;
     }
     ///////КОНСТРУКТОР главного класса по созданию базы данных
-    public CREATE_DATABASE( @NotNull Context context) {/////КОНСТРУКТОР КЛАССА ПО СОЗДАНИЮ БАЗЫ ДАННЫХ
+    public  CREATE_DATABASE( @NotNull Context context) {/////КОНСТРУКТОР КЛАССА ПО СОЗДАНИЮ БАЗЫ ДАННЫХ
         super(context, "Database DSU-1.db", null, VERSION ); // определяем имя базы данных  и ее версию
         try{
+            synchronized (this){
             this.context =context;
-            if (ССылкаНаСозданнуюБазу == null ) {
-                ССылкаНаСозданнуюБазу = this.getWritableDatabase(); //ссылка на схему базы данных;//ссылка на схему базы данных ГЛАВНАЯ ВСТАВКА НА БАЗУ ДСУ-1
-                Log.d(this.getClass().getName()," БАЗА  ДАННЫХ   ДСУ-1 ОТКРЫВАЕМ  ССылкаНаСозданнуюБазу==null   "
-                        +ССылкаНаСозданнуюБазу.isOpen());
-            }else{
-                //TODO connection  else is onen false
-                if (!ССылкаНаСозданнуюБазу.isOpen()    )  {
-                    ССылкаНаСозданнуюБазу = this.getWritableDatabase(); //ссылка на схему базы данных;//ссылка на схему базы данных ГЛАВНАЯ ВСТАВКА НА БАЗУ ДСУ-1
-                    Log.d(this.getClass().getName()," БАЗА  ДАННЫХ   ДСУ-1 ОТКРЫВАЕМ  ССылкаНаСозданнуюБазу.isOpen()  "
-                            +ССылкаНаСозданнуюБазу.isOpen());
+                    if (ССылкаНаСозданнуюБазу == null && context!=null ) {
+                        ССылкаНаСозданнуюБазу = this.getWritableDatabase(); //ссылка на схему базы данных;//ссылка на схему базы данных ГЛАВНАЯ ВСТАВКА НА БАЗУ ДСУ-1
+                        Log.d(this.getClass().getName(), " БАЗА  ДАННЫХ   ДСУ-1 ОТКРЫВАЕМ  ССылкаНаСозданнуюБазу==null   "
+                                + ССылкаНаСозданнуюБазу.isOpen());
+                    }
                 }
-            }
+
             Log.d(this.getClass().getName(),"\n" + " class " +
                     Thread.currentThread().getStackTrace()[2].getClassName()
                     + "\n" +
@@ -58,6 +53,13 @@ public class CREATE_DATABASE extends SQLiteOpenHelper{ ///SQLiteOpenHelper
             new Class_Generation_Errors(this.context).МетодЗаписиВЖурналНовойОшибки(e.toString(),
                     this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
                     Thread.currentThread().getStackTrace()[2].getLineNumber());
+            // TODO: 21.08.2023
+            if(ССылкаНаСозданнуюБазу!=null){
+                if(ССылкаНаСозданнуюБазу.inTransaction()){
+                    ССылкаНаСозданнуюБазу.endTransaction();
+                }
+                ССылкаНаСозданнуюБазу.close();
+            }
         }
     }
     //  Cоздание ТАблиц
