@@ -42,20 +42,25 @@
             android:typeface="monospace"
             app:srcCompat="@mipmap/icon_boot_dsu1_1" />-->
 
-
+        <androidx.cardview.widget.CardView
+            android:layout_above="@+id/progressbarbootandasync"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_marginBottom="250dp"
+            android:layout_centerHorizontal="true"
+            app:cardCornerRadius="100dp">
         <ImageView
             android:id="@+id/imageviewbootlogo"
             android:layout_width="70dp"
             android:layout_height="70dp"
             android:adjustViewBounds="false"
-            android:layout_alignParentTop="true"
-            android:layout_marginTop="270dp"
-            android:layout_marginBottom="250dp"
-            android:layout_centerHorizontal="true"
             android:textSize="26sp"
             android:textStyle="bold"
             android:typeface="monospace"
+            android:visibility="visible"
             app:srcCompat="@mipmap/icon_new_main_logo12" />
+
+        </androidx.cardview.widget.CardView>
 
 
 
@@ -63,11 +68,10 @@
             android:id="@+id/progressbarbootandasync"
             style="?android:attr/progressBarStyleHorizontal"
             android:layout_width="150dp"
-            android:layout_marginBottom="50dp"
+            android:layout_marginBottom="60dp"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/imageviewbootlogo"
+            android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
-            android:layout_margin="10dp"
             android:indeterminate="false"
             android:max="100"
             android:visibility="visible"
@@ -93,7 +97,7 @@
         android:fitsSystemWindows="true"
         app:itemIconSize="35dp"
         app:itemIconTint="#00ACC1"
-        android:visibility="visible"
+        android:visibility="gone"
         android:backgroundTint="@color/cardview_light_background"
         app:itemTextColor="@color/cardview_dark_background"
         app:menu="@menu/menu_for_asynsapp_navigationview">
