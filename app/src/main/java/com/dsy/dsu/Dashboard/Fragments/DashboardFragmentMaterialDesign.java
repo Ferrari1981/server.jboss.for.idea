@@ -28,7 +28,9 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.LifecycleOwner;
 
 import com.dsy.dsu.Business_logic_Only_Class.Class_Generation_Errors;
+import com.dsy.dsu.CodeOrdersAnTransports.Window.MainActivityOrdersTransports;
 import com.dsy.dsu.Code_ForTABEL.MainActivity_List_Tabels;
+import com.dsy.dsu.Code_For_Commit_Payments_КодДля_Согласование.MainActivity_CommitPay;
 import com.dsy.dsu.Code_For_Firebase_AndOneSignal_Здесь_КодДЛяСлужбыУведомленияFirebase.Class_Generation_SendBroadcastReceiver_And_Firebase_OneSignal;
 import com.dsy.dsu.Code_For_Services.ServiceUpdatePoОбновлениеПО;
 import com.dsy.dsu.R;
@@ -199,10 +201,10 @@ public class DashboardFragmentMaterialDesign extends DialogFragment {
 
 
 
-            КнопкаЗаявкаНаТранспорт   = (MaterialButton) view.findViewById(R.id.materialcardview_dashboard1); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
-            КнопкаСогласование         = (MaterialButton) view.findViewById(R.id.materialcardview_dashboard2); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
-            КнопкаПоступлениеМатериалов         = (MaterialButton) view.findViewById(R.id.materialcardview_dashboard3); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
-            КнопкаТабель          = (MaterialButton) view.findViewById(R.id.materialcardview_dashboard4); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
+            КнопкаЗаявкаНаТранспорт   = (MaterialButton) view.findViewById(R.id.КнопкаЗаявкаНаТранспорт); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
+            КнопкаСогласование         = (MaterialButton) view.findViewById(R.id.КнопкаСогласование); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
+            КнопкаПоступлениеМатериалов         = (MaterialButton) view.findViewById(R.id.КнопкаПоступлениеМатериалов); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
+            КнопкаТабель          = (MaterialButton) view.findViewById(R.id.КнопкаТабель); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
 
 
             TextViewLogo      = (TextView) view.findViewById(R.id.TextViewLogo); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
@@ -214,8 +216,6 @@ public class DashboardFragmentMaterialDesign extends DialogFragment {
             animation4 = AnimationUtils.loadAnimation(getContext(),R.anim.slide_in_row7);
             animation5 = AnimationUtils.loadAnimation(getContext(),R.anim.slide_in_row8);
             animation6 = AnimationUtils.loadAnimation(getContext(),R.anim.slide_in_row9);
-
-            buniccessLogicFra4gmentDashboard.new ClassButtonsApp().методStartingAllButtonApp();;
 
 
             Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -242,7 +242,7 @@ public class DashboardFragmentMaterialDesign extends DialogFragment {
         super.onStart();
         try{
 
-       buniccessLogicFra4gmentDashboard.методНастройкиВнешнегоВида();
+            buniccessLogicFra4gmentDashboard.new ClassButtonsApp().методStartingAllButtonApp();;
 
         // TODO: 20.07.2023
         Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -257,6 +257,27 @@ public class DashboardFragmentMaterialDesign extends DialogFragment {
                 this.getClass().getName().toString(), Thread.currentThread().getStackTrace()[2].getMethodName().toString(),
                 Thread.currentThread().getStackTrace()[2].getLineNumber());
     }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        try{
+
+            buniccessLogicFra4gmentDashboard.методНастройкиВнешнегоВида();
+            // TODO: 20.072023
+            Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"  );
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.e(getContext().getClass().getName(),
+                    "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
+                            " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
+            new Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+                    this.getClass().getName().toString(), Thread.currentThread().getStackTrace()[2].getMethodName().toString(),
+                    Thread.currentThread().getStackTrace()[2].getLineNumber());
+        }
     }
 
 
@@ -300,7 +321,7 @@ public class DashboardFragmentMaterialDesign extends DialogFragment {
                 КнопкаТабель.refreshDrawableState();
 
                 // TODO: 21.08.2023  ЛОГОТИП
-                TextViewLogo.startAnimation(animation5);
+                TextViewLogo.startAnimation(animation6);
                 TextViewLogo.refreshDrawableState();
                 // TODO: 21.08.2023
                 Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -449,17 +470,44 @@ public class DashboardFragmentMaterialDesign extends DialogFragment {
 
             class ClassButtonsApp {
                 void методStartingAllButtonApp() {
-                    КнопкаТабель.setOnClickListener(new View.OnClickListener() {
+
+
+                    // TODO: 14.04.2023 Запускаем Заявка НА Транспорт
+                    КнопкаЗаявкаНаТранспорт.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
                             try {
-                                Intent Интент_ЗапускТабельногоУчётаПервыйШаг = new Intent();
+                                Log.d(this.getClass().getName(), "Запускает Согласния   ");
+                                Intent ИнтентЗаявкаНаТранспорт = new Intent();
                                 Bundle data = new Bundle();
-                                Интент_ЗапускТабельногоУчётаПервыйШаг.putExtras(data);
-                                Интент_ЗапускТабельногоУчётаПервыйШаг.setClass(getContext(), MainActivity_List_Tabels.class); //  ТЕСТ КОД КОТОРЫЙ ЗАПУСКАЕТ ACTIVITY VIEWDATA  ПРОВЕРИТЬ ОБМЕН
-                                Интент_ЗапускТабельногоУчётаПервыйШаг.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                                Log.d(this.getClass().getName(), "" + "    КнопкаТабельныйУчёт.setOnClickListener(new View.OnClickListener() {");
-                                startActivity(Интент_ЗапускТабельногоУчётаПервыйШаг);
+                                ИнтентЗаявкаНаТранспорт.putExtras(data);
+                                ИнтентЗаявкаНаТранспорт.setClass(getContext(), MainActivityOrdersTransports.class);//рабочий
+                                ИнтентЗаявкаНаТранспорт.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                startActivity(ИнтентЗаявкаНаТранспорт);
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                                Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                                        + Thread.currentThread().getStackTrace()[2].getLineNumber());
+                                new Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(),
+                                        Thread.currentThread().getStackTrace()[2].getMethodName(),
+                                        Thread.currentThread().getStackTrace()[2].getLineNumber());
+                            }
+
+
+                        }
+                    });
+// TODO: 21.08.2023 tretiy button
+                    КнопкаСогласование.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            try {
+                                Log.d(this.getClass().getName(), "Запускает Согласния   ");
+                                Intent intentЗапускСогласования1C = new Intent();
+                                Bundle data = new Bundle();
+                                intentЗапускСогласования1C.putExtras(data);
+                                intentЗапускСогласования1C.setClass(getContext(), MainActivity_CommitPay.class);//рабочий
+                                intentЗапускСогласования1C.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                startActivity(intentЗапускСогласования1C);
                             } catch (Exception e) {
                                 e.printStackTrace();
                                 Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
@@ -472,6 +520,61 @@ public class DashboardFragmentMaterialDesign extends DialogFragment {
 
 
                     });
+                    // TODO: 21.08.2023 hetbertay button
+
+                    // TODO: 14.04.2023 Запускаем Заявка НА Транспорт
+                    КнопкаПоступлениеМатериалов.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            try {
+                                Log.d(this.getClass().getName(), "Запускает Согласния   ");
+                                Intent ИнтентЗаявкаНаТранспорт = new Intent();
+                                Bundle data = new Bundle();
+                                ИнтентЗаявкаНаТранспорт.putExtras(data);
+                                ИнтентЗаявкаНаТранспорт.setClass(getContext(), MainActivityOrdersTransports.class);//рабочий
+                                ИнтентЗаявкаНаТранспорт.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                startActivity(ИнтентЗаявкаНаТранспорт);
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                                Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                                        + Thread.currentThread().getStackTrace()[2].getLineNumber());
+                                new Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(),
+                                        Thread.currentThread().getStackTrace()[2].getMethodName(),
+                                        Thread.currentThread().getStackTrace()[2].getLineNumber());
+                            }
+
+
+                        }
+                    });
+
+                    // TODO: 21.08.2023 pyty abutton
+                    КнопкаТабель.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            try {
+                                Intent Интент_ЗапускТабельногоУчётаПервыйШаг = new Intent();
+                                Bundle data = new Bundle();
+                                Интент_ЗапускТабельногоУчётаПервыйШаг.putExtras(data);
+                                Интент_ЗапускТабельногоУчётаПервыйШаг.setClass(getContext(), MainActivity_List_Tabels.class); //  ТЕСТ КОД КОТОРЫЙ ЗАПУСКАЕТ ACTIVITY VIEWDATA  ПРОВЕРИТЬ ОБМЕН
+                                Интент_ЗапускТабельногоУчётаПервыйШаг.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                Log.d(this.getClass().getName(), "" + "    КнопкаТабельныйУчёт.setOnClickListener(new View.OnClickListener() {");
+                               startActivity(Интент_ЗапускТабельногоУчётаПервыйШаг);
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                                Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                                        + Thread.currentThread().getStackTrace()[2].getLineNumber());
+                                new Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(),
+                                        Thread.currentThread().getStackTrace()[2].getMethodName(),
+                                        Thread.currentThread().getStackTrace()[2].getLineNumber());
+                            }
+                        }
+                    });
+
+                    // TODO: 21.08.2023  teo button
+
+
+
+
                 }
             }
 
