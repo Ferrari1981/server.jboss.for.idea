@@ -53,7 +53,7 @@ public class DashboardFragmentMaterialDesign extends DialogFragment {
 
     private   RelativeLayout relativelayout_dashboard;
 
-    private Animation animation1,animation2,animation3,animation4,animation5,animation6;
+    private Animation animation1,animation2,animation3,animation4,animation5;
 
     private MaterialButton КнопкаТабель, КнопкаСогласование ,  КнопкаПоступлениеМатериалов,КнопкаЗаявкаНаТранспорт;
 
@@ -114,10 +114,9 @@ public class DashboardFragmentMaterialDesign extends DialogFragment {
             // setStyle(   DialogFragment.STYLE_NORMAL ,android.R.style.Theme_DeviceDefault_Light_NoActionBar_Fullscreen);//Theme_Dialog
             // setStyle(   DialogFragment.STYLE_NORMAL ,android.R.style.Theme_Material_Dialog_MinWidth);//Theme_Dialog
             // setStyle(   DialogFragment.STYLE_NO_TITLE ,android.R.style.Theme_Material_Light);//Theme_Dialog
+           // setStyle(   DialogFragment.STYLE_NO_TITLE ,android.R.style.Theme_Material_Light_NoActionBar_Overscan);//Theme_Dialog
             setStyle(   DialogFragment.STYLE_NO_TITLE ,android.R.style.Theme_Material_Light_NoActionBar_Overscan);//Theme_Dialog
-
-
-
+            setShowsDialog(true);
 
         // TODO: 15.08.2023
         Log.d(this.getClass().getName(),"\n" + " class "
@@ -210,7 +209,7 @@ public class DashboardFragmentMaterialDesign extends DialogFragment {
             animation3 = AnimationUtils.loadAnimation(getContext(),R.anim.slide_in_row6);
             animation4 = AnimationUtils.loadAnimation(getContext(),R.anim.slide_in_row7);
             animation5 = AnimationUtils.loadAnimation(getContext(),R.anim.slide_in_row8);
-            animation6 = AnimationUtils.loadAnimation(getContext(),R.anim.slide_in_row9);
+
 
 
             Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -298,26 +297,27 @@ public class DashboardFragmentMaterialDesign extends DialogFragment {
 
 
 
+                // TODO: 21.08.2023  ЛОГОТИП
+                TextViewLogo.startAnimation(animation5);
+                TextViewLogo.refreshDrawableState();
 
-                КнопкаЗаявкаНаТранспорт.startAnimation(animation1);
+                КнопкаЗаявкаНаТранспорт.startAnimation(animation4);
                 КнопкаЗаявкаНаТранспорт.refreshDrawableState();
 
 
-                КнопкаСогласование.startAnimation(animation2);
+                КнопкаСогласование.startAnimation(animation3);
                 КнопкаСогласование.refreshDrawableState();
 
 
 
-                КнопкаПоступлениеМатериалов.startAnimation(animation3);
+                КнопкаПоступлениеМатериалов.startAnimation(animation2);
                 КнопкаПоступлениеМатериалов.refreshDrawableState();
 
 
-                КнопкаТабель.startAnimation(animation4);
+                КнопкаТабель.startAnimation(animation1);
                 КнопкаТабель.refreshDrawableState();
 
-                // TODO: 21.08.2023  ЛОГОТИП
-                TextViewLogo.startAnimation(animation6);
-                TextViewLogo.refreshDrawableState();
+
                 // TODO: 21.08.2023
                 Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                         " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
