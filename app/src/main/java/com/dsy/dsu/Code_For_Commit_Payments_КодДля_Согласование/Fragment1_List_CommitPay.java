@@ -38,6 +38,7 @@ import com.dsy.dsu.Business_logic_Only_Class.Class_Generation_Errors;
 import com.dsy.dsu.Business_logic_Only_Class.Class_Generations_PUBLIC_CURRENT_ID;
 import com.dsy.dsu.Business_logic_Only_Class.Class_Get_Json_1C;
 import com.dsy.dsu.Code_For_Services.Service_Notificatios_Для_Согласования;
+import com.dsy.dsu.Dashboard.MainActivity_Dashboard;
 import com.dsy.dsu.For_Code_Settings_DSU1.MainActivity_Face_App;
 import com.dsy.dsu.R;
 import com.dsy.dsu.Code_Gson_Processing.SubClass_JSON_B_P_GET_1C;
@@ -350,7 +351,7 @@ public class Fragment1_List_CommitPay extends Fragment {
                         Bundle data1C = new Bundle();
                         data1C.putBinder("binderСогласования1C", binderСогласования1C);
                         Интент_BackВозвращаемАктивти.putExtras(data1C);
-                        Интент_BackВозвращаемАктивти.setClass(getContext(), MainActivity_Face_App.class); // Т
+                        Интент_BackВозвращаемАктивти.setClass(getContext(), MainActivity_Dashboard.class); // Т
                         Интент_BackВозвращаемАктивти.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         Log.d(this.getClass().getName(), "  выходим из задания МетодКпопкаВозвращениеНазадИзСогласованиии" );
                         startActivity( Интент_BackВозвращаемАктивти);

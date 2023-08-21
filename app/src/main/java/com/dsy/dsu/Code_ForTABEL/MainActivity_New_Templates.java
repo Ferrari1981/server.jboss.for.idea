@@ -45,6 +45,7 @@ import com.dsy.dsu.Business_logic_Only_Class.DATE.SubClassCursorLoader;
 import com.dsy.dsu.Business_logic_Only_Class.PUBLIC_CONTENT;
 import com.dsy.dsu.Business_logic_Only_Class.SubClassGetPublicId;
 import com.dsy.dsu.Business_logic_Only_Class.SubClassUpVersionDATA;
+import com.dsy.dsu.Dashboard.MainActivity_Dashboard;
 import com.dsy.dsu.For_Code_Settings_DSU1.MainActivity_Face_App;
 import com.dsy.dsu.R;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
@@ -2461,7 +2462,7 @@ public class MainActivity_New_Templates extends AppCompatActivity implements Dat
             if (MainParentUUID>0) {
                 ИнтентBackactivityListPeoples = new Intent(getApplicationContext(), MainActivity_List_Peoples.class);
             } else {
-                ИнтентBackactivityListPeoples = new Intent(getApplicationContext(), MainActivity_Face_App.class);
+                ИнтентBackactivityListPeoples = new Intent(getApplicationContext(), MainActivity_Dashboard.class);
             }
             Bundle bundleBackactivityListPeoples=new Bundle();
             bundleBackactivityListPeoples.putLong("MainParentUUID", MainParentUUID);

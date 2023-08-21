@@ -43,6 +43,7 @@ import com.dsy.dsu.Business_logic_Only_Class.Class_GRUD_SQL_Operations;
 import com.dsy.dsu.Business_logic_Only_Class.Class_Generation_Errors;
 import com.dsy.dsu.Business_logic_Only_Class.DATE.SubClassCursorLoader;
 import com.dsy.dsu.Business_logic_Only_Class.PUBLIC_CONTENT;
+import com.dsy.dsu.Dashboard.MainActivity_Dashboard;
 import com.dsy.dsu.R;
 import com.google.type.TimeOfDayOrBuilder;
 
@@ -450,9 +451,9 @@ try{
                         Интент_ЗапускаетFaceApp.setAction("MainActivity_Visible_Async.class");
 
                     } else {
-                        Интент_ЗапускаетFaceApp.setClass(getApplicationContext(),  MainActivity_Face_App.class);
+                        Интент_ЗапускаетFaceApp.setClass(getApplicationContext(),  MainActivity_Dashboard.class);
                         МетодСообщениеПользоватлюЧтоНЕтИнтренета("Режим: (офлайн)");
-                        Интент_ЗапускаетFaceApp.setAction("MainActivity_Face_App.class");
+                        Интент_ЗапускаетFaceApp.setAction("MainActivity_Dashboard.class");
                     }
 
                 }else{

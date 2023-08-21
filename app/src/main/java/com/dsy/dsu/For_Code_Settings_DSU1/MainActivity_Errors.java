@@ -24,6 +24,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.dsy.dsu.AllDatabases.CREATE_DATABASE;
 import com.dsy.dsu.Business_logic_Only_Class.Class_Generation_Errors;
 import com.dsy.dsu.Business_logic_Only_Class.Class_Sendiing_Errors;
+import com.dsy.dsu.Dashboard.MainActivity_Dashboard;
 import com.dsy.dsu.R;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
@@ -102,7 +103,7 @@ public class MainActivity_Errors extends AppCompatActivity  {
                     try{
 
                         Intent Интент_BackВозвращаемАктивти = new Intent();
-                        Интент_BackВозвращаемАктивти.setClass(getApplication(), MainActivity_Face_App.class); // Т
+                        Интент_BackВозвращаемАктивти.setClass(getApplication(), MainActivity_Dashboard.class); // Т
                         Интент_BackВозвращаемАктивти.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         startActivity( Интент_BackВозвращаемАктивти);
                         Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -279,7 +280,7 @@ public class MainActivity_Errors extends AppCompatActivity  {
 // Toast.makeText(getApplicationContext(), "Запускаем обновление данных " , Toast.LENGTH_LONG).show();
 ///////запуск главного меню после того как поняли что в азе нет логинов
                         Intent Интент_Меню_ТолькоПростотДанных;
-                        Интент_Меню_ТолькоПростотДанных = new Intent(getApplicationContext(), MainActivity_Face_App.class);
+                        Интент_Меню_ТолькоПростотДанных = new Intent(getApplicationContext(), MainActivity_Dashboard.class);
 ///// Toast.makeText(getApplicationContext(), "Выбран пунк меню Главный Экран" , Toast.LENGTH_LONG).show();
                         startActivity(Интент_Меню_ТолькоПростотДанных);
                        // finish();

@@ -34,6 +34,7 @@ import com.dsy.dsu.Business_logic_Only_Class.DATE.Class_Generation_Data;
 import com.dsy.dsu.Business_logic_Only_Class.Class_Generation_Errors;
 import com.dsy.dsu.Business_logic_Only_Class.Class_MODEL_synchronized;
 import com.dsy.dsu.Business_logic_Only_Class.PUBLIC_CONTENT;
+import com.dsy.dsu.Dashboard.MainActivity_Dashboard;
 import com.dsy.dsu.R;
 
 import org.jetbrains.annotations.NotNull;
@@ -871,7 +872,7 @@ return (int) РезультатВставкиНовогоСотрудникар�
                 Log.d(this.getClass().getName(), " кликнем для созданни новго сотрдника при нажатии  ");
                 ///todo код которыц возврящет предыдущий актвитики кнопка back
                 Intent ИнтентВозврящемсяНазад = new Intent();
-                ИнтентВозврящемсяНазад .setClass(getApplication(),  MainActivity_Face_App.class); // ТУТ ЗАПВСКАЕТЬСЯ ВЫБОР ПРИЛОЖЕНИЯ КОТОРЫЕ ЕСТЬ FACE APP НА ДАННЫЙ МОМЕТНТ РАЗРАБОТНАО ТАБЕЛЬНЫЙ УЧЁТ
+                ИнтентВозврящемсяНазад .setClass(getApplication(),  MainActivity_Dashboard.class); // ТУТ ЗАПВСКАЕТЬСЯ ВЫБОР ПРИЛОЖЕНИЯ КОТОРЫЕ ЕСТЬ FACE APP НА ДАННЫЙ МОМЕТНТ РАЗРАБОТНАО ТАБЕЛЬНЫЙ УЧЁТ
                 ИнтентВозврящемсяНазад.setFlags( Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(ИнтентВозврящемсяНазад);
                 Log.d(this.getClass().getName(), " кликнем для созданни новго сотрдника при нажатии  ");

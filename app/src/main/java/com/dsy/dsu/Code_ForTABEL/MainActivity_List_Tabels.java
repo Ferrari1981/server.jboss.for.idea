@@ -51,6 +51,7 @@ import com.dsy.dsu.Business_logic_Only_Class.Class_MODEL_synchronized;
 import com.dsy.dsu.Business_logic_Only_Class.DATE.SubClassCursorLoader;
 import com.dsy.dsu.Business_logic_Only_Class.PUBLIC_CONTENT;
 import com.dsy.dsu.Code_For_Services.Service_For_Public;
+import com.dsy.dsu.Dashboard.MainActivity_Dashboard;
 import com.dsy.dsu.For_Code_Settings_DSU1.MainActivity_Face_App;
 import com.dsy.dsu.R;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
@@ -209,7 +210,7 @@ public class MainActivity_List_Tabels extends AppCompatActivity  {
                     Log.d(this.getClass().getName(), " кликнем для созданни новго сотрдника при нажатии  ");
                     ///todo код которыц возврящет предыдущий актвитики кнопка back
                     Intent Интент_BackВозвращаемАктивти = new Intent();
-                    Интент_BackВозвращаемАктивти.setClass(getApplication(), MainActivity_Face_App.class); // Т
+                    Интент_BackВозвращаемАктивти.setClass(getApplication(), MainActivity_Dashboard.class); // Т
                     Интент_BackВозвращаемАктивти.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity( Интент_BackВозвращаемАктивти);
                     Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
