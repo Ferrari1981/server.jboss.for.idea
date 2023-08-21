@@ -929,8 +929,7 @@ try{
                     ВерсияДанныхсСамогоSqlServer =      Optional.ofNullable(ВерсияДанныхсСамогоSqlServer).map(Long::new).orElse(0l);
                     Log.d(this.getClass().getName(), " ВерсияДанныхсСамогоSqlServer" + ВерсияДанныхсСамогоSqlServer);
                     // TODO: 05.10.2021  POST()-->
-                    if (ВерсияДанныхЛокальноЛокальная > ВерсияДанныхЛокальнаяСерверная &&
-                            !ИмяТаблицыОтАндройда_Локальноая.matches("(.*)view(.*)")) {
+                    if (ВерсияДанныхЛокальноЛокальная > ВерсияДанныхЛокальнаяСерверная ) {
                         Log.d(this.getClass().getName(),
                                 " ВерсияДанныхЛокальноЛокальная  " + ВерсияДанныхЛокальноЛокальная +
                                         "  ВерсияДанныхЛокальнаяСерверная " + ВерсияДанныхЛокальнаяСерверная
@@ -1264,7 +1263,7 @@ try{
                 // TODO: 15.02.2022  ДАННЫЕ ДЛЯ ОТПРАВКИ НА СЕРВЕР 
             Cursor   cursorForSendServer= методГлавныйGetDataForAsync(имяТаблицыОтАндройда_локальноая ,ВерсияДанныхОсноваСозданиеДанныхОтправки );
                 /////TODO результаты   количество отправляемой информации на сервера
-                if (cursorForSendServer.getCount() > 0) {
+                if (cursorForSendServer!=null && cursorForSendServer.getCount() > 0) {
                     Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                             " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
@@ -1321,10 +1320,11 @@ try{
                         break;
                     case "chat_users":
                     case "data_notification":
+                    case "view_onesignal":
                         data=new Bundle();
-                        data.putString("query"," SELECT DISTINCT  * FROM " +имяТаблицыОтАндройда_локальноая+" as gett" +
+                       /* data.putString("query"," SELECT DISTINCT  * FROM " +имяТаблицыОтАндройда_локальноая+" as gett" +
                                 " WHERE   gett.current_table >  "+ВерсияДанныхДляСравения+"" );
-
+*/
                         Log.d(this.getClass().getName(), " имяТаблицыОтАндройда_локальноая Все остальные  _id " + имяТаблицыОтАндройда_локальноая);
                         break;
 
@@ -1341,8 +1341,11 @@ try{
                 }
                 // TODO: 08.08.2023 ГЛАВНОЕ ПОЛУЧЕНИЕ ДАННЫХ  ДЛя ОТПРАВКИ НА СЕРВЕР
                 // TODO: 16.05.2023
-                cursor = resolver.query(uri,new String[]{"*"},data,null);// TODO: 13.10.2022 ,"Удаленная"
-                Log.d(this.getClass().getName(), "cursor   " + cursor  + "  имяТаблицыОтАндройда_локальноая " +имяТаблицыОтАндройда_локальноая);
+                if (data.size()>0) {
+                    cursor = resolver.query(uri,new String[]{"*"},data,null);// TODO: 13.10.2022 ,"Удаленная"
+                }
+                Log.d(this.getClass().getName(), "cursor   " + cursor  + "  имяТаблицыОтАндройда_локальноая " +имяТаблицыОтАндройда_локальноая
+                + " data.size() " +data.size());
 
             } catch (Exception e) {
                 e.printStackTrace();
