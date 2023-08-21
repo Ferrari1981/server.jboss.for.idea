@@ -205,7 +205,7 @@ public class ServiceUpdatePoОбновлениеПО extends IntentService {////
 
     public Boolean МетодГлавныйОбновленияПОДоAsync(@NonNull Boolean РежимРаботыСлужбыОбновлениеПО ,
                                                    @NonNull Activity  activity,
-                                                   @NonNull Handler handlerAsync){
+                                                   @NonNull Handler handlerUpdatePO){
         Boolean ФлагЗАпускатьСинхронизациюПотосучтоВерсияРавна=false;
         try {
             this.activity=activity;
@@ -236,7 +236,7 @@ public class ServiceUpdatePoОбновлениеПО extends IntentService {////
                     @Override
                     public void run() {
                         if (РежимРаботыСлужбыОбновлениеПО == true) {
-                            Message message = handlerAsync.obtainMessage();
+                            Message message = handlerUpdatePO.obtainMessage();
                             message.what = 20;
                             message.sendToTarget();
                             Log.i(this.getClass().getName(),  Thread.currentThread().getStackTrace()[2].getMethodName()+ " время " +new Date().toLocaleString() );

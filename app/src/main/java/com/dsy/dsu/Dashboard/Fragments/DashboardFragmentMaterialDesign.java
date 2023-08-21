@@ -47,16 +47,12 @@ public class DashboardFragmentMaterialDesign extends DialogFragment {
 
     private  BuniccessLogicFra4gmentDashboard buniccessLogicFra4gmentDashboard;
     private MaterialCardView materialcardview_dashboard=null;
-
     private FragmentManager fragmentManager;
     private FragmentTransaction fragmentTransaction;
     private          View ViewDashboart=null;
 
+    private   RelativeLayout relativelayout_dashboard;
 
-    RelativeLayout relativelayout_dashboard;
-
-
-    private Handler handlerAsync;
     private Animation animation1,animation2,animation3,animation4,animation5,animation6;
 
     private MaterialButton КнопкаТабель, КнопкаСогласование ,  КнопкаПоступлениеМатериалов,КнопкаЗаявкаНаТранспорт;
@@ -88,7 +84,6 @@ public class DashboardFragmentMaterialDesign extends DialogFragment {
 
               buniccessLogicFra4gmentDashboard=new BuniccessLogicFra4gmentDashboard();
             // TODO: 17.08.2023 inizial message
-            buniccessLogicFra4gmentDashboard.   МетодИнициализацияHandler();
             lifecycleOwner=getActivity();
             buniccessLogicFra4gmentDashboard. методСлушательФрагментовBinder( );
             new Class_Generation_SendBroadcastReceiver_And_Firebase_OneSignal(getContext()).МетодЗапускаетОБЩУЮСинхронизацию();
@@ -344,83 +339,7 @@ public class DashboardFragmentMaterialDesign extends DialogFragment {
 
 
 
-        // TODO: 02.09.2021  метод Визуализация
-        private void МетодИнициализацияHandler() {
-            try{
-                handlerAsync=new Handler(Looper.getMainLooper()){
 
-
-                    @Override
-                    public void handleMessage(@NonNull Message msg) {
-                        super.handleMessage(msg);
-                    }
-
-                    @Override
-                    public void dispatchMessage(@NonNull Message msg) {
-                        super.dispatchMessage(msg);
-                        try {
-                            Bundle bundleCallsBackAsynsService=msg.getData();
-                            switch (msg.what){
-                                case 20:// процеессе
-
-                                    Toast toast = Toast.makeText(getContext(), "У Вас последняя версия ПО !!! ", Toast.LENGTH_LONG);
-                                    toast.setGravity(Gravity.BOTTOM, 0, 40);
-                                    toast.show();
-
-
-
-                                    Log.d(this.getClass().getName(), "\n" + " class " +
-                                            Thread.currentThread().getStackTrace()[2].getClassName()
-                                            + "\n" +
-                                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
-                                    break;
-
-                                case 34:// процеессе
-
-                                    Toast toast3 = Toast.makeText(getContext(), "Нет связи c Cервер ПО !!!", Toast.LENGTH_LONG);
-                                    toast3.setGravity(Gravity.BOTTOM, 0, 40);
-                                    toast3.show();
-
-                                    Log.d(this.getClass().getName(), "\n" + " class " +
-                                            Thread.currentThread().getStackTrace()[2].getClassName()
-                                            + "\n" +
-                                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
-                                    break;
-                            }
-
-
-                            Log.d(this.getClass().getName(), "\n" + " class " +
-                                    Thread.currentThread().getStackTrace()[2].getClassName()
-                                    + "\n" +
-                                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
-                                    + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                            new   Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(),
-                                    this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
-                                    Thread.currentThread().getStackTrace()[2].getLineNumber());
-                        }
-
-
-                    }
-                };
-
-                Log.i(getContext().getClass().getName(),  " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"  );
-            } catch (Exception e) {
-                e.printStackTrace();
-                Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
-                        + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                new   Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(),
-                        this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
-                        Thread.currentThread().getStackTrace()[2].getLineNumber());
-            }
-        }
 
 
 
