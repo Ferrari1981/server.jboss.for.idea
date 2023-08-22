@@ -71,7 +71,7 @@ public class DashboardFragmentSettings extends  DialogFragment {
     private Animation  animation6;
     private TextView TextViewLogo;
     private LifecycleOwner lifecycleOwner;
-    private AppCompatImageButton imageview_back_dashboard ;
+    private AppCompatImageButton imageButton_back_in_settings ;
 
     private ServiceUpdatePoОбновлениеПО.localBinderОбновлениеПО localBinderОбновлениеПО;//TODO новаЯ
 
@@ -135,7 +135,8 @@ public class DashboardFragmentSettings extends  DialogFragment {
            // setStyle(   DialogFragment.STYLE_NORMAL ,android.R.style.Theme_DeviceDefault_Light_NoActionBar_Fullscreen);//Theme_Dialog  Без Часов
         //    setStyle(   DialogFragment.STYLE_NORMAL ,android.R.style.Theme_DeviceDefault_Light_NoActionBar_TranslucentDecor);//Theme_Dialog
            // setStyle(   DialogFragment.STYLE_NORMAL ,android.R.style.Theme_DeviceDefault_Light_DarkActionBar);//Theme_Dialog
-            setStyle(   DialogFragment.STYLE_NORMAL ,android.R.style.Theme_DeviceDefault_Light_DialogWhenLarge_NoActionBar);//Theme_Dialog   с часами сверху
+          //  setStyle(   DialogFragment.STYLE_NORMAL ,android.R.style.Theme_DeviceDefault_Light_DialogWhenLarge_NoActionBar);//Theme_Dialog   с часами сверху
+             setStyle(   DialogFragment.STYLE_NORMAL ,android.R.style.Theme_DeviceDefault_Light_NoActionBar_Fullscreen);//Theme_Dialog  Без Часов
   /*          setCancelable(false);*/
             setShowsDialog(true);
         // TODO: 15.08.2023
@@ -201,7 +202,7 @@ public class DashboardFragmentSettings extends  DialogFragment {
 
 
             TextViewLogo      = (TextView) view.findViewById(R.id.TextViewLogo); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
-            imageview_back_dashboard      = (AppCompatImageButton) view.findViewById(R.id.imageButton_back_in_settings); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
+            imageButton_back_in_settings      = (AppCompatImageButton) view.findViewById(R.id.imageButton_back_in_settings); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
 
 
 
@@ -600,7 +601,7 @@ public class DashboardFragmentSettings extends  DialogFragment {
         // TODO: 22.08.2023  классс который отвечает за Переход на Фрагмент НАстройки
         class ClassAnimatilBackButton{
             void методToSettingsFragment(){
-                imageview_back_dashboard.setOnClickListener(new View.OnClickListener() {
+                imageButton_back_in_settings.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         try{
