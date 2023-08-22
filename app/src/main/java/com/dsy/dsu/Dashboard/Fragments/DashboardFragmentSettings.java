@@ -13,7 +13,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -25,6 +28,7 @@ import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.LifecycleOwner;
 
 import com.dsy.dsu.Business_logic_Only_Class.Class_Clears_Tables;
 import com.dsy.dsu.Business_logic_Only_Class.Class_Connections_Server;
@@ -36,6 +40,7 @@ import com.dsy.dsu.Business_logic_Only_Class.PUBLIC_CONTENT;
 import com.dsy.dsu.Business_logic_Only_Class.Websocet.WebSocketss;
 import com.dsy.dsu.For_Code_Settings_DSU1.MainActivity_Settings;
 import com.dsy.dsu.R;
+import com.google.android.material.button.MaterialButton;
 import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.textview.MaterialTextView;
@@ -55,16 +60,17 @@ public class DashboardFragmentSettings extends DialogFragment {
     private FragmentTransaction fragmentTransaction;
     private          View ViewDashboart=null;
 
-    DrawerLayout navigator_dashboord;
-    RelativeLayout relativelayout_dashboard;
-
-    private Handler handlerDashBord;
-
-
+    private RelativeLayout relativelayout_settings;
 
     private AlertDialog DialogBox=null;
-
     private  Handler handlerAsync;
+    private MaterialButton КнопкаТабель, КнопкаСогласование ,  КнопкаПоступлениеМатериалов,КнопкаЗаявкаНаТранспорт;
+    private Animation animation1,animation2,animation3,animation4,animation5;
+    private TextView TextViewLogo;
+    private LifecycleOwner lifecycleOwner;
+
+
+
     public DashboardFragmentSettings() {
         // Required empty public constructor
     }
@@ -82,6 +88,8 @@ public class DashboardFragmentSettings extends DialogFragment {
         super.onCreate(savedInstanceState);
         try{
         buniccessLogicFra4gmentDashboard=new BuniccessLogicFra4gmentDashboard();
+            fragmentManager = getActivity(). getSupportFragmentManager();
+            fragmentTransaction = fragmentManager.beginTransaction();
             // TODO: 17.08.2023 inizial message
             buniccessLogicFra4gmentDashboard.  МетодИнициализацияMessager();
             //  setStyle(DialogFragment.STYLE_NORMAL,android.R.style.Theme_Material_Dialog_Alert);//Theme_Dialog
@@ -173,12 +181,27 @@ public class DashboardFragmentSettings extends DialogFragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         try{
             super.onViewCreated(view, savedInstanceState);
-            fragmentManager = getActivity(). getSupportFragmentManager();
-            fragmentTransaction = fragmentManager.beginTransaction();
-
             ViewDashboart=view;
-            DrawerLayout      drawerLayout_dashdord                  = (DrawerLayout) view.findViewById(R.id.drawerLayout_dashdord); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
-            navigator_dashboord         = (DrawerLayout) drawerLayout_dashdord.findViewById(R.id.drawerLayout_dashdord); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
+
+            relativelayout_settings         = (RelativeLayout) view.findViewById(R.id.relativelayout_settings); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
+
+            КнопкаЗаявкаНаТранспорт   = (MaterialButton) view.findViewById(R.id.КнопкаЗаявкаНаТранспорт); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
+            КнопкаСогласование         = (MaterialButton) view.findViewById(R.id.КнопкаСогласование); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
+            КнопкаПоступлениеМатериалов         = (MaterialButton) view.findViewById(R.id.КнопкаПоступлениеМатериалов); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
+            КнопкаТабель          = (MaterialButton) view.findViewById(R.id.КнопкаТабель); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
+
+
+            TextViewLogo      = (TextView) view.findViewById(R.id.TextViewLogo); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
+
+
+            animation1= AnimationUtils.loadAnimation(getContext(),R.anim.slide_in_row3);
+            animation2= AnimationUtils.loadAnimation(getContext(),R.anim.slide_in_row5);
+            animation3 = AnimationUtils.loadAnimation(getContext(),R.anim.slide_in_row6);
+            animation4 = AnimationUtils.loadAnimation(getContext(),R.anim.slide_in_row7);
+            animation5 = AnimationUtils.loadAnimation(getContext(),R.anim.slide_in_row8);
+
+
+
             // TODO: 17.08.2023
             Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -483,8 +506,37 @@ public class DashboardFragmentSettings extends DialogFragment {
                 layoutParams.gravity = Gravity.CENTER;
                 layoutParams.dimAmount=0.0f;
 
+                layoutParams.width = WindowManager.LayoutParams.MATCH_PARENT;
+                layoutParams.height =WindowManager.LayoutParams.WRAP_CONTENT;
+
+
                 getDialog().getWindow().setAttributes(layoutParams);
                 getDialog().getWindow().addFlags(WindowManager.LayoutParams.FLAG_BLUR_BEHIND);
+
+
+
+
+                // TODO: 21.08.2023  ЛОГОТИП
+                TextViewLogo.startAnimation(animation5);
+                TextViewLogo.refreshDrawableState();
+
+                КнопкаЗаявкаНаТранспорт.startAnimation(animation4);
+                КнопкаЗаявкаНаТранспорт.refreshDrawableState();
+
+
+                КнопкаСогласование.startAnimation(animation3);
+                КнопкаСогласование.refreshDrawableState();
+
+
+
+                КнопкаПоступлениеМатериалов.startAnimation(animation2);
+                КнопкаПоступлениеМатериалов.refreshDrawableState();
+
+
+                КнопкаТабель.startAnimation(animation1);
+                КнопкаТабель.refreshDrawableState();
+
+
 
                 // TODO: 20.07.2023
                 Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -501,78 +553,6 @@ public class DashboardFragmentSettings extends DialogFragment {
             }
         }
 
-
-        // TODO: 17.08.2023  Класс Для Компонента Табель
-
-
-        class BunicessLogicTabel{
-            MaterialTextView materialtextview_dashborn_tabel;
-/*            void методНАстройкиДизайнаТабеля( ){
-                materialtextview_dashborn_tabel=(MaterialTextView)      ViewDashboart.findViewById(R.id.materialtextview_dashborn_tabel);
-
-                Spannable wordtoSpan = new SpannableString(materialtextview_dashborn_tabel.getText().toString());
-
-                wordtoSpan.setSpan(new ForegroundColorSpan(Color.BLUE), 0, materialtextview_dashborn_tabel.getText().toString().length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-
-                materialtextview_dashborn_tabel.setText(wordtoSpan);
-
-
-
-            }*/
-
-
-
-        }
-
-
-
-
-
-
-
-        // TODO: 17.08.2023  Класс Для Компонента Для  Боковой Панели
-
-                class BuniccessLogicNavigarlaout{
-                            void  методНастройкиБоковойпанели() {
-                                try{
-
-
-
-                                    handlerDashBord.postDelayed(()->{
-                                        navigator_dashboord.openDrawer(Gravity.END | Gravity.CENTER,true);
-
-                                    },500);
-
-                                handlerDashBord.postDelayed(()->{
-                                    if (  navigator_dashboord.isDrawerOpen(Gravity.END | Gravity.CENTER)) {
-                                        navigator_dashboord.closeDrawer(Gravity.END | Gravity.CENTER,true);
-                                    }
-
-                                },2000);
-
-                                    Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"  );
-                            } catch (Exception e) {
-                        e.printStackTrace();
-                        Log.e(getContext().getClass().getName(),
-                                "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
-                                        " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                        new Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(),
-                                this.getClass().getName().toString(), Thread.currentThread().getStackTrace()[2].getMethodName().toString(),
-                                Thread.currentThread().getStackTrace()[2].getLineNumber());
-                    }
-
-                    }
-
-
-
-
-
-
-
-
-}
 
 
 
