@@ -3,6 +3,7 @@ package com.dsy.dsu.Dashboard.Fragments;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -15,12 +16,14 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.annotation.UiThread;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.AppCompatImageButton;
@@ -37,9 +40,11 @@ import com.dsy.dsu.Business_logic_Only_Class.Class_Find_Setting_User_Network;
 import com.dsy.dsu.Business_logic_Only_Class.Class_Generation_Errors;
 import com.dsy.dsu.Business_logic_Only_Class.Class_Generations_PUBLIC_CURRENT_ID;
 import com.dsy.dsu.Business_logic_Only_Class.Class_Generator_One_WORK_MANAGER;
+import com.dsy.dsu.Business_logic_Only_Class.Class_MODEL_synchronized;
 import com.dsy.dsu.Business_logic_Only_Class.PUBLIC_CONTENT;
 import com.dsy.dsu.Business_logic_Only_Class.Websocet.WebSocketss;
 import com.dsy.dsu.Code_For_Services.ServiceUpdatePoОбновлениеПО;
+import com.dsy.dsu.For_Code_Settings_DSU1.MainActivity_Errors;
 import com.dsy.dsu.For_Code_Settings_DSU1.MainActivity_Settings;
 import com.dsy.dsu.R;
 import com.google.android.material.button.MaterialButton;
@@ -204,6 +209,8 @@ public class DashboardFragmentSettings extends  DialogFragment {
 
             classBiznesLogikaSettings.new ClassAllTaskButtons().new SubClassAsyncVisual().методStartingAsyncVisuals() ;
 
+            classBiznesLogikaSettings.new ClassAllTaskButtons().new SubClassChangeDataUsers().методСменыДанныхПользователя(); ;
+
             // TODO: 17.08.2023
             Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -255,109 +262,6 @@ public class DashboardFragmentSettings extends  DialogFragment {
 
     // TODO: 15.08.2023  Бизнес Логика Фрагмета Настройки
     class ClassBiznesLogikaSettings{
-
-
-        @UiThread
-        protected void СообщениеДляСменыДанныхПользователя(String Самообщение) {
-            try {
-//////сам вид
-
-                MaterialAlertDialogBuilder materialAlertDialogBuilder= new MaterialAlertDialogBuilder(getActivity())
-                        .setTitle("Смена пользователя")
-                        .setMessage(Самообщение)
-                        .setPositiveButton("Да", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                Intent Интент_Меню = new Intent();
-                                try {
-                                    // TODO: 24.04.2023  запуск смены Пользоватедя Данные
-                                    ProgressDialog prograssbarСменаДанныхПользователя;
-                                    prograssbarСменаДанныхПользователя = new ProgressDialog(getActivity());
-                                    prograssbarСменаДанныхПользователя.setTitle("Смена данных");
-                                    prograssbarСменаДанныхПользователя.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-                                    prograssbarСменаДанныхПользователя.setProgress(0);
-                                    prograssbarСменаДанныхПользователя.setCanceledOnTouchOutside(false);
-                                    prograssbarСменаДанныхПользователя.setMessage("в процессе...");
-                                    prograssbarСменаДанныхПользователя.show();
-
-                                    try{
-                                        PUBLIC_CONTENT Class_Engine_SQLГдеНаходитьсяМенеджерПотоков = new PUBLIC_CONTENT(getActivity());
-                                        Class_Clears_Tables class_clears_tables=     new Class_Clears_Tables(getActivity(),
-                                                handlerAsync,
-                                                prograssbarСменаДанныхПользователя);
-
-                                        Integer    РезультатОчистикТАблицИДобалениеДаты = class_clears_tables
-                                                .методСменаДанныхПользователя(getActivity(),
-                                                        Class_Engine_SQLГдеНаходитьсяМенеджерПотоков.МенеджерПотоков,
-                                                        getActivity());
-                                        Log.d(this.getClass().getName(), "   ЗАПУСК ФОНРезультатОчистикТАблицИДобалениеДаты " +
-                                                РезультатОчистикТАблицИДобалениеДаты);
-                                    } catch (Exception e) {
-                                        e.printStackTrace();
-                                        Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName()
-                                                + " Линия  :"
-                                                + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                                        new Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(),
-                                                this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
-                                                Thread.currentThread().getStackTrace()[2].getLineNumber());
-                                    }
-                                    Log.d(this.getClass().getName(), "\n" + " class " +
-                                            Thread.currentThread().getStackTrace()[2].getClassName()
-                                            + "\n" +
-                                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
-                                } catch (Exception e) {
-                                    e.printStackTrace();
-                                    Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName()
-                                            + " Линия  :"
-                                            + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                                    new Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(),
-                                            this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
-                                            Thread.currentThread().getStackTrace()[2].getLineNumber());
-                                }
-
-                            }
-                        })
-                        .setNegativeButton("Нет", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-
-                                dialog.cancel();
-                                dialog.dismiss();
-                                Log.d(this.getClass().getName(), "\n" + " class " +
-                                        Thread.currentThread().getStackTrace()[2].getClassName()
-                                        + "\n" +
-                                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
-                            }
-                        })
-                        .setIcon(R.drawable.icon_change_user1);
-
-
-                if(    DialogBox==null ){
-                    DialogBox=  materialAlertDialogBuilder.show();
-                }else {
-                    if(!DialogBox.isShowing()){
-                        DialogBox=  materialAlertDialogBuilder.show();
-                    }
-                }
-
-                Log.d(this.getClass().getName(), "\n" + " class " +
-                        Thread.currentThread().getStackTrace()[2].getClassName()
-                        + "\n" +
-                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
-            } catch (Exception e) {
-                e.printStackTrace();
-                Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
-                        + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                new Class_Generation_Errors(getActivity()).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
-                        Thread.currentThread().getStackTrace()[2].getLineNumber());
-            }
-        }
-
-
-
 
         // TODO: 15.08.2023 тест код для 1С
         private void методДляТетсирования1С() {
@@ -507,7 +411,7 @@ public class DashboardFragmentSettings extends  DialogFragment {
                         Thread.currentThread().getStackTrace()[2].getLineNumber());
             }
         }
-        
+
         // TODO: 22.08.2023 МЕТОД ПОЛУЧЕНИЕ ДАННЫХ binder
         void методGetBinder (@NonNull Bundle bundleGetSettings){
 try{
@@ -603,7 +507,7 @@ try{
 
 
                 }
-                
+
             }
 
             // TODO: 22.08.2023  Сласс для Запуска Синхрониазциии  из Фрагнмета Настройки
@@ -622,7 +526,7 @@ try{
                                 progressDialogДляСинхронизации.setProgressStyle(ProgressDialog.STYLE_SPINNER);
                                 progressDialogДляСинхронизации.setProgress(0);
                                 progressDialogДляСинхронизации.setCanceledOnTouchOutside(false);
-                                progressDialogДляСинхронизации.setMessage("Процессе ....");
+                                progressDialogДляСинхронизации.setMessage("В процессе ....");
                                 progressDialogДляСинхронизации.show();
 
                                 handlerAsync.post(() -> {
@@ -690,12 +594,143 @@ try{
                 }
 
 
+          //TODO end SubClassAsyncVisual
+            }//TODO end SubClassAsyncVisual //TODO end SubClassAsyncVisual
+
+
+            // TODO: 22.08.2023  Класс для смены Данных Пользователя на Другие
+            class SubClassChangeDataUsers{
+                @UiThread
+                protected void методСменыДанныхПользователя() {
+                    КнопкаПользователи.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            try {
+                                Boolean ЕслиСвязьсСервером =
+                                        new Class_Connections_Server(getContext()).МетодПингаСервераРаботаетИлиНет(getContext());
+
+                                if (ЕслиСвязьсСервером == true) {
+                                    String ПолученыйТекущееИмяПользователя = new Class_MODEL_synchronized(getContext())
+                                            .МетодПолучениеИмяСистемыДляСменыПользователя(getActivity());
+
+                                MaterialAlertDialogBuilder materialAlertDialogBuilder = new MaterialAlertDialogBuilder(getActivity())
+                                                .setTitle("Пользователи Системы")
+                                                .setMessage("При смене пользователя,"
+                                                        + "\n" + " поменяються и данные системы." + "\n"
+                                                        + "Поменять пользователя ?" + "\n"
+                                                        + " (текущий пользователь : ) " + ПолученыйТекущееИмяПользователя.toUpperCase())
+                                                 .setIcon(R.drawable.icon_dsu1_web_success)
+                                             .setPositiveButton("Да", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        Intent Интент_Меню = new Intent();
+                                        try {
+                                            // TODO: 24.04.2023  запуск смены Пользоватедя Данные
+                                            ProgressDialog prograssbarСменаДанныхПользователя;
+                                            prograssbarСменаДанныхПользователя = new ProgressDialog(getActivity());
+                                            prograssbarСменаДанныхПользователя.setTitle("Смена данных");
+                                            prograssbarСменаДанныхПользователя.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+                                            prograssbarСменаДанныхПользователя.setProgress(0);
+                                            prograssbarСменаДанныхПользователя.setCanceledOnTouchOutside(false);
+                                            prograssbarСменаДанныхПользователя.setMessage("в процессе...");
+                                            prograssbarСменаДанныхПользователя.show();
+
+                                            try{
+                                                PUBLIC_CONTENT Class_Engine_SQLГдеНаходитьсяМенеджерПотоков = new PUBLIC_CONTENT(getActivity());
+                                                Class_Clears_Tables class_clears_tables=     new Class_Clears_Tables(getActivity(),
+                                                        handlerAsync,
+                                                        prograssbarСменаДанныхПользователя);
+
+                                                Integer    РезультатОчистикТАблицИДобалениеДаты = class_clears_tables
+                                                        .методСменаДанныхПользователя(getActivity(),
+                                                                Class_Engine_SQLГдеНаходитьсяМенеджерПотоков.МенеджерПотоков,
+                                                                getActivity());
+                                                Log.d(this.getClass().getName(), "   ЗАПУСК ФОНРезультатОчистикТАблицИДобалениеДаты " +
+                                                        РезультатОчистикТАблицИДобалениеДаты);
+                                            } catch (Exception e) {
+                                                e.printStackTrace();
+                                                Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName()
+                                                        + " Линия  :"
+                                                        + Thread.currentThread().getStackTrace()[2].getLineNumber());
+                                                new Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+                                                        this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
+                                                        Thread.currentThread().getStackTrace()[2].getLineNumber());
+                                            }
+                                            Log.d(this.getClass().getName(), "\n" + " class " +
+                                                    Thread.currentThread().getStackTrace()[2].getClassName()
+                                                    + "\n" +
+                                                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
+                                        } catch (Exception e) {
+                                            e.printStackTrace();
+                                            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName()
+                                                    + " Линия  :"
+                                                    + Thread.currentThread().getStackTrace()[2].getLineNumber());
+                                            new Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+                                                    this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
+                                                    Thread.currentThread().getStackTrace()[2].getLineNumber());
+                                        }
+
+                                    }
+                                })
+                                        .setNegativeButton("Нет", new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialog, int which) {
+
+                                                dialog.cancel();
+                                                dialog.dismiss();
+                                                Log.d(this.getClass().getName(), "\n" + " class " +
+                                                        Thread.currentThread().getStackTrace()[2].getClassName()
+                                                        + "\n" +
+                                                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
+                                            }
+                                        })
+                                        .setIcon(R.drawable.icon_change_user1);
+
+// TODO: 22.08.2023
+                                if(    DialogBox==null ){
+                                    DialogBox=  materialAlertDialogBuilder.show();
+                                }else {
+                                    if(!DialogBox.isShowing()){
+                                        DialogBox=  materialAlertDialogBuilder.show();
+                                    }
+                                }
+
+                                } else {
+                                    Toast.makeText(getContext(), "Для смены данных, нужно подключение к серверу !!! "
+                                            + "\n", Toast.LENGTH_LONG).show();
+                                }
+
+                                Log.d(this.getClass().getName(), "\n" + " class " +
+                                        Thread.currentThread().getStackTrace()[2].getClassName()
+                                        + "\n" +
+                                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                                Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                                        + Thread.currentThread().getStackTrace()[2].getLineNumber());
+                                new Class_Generation_Errors(getActivity()).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
+                                        Thread.currentThread().getStackTrace()[2].getLineNumber());
+                            }
+
+                        }
+                    });
+
+
+                }
+
 
             }
 
+
+
+
+
           //TODO end class ClassAllTaskButtons
         }//TODO end class ClassAllTaskButtons
-        
+
     }//TODO end Buniceess Lofic for Activity
 
 
