@@ -38,7 +38,7 @@
 
             <!--   //TODO   #5 -->
             <androidx.appcompat.widget.AppCompatImageButton
-                android:id="@+id/imageview_dashborn_settings"
+                android:id="@+id/imageview_to_settings"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_alignLeft="@+id/TextViewLogo"
@@ -50,6 +50,8 @@
                 android:backgroundTint="#FFFFFF"
                 android:visibility="visible"
                 app:rippleColor="@color/colorPrimaryDark"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:foreground="?attr/selectableItemBackground"
                 app:srcCompat="@drawable/icon_new_dashaborad_settings" />
 
 

@@ -23,6 +23,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.UiThread;
 import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.widget.AppCompatImageButton;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
@@ -38,12 +39,14 @@ import com.dsy.dsu.Business_logic_Only_Class.Class_Generations_PUBLIC_CURRENT_ID
 import com.dsy.dsu.Business_logic_Only_Class.Class_Generator_One_WORK_MANAGER;
 import com.dsy.dsu.Business_logic_Only_Class.PUBLIC_CONTENT;
 import com.dsy.dsu.Business_logic_Only_Class.Websocet.WebSocketss;
+import com.dsy.dsu.Code_For_Services.ServiceUpdatePoОбновлениеПО;
 import com.dsy.dsu.For_Code_Settings_DSU1.MainActivity_Settings;
 import com.dsy.dsu.R;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.textview.MaterialTextView;
+import com.google.common.util.concurrent.AtomicDouble;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -68,6 +71,9 @@ public class DashboardFragmentSettings extends DialogFragment {
     private Animation animation1,animation2,animation3,animation4,animation5;
     private TextView TextViewLogo;
     private LifecycleOwner lifecycleOwner;
+    private AppCompatImageButton imageview_back_dashboard ;
+
+    private ServiceUpdatePoОбновлениеПО.localBinderОбновлениеПО localBinderОбновлениеПО;//TODO новаЯ
 
 
 
@@ -87,11 +93,19 @@ public class DashboardFragmentSettings extends DialogFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         try{
+
         buniccessLogicFra4gmentDashboard=new BuniccessLogicFra4gmentDashboard();
+
             fragmentManager = getActivity(). getSupportFragmentManager();
+
             fragmentTransaction = fragmentManager.beginTransaction();
+
             // TODO: 17.08.2023 inizial message
-            buniccessLogicFra4gmentDashboard.  МетодИнициализацияMessager();
+            buniccessLogicFra4gmentDashboard.  МетодИнициализацияHandler();
+
+            buniccessLogicFra4gmentDashboard.методGetBinder(getArguments());
+            
+
             //  setStyle(DialogFragment.STYLE_NORMAL,android.R.style.Theme_Material_Dialog_Alert);//Theme_Dialog
        // setStyle(DialogFragment.STYLE_NORMAL,android.R.style.Theme_DeviceDefault_Light_NoActionBar_Fullscreen);//Theme_Dialog
       //  setStyle(DialogFragment.STYLE_NORMAL,android.R.style.Theme_DeviceDefault_Light_NoActionBar_TranslucentDecor);//Theme_Dialog
@@ -159,7 +173,9 @@ public class DashboardFragmentSettings extends DialogFragment {
             ViewDashboart= inflater.inflate(R.layout.simple_dashbord_fragment_grey, container, false);*/
            // ViewDashboart= inflater.inflate(R.layout.simple_dashbord_fragment_grey, container, false);
            // ViewDashboart= inflater.inflate(R.layout.simple_dashbord_fragment_blue, container, false);
+          //  view= inflater.inflate(R.layout.simple_dashbord_fragment_grey, container, false);
             view= inflater.inflate(R.layout.simple_dashbord_fragment_grey_materialdisign_4, container, false);
+
            // view= inflater.inflate(R.layout.simple_dashbord_fragment_green, container, false);
             // TODO: 21.06.2023
             Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -192,7 +208,10 @@ public class DashboardFragmentSettings extends DialogFragment {
 
 
             TextViewLogo      = (TextView) view.findViewById(R.id.TextViewLogo); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
+            imageview_back_dashboard      = (AppCompatImageButton) view.findViewById(R.id.imageButton_back_in_settings); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
 
+
+            // TODO: 22.08.2023  настйроки анимацуии
 
             animation1= AnimationUtils.loadAnimation(getContext(),R.anim.slide_in_row3);
             animation2= AnimationUtils.loadAnimation(getContext(),R.anim.slide_in_row5);
@@ -229,12 +248,7 @@ public class DashboardFragmentSettings extends DialogFragment {
 
        buniccessLogicFra4gmentDashboard.методНастройкиВнешнегоВида();
 
-            buniccessLogicFra4gmentDashboard.      МетодИнициализацияHandler();
-
-
-            /*          buniccessLogicFra4gmentDashboard.new BunicessLogicTabel().методНАстройкиДизайнаТабеля();*/
-
-            buniccessLogicFra4gmentDashboard.new BuniccessLogicNavigarlaout().методНастройкиБоковойпанели();;
+            buniccessLogicFra4gmentDashboard.new ClassAnimatilBackButton().методToSettingsFragment();
 
 
         // TODO: 20.07.2023
@@ -556,50 +570,7 @@ public class DashboardFragmentSettings extends DialogFragment {
 
 
 
-        private void МетодИнициализацияMessager() {
-            try{
 
-                handlerDashBord=new Handler(Looper.getMainLooper()){
-
-
-                    @Override
-                    public void handleMessage(@NonNull Message msg) {
-                        super.handleMessage(msg);
-                    }
-
-                    @Override
-                    public void dispatchMessage(@NonNull Message msg) {
-                        super.dispatchMessage(msg);
-
-                        try {
-                            Bundle bundleCallsBackAsynsService=msg.getData();
-                            Log.d(this.getClass().getName(), "\n" + " class " +
-                                    Thread.currentThread().getStackTrace()[2].getClassName()
-                                    + "\n" +
-                                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
-                                    + " msg.what " +msg.what  + "bundleCallsBackAsynsService "+bundleCallsBackAsynsService);
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
-                                    + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                            new   Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(),
-                                    this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
-                                    Thread.currentThread().getStackTrace()[2].getLineNumber());
-                        }
-
-                    }
-                };
-
-            } catch (Exception e) {
-                e.printStackTrace();
-                Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
-                        + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                new   Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(),
-                        this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
-                        Thread.currentThread().getStackTrace()[2].getLineNumber());
-            }
-        }
 
 
         private void МетодИнициализацияHandler() {
@@ -680,14 +651,88 @@ public class DashboardFragmentSettings extends DialogFragment {
         }
 
 
+        // TODO: 22.08.2023  классс который отвечает за Переход на Фрагмент НАстройки
+        class ClassAnimatilBackButton{
+            void методToSettingsFragment(){
+                imageview_back_dashboard.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        try{
+                            // TODO Запусукаем Фргамент DdshBoard
+                            DashboardFragmentMaterialDesign    dashboardFragmentHarmonyOS = DashboardFragmentMaterialDesign.newInstance();
+                            Bundle data=new Bundle();
+                            data.putBinder("callbackbinderdashbord",localBinderОбновлениеПО);
+                            dashboardFragmentHarmonyOS.setArguments(data);
+                            String fragmentNewImageNameaddToBackStack=   dashboardFragmentHarmonyOS.getClass().getName();
+                            fragmentTransaction.addToBackStack(fragmentNewImageNameaddToBackStack);
+                            Fragment FragmentУжеЕСтьИлиНЕт=     fragmentManager.findFragmentByTag(fragmentNewImageNameaddToBackStack);
+                            if (FragmentУжеЕСтьИлиНЕт==null) {
+                                dashboardFragmentHarmonyOS.show(fragmentManager, "dashboardFragmentHarmonyOS");
+                                // TODO: 01.08.2023
+
+                            }
+                            Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
+                                    + " FragmentУжеЕСтьИлиНЕт " +FragmentУжеЕСтьИлиНЕт );
 
 
+                            Log.i(getContext().getClass().getName(),  " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"  );
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                                + Thread.currentThread().getStackTrace()[2].getLineNumber());
+                        new   Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+                                this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
+                                Thread.currentThread().getStackTrace()[2].getLineNumber());
+                    }
+                    }
+                });
+
+      
+        }
+        }
 
 
+        // TODO: 22.08.2023 МЕТОД ПОЛУЧЕНИЕ ДАННЫХ binder
+        void методGetBinder (@NonNull Bundle bundleGetSettings){
+try{
 
+    if (localBinderОбновлениеПО==null) {
+        localBinderОбновлениеПО =(ServiceUpdatePoОбновлениеПО.localBinderОбновлениеПО)  bundleGetSettings.getBinder("callbackbinderdashbord");
+    }
 
-
-
+    Log.i(getContext().getClass().getName(),  " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"  + " bundleGetSettings  " +bundleGetSettings +
+                    " localBinderОбновлениеПО " +localBinderОбновлениеПО);
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                    + Thread.currentThread().getStackTrace()[2].getLineNumber());
+            new   Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+                    this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
+                    Thread.currentThread().getStackTrace()[2].getLineNumber());
+        }
+        }
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
     }//TODO end Buniceess Lofic for Activity
 
 

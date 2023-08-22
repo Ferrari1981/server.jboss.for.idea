@@ -65,8 +65,10 @@
                 android:layout_height="40dp"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentTop="true"
-                android:background="#FFFFFF"
+                android:layout_marginTop="10dp"
                 android:src="@drawable/icon_new_settings_arrow_back"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:foreground="?attr/selectableItemBackground"
                 tools:ignore="SpeakableTextPresentCheck" />
 
 

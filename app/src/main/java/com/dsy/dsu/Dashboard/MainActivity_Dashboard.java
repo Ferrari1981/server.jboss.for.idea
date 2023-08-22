@@ -90,7 +90,7 @@ public class MainActivity_Dashboard extends AppCompatActivity {
             // TODO: 18.02.2023 установки для Обновленеи ПО
             buniccessLogicaActivityDashboard.    МЕтодУстанавливаемРазрешенияДляОновлениеПО();
 
-          //  buniccessLogicaActivityDashboard.   МетодСитемныйНастройкиЭкран();
+           // buniccessLogicaActivityDashboard.   МетодСитемныйНастройкиЭкран();
             // TODO: 06.04.2023  ТЕСТ КОД для 1С
             ///методДляТетсирования1С();
 
@@ -323,15 +323,11 @@ public class MainActivity_Dashboard extends AppCompatActivity {
                 data.putBinder("binder",localBinderОбновлениеПО);
                 dashboardFragmentHarmonyOS.setArguments(data);
                 String fragmentNewImageNameaddToBackStack=   dashboardFragmentHarmonyOS.getClass().getName();
+                fragmentTransaction.addToBackStack(fragmentNewImageNameaddToBackStack);
                 Fragment FragmentУжеЕСтьИлиНЕт=     fragmentManager.findFragmentByTag(fragmentNewImageNameaddToBackStack);
                 if (FragmentУжеЕСтьИлиНЕт==null) {
-                    fragmentTransaction.disallowAddToBackStack();
-                    fragmentManager.popBackStackImmediate();
-
-                    dashboardFragmentHarmonyOS.show(getSupportFragmentManager(), "dashboardFragmentHarmonyOS");
+                    dashboardFragmentHarmonyOS.show(fragmentManager, "dashboardFragmentHarmonyOS");
                     // TODO: 01.08.2023
-
-
 
                 }
                 Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +

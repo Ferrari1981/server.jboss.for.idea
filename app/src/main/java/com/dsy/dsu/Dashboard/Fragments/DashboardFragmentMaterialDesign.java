@@ -19,6 +19,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.AppCompatImageButton;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
@@ -62,6 +63,8 @@ public class DashboardFragmentMaterialDesign extends DialogFragment {
 
     private ServiceUpdatePoОбновлениеПО.localBinderОбновлениеПО localBinderОбновлениеПО;//TODO новаЯ
 
+    private AppCompatImageButton imageview_to_settings ;
+
 
     public DashboardFragmentMaterialDesign() {
         // Required empty public constructor
@@ -86,6 +89,9 @@ public class DashboardFragmentMaterialDesign extends DialogFragment {
             // TODO: 17.08.2023 inizial message
             lifecycleOwner=getActivity();
             buniccessLogicFra4gmentDashboard. методСлушательФрагментовBinder( );
+
+            buniccessLogicFra4gmentDashboard.методGetBinder(getArguments());
+
             new Class_Generation_SendBroadcastReceiver_And_Firebase_OneSignal(getContext()).МетодЗапускаетОБЩУЮСинхронизацию();
 
             // TODO: 21.08.2023 насйтироки Разые дизайна Фрагмента
@@ -203,7 +209,9 @@ public class DashboardFragmentMaterialDesign extends DialogFragment {
 
             TextViewLogo      = (TextView) view.findViewById(R.id.TextViewLogo); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
 
+            imageview_to_settings      = (AppCompatImageButton) view.findViewById(R.id.imageview_to_settings); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
 
+            // TODO: 22.08.2023  анимауия
              animation1= AnimationUtils.loadAnimation(getContext(),R.anim.slide_in_row3);
             animation2= AnimationUtils.loadAnimation(getContext(),R.anim.slide_in_row5);
             animation3 = AnimationUtils.loadAnimation(getContext(),R.anim.slide_in_row6);
@@ -236,7 +244,10 @@ public class DashboardFragmentMaterialDesign extends DialogFragment {
         super.onStart();
         try{
 
-            buniccessLogicFra4gmentDashboard.new ClassButtonsApp().методStartingAllButtonApp();;
+            buniccessLogicFra4gmentDashboard.new ClassButtonsApp().методStartingAllButtonApp();
+
+
+            buniccessLogicFra4gmentDashboard.new ClassAnimatilBackButton().методToSettingsFragment();
 
         // TODO: 20.07.2023
         Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -499,7 +510,95 @@ public class DashboardFragmentMaterialDesign extends DialogFragment {
 
 
 
-                      //TODO end Buniceess Lofic for Activity//TODO end Buniceess Lofic for Activity//TODO end Buniceess Lofic for Activity//TODO end Buniceess Lofic for Activity//TODO end Buniceess Lofic for Activity
+        // TODO: 22.08.2023  классс который отвечает за Переход на Фрагмент НАстройки
+        class ClassAnimatilBackButton{
+            void методToSettingsFragment(){
+                imageview_to_settings.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        try{
+
+                            // TODO Запусукаем Фргамент DdshBoard
+                            DashboardFragmentSettings    dashboardFragmentSettings = DashboardFragmentSettings.newInstance();
+                            Bundle data=new Bundle();
+                            data.putBinder("callbackbinderdashbord",localBinderОбновлениеПО);
+                            dashboardFragmentSettings.setArguments(data);
+                            String fragmentNewImageNameaddToBackStack=   dashboardFragmentSettings.getClass().getName();
+                            fragmentTransaction.addToBackStack(fragmentNewImageNameaddToBackStack);
+                            Fragment FragmentУжеЕСтьИлиНЕт=     fragmentManager.findFragmentByTag(fragmentNewImageNameaddToBackStack);
+                            if (FragmentУжеЕСтьИлиНЕт==null) {
+                                dashboardFragmentSettings.show(fragmentManager, "DashboardFragmentSettings");
+                                // TODO: 01.08.2023
+
+                            }
+                            Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
+                                    + " FragmentУжеЕСтьИлиНЕт " +FragmentУжеЕСтьИлиНЕт );
+
+
+
+
+                            Log.i(getContext().getClass().getName(),  " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"  );
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                                    + Thread.currentThread().getStackTrace()[2].getLineNumber());
+                            new   Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+                                    this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
+                                    Thread.currentThread().getStackTrace()[2].getLineNumber());
+                        }
+                    }
+                });
+
+
+
+
+            }
+
+
+        }
+
+
+
+        // TODO: 22.08.2023 МЕТОД ПОЛУЧЕНИЕ ДАННЫХ binder
+        void методGetBinder (@NonNull Bundle bundleGetSettings){
+            try{
+
+                if (localBinderОбновлениеПО==null) {
+                    localBinderОбновлениеПО =(ServiceUpdatePoОбновлениеПО.localBinderОбновлениеПО)  bundleGetSettings.getBinder("callbackbinderdashbord");
+                }
+
+                Log.i(getContext().getClass().getName(),  " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"  + " bundleGetSettings  " +bundleGetSettings +
+                        " localBinderОбновлениеПО " +localBinderОбновлениеПО);
+            } catch (Exception e) {
+                e.printStackTrace();
+                Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                        + Thread.currentThread().getStackTrace()[2].getLineNumber());
+                new   Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+                        this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
+                        Thread.currentThread().getStackTrace()[2].getLineNumber());
+            }
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        //TODO end Buniceess Lofic for Activity//TODO end Buniceess Lofic for Activity//TODO end Buniceess Lofic for Activity//TODO end Buniceess Lofic for Activity//TODO end Buniceess Lofic for Activity
 
     }//TODO end Buniceess Lofic for Activity
 
