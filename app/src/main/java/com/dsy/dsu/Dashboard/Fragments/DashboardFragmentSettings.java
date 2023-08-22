@@ -67,8 +67,8 @@ public class DashboardFragmentSettings extends DialogFragment {
 
     private AlertDialog DialogBox=null;
     private  Handler handlerAsync;
-    private MaterialButton КнопкаТабель, КнопкаСогласование ,  КнопкаПоступлениеМатериалов,КнопкаЗаявкаНаТранспорт;
-    private Animation animation1,animation2,animation3,animation4,animation5;
+    private MaterialButton КнопкаоСистеме, КнопкаПользователи ,  КнопкаОбменДанными,Кнопкаобновление,КнопкаОшибки;
+    private Animation animation1,animation2,animation3,animation4,animation5,animation6;
     private TextView TextViewLogo;
     private LifecycleOwner lifecycleOwner;
     private AppCompatImageButton imageview_back_dashboard ;
@@ -181,10 +181,11 @@ public class DashboardFragmentSettings extends DialogFragment {
 
             relativelayout_settings         = (RelativeLayout) view.findViewById(R.id.relativelayout_settings); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
 
-            КнопкаЗаявкаНаТранспорт   = (MaterialButton) view.findViewById(R.id.КнопкаЗаявкаНаТранспорт); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
-            КнопкаСогласование         = (MaterialButton) view.findViewById(R.id.КнопкаСогласование); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
-            КнопкаПоступлениеМатериалов         = (MaterialButton) view.findViewById(R.id.КнопкаПоступлениеМатериалов); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
-            КнопкаТабель          = (MaterialButton) view.findViewById(R.id.КнопкаТабель); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
+            КнопкаоСистеме   = (MaterialButton) view.findViewById(R.id.КнопкаоСистеме); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
+            КнопкаПользователи         = (MaterialButton) view.findViewById(R.id.КнопкаПользователи); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
+            КнопкаОбменДанными         = (MaterialButton) view.findViewById(R.id.КнопкаОбменДанными); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
+            Кнопкаобновление          = (MaterialButton) view.findViewById(R.id.Кнопкаобновление); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
+            КнопкаОшибки          = (MaterialButton) view.findViewById(R.id.КнопкаОшибки); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
 
 
             TextViewLogo      = (TextView) view.findViewById(R.id.TextViewLogo); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
@@ -198,6 +199,7 @@ public class DashboardFragmentSettings extends DialogFragment {
             animation3 = AnimationUtils.loadAnimation(getContext(),R.anim.slide_in_row6);
             animation4 = AnimationUtils.loadAnimation(getContext(),R.anim.slide_in_row7);
             animation5 = AnimationUtils.loadAnimation(getContext(),R.anim.slide_in_row8);
+            animation6 = AnimationUtils.loadAnimation(getContext(),R.anim.slide_in_row9);
 
 
 
@@ -511,26 +513,27 @@ public class DashboardFragmentSettings extends DialogFragment {
 
 
                 // TODO: 21.08.2023  ЛОГОТИП
-                TextViewLogo.startAnimation(animation5);
+                TextViewLogo.startAnimation(animation6);
                 TextViewLogo.refreshDrawableState();
 
-                КнопкаЗаявкаНаТранспорт.startAnimation(animation4);
-                КнопкаЗаявкаНаТранспорт.refreshDrawableState();
+                КнопкаоСистеме.startAnimation(animation5);
+                КнопкаоСистеме.refreshDrawableState();
 
 
-                КнопкаСогласование.startAnimation(animation3);
-                КнопкаСогласование.refreshDrawableState();
+                КнопкаПользователи.startAnimation(animation4);
+                КнопкаПользователи.refreshDrawableState();
 
 
 
-                КнопкаПоступлениеМатериалов.startAnimation(animation2);
-                КнопкаПоступлениеМатериалов.refreshDrawableState();
+                КнопкаОбменДанными.startAnimation(animation3);
+                КнопкаОбменДанными.refreshDrawableState();
 
 
-                КнопкаТабель.startAnimation(animation1);
-                КнопкаТабель.refreshDrawableState();
+                Кнопкаобновление.startAnimation(animation2);
+                Кнопкаобновление.refreshDrawableState();
 
-
+                КнопкаОшибки.startAnimation(animation1);
+                КнопкаОшибки.refreshDrawableState();
 
                 // TODO: 20.07.2023
                 Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -639,22 +642,23 @@ public class DashboardFragmentSettings extends DialogFragment {
                     public void onClick(View v) {
                         try{
                             // TODO Запусукаем Фргамент DdshBoard
-                            DashboardFragmentMaterialDesign    dashboardFragmentHarmonyOS = DashboardFragmentMaterialDesign.newInstance();
+                            DashboardFragmentMaterialDesign dashboardFragmentHarmonyOS = new DashboardFragmentMaterialDesign();
                             Bundle data=new Bundle();
-                            data.putBinder("callbackbinderdashbord",localBinderОбновлениеПО);
+                            data.putBinder("binder",localBinderОбновлениеПО);
                             dashboardFragmentHarmonyOS.setArguments(data);
-                            String fragmentNewImageNameaddToBackStack=   dashboardFragmentHarmonyOS.getClass().getName();
-                            fragmentTransaction.addToBackStack(fragmentNewImageNameaddToBackStack);
-                            Fragment FragmentУжеЕСтьИлиНЕт=     fragmentManager.findFragmentByTag(fragmentNewImageNameaddToBackStack);
-                            if (FragmentУжеЕСтьИлиНЕт==null) {
-                                dashboardFragmentHarmonyOS.show(fragmentManager, "dashboardFragmentHarmonyOS");
-                                // TODO: 01.08.2023
+                            fragmentTransaction.replace(R.id.linearLayout_root_activity_dashboard, dashboardFragmentHarmonyOS)
+                                    .setPrimaryNavigationFragment(dashboardFragmentHarmonyOS)
+                                    .setReorderingAllowed(true).commit();//.layout.activity_for_fragemtb_history_tasks
+                            fragmentTransaction.show(dashboardFragmentHarmonyOS);
 
-                            }
                             Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
-                                    + " FragmentУжеЕСтьИлиНЕт " +FragmentУжеЕСтьИлиНЕт );
+                                    + " dashboardFragmentHarmonyOS " +dashboardFragmentHarmonyOS );
+                            Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
+                                    + " dashboardFragmentHarmonyOS " +dashboardFragmentHarmonyOS );
 
 
                             Log.i(getContext().getClass().getName(),  " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +

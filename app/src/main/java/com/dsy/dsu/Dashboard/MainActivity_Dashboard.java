@@ -313,7 +313,7 @@ public class MainActivity_Dashboard extends AppCompatActivity {
 
 
 
-
+/*
 
         void методStartingDashboardFragment(){
             try{
@@ -334,6 +334,33 @@ public class MainActivity_Dashboard extends AppCompatActivity {
                         " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                         " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
                         + " FragmentУжеЕСтьИлиНЕт " +FragmentУжеЕСтьИлиНЕт );
+            } catch (Exception e) {
+                e.printStackTrace();
+                Log.e(getApplicationContext().getClass().getName(),
+                        "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
+                                " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
+                new   Class_Generation_Errors(getApplicationContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+                        this.getClass().getName().toString(), Thread.currentThread().getStackTrace()[2].getMethodName().toString(),
+                        Thread.currentThread().getStackTrace()[2].getLineNumber());
+            }
+
+        }*/
+        void методStartingDashboardFragment(){
+            try{
+                // TODO Запусукаем Фргамент DdshBoard
+                DashboardFragmentMaterialDesign dashboardFragmentHarmonyOS = new DashboardFragmentMaterialDesign();
+                Bundle data=new Bundle();
+                data.putBinder("binder",localBinderОбновлениеПО);
+                dashboardFragmentHarmonyOS.setArguments(data);
+                fragmentTransaction.replace(R.id.linearLayout_root_activity_dashboard, dashboardFragmentHarmonyOS)
+                        .setPrimaryNavigationFragment(dashboardFragmentHarmonyOS)
+                        .setReorderingAllowed(true).commit();//.layout.activity_for_fragemtb_history_tasks
+                fragmentTransaction.show(dashboardFragmentHarmonyOS);
+
+                Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
+                        + " dashboardFragmentHarmonyOS " +dashboardFragmentHarmonyOS );
             } catch (Exception e) {
                 e.printStackTrace();
                 Log.e(getApplicationContext().getClass().getName(),

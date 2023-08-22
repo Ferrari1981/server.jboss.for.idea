@@ -43,7 +43,7 @@ import com.google.android.material.card.MaterialCardView;
  * Use the {@link DashboardFragmentMaterialDesign#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class DashboardFragmentMaterialDesign extends DialogFragment {
+public class DashboardFragmentMaterialDesign extends  Fragment {
     // TODO: Rename parameter arguments, choose names that match
 
     private  BuniccessLogicFra4gmentDashboard buniccessLogicFra4gmentDashboard;
@@ -121,8 +121,10 @@ public class DashboardFragmentMaterialDesign extends DialogFragment {
             // setStyle(   DialogFragment.STYLE_NORMAL ,android.R.style.Theme_Material_Dialog_MinWidth);//Theme_Dialog
             // setStyle(   DialogFragment.STYLE_NO_TITLE ,android.R.style.Theme_Material_Light);//Theme_Dialog
            // setStyle(   DialogFragment.STYLE_NO_TITLE ,android.R.style.Theme_Material_Light_NoActionBar_Overscan);//Theme_Dialog
-            setStyle(   DialogFragment.STYLE_NO_TITLE ,android.R.style.Theme_Material_Light_NoActionBar_Overscan);//Theme_Dialog
-            setShowsDialog(true);
+        /*    setStyle(   DialogFragment.STYLE_NO_TITLE ,android.R.style.Theme_Material_Light_NoActionBar_Overscan);//Theme_Dialog
+            setShowsDialog(true);*/
+
+          getActivity().getTheme().applyStyle(android.R.style.Theme_Material_Dialog, true);
 
         // TODO: 15.08.2023
         Log.d(this.getClass().getName(),"\n" + " class "
@@ -139,6 +141,9 @@ public class DashboardFragmentMaterialDesign extends DialogFragment {
                 Thread.currentThread().getStackTrace()[2].getLineNumber());
     }
     }
+
+
+
 
     @Override
     public void onDestroyView() {
@@ -294,15 +299,15 @@ public class DashboardFragmentMaterialDesign extends DialogFragment {
         private void методНастройкиВнешнегоВида() {
             try{
                 WindowManager.LayoutParams layoutParams = new WindowManager.LayoutParams();
-                layoutParams.copyFrom(    getDialog().getWindow().getAttributes());
+                layoutParams.copyFrom(    getActivity().getWindow().getAttributes());
                 layoutParams.gravity = Gravity.CENTER;
                 layoutParams.dimAmount=0.0f;
 
                 layoutParams.width = WindowManager.LayoutParams.MATCH_PARENT;
                 layoutParams.height =WindowManager.LayoutParams.WRAP_CONTENT;
 
-                getDialog().getWindow().setAttributes(layoutParams);
-                getDialog().getWindow().addFlags(WindowManager.LayoutParams.FLAG_BLUR_BEHIND);
+                getActivity(). getWindow().setAttributes(layoutParams);
+                getActivity().  getWindow().addFlags(WindowManager.LayoutParams.FLAG_BLUR_BEHIND);
 
 
 
