@@ -31,15 +31,14 @@ public class CREATE_DATABASE extends SQLiteOpenHelper{ ///SQLiteOpenHelper
     public  CREATE_DATABASE( @NotNull Context context) {/////КОНСТРУКТОР КЛАССА ПО СОЗДАНИЮ БАЗЫ ДАННЫХ
         super(context, "Database DSU-1.db", null, VERSION ); // определяем имя базы данных  и ее версию
         try{
+            if (ССылкаНаСозданнуюБазу == null && context!=null ) {
             synchronized (this){
             this.context =context;
-                    if (ССылкаНаСозданнуюБазу == null && context!=null ) {
                         ССылкаНаСозданнуюБазу = this.getWritableDatabase(); //ссылка на схему базы данных;//ссылка на схему базы данных ГЛАВНАЯ ВСТАВКА НА БАЗУ ДСУ-1
                         Log.d(this.getClass().getName(), " БАЗА  ДАННЫХ   ДСУ-1 ОТКРЫВАЕМ  ССылкаНаСозданнуюБазу==null   "
                                 + ССылкаНаСозданнуюБазу.isOpen());
                     }
                 }
-
             Log.d(this.getClass().getName(),"\n" + " class " +
                     Thread.currentThread().getStackTrace()[2].getClassName()
                     + "\n" +
