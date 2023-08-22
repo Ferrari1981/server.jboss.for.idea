@@ -320,7 +320,7 @@ public class MainActivity_Dashboard extends AppCompatActivity {
                 // TODO Запусукаем Фргамент DdshBoard
                 DashboardFragmentMaterialDesign    dashboardFragmentHarmonyOS = DashboardFragmentMaterialDesign.newInstance();
                 Bundle data=new Bundle();
-                data.putBinder("binder",localBinderОбновлениеПО);
+                data.putBinder("callbackbinderdashbord",localBinderОбновлениеПО);
                 dashboardFragmentHarmonyOS.setArguments(data);
                 fragmentTransaction.remove(dashboardFragmentHarmonyOS);
                 String fragmentNewImageNameaddToBackStack=   dashboardFragmentHarmonyOS.getClass().getName();

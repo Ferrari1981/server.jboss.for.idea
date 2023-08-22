@@ -238,7 +238,7 @@ public class DashboardFragmentMaterialDesign extends  DialogFragment  {
             buniccessLogicFra4gmentDashboard.new ClassButtonsApp().методStartingAllButtonApp();
 
 
-          //  buniccessLogicFra4gmentDashboard.new ClassAnimatilBackButton().методToSettingsFragment();
+            buniccessLogicFra4gmentDashboard.new ClassAnimatilBackButton().методToSettingsFragment();
 
         // TODO: 20.07.2023
         Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -513,22 +513,17 @@ public class DashboardFragmentMaterialDesign extends  DialogFragment  {
                     @Override
                     public void onClick(View v) {
                         try{
-
-                            // TODO Запусукаем Фргамент DdshBoard
+                            // TODO Запусукаем Фргамент НАстройки  dashbord
                             DashboardFragmentSettings    dashboardFragmentSettings = DashboardFragmentSettings.newInstance();
                             Bundle data=new Bundle();
                             data.putBinder("callbackbinderdashbord",localBinderОбновлениеПО);
                             dashboardFragmentSettings.setArguments(data);
+                            fragmentTransaction.remove(dashboardFragmentSettings);
                             String fragmentNewImageNameaddToBackStack=   dashboardFragmentSettings.getClass().getName();
-                          //  fragmentTransaction.addToBackStack(fragmentNewImageNameaddToBackStack);
-
-                            fragmentTransaction.disallowAddToBackStack();
-                            fragmentManager.popBackStackImmediate();
-
-
+                              fragmentTransaction.addToBackStack(fragmentNewImageNameaddToBackStack);
                             Fragment FragmentУжеЕСтьИлиНЕт=     fragmentManager.findFragmentByTag(fragmentNewImageNameaddToBackStack);
                             if (FragmentУжеЕСтьИлиНЕт==null) {
-                              //  dashboardFragmentSettings.show(fragmentManager, "DashboardFragmentSettings");
+                                dashboardFragmentSettings.show(fragmentManager, "DashboardFragmentSettings");
                                 // TODO: 01.08.2023
 
                             }

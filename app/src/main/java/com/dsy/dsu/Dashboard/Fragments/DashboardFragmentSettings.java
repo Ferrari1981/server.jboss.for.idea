@@ -53,7 +53,7 @@ import com.google.common.util.concurrent.AtomicDouble;
  * Use the {@link DashboardFragmentSettings#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class DashboardFragmentSettings extends  Fragment {
+public class DashboardFragmentSettings extends  DialogFragment {
     // TODO: Rename parameter arguments, choose names that match
 
     private  BuniccessLogicFra4gmentDashboard buniccessLogicFra4gmentDashboard;
@@ -94,6 +94,9 @@ public class DashboardFragmentSettings extends  Fragment {
         super.onCreate(savedInstanceState);
         try{
 
+
+
+
         buniccessLogicFra4gmentDashboard=new BuniccessLogicFra4gmentDashboard();
 
             fragmentManager = getActivity(). getSupportFragmentManager();
@@ -126,6 +129,9 @@ public class DashboardFragmentSettings extends  Fragment {
        // setStyle(   DialogFragment.STYLE_NO_FRAME ,android.R.style.Theme_DeviceDefault_Light_NoActionBar_Overscan);//Theme_Dialog
        // setStyle(   DialogFragment.STYLE_NORMAL ,android.R.style.Theme_DeviceDefault_Light_NoActionBar_Fullscreen);//Theme_Dialog
             //setCancelable(false);
+            setStyle(   DialogFragment.STYLE_NORMAL ,android.R.style.Theme_DeviceDefault_Light_NoActionBar_Fullscreen);//Theme_Dialog
+            setCancelable(false);
+            setShowsDialog(true);
         // TODO: 15.08.2023
         Log.d(this.getClass().getName(),"\n" + " class "
                 + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -228,7 +234,7 @@ public class DashboardFragmentSettings extends  Fragment {
         super.onStart();
         try{
 
-       buniccessLogicFra4gmentDashboard.методНастройкиВнешнегоВида();
+       //buniccessLogicFra4gmentDashboard.методНастройкиВнешнегоВида();
 
             buniccessLogicFra4gmentDashboard.new ClassAnimatilBackButton().методToSettingsFragment();
 
@@ -639,29 +645,24 @@ public class DashboardFragmentSettings extends  Fragment {
                     @Override
                     public void onClick(View v) {
                         try{
-                            // TODO Запусукаем Фргамент DdshBoard
-                            DashboardFragmentMaterialDesign dashboardFragmentHarmonyOS = new DashboardFragmentMaterialDesign();
+                            // TODO Запусукаем  Фрагмент Главный Экран
+                            DashboardFragmentMaterialDesign    dashboardFragmentHarmonyOS = DashboardFragmentMaterialDesign.newInstance();
                             Bundle data=new Bundle();
                             data.putBinder("callbackbinderdashbord",localBinderОбновлениеПО);
                             dashboardFragmentHarmonyOS.setArguments(data);
-                            fragmentTransaction.replace(R.id.linearLayout_root_activity_dashboard, dashboardFragmentHarmonyOS)
-                                    .setPrimaryNavigationFragment(dashboardFragmentHarmonyOS)
-                                    .setReorderingAllowed(true).commit();//.layout.activity_for_fragemtb_history_tasks
-                            fragmentTransaction.show(dashboardFragmentHarmonyOS);
+                            fragmentTransaction.remove(dashboardFragmentHarmonyOS);
+                            String fragmentNewImageNameaddToBackStack=   dashboardFragmentHarmonyOS.getClass().getName();
+                            fragmentTransaction.addToBackStack(fragmentNewImageNameaddToBackStack);
 
+                            Fragment FragmentУжеЕСтьИлиНЕт=     fragmentManager.findFragmentByTag(fragmentNewImageNameaddToBackStack);
+                            if (FragmentУжеЕСтьИлиНЕт==null) {
+                                dashboardFragmentHarmonyOS.show(fragmentManager, "dashboardFragmentHarmonyOS");
+                                // TODO: 01.08.2023
+                            }
                             Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
                                     + " dashboardFragmentHarmonyOS " +dashboardFragmentHarmonyOS );
-                            Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
-                                    + " dashboardFragmentHarmonyOS " +dashboardFragmentHarmonyOS );
-
-
-                            Log.i(getContext().getClass().getName(),  " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"  );
                     } catch (Exception e) {
                         e.printStackTrace();
                         Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
