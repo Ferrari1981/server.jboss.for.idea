@@ -40,7 +40,7 @@ import com.google.android.material.button.MaterialButton;
 import com.google.android.material.card.MaterialCardView;
 
 
-public class DashboardFragmentMaterialDesign extends  Fragment {
+public class DashboardFragmentMaterialDesign extends  DialogFragment  {
     // TODO: Rename parameter arguments, choose names that match
 
     private  BuniccessLogicFra4gmentDashboard buniccessLogicFra4gmentDashboard;
@@ -63,7 +63,13 @@ public class DashboardFragmentMaterialDesign extends  Fragment {
     private AppCompatImageButton imageview_to_settings ;
 
 
-
+    // TODO: Rename and change types and number of parameters
+    public static DashboardFragmentMaterialDesign newInstance( ) {
+        DashboardFragmentMaterialDesign fragment = new DashboardFragmentMaterialDesign();
+        Bundle args = new Bundle();
+        fragment.setArguments(args);
+        return fragment;
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -108,8 +114,8 @@ public class DashboardFragmentMaterialDesign extends  Fragment {
             // setStyle(   DialogFragment.STYLE_NORMAL ,android.R.style.Theme_Material_Dialog_MinWidth);//Theme_Dialog
             // setStyle(   DialogFragment.STYLE_NO_TITLE ,android.R.style.Theme_Material_Light);//Theme_Dialog
            // setStyle(   DialogFragment.STYLE_NO_TITLE ,android.R.style.Theme_Material_Light_NoActionBar_Overscan);//Theme_Dialog
-        /*    setStyle(   DialogFragment.STYLE_NO_TITLE ,android.R.style.Theme_Material_Light_NoActionBar_Overscan);//Theme_Dialog
-            setShowsDialog(true);*/
+            setStyle(   DialogFragment.STYLE_NO_TITLE ,android.R.style.Theme_Material_Light_NoActionBar_Overscan);//Theme_Dialog
+            setShowsDialog(true);
         // TODO: 15.08.2023
         Log.d(this.getClass().getName(),"\n" + " class "
                 + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +

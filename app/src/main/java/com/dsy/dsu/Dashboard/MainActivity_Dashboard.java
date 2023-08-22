@@ -313,7 +313,7 @@ public class MainActivity_Dashboard extends AppCompatActivity {
 
 
 
-/*
+
 
         void методStartingDashboardFragment(){
             try{
@@ -322,8 +322,10 @@ public class MainActivity_Dashboard extends AppCompatActivity {
                 Bundle data=new Bundle();
                 data.putBinder("binder",localBinderОбновлениеПО);
                 dashboardFragmentHarmonyOS.setArguments(data);
+                fragmentTransaction.remove(dashboardFragmentHarmonyOS);
                 String fragmentNewImageNameaddToBackStack=   dashboardFragmentHarmonyOS.getClass().getName();
-                fragmentTransaction.addToBackStack(fragmentNewImageNameaddToBackStack);
+                fragmentTransaction.addToBackStack(fragmentNewImageNameaddToBackStack).setPrimaryNavigationFragment(dashboardFragmentHarmonyOS)
+                        .setReorderingAllowed(true);
                 Fragment FragmentУжеЕСтьИлиНЕт=     fragmentManager.findFragmentByTag(fragmentNewImageNameaddToBackStack);
                 if (FragmentУжеЕСтьИлиНЕт==null) {
                     dashboardFragmentHarmonyOS.show(fragmentManager, "dashboardFragmentHarmonyOS");
@@ -344,8 +346,8 @@ public class MainActivity_Dashboard extends AppCompatActivity {
                         Thread.currentThread().getStackTrace()[2].getLineNumber());
             }
 
-        }*/
-        void методStartingDashboardFragment(){
+        }
+/*        void методStartingDashboardFragment(){
             try{
                 // TODO Запусукаем Фргамент DdshBoard
                 DashboardFragmentMaterialDesign dashboardFragmentHarmonyOS = new DashboardFragmentMaterialDesign();
@@ -375,7 +377,7 @@ public class MainActivity_Dashboard extends AppCompatActivity {
                         Thread.currentThread().getStackTrace()[2].getLineNumber());
             }
 
-        }
+        }*/
 
         private void методСлушательФрагментов( ) {
             try{
