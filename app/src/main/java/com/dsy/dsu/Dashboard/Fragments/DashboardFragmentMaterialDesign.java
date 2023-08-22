@@ -85,7 +85,7 @@ public class DashboardFragmentMaterialDesign extends  DialogFragment  {
 
             buniccessLogicFra4gmentDashboard.методGetBinder(getArguments());
 
-            new Class_Generation_SendBroadcastReceiver_And_Firebase_OneSignal(getContext()).МетодЗапускаетОБЩУЮСинхронизацию();
+
 
             // TODO: 22.08.2023  анимауия
             animation5 = AnimationUtils.loadAnimation(getContext(),R.anim.slide_in_row8);
@@ -139,6 +139,29 @@ public class DashboardFragmentMaterialDesign extends  DialogFragment  {
                 this.getClass().getName().toString(), Thread.currentThread().getStackTrace()[2].getMethodName().toString(),
                 Thread.currentThread().getStackTrace()[2].getLineNumber());
     }
+    }
+
+
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        try{
+            new Class_Generation_SendBroadcastReceiver_And_Firebase_OneSignal(getContext()).МетодЗапускаетОБЩУЮСинхронизацию();
+            Log.d(this.getClass().getName(),"\n" + " class "
+                    + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.e(getContext().getClass().getName(),
+                    "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
+                            " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
+            new Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+                    this.getClass().getName().toString(), Thread.currentThread().getStackTrace()[2].getMethodName().toString(),
+                    Thread.currentThread().getStackTrace()[2].getLineNumber());
+        }
+
     }
 
     @Override
