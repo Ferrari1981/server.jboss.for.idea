@@ -68,7 +68,7 @@ public class DashboardFragmentSettings extends  DialogFragment {
     private AlertDialog DialogBox=null;
     private  Handler handlerAsync;
     private MaterialButton КнопкаоСистеме, КнопкаПользователи ,  КнопкаОбменДанными,Кнопкаобновление,КнопкаОшибки;
-    private Animation animation1,animation2,animation3,animation4,animation5,animation6;
+    private Animation  animation6;
     private TextView TextViewLogo;
     private LifecycleOwner lifecycleOwner;
     private AppCompatImageButton imageview_back_dashboard ;
@@ -107,6 +107,9 @@ public class DashboardFragmentSettings extends  DialogFragment {
             buniccessLogicFra4gmentDashboard.  МетодИнициализацияHandler();
 
             buniccessLogicFra4gmentDashboard.методGetBinder(getArguments());
+
+            // TODO: 22.08.2023  настйроки анимацуии
+            animation6 = AnimationUtils.loadAnimation(getContext(),R.anim.slide_in_row9);
             
 
             //  setStyle(DialogFragment.STYLE_NORMAL,android.R.style.Theme_Material_Dialog_Alert);//Theme_Dialog
@@ -129,8 +132,8 @@ public class DashboardFragmentSettings extends  DialogFragment {
        // setStyle(   DialogFragment.STYLE_NO_FRAME ,android.R.style.Theme_DeviceDefault_Light_NoActionBar_Overscan);//Theme_Dialog
        // setStyle(   DialogFragment.STYLE_NORMAL ,android.R.style.Theme_DeviceDefault_Light_NoActionBar_Fullscreen);//Theme_Dialog
             //setCancelable(false);
-            setStyle(   DialogFragment.STYLE_NORMAL ,android.R.style.Theme_DeviceDefault_Light_NoActionBar_Fullscreen);//Theme_Dialog
-            setCancelable(false);
+            setStyle(   DialogFragment.STYLE_NO_TITLE ,android.R.style.Theme_DeviceDefault_Light_NoActionBar_Fullscreen);//Theme_Dialog
+  /*          setCancelable(false);*/
             setShowsDialog(true);
         // TODO: 15.08.2023
         Log.d(this.getClass().getName(),"\n" + " class "
@@ -198,16 +201,8 @@ public class DashboardFragmentSettings extends  DialogFragment {
             imageview_back_dashboard      = (AppCompatImageButton) view.findViewById(R.id.imageButton_back_in_settings); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
 
 
-            // TODO: 22.08.2023  настйроки анимацуии
 
-            animation1= AnimationUtils.loadAnimation(getContext(),R.anim.slide_in_row3);
-            animation2= AnimationUtils.loadAnimation(getContext(),R.anim.slide_in_row5);
-            animation3 = AnimationUtils.loadAnimation(getContext(),R.anim.slide_in_row6);
-            animation4 = AnimationUtils.loadAnimation(getContext(),R.anim.slide_in_row7);
-            animation5 = AnimationUtils.loadAnimation(getContext(),R.anim.slide_in_row8);
-            animation6 = AnimationUtils.loadAnimation(getContext(),R.anim.slide_in_row9);
-
-
+            buniccessLogicFra4gmentDashboard.методНастройкиВнешнегоВида();
 
             // TODO: 17.08.2023
             Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -233,12 +228,7 @@ public class DashboardFragmentSettings extends  DialogFragment {
     public void onStart() {
         super.onStart();
         try{
-
-       //buniccessLogicFra4gmentDashboard.методНастройкиВнешнегоВида();
-
             buniccessLogicFra4gmentDashboard.new ClassAnimatilBackButton().методToSettingsFragment();
-
-
         // TODO: 20.07.2023
         Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -502,43 +492,9 @@ public class DashboardFragmentSettings extends  DialogFragment {
         private void методНастройкиВнешнегоВида() {
             try{
 
-
-                WindowManager.LayoutParams layoutParams = new WindowManager.LayoutParams();
-                layoutParams.copyFrom(    getActivity().getWindow().getAttributes());
-                layoutParams.gravity = Gravity.CENTER;
-                layoutParams.dimAmount=0.0f;
-
-                layoutParams.width = WindowManager.LayoutParams.MATCH_PARENT;
-                layoutParams.height =WindowManager.LayoutParams.WRAP_CONTENT;
-
-                getActivity(). getWindow().setAttributes(layoutParams);
-                getActivity().  getWindow().addFlags(WindowManager.LayoutParams.FLAG_BLUR_BEHIND);
-
-
-
                 // TODO: 21.08.2023  ЛОГОТИП
                 TextViewLogo.startAnimation(animation6);
                 TextViewLogo.refreshDrawableState();
-
-                КнопкаоСистеме.startAnimation(animation5);
-                КнопкаоСистеме.refreshDrawableState();
-
-
-                КнопкаПользователи.startAnimation(animation4);
-                КнопкаПользователи.refreshDrawableState();
-
-
-
-                КнопкаОбменДанными.startAnimation(animation3);
-                КнопкаОбменДанными.refreshDrawableState();
-
-
-                Кнопкаобновление.startAnimation(animation2);
-                Кнопкаобновление.refreshDrawableState();
-
-                КнопкаОшибки.startAnimation(animation1);
-                КнопкаОшибки.refreshDrawableState();
-
                 // TODO: 20.07.2023
                 Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                         " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +

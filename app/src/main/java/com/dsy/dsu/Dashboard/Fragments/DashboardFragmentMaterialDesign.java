@@ -87,6 +87,9 @@ public class DashboardFragmentMaterialDesign extends  DialogFragment  {
 
             new Class_Generation_SendBroadcastReceiver_And_Firebase_OneSignal(getContext()).МетодЗапускаетОБЩУЮСинхронизацию();
 
+            // TODO: 22.08.2023  анимауия
+            animation5 = AnimationUtils.loadAnimation(getContext(),R.anim.slide_in_row8);
+
             // TODO: 21.08.2023 насйтироки Разые дизайна Фрагмента
             /*setStyle(DialogFragment.STYLE_NORMAL,android.R.style.Theme_Material_Dialog_Alert);//Theme_Dialog*/
             // setStyle(DialogFragment.STYLE_NORMAL,android.R.style.Theme_DeviceDefault_Light_NoActionBar_Fullscreen);//Theme_Dialog
@@ -202,14 +205,9 @@ public class DashboardFragmentMaterialDesign extends  DialogFragment  {
 
             imageview_to_settings      = (AppCompatImageButton) view.findViewById(R.id.imageview_to_settings); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
 
-            // TODO: 22.08.2023  анимауия
-             animation1= AnimationUtils.loadAnimation(getContext(),R.anim.slide_in_row3);
-            animation2= AnimationUtils.loadAnimation(getContext(),R.anim.slide_in_row5);
-            animation3 = AnimationUtils.loadAnimation(getContext(),R.anim.slide_in_row6);
-            animation4 = AnimationUtils.loadAnimation(getContext(),R.anim.slide_in_row7);
-            animation5 = AnimationUtils.loadAnimation(getContext(),R.anim.slide_in_row8);
 
 
+            buniccessLogicFra4gmentDashboard.методНастройкиВнешнегоВида();
 
             Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -255,26 +253,6 @@ public class DashboardFragmentMaterialDesign extends  DialogFragment  {
     }
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        try{
-        //    buniccessLogicFra4gmentDashboard.методНастройкиВнешнегоВида();
-            // TODO: 20.072023
-            Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"  );
-        } catch (Exception e) {
-            e.printStackTrace();
-            Log.e(getContext().getClass().getName(),
-                    "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
-                            " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            new Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(),
-                    this.getClass().getName().toString(), Thread.currentThread().getStackTrace()[2].getMethodName().toString(),
-                    Thread.currentThread().getStackTrace()[2].getLineNumber());
-        }
-    }
-
 
 
 
@@ -289,42 +267,9 @@ public class DashboardFragmentMaterialDesign extends  DialogFragment  {
 
         private void методНастройкиВнешнегоВида() {
             try{
-                WindowManager.LayoutParams layoutParams = new WindowManager.LayoutParams();
-                layoutParams.copyFrom(    getActivity().getWindow().getAttributes());
-                layoutParams.gravity = Gravity.CENTER;
-                layoutParams.dimAmount=0.0f;
-
-                layoutParams.width = WindowManager.LayoutParams.MATCH_PARENT;
-                layoutParams.height =WindowManager.LayoutParams.WRAP_CONTENT;
-
-                getActivity(). getWindow().setAttributes(layoutParams);
-                getActivity().  getWindow().addFlags(WindowManager.LayoutParams.FLAG_BLUR_BEHIND);
-
-
-/*
-
-
                 // TODO: 21.08.2023  ЛОГОТИП
                 TextViewLogo.startAnimation(animation5);
                 TextViewLogo.refreshDrawableState();
-
-                КнопкаЗаявкаНаТранспорт.startAnimation(animation4);
-                КнопкаЗаявкаНаТранспорт.refreshDrawableState();
-
-
-                КнопкаСогласование.startAnimation(animation3);
-                КнопкаСогласование.refreshDrawableState();
-
-
-
-                КнопкаПоступлениеМатериалов.startAnimation(animation2);
-                КнопкаПоступлениеМатериалов.refreshDrawableState();
-
-
-                КнопкаТабель.startAnimation(animation1);
-                КнопкаТабель.refreshDrawableState();*/
-
-
                 // TODO: 21.08.2023
                 Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                         " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
