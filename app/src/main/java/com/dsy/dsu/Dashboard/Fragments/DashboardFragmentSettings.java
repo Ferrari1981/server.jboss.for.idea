@@ -56,7 +56,7 @@ import com.google.common.util.concurrent.AtomicDouble;
 public class DashboardFragmentSettings extends  DialogFragment {
     // TODO: Rename parameter arguments, choose names that match
 
-    private  BuniccessLogicFra4gmentDashboard buniccessLogicFra4gmentDashboard;
+    private  ClassBiznesLogikaSettings classBiznesLogikaSettings;
     private MaterialCardView materialcardview_dashboard=null;
 
     private FragmentManager fragmentManager;
@@ -93,24 +93,16 @@ public class DashboardFragmentSettings extends  DialogFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         try{
-
-
-
-
-        buniccessLogicFra4gmentDashboard=new BuniccessLogicFra4gmentDashboard();
-
             fragmentManager = getActivity(). getSupportFragmentManager();
-
             fragmentTransaction = fragmentManager.beginTransaction();
-
-            // TODO: 17.08.2023 inizial message
-            buniccessLogicFra4gmentDashboard.  МетодИнициализацияHandler();
-
-            buniccessLogicFra4gmentDashboard.методGetBinder(getArguments());
-
             // TODO: 22.08.2023  настйроки анимацуии
             animation6 = AnimationUtils.loadAnimation(getContext(),R.anim.slide_in_row9);
             
+            classBiznesLogikaSettings=new ClassBiznesLogikaSettings();
+            // TODO: 17.08.2023 inizial message
+            classBiznesLogikaSettings.  МетодИнициализацияHandler();
+            classBiznesLogikaSettings.методGetBinder(getArguments());
+
 
             //  setStyle(DialogFragment.STYLE_NORMAL,android.R.style.Theme_Material_Dialog_Alert);//Theme_Dialog
        // setStyle(DialogFragment.STYLE_NORMAL,android.R.style.Theme_DeviceDefault_Light_NoActionBar_Fullscreen);//Theme_Dialog
@@ -204,9 +196,13 @@ public class DashboardFragmentSettings extends  DialogFragment {
             TextViewLogo      = (TextView) view.findViewById(R.id.TextViewLogo); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
             imageButton_back_in_settings      = (AppCompatImageButton) view.findViewById(R.id.imageButton_back_in_settings); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
 
+            // TODO: 22.08.2023 код после ИНИЦИАЛИЗАЦИИ КНОПОК
+            classBiznesLogikaSettings.методНастройкиВнешнегоВида();
 
+            // TODO: 22.08.2023  дейстия кнопок TASK
+            classBiznesLogikaSettings.new ClassAllTaskButtons().new SubClassoSystem().методТаскоСистемы();
 
-            buniccessLogicFra4gmentDashboard.методНастройкиВнешнегоВида();
+            classBiznesLogikaSettings.new ClassAllTaskButtons().new SubClassAsyncVisual().методStartingAsyncVisuals() ;
 
             // TODO: 17.08.2023
             Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -232,11 +228,11 @@ public class DashboardFragmentSettings extends  DialogFragment {
     public void onStart() {
         super.onStart();
         try{
-            buniccessLogicFra4gmentDashboard.new ClassAnimatilBackButton().методToSettingsFragment();
+       classBiznesLogikaSettings.new ClassAnimatilBackButton().методToSettingsFragment();
         // TODO: 20.07.2023
         Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"  );
+                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+ " localBinderОбновлениеПО " +localBinderОбновлениеПО  );
     } catch (Exception e) {
         e.printStackTrace();
         Log.e(getContext().getClass().getName(),
@@ -249,83 +245,18 @@ public class DashboardFragmentSettings extends  DialogFragment {
     }
 
 
-    // TODO: 15.08.2023  Бизнес ЛОгика Bunecees Logic Dashboard Fragment
-
-    class BuniccessLogicFra4gmentDashboard{
 
 
 
 
 
-        private void МетодЗапускаСинихрниазцииИзМенюНаАктивтиFACEAPP() {
-            try {
-                final Integer[] ФинальныйРезультатФоновойСинхронизации = {0};
-                ProgressDialog progressDialogДляСинхронизации;
-                progressDialogДляСинхронизации = new ProgressDialog(getActivity());
-                progressDialogДляСинхронизации.setTitle("Синхронизация");
-                progressDialogДляСинхронизации.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-                progressDialogДляСинхронизации.setProgress(0);
-                progressDialogДляСинхронизации.setCanceledOnTouchOutside(false);
-                progressDialogДляСинхронизации.setMessage("Обмен данными ....");
-                progressDialogДляСинхронизации.show();
-
-                handlerAsync.post(() -> {
-                    boolean СтатусСетиВыбранныйПользователем =
-                            new Class_Find_Setting_User_Network(getContext()).МетодПроветяетКакуюУстановкуВыбралПользовательСети();
-                    Log.d(this.getClass().getName(), "  РезультатПроВеркиУстановкиПользователяРежимРаботыСети "
-                            + СтатусСетиВыбранныйПользователем);
-                    Class_Connections_Server class_connections_serverПингаСерераИзАктивтиМеню = new Class_Connections_Server(getActivity());
-                    PUBLIC_CONTENT public_contentЗапусСинхрониазцииИМеню = new PUBLIC_CONTENT(getContext());
-
-                    if (СтатусСетиВыбранныйПользователем == true) {
-                        Boolean СтатусСервераСоюзаВключенИлиНЕт =
-                                class_connections_serverПингаСерераИзАктивтиМеню.МетодПингаСервераРаботаетИлиНет(getContext());
-                        if (СтатусСервераСоюзаВключенИлиНЕт == true) {
-                            Integer ПубличныйIDДляОдноразовойСинхрониазции =
-                                    new Class_Generations_PUBLIC_CURRENT_ID().ПолучениеПубличногоТекущегоПользователяID(getActivity());
-
-                            Bundle bundleДляПЕредачи = new Bundle();
-                            bundleДляПЕредачи.putInt("IDПубличныйНеМойАСкемБылаПереписака", ПубличныйIDДляОдноразовойСинхрониазции);
-                            bundleДляПЕредачи.putBoolean("StatusOneWokManagers", true);
-                            Intent intentЗапускОднорworkanager = new Intent();
-                            intentЗапускОднорworkanager.putExtras(bundleДляПЕредачи);
-                            // TODO: 02.08.2022
-                            // TODO: 02.08.2022
-                            new Class_Generator_One_WORK_MANAGER(getContext()).МетодОдноразовыйЗапускВоерМенеджера(getContext(),intentЗапускОднорworkanager);
-                            // TODO: 26.06.2022
-                            Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
-                                    + " ПубличныйIDДляОдноразовойСинхрониазции " + ПубличныйIDДляОдноразовойСинхрониазции);
-                            handlerAsync.postDelayed(() -> {
-                                progressDialogДляСинхронизации.dismiss();
-                                progressDialogДляСинхронизации.cancel();
-                            }, 3000);
 
 
-                        } else {
-                            getActivity().runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    Toast toast = Toast.makeText(getContext(), "Сервер выкл. !!!", Toast.LENGTH_LONG);
-                                    toast.setGravity(Gravity.BOTTOM, 0, 40);
-                                    toast.show();
-                                }
-                            });
-                        }
-                    }
-                });
+
+    // TODO: 15.08.2023  Бизнес Логика Фрагмета Настройки
+    class ClassBiznesLogikaSettings{
 
 
-            } catch (Exception e) {
-                e.printStackTrace();
-                Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
-                        " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                new Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(),
-                        Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
-
-            }
-        }
         @UiThread
         protected void СообщениеДляСменыДанныхПользователя(String Самообщение) {
             try {
@@ -426,26 +357,6 @@ public class DashboardFragmentSettings extends  DialogFragment {
         }
 
 
-
-
-
-
-
-        protected void МетодЗапускаИзМенюНастроек() {
-            try {
-                Intent Интент_Меню = new Intent(getContext(), MainActivity_Settings.class);
-                Интент_Меню.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);//////FLAG_ACTIVITY_SINGLE_TOP
-                Log.d(this.getClass().getName(), "" +
-                        "          case R.id.ПунктМенюВторой:");
-                getActivity().startActivity(Интент_Меню);
-            } catch (Exception e) {
-                e.printStackTrace();
-                Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
-                        + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                new Class_Generation_Errors(getActivity()).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
-                        Thread.currentThread().getStackTrace()[2].getLineNumber());
-            }
-        }
 
 
         // TODO: 15.08.2023 тест код для 1С
@@ -596,6 +507,29 @@ public class DashboardFragmentSettings extends  DialogFragment {
                         Thread.currentThread().getStackTrace()[2].getLineNumber());
             }
         }
+        
+        // TODO: 22.08.2023 МЕТОД ПОЛУЧЕНИЕ ДАННЫХ binder
+        void методGetBinder (@NonNull Bundle bundleGetSettings){
+try{
+
+    if (localBinderОбновлениеПО==null) {
+        localBinderОбновлениеПО =(ServiceUpdatePoОбновлениеПО.localBinderОбновлениеПО)  bundleGetSettings.getBinder("callbackbinderdashbord");
+    }
+
+    Log.i(getContext().getClass().getName(),  " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"  + " bundleGetSettings  " +bundleGetSettings +
+                    " localBinderОбновлениеПО " +localBinderОбновлениеПО);
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                    + Thread.currentThread().getStackTrace()[2].getLineNumber());
+            new   Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+                    this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
+                    Thread.currentThread().getStackTrace()[2].getLineNumber());
+        }
+        }
+
 
 
         // TODO: 22.08.2023  классс который отвечает за Переход на Фрагмент НАстройки
@@ -623,58 +557,144 @@ public class DashboardFragmentSettings extends  DialogFragment {
                                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
                                     + " dashboardFragmentHarmonyOS " +dashboardFragmentHarmonyOS );
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                        Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
-                                + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                        new   Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(),
-                                this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
-                                Thread.currentThread().getStackTrace()[2].getLineNumber());
-                    }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                                    + Thread.currentThread().getStackTrace()[2].getLineNumber());
+                            new   Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+                                    this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
+                                    Thread.currentThread().getStackTrace()[2].getLineNumber());
+                        }
                     }
                 });
 
-      
-        }
+
+            }
         }
 
 
-        // TODO: 22.08.2023 МЕТОД ПОЛУЧЕНИЕ ДАННЫХ binder
-        void методGetBinder (@NonNull Bundle bundleGetSettings){
-try{
+        // TODO: 22.08.2023 Класс для всех Тask Кнопок     // TODO: 22.08.2023 Класс для всех Тask Кнопок
+        // TODO: 22.08.2023 Класс для всех Тask Кнопок    // TODO: 22.08.2023 Класс для всех Тask Кнопок
+        class ClassAllTaskButtons{
+            // TODO: 22.08.2023  класс для Таск О Системы
+            class SubClassoSystem {
+                void методТаскоСистемы ( ){
+                    КнопкаоСистеме.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            try{
+                                Intent Интент_Меню = new Intent(getContext(), MainActivity_Settings.class);
+                                Интент_Меню.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                getActivity().startActivity(Интент_Меню);
 
-    if (localBinderОбновлениеПО==null) {
-        localBinderОбновлениеПО =(ServiceUpdatePoОбновлениеПО.localBinderОбновлениеПО)  bundleGetSettings.getBinder("callbackbinderdashbord");
-    }
+                                Log.i(getContext().getClass().getName(),  " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" );
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                                Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                                        + Thread.currentThread().getStackTrace()[2].getLineNumber());
+                                new   Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+                                        this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
+                                        Thread.currentThread().getStackTrace()[2].getLineNumber());
+                            }
+                        }
+                    });
 
-    Log.i(getContext().getClass().getName(),  " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"  + " bundleGetSettings  " +bundleGetSettings +
-                    " localBinderОбновлениеПО " +localBinderОбновлениеПО);
-        } catch (Exception e) {
-            e.printStackTrace();
-            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
-                    + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            new   Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(),
-                    this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
-                    Thread.currentThread().getStackTrace()[2].getLineNumber());
-        }
-        }
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
+
+                }
+                
+            }
+
+            // TODO: 22.08.2023  Сласс для Запуска Синхрониазциии  из Фрагнмета Настройки
+
+
+            class SubClassAsyncVisual{
+                private void методStartingAsyncVisuals() {
+                    КнопкаОбменДанными.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            try {
+                                final Integer[] ФинальныйРезультатФоновойСинхронизации = {0};
+                                ProgressDialog progressDialogДляСинхронизации;
+                                progressDialogДляСинхронизации = new ProgressDialog(getActivity());
+                                progressDialogДляСинхронизации.setTitle("Обмен данными");
+                                progressDialogДляСинхронизации.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+                                progressDialogДляСинхронизации.setProgress(0);
+                                progressDialogДляСинхронизации.setCanceledOnTouchOutside(false);
+                                progressDialogДляСинхронизации.setMessage("Процессе ....");
+                                progressDialogДляСинхронизации.show();
+
+                                handlerAsync.post(() -> {
+                                    boolean СтатусСетиВыбранныйПользователем =
+                                            new Class_Find_Setting_User_Network(getContext()).МетодПроветяетКакуюУстановкуВыбралПользовательСети();
+                                    Log.d(this.getClass().getName(), "  РезультатПроВеркиУстановкиПользователяРежимРаботыСети "
+                                            + СтатусСетиВыбранныйПользователем);
+                                    Class_Connections_Server class_connections_serverПингаСерераИзАктивтиМеню = new Class_Connections_Server(getActivity());
+                                    PUBLIC_CONTENT public_contentЗапусСинхрониазцииИМеню = new PUBLIC_CONTENT(getContext());
+
+                                    if (СтатусСетиВыбранныйПользователем == true) {
+                                        Boolean СтатусСервераСоюзаВключенИлиНЕт =
+                                                class_connections_serverПингаСерераИзАктивтиМеню.МетодПингаСервераРаботаетИлиНет(getContext());
+                                        if (СтатусСервераСоюзаВключенИлиНЕт == true) {
+                                            Integer ПубличныйIDДляОдноразовойСинхрониазции =
+                                                    new Class_Generations_PUBLIC_CURRENT_ID().ПолучениеПубличногоТекущегоПользователяID(getActivity());
+
+                                            Bundle bundleДляПЕредачи = new Bundle();
+                                            bundleДляПЕредачи.putInt("IDПубличныйНеМойАСкемБылаПереписака", ПубличныйIDДляОдноразовойСинхрониазции);
+                                            bundleДляПЕредачи.putBoolean("StatusOneWokManagers", true);
+                                            Intent intentЗапускОднорworkanager = new Intent();
+                                            intentЗапускОднорworkanager.putExtras(bundleДляПЕредачи);
+                                            // TODO: 02.08.2022
+                                            // TODO: 02.08.2022
+                                            new Class_Generator_One_WORK_MANAGER(getContext()).МетодОдноразовыйЗапускВоерМенеджера(getContext(),intentЗапускОднорworkanager);
+                                            // TODO: 26.06.2022
+                                            Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
+                                                    + " ПубличныйIDДляОдноразовойСинхрониазции " + ПубличныйIDДляОдноразовойСинхрониазции);
+                                            handlerAsync.postDelayed(() -> {
+                                                progressDialogДляСинхронизации.dismiss();
+                                                progressDialogДляСинхронизации.cancel();
+                                            }, 3000);
+
+
+                                        } else {
+                                            getActivity().runOnUiThread(new Runnable() {
+                                                @Override
+                                                public void run() {
+                                                    Toast toast = Toast.makeText(getContext(), "Сервер выкл. !!!", Toast.LENGTH_LONG);
+                                                    toast.setGravity(Gravity.BOTTOM, 0, 40);
+                                                    toast.show();
+                                                }
+                                            });
+                                        }
+                                    }
+                                });
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                                Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
+                                        " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
+                                new Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(),
+                                        Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
+
+                            }
+
+                        }
+                    });
+
+
+
+
+
+                }
+
+
+
+            }
+
+          //TODO end class ClassAllTaskButtons
+        }//TODO end class ClassAllTaskButtons
         
     }//TODO end Buniceess Lofic for Activity
 

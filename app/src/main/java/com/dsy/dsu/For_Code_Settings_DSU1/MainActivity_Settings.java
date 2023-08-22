@@ -26,6 +26,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.dsy.dsu.BuildConfig;
 import com.dsy.dsu.AllDatabases.CREATE_DATABASE;
@@ -34,6 +37,7 @@ import com.dsy.dsu.Business_logic_Only_Class.DATE.Class_Generation_Data;
 import com.dsy.dsu.Business_logic_Only_Class.Class_Generation_Errors;
 import com.dsy.dsu.Business_logic_Only_Class.Class_MODEL_synchronized;
 import com.dsy.dsu.Business_logic_Only_Class.PUBLIC_CONTENT;
+import com.dsy.dsu.Dashboard.Fragments.DashboardFragmentSettings;
 import com.dsy.dsu.Dashboard.MainActivity_Dashboard;
 import com.dsy.dsu.R;
 
@@ -69,6 +73,9 @@ public class MainActivity_Settings extends AppCompatActivity {
     private     int ПубличныйIDДляорганизацции=0;
     private     String ДатаДляОбновлениеОргназации;
     private SharedPreferences preferences;
+
+    private FragmentManager fragmentManager;
+    private FragmentTransaction fragmentTransaction;
     // TODO: 12.10.2021  Ссылка Менеджер Потоков
     PUBLIC_CONTENT Class_Engine_SQLГдеНаходитьсяМенеджерПотоков =null;
     @Override
@@ -78,6 +85,11 @@ public class MainActivity_Settings extends AppCompatActivity {
                 super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_main_wifi);
             getSupportActionBar().hide(); ///скрывать тул бар
+
+            fragmentManager =  getSupportFragmentManager();
+            fragmentTransaction = fragmentManager.beginTransaction();
+
+
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
             Class_Engine_SQLГдеНаходитьсяМенеджерПотоков =new  PUBLIC_CONTENT(getApplicationContext());
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD
@@ -871,11 +883,37 @@ return (int) РезультатВставкиНовогоСотрудникар�
             public void onClick(View v) {
                 Log.d(this.getClass().getName(), " кликнем для созданни новго сотрдника при нажатии  ");
                 ///todo код которыц возврящет предыдущий актвитики кнопка back
-                Intent ИнтентВозврящемсяНазад = new Intent();
+      /*          Intent ИнтентВозврящемсяНазад = new Intent();
                 ИнтентВозврящемсяНазад .setClass(getApplication(),  MainActivity_Dashboard.class); // ТУТ ЗАПВСКАЕТЬСЯ ВЫБОР ПРИЛОЖЕНИЯ КОТОРЫЕ ЕСТЬ FACE APP НА ДАННЫЙ МОМЕТНТ РАЗРАБОТНАО ТАБЕЛЬНЫЙ УЧЁТ
                 ИнтентВозврящемсяНазад.setFlags( Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(ИнтентВозврящемсяНазад);
                 Log.d(this.getClass().getName(), " кликнем для созданни новго сотрдника при нажатии  ");
+*/
+
+
+
+                // TODO Запусукаем Фргамент НАстройки  dashbord
+                DashboardFragmentSettings dashboardFragmentSettings = DashboardFragmentSettings.newInstance();
+                Bundle data=new Bundle();
+                dashboardFragmentSettings.setArguments(data);
+                fragmentTransaction.remove(dashboardFragmentSettings);
+                String fragmentNewImageNameaddToBackStack=   dashboardFragmentSettings.getClass().getName();
+                fragmentTransaction.addToBackStack(fragmentNewImageNameaddToBackStack);
+                Fragment FragmentУжеЕСтьИлиНЕт=     fragmentManager.findFragmentByTag(fragmentNewImageNameaddToBackStack);
+                if (FragmentУжеЕСтьИлиНЕт==null) {
+                    dashboardFragmentSettings.show(fragmentManager, "DashboardFragmentSettings");
+                    // TODO: 01.08.2023
+
+                }
+                Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
+                        + " FragmentУжеЕСтьИлиНЕт " +FragmentУжеЕСтьИлиНЕт );
+
+
+
+
+
             }
 
         });

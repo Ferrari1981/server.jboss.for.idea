@@ -128,11 +128,23 @@ public class FragmentOrderTransportOneChane extends Fragment {
     private  Class_Generator_One_WORK_MANAGER class_generator_one_work_manager;
     private              Cursor        cursor ;
     private AsyncTaskLoader asyncTaskLoader;
+
+
+
+
+
+
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         try{
             super.onCreate(savedInstanceState);
             // TODO: 27.04.2023  Запускаем Заказ Транпорта
+
+            fragmentManager = getActivity().getSupportFragmentManager();
+            fragmentTransaction = fragmentManager.beginTransaction();
+
+
          Bundle bundleBoundOrserTran=(Bundle)        getArguments();
          if(bundleBoundOrserTran!=null){
              localBinderOrderTransport= (ServiceOrserTransportService.  LocalBinderOrderTransport)    bundleBoundOrserTran.getBinder("binder");
@@ -220,7 +232,6 @@ public class FragmentOrderTransportOneChane extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         try{
             super.onViewCreated(view, savedInstanceState);
-            fragmentManager = getActivity().getSupportFragmentManager();
             start=     Calendar.getInstance().getTimeInMillis();
             startДляОбноразвовной=     Calendar.getInstance().getTimeInMillis();
             //todo запуск методов в фрагменте
@@ -600,7 +611,7 @@ public class FragmentOrderTransportOneChane extends Fragment {
         private void методBackActivityOrderTranport( ) {
            try{
             Intent Интент_BackВозвращаемАктивти = getActivity().getIntent();
-            Интент_BackВозвращаемАктивти.setClass(getContext(), MainActivity_Dashboard.class); // Т
+          Интент_BackВозвращаемАктивти.setClass(getContext(), MainActivity_Dashboard.class); // Т
             Интент_BackВозвращаемАктивти.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(Интент_BackВозвращаемАктивти);
                Log.i(this.getClass().getName(),  " Атоманически установкаОбновление ПО "+
