@@ -41,7 +41,7 @@
         android:id="@+id/toolbarcamera_dashbord"
         android:layout_width="match_parent"
         android:layout_height="300dp"
-        android:layout_above="@+id/КнопкаЗаявкаНаТранспорт"
+        android:layout_above="@+id/КнопкаоСистеме"
         android:layout_alignParentTop="true"
         android:layout_centerInParent="true"
         android:layout_marginBottom="5dp"
@@ -102,24 +102,23 @@
 
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/КнопкаЗаявкаНаТранспорт"
+        android:id="@+id/КнопкаоСистеме"
         style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/КнопкаСогласование"
+        android:layout_above="@+id/КнопкаПользователи"
 
 
         android:layout_centerInParent="true"
-
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:backgroundTint="#FFFFFF"
-        android:drawableLeft="@drawable/icon_task_transport_dashbord"
+        android:drawableLeft="@drawable/icon_newsettings_info_settrtings"
         android:fontFamily="@font/alfa_slab_one"
         android:gravity="center"
         android:minHeight="70dp"
         android:paddingLeft="15dp"
-        android:text="Заявки на траспорт"
+        android:text="О системе"
         android:textColor="#000000"
         android:textSize="14sp"
         android:textStyle="normal"
@@ -138,25 +137,24 @@
 
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/КнопкаСогласование"
+        android:id="@+id/КнопкаПользователи"
         style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/КнопкаПоступлениеМатериалов"
+        android:layout_above="@+id/КнопкаОбменДанными"
+
 
         android:layout_centerInParent="true"
 
-
         android:layout_marginLeft="20dp"
-
         android:layout_marginRight="20dp"
         android:backgroundTint="#FFFFFF"
-        android:drawableLeft="@drawable/icon_compelte_dashbord"
+        android:drawableLeft="@drawable/icon_newsetting_users_ettings"
         android:fontFamily="@font/alfa_slab_one"
         android:gravity="center"
         android:minHeight="70dp"
         android:paddingLeft="15dp"
-        android:text="Согласование"
+        android:text="Пользователи"
         android:textColor="#000000"
         android:textSize="14sp"
         android:textStyle="normal"
@@ -175,26 +173,24 @@
 
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/КнопкаПоступлениеМатериалов"
+        android:id="@+id/КнопкаОбменДанными"
         style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/КнопкаТабель"
+        android:layout_above="@+id/Кнопкаобновление"
 
 
         android:layout_centerInParent="true"
 
-
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
-
         android:backgroundTint="#FFFFFF"
-        android:drawableLeft="@drawable/icon_get_material_dashboard"
+        android:drawableLeft="@drawable/icon_newsettings_async"
         android:fontFamily="@font/alfa_slab_one"
         android:gravity="center"
         android:minHeight="70dp"
         android:paddingLeft="15dp"
-        android:text="Поступление  материалов"
+        android:text="Обмен данными"
         android:textColor="#000000"
         android:textSize="14sp"
         android:textStyle="normal"
@@ -209,9 +205,56 @@
         app:strokeWidth="1dp" />
 
 
-    <!--   //TODO   #4 -->
+
+
+
+
+
+
+    <!--   //TODO   #4-->
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/КнопкаТабель"
+        android:id="@+id/Кнопкаобновление"
+        style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
+
+        android:layout_above="@+id/КнопкаОшибки"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+
+
+        android:layout_centerInParent="true"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:backgroundTint="#FFFFFF"
+        android:drawableLeft="@drawable/icon_newsettings_updatepo"
+
+
+        android:fontFamily="@font/alfa_slab_one"
+        android:gravity="center"
+        android:minHeight="70dp"
+        android:paddingLeft="15dp"
+        android:text="Обновление"
+        android:textColor="#000000"
+        android:textSize="14sp"
+        android:textStyle="normal"
+        android:translationZ="2dp"
+        android:visibility="visible"
+        app:cardElevation="2dp"
+        app:cardMaxElevation="1dp"
+        app:cornerRadius="15dp"
+        app:iconGravity="textStart"
+        app:rippleColor="@color/design_default_color_on_secondary"
+        app:strokeColor="#EEEDEF"
+        app:strokeWidth="1dp" />
+
+
+
+
+
+
+    <!--   //TODO   #5-->
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/КнопкаОшибки"
         style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
 
 
@@ -220,21 +263,19 @@
         android:layout_alignParentBottom="true"
 
 
-        android:layout_centerInParent="true"
-
 
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:layout_marginBottom="30dp"
         android:backgroundTint="#FFFFFF"
-        android:drawableLeft="@drawable/icon_tabel_dashbord"
+        android:drawableLeft="@drawable/icon_newsettings_error"
+
+
         android:fontFamily="@font/alfa_slab_one"
-
-
         android:gravity="center"
         android:minHeight="70dp"
         android:paddingLeft="15dp"
-        android:text="Табель"
+        android:text="Ошибки"
         android:textColor="#000000"
         android:textSize="14sp"
         android:textStyle="normal"
@@ -247,6 +288,24 @@
         app:rippleColor="@color/design_default_color_on_secondary"
         app:strokeColor="#EEEDEF"
         app:strokeWidth="1dp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     <!--      //TODO конец всех данных-->
 
