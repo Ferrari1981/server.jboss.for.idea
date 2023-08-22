@@ -122,7 +122,8 @@ public class DashboardFragmentMaterialDesign extends  DialogFragment  {
             // setStyle(   DialogFragment.STYLE_NORMAL ,android.R.style.Theme_DeviceDefault_Light_NoActionBar_Fullscreen);//Theme_Dialog  Без Часов
             //    setStyle(   DialogFragment.STYLE_NORMAL ,android.R.style.Theme_DeviceDefault_Light_NoActionBar_TranslucentDecor);//Theme_Dialog
             // setStyle(   DialogFragment.STYLE_NORMAL ,android.R.style.Theme_DeviceDefault_Light_DarkActionBar);//Theme_Dialog
-            setStyle(   DialogFragment.STYLE_NORMAL ,android.R.style.Theme_DeviceDefault_Light_DialogWhenLarge_NoActionBar);//Theme_Dialog   с часами сверху
+           // setStyle(   DialogFragment.STYLE_NORMAL ,android.R.style.Theme_DeviceDefault_Light_DialogWhenLarge_NoActionBar);//Theme_Dialog   с часами сверху
+            setStyle(   DialogFragment.STYLE_NORMAL ,android.R.style.Theme_DeviceDefault_Light_NoActionBar_Fullscreen);//Theme_Dialog  Без Часов
 
             setShowsDialog(true);
         // TODO: 15.08.2023
@@ -493,8 +494,11 @@ public class DashboardFragmentMaterialDesign extends  DialogFragment  {
                             data.putBinder("callbackbinderdashbord",localBinderОбновлениеПО);
                             dashboardFragmentSettings.setArguments(data);
                             fragmentTransaction.remove(dashboardFragmentSettings);
+                            fragmentTransaction.disallowAddToBackStack();
+                            fragmentManager.popBackStackImmediate();
+
                             String fragmentNewImageNameaddToBackStack=   dashboardFragmentSettings.getClass().getName();
-                              fragmentTransaction.addToBackStack(fragmentNewImageNameaddToBackStack);
+                              //fragmentTransaction.addToBackStack(fragmentNewImageNameaddToBackStack);*/
                             Fragment FragmentУжеЕСтьИлиНЕт=     fragmentManager.findFragmentByTag(fragmentNewImageNameaddToBackStack);
                             if (FragmentУжеЕСтьИлиНЕт==null) {
                                 dashboardFragmentSettings.show(fragmentManager, "DashboardFragmentSettings");
