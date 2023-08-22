@@ -350,8 +350,12 @@ public class MainActivity_Dashboard extends AppCompatActivity {
                 // TODO Запусукаем Фргамент DdshBoard
                 DashboardFragmentMaterialDesign dashboardFragmentHarmonyOS = new DashboardFragmentMaterialDesign();
                 Bundle data=new Bundle();
-                data.putBinder("binder",localBinderОбновлениеПО);
+                data.putBinder("callbackbinderdashbord",localBinderОбновлениеПО);
                 dashboardFragmentHarmonyOS.setArguments(data);
+
+
+                fragmentTransaction.remove(dashboardFragmentHarmonyOS);
+
                 fragmentTransaction.replace(R.id.linearLayout_root_activity_dashboard, dashboardFragmentHarmonyOS)
                         .setPrimaryNavigationFragment(dashboardFragmentHarmonyOS)
                         .setReorderingAllowed(true).commit();//.layout.activity_for_fragemtb_history_tasks

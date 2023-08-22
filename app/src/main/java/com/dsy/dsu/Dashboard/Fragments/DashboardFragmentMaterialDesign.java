@@ -1,5 +1,6 @@
 package com.dsy.dsu.Dashboard.Fragments;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -38,11 +39,7 @@ import com.dsy.dsu.R;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.card.MaterialCardView;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link DashboardFragmentMaterialDesign#newInstance} factory method to
- * create an instance of this fragment.
- */
+
 public class DashboardFragmentMaterialDesign extends  Fragment {
     // TODO: Rename parameter arguments, choose names that match
 
@@ -66,17 +63,7 @@ public class DashboardFragmentMaterialDesign extends  Fragment {
     private AppCompatImageButton imageview_to_settings ;
 
 
-    public DashboardFragmentMaterialDesign() {
-        // Required empty public constructor
-    }
 
-    // TODO: Rename and change types and number of parameters
-    public static DashboardFragmentMaterialDesign newInstance( ) {
-        DashboardFragmentMaterialDesign fragment = new DashboardFragmentMaterialDesign();
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
-        return fragment;
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -123,9 +110,6 @@ public class DashboardFragmentMaterialDesign extends  Fragment {
            // setStyle(   DialogFragment.STYLE_NO_TITLE ,android.R.style.Theme_Material_Light_NoActionBar_Overscan);//Theme_Dialog
         /*    setStyle(   DialogFragment.STYLE_NO_TITLE ,android.R.style.Theme_Material_Light_NoActionBar_Overscan);//Theme_Dialog
             setShowsDialog(true);*/
-
-          getActivity().getTheme().applyStyle(android.R.style.Theme_Material_Dialog, true);
-
         // TODO: 15.08.2023
         Log.d(this.getClass().getName(),"\n" + " class "
                 + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -144,13 +128,11 @@ public class DashboardFragmentMaterialDesign extends  Fragment {
 
 
 
-
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         try{
         fragmentManager.setFragmentResult(     "CallBackDashborndFragment",new Bundle());
-
         Log.d(this.getClass().getName(),"\n" + " class "
                 + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -252,7 +234,7 @@ public class DashboardFragmentMaterialDesign extends  Fragment {
             buniccessLogicFra4gmentDashboard.new ClassButtonsApp().методStartingAllButtonApp();
 
 
-            buniccessLogicFra4gmentDashboard.new ClassAnimatilBackButton().методToSettingsFragment();
+          //  buniccessLogicFra4gmentDashboard.new ClassAnimatilBackButton().методToSettingsFragment();
 
         // TODO: 20.07.2023
         Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -273,8 +255,7 @@ public class DashboardFragmentMaterialDesign extends  Fragment {
     public void onResume() {
         super.onResume();
         try{
-
-            buniccessLogicFra4gmentDashboard.методНастройкиВнешнегоВида();
+        //    buniccessLogicFra4gmentDashboard.методНастройкиВнешнегоВида();
             // TODO: 20.072023
             Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -289,6 +270,12 @@ public class DashboardFragmentMaterialDesign extends  Fragment {
                     Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
     }
+
+
+
+
+
+
 
 
     // TODO: 15.08.2023  Бизнес ЛОгика Bunecees Logic Dashboard Fragment
@@ -310,7 +297,7 @@ public class DashboardFragmentMaterialDesign extends  Fragment {
                 getActivity().  getWindow().addFlags(WindowManager.LayoutParams.FLAG_BLUR_BEHIND);
 
 
-
+/*
 
 
                 // TODO: 21.08.2023  ЛОГОТИП
@@ -331,7 +318,7 @@ public class DashboardFragmentMaterialDesign extends  Fragment {
 
 
                 КнопкаТабель.startAnimation(animation1);
-                КнопкаТабель.refreshDrawableState();
+                КнопкаТабель.refreshDrawableState();*/
 
 
                 // TODO: 21.08.2023
@@ -529,10 +516,15 @@ public class DashboardFragmentMaterialDesign extends  Fragment {
                             data.putBinder("callbackbinderdashbord",localBinderОбновлениеПО);
                             dashboardFragmentSettings.setArguments(data);
                             String fragmentNewImageNameaddToBackStack=   dashboardFragmentSettings.getClass().getName();
-                            fragmentTransaction.addToBackStack(fragmentNewImageNameaddToBackStack);
+                          //  fragmentTransaction.addToBackStack(fragmentNewImageNameaddToBackStack);
+
+                            fragmentTransaction.disallowAddToBackStack();
+                            fragmentManager.popBackStackImmediate();
+
+
                             Fragment FragmentУжеЕСтьИлиНЕт=     fragmentManager.findFragmentByTag(fragmentNewImageNameaddToBackStack);
                             if (FragmentУжеЕСтьИлиНЕт==null) {
-                                dashboardFragmentSettings.show(fragmentManager, "DashboardFragmentSettings");
+                              //  dashboardFragmentSettings.show(fragmentManager, "DashboardFragmentSettings");
                                 // TODO: 01.08.2023
 
                             }

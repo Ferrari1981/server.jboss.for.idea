@@ -53,7 +53,7 @@ import com.google.common.util.concurrent.AtomicDouble;
  * Use the {@link DashboardFragmentSettings#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class DashboardFragmentSettings extends DialogFragment {
+public class DashboardFragmentSettings extends  Fragment {
     // TODO: Rename parameter arguments, choose names that match
 
     private  BuniccessLogicFra4gmentDashboard buniccessLogicFra4gmentDashboard;
@@ -124,7 +124,7 @@ public class DashboardFragmentSettings extends DialogFragment {
     //    setStyle(   DialogFragment.STYLE_NO_TITLE,android.R.style.Theme_DeviceDefault_Wallpaper_NoTitleBar);//Theme_Dialog
       //  setStyle(   DialogFragment.STYLE_NO_INPUT ,android.R.style.Theme_DeviceDefault_Light_NoActionBar_Fullscreen);//Theme_Dialog
        // setStyle(   DialogFragment.STYLE_NO_FRAME ,android.R.style.Theme_DeviceDefault_Light_NoActionBar_Overscan);//Theme_Dialog
-        setStyle(   DialogFragment.STYLE_NO_FRAME ,android.R.style.Theme_DeviceDefault_Light_NoActionBar_Overscan);//Theme_Dialog
+       // setStyle(   DialogFragment.STYLE_NORMAL ,android.R.style.Theme_DeviceDefault_Light_NoActionBar_Fullscreen);//Theme_Dialog
             //setCancelable(false);
         // TODO: 15.08.2023
         Log.d(this.getClass().getName(),"\n" + " class "
@@ -498,17 +498,15 @@ public class DashboardFragmentSettings extends DialogFragment {
 
 
                 WindowManager.LayoutParams layoutParams = new WindowManager.LayoutParams();
-                layoutParams.copyFrom(    getDialog().getWindow().getAttributes());
+                layoutParams.copyFrom(    getActivity().getWindow().getAttributes());
                 layoutParams.gravity = Gravity.CENTER;
                 layoutParams.dimAmount=0.0f;
 
                 layoutParams.width = WindowManager.LayoutParams.MATCH_PARENT;
                 layoutParams.height =WindowManager.LayoutParams.WRAP_CONTENT;
 
-
-                getDialog().getWindow().setAttributes(layoutParams);
-                getDialog().getWindow().addFlags(WindowManager.LayoutParams.FLAG_BLUR_BEHIND);
-
+                getActivity(). getWindow().setAttributes(layoutParams);
+                getActivity().  getWindow().addFlags(WindowManager.LayoutParams.FLAG_BLUR_BEHIND);
 
 
 
@@ -644,7 +642,7 @@ public class DashboardFragmentSettings extends DialogFragment {
                             // TODO Запусукаем Фргамент DdshBoard
                             DashboardFragmentMaterialDesign dashboardFragmentHarmonyOS = new DashboardFragmentMaterialDesign();
                             Bundle data=new Bundle();
-                            data.putBinder("binder",localBinderОбновлениеПО);
+                            data.putBinder("callbackbinderdashbord",localBinderОбновлениеПО);
                             dashboardFragmentHarmonyOS.setArguments(data);
                             fragmentTransaction.replace(R.id.linearLayout_root_activity_dashboard, dashboardFragmentHarmonyOS)
                                     .setPrimaryNavigationFragment(dashboardFragmentHarmonyOS)
