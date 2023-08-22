@@ -324,13 +324,13 @@ public class MainActivity_Dashboard extends AppCompatActivity {
                 dashboardFragmentHarmonyOS.setArguments(data);
                 fragmentTransaction.remove(dashboardFragmentHarmonyOS);
                 String fragmentNewImageNameaddToBackStack=   dashboardFragmentHarmonyOS.getClass().getName();
-                fragmentTransaction.addToBackStack(fragmentNewImageNameaddToBackStack).setPrimaryNavigationFragment(dashboardFragmentHarmonyOS)
+                fragmentTransaction.addToBackStack(fragmentNewImageNameaddToBackStack)
+                        .setPrimaryNavigationFragment(dashboardFragmentHarmonyOS)
                         .setReorderingAllowed(true);
                 Fragment FragmentУжеЕСтьИлиНЕт=     fragmentManager.findFragmentByTag(fragmentNewImageNameaddToBackStack);
                 if (FragmentУжеЕСтьИлиНЕт==null) {
                     dashboardFragmentHarmonyOS.show(fragmentManager, "dashboardFragmentHarmonyOS");
                     // TODO: 01.08.2023
-
                 }
                 Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                         " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +

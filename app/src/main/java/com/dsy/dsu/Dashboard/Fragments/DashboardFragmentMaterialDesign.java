@@ -114,7 +114,7 @@ public class DashboardFragmentMaterialDesign extends  DialogFragment  {
             // setStyle(   DialogFragment.STYLE_NORMAL ,android.R.style.Theme_Material_Dialog_MinWidth);//Theme_Dialog
             // setStyle(   DialogFragment.STYLE_NO_TITLE ,android.R.style.Theme_Material_Light);//Theme_Dialog
            // setStyle(   DialogFragment.STYLE_NO_TITLE ,android.R.style.Theme_Material_Light_NoActionBar_Overscan);//Theme_Dialog
-            setStyle(   DialogFragment.STYLE_NO_TITLE ,android.R.style.Theme_Material_Light_NoActionBar_Overscan);//Theme_Dialog
+            setStyle(   DialogFragment.STYLE_NORMAL,android.R.style.Theme_Material_Light_NoActionBar_Overscan);//Theme_Dialog
             setShowsDialog(true);
         // TODO: 15.08.2023
         Log.d(this.getClass().getName(),"\n" + " class "
@@ -131,8 +131,6 @@ public class DashboardFragmentMaterialDesign extends  DialogFragment  {
                 Thread.currentThread().getStackTrace()[2].getLineNumber());
     }
     }
-
-
 
     @Override
     public void onDestroyView() {
