@@ -1669,7 +1669,6 @@ public class FragmentSingleTabelOneSwipe extends Fragment {
                                     // TODO: 10.05.2023  ГЛАВНЫЙ МЕТОД ЗАПИСИ ДАННЫХ update
                                     String До=editTextRowКликПоДАнными.getText().toString();
                        disposableAfterTextChangeEvent=            RxTextView.afterTextChangeEvents(editTextRowКликПоДАнными)
-                                            .debounce(1,TimeUnit.SECONDS)
                                             .filter(s -> !s.getView().getText().toString().equalsIgnoreCase("0"))
                                             .filter(ss->ss.getView().isFocusableInTouchMode())
                                             .subscribeOn(AndroidSchedulers.mainThread())

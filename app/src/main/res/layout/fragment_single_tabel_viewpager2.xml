@@ -43,7 +43,7 @@
             android:layout_height="20dp"
             android:layout_marginTop="1dp"
             android:layout_marginEnd="1dp"
-            android:layout_marginBottom="1dp"
+            android:layout_marginBottom="2dp"
             android:background="#FFFFFF"
             android:clickable="false"
             android:focusable="false"
@@ -59,7 +59,7 @@
             android:touchscreenBlocksFocus="false"
             android:typeface="sans"
             android:visibility="visible"
-            app:layout_constraintBottom_toTopOf="@+id/view2Линия"
+            app:layout_constraintBottom_toTopOf="@+id/TextViewФИОПрофессия"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/СпинерТабельМесяц" />
 
@@ -68,15 +68,16 @@
             android:id="@+id/imageViewСтрелкаВнутриТабеля"
             android:layout_width="60dp"
             android:layout_height="40dp"
+            android:layout_marginTop="5dp"
             android:backgroundTintMode="screen"
             android:visibility="visible"
             app:iconGravity="textEnd"
             app:iconSize="40dp"
             app:iconTint="#FFD5D9DA"
-            app:layout_constraintBottom_toTopOf="@id/view2Линия"
+            app:layout_constraintBottom_toTopOf="@id/TextViewФИОПрофессия"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0"
+            app:layout_constraintVertical_bias="0.39"
             app:rippleColor="@color/colorAccent"
             app:srcCompat="@drawable/icon_newsingletabel3" />
 
@@ -111,12 +112,11 @@
             app:layout_constraintTop_toTopOf="parent" />
 
 
-
-
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/TextViewФИОПрофессия"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
             android:background="#FFFFFF"
             android:foregroundGravity="center"
             android:gravity="center"

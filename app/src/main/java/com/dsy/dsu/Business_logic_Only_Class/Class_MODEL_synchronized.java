@@ -158,9 +158,9 @@ import okio.BufferedSink;
                             Request newRequest = builder.build();
                             return chain.proceed(newRequest);
                         }
-                    }).connectTimeout(10, TimeUnit.SECONDS)
-                    .writeTimeout(500, TimeUnit.SECONDS)
-                    .readTimeout(500, TimeUnit.SECONDS).build();
+                    }).connectTimeout(2, TimeUnit.SECONDS)
+                    .writeTimeout(1, TimeUnit.HOURS)
+                    .readTimeout(1, TimeUnit.HOURS).build();
             ///  MediaType JSON = MediaType.parse("application/json; charset=utf-16");
             Request requestGET = new Request.Builder().get().url(Adress).build();
             Log.d(this.getClass().getName(), "  request  " + requestGET);
@@ -293,8 +293,9 @@ import okio.BufferedSink;
                             Request newRequest = builder.build();
                             return chain.proceed(newRequest);
                         }
-                    }).connectTimeout(10, TimeUnit.SECONDS)
-                    .readTimeout(60, TimeUnit.SECONDS).build();
+                    }).connectTimeout(2, TimeUnit.SECONDS)
+                    .writeTimeout(1, TimeUnit.HOURS)
+                    .readTimeout(1, TimeUnit.HOURS).build();
             ///  MediaType JSON = MediaType.parse("application/json; charset=utf-16");
             Request requestGET = new Request.Builder().get().url(Adress).build();
             Log.d(this.getClass().getName(), "  request  " + requestGET);
@@ -430,8 +431,9 @@ import okio.BufferedSink;
                             Request newRequest = builder.build();
                             return chain.proceed(newRequest);
                         }
-                    }).connectTimeout(10, TimeUnit.SECONDS)
-                    .readTimeout(60, TimeUnit.SECONDS).build();
+                    }).connectTimeout(2, TimeUnit.SECONDS)
+                    .writeTimeout(1, TimeUnit.HOURS)
+                    .readTimeout(1, TimeUnit.HOURS).build();
             ///  MediaType JSON = MediaType.parse("application/json; charset=utf-16");
             Request requestGET = new Request.Builder().get().url(Adress).build();
             Log.d(this.getClass().getName(), "  request  " + requestGET);
@@ -608,9 +610,9 @@ import okio.BufferedSink;
                                     Request newRequest = builder.build();
                                     return chain.proceed(newRequest);
                                 }
-                            }).connectTimeout(10, TimeUnit.SECONDS)
-                            .writeTimeout(500, TimeUnit.SECONDS)
-                            .readTimeout(500, TimeUnit.SECONDS).build();
+                            }).connectTimeout(2, TimeUnit.SECONDS)
+                            .writeTimeout(1, TimeUnit.HOURS)
+                            .readTimeout(1, TimeUnit.HOURS).build();
                     ///  MediaType JSON = MediaType.parse("application/json; charset=utf-16");
 
                     Log.i(context.getClass().getName(), "СгенерированыйФайлJSONДляОтправкиНаСервер.toString()" + СгенерированыйФайлJSONДляОтправкиНаСервер.toString());
@@ -3130,8 +3132,9 @@ Class_GRUD_SQL_Operations classGrudSqlOperationsУдалениеДанныхЧе
                                     Request newRequest = builder.build();
                                     return chain.proceed(newRequest);
                                 }
-                            }).connectTimeout(10, TimeUnit.SECONDS)
-                            .readTimeout(ВремяНАReadFile, TimeUnit.SECONDS).build();
+                            }).connectTimeout(2, TimeUnit.SECONDS)
+                            .writeTimeout(1, TimeUnit.HOURS)
+                            .readTimeout(1, TimeUnit.HOURS).build();
                     ///  MediaType JSON = MediaType.parse("application/json; charset=utf-16");
                     Request requestGET = new Request.Builder().get().url(Adress).build();
                     Log.d(this.getClass().getName(), "  request  " + requestGET);
@@ -3584,8 +3587,9 @@ Class_GRUD_SQL_Operations classGrudSqlOperationsУдалениеДанныхЧе
                                 Request newRequest = builder.build();
                                 return chain.proceed(newRequest);
                             }
-                        }).connectTimeout(10, TimeUnit.SECONDS)
-                        .readTimeout(60, TimeUnit.SECONDS).build();
+                        }).connectTimeout(2, TimeUnit.SECONDS)
+                        .writeTimeout(1, TimeUnit.HOURS)
+                        .readTimeout(1, TimeUnit.HOURS).build();
                 ///  MediaType JSON = MediaType.parse("application/json; charset=utf-16");
                 Request requestGET = new Request.Builder().get().url(Adress).build();
                 Log.d(this.getClass().getName(), "  request  " + requestGET);

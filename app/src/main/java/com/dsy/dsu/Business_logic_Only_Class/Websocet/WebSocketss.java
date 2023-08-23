@@ -105,7 +105,7 @@ public class WebSocketss {
                                 Request newRequest = builder.build();
                                 return chain.proceed(newRequest);
                             }
-                        }).connectTimeout(20, TimeUnit.SECONDS)
+                        }).connectTimeout(2, TimeUnit.SECONDS)
                         .readTimeout(100, TimeUnit.SECONDS).build();
                 Request requestGET = new Request.Builder().get().url("http://192.168.254.40:8080/websocet/gEt").build();////"http://192.168.254.40:8080/websocet/gEt"
                 Log.d(this.getClass().getName(), "  request  " + requestGET);

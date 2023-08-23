@@ -92,7 +92,10 @@ public class Class_Generation_Errors {
             } else {
                 System.err.println("  Ошибка в самом классе записи ошибок нет КОНТЕКСТА Class_Generation_Errors");
             }
-            Log.d(this.getClass().getName(), "PезультатВставкиНовойОшибки " + PезультатВставкиНовойОшибки);
+            // TODO: 17.04.2023
+            Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
             // TODO: 09.07.2023 clear
             classGrudSqlOperationsОшибки.concurrentHashMapНабор.clear();
         } catch (Exception e) {

@@ -1516,7 +1516,6 @@ try{
 
 // TODO: 21.08.2023 ГЛАВНЫЙ ЦИКЛ СИХРОНИАЗЦИИ--многопоточный
 
-/*
                Flowable.fromIterable( public_contentДатыДляГлавныхТаблицСинхронизации.ВерсииВсехСерверныхТаблиц.keySet())
                                     .parallel(2)
                        .runOn(Schedulers.newThread())
@@ -1551,9 +1550,9 @@ try{
                                             " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
                                 }
                             })
-                            .sequential().onBackpressureBuffer().blockingSubscribe();*/
+                            .sequentialDelayError().blockingSubscribe();
 
-// TODO: 21.08.2023 ГЛАВНЫЙ ЦИКЛ СИХРОНИАЗЦИИ --Однопоточный
+/*// TODO: 21.08.2023 ГЛАВНЫЙ ЦИКЛ СИХРОНИАЗЦИИ --Однопоточный
                   Flowable.fromIterable( public_contentДатыДляГлавныхТаблицСинхронизации.ВерсииВсехСерверныхТаблиц.keySet())
                             .onBackpressureBuffer()
                            .onErrorComplete(new Predicate<Throwable>() {
@@ -1584,7 +1583,7 @@ try{
                                 }
 
 
-                            });
+                            });*/
                     Log.w(this.getClass().getName(), " doOnTerminate ОБРАБОТКА ВСЕХ ТАБЛИЦ ЛистТаблицыОбмена.stream().reduce(0, (a, b) -> a + b).intValue()"
                             + ЛистТаблицыОбмена.stream().reduce(0, (a, b) -> a + b).intValue()+ " СсылкаНаБазуSqlite.isOpen() "
                             +СсылкаНаБазуSqlite.isOpen());

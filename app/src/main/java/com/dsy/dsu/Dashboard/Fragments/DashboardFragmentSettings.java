@@ -679,7 +679,7 @@ try{
                                 progressDialogДляСинхронизации.setProgress(0);
                                 progressDialogДляСинхронизации.setCanceledOnTouchOutside(false);
                                 progressDialogДляСинхронизации.setMessage("В процессе ....");
-                                progressDialogДляСинхронизации.show();
+
 
                                 handlerAsync.post(() -> {
                                     boolean СтатусСетиВыбранныйПользователем =
@@ -693,6 +693,11 @@ try{
                                         Boolean СтатусСервераСоюзаВключенИлиНЕт =
                                                 class_connections_serverПингаСерераИзАктивтиМеню.МетодПингаСервераРаботаетИлиНет(getContext());
                                         if (СтатусСервераСоюзаВключенИлиНЕт == true) {
+                                            // TODO: 23.08.2023
+                                            if (!progressDialogДляСинхронизации.isShowing()) {
+                                                progressDialogДляСинхронизации.show();
+                                            }
+
                                             Integer ПубличныйIDДляОдноразовойСинхрониазции =
                                                     new Class_Generations_PUBLIC_CURRENT_ID().ПолучениеПубличногоТекущегоПользователяID(getActivity());
 
