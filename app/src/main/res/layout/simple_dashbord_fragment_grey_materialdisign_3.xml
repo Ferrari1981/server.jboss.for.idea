@@ -88,11 +88,9 @@
         android:layout_height="wrap_content"
         android:layout_above="@+id/КнопкаСогласование"
 
+
         android:layout_centerInParent="true"
-
-
         android:layout_marginLeft="20dp"
-
         android:layout_marginRight="20dp"
         android:backgroundTint="#FFFFFF"
         android:drawableLeft="@drawable/icon_task_transport_dashbord"
@@ -110,7 +108,7 @@
         app:cardMaxElevation="1dp"
         app:cornerRadius="15dp"
         app:iconGravity="textStart"
-        app:rippleColor="@color/colorPrimaryDark"
+        app:rippleColor="@color/design_default_color_on_secondary"
         app:strokeColor="#EEEDEF"
         app:strokeWidth="1dp" />
 
@@ -126,11 +124,11 @@
         android:layout_above="@+id/КнопкаПоступлениеМатериалов"
 
         android:layout_centerInParent="true"
+
+
         android:layout_marginLeft="20dp"
 
-
         android:layout_marginRight="20dp"
-
         android:backgroundTint="#FFFFFF"
         android:drawableLeft="@drawable/icon_compelte_dashbord"
         android:fontFamily="@font/alfa_slab_one"
@@ -147,7 +145,7 @@
         app:cardMaxElevation="1dp"
         app:cornerRadius="15dp"
         app:iconGravity="textStart"
-        app:rippleColor="@color/colorPrimaryDark"
+        app:rippleColor="@color/design_default_color_on_secondary"
         app:strokeColor="#EEEDEF"
         app:strokeWidth="1dp" />
 
@@ -164,12 +162,12 @@
 
 
         android:layout_centerInParent="true"
+
+
         android:layout_marginLeft="20dp"
-
-
         android:layout_marginRight="20dp"
-        android:backgroundTint="#FFFFFF"
 
+        android:backgroundTint="#FFFFFF"
         android:drawableLeft="@drawable/icon_get_material_dashboard"
         android:fontFamily="@font/alfa_slab_one"
         android:gravity="center"
@@ -185,7 +183,7 @@
         app:cardMaxElevation="1dp"
         app:cornerRadius="15dp"
         app:iconGravity="textStart"
-        app:rippleColor="@color/colorPrimaryDark"
+        app:rippleColor="@color/design_default_color_on_secondary"
         app:strokeColor="#EEEDEF"
         app:strokeWidth="1dp" />
 
@@ -202,17 +200,17 @@
 
 
         android:layout_centerInParent="true"
+
+
         android:layout_marginLeft="20dp"
-
-
         android:layout_marginRight="20dp"
         android:layout_marginBottom="30dp"
         android:backgroundTint="#FFFFFF"
         android:drawableLeft="@drawable/icon_tabel_dashbord"
         android:fontFamily="@font/alfa_slab_one"
+
+
         android:gravity="center"
-
-
         android:minHeight="70dp"
         android:paddingLeft="15dp"
         android:text="Табель"
@@ -225,7 +223,7 @@
         app:cardMaxElevation="1dp"
         app:cornerRadius="15dp"
         app:iconGravity="textStart"
-        app:rippleColor="@color/colorPrimaryDark"
+        app:rippleColor="@color/design_default_color_on_secondary"
         app:strokeColor="#EEEDEF"
         app:strokeWidth="1dp" />
 

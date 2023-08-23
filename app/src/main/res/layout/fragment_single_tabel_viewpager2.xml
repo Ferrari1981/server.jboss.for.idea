@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#FFFFFF"
-    tools:context=".Code_ForTABEL.MainActivity_Tabel_Single_People"
+    tools:context=".Code_ForTABEL.viewpagers.MainActivity_Tabel_Single_PeopleOneSwipe"
     tools:visibility="visible">
 
 
@@ -64,26 +64,21 @@
             app:layout_constraintTop_toBottomOf="@+id/СпинерТабельМесяц" />
 
 
-        <Button
+        <ImageButton
             android:id="@+id/imageViewСтрелкаВнутриТабеля"
-            android:layout_width="70dp"
-            android:layout_height="55dp"
-            android:layout_marginStart="1dp"
-            android:layout_marginTop="5dp"
-            android:background="#FFFFFF"
-            android:backgroundTint="#FFFFFF"
+            android:layout_width="60dp"
+            android:layout_height="40dp"
             android:backgroundTintMode="screen"
-            android:stateListAnimator="@drawable/icon_dsu1_exit3_foreground"
-            android:textAlignment="center"
             android:visibility="visible"
-            app:icon="@drawable/icon_dsu1_exit3_foreground"
             app:iconGravity="textEnd"
             app:iconSize="40dp"
-            app:iconTint="#00ACC1"
+            app:iconTint="#FFD5D9DA"
             app:layout_constraintBottom_toTopOf="@id/view2Линия"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:rippleColor="@color/colorAccent" />
+            app:layout_constraintVertical_bias="0.0"
+            app:rippleColor="@color/colorAccent"
+            app:srcCompat="@drawable/icon_newsingletabel3" />
 
         <TextView
             android:id="@+id/textView3СловоТабель"
@@ -109,30 +104,14 @@
             android:theme="@style/Theme.AppCompat.DayNight"
             android:touchscreenBlocksFocus="false"
             android:typeface="monospace"
+            app:layout_constraintBottom_toTopOf="@+id/TextViewФИОПрофессия"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.48"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintHorizontal_bias="0.38"
+            app:layout_constraintStart_toEndOf="@+id/imageViewСтрелкаВнутриТабеля"
             app:layout_constraintTop_toTopOf="parent" />
 
 
-        <View
-            android:id="@+id/view2Линия"
-            android:layout_width="match_parent"
-            android:layout_height="4dp"
-            android:layout_margin="5dp"
-            android:background="@drawable/divider_for_single_tabel"
-            android:clickable="false"
-            android:focusable="false"
-            android:focusableInTouchMode="false"
-            android:foregroundGravity="center"
-            android:padding="5dp"
-            android:touchscreenBlocksFocus="false"
-            android:visibility="visible"
-            app:layout_constraintBottom_toTopOf="@+id/TextViewФИОПрофессия"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            tools:visibility="visible" />
+
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/TextViewФИОПрофессия"
@@ -251,6 +230,7 @@
             android:scaleY="2"
             android:scrollIndicators="top"
             android:visibility="visible"
+            android:indeterminateTint="#FFD5D9DA"
             app:layout_constraintBottom_toTopOf="@id/СпинерТабельДепратамент"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

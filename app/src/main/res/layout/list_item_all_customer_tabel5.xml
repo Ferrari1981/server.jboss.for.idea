@@ -15,13 +15,13 @@ android:orientation="horizontal">
             android:layout_height="80dp"
             android:layout_margin="5dp"
             android:animateLayoutChanges="true"
-            android:background="@drawable/stylesingletablerowiine5"
+            android:background="@drawable/stylesingletablerowiine6"
             android:gravity="center"
             android:padding="5dp"
             android:visibility="visible"
             app:cardCornerRadius="20dp"
             app:cardElevation="10dp"
-            app:srcCompat="@drawable/icon_alltabels4"
+            app:srcCompat="@drawable/icon_newlistpeoples"
             app:strokeColor="#F5FFFA" />
 
 
@@ -29,7 +29,7 @@ android:orientation="horizontal">
         <com.google.android.material.textview.MaterialTextView
             android:id="@android:id/text2"
             android:layout_width="match_parent"
-            android:background="@drawable/stylesingletablerowiine5"
+            android:background="@drawable/stylesingletablerowiine6"
             android:layout_height="80dp"
             android:checkMark="?android:attr/textCheckMark"
             android:foregroundGravity="center"

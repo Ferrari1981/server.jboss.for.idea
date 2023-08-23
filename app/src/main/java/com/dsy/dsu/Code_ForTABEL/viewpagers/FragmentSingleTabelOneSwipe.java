@@ -154,7 +154,7 @@ public class FragmentSingleTabelOneSwipe extends Fragment {
     private  String ПубличноеIDЗагрузкиТабелей= "";
     private   int МЕсяцДляКурсораТабелей;
     private   int ГодДляТабелей;
-    private Button КнопкаНазад;
+    private ImageButton КнопкаНазад;
     private Button КнопкаЛеваяПередвиженияПоДанным;
     private Button КнопкаПраваяПередвиженияПоДанным;
     private  TextView textViewчасыsimgletabel;
@@ -379,7 +379,7 @@ public class FragmentSingleTabelOneSwipe extends Fragment {
                     textViewчасыsimgletabel.setPaintFlags( (textViewчасыsimgletabel.getPaintFlags() | Paint.FAKE_BOLD_TEXT_FLAG));
                     СловоТабель=(TextView)view. findViewById(R.id.textView3СловоТабель);
                     СловоТабель.setGravity(Gravity.CENTER_HORIZONTAL | Gravity.CENTER_VERTICAL);
-                    КнопкаНазад=(Button)view. findViewById(R.id.imageViewСтрелкаВнутриТабеля);
+                    КнопкаНазад=(ImageButton)view. findViewById(R.id.imageViewСтрелкаВнутриТабеля);
                     view2Линия=(View)view. findViewById(R.id.view2Линия);
                     ProgressBarSingleTabel.setVisibility(View.VISIBLE);
                     TextViewФИОПрофессия = (TextView)  view.findViewById(R.id.TextViewФИОПрофессия);
@@ -748,7 +748,7 @@ public class FragmentSingleTabelOneSwipe extends Fragment {
 
                 DividerItemDecoration dividerItemDecorationHor=
                         new DividerItemDecoration(getActivity(), LinearLayoutManager.HORIZONTAL);
-                dividerItemDecorationHor.setDrawable(getContext().getDrawable(R.drawable.divider_for_order_transport1));///R.dimen.activity_horizontal_margin
+                dividerItemDecorationHor.setDrawable(getContext().getDrawable(R.drawable.divider_for_order_transport2));///R.dimen.activity_horizontal_margin
                 recycleView.addItemDecoration(dividerItemDecorationHor);
 
                 LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity() , LinearLayoutManager.VERTICAL, true);
