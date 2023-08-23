@@ -1514,11 +1514,11 @@ try{
                             + public_contentДатыДляГлавныхТаблицСинхронизации.ВерсииВсехСерверныхТаблиц.toString());
 
 
-// TODO: 21.08.2023 ГЛАВНЫЙ ЦИКЛ СИХРОНИАЗЦИИ
+// TODO: 21.08.2023 ГЛАВНЫЙ ЦИКЛ СИХРОНИАЗЦИИ--многопоточный
 
-
+/*
                Flowable.fromIterable( public_contentДатыДляГлавныхТаблицСинхронизации.ВерсииВсехСерверныхТаблиц.keySet())
-                                    .parallel()
+                                    .parallel(2)
                        .runOn(Schedulers.newThread())
                                                     .doOnNext(new io.reactivex.rxjava3.functions.Consumer<String>() {
                                                         @Override
@@ -1551,10 +1551,9 @@ try{
                                             " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
                                 }
                             })
-                            .sequential().onBackpressureBuffer().blockingSubscribe();
+                            .sequential().onBackpressureBuffer().blockingSubscribe();*/
 
-/*
-                    // TODO: 01.12.2022  еще один тест
+// TODO: 21.08.2023 ГЛАВНЫЙ ЦИКЛ СИХРОНИАЗЦИИ --Однопоточный
                   Flowable.fromIterable( public_contentДатыДляГлавныхТаблицСинхронизации.ВерсииВсехСерверныхТаблиц.keySet())
                             .onBackpressureBuffer()
                            .onErrorComplete(new Predicate<Throwable>() {
@@ -1585,7 +1584,7 @@ try{
                                 }
 
 
-                            });*/
+                            });
                     Log.w(this.getClass().getName(), " doOnTerminate ОБРАБОТКА ВСЕХ ТАБЛИЦ ЛистТаблицыОбмена.stream().reduce(0, (a, b) -> a + b).intValue()"
                             + ЛистТаблицыОбмена.stream().reduce(0, (a, b) -> a + b).intValue()+ " СсылкаНаБазуSqlite.isOpen() "
                             +СсылкаНаБазуSqlite.isOpen());
