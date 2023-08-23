@@ -55,6 +55,7 @@ import com.dsy.dsu.Business_logic_Only_Class.Class_Generation_Errors;
 import com.dsy.dsu.Business_logic_Only_Class.Class_Generations_PUBLIC_CURRENT_ID;
 import com.dsy.dsu.Business_logic_Only_Class.Class_Generator_One_WORK_MANAGER;
 import com.dsy.dsu.CodeOrdersAnTransports.Background.ServiceOrserTransportService;
+import com.dsy.dsu.Dashboard.Fragments.DashboardFragmentSettings;
 import com.dsy.dsu.Dashboard.MainActivity_Dashboard;
 import com.dsy.dsu.R;
 import com.google.android.material.bottomnavigation.BottomNavigationItemView;
@@ -606,10 +607,31 @@ public class FragmentOrderTransportOneChane extends Fragment {
 
         private void методBackActivityOrderTranport( ) {
            try{
-            Intent Интент_BackВозвращаемАктивти = getActivity().getIntent();
+         /*   Intent Интент_BackВозвращаемАктивти = getActivity().getIntent();
           Интент_BackВозвращаемАктивти.setClass(getContext(), MainActivity_Dashboard.class); // Т
             Интент_BackВозвращаемАктивти.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(Интент_BackВозвращаемАктивти);
+            */
+
+
+               // TODO Запусукаем Фргамент НАстройки  dashbord
+               DashboardFragmentSettings dashboardFragmentSettings = DashboardFragmentSettings.newInstance();
+               Bundle data=new Bundle();
+               dashboardFragmentSettings.setArguments(data);
+               fragmentTransaction.remove(dashboardFragmentSettings);
+               String fragmentNewImageNameaddToBackStack=   dashboardFragmentSettings.getClass().getName();
+               fragmentTransaction.addToBackStack(fragmentNewImageNameaddToBackStack);
+               Fragment FragmentУжеЕСтьИлиНЕт=     fragmentManager.findFragmentByTag(fragmentNewImageNameaddToBackStack);
+               if (FragmentУжеЕСтьИлиНЕт==null) {
+                   dashboardFragmentSettings.show(fragmentManager, "DashboardFragmentSettings");
+                   // TODO: 01.08.2023
+
+               }
+
+
+
+
+
                Log.i(this.getClass().getName(),  " Атоманически установкаОбновление ПО "+
                        Thread.currentThread().getStackTrace()[2].getMethodName()+
                        " время " +new Date().toLocaleString() + " message " +message );

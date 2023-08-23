@@ -33,6 +33,9 @@ import androidx.annotation.RequiresApi;
 import androidx.annotation.UiThread;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.dsy.dsu.AllDatabases.CREATE_DATABASE;
 import com.dsy.dsu.Business_logic_Only_Class.Class_GRUD_SQL_Operations;
@@ -45,6 +48,7 @@ import com.dsy.dsu.Business_logic_Only_Class.DATE.SubClassCursorLoader;
 import com.dsy.dsu.Business_logic_Only_Class.PUBLIC_CONTENT;
 import com.dsy.dsu.Business_logic_Only_Class.SubClassGetPublicId;
 import com.dsy.dsu.Business_logic_Only_Class.SubClassUpVersionDATA;
+import com.dsy.dsu.Dashboard.Fragments.DashboardFragmentSettings;
 import com.dsy.dsu.Dashboard.MainActivity_Dashboard;
 import com.dsy.dsu.R;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
@@ -122,6 +126,8 @@ public class MainActivity_New_Templates extends AppCompatActivity implements Dat
     private ProgressDialog progressDialog ;
     private  FloatingActionButton КруглаяКнопкаСозданиеНовогоТабеля;
     private  Activity activity;
+    private FragmentManager fragmentManager;
+    private FragmentTransaction fragmentTransaction;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -138,6 +144,10 @@ public class MainActivity_New_Templates extends AppCompatActivity implements Dat
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD
                 | WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON
                 | WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+
+            fragmentManager =   getSupportFragmentManager();
+            fragmentTransaction = fragmentManager.beginTransaction();
+
         /////
         ScrollНаАктивтиСозданныхТабелей = (ScrollView) findViewById(R.id.ScrollViewListTabels); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
         LinearLayoutСозданныхТабелей = (LinearLayout) findViewById(R.id.ГлавныйКонтейнерТабель); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
@@ -2460,25 +2470,41 @@ public class MainActivity_New_Templates extends AppCompatActivity implements Dat
             Intent ИнтентBackactivityListPeoples = null;
             if (MainParentUUID>0) {
                 ИнтентBackactivityListPeoples = new Intent(getApplicationContext(), MainActivity_List_Peoples.class);
+                Bundle bundleBackactivityListPeoples=new Bundle();
+                bundleBackactivityListPeoples.putLong("MainParentUUID", MainParentUUID);
+                bundleBackactivityListPeoples.putInt("Position",    Position);
+                bundleBackactivityListPeoples.putInt("ГодТабелей",     ГодТабелей);
+                bundleBackactivityListPeoples.putInt("МЕсяцТабелей", МЕсяцТабелей);
+                bundleBackactivityListPeoples.putInt("DigitalNameCFO",  DigitalNameCFO);
+                bundleBackactivityListPeoples.putString("FullNameCFO", FullNameCFO);
+                bundleBackactivityListPeoples.putString("ИмесяцвИГодСразу",    ИмесяцвИГодСразу);
+                bundleBackactivityListPeoples.putLong("CurrenrsСhildUUID",  CurrenrsСhildUUID);
+                ИнтентBackactivityListPeoples.putExtras(bundleBackactivityListPeoples);
+                startActivity( ИнтентBackactivityListPeoples);
             } else {
-                ИнтентBackactivityListPeoples = new Intent(getApplicationContext(), MainActivity_Dashboard.class);
+
+              //  ИнтентBackactivityListPeoples = new Intent(getApplicationContext(), MainActivity_Dashboard.class);
+                // TODO Запусукаем Фргамент НАстройки  dashbord
+                DashboardFragmentSettings dashboardFragmentSettings = DashboardFragmentSettings.newInstance();
+                Bundle data=new Bundle();
+                dashboardFragmentSettings.setArguments(data);
+                fragmentTransaction.remove(dashboardFragmentSettings);
+                String fragmentNewImageNameaddToBackStack=   dashboardFragmentSettings.getClass().getName();
+                fragmentTransaction.addToBackStack(fragmentNewImageNameaddToBackStack);
+                Fragment FragmentУжеЕСтьИлиНЕт=     fragmentManager.findFragmentByTag(fragmentNewImageNameaddToBackStack);
+                if (FragmentУжеЕСтьИлиНЕт==null) {
+                    dashboardFragmentSettings.show(fragmentManager, "DashboardFragmentSettings");
+                    // TODO: 01.08.2023
+
+                }
+
+
             }
-            Bundle bundleBackactivityListPeoples=new Bundle();
-            bundleBackactivityListPeoples.putLong("MainParentUUID", MainParentUUID);
-            bundleBackactivityListPeoples.putInt("Position",    Position);
-            bundleBackactivityListPeoples.putInt("ГодТабелей",     ГодТабелей);
-            bundleBackactivityListPeoples.putInt("МЕсяцТабелей", МЕсяцТабелей);
-            bundleBackactivityListPeoples.putInt("DigitalNameCFO",  DigitalNameCFO);
-            bundleBackactivityListPeoples.putString("FullNameCFO", FullNameCFO);
-            bundleBackactivityListPeoples.putString("ИмесяцвИГодСразу",    ИмесяцвИГодСразу);
-            bundleBackactivityListPeoples.putLong("CurrenrsСhildUUID",  CurrenrsСhildUUID);
-            ИнтентBackactivityListPeoples.putExtras(bundleBackactivityListPeoples);
-            startActivity( ИнтентBackactivityListPeoples);
+
 // TODO: 17.04.2023
             Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
-                    + " bundleBackactivityListPeoples "+bundleBackactivityListPeoples);
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
         } catch (Exception e) {
             e.printStackTrace();
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +

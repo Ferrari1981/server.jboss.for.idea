@@ -41,6 +41,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.UiThread;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.dsy.dsu.AllDatabases.CREATE_DATABASE;
 import com.dsy.dsu.Business_logic_Only_Class.Class_GRUD_SQL_Operations;
@@ -51,6 +54,7 @@ import com.dsy.dsu.Business_logic_Only_Class.Class_MODEL_synchronized;
 import com.dsy.dsu.Business_logic_Only_Class.DATE.SubClassCursorLoader;
 import com.dsy.dsu.Business_logic_Only_Class.PUBLIC_CONTENT;
 import com.dsy.dsu.Code_For_Services.Service_For_Public;
+import com.dsy.dsu.Dashboard.Fragments.DashboardFragmentSettings;
 import com.dsy.dsu.Dashboard.MainActivity_Dashboard;
 import com.dsy.dsu.R;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
@@ -122,6 +126,10 @@ public class MainActivity_List_Tabels extends AppCompatActivity  {
     private      SubClassCursorLoader subClassCursorLoader;
     private    DatePickerDialog ДатаДляКалендаря;
 
+
+    private FragmentManager fragmentManager;
+    private FragmentTransaction fragmentTransaction;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         try{
@@ -140,6 +148,10 @@ public class MainActivity_List_Tabels extends AppCompatActivity  {
         /////todo данная настрока запрещает при запуке активти подскаваать клавиатуре вверх на компонеты eedittext
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
             gridViewAllTabes = (GridView) findViewById(R.id.gridViewAllTabes); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
+
+
+            fragmentManager =   getSupportFragmentManager();
+            fragmentTransaction = fragmentManager.beginTransaction();
 
         //todo кнопка назад
         КнопкаНазадВсеТабеля= findViewById(R.id.КонопкаНазадСтрелкаВсеТабеля);
@@ -208,10 +220,32 @@ public class MainActivity_List_Tabels extends AppCompatActivity  {
                 try{
                     Log.d(this.getClass().getName(), " кликнем для созданни новго сотрдника при нажатии  ");
                     ///todo код которыц возврящет предыдущий актвитики кнопка back
-                    Intent Интент_BackВозвращаемАктивти = new Intent();
+                  /*  Intent Интент_BackВозвращаемАктивти = new Intent();
                     Интент_BackВозвращаемАктивти.setClass(getApplication(), MainActivity_Dashboard.class); // Т
                     Интент_BackВозвращаемАктивти.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    startActivity( Интент_BackВозвращаемАктивти);
+                    startActivity( Интент_BackВозвращаемАктивти);*/
+
+
+
+                    // TODO Запусукаем Фргамент НАстройки  dashbord
+                    DashboardFragmentSettings dashboardFragmentSettings = DashboardFragmentSettings.newInstance();
+                    Bundle data=new Bundle();
+                    dashboardFragmentSettings.setArguments(data);
+                    fragmentTransaction.remove(dashboardFragmentSettings);
+                    String fragmentNewImageNameaddToBackStack=   dashboardFragmentSettings.getClass().getName();
+                    fragmentTransaction.addToBackStack(fragmentNewImageNameaddToBackStack);
+                    Fragment FragmentУжеЕСтьИлиНЕт=     fragmentManager.findFragmentByTag(fragmentNewImageNameaddToBackStack);
+                    if (FragmentУжеЕСтьИлиНЕт==null) {
+                        dashboardFragmentSettings.show(fragmentManager, "DashboardFragmentSettings");
+                        // TODO: 01.08.2023
+
+                    }
+
+
+
+
+
+
                     Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                             " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");

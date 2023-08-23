@@ -38,6 +38,7 @@ import com.dsy.dsu.Business_logic_Only_Class.Class_Generation_Errors;
 import com.dsy.dsu.Business_logic_Only_Class.Class_Generations_PUBLIC_CURRENT_ID;
 import com.dsy.dsu.Business_logic_Only_Class.Class_Get_Json_1C;
 import com.dsy.dsu.Code_For_Services.Service_Notificatios_Для_Согласования;
+import com.dsy.dsu.Dashboard.Fragments.DashboardFragmentSettings;
 import com.dsy.dsu.Dashboard.MainActivity_Dashboard;
 import com.dsy.dsu.R;
 import com.dsy.dsu.Code_Gson_Processing.SubClass_JSON_B_P_GET_1C;
@@ -96,6 +97,9 @@ public class Fragment1_List_CommitPay extends Fragment {
    private  Animation animationДляСогласования;
    private AsyncTaskLoader <Object> asyncTaskLoader;
 
+    private FragmentManager fragmentManager;
+    private FragmentTransaction fragmentTransaction;
+
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -105,6 +109,13 @@ public class Fragment1_List_CommitPay extends Fragment {
         if (data!=null) {
             binderСогласования1C =  (Service_Notificatios_Для_Согласования.LocalBinderДляСогласования) data.getBinder("binderСогласования1C");
         }
+            fragmentManager = getActivity(). getSupportFragmentManager();
+            fragmentTransaction = fragmentManager.beginTransaction();
+            // TODO: 15.08.2023
+            Log.d(this.getClass().getName(),"\n" + " class "
+                    + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
     } catch (Exception e) {
         e.printStackTrace();
         Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
@@ -346,7 +357,7 @@ public class Fragment1_List_CommitPay extends Fragment {
                 bottomNavigationКонкретноКнопкаКонтролируемыеНазад.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Intent Интент_BackВозвращаемАктивти = new Intent();
+                     /*   Intent Интент_BackВозвращаемАктивти = new Intent();
                         Bundle data1C = new Bundle();
                         data1C.putBinder("binderСогласования1C", binderСогласования1C);
                         Интент_BackВозвращаемАктивти.putExtras(data1C);
@@ -354,6 +365,28 @@ public class Fragment1_List_CommitPay extends Fragment {
                         Интент_BackВозвращаемАктивти.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         Log.d(this.getClass().getName(), "  выходим из задания МетодКпопкаВозвращениеНазадИзСогласованиии" );
                         startActivity( Интент_BackВозвращаемАктивти);
+*/
+
+
+                        // TODO Запусукаем Фргамент НАстройки  dashbord
+                        DashboardFragmentSettings dashboardFragmentSettings = DashboardFragmentSettings.newInstance();
+                        Bundle data=new Bundle();
+                        dashboardFragmentSettings.setArguments(data);
+                        fragmentTransaction.remove(dashboardFragmentSettings);
+                        String fragmentNewImageNameaddToBackStack=   dashboardFragmentSettings.getClass().getName();
+                        fragmentTransaction.addToBackStack(fragmentNewImageNameaddToBackStack);
+                        Fragment FragmentУжеЕСтьИлиНЕт=     fragmentManager.findFragmentByTag(fragmentNewImageNameaddToBackStack);
+                        if (FragmentУжеЕСтьИлиНЕт==null) {
+                            dashboardFragmentSettings.show(fragmentManager, "DashboardFragmentSettings");
+                            // TODO: 01.08.2023
+
+                        }
+
+
+
+
+
+
                     }
                 });
             } catch (Exception e) {

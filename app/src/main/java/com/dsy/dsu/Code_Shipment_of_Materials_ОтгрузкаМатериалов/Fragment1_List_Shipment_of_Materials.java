@@ -44,6 +44,7 @@ import com.dsy.dsu.Business_logic_Only_Class.Class_Generation_Errors;
 import com.dsy.dsu.Business_logic_Only_Class.Class_Generations_PUBLIC_CURRENT_ID;
 import com.dsy.dsu.Code_For_Services.Service_Get1C_ПолучениеДанныхОт1С;
 import com.dsy.dsu.Code_Gson_Processing.SubClass_JSON_B_P_GET_1C_shipment_of_materials;
+import com.dsy.dsu.Dashboard.Fragments.DashboardFragmentSettings;
 import com.dsy.dsu.Dashboard.MainActivity_Dashboard;
 import com.dsy.dsu.R;
 import com.google.android.material.bottomnavigation.BottomNavigationItemView;
@@ -123,6 +124,9 @@ public class Fragment1_List_Shipment_of_Materials extends Fragment    {
     // TODO: 30.07.2022
     private Boolean  ФлагЧтоЭтоНеПервыйСтартСпинераДляВыбораЦФО=false;
 
+    private FragmentManager fragmentManager;
+    private FragmentTransaction fragmentTransaction;
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -194,6 +198,8 @@ public class Fragment1_List_Shipment_of_Materials extends Fragment    {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        fragmentManager = getActivity(). getSupportFragmentManager();
+        fragmentTransaction = fragmentManager.beginTransaction();
     }
 
     @Override
@@ -452,12 +458,30 @@ public class Fragment1_List_Shipment_of_Materials extends Fragment    {
                 bottomNavigationКонкретноКнопкаКонтролируемыеНазад.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Intent Интент_BackВозвращаемАктивти = new Intent();
+            /*            Intent Интент_BackВозвращаемАктивти = new Intent();
                         Интент_BackВозвращаемАктивти.setClass(getContext(), MainActivity_Dashboard.class); // Т
                         ////todo запускаем активти
                         Интент_BackВозвращаемАктивти.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         Log.d(this.getClass().getName(), "  выходим из задания МетодКпопкаВозвращениеНазадИзСогласованиии" );
-                        startActivity( Интент_BackВозвращаемАктивти);
+                        startActivity( Интент_BackВозвращаемАктивти);*/
+
+
+                        // TODO Запусукаем Фргамент НАстройки  dashbord
+                        DashboardFragmentSettings dashboardFragmentSettings = DashboardFragmentSettings.newInstance();
+                        Bundle data=new Bundle();
+                        dashboardFragmentSettings.setArguments(data);
+                        fragmentTransaction.remove(dashboardFragmentSettings);
+                        String fragmentNewImageNameaddToBackStack=   dashboardFragmentSettings.getClass().getName();
+                        fragmentTransaction.addToBackStack(fragmentNewImageNameaddToBackStack);
+                        Fragment FragmentУжеЕСтьИлиНЕт=     fragmentManager.findFragmentByTag(fragmentNewImageNameaddToBackStack);
+                        if (FragmentУжеЕСтьИлиНЕт==null) {
+                            dashboardFragmentSettings.show(fragmentManager, "DashboardFragmentSettings");
+                            // TODO: 01.08.2023
+
+                        }
+
+
+
                     }
                 });
             } catch (Exception e) {

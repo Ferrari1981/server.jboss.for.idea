@@ -20,10 +20,14 @@ import androidx.annotation.NonNull;
 import androidx.annotation.UiThread;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.dsy.dsu.AllDatabases.CREATE_DATABASE;
 import com.dsy.dsu.Business_logic_Only_Class.Class_Generation_Errors;
 import com.dsy.dsu.Business_logic_Only_Class.Class_Sendiing_Errors;
+import com.dsy.dsu.Dashboard.Fragments.DashboardFragmentSettings;
 import com.dsy.dsu.Dashboard.MainActivity_Dashboard;
 import com.dsy.dsu.R;
 import com.google.android.material.button.MaterialButton;
@@ -53,11 +57,19 @@ public class MainActivity_Errors extends AppCompatActivity  {
 
 
     private MaterialButton imageViewСтрелкаВнутриТабеля;
+
+    private FragmentManager fragmentManager;
+    private FragmentTransaction fragmentTransaction;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         try {
                 super.onCreate(savedInstanceState);
             setContentView(R.layout.activitymain_viewlogin); ///activitymain_viewlogin  /// fragment_dashboard
+
+
+            fragmentManager = getSupportFragmentManager();
+            fragmentTransaction = fragmentManager.beginTransaction();
+
             КонтейнерКудаЗагружаеютьсяОшибкиПрилоджения = (TextView) findViewById(R.id.textViewDATA);
             create_database =new CREATE_DATABASE(getApplicationContext());
             getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
@@ -102,10 +114,15 @@ public class MainActivity_Errors extends AppCompatActivity  {
                 public void onClick(View v) {
                     try{
 
-                        Intent Интент_BackВозвращаемАктивти = new Intent();
+         /*               Intent Интент_BackВозвращаемАктивти = new Intent();
                         Интент_BackВозвращаемАктивти.setClass(getApplication(), MainActivity_Dashboard.class); // Т
                         Интент_BackВозвращаемАктивти.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                        startActivity( Интент_BackВозвращаемАктивти);
+                        startActivity( Интент_BackВозвращаемАктивти);*/
+
+
+                        методвыходизОшибок();
+
+
                         Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                                 " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
@@ -123,6 +140,22 @@ public class MainActivity_Errors extends AppCompatActivity  {
                 }
             });
 
+    }
+
+    private void методвыходизОшибок() {
+        // TODO Запусукаем Фргамент НАстройки  dashbord
+        DashboardFragmentSettings dashboardFragmentSettings = DashboardFragmentSettings.newInstance();
+        Bundle data=new Bundle();
+        dashboardFragmentSettings.setArguments(data);
+        fragmentTransaction.remove(dashboardFragmentSettings);
+        String fragmentNewImageNameaddToBackStack=   dashboardFragmentSettings.getClass().getName();
+        fragmentTransaction.addToBackStack(fragmentNewImageNameaddToBackStack);
+        Fragment FragmentУжеЕСтьИлиНЕт=     fragmentManager.findFragmentByTag(fragmentNewImageNameaddToBackStack);
+        if (FragmentУжеЕСтьИлиНЕт==null) {
+            dashboardFragmentSettings.show(fragmentManager, "DashboardFragmentSettings");
+            // TODO: 01.08.2023
+
+        }
     }
 
 
@@ -252,72 +285,6 @@ public class MainActivity_Errors extends AppCompatActivity  {
 ///////
         }
     }
-
-
-    //////ОБЩИЙ МЕТОД СОЗДАНИЕ КЛАССИЧЕСКОГО ДИАЛОГА С КНОПКОЙ ЗАКРЫТЬ
-    @UiThread
-    public void МетодСозданиеДиалогаКлассЛогин(String ШабкаДиалога, String СообщениеДиалога) {
-        try {
-///////СОЗДАЕМ ДИАЛОГ ДА ИЛИ НЕТ///////СОЗДАЕМ ДИАЛОГ ДА ИЛИ НЕТ
-//////сам вид
-            final AlertDialog DialogBoxsПростомрДанных = new MaterialAlertDialogBuilder(this)
-                    .setTitle(ШабкаДиалога)
-                    .setMessage(СообщениеДиалога)
-                    .setPositiveButton("Закрыть", null)
-                    .show();
-/////////кнопка
-            final Button MessageBoxUpdateПростомрДанных = DialogBoxsПростомрДанных.getButton(AlertDialog.BUTTON_POSITIVE);
-            MessageBoxUpdateПростомрДанных.setOnClickListener(new View.OnClickListener() {
-
-                ///MessageBoxUpdate метод CLICK для DIALOBOX
-                @Override
-                public void onClick(View v) {
-///запуск метода обновления через DIALOGBOX
-                    try {
-//удаляем с экрана Диалог
-                        DialogBoxsПростомрДанных.dismiss();
-//соообщение
-// Toast.makeText(getApplicationContext(), "Запускаем обновление данных " , Toast.LENGTH_LONG).show();
-///////запуск главного меню после того как поняли что в азе нет логинов
-                        Intent Интент_Меню_ТолькоПростотДанных;
-                        Интент_Меню_ТолькоПростотДанных = new Intent(getApplicationContext(), MainActivity_Dashboard.class);
-///// Toast.makeText(getApplicationContext(), "Выбран пунк меню Главный Экран" , Toast.LENGTH_LONG).show();
-                        startActivity(Интент_Меню_ТолькоПростотДанных);
-                       // finish();
-////ПОСЛЕ ОПЕРАЦИИ ОБНОВЛЕНИЕ ЗАПУСКАМ ГЛАВНЦЮ ФОРМУ ПРОСМОТРА ДАННЫХ
-////
-
-
-//ловим ошибки
-
-                    } catch (Exception e) {
-                        e.printStackTrace();
-///метод запись ошибок в таблицу
-                        Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                         // TODO: 01.09.2021 метод вызова
-            new   Class_Generation_Errors(getApplicationContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(), 
-          this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
-                    Thread.currentThread().getStackTrace()[2].getLineNumber());
-
-                    }
-
-                }
-            });
-
-// /поймать ошибку
-        } catch (Exception e) {
-//  Block of code to handle errors
-            e.printStackTrace();
-///метод запись ошибок в таблицу
-            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-             // TODO: 01.09.2021 метод вызова
-            new   Class_Generation_Errors(getApplicationContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(), 
-          this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
-                    Thread.currentThread().getStackTrace()[2].getLineNumber());
-        }
-    }
-
-
 
     protected void МетодПосылаемОшибкиНапочту(@NonNull StringBuffer БуерДляОшибок) {
         try{
