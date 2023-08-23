@@ -458,14 +458,14 @@ public class Fragment1_List_Shipment_of_Materials extends Fragment    {
                 bottomNavigationКонкретноКнопкаКонтролируемыеНазад.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-            /*            Intent Интент_BackВозвращаемАктивти = new Intent();
+                        Intent Интент_BackВозвращаемАктивти = new Intent();
                         Интент_BackВозвращаемАктивти.setClass(getContext(), MainActivity_Dashboard.class); // Т
                         ////todo запускаем активти
                         Интент_BackВозвращаемАктивти.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         Log.d(this.getClass().getName(), "  выходим из задания МетодКпопкаВозвращениеНазадИзСогласованиии" );
-                        startActivity( Интент_BackВозвращаемАктивти);*/
+                        startActivity( Интент_BackВозвращаемАктивти);
 
-
+/*
                         // TODO Запусукаем Фргамент НАстройки  dashbord
                         DashboardFragmentSettings dashboardFragmentSettings = DashboardFragmentSettings.newInstance();
                         Bundle data=new Bundle();
@@ -478,7 +478,7 @@ public class Fragment1_List_Shipment_of_Materials extends Fragment    {
                             dashboardFragmentSettings.show(fragmentManager, "DashboardFragmentSettings");
                             // TODO: 01.08.2023
 
-                        }
+                        }*/
 
 
 

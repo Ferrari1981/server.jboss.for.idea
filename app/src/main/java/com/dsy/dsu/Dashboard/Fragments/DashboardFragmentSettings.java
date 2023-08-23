@@ -931,7 +931,8 @@ try{
             public void onClick(View v) {
                 try {
                     Intent Интент_BackВозвращаемАктивти = new Intent();
-                    Интент_BackВозвращаемАктивти.setClass(getContext(), MainActivity_New_Templates.class); // Т
+                    Интент_BackВозвращаемАктивти.setClass(getContext(), MainActivity_New_Templates.class); //
+                    Интент_BackВозвращаемАктивти.setAction("FromFragmentSettings.class");
                     Интент_BackВозвращаемАктивти.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     Интент_BackВозвращаемАктивти.putExtra("ЗапускШаблоновFaceAppБлокировкаКнопкиДа", true);
                   getActivity().  startActivity(Интент_BackВозвращаемАктивти);

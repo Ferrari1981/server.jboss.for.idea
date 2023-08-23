@@ -2468,23 +2468,7 @@ public class MainActivity_New_Templates extends AppCompatActivity implements Dat
     private void методBackActivityListPeoples() {
         try {
             Intent ИнтентBackactivityListPeoples = null;
-            if (MainParentUUID>0) {
-                ИнтентBackactivityListPeoples = new Intent(getApplicationContext(), MainActivity_List_Peoples.class);
-                Bundle bundleBackactivityListPeoples=new Bundle();
-                bundleBackactivityListPeoples.putLong("MainParentUUID", MainParentUUID);
-                bundleBackactivityListPeoples.putInt("Position",    Position);
-                bundleBackactivityListPeoples.putInt("ГодТабелей",     ГодТабелей);
-                bundleBackactivityListPeoples.putInt("МЕсяцТабелей", МЕсяцТабелей);
-                bundleBackactivityListPeoples.putInt("DigitalNameCFO",  DigitalNameCFO);
-                bundleBackactivityListPeoples.putString("FullNameCFO", FullNameCFO);
-                bundleBackactivityListPeoples.putString("ИмесяцвИГодСразу",    ИмесяцвИГодСразу);
-                bundleBackactivityListPeoples.putLong("CurrenrsСhildUUID",  CurrenrsСhildUUID);
-                ИнтентBackactivityListPeoples.putExtras(bundleBackactivityListPeoples);
-                startActivity( ИнтентBackactivityListPeoples);
-            } else {
-
-              //  ИнтентBackactivityListPeoples = new Intent(getApplicationContext(), MainActivity_Dashboard.class);
-                // TODO Запусукаем Фргамент НАстройки  dashbord
+            if(getIntent().getAction().equalsIgnoreCase( "FromFragmentSettings.class")){
                 DashboardFragmentSettings dashboardFragmentSettings = DashboardFragmentSettings.newInstance();
                 Bundle data=new Bundle();
                 dashboardFragmentSettings.setArguments(data);
@@ -2498,8 +2482,29 @@ public class MainActivity_New_Templates extends AppCompatActivity implements Dat
 
                 }
 
+            }else{
+
+                if (MainParentUUID>0) {
+                    ИнтентBackactivityListPeoples = new Intent(getApplicationContext(), MainActivity_List_Peoples.class);
+                    Bundle bundleBackactivityListPeoples=new Bundle();
+                    bundleBackactivityListPeoples.putLong("MainParentUUID", MainParentUUID);
+                    bundleBackactivityListPeoples.putInt("Position",    Position);
+                    bundleBackactivityListPeoples.putInt("ГодТабелей",     ГодТабелей);
+                    bundleBackactivityListPeoples.putInt("МЕсяцТабелей", МЕсяцТабелей);
+                    bundleBackactivityListPeoples.putInt("DigitalNameCFO",  DigitalNameCFO);
+                    bundleBackactivityListPeoples.putString("FullNameCFO", FullNameCFO);
+                    bundleBackactivityListPeoples.putString("ИмесяцвИГодСразу",    ИмесяцвИГодСразу);
+                    bundleBackactivityListPeoples.putLong("CurrenrsСhildUUID",  CurrenrsСhildUUID);
+                    ИнтентBackactivityListPeoples.putExtras(bundleBackactivityListPeoples);
+
+                } else {
+                    ИнтентBackactivityListPeoples = new Intent(getApplicationContext(), MainActivity_Dashboard.class);
+                    // TODO Запусукаем Фргамент НАстройки  dashbord
+                }
+                startActivity( ИнтентBackactivityListPeoples);
 
             }
+
 
 // TODO: 17.04.2023
             Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +

@@ -607,14 +607,13 @@ public class FragmentOrderTransportOneChane extends Fragment {
 
         private void методBackActivityOrderTranport( ) {
            try{
-         /*   Intent Интент_BackВозвращаемАктивти = getActivity().getIntent();
+            Intent Интент_BackВозвращаемАктивти = getActivity().getIntent();
           Интент_BackВозвращаемАктивти.setClass(getContext(), MainActivity_Dashboard.class); // Т
             Интент_BackВозвращаемАктивти.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(Интент_BackВозвращаемАктивти);
-            */
 
 
-               // TODO Запусукаем Фргамент НАстройки  dashbord
+   /*            // TODO Запусукаем Фргамент НАстройки  dashbord
                DashboardFragmentSettings dashboardFragmentSettings = DashboardFragmentSettings.newInstance();
                Bundle data=new Bundle();
                dashboardFragmentSettings.setArguments(data);
@@ -627,7 +626,7 @@ public class FragmentOrderTransportOneChane extends Fragment {
                    // TODO: 01.08.2023
 
                }
-
+*/
 
 
 

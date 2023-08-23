@@ -220,14 +220,14 @@ public class MainActivity_List_Tabels extends AppCompatActivity  {
                 try{
                     Log.d(this.getClass().getName(), " кликнем для созданни новго сотрдника при нажатии  ");
                     ///todo код которыц возврящет предыдущий актвитики кнопка back
-                  /*  Intent Интент_BackВозвращаемАктивти = new Intent();
+                    Intent Интент_BackВозвращаемАктивти = new Intent();
                     Интент_BackВозвращаемАктивти.setClass(getApplication(), MainActivity_Dashboard.class); // Т
                     Интент_BackВозвращаемАктивти.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    startActivity( Интент_BackВозвращаемАктивти);*/
+                    startActivity( Интент_BackВозвращаемАктивти);
 
 
 
-                    // TODO Запусукаем Фргамент НАстройки  dashbord
+        /*            // TODO Запусукаем Фргамент НАстройки  dashbord
                     DashboardFragmentSettings dashboardFragmentSettings = DashboardFragmentSettings.newInstance();
                     Bundle data=new Bundle();
                     dashboardFragmentSettings.setArguments(data);
@@ -239,7 +239,7 @@ public class MainActivity_List_Tabels extends AppCompatActivity  {
                         dashboardFragmentSettings.show(fragmentManager, "DashboardFragmentSettings");
                         // TODO: 01.08.2023
 
-                    }
+                    }*/
 
 
 

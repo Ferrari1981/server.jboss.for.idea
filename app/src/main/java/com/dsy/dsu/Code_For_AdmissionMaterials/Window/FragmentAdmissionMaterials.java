@@ -531,7 +531,7 @@ public class FragmentAdmissionMaterials extends Fragment {
                 public void onClick(View v) {
                     try {
                         МетодЗапускаАнимацииКнопок(v);//todo только анимауия
-                   /*     Intent Интент_BackВозвращаемАктивти = getActivity().getIntent();
+                        Intent Интент_BackВозвращаемАктивти = getActivity().getIntent();
                         Интент_BackВозвращаемАктивти.setClass(getContext(), MainActivity_Dashboard.class); // Т
                         Интент_BackВозвращаемАктивти.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         Bundle gameData = new Bundle();
@@ -540,9 +540,8 @@ public class FragmentAdmissionMaterials extends Fragment {
                         Интент_BackВозвращаемАктивти.putExtras(gameData);
                         Log.d(this.getClass().getName(), "  выходим из задания МетодКпопкаВозвращениеНазадИзСогласованиии");
                         message.getTarget().postDelayed(()->{ startActivity(Интент_BackВозвращаемАктивти); },500);
-*/
 
-                        // TODO Запусукаем Фргамент НАстройки  dashbord
+              /*          // TODO Запусукаем Фргамент НАстройки  dashbord
                         DashboardFragmentSettings dashboardFragmentSettings = DashboardFragmentSettings.newInstance();
                         Bundle data=new Bundle();
                         dashboardFragmentSettings.setArguments(data);
@@ -554,7 +553,7 @@ public class FragmentAdmissionMaterials extends Fragment {
                             dashboardFragmentSettings.show(fragmentManager, "DashboardFragmentSettings");
                             // TODO: 01.08.2023
 
-                        }
+                        }*/
 
 
 

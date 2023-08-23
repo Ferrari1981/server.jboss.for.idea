@@ -357,7 +357,7 @@ public class Fragment1_List_CommitPay extends Fragment {
                 bottomNavigationКонкретноКнопкаКонтролируемыеНазад.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                     /*   Intent Интент_BackВозвращаемАктивти = new Intent();
+                        Intent Интент_BackВозвращаемАктивти = new Intent();
                         Bundle data1C = new Bundle();
                         data1C.putBinder("binderСогласования1C", binderСогласования1C);
                         Интент_BackВозвращаемАктивти.putExtras(data1C);
@@ -365,10 +365,9 @@ public class Fragment1_List_CommitPay extends Fragment {
                         Интент_BackВозвращаемАктивти.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         Log.d(this.getClass().getName(), "  выходим из задания МетодКпопкаВозвращениеНазадИзСогласованиии" );
                         startActivity( Интент_BackВозвращаемАктивти);
-*/
 
 
-                        // TODO Запусукаем Фргамент НАстройки  dashbord
+              /*          // TODO Запусукаем Фргамент НАстройки  dashbord
                         DashboardFragmentSettings dashboardFragmentSettings = DashboardFragmentSettings.newInstance();
                         Bundle data=new Bundle();
                         dashboardFragmentSettings.setArguments(data);
@@ -380,7 +379,7 @@ public class Fragment1_List_CommitPay extends Fragment {
                             dashboardFragmentSettings.show(fragmentManager, "DashboardFragmentSettings");
                             // TODO: 01.08.2023
 
-                        }
+                        }*/
 
 
 
