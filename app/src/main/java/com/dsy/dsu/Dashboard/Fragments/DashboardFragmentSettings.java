@@ -48,6 +48,7 @@ import com.dsy.dsu.Business_logic_Only_Class.Class_Generator_One_WORK_MANAGER;
 import com.dsy.dsu.Business_logic_Only_Class.Class_MODEL_synchronized;
 import com.dsy.dsu.Business_logic_Only_Class.PUBLIC_CONTENT;
 import com.dsy.dsu.Business_logic_Only_Class.Websocet.WebSocketss;
+import com.dsy.dsu.Code_ForTABEL.MainActivity_New_Templates;
 import com.dsy.dsu.Code_For_Services.ServiceUpdatePoОбновлениеПО;
 import com.dsy.dsu.Dashboard.MainActivity_Dashboard;
 import com.dsy.dsu.For_Code_Settings_DSU1.MainActivity_Errors;
@@ -80,7 +81,7 @@ public class DashboardFragmentSettings extends  DialogFragment {
 
     private AlertDialog DialogBox=null;
     private  Handler handlerAsync;
-    private MaterialButton КнопкаоСистеме, КнопкаПользователи ,  КнопкаОбменДанными,Кнопкаобновление,КнопкаОшибки;
+    private MaterialButton КнопкаоСистеме, КнопкаПользователи ,  КнопкаОбменДанными,Кнопкаобновление,КнопкаОшибки,КнопкаШаблоны;
     private Animation  animation6;
     private TextView TextViewLogo;
     private LifecycleOwner lifecycleOwner;
@@ -214,6 +215,7 @@ public class DashboardFragmentSettings extends  DialogFragment {
             КнопкаОбменДанными         = (MaterialButton) view.findViewById(R.id.КнопкаОбменДанными); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
             Кнопкаобновление          = (MaterialButton) view.findViewById(R.id.Кнопкаобновление); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
             КнопкаОшибки          = (MaterialButton) view.findViewById(R.id.КнопкаОшибки); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
+            КнопкаШаблоны          = (MaterialButton) view.findViewById(R.id.КнопкаШаблоны); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
 
 
             TextViewLogo      = (TextView) view.findViewById(R.id.TextViewLogo); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
@@ -231,6 +233,10 @@ public class DashboardFragmentSettings extends  DialogFragment {
 
 
             classBiznesLogikaSettings.new ClassAllTaskButtons().new ClassUpdatePO().методОбновлениеПО(); ;
+
+            classBiznesLogikaSettings.new ClassAllTaskButtons().new ClassTaskError( ).методtaskError() ;
+
+            classBiznesLogikaSettings.new ClassAllTaskButtons().new ClassTaskShablony( ) .методtaskChablony() ;
 
             // TODO: 17.08.2023
             Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -882,13 +888,68 @@ try{
                });
 
            }
-
-
-
-
                 //TODO END   class  ClassUpdatePO
             }//TODO END   class  ClassUpdatePO
 
+
+            // TODO: 23.08.2023  КЛАСС Task Ошибки
+            class ClassTaskError{
+                // TODO: 23.08.2023  metod error
+                void  методtaskError(){
+                    КнопкаОшибки.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            try {
+                                Intent Интент_Меню = new Intent(getContext(), MainActivity_Errors.class);
+                                Интент_Меню.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);//////FLAG_ACTIVITY_SINGLE_TOP
+                                getActivity().  startActivity(Интент_Меню);
+                                Log.d(this.getClass().getName(), "" +
+                                        "                     case R.id.ПунктМенюПервый:");
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                                Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                                        + Thread.currentThread().getStackTrace()[2].getLineNumber());
+                                new Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
+                                        Thread.currentThread().getStackTrace()[2].getLineNumber());
+                            }
+                        }
+                    });
+
+
+                }
+//TODO END  class ClassTaskError
+            }//TODO END  class ClassTaskError
+
+
+
+// TODO: 23.08.2023 КЛАСС ШАБЛОНЫ TASK
+ class ClassTaskShablony{
+    // TODO: 23.08.2023  metod task Shablony
+    void методtaskChablony(){
+        КнопкаШаблоны.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    Intent Интент_BackВозвращаемАктивти = new Intent();
+                    Интент_BackВозвращаемАктивти.setClass(getContext(), MainActivity_New_Templates.class); // Т
+                    Интент_BackВозвращаемАктивти.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    Интент_BackВозвращаемАктивти.putExtra("ЗапускШаблоновFaceAppБлокировкаКнопкиДа", true);
+                  getActivity().  startActivity(Интент_BackВозвращаемАктивти);
+                    Log.d(this.getClass().getName(), "" +
+                            "                     case R.id.шабоны:");
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                            + Thread.currentThread().getStackTrace()[2].getLineNumber());
+                    new Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
+                            Thread.currentThread().getStackTrace()[2].getLineNumber());
+                }
+            }
+        });
+    }
+
+
+}
 
 
 

@@ -258,16 +258,17 @@
         android:id="@+id/КнопкаОшибки"
         style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
 
+        android:layout_above="@+id/КнопкаШаблоны"
 
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
+
 
 
 
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
-        android:layout_marginBottom="30dp"
+
         android:backgroundTint="#FFFFFF"
         android:drawableLeft="@drawable/icon_newsettings_error"
 
@@ -294,6 +295,47 @@
 
 
 
+
+
+
+    <!--   //TODO   #6-->
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/КнопкаШаблоны"
+        style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
+
+
+        android:layout_alignParentBottom="true"
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+
+
+
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="30dp"
+        android:backgroundTint="#FFFFFF"
+        android:drawableLeft="@drawable/icon_newswttings_shablon"
+
+
+        android:fontFamily="@font/alfa_slab_one"
+        android:gravity="center"
+        android:minHeight="70dp"
+        android:paddingLeft="15dp"
+        android:text="Шаблоны"
+        android:textColor="#000000"
+        android:textSize="14sp"
+        android:textStyle="normal"
+        android:translationZ="2dp"
+        android:visibility="visible"
+        app:cardElevation="2dp"
+        app:cardMaxElevation="1dp"
+        app:cornerRadius="15dp"
+        app:iconGravity="textStart"
+        app:rippleColor="@color/design_default_color_on_secondary"
+        app:strokeColor="#EEEDEF"
+        app:strokeWidth="1dp" />
 
 
 
