@@ -17,6 +17,8 @@ import java.util.Date;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.function.Consumer;
 
+import javax.inject.Singleton;
+
 //этот класс создает базу данных SQLite
 public class CREATE_DATABASE extends SQLiteOpenHelper{ ///SQLiteOpenHelper
      static final int VERSION =              1069;//ПРИ ЛЮБОМ ИЗМЕНЕНИЕ В СТРУКТУРЕ БАЗЫ ДАННЫХ НУЖНО ДОБАВИТЬ ПЛЮС ОДНУ ЦИФРУ К ВЕРСИИ 1=1+1=2 ИТД.1
@@ -27,7 +29,7 @@ public class CREATE_DATABASE extends SQLiteOpenHelper{ ///SQLiteOpenHelper
     public static synchronized SQLiteDatabase getССылкаНаСозданнуюБазу() {
         return ССылкаНаСозданнуюБазу;
     }
-    ///////КОНСТРУКТОР главного класса по созданию базы данных
+@Singleton
     public  CREATE_DATABASE( @NotNull Context context) {/////КОНСТРУКТОР КЛАССА ПО СОЗДАНИЮ БАЗЫ ДАННЫХ
         super(context, "Database DSU-1.db", null, VERSION ); // определяем имя базы данных  и ее версию
         try{

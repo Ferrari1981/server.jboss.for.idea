@@ -69,6 +69,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
+import java.util.stream.Collectors;
 
 import javax.crypto.NoSuchPaddingException;
 
@@ -109,7 +110,7 @@ private  Handler handlerAsync;
     private  String КлючДляFirebaseNotification = "2a1819db-60c8-4ca3-a752-1b6cd9cadfa1";
 
 
-    private     ArrayList<Integer>  ЛистТаблицыОбмена;
+    private     CopyOnWriteArrayList<Integer>  ЛистТаблицыОбмена;
     public Service_For_Remote_Async_Binary() {
         super("Service_For_Remote_Async");
     }
@@ -1505,7 +1506,7 @@ try{
 //todo  ПОД КЛАСС  С ГЛАВНМ ЦИКЛОМ ОБМЕНА ДАННЫМИ ТАБЛИ
             Integer МетодГлавныхЦиклТаблицДляСинхронизации(@NonNull Integer ID)
                     throws ExecutionException, InterruptedException {//КонтекстСинхроДляКонтроллера
-                 ЛистТаблицыОбмена = new ArrayList<>();
+                 ЛистТаблицыОбмена = new CopyOnWriteArrayList<>();
                 try {
                     Log.i(this.getClass().getName(), " ИменаТаблицыОтАндройда "
                             + public_contentДатыДляГлавныхТаблицСинхронизации.ИменаТаблицыОтАндройда.toString()
@@ -1622,7 +1623,6 @@ try{
                 ЛистТаблицыОбмена.add(РезультатТаблицыОбмена);
                 // TODO: 12.07.2023
                 ПозицияТекущейТаблицы++;
-
                 Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                         " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                         " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+
