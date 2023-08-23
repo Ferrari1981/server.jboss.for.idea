@@ -32,6 +32,7 @@ import androidx.lifecycle.LifecycleOwner;
 import com.dsy.dsu.Business_logic_Only_Class.Class_Generation_Errors;
 import com.dsy.dsu.CodeOrdersAnTransports.Window.MainActivityOrdersTransports;
 import com.dsy.dsu.Code_ForTABEL.MainActivity_List_Tabels;
+import com.dsy.dsu.Code_For_AdmissionMaterials.Window.MainActivity_AdmissionMaterials;
 import com.dsy.dsu.Code_For_Commit_Payments_КодДля_Согласование.MainActivity_CommitPay;
 import com.dsy.dsu.Code_For_Firebase_AndOneSignal_Здесь_КодДЛяСлужбыУведомленияFirebase.Class_Generation_SendBroadcastReceiver_And_Firebase_OneSignal;
 import com.dsy.dsu.Code_For_Services.ServiceUpdatePoОбновлениеПО;
@@ -435,7 +436,7 @@ public class DashboardFragmentMaterialDesign extends  DialogFragment  {
                                 Intent ИнтентЗаявкаНаТранспорт = new Intent();
                                 Bundle data = new Bundle();
                                 ИнтентЗаявкаНаТранспорт.putExtras(data);
-                                ИнтентЗаявкаНаТранспорт.setClass(getContext(), MainActivityOrdersTransports.class);//рабочий
+                                ИнтентЗаявкаНаТранспорт.setClass(getContext(), MainActivity_AdmissionMaterials.class);//рабочий
                                 ИнтентЗаявкаНаТранспорт.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                                 startActivity(ИнтентЗаявкаНаТранспорт);
                             } catch (Exception e) {

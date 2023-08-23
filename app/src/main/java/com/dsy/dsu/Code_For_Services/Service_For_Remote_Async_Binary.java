@@ -1323,15 +1323,20 @@ try{
                         Log.d(this.getClass().getName(), " имяТаблицыОтАндройда_локальноая Все остальные  _id " + имяТаблицыОтАндройда_локальноая);
                         break;
                     case "chat_users":
-                    case "data_notification":
                     case "view_onesignal":
+                    case "prof":
                         data=new Bundle();
                        /* data.putString("query"," SELECT DISTINCT  * FROM " +имяТаблицыОтАндройда_локальноая+" as gett" +
                                 " WHERE   gett.current_table >  "+ВерсияДанныхДляСравения+"" );
 */
                         Log.d(this.getClass().getName(), " имяТаблицыОтАндройда_локальноая Все остальные  _id " + имяТаблицыОтАндройда_локальноая);
                         break;
-
+                    case "data_notification":
+                        data=new Bundle();
+                        data.putString("query"," SELECT DISTINCT  * FROM " +имяТаблицыОтАндройда_локальноая+" as gett" +
+                                " WHERE   gett.current_table >  "+ВерсияДанныхДляСравения+"" );
+                        Log.d(this.getClass().getName(), " имяТаблицыОтАндройда_локальноая Все остальные  _id " + имяТаблицыОтАндройда_локальноая);
+                        break;
                     // TODO: 23.03.2023 ТАБЛИЦЫ С ПОЛЕМ ID   // TODO: 23.03.2023 ТАБЛИЦЫ С ПОЛЕМ ID // TODO: 23.03.2023 ТАБЛИЦЫ С ПОЛЕМ ID // TODO: 23.03.2023 ТАБЛИЦЫ С ПОЛЕМ ID
                     // TODO: 23.03.2023 ТАБЛИЦЫ С ПОЛЕМ ID // TODO: 23.03.2023 ТАБЛИЦЫ С ПОЛЕМ ID // TODO: 23.03.2023 ТАБЛИЦЫ С ПОЛЕМ ID // TODO: 23.03.2023 ТАБЛИЦЫ С ПОЛЕМ ID
                     default:
@@ -1545,7 +1550,7 @@ try{
                                             " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
                                 }
                             })
-                            .sequential().blockingSubscribe();
+                            .sequential().onBackpressureBuffer().blockingSubscribe();
 
 
                     // TODO: 01.12.2022  еще один тест
