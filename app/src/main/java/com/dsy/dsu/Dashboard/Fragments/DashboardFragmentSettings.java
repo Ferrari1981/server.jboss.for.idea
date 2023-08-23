@@ -618,10 +618,8 @@ try{
                                             .МетодПолучениеИмяСистемыДляСменыПользователя(getActivity());
 
                                 MaterialAlertDialogBuilder materialAlertDialogBuilder = new MaterialAlertDialogBuilder(getActivity())
-                                                .setTitle("Пользователи Системы")
-                                                .setMessage("При смене пользователя,"
-                                                        + "\n" + " поменяються и данные системы." + "\n"
-                                                        + "Поменять пользователя ?" + "\n"
+                                                .setTitle("Смена данных")
+                                                .setMessage("Данные будут удалены" + "\n"
                                                         + " (текущий пользователь : ) " + ПолученыйТекущееИмяПользователя.toUpperCase())
                                                  .setIcon(R.drawable.icon_dsu1_web_success)
                                              .setPositiveButton("Да", new DialogInterface.OnClickListener() {
