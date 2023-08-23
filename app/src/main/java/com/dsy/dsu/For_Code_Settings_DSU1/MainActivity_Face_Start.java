@@ -447,7 +447,7 @@ try{
                 if ( ФиналПолучаемРазницуМеждуДатами <20 && date_update!=null && success_users!=null  && success_login!=null  ) {
 
                     if (СтатусРаботыСервера ==true) {
-                        Интент_ЗапускаетFaceApp.setClass(getApplicationContext(),  MainActivity_Visible_Async.class); //MainActivity_Visible_Async //MainActivity_Face_App
+                        Интент_ЗапускаетFaceApp.setClass(getApplicationContext(),  MainActivity_Visible_Async.class); //MainActivity_Visible_Async //MainActivity_Face_App_OLd
                         Интент_ЗапускаетFaceApp.setAction("MainActivity_Visible_Async.class");
 
                     } else {

@@ -1,7 +1,6 @@
 package com.dsy.dsu.Code_Shipment_of_Materials_ОтгрузкаМатериалов;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -46,7 +45,6 @@ import com.dsy.dsu.Business_logic_Only_Class.Class_Generations_PUBLIC_CURRENT_ID
 import com.dsy.dsu.Code_For_Services.Service_Get1C_ПолучениеДанныхОт1С;
 import com.dsy.dsu.Code_Gson_Processing.SubClass_JSON_B_P_GET_1C_shipment_of_materials;
 import com.dsy.dsu.Dashboard.MainActivity_Dashboard;
-import com.dsy.dsu.For_Code_Settings_DSU1.MainActivity_Face_App;
 import com.dsy.dsu.R;
 import com.google.android.material.bottomnavigation.BottomNavigationItemView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -75,7 +73,6 @@ import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
 import javax.inject.Inject;
-import javax.inject.Singleton;
 
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;

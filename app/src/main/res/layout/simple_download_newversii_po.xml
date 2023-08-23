@@ -8,7 +8,7 @@
     android:layout_margin="10dp"
     android:padding="5dp"
     android:visibility="visible"
-    tools:context=".For_Code_Settings_DSU1.MainActivity_Face_App"
+    tools:context=".For_Code_Settings_DSU1.MainActivity_Face_App_OLd"
     tools:visibility="visible">
 
 

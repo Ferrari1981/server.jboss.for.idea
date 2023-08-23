@@ -23,7 +23,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.view.animation.Interpolator;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -65,12 +64,8 @@ import com.google.android.material.navigation.NavigationView;
 
 import java.util.Date;
 
-import io.reactivex.rxjava3.core.Observable;
-import io.reactivex.rxjava3.functions.Consumer;
-import io.reactivex.rxjava3.schedulers.Schedulers;
-
 /////////////////////////////////////////////////////////////////////////
-public class MainActivity_Face_App extends AppCompatActivity {
+public class MainActivity_Face_App_OLd extends AppCompatActivity {
     private ImageView imageView_ЗначекApp;
     private CREATE_DATABASE Create_Database_СсылкаНАБазовыйКласс;
     private LinearLayout LinearLayoutFaceApp;
@@ -100,7 +95,7 @@ public class MainActivity_Face_App extends AppCompatActivity {
         try {
             super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_main_face_app);
-            Log.w(getPackageName().getClass().getName(), "Сработал  protected void onCreate(Bundle savedInstanceState)  в MainActivity_Face_App");
+            Log.w(getPackageName().getClass().getName(), "Сработал  protected void onCreate(Bundle savedInstanceState)  в MainActivity_Face_App_OLd");
             LinearLayoutFaceApp = (LinearLayout) findViewById(R.id.LineLayFaceApp); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
             context = this;
             activity = this;
@@ -816,7 +811,7 @@ public class MainActivity_Face_App extends AppCompatActivity {
                             case "Настройка системы":
                                 /////данные с потока
                                 /////TODO ЗАПУСКАМ ОБНОЛВЕНИЕ ДАННЫХ С СЕРВЕРА ПЕРЕРД ЗАПУСКОМ ПРИЛОЖЕНИЯ ВСЕ ПРИЛОЖЕНИЯ ДСУ-1
-                                Интент_Меню.setClass(getApplication(), MainActivity_Settings.class); //MainActivity_Visible_Async //MainActivity_Face_App
+                                Интент_Меню.setClass(getApplication(), MainActivity_Settings.class); //MainActivity_Visible_Async //MainActivity_Face_App_OLd
                                 Интент_Меню.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);//////FLAG_ACTIVITY_SINGLE_TOP
                                 startActivity(Интент_Меню);
                                 ////TODO ДАННАЯ КОМАНДА ПЕРЕКРЫВАЕТ НЕ ЗАПУСКАЕМОЕ АКТИВТИ А АКТИВТИ КОТОРЕ ЕГО ЗАПУСТИЛО

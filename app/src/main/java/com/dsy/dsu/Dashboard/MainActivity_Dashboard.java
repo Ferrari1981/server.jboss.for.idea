@@ -211,7 +211,7 @@ public class MainActivity_Dashboard extends AppCompatActivity {
     // TODO: 15.08.2023 НачинаетсяБизнеЛОгика Активтив Dashboard
     // TODO: 15.08.2023 НачинаетсяБизнеЛОгика Активтив Dashboard
 
-    class BuniccessLogicaActivityDashboard {
+    public class BuniccessLogicaActivityDashboard {
 
 
 
@@ -251,7 +251,7 @@ public class MainActivity_Dashboard extends AppCompatActivity {
         }
 
 
-        private void МетодБиндингаОбновлениеПО() {
+        public void МетодБиндингаОбновлениеПО() {
             try {
                 ServiceConnection       connectionОбновлениеПО = new ServiceConnection() {
                     @Override

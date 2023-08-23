@@ -155,7 +155,7 @@ public class Class_Clears_Tables {
                     editor.putString("РежимЗапускаСинхронизации","ПовторныйЗапускСинхронизации");
                     editor.commit();
                     /////TODO ЗАПУСКАМ ОБНОЛВЕНИЕ ДАННЫХ С СЕРВЕРА ПЕРЕРД ЗАПУСКОМ ПРИЛОЖЕНИЯ ВСЕ ПРИЛОЖЕНИЯ ДСУ-1
-                    Интент_Меню.setClass(activity, MainActivity_Tabels_Users_And_Passwords.class); //MainActivity_Visible_Async //MainActivity_Face_App
+                    Интент_Меню.setClass(activity, MainActivity_Tabels_Users_And_Passwords.class); //MainActivity_Visible_Async //MainActivity_Face_App_OLd
                     Интент_Меню.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK   );//////FLAG_ACTIVITY_SINGLE_TOP
                     activity. startActivity(Интент_Меню);
         } catch (Exception e) {

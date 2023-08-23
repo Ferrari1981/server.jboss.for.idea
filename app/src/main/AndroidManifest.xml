@@ -1401,7 +1401,7 @@
             android:theme="@style/Theme.MaterialComponents.DayNight.DarkActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.dsy.dsu.For_Code_Settings_DSU1.MainActivity_Face_App" />
+                android:value="com.dsy.dsu.For_Code_Settings_DSU1.MainActivity_Face_App_OLd" />
 
             <intent-filter>
                 <action android:name="android.intent.action.EDIT" />
@@ -1526,7 +1526,7 @@
         <!-- активити прикложения ДСУ-1 -->
         <!-- активити прикложения ДСУ-1  singleTask singleTop  standard -->
         <activity
-            android:name=".For_Code_Settings_DSU1.MainActivity_Face_App"
+            android:name=".For_Code_Settings_DSU1.MainActivity_Face_App_OLd"
             android:exported="true"
             android:grantUriPermissions="true"
             android:label=" ПО Союз-Автодор "

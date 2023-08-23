@@ -1,11 +1,15 @@
 package com.dsy.dsu.Dashboard.Fragments;
 
 import android.app.ProgressDialog;
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.IBinder;
 import android.os.Looper;
 import android.os.Message;
 import android.util.Log;
@@ -31,6 +35,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentResultListener;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.LifecycleOwner;
 
@@ -44,6 +49,7 @@ import com.dsy.dsu.Business_logic_Only_Class.Class_MODEL_synchronized;
 import com.dsy.dsu.Business_logic_Only_Class.PUBLIC_CONTENT;
 import com.dsy.dsu.Business_logic_Only_Class.Websocet.WebSocketss;
 import com.dsy.dsu.Code_For_Services.ServiceUpdatePoОбновлениеПО;
+import com.dsy.dsu.Dashboard.MainActivity_Dashboard;
 import com.dsy.dsu.For_Code_Settings_DSU1.MainActivity_Errors;
 import com.dsy.dsu.For_Code_Settings_DSU1.MainActivity_Settings;
 import com.dsy.dsu.R;
@@ -52,6 +58,8 @@ import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.textview.MaterialTextView;
 import com.google.common.util.concurrent.AtomicDouble;
+
+import java.util.Date;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -98,6 +106,8 @@ public class DashboardFragmentSettings extends  DialogFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         try{
+            lifecycleOwner=getActivity();
+
             fragmentManager = getActivity(). getSupportFragmentManager();
             fragmentTransaction = fragmentManager.beginTransaction();
             // TODO: 22.08.2023  настйроки анимацуии
@@ -107,6 +117,10 @@ public class DashboardFragmentSettings extends  DialogFragment {
             // TODO: 17.08.2023 inizial message
             classBiznesLogikaSettings.  МетодИнициализацияHandler();
             classBiznesLogikaSettings.методGetBinder(getArguments());
+
+            classBiznesLogikaSettings.    методСлушательФрагментовBinder( );
+
+
 
 
             //  setStyle(DialogFragment.STYLE_NORMAL,android.R.style.Theme_Material_Dialog_Alert);//Theme_Dialog
@@ -214,6 +228,9 @@ public class DashboardFragmentSettings extends  DialogFragment {
             classBiznesLogikaSettings.new ClassAllTaskButtons().new SubClassAsyncVisual().методStartingAsyncVisuals() ;
 
             classBiznesLogikaSettings.new ClassAllTaskButtons().new SubClassChangeDataUsers().методСменыДанныхПользователя(); ;
+
+
+            classBiznesLogikaSettings.new ClassAllTaskButtons().new ClassUpdatePO().методОбновлениеПО(); ;
 
             // TODO: 17.08.2023
             Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -415,6 +432,104 @@ public class DashboardFragmentSettings extends  DialogFragment {
                         Thread.currentThread().getStackTrace()[2].getLineNumber());
             }
         }
+        public void МетодБиндингаОбновлениеПО() {
+            try {
+                ServiceConnection connectionОбновлениеПО = new ServiceConnection() {
+                    @Override
+                    public void onServiceConnected(ComponentName name, IBinder service) {
+                        try {
+                            if (service.isBinderAlive()) {
+                                localBinderОбновлениеПО = (ServiceUpdatePoОбновлениеПО.localBinderОбновлениеПО) service;
+                                Bundle bundlebinder=new Bundle();
+                                bundlebinder.putBinder("callbackbinderdashbord", localBinderОбновлениеПО);
+                                fragmentManager.setFragmentResult(     "callbackbinderdashbord",bundlebinder);
+                                Log.i(getContext().getClass().getName(), "    onServiceConnected  service)"
+                                        + service.isBinderAlive());
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
+                                    " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
+                            new Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+                                    this.getClass().getName(),
+                                    Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
+                        }
+                    }
+                    @Override
+                    public void onServiceDisconnected(ComponentName name) {
+                        try {
+                            Log.i(getContext().getClass().getName(), "    onServiceDisconnected  binder.isBinderAlive()");
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
+                                    " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
+                            new Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+                                    this.getClass().getName(),
+                                    Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
+                        }
+                    }
+                };
+                Intent intentЗапускСлужбыОбновлениеПО = new Intent(getContext(), ServiceUpdatePoОбновлениеПО.class);
+                intentЗапускСлужбыОбновлениеПО.setAction("com.ServiceUpdatePoОбновлениеПО");
+               getActivity(). bindService(intentЗапускСлужбыОбновлениеПО ,  connectionОбновлениеПО, Context.BIND_AUTO_CREATE );
+
+            } catch (Exception e) {
+                e.printStackTrace();
+                Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                        + Thread.currentThread().getStackTrace()[2].getLineNumber());
+                new Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+                        this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
+                        Thread.currentThread().getStackTrace()[2].getLineNumber());
+                Log.d(this.getClass().getName(), "  Полусаем Ошибку e.toString() " + e.toString());
+            }
+
+        }
+
+
+        private void методСлушательФрагментовBinder( ) {
+            try{
+                fragmentManager.setFragmentResultListener("callbackbinderdashbord", lifecycleOwner, new FragmentResultListener() {
+                    @Override
+                    public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle result) {
+                        if (requestKey.equalsIgnoreCase("callbackbinderdashbord")) {
+                            try{
+                                localBinderОбновлениеПО=(ServiceUpdatePoОбновлениеПО.localBinderОбновлениеПО)       result.getBinder("callbackbinderdashbord");
+                                // TODO: 21.08.2023
+
+                                Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"  +
+                                        "  localBinderОбновлениеПО " +localBinderОбновлениеПО);
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                                Log.e(getContext().getClass().getName(),
+                                        "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
+                                                " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
+                                new   Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+                                        this.getClass().getName().toString(), Thread.currentThread().getStackTrace()[2].getMethodName().toString(),
+                                        Thread.currentThread().getStackTrace()[2].getLineNumber());
+                            }
+
+                        }
+                    }
+                });
+                Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
+            } catch (Exception e) {
+                e.printStackTrace();
+                Log.e(getContext().getClass().getName(),
+                        "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
+                                " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
+                new   Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+                        this.getClass().getName().toString(), Thread.currentThread().getStackTrace()[2].getMethodName().toString(),
+                        Thread.currentThread().getStackTrace()[2].getLineNumber());
+            }
+        }
+
+
+
+
 
         // TODO: 22.08.2023 МЕТОД ПОЛУЧЕНИЕ ДАННЫХ binder
         void методGetBinder (@NonNull Bundle bundleGetSettings){
@@ -422,6 +537,9 @@ try{
 
     if (localBinderОбновлениеПО==null) {
         localBinderОбновлениеПО =(ServiceUpdatePoОбновлениеПО.localBinderОбновлениеПО)  bundleGetSettings.getBinder("callbackbinderdashbord");
+    }
+    if (localBinderОбновлениеПО==null){
+        classBiznesLogikaSettings. МетодБиндингаОбновлениеПО();
     }
 
     Log.i(getContext().getClass().getName(),  " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -513,6 +631,19 @@ try{
                 }
 
             }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
             // TODO: 22.08.2023  Сласс для Запуска Синхрониазциии  из Фрагнмета Настройки
 
@@ -723,8 +854,50 @@ try{
 
                 }
 
+//TODO END CLASS SubClassChangeDataUsers//TODO END CLASS SubClassChangeDataUsers//TODO END CLASS SubClassChangeDataUsers
+            }//TODO END CLASS SubClassChangeDataUsers//TODO END CLASS SubClassChangeDataUsers
 
-            }
+
+            // TODO: 23.08.2023 \ Class Task Обновление ПО
+            class  ClassUpdatePO{
+           void методОбновлениеПО(){
+               Кнопкаобновление.setOnClickListener(new View.OnClickListener() {
+                   @Override
+                   public void onClick(View v) {
+                       try {
+                           localBinderОбновлениеПО.getService().МетодГлавныйОбновленияПО(true, getActivity(),handlerAsync);
+                           Log.i(this.getClass().getName(), " Из меню установкаОбновление ПО "
+                                   + Thread.currentThread().getStackTrace()[2].getMethodName()
+                                   + " время " + new Date().toLocaleString());
+                       } catch (Exception e) {
+                           e.printStackTrace();
+                           Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :"
+                                   + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                                   + Thread.currentThread().getStackTrace()[2].getLineNumber());
+                           new Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+                                   this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
+                                   Thread.currentThread().getStackTrace()[2].getLineNumber());
+                       }
+                   }
+               });
+
+           }
+
+
+
+
+                //TODO END   class  ClassUpdatePO
+            }//TODO END   class  ClassUpdatePO
+
+
+
+
+
+
+
+
+
+
 
 
 

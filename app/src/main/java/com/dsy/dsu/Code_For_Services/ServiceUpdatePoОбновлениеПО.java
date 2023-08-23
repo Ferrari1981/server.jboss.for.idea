@@ -400,7 +400,7 @@ public class ServiceUpdatePoОбновлениеПО extends IntentService {////
             });
 
                 // TODO: 28.07.2023
-            MaterialAlertDialogBuilder materialAlertDialogBuilderАнализПО = (MaterialAlertDialogBuilder) new MaterialAlertDialogBuilder(activity)///       final AlertDialog alertDialog =new AlertDialog.Builder( MainActivity_Face_App.КонтекстFaceApp)
+            MaterialAlertDialogBuilder materialAlertDialogBuilderАнализПО = (MaterialAlertDialogBuilder) new MaterialAlertDialogBuilder(activity)///       final AlertDialog alertDialog =new AlertDialog.Builder( MainActivity_Face_App_OLd.КонтекстFaceApp)
                        .setTitle("Обновление")
                     .setCancelable(false)
                        .setView(promptsViewАнализПО)
@@ -576,7 +576,7 @@ try{
             });
 
             // TODO: 29.07.2023 Установка ПО  ДИАЛОГ  
-            MaterialAlertDialogBuilder materialAlertDialogBuilderУстановкаПО     = new MaterialAlertDialogBuilder(activity)///       final AlertDialog alertDialog =new AlertDialog.Builder( MainActivity_Face_App.КонтекстFaceApp)
+            MaterialAlertDialogBuilder materialAlertDialogBuilderУстановкаПО     = new MaterialAlertDialogBuilder(activity)///       final AlertDialog alertDialog =new AlertDialog.Builder( MainActivity_Face_App_OLd.КонтекстFaceApp)
                     .setTitle("Установщик")
                     .setCancelable(false)
                     .setView(promptsViewУстановкаПО)

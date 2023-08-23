@@ -211,7 +211,7 @@ public class MyWork_Async_Синхронизация_Single extends Worker {
                             + ТекущаяАктивти.getTaskInfo().numActivities);////   case "com.dsy.dsu.Code_For_Chats_КодДля_Чата.MainActivity_List_Chats" :
                 }
                 if (АктивностьЕслиЕстьTOP!=null ) {
-                    switch (АктивностьЕслиЕстьTOP) {// case "com.dsy.dsu.For_Code_Settings_DSU1.MainActivity_Face_App" :
+                    switch (АктивностьЕслиЕстьTOP) {// case "com.dsy.dsu.For_Code_Settings_DSU1.MainActivity_Face_App_OLd" :
                    //     case "com.dsy.dsu.For_Code_Settings_DSU1.MainActivity_Visible_Async":
                         case "com.dsy.dsu.For_Code_Settings_DSU1.MainActivity_Tabels_Users_And_Passwords":
                         case "com.dsy.dsu.For_Code_Settings_DSU1.MainActivity_Face_Start":
