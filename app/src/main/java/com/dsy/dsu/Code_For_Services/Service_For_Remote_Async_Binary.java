@@ -1516,9 +1516,9 @@ try{
 // TODO: 21.08.2023 ГЛАВНЫЙ ЦИКЛ СИХРОНИАЗЦИИ
 
 
+/*
                Flowable.fromIterable( public_contentДатыДляГлавныхТаблицСинхронизации.ВерсииВсехСерверныхТаблиц.keySet())
-                                    .parallel(2)
-                                            .runOn(Schedulers.computation())
+                                    .parallel(1)
                                                     .doOnNext(new io.reactivex.rxjava3.functions.Consumer<String>() {
                                                         @Override
                                                         public void accept(String ИмяТаблицыоТВерсияДанныхОтSqlServer) throws Throwable {
@@ -1551,10 +1551,11 @@ try{
                                 }
                             })
                             .sequential().onBackpressureBuffer().blockingSubscribe();
+*/
 
 
                     // TODO: 01.12.2022  еще один тест
-         /*          Flowable.fromIterable( public_contentДатыДляГлавныхТаблицСинхронизации.ВерсииВсехСерверныхТаблиц.keySet())
+                  Flowable.fromIterable( public_contentДатыДляГлавныхТаблицСинхронизации.ВерсииВсехСерверныхТаблиц.keySet())
                             .onBackpressureBuffer()
                            .onErrorComplete(new Predicate<Throwable>() {
                                @Override
@@ -1584,7 +1585,7 @@ try{
                                 }
 
 
-                            });*/
+                            });
                     Log.w(this.getClass().getName(), " doOnTerminate ОБРАБОТКА ВСЕХ ТАБЛИЦ ЛистТаблицыОбмена.stream().reduce(0, (a, b) -> a + b).intValue()"
                             + ЛистТаблицыОбмена.stream().reduce(0, (a, b) -> a + b).intValue()+ " СсылкаНаБазуSqlite.isOpen() "
                             +СсылкаНаБазуSqlite.isOpen());
