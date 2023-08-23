@@ -109,6 +109,21 @@ public class GeneratorJSONSerializer extends JsonSerializer<Cursor> {
                                                     Log.d(this.getClass().getName(), " НазваниеСтолбикаJson ::    " + НазваниеСтолбикаJson +
                                                             " GetBlobFile " +GetBlobFile);
                                                     break;
+                                                case "image_chat":
+                                                    byte[] GetBlobImageChat= КурсорДляОтправкиДанныхНаСерверОтАндройда
+                                                            .getBlob(КурсорДляОтправкиДанныхНаСерверОтАндройда.getColumnIndex(НазваниеСтолбикаJson)) ;
+                                                    // Само Полученое содеожимое столбика FILE
+                                                    if (GetBlobImageChat==null) {
+                                                        serializers.defaultSerializeField(НазваниеСтолбикаJson,null, jsonGenerator);
+                                                    } else {
+                                                        serializers.defaultSerializeField(НазваниеСтолбикаJson,GetBlobImageChat, jsonGenerator);
+                                                    }
+                                                    Log.d(this.getClass().getName(), " НазваниеСтолбикаJson ::    " + НазваниеСтолбикаJson +
+                                                            " GetBlobImageChat " +GetBlobImageChat);
+                                                    break;
+
+
+
                                                 default:
                                                     String СодержимоеСтолбикаJson= КурсорДляОтправкиДанныхНаСерверОтАндройда
                                                             .getString(КурсорДляОтправкиДанныхНаСерверОтАндройда.getColumnIndex(НазваниеСтолбикаJson)) ;

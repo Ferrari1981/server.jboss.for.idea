@@ -65,7 +65,7 @@ public class MainActivity_Errors extends AppCompatActivity  {
         try {
                 super.onCreate(savedInstanceState);
             setContentView(R.layout.activitymain_viewlogin); ///activitymain_viewlogin  /// fragment_dashboard
-
+            getSupportActionBar().hide(); ///скрывать тул бар
 
             fragmentManager = getSupportFragmentManager();
             fragmentTransaction = fragmentManager.beginTransaction();

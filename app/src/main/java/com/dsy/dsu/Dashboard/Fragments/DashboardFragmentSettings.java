@@ -90,7 +90,7 @@ public class DashboardFragmentSettings extends  DialogFragment {
     private ServiceUpdatePoОбновлениеПО.localBinderОбновлениеПО localBinderОбновлениеПО;//TODO новаЯ
 
 
-
+ private         ServiceConnection connectionОбновлениеПО;
     public DashboardFragmentSettings() {
         // Required empty public constructor
     }
@@ -279,13 +279,27 @@ public class DashboardFragmentSettings extends  DialogFragment {
     }
 
 
-
-
-
-
-
-
-
+    @Override
+    public void onStop() {
+        super.onStop();
+        try{
+        if(connectionОбновлениеПО!=null){
+            getContext().unbindService(connectionОбновлениеПО);
+        }
+            // TODO: 17.08.2023
+            Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
+    } catch (Exception e) {
+        e.printStackTrace();
+        Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                + Thread.currentThread().getStackTrace()[2].getLineNumber());
+        new Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+                this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
+                Thread.currentThread().getStackTrace()[2].getLineNumber());
+        Log.d(this.getClass().getName(), "  Полусаем Ошибку e.toString() " + e.toString());
+    }
+    }
 
     // TODO: 15.08.2023  Бизнес Логика Фрагмета Настройки
     class ClassBiznesLogikaSettings{
@@ -440,17 +454,14 @@ public class DashboardFragmentSettings extends  DialogFragment {
         }
         public void МетодБиндингаОбновлениеПО() {
             try {
-                ServiceConnection connectionОбновлениеПО = new ServiceConnection() {
+             connectionОбновлениеПО = new ServiceConnection() {
                     @Override
                     public void onServiceConnected(ComponentName name, IBinder service) {
                         try {
                             if (service.isBinderAlive()) {
                                 localBinderОбновлениеПО = (ServiceUpdatePoОбновлениеПО.localBinderОбновлениеПО) service;
-                                Bundle bundlebinder=new Bundle();
-                                bundlebinder.putBinder("callbackbinderdashbord", localBinderОбновлениеПО);
-                                fragmentManager.setFragmentResult(     "callbackbinderdashbord",bundlebinder);
                                 Log.i(getContext().getClass().getName(), "    onServiceConnected  service)"
-                                        + service.isBinderAlive());
+                                        + service.isBinderAlive()  + " localBinderОбновлениеПО " +localBinderОбновлениеПО);
                             }
                         } catch (Exception e) {
                             e.printStackTrace();
@@ -477,7 +488,7 @@ public class DashboardFragmentSettings extends  DialogFragment {
                 };
                 Intent intentЗапускСлужбыОбновлениеПО = new Intent(getContext(), ServiceUpdatePoОбновлениеПО.class);
                 intentЗапускСлужбыОбновлениеПО.setAction("com.ServiceUpdatePoОбновлениеПО");
-               getActivity(). bindService(intentЗапускСлужбыОбновлениеПО ,  connectionОбновлениеПО, Context.BIND_AUTO_CREATE );
+           getContext(). bindService(intentЗапускСлужбыОбновлениеПО ,  connectionОбновлениеПО, Context.BIND_AUTO_CREATE );
 
             } catch (Exception e) {
                 e.printStackTrace();
@@ -616,8 +627,8 @@ try{
                         public void onClick(View v) {
                             try{
                                 Intent Интент_Меню = new Intent(getContext(), MainActivity_Settings.class);
-                                Интент_Меню.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                                getActivity().startActivity(Интент_Меню);
+                                Интент_Меню.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                startActivity(Интент_Меню);
 
                                 Log.i(getContext().getClass().getName(),  " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                         " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -901,8 +912,8 @@ try{
                         public void onClick(View v) {
                             try {
                                 Intent Интент_Меню = new Intent(getContext(), MainActivity_Errors.class);
-                                Интент_Меню.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);//////FLAG_ACTIVITY_SINGLE_TOP
-                                getActivity().  startActivity(Интент_Меню);
+                                Интент_Меню.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);//////FLAG_ACTIVITY_SINGLE_TOP
+                                 startActivity(Интент_Меню);
                                 Log.d(this.getClass().getName(), "" +
                                         "                     case R.id.ПунктМенюПервый:");
                             } catch (Exception e) {
@@ -933,9 +944,9 @@ try{
                     Intent Интент_BackВозвращаемАктивти = new Intent();
                     Интент_BackВозвращаемАктивти.setClass(getContext(), MainActivity_New_Templates.class); //
                     Интент_BackВозвращаемАктивти.setAction("FromFragmentSettings.class");
-                    Интент_BackВозвращаемАктивти.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    Интент_BackВозвращаемАктивти.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK );
                     Интент_BackВозвращаемАктивти.putExtra("ЗапускШаблоновFaceAppБлокировкаКнопкиДа", true);
-                  getActivity().  startActivity(Интент_BackВозвращаемАктивти);
+                     startActivity(Интент_BackВозвращаемАктивти);
                     Log.d(this.getClass().getName(), "" +
                             "                     case R.id.шабоны:");
                 } catch (Exception e) {
