@@ -716,9 +716,9 @@ public class MainActivity_List_Tabels extends AppCompatActivity  {
 
                             case android.R.id.text1:
                                 //Drawable icon2 = getResources().getDrawable(   R.drawable.icon_alltabels1);
-                                Drawable icon2 = getResources().getDrawable(   R.drawable.icon_alltabels4);
+                                Drawable icon2 = getResources().getDrawable(   R.drawable.icon_newlisttabel);
                                 ((ImageView) view).setImageDrawable(icon2);
-                                ((ImageView) view).setImageResource(R.drawable.icon_alltabels4);
+                                ((ImageView) view).setImageResource(R.drawable.icon_newlisttabel);
 
                                 Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                         " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +

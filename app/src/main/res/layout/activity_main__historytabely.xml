@@ -18,7 +18,10 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_margin="5dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginBottom="5dp"
         android:background="#FFFFFF"
         android:stateListAnimator="@drawable/icon_dsu1_exit3_foreground"
         android:textAlignment="center"
@@ -27,7 +30,7 @@
         app:icon="@drawable/icon_dsu1_exit3_foreground"
         app:iconGravity="textEnd"
         app:iconSize="40dp"
-        app:iconTint="#00ACC1"
+        app:iconTint="#FFD5D9DA"
         app:rippleColor="#F50057" />
 
 
@@ -80,14 +83,16 @@
         android:id="@+id/view2Линия"
         android:layout_width="match_parent"
         android:layout_height="3dp"
-        android:background="#00ACC1"
+        android:layout_below="@+id/КонопкаНазадСтрелкаВсеТабеля"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="3dp"
+        android:layout_marginTop="3dp"
+        android:layout_marginEnd="3dp"
+        android:layout_marginBottom="3dp"
+        android:background="#FFD5D9DA"
         android:foregroundGravity="center"
         android:visibility="visible"
-        tools:visibility="visible"
-        android:layout_margin="3dp"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@+id/КонопкаНазадСтрелкаВсеТабеля"
-        />
+        tools:visibility="visible" />
 
 <!--    КОНЕЦ ВЕРХНЕЙ СТРОЧКИ-->
 
@@ -129,7 +134,7 @@
         android:layout_marginBottom="10dp"
         android:src="@drawable/icon_dsu1_add_tably1"
         android:visibility="visible"
-        app:backgroundTint="#00ACC1"
+        app:backgroundTint="#D5D9DA"
         app:fabSize="auto" />
 
 
