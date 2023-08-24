@@ -240,7 +240,7 @@ this.context=context;
         try{
             this.context=context;
             // ОперацияInsert = Create_Database_СамаБАзаSQLite.insert(имяТаблицаAsync, null, ТекущийАдаптерДляВсего);
-            String  SQlOperUpdate=  " UPDATE "+имяТаблицаAsync+" SET  _id=?, " +
+            String  SQlOperUpdate=  " UPDATE "+имяТаблицаAsync+" SET    " +
                     " image =?,files=?,date_update=?, uuid=? ,parent_uuid=? ,user_update=? ,current_table=?   "+
                     "   WHERE  uuid=?  ;";
 
@@ -279,7 +279,8 @@ this.context=context;
            sqLiteStatementInsert = Create_Database_СамаБАзаSQLite.compileStatement(SQlOperInsert);
             sqLiteStatementInsert.clearBindings();
             // TODO: 04.07.2023 цикл данных
-            sqLiteStatementInsert=    методЗаполенияMaterialBinarySQLiteStatement(sqLiteStatementInsert, jsonNodeParentMAP );
+// todo  INSERT
+            new BunessLogicAllInsertAllUpdateBindsForImages(context).методЗаполненияBindingInsert(jsonNodeParentMAP, sqLiteStatementInsert);
 
             Log.d(this.getClass().getName(), "\n" + " class " +
                 Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -296,59 +297,24 @@ this.context=context;
         return sqLiteStatementInsert;
     }
 
-    private SQLiteStatement методЗаполенияMaterialBinarySQLiteStatement( @NonNull SQLiteStatement sqLiteStatementInsert,
-                                                                        @NonNull JsonNode jsonNodeParentMAP) throws IOException {
-        try{
-        sqLiteStatementInsert.bindLong(1, jsonNodeParentMAP.get("id").intValue());//"id""
-            // TODO: 16.07.2023 Binary Image
 
-            if (!jsonNodeParentMAP.get("image").isNull()) {
-                sqLiteStatementInsert.bindBlob(2, jsonNodeParentMAP.get("image").binaryValue());//"date_update"
-
-            }else{
-                sqLiteStatementInsert.bindNull(2);
-            }
-            if (!jsonNodeParentMAP.get("files").isNull()) {
-                sqLiteStatementInsert.bindBlob(3, jsonNodeParentMAP.get("files").binaryValue());//"date_update"
-            }else{
-                sqLiteStatementInsert.bindNull(3);
-            }
-        sqLiteStatementInsert.bindString(4, jsonNodeParentMAP.get("date_update").asText().trim());//"date_update"
-        sqLiteStatementInsert.bindLong(5, jsonNodeParentMAP.get("uuid").longValue());//"uuid"
-        sqLiteStatementInsert.bindLong(6, jsonNodeParentMAP.get("parent_uuid").longValue());//"uuid"
-        sqLiteStatementInsert.bindLong(7, jsonNodeParentMAP.get("user_update").intValue());//"uuid"
-        sqLiteStatementInsert.bindLong(8, jsonNodeParentMAP.get("current_table").longValue());//"current_table"
-        // TODO: 27.04.2023  повышаем верисю данных
-        Log.d(this.getClass().getName(), "\n" + " class " +
-                Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
-
-    } catch (Exception e) {
-        e.printStackTrace();
-        Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
-                " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-        new Class_Generation_Errors(context).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(),
-                Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
-    }
-        return  sqLiteStatementInsert;
-    }
 
     @NonNull
-    private SQLiteStatement методGetSqliteStatementForUpdate(@NonNull String SQlOperInsert,
+    private SQLiteStatement методGetSqliteStatementForUpdate(@NonNull String SQlOperUpdate,
                                                              @NonNull JsonNode jsonNodeParentMAP,
                                                              @NonNull SQLiteDatabase Create_Database_СамаБАзаSQLite) {
-        SQLiteStatement sqLiteStatementInsert = null;
+        SQLiteStatement sqLiteStatementUpdate = null;
         try{
-            sqLiteStatementInsert =          Create_Database_СамаБАзаSQLite.compileStatement(SQlOperInsert);
-            sqLiteStatementInsert=    методЗаполенияMaterialBinarySQLiteStatement(sqLiteStatementInsert, jsonNodeParentMAP );
-            // TODO: 05.07.2023  Для Состыковки
-            sqLiteStatementInsert.bindLong(9,jsonNodeParentMAP.get("uuid").longValue());//"uuid уже для UUID"
+            sqLiteStatementUpdate =          Create_Database_СамаБАзаSQLite.compileStatement(SQlOperUpdate);
+            sqLiteStatementUpdate.clearBindings();
+                 // todo  UPDATE
+            new BunessLogicAllInsertAllUpdateBindsForImages(context).методЗаполненияBindingUpdate(jsonNodeParentMAP, sqLiteStatementUpdate);
+
             Log.d(this.getClass().getName(), "\n" + " class " +
                     Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
-                    + sqLiteStatementInsert  + "sqLiteStatementInsert");
+                    + sqLiteStatementUpdate  + "sqLiteStatementUpdate");
         } catch (Exception e) {
             e.printStackTrace();
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
@@ -356,7 +322,7 @@ this.context=context;
             new Class_Generation_Errors(context).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(),
                     Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
-        return sqLiteStatementInsert;
+        return sqLiteStatementUpdate;
     }
 
 }
