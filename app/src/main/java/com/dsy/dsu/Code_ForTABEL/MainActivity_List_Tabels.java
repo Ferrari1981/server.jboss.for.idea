@@ -6,6 +6,7 @@ import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
@@ -1130,18 +1131,40 @@ public class MainActivity_List_Tabels extends AppCompatActivity  {
 
 //        datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
             ДатаДляКалендаря.setTitle("Календарь");
-            ДатаДляКалендаря.setButton(DatePickerDialog.BUTTON_POSITIVE, "Создать", ДатаДляКалендаря);
-            ДатаДляКалендаря.setButton(DatePickerDialog.BUTTON_NEGATIVE, "Закрыть", ДатаДляКалендаря);
-       /*     ДатаДляКалендаря.getDatePicker().setAlpha(0.3f);*/
+            ДатаДляКалендаря.setButton(DialogInterface.BUTTON_NEGATIVE, "Закрыть", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    //Your code
+                    dialog.dismiss();
+                    dialog.cancel();
+                    // TODO: 17.04.2023
+                    Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
+                }
+            });
+
             ДатаДляКалендаря.setCancelable(false);
             if (!ДатаДляКалендаря.isShowing()) {
                 ДатаДляКалендаря.show();
             }
-            ДатаДляКалендаря.getButton(DatePickerDialog.BUTTON_NEGATIVE).setTextColor(Color.BLACK);
+
+
+
+
+
+
+
+
+
+
+
+
+         /*   ДатаДляКалендаря.getButton(DatePickerDialog.BUTTON_NEGATIVE).setTextColor(Color.BLACK);
             ДатаДляКалендаря.getButton(DatePickerDialog.BUTTON_NEGATIVE).setBackgroundColor(Color.WHITE);
 
             ДатаДляКалендаря.getButton(DatePickerDialog.BUTTON_POSITIVE).setTextColor(Color.BLACK);
-            ДатаДляКалендаря.getButton(DatePickerDialog.BUTTON_POSITIVE).setBackgroundColor(Color.WHITE);
+            ДатаДляКалендаря.getButton(DatePickerDialog.BUTTON_POSITIVE).setBackgroundColor(Color.WHITE);*/
 
             ///ДатаДляКалендаря.getActionBar().setDisplayHomeAsUpEnabled(true);
         //////////////////////
