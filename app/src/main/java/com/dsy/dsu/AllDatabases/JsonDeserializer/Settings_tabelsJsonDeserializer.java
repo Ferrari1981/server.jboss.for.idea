@@ -225,7 +225,7 @@ this.context=context;
         try{
             this.context=context;
             // ОперацияInsert = Create_Database_СамаБАзаSQLite.insert(имяТаблицаAsync, null, ТекущийАдаптерДляВсего);
-            String  SQlOperUpdate=  " UPDATE "+имяТаблицаAsync+" SET  id=?," +
+            String  SQlOperUpdate=  " UPDATE "+имяТаблицаAsync+" SET   " +
                     "  date_update=?,  user_update=?,   " +
                     " version_dsu1=? , organizations=?,   uuid=?  , current_table=?, onesignal=?  WHERE  uuid=?  ;";
 
@@ -264,14 +264,9 @@ this.context=context;
             sqLiteStatementInsert = Create_Database_СамаБАзаSQLite.compileStatement(SQlOperInsert);
             sqLiteStatementInsert.clearBindings();
             // TODO: 04.07.2023 цикл данных
-            sqLiteStatementInsert.bindLong(1, jsonNodeParentMAP.get("id").intValue());//"id""
-            sqLiteStatementInsert.bindString(2, jsonNodeParentMAP.get("date_update").asText());//"date_update"
-            sqLiteStatementInsert.bindLong(3, jsonNodeParentMAP.get("user_update").intValue());//"user_update"
-            sqLiteStatementInsert.bindLong(4, jsonNodeParentMAP.get("version_dsu1").intValue());//"user_update"
-            sqLiteStatementInsert.bindLong(5, jsonNodeParentMAP.get("organizations").intValue());//"user_update"
-            sqLiteStatementInsert.bindLong(6, jsonNodeParentMAP.get("uuid").longValue());//"uuid"
-            sqLiteStatementInsert.bindLong(7, jsonNodeParentMAP.get("current_table").longValue());//"current_table"
-            sqLiteStatementInsert.bindString(8, jsonNodeParentMAP.get("onesignal").asText());//"name"
+
+// todo  INSERT
+            new BunessLogicAllInsertAllUpdateBinds(context).методЗаполненияBindingInsert(jsonNodeParentMAP, sqLiteStatementInsert);
         Log.d(this.getClass().getName(), "\n" + " class " +
                 Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -290,27 +285,18 @@ this.context=context;
     private SQLiteStatement методGetSqliteStatementForUpdate(@NonNull SQLiteDatabase Create_Database_СамаБАзаSQLite,
                                                              String SQlOperInsert,
                                                              @NonNull JsonNode jsonNodeParentMAP) {
-        SQLiteStatement sqLiteStatementInsert = null;
+        SQLiteStatement sqLiteStatementUpdate = null;
         try{
-            sqLiteStatementInsert= Create_Database_СамаБАзаSQLite.compileStatement(SQlOperInsert);
-            sqLiteStatementInsert.clearBindings();
+            sqLiteStatementUpdate= Create_Database_СамаБАзаSQLite.compileStatement(SQlOperInsert);
+            sqLiteStatementUpdate.clearBindings();
             // TODO: 04.07.2023 цикл данных
-            sqLiteStatementInsert.bindLong(1, jsonNodeParentMAP.get("id").intValue());//"id""
-            sqLiteStatementInsert.bindString(2, jsonNodeParentMAP.get("date_update").asText());//"date_update"
-            sqLiteStatementInsert.bindLong(3, jsonNodeParentMAP.get("user_update").intValue());//"user_update"
-            sqLiteStatementInsert.bindLong(4, jsonNodeParentMAP.get("version_dsu1").intValue());//"user_update"
-            sqLiteStatementInsert.bindLong(5, jsonNodeParentMAP.get("organizations").intValue());//"user_update"
-            sqLiteStatementInsert.bindLong(6, jsonNodeParentMAP.get("uuid").longValue());//"uuid"
-            sqLiteStatementInsert.bindLong(7, jsonNodeParentMAP.get("current_table").longValue());//"current_table"
-            sqLiteStatementInsert.bindString(8, jsonNodeParentMAP.get("onesignal").asText());//"name"
-
-            // TODO: 05.07.2023  Для Состыковки
-            sqLiteStatementInsert.bindLong(9,jsonNodeParentMAP.get("uuid").longValue());//"uuid уже для UUID"
+            // todo  UPDATE
+            new BunessLogicAllInsertAllUpdateBinds(context).методЗаполненияBindingUpdate(jsonNodeParentMAP, sqLiteStatementUpdate);
             Log.d(this.getClass().getName(), "\n" + " class " +
                     Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
-                    + sqLiteStatementInsert  + "sqLiteStatementInsert");
+                    + sqLiteStatementUpdate  + "sqLiteStatementUpdate");
         } catch (Exception e) {
             e.printStackTrace();
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
@@ -318,7 +304,7 @@ this.context=context;
             new Class_Generation_Errors(context).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(),
                     Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
-        return sqLiteStatementInsert;
+        return sqLiteStatementUpdate;
     }
 
 }
