@@ -803,7 +803,7 @@ public class CREATE_DATABASE extends SQLiteOpenHelper{ ///SQLiteOpenHelper
                 " current_organization INTEGER," +
                 " current_table  NUMERIC UNIQUE   ," +
                 " prof  INTEGER   ," +
-                "  UNIQUE (uuid, name)," +
+                "  UNIQUE (uuid,name )," +
                 "FOREIGN KEY(user_update) REFERENCES users  (id)  ON UPDATE CASCADE," +
                 "FOREIGN KEY(prof) REFERENCES prof  (_id)  ON UPDATE CASCADE," +
                 "FOREIGN KEY(current_organization) REFERENCES organization  (id)  ON UPDATE CASCADE " +

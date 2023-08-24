@@ -36,65 +36,24 @@ public class SubClassUpdatesCELL {
     }
 
 
-
-
-    public Integer МетодВалидацияЯчеекSaveCell(@NonNull EditText  editTextЯчейниДанных ) {
+    public Integer МетодВалидацияЯчеекSaveCell(@NonNull EditText editTextRowКликПоДАнными,@NonNull String  НовоеЗначениеЯчейки ) {
         Integer ОбновлениеЯчейки=0;
         try{
-            Bundle bundleперезаписьЯчейки=null;
-            // TODO: 10.08.2023  
-                List<Integer> ЛистДопустимоеСодержание = new ArrayList();
-                IntStream.iterate(1, i -> i + 1).limit(24).forEachOrdered(ЛистДопустимоеСодержание::add);
-                String ЗначениеИзЯчейки=editTextЯчейниДанных.getText().toString().trim();
-                 bundleперезаписьЯчейки= (Bundle)  editTextЯчейниДанных.getTag();
+            // TODO: 10.08.2023
+         Integer   НовоеЗначениеЯчейкиФинал=  Integer.parseInt(НовоеЗначениеЯчейки) ;
 
-                    ЗначениеИзЯчейки=   ЗначениеИзЯчейки.replaceAll("[^0-9]","").trim();
-                boolean ФлагНовоеЗначение=        ЗначениеИзЯчейки.matches("(.*)[0-9](.*)");/////TODO   viewДанные.toString().matches("(.*)[^0-9](.*)");
-
-                // TODO: 12.04.2023 КОГДА ЕСТЬ ТОЛЬКО ЦИФРА
-            if (ФлагНовоеЗначение==true) {
-                if (   Integer.parseInt(ЗначениеИзЯчейки.trim())<=24) {
-
-                    bundleперезаписьЯчейки.putString("ПослеЗначниеДня",ЗначениеИзЯчейки);
-
+                if (  НовоеЗначениеЯчейкиФинал<=24) {
                     // TODO: 11.04.2023 Обновление Ячейки через ПРовайдер
-                    ОбновлениеЯчейки=    МетодСохранениеЯчейкиCellTabelSingle(editTextЯчейниДанных,context);
+                    ОбновлениеЯчейки=    МетодСохранениеЯчейкиCellTabelSingle(editTextRowКликПоДАнными,НовоеЗначениеЯчейкиФинал,context);
                     if (ОбновлениеЯчейки>0) {
-                        editTextЯчейниДанных.setText(ЗначениеИзЯчейки.toString());
-                        bundleперезаписьЯчейки.putString("ЗначениеДня",ЗначениеИзЯчейки);
+                        Bundle bundleперезаписьЯчейки=(Bundle) editTextRowКликПоДАнными.getTag();
+                        bundleперезаписьЯчейки.putString("ПослеЗначниеДня"  , String.valueOf(НовоеЗначениеЯчейкиФинал));
                     }
-                }else {
-
-                    Toast aa = Toast.makeText(context, "OPEN", Toast.LENGTH_LONG);
-                    ImageView cc = new ImageView( context);
-                    cc.setImageResource(R.drawable.icon_dsu1_add_organisazio_error);//icon_dsu1_synchronisazia_dsu1_success
-                    aa.setView(cc);
-
-
-                    Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"  + " ФлагНовоеЗначение " +ФлагНовоеЗначение+
-                            " editTextЯчейкаОбновление.toString()" +  editTextЯчейниДанных.toString() + " ОбновлениеЯчейки " +ОбновлениеЯчейки);
                 }
-            }else{
-                bundleперезаписьЯчейки.putString("ПослеЗначниеДня",ЗначениеИзЯчейки);
-                // TODO: 11.04.2023 Обновление КОГДА НЕТ ЦИФРЫ
-                ОбновлениеЯчейки=    МетодСохранениеЯчейкиCellTabelSingle(editTextЯчейниДанных,context);
-                if (ОбновлениеЯчейки>0) {
-                    editTextЯчейниДанных.setText(ЗначениеИзЯчейки.toString());
-                    bundleперезаписьЯчейки.putString("ЗначениеДня",ЗначениеИзЯчейки);
-                }
-                Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"  + " ФлагНовоеЗначение " +ФлагНовоеЗначение+
-                        " editTextЯчейкаОбновление.toString()" +  editTextЯчейниДанных.toString() + " ОбновлениеЯчейки " +ОбновлениеЯчейки);
-            }
-            // TODO: 12.04.2023 ЧИСЛО ОБНОВЛЕНИЕ
-                Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"  + " ФлагНовоеЗначение " +ФлагНовоеЗначение+
-                        " editTextЯчейкаОбновление.toString()" +  editTextЯчейниДанных.toString() + " ОбновлениеЯчейки " +ОбновлениеЯчейки);
-
+            Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"  +
+                    "НовоеЗначениеЯчейки" +  НовоеЗначениеЯчейки + " ОбновлениеЯчейки " +ОбновлениеЯчейки);
         } catch (Exception e) {
             e.printStackTrace();
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
@@ -106,8 +65,6 @@ public class SubClassUpdatesCELL {
         }
         return ОбновлениеЯчейки;
     }
-
-
 
 
     public Integer МетодВалидацияЯчеекMetkiTabel(@NonNull TextView  textviewЯчейниДанных ) {
@@ -194,20 +151,18 @@ public class SubClassUpdatesCELL {
         }
         return  ОбновлениеЯчейки;
     }
-    Integer МетодСохранениеЯчейкиCellTabelSingle(@NonNull EditText editTextCellSingleTabel,@NonNull Context context){ //TODO метод записи СМЕНЫ ПРОФЕСИИ
+    Integer МетодСохранениеЯчейкиCellTabelSingle(@NonNull EditText editTextCellSingleTabel,
+                                                 @NonNull Integer ЗначениеИзЯчейки ,
+                                                 @NonNull Context context){ //TODO метод записи СМЕНЫ ПРОФЕСИИ
         Integer ОбновлениеЯчейки=0;
         try{
             String ТаблицаОбработки="data_tabels";
             Uri uri = Uri.parse("content://com.dsy.dsu.providerdatabasecurrentoperations/" +ТаблицаОбработки + "");
             Bundle bundleОбновлениеЯчейки= (Bundle)  editTextCellSingleTabel.getTag();
             ContentValues contentValuesОбноленияЯчейкиSingleTanel=new ContentValues();
-            String ЗначениеИзЯчейки=bundleОбновлениеЯчейки.getString(  "ПослеЗначниеДня","");
-            // TODO: 10.08.2023 not 0
 
             String День=bundleОбновлениеЯчейки.getString("День","");
-
             Long  uuid=bundleОбновлениеЯчейки.getLong("uuid",0l);
-
             contentValuesОбноленияЯчейкиSingleTanel.put(День,ЗначениеИзЯчейки);
 
             String Дата =     new Class_Generation_Data(context).ГлавнаяДатаИВремяОперацийСБазойДанныхДОП();

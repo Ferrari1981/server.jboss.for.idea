@@ -228,7 +228,7 @@ this.context=context;
         try{
             this.context=context;
             // ОперацияInsert = Create_Database_СамаБАзаSQLite.insert(имяТаблицаAsync, null, ТекущийАдаптерДляВсего);
-            String  SQlOperUpdate=  " UPDATE "+имяТаблицаAsync+" SET    " +
+            String  SQlOperUpdate=  " UPDATE "+имяТаблицаAsync+" SET  id=?, " +
                     " type_material =?,nomen_vesov=?,tracks=?, companys=?  , "+
                     " count =?,date_update=?,uuid=?,user_update=?,cfo=?,  current_table=? ,status_send=?,ttn=?,datattn=?  "+
                     "   WHERE  uuid=?  ;";
@@ -268,8 +268,20 @@ this.context=context;
             sqLiteStatementInsert = Create_Database_СамаБАзаSQLite.compileStatement(SQlOperInsert);
             sqLiteStatementInsert.clearBindings();
             // TODO: 04.07.2023 цикл данных
-            // todo  INSERT
-            new BunessLogicAllInsertAllUpdateBinds(context).методЗаполненияBindingInsert(jsonNodeParentMAP, sqLiteStatementInsert);
+            sqLiteStatementInsert.bindLong(1, jsonNodeParentMAP.get("id").intValue());//"id""
+            sqLiteStatementInsert.bindLong(2, jsonNodeParentMAP.get("type_material").intValue());//"uuid"
+            sqLiteStatementInsert.bindLong(3, jsonNodeParentMAP.get("nomen_vesov").intValue());//"uuid"
+            sqLiteStatementInsert.bindLong(4, jsonNodeParentMAP.get("tracks").intValue());//"uuid"
+            sqLiteStatementInsert.bindLong(5, jsonNodeParentMAP.get("companys").intValue());//"uuid"
+            sqLiteStatementInsert.bindLong(6, jsonNodeParentMAP.get("count").intValue());//"uuid"
+            sqLiteStatementInsert.bindString(7, jsonNodeParentMAP.get("date_update").asText().trim());//"date_update"
+            sqLiteStatementInsert.bindLong(8, jsonNodeParentMAP.get("uuid").longValue());//"uuid"
+            sqLiteStatementInsert.bindLong(9, jsonNodeParentMAP.get("user_update").intValue());//"uuid"
+            sqLiteStatementInsert.bindLong(10, jsonNodeParentMAP.get("cfo").intValue());//"uuid"
+            sqLiteStatementInsert.bindLong(11, jsonNodeParentMAP.get("current_table").longValue());//"current_table"
+            sqLiteStatementInsert.bindLong(12, jsonNodeParentMAP.get("status_send").intValue());//"uuid"
+            sqLiteStatementInsert.bindString(13, jsonNodeParentMAP.get("ttn").asText().trim());//"date_update"
+            sqLiteStatementInsert.bindString(14, jsonNodeParentMAP.get("datattn").asText().trim());//"date_update"
 
         Log.d(this.getClass().getName(), "\n" + " class " +
                 Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -289,18 +301,33 @@ this.context=context;
     private SQLiteStatement методGetSqliteStatementForUpdate(@NonNull SQLiteDatabase Create_Database_СамаБАзаSQLite,
                                                              String SQlOperInsert,
                                                              @NonNull JsonNode jsonNodeParentMAP) {
-        SQLiteStatement sqLiteStatementUpdate = null;
+        SQLiteStatement sqLiteStatementInsert = null;
         try{
-            sqLiteStatementUpdate= Create_Database_СамаБАзаSQLite.compileStatement(SQlOperInsert);
-            sqLiteStatementUpdate.clearBindings();
+            sqLiteStatementInsert= Create_Database_СамаБАзаSQLite.compileStatement(SQlOperInsert);
+            sqLiteStatementInsert.clearBindings();
             // TODO: 04.07.2023 цикл данных
-            // todo  UPDATE
-            new BunessLogicAllInsertAllUpdateBinds(context).методЗаполненияBindingUpdate(jsonNodeParentMAP, sqLiteStatementUpdate);
+            sqLiteStatementInsert.bindLong(1, jsonNodeParentMAP.get("id").intValue());//"id""
+            sqLiteStatementInsert.bindLong(2, jsonNodeParentMAP.get("type_material").intValue());//"uuid"
+            sqLiteStatementInsert.bindLong(3, jsonNodeParentMAP.get("nomen_vesov").intValue());//"uuid"
+            sqLiteStatementInsert.bindLong(4, jsonNodeParentMAP.get("tracks").intValue());//"uuid"
+            sqLiteStatementInsert.bindLong(5, jsonNodeParentMAP.get("companys").intValue());//"uuid"
+            sqLiteStatementInsert.bindLong(6, jsonNodeParentMAP.get("count").intValue());//"uuid"
+            sqLiteStatementInsert.bindString(7, jsonNodeParentMAP.get("date_update").asText().trim());//"date_update"
+            sqLiteStatementInsert.bindLong(8, jsonNodeParentMAP.get("uuid").longValue());//"uuid"
+            sqLiteStatementInsert.bindLong(9, jsonNodeParentMAP.get("user_update").intValue());//"uuid"
+            sqLiteStatementInsert.bindLong(10, jsonNodeParentMAP.get("cfo").intValue());//"uuid"
+            sqLiteStatementInsert.bindLong(11, jsonNodeParentMAP.get("current_table").longValue());//"current_table"
+            sqLiteStatementInsert.bindString(12, jsonNodeParentMAP.get("status_send").asText().trim());//"uuid"
+            sqLiteStatementInsert.bindString(13, jsonNodeParentMAP.get("ttn").asText().trim());//"date_update"
+            sqLiteStatementInsert.bindString(14, jsonNodeParentMAP.get("datattn").asText().trim());//"date_update"
+
+            // TODO: 05.07.2023  Для Состыковки
+            sqLiteStatementInsert.bindLong(15,jsonNodeParentMAP.get("uuid").longValue());//"uuid уже для UUID"
             Log.d(this.getClass().getName(), "\n" + " class " +
                     Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
-                    + sqLiteStatementUpdate  + "sqLiteStatementUpdate");
+                    + sqLiteStatementInsert  + "sqLiteStatementInsert");
         } catch (Exception e) {
             e.printStackTrace();
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
@@ -308,7 +335,7 @@ this.context=context;
             new Class_Generation_Errors(context).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(),
                     Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
-        return sqLiteStatementUpdate;
+        return sqLiteStatementInsert;
     }
 
 }
