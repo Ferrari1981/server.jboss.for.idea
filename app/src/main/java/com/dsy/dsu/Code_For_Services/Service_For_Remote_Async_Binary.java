@@ -210,7 +210,7 @@ private  Handler handlerAsync;
     @Override
     protected void onHandleIntent(@Nullable Intent intent) {
 try{
-        metodStartingSync(getApplicationContext(),null,null);
+        metodStartingSync(getApplicationContext(),null );
         Log.d(getApplicationContext().getClass().getName(), "\n"
                 + " время: " + new Date() + "\n+" +
                 " Класс в процессе... " + this.getClass().getName() + "\n" +
@@ -262,13 +262,12 @@ try{
 
 @BinderThread
 @Background
-    public Integer metodStartingSync(@NonNull Context context , @NonNull Handler handlerAsync,@NonNull String  РежимПерваяЗапускПослеPasswordИлиПовторная) {
+    public Integer metodStartingSync(@NonNull Context context , @NonNull Handler handlerAsync ) {
     Integer       ФинальныйРезультатAsyncBackgroud=0;
     try{
             if (handlerAsync!=null) {
                 this.handlerAsync=handlerAsync;
             }
-            this.РежимПерваяЗапускПослеPasswordИлиПовторная=РежимПерваяЗапускПослеPasswordИлиПовторная;
             // TODO: 25.03.2023 ДОПОЛНИТЕОТНЕ УДЛАНИЕ СТАТУСА УДАЛЕНИЕ ПОСЛЕ СИНХРОНИАЗЦИИ
                 ФинальныйРезультатAsyncBackgroud  = new Class_Engine_SQL(context).МетодЗАпускаФоновойСинхронизации(context);
 
@@ -1518,6 +1517,7 @@ try{
 
 
 // TODO: 21.08.2023 ГЛАВНЫЙ ЦИКЛ СИХРОНИАЗЦИИ--многопоточный
+                    РежимПерваяЗапускПослеPasswordИлиПовторная = preferences.getString("РежимЗапускаСинхронизации","СамыйПервыйЗапускСинхронизации");
 
                     if (РежимПерваяЗапускПослеPasswordИлиПовторная.equalsIgnoreCase("СамыйПервыйЗапускСинхронизации") ) {
                     // TODO: 21.08.2023  -многопоточный
