@@ -401,17 +401,6 @@ public class MainActivity_List_Tabels extends AppCompatActivity  {
 
     private void методМассивДляВыбораВСпинерДата() {
         try {
-
-            СпинерВыборДату.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    СпинерВыборДату.startAnimation(animation);
-                    Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
-                            + " МассивДляВыбораВСпинерДатаArray " +МассивДляВыбораВСпинерДатаArray+"  FullNameCFO  " +FullNameCFO);
-                }
-            },2000);
             ИмесяцвИГодСразу = СпинерВыборДату.getSelectedItem().toString();
                 if (ИмесяцвИГодСразу !=null) {
                  Integer ИндексНахождение=   МассивДляВыбораВСпинерДатаArray.indexOf(ИмесяцвИГодСразу);
