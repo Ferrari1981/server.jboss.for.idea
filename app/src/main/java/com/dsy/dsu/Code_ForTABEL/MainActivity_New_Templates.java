@@ -925,7 +925,7 @@ public class MainActivity_New_Templates extends AppCompatActivity implements Dat
                     ШАблонвВидеКнопок.setGravity(Gravity.CENTER_HORIZONTAL | Gravity.CENTER_VERTICAL);
                     ШАблонвВидеКнопок.setTextColor(Color.BLACK);
                     ШАблонвВидеКнопок.setHintTextColor(Color.RED);
-                    Drawable icon = getResources().getDrawable(R.mipmap.icon_dsu1_tabels_sam_tamples);
+                    Drawable icon = getResources().getDrawable(R.drawable.icon_newforshablon1);
                     icon.setBounds(10, 0, 80, 60);
                     ШАблонвВидеКнопок.setCompoundDrawables(icon, null, null, null);
                     ШАблонвВидеКнопок.setBackground(getApplication().getResources().getDrawable(R.drawable.textlines_tabel_row_color_green_mini));

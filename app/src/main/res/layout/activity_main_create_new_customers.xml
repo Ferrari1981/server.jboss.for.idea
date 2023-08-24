@@ -63,22 +63,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="parent"></ScrollView>
 
-        <ImageView
-            android:id="@+id/imageView_СозданиеСотрудника"
-            android:layout_width="28dp"
-            android:layout_height="28dp"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="2dp"
-            android:layout_marginBottom="5dp"
-            android:foregroundGravity="center"
-            android:scaleType="centerCrop"
-            android:stateListAnimator="@android:animator/fade_in"
-            android:visibility="visible"
-            app:layout_constraintBottom_toBottomOf="@+id/ЛинияСозданиеСотрудника"
-            app:layout_constraintStart_toEndOf="@+id/НазваниеСозданиеНовогоСотрудника"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/icon_dsu1_tabel_new_customer8"
-            tools:src="@tools:sample/avatars" />
 
         <TextView
             android:id="@+id/НазваниеСозданиеНовогоСотрудника"
@@ -102,8 +86,10 @@
             android:theme="@style/Theme.AppCompat.DayNight"
             android:typeface="monospace"
             android:visibility="visible"
-            app:layout_constraintEnd_toStartOf="@id/imageView_СозданиеСотрудника"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@id/imageViewСтрелкаНазадНовыйСотрудник"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <View
@@ -111,7 +97,7 @@
             android:layout_width="match_parent"
             android:layout_height="3dp"
             android:layout_marginTop="10dp"
-            android:background="#00ACC1"
+            android:background="#FFD5D9DA"
             android:foregroundGravity="center"
             android:visibility="visible"
             app:layout_constraintTop_toBottomOf="@id/НазваниеСозданиеНовогоСотрудника"
@@ -127,7 +113,7 @@
             android:layout_marginEnd="90dp"
             android:layout_marginBottom="5dp"
             android:background="@drawable/dsu1_botton_linesface"
-            android:backgroundTint="#00ACC1"
+            android:backgroundTint="#FFD5D9DA"
             android:gravity="center|end"
             android:text="Создать"
             android:textAlignment="center"
@@ -148,7 +134,8 @@
 
         <EditText
             android:id="@+id/ЗначениеЦФОПриСозданииНовогоТабеля"
-            style="com.android.tools.property.panel.impl.model.TableGroupItem@7ad956ee	com.android.tools.property.panel.impl.model.TableGroupItem@7ad956ee"
+            style="com.android.tools.property.panel.impl.model.TableGroupItem@7ad956ee
+            	com.android.tools.property.panel.impl.model.TableGroupItem@7ad956ee"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="20dp"
@@ -227,8 +214,8 @@
             android:layout_width="70dp"
             android:layout_height="50dp"
             android:layout_marginBottom="4dp"
-            android:backgroundTint="#FFFFFF"
             android:background="#FFFFFF"
+            android:backgroundTint="#FFFFFF"
             android:backgroundTintMode="screen"
             android:stateListAnimator="@drawable/icon_dsu1_exit3_foreground"
             android:textAlignment="center"
@@ -236,7 +223,7 @@
             app:icon="@drawable/icon_dsu1_exit3_foreground"
             app:iconGravity="textEnd"
             app:iconSize="40dp"
-            app:iconTint="#00ACC1"
+            app:iconTint="#FFD5D9DA"
             app:layout_constraintBottom_toBottomOf="@id/ЛинияСозданиеСотрудника"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"

@@ -16,12 +16,12 @@
     <Button
         android:id="@+id/imagimageViewСтрелкаНазадПодборСотрудник"
         android:layout_width="70dp"
-        android:layout_height="50dp"
+        android:layout_height="40dp"
         android:layout_marginStart="1dp"
         android:layout_marginTop="1dp"
         android:layout_marginBottom="2dp"
-        android:backgroundTint="#FFFFFF"
         android:background="#FFFFFF"
+        android:backgroundTint="#FFFFFF"
         android:backgroundTintMode="screen"
         android:stateListAnimator="@drawable/icon_dsu1_exit3_foreground"
         android:textAlignment="center"
@@ -29,7 +29,7 @@
         app:icon="@drawable/icon_dsu1_exit3_foreground"
         app:iconGravity="textEnd"
         app:iconSize="40dp"
-        app:iconTint="#00ACC1"
+        app:iconTint="#FFD5D9DA"
         app:layout_constraintBottom_toBottomOf="@id/линияСозданиеСотрудника"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -59,15 +59,13 @@
         app:layout_constraintStart_toStartOf="@+id/ГлавныйКойтейнерПоискаФИОСотрудника"
         app:layout_constraintTop_toTopOf="@+id/ГлавныйКойтейнерПоискаФИОСотрудника" />
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/КнопкаОтправкиСотрудникаДляТабеля"
         style="@style/Widget.MaterialComponents.Button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="100dp"
-        android:layout_marginEnd="100dp"
+        android:layout_width="150dp"
+        android:layout_height="43dp"
         android:layout_marginBottom="5dp"
-        android:backgroundTint="#00ACC1"
+        android:backgroundTint="#FFD5D9DA"
         android:backgroundTintMode="screen"
         android:gravity="center|end"
         android:text="Добавить"
@@ -78,6 +76,7 @@
         android:textSize="12sp"
         android:visibility="visible"
         app:iconTint="#8A3C3C"
+        app:cornerRadius="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.47"
@@ -85,22 +84,6 @@
         app:rippleColor="@color/colorAccent"
         app:strokeColor="#FF3D00" />
 
-    <ImageView
-        android:id="@+id/imageView_ВыборСотрудника3"
-        android:layout_width="28dp"
-        android:layout_height="25dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="1dp"
-        android:layout_marginBottom="5dp"
-        android:foregroundGravity="center"
-        android:scaleType="centerCrop"
-        android:stateListAnimator="@android:animator/fade_in"
-        android:visibility="visible"
-        app:layout_constraintBottom_toTopOf="@+id/ГлавныйКойтейнерПоискаФИОСотрудника"
-        app:layout_constraintStart_toEndOf="@id/названиеВыборСотрудникаДляТабеля"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/icon_dsu1_find_for_templaes"
-        tools:src="@tools:sample/avatars" />
 
     <TextView
         android:id="@+id/названиеВыборСотрудникаДляТабеля"
@@ -115,7 +98,7 @@
         android:foregroundGravity="center"
         android:gravity="center"
         android:lineSpacingExtra="30sp"
-        android:text="Подбор  Сотрудников"
+        android:text="Cотрудники"
         android:textAlignment="center"
         android:textAllCaps="false"
         android:textAppearance="@style/TextAppearance.AppCompat.Small"
@@ -125,7 +108,10 @@
         android:theme="@style/Theme.AppCompat.DayNight"
         android:typeface="monospace"
         android:visibility="visible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@id/imagimageViewСтрелкаНазадПодборСотрудник"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <View
@@ -133,7 +119,7 @@
         android:layout_width="match_parent"
         android:layout_height="3dp"
         android:layout_marginTop="2dp"
-        android:background="#00ACC1"
+        android:background="#FFD5D9DA"
         android:foregroundGravity="center"
         android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
@@ -154,7 +140,7 @@
         android:inputType="textPersonName|textCapWords"
         android:textAlignment="center"
         android:textColor="#0E0E0E"
-        android:textColorHint="#00ACC1"
+        android:textColorHint="#FFD5D9DA"
         android:textSize="16sp"
         android:textStyle="bold"
         android:theme="@style/Theme.AppCompat.DayNight.DarkActionBar"
