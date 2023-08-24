@@ -301,7 +301,7 @@ public class MainActivity_Errors extends AppCompatActivity  {
                         .МетодПослываемОшибкиАдминистаторуПо(БуерДляОшибок,this,ПубличноеID, create_database.getССылкаНаСозданнуюБазу() );
 
 
-
+            методвыходизОшибок();
 
             Log.d(this.getClass().getName(), " Ошибок Нет. время :   " +new Date().toString());
 

@@ -83,26 +83,49 @@
 
 
 
+
+
+
+
     <com.google.android.material.button.MaterialButton
         android:id="@+id/materialButtonОтправкаОшибокНАпочту"
-        android:layout_width="150dp"
+        style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
+        android:layout_width="180dp"
         android:layout_height="50dp"
-        android:layout_marginTop="2dp"
-        android:layout_marginBottom="5dp"
-        android:backgroundTint="#FFD5D9DA"
-        android:text="Отправить"
-        android:textColor="#131313"
-        app:cornerRadius="20dp"
-        android:textSize="12dp"
-        app:iconTint="#3F51B5"
-        app:iconGravity="textStart"
+        android:layout_centerInParent="true"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:backgroundTint="#FFFFFF"
+        android:fontFamily="@font/alfa_slab_one"
         android:gravity="center"
+        android:minHeight="70dp"
+        android:paddingLeft="15dp"
+        android:text="Отправить"
+        android:textColor="#000000"
+        android:textSize="11sp"
+        android:textStyle="normal"
+        android:translationZ="2dp"
+        android:visibility="visible"
+        app:cardElevation="2dp"
+        app:cardMaxElevation="1dp"
+        app:cornerRadius="15dp"
+        app:iconGravity="textStart"
+        app:rippleColor="@color/design_default_color_on_secondary"
+        app:strokeColor="#EEEDEF"
+        app:strokeWidth="1dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/scrollView4"
-        app:strokeColor="#120B0B" />
+
+        />
+
+
+
+
+
+
 
     <ScrollView
         android:id="@+id/scrollView4"
@@ -139,7 +162,7 @@
             android:orientation="vertical"
             android:overScrollMode="always"
             android:scrollbars="horizontal|vertical"
-            android:textColor="#00BFA5"
+            android:textColor="#5B6161"
             android:textSize="14sp"
             android:textStyle="bold"
             android:visibility="visible"
