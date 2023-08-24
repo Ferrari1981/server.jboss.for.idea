@@ -1518,7 +1518,7 @@ try{
 
                Flowable.fromIterable( public_contentДатыДляГлавныхТаблицСинхронизации.ВерсииВсехСерверныхТаблиц.keySet())
                                     .parallel(2)
-                       .runOn(Schedulers.newThread())
+                       .runOn(Schedulers.computation())
                                                     .doOnNext(new io.reactivex.rxjava3.functions.Consumer<String>() {
                                                         @Override
                                                         public void accept(String ИмяТаблицыоТВерсияДанныхОтSqlServer) throws Throwable {

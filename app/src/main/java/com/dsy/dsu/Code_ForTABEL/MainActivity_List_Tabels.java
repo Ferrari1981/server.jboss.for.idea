@@ -214,6 +214,11 @@ public class MainActivity_List_Tabels extends AppCompatActivity  {
     protected void onStart() {
         super.onStart();
         try{
+
+            gridViewAllTabes.refreshDrawableState();
+            gridViewAllTabes.requestLayout();
+            gridViewAllTabes.startAnimation(animation);
+            СпинерВыборДату.startAnimation(animation);
             Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
@@ -228,26 +233,6 @@ public class MainActivity_List_Tabels extends AppCompatActivity  {
 
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        try{
-                gridViewAllTabes.refreshDrawableState();
-                gridViewAllTabes.requestLayout();
-                gridViewAllTabes.startAnimation(animation);
-               СпинерВыборДату.startAnimation(animation);
-            Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
-        } catch (Exception e) {
-            e.printStackTrace();
-            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
-                    " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            new   Class_Generation_Errors(getApplicationContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(),
-                    this.getClass().getName(),
-                    Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
-        }
-    }
 
 
 
@@ -1882,30 +1867,25 @@ try{
 
                         }
                     })
-                    .subscribeOn(AndroidSchedulers.mainThread())
+                    .observeOn(AndroidSchedulers.mainThread())
                     .doOnComplete(new Action() {
                         @Override
                         public void run() throws Throwable {
                             Log.d(this.getClass().getName(), " УдалениеintegerArrayList.size() " +УдалениеintegerArrayList.size());
-                            context.getMainExecutor().execute(()->{
-                                if ( УдалениеintegerArrayList.size()>0) {
-                                    // TODO: 07.10.2022  СИНХронизация
-                                    МетодЗапускаСинхрониазцииЕслиБыИзмененияВбАзе();
-                                }
+                            if ( УдалениеintegerArrayList.size()>0) {
+                                // TODO: 07.10.2022  СИНХронизация
                                 // TODO: 15.02.2023
                                 progressDialogДляУдаления.dismiss();
                                 progressDialogДляУдаления.cancel();;
-                            });
-                        }
-                    })
-                    .doOnTerminate(new Action() {
-                        @Override
-                        public void run() throws Throwable {
-                            context.getMainExecutor().execute(()-> {
+
+                                // TODO: 24.08.2023  метод перегрузки reeboot данных
+                                методRebootGataTabel();
+
                                 onStart();
-                            });
+                            }
                         }
                     })
+
                     .doOnError(new Consumer<Throwable>() {
                         @Override
                         public void accept(Throwable throwable) throws Throwable {
@@ -1931,7 +1911,6 @@ try{
                     }).subscribe();
         } catch (Exception e) {
             e.printStackTrace();
-            ///метод запись ошибок в таблицу
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                     " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
             new   Class_Generation_Errors(getApplicationContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(),
@@ -1939,8 +1918,48 @@ try{
         };
     }
 
+    private void методRebootGataTabel() {
+        try{
+        if (simpleCursorAdapterAllTAbels!=null) {
+            /*Cursor Курсор_MainСамиДанныеТекущегоТАбеля  =     simpleCursorAdapterAllTAbels.getCursor();
+           Курсор_MainСамиДанныеТекущегоТАбеля .requery();*/
+
+            // TODO: 24.08.2023
+
+            Курсор_ДанныеСпиннера=    методGetDataSimpleCursorAdapter(); /////МЕТОД ЗАГРУЗКИ СОЗДАННЫХ ТАБЕЛЕЙ ИЗ БАЗж
+          //  Курсор_ДанныеСпиннера.requery(); /////МЕТОД ЗАГРУЗКИ СОЗДАННЫХ ТАБЕЛЕЙ ИЗ БАЗж
+
+            методЗаполенениеДатаСпинер( );
+            ////todo заполение спинера
+            МетодДанныеСпинераДаты( );
+
+            // TODO: 09.04.2023  set Позиция после инициализации Scinner
+            методМассивДляВыбораВСпинерДата();
 
 
+
+           // Cursor Курсор_MainСамиДанныеТекущегоТАбеля = методGetИзСпинераВнутри();
+
+
+        /*    if (Курсор_MainСамиДанныеТекущегоТАбеля!=null &&  Курсор_MainСамиДанныеТекущегоТАбеля.getCount()>0 ) {
+                // TODO: 23.08.2023  ГЛАВНЫЙ МЕТОД ЗАПОЛЕНИЯ ЭКРАНА SIMPLECURSOR  ДАННЫМИ
+                методзаполненияSimplrCursor(Курсор_MainСамиДанныеТекущегоТАбеля);
+                // TODO: 19.04.2023  показываем количемтво табеленй
+                методКоличествоТабелей(Курсор_MainСамиДанныеТекущегоТАбеля );
+
+            } else {
+                // TODO: 19.04.2023  Когда ДАННЫХ НЕТ
+                методDontGetData();
+            }*/
+        }
+    } catch (Exception e) {
+        e.printStackTrace();
+        Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
+                " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
+        new   Class_Generation_Errors(getApplicationContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(),
+                Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
+    };
+    }
 
 
     private void МетодЗапускаСинхрониазцииЕслиБыИзмененияВбАзе() {
