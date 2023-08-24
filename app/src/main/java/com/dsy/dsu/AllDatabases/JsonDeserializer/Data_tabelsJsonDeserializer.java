@@ -243,7 +243,7 @@ this.context=context;
         try{
             this.context=context;
             // ОперацияInsert = Create_Database_СамаБАзаSQLite.insert(имяТаблицаAsync, null, ТекущийАдаптерДляВсего);
-            String  SQlOperUpdate=  " UPDATE "+имяТаблицаAsync+" SET  _id=?, fio=?," +
+            String  SQlOperUpdate=  " UPDATE "+имяТаблицаAsync+" SET    fio=?," +
                     " d1 =?,d2=?, d3=? , d4=? ,d5=? ,d6=? , d7=? , d8=? ,d9=? , d10=? ,  " +
                     " d11 =?, d12=? , d13=? ,d14=? ,d15=? , d16=? , d17=? ,d18=? , d19=? ,  " +
                     " d20 =?,d21=?, d22=? , d23=? ,d24=? ,d25=? , d26=? , d27=? ,d28=? , d29=? ,  " +
@@ -315,8 +315,8 @@ this.context=context;
             // TODO: 04.07.2023 цикл данных Заполение ДАнными ДЛя Обновления
             методЗаполенияДнейТабеляДляUpdate(jsonNodeParentMAP, sqLiteStatementInsert);
 
-            // TODO: 05.07.2023  Для Состыковки
-            sqLiteStatementInsert.bindLong(42,jsonNodeParentMAP.get("uuid").longValue());//"uuid уже для UUID"
+       /*     // TODO: 05.07.2023  Для Состыковки
+            sqLiteStatementInsert.bindLong(42,jsonNodeParentMAP.get("uuid").longValue());//"uuid уже для UUID"*/
             Log.d(this.getClass().getName(), "\n" + " class " +
                     Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -394,47 +394,65 @@ this.context=context;
     // TODO: 24.08.2023 up[date
 
     private void методЗаполенияДнейТабеляДляUpdate(@NonNull JsonNode jsonNodeParentMAP, SQLiteStatement sqLiteStatementInsert) {
+        final Integer[] Индексbindis = {1};
         try{
            // sqLiteStatementInsert.bindLong(1, jsonNodeParentMAP.get("id").intValue());//"id""
             jsonNodeParentMAP.fields().forEachRemaining(new java.util.function.Consumer<Map.Entry<String, JsonNode>>() {
-                Integer  Индексbindis=1;
                 @Override
                 public void accept(Map.Entry<String, JsonNode> stringJsonNodeEntry) {
-                    if(!stringJsonNodeEntry.getKey().equalsIgnoreCase("id")
-                            &&! stringJsonNodeEntry.getKey().equalsIgnoreCase("uuid")){
-
-
-                        if (stringJsonNodeEntry.getValue().isTextual()) {
-                            sqLiteStatementInsert.bindString(Индексbindis, stringJsonNodeEntry.getValue().asText().trim());
-                        }
-
-                        if (stringJsonNodeEntry.getValue().isLong()) {
-                            sqLiteStatementInsert.bindLong(Индексbindis, stringJsonNodeEntry.getValue().longValue());
-                        }
-                        if (stringJsonNodeEntry.getValue().isInt()) {
-                            sqLiteStatementInsert.bindLong(Индексbindis, stringJsonNodeEntry.getValue().intValue());
-                        }
-                        if (stringJsonNodeEntry.getValue().isBigInteger()) {
-                            sqLiteStatementInsert.bindLong(Индексbindis, stringJsonNodeEntry.getValue().bigIntegerValue().longValue());
-                        }
+                    try{
+                    if(!stringJsonNodeEntry.getKey().equalsIgnoreCase("id")){
 
                         if (stringJsonNodeEntry.getValue().isNull()) {
+// TODO: 24.08.2023 is null 
+                            sqLiteStatementInsert.bindNull(Индексbindis[0]);
                             Log.d(this.getClass().getName(), "\n" + " class " +
                                     Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
                                     + sqLiteStatementInsert  + "sqLiteStatementInsert");
+                        }else {
+                            if (stringJsonNodeEntry.getValue().isTextual()) {
+                                sqLiteStatementInsert.bindString(Индексbindis[0], stringJsonNodeEntry.getValue().asText().trim());
+                            }
+
+                            if (stringJsonNodeEntry.getValue().isLong()) {
+                                sqLiteStatementInsert.bindLong(Индексbindis[0], stringJsonNodeEntry.getValue().longValue());
+                            }
+                            if (stringJsonNodeEntry.getValue().isInt()) {
+                                sqLiteStatementInsert.bindLong(Индексbindis[0], stringJsonNodeEntry.getValue().intValue());
+                            }
+                            if (stringJsonNodeEntry.getValue().isBigInteger()) {
+                                sqLiteStatementInsert.bindLong(Индексbindis[0], stringJsonNodeEntry.getValue().bigIntegerValue().longValue());
+                            }
+
+                            if (stringJsonNodeEntry.getValue().isBinary()) {
+                                sqLiteStatementInsert.bindBlob(Индексbindis[0], stringJsonNodeEntry.getValue().binaryValue());
+                            }
+
                         }
-
-
                         // TODO: 24.08.2023  end loop
-                        Индексbindis++;
-
-                    }
+                        Индексbindis[0]++;
+                        Log.d(this.getClass().getName(), "\n" + " class " +
+                                Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
+                                + sqLiteStatementInsert  + "sqLiteStatementInsert"  + " Индексbindis " + Индексbindis[0]);
                     //TODO end  public void accept(Map.Entry<String, JsonNode> stringJsonNodeEntry)
                     }//TODO end  public void accept(Map.Entry<String, JsonNode> stringJsonNodeEntry)
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
+                            " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
+                    new Class_Generation_Errors(context).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(),
+                            Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
+                }
+                        }
 
             });
+               // TODO: 05.07.2023  Для Состыковки
+            sqLiteStatementInsert.bindLong(Индексbindis[0],jsonNodeParentMAP.get("uuid").longValue());
+
 /*            sqLiteStatementInsert.bindLong(2, jsonNodeParentMAP.get("fio").longValue());//"current_table"
             // TODO: 05.07.2023  дни
             sqLiteStatementInsert.bindString(3, jsonNodeParentMAP.get("d1").asText().trim());//"id1""
