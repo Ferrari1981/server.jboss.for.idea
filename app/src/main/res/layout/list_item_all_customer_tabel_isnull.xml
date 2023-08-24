@@ -1,56 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     android:id="@+id/linearLayoutSimpelCursorAllTabeles"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+android:layout_height="match_parent"
     android:background="#FFFFFF"
-    android:orientation="horizontal">
+android:orientation="horizontal">
 
 
         <ImageView
             android:id="@android:id/text1"
             android:layout_width="35dp"
-            android:layout_height="match_parent"
-            android:layout_margin="10dp"
-            android:minHeight="490dp"
+            android:layout_height="80dp"
+            android:layout_margin="5dp"
             android:animateLayoutChanges="true"
-            android:background="@drawable/stylesingletablerowiine3"
+            android:background="@drawable/stylesingletablerowiine6"
             android:gravity="center"
             android:padding="5dp"
             android:visibility="visible"
             app:cardCornerRadius="20dp"
             app:cardElevation="10dp"
-            app:srcCompat="@drawable/icon_alltabels4"
-            app:strokeColor="#F5FFFA" />
-
+            app:srcCompat="@drawable/icon_newlistpeoples_isnull"
+            app:strokeColor="#AF1248" />
 
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@android:id/text2"
             android:layout_width="match_parent"
-            android:minHeight="490dp"
-            android:background="@drawable/stylesingletablerowiine3"
-            android:layout_height="match_parent"
+            android:layout_height="80dp"
+            android:layout_margin="5dp"
+            android:animateLayoutChanges="true"
+            android:background="@drawable/stylesingletablerowiine6"
             android:checkMark="?android:attr/textCheckMark"
             android:foregroundGravity="center"
             android:gravity="center"
             android:padding="5dp"
-            android:layout_margin="10dp"
             android:paddingStart="?android:attr/listPreferredItemPaddingStart"
             android:paddingEnd="?android:attr/listPreferredItemPaddingEnd"
-            android:text="text2"
+            android:text="*В табеле нет сотрудников*&quot;"
             android:textAlignment="gravity"
             android:textAppearance="?android:attr/textAppearanceListItemSmall"
-            android:textColor="#000000"
+            android:textColor="#AA093E"
             android:textSize="14sp"
             android:textStyle="bold"
+            android:visibility="visible"
             app:cardCornerRadius="20dp"
             app:cardElevation="10dp"
-            app:strokeColor="#F5FFFA"
-            android:animateLayoutChanges="true"
-            android:visibility="visible"/>
+            app:strokeColor="#F5FFFA" />
 
 
 

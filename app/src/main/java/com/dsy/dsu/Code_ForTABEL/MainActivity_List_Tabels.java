@@ -852,7 +852,7 @@ public class MainActivity_List_Tabels extends AppCompatActivity  {
         try {
             ArrayList<HashMap<String, Object>> ЛистНетданных= new ArrayList<HashMap<String, Object>> ();
             HashMap<String, Object> map = new HashMap<>();
-            map.put("alldonttbels", "Не создано !!!");
+            map.put("alldonttbels", "Нет табелей !!!");
             map.put("allimage", " dont");
             ЛистНетданных.add(map);
             SimpleAdapter АдаптерКогдаНетданных = new SimpleAdapter(getApplicationContext(),
@@ -1053,8 +1053,12 @@ public class MainActivity_List_Tabels extends AppCompatActivity  {
             Calendar newDate = Calendar.getInstance();
             //TODODATA
             if (ДатаДляКалендаря == null) {
+                /*                               new DatePickerDialog(this, android.R.style.Theme_Material_Light_Dialog_MinWidth, new DatePickerDialog.OnDateSetListener() {////Theme_Holo_Dialog_MinWidth  //Theme_Holo_Panel
+                                new DatePickerDialog(this, android.R.style.Theme_Material_Light_Dialog_Alert, new DatePickerDialog.OnDateSetListener() {////Theme_Holo_Dialog_MinWidth  //Theme_Holo_Panel
+     new DatePickerDialog(this, android.R.style.Theme_Material_Dialog_MinWidth, new DatePickerDialog.OnDateSetListener() {////Theme_Holo_Dialog_MinWidth  //Theme_Holo_Panel*/
                 ДатаДляКалендаря =
-                        new DatePickerDialog(this, android.R.style.Theme_Holo_InputMethod, new DatePickerDialog.OnDateSetListener() {////Theme_Holo_Dialog_MinWidth  //Theme_Holo_Panel
+                        new DatePickerDialog(this, android.R.style.Theme_Material_Dialog_MinWidth, new DatePickerDialog.OnDateSetListener() {////Theme_Holo_Dialog_MinWidth  //Theme_Holo_Panel
+
                             public void onDateSet(android.widget.DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                                 newDate.set(year, monthOfYear, dayOfMonth);
                                 Log.d(this.getClass().getName(), " ИмесяцвИГодСразу " + ИмесяцвИГодСразу + " view " + view);
@@ -1128,13 +1132,17 @@ public class MainActivity_List_Tabels extends AppCompatActivity  {
             ДатаДляКалендаря.setTitle("Календарь");
             ДатаДляКалендаря.setButton(DatePickerDialog.BUTTON_POSITIVE, "Создать", ДатаДляКалендаря);
             ДатаДляКалендаря.setButton(DatePickerDialog.BUTTON_NEGATIVE, "Закрыть", ДатаДляКалендаря);
+       /*     ДатаДляКалендаря.getDatePicker().setAlpha(0.3f);*/
+            ДатаДляКалендаря.setCancelable(false);
             if (!ДатаДляКалендаря.isShowing()) {
                 ДатаДляКалендаря.show();
             }
             ДатаДляКалендаря.getButton(DatePickerDialog.BUTTON_NEGATIVE).setTextColor(Color.BLACK);
             ДатаДляКалендаря.getButton(DatePickerDialog.BUTTON_NEGATIVE).setBackgroundColor(Color.WHITE);
+
             ДатаДляКалендаря.getButton(DatePickerDialog.BUTTON_POSITIVE).setTextColor(Color.BLACK);
             ДатаДляКалендаря.getButton(DatePickerDialog.BUTTON_POSITIVE).setBackgroundColor(Color.WHITE);
+
             ///ДатаДляКалендаря.getActionBar().setDisplayHomeAsUpEnabled(true);
         //////////////////////
             Log.d(this.getClass().getName(), " ИмесяцвИГодСразу " + ИмесяцвИГодСразу);
