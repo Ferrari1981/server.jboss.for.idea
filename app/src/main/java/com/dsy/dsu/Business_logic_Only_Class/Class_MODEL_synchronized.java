@@ -3540,8 +3540,7 @@ Class_GRUD_SQL_Operations classGrudSqlOperationsУдалениеДанныхЧе
 
 
     ////TODO САМ МЕТОД АУНТИФИКАЦИИ С СЕРВЕРОМ
-    public StringBuffer методАвторизацииЛогинИПаполь(@NonNull View v,
-                                                     @NonNull Context context,
+    public StringBuffer методАвторизацииЛогинИПаполь(@NonNull Context context,
                                                      @NonNull SharedPreferences preferences,
                                                      @NonNull String ПубличноеЛогин,
                                                      @NonNull String ПубличноеПароль) {
@@ -3612,18 +3611,26 @@ Class_GRUD_SQL_Operations classGrudSqlOperationsУдалениеДанныхЧе
                     public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                         try{
                             if (response.isSuccessful()) {
-                                Long РазмерПришедшегоПотока = Long.parseLong(   response.header("stream_size"));
+                          Object oобьектПриЛогинеИПароли=response.header("stream_size");
+                                Long РазмерПришедшегоПотока = 0l;
+                                if (oобьектПриЛогинеИПароли!=null) {
+                                    РазмерПришедшегоПотока = Long.parseLong(  oобьектПриЛогинеИПароли.toString());
+                                    // TODO: 24.08.2023
                                     InputStream inputStreamОтПинга = response.body().source().inputStream();
-                                        GZIPInputStream GZIPПотокОтСЕРВЕРА = new GZIPInputStream(inputStreamОтПинга);
-                                        BufferedReader РидерОтСервераМетодаGET = new BufferedReader(new InputStreamReader(GZIPПотокОтСЕРВЕРА, StandardCharsets.UTF_16));//
-                                        БуферПолученнниеДанныхПолученияIDотСервера[0] = РидерОтСервераМетодаGET.lines().collect(StringBuffer::new, (sb, i) -> sb.append(i),
-                                                StringBuffer::append);
-                                        Log.d(this.getClass().getName(), "БуферПолученнниеДанныхПолученияIDотСервера "
-                                                + БуферПолученнниеДанныхПолученияIDотСервера[0] +  " РазмерПришедшегоПотока " +РазмерПришедшегоПотока);
+                                    GZIPInputStream GZIPПотокОтСЕРВЕРА = new GZIPInputStream(inputStreamОтПинга);
+                                    BufferedReader РидерОтСервераМетодаGET = new BufferedReader(new InputStreamReader(GZIPПотокОтСЕРВЕРА, StandardCharsets.UTF_16));//
+                                    БуферПолученнниеДанныхПолученияIDотСервера[0] = РидерОтСервераМетодаGET.lines().collect(StringBuffer::new, (sb, i) -> sb.append(i),
+                                            StringBuffer::append);
+                                    Log.d(this.getClass().getName(), "БуферПолученнниеДанныхПолученияIDотСервера "
+                                            + БуферПолученнниеДанныхПолученияIDотСервера[0] +  " РазмерПришедшегоПотока " +РазмерПришедшегоПотока);
                                     // TODO: 31.05.2022
-                                Log.d(this.getClass().getName(), "БуферПолученнниеДанныхПолученияIDотСервера " + БуферПолученнниеДанныхПолученияIDотСервера[0] +  " РазмерПришедшегоПотока " +РазмерПришедшегоПотока);
-                                // TODO: 31.05.2022
-
+                                    Log.d(this.getClass().getName(), "БуферПолученнниеДанныхПолученияIDотСервера " + БуферПолученнниеДанныхПолученияIDотСервера[0] +  " РазмерПришедшегоПотока " +РазмерПришедшегоПотока);
+                                    // TODO: 31.05.2022
+                                }else {
+                                    БуферПолученнниеДанныхПолученияIDотСервера[0]=new StringBuffer();
+                                    Log.d(this.getClass().getName(), "БуферПолученнниеДанныхПолученияIDотСервера " + БуферПолученнниеДанныхПолученияIDотСервера[0] +  " РазмерПришедшегоПотока " +РазмерПришедшегоПотока);
+                                    // TODO: 31.05.2022
+                                }
                                 dispatcherПроверкаЛогиниПароль.executorService().shutdown();
                             }
                         } catch (Exception e) {

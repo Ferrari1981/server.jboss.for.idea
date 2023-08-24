@@ -64,10 +64,8 @@ public class MainActivity_Tabels_Users_And_Passwords extends AppCompatActivity {
     private String ПубличноеПароль =new String();
     private   Integer ПубличноеIDПолученныйИзСервлетаДляUUID;
     private  CREATE_DATABASE   Create_Database_СсылкаНАБазовыйКласс;
-
     private SharedPreferences preferences;
     private   String ОшибкиПришлиПослеПингаОтСервера = null;
-    private  View vКнопки;
     private  Message message;
     public static final int CAMERA_PERSSION_CODE=1;
     ////
@@ -157,74 +155,91 @@ public class MainActivity_Tabels_Users_And_Passwords extends AppCompatActivity {
     ////////TODO КОТОРЫЙ НАЧИНАЕМ ТОЛЬКО ЕСЛИ ЕСТЬ ИМЯ И ПАРОЛЬ НАЧИНАЕТЬСЯ ТОЛЬКО С НЯЖАТИЕ КНОПКИ ВХОД
     private void МетодПодготовкиДляАунтификации() {
         try {
-
             КнопкаВходавСистему.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    vКнопки=v;
-                    Vibrator v2 = (Vibrator) getApplicationContext().getSystemService(Context.VIBRATOR_SERVICE);
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                        v2.vibrate(VibrationEffect.createOneShot(50, VibrationEffect.DEFAULT_AMPLITUDE));
-                    } else {
-                        //deprecated in API 26
-                        v2.vibrate(50);
-                    }
-                    ПубличноеЛогин = ИмяДляВходаСистему.getText().toString().trim();///получаем из формы имя для того чтобы постучаться на сервер
-                    Log.d(getPackageName().getClass().getName(), "ПубличноеИмяПользовательДлСервлета " + ПубличноеЛогин);
-                 ПубличноеПароль = ПарольДляВходаСистему.getText().toString().trim();///////получаем из формы пароль для того чтобы постучаться на сервер
-                    Log.d(getPackageName().getClass().getName(), "ПубличноеПарольДлСервлета " + ПубличноеПароль);
-                    getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
-
                     ПрогрессБарДляВходаСистему.setVisibility(View.VISIBLE);// при нажатии делаем видимый програсссбар
                     ПрогрессБарДляВходаСистему.refreshDrawableState();
                     ПрогрессБарДляВходаСистему.forceLayout();
-                    // TODO: 25.04.2023 начинаем работак Асинхроном
-                    message.getTarget().post(()->{
-                    if (ПубличноеЛогин.length() > 0 &&  ПубличноеПароль.length() > 0) {
+                        message.getTarget().post(()->{
 
-                        boolean РезультатПроВеркиУстановкиПользователяРежимРаботыСетиСтоитЛиЗапускатьСсинхронизацию =
-                                new Class_Find_Setting_User_Network(getApplicationContext()).МетодПроветяетКакуюУстановкуВыбралПользовательСети();
+                            try {
+                                StringBuffer  БуферПолученнниеДанныхПолученияIDотСервера=new StringBuffer();
+                                Vibrator v2 = (Vibrator) getApplicationContext().getSystemService(Context.VIBRATOR_SERVICE);
+                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                                    v2.vibrate(VibrationEffect.createOneShot(50, VibrationEffect.DEFAULT_AMPLITUDE));
+                                } else {
+                                    //deprecated in API 26
+                                    v2.vibrate(50);
+                                }
 
-                        if (РезультатПроВеркиУстановкиПользователяРежимРаботыСетиСтоитЛиЗапускатьСсинхронизацию == true) {
-                            Boolean       РеальныйПингСервера = new Class_Connections_Server(getApplicationContext()).
-                                    МетодПингаСервераРаботаетИлиНет(getApplicationContext());
-                                    Log.d(this.getClass().getName(), " РеальныйПингСервера "+ РеальныйПингСервера) ;
-                            if (РеальныйПингСервера==true) {
-                                //TODO запукаем метод аунтификции
-                                //TODO запукаем метод Афторизаиция по ЛОГИНУ И ПАРОЛЮ
-                                    StringBuffer  БуферПолученнниеДанныхПолученияIDотСервера=new Class_MODEL_synchronized(getApplicationContext()).
-                                            методАвторизацииЛогинИПаполь(vКнопки,getApplicationContext(),preferences,ПубличноеЛогин,ПубличноеПароль);
-                                    Log.d(this.getClass().getName(), " БуферПолученнниеДанныхПолученияIDотСервера "+
-                                            БуферПолученнниеДанныхПолученияIDотСервера) ;
-                                    if (БуферПолученнниеДанныхПолученияIDотСервера!=null
-                                            && БуферПолученнниеДанныхПолученияIDотСервера.toString().length()>0) {
-                                        Bundle bundleРезультатПарольЛогин=new Bundle();
-                                        bundleРезультатПарольЛогин.putString("БуферПолученнниеДанныхПолученияIDотСервера",
-                                             БуферПолученнниеДанныхПолученияIDотСервера.toString());
-                                        message.setData(bundleРезультатПарольЛогин);
-                                        message.getTarget().dispatchMessage(message);
-                                    }else {
-                                        Snackbar.make(vКнопки, "Логин/Пароль не подходят !!! ", Snackbar.LENGTH_LONG).show();
+                                ПубличноеЛогин = ИмяДляВходаСистему.getText().toString().trim();///получаем из формы имя для того чтобы постучаться на сервер
+                                Log.d(getPackageName().getClass().getName(), "ПубличноеИмяПользовательДлСервлета " + ПубличноеЛогин);
+                                ПубличноеПароль = ПарольДляВходаСистему.getText().toString().trim();///////получаем из формы пароль для того чтобы постучаться на сервер
+                                Log.d(getPackageName().getClass().getName(), "ПубличноеПарольДлСервлета " + ПубличноеПароль);
+                                getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+
+
+
+                                if (ПубличноеЛогин.length() > 3 &&  ПубличноеПароль.length() > 3) {
+
+                                    boolean РезультатПроВеркиУстановкиПользователяРежимРаботыСетиСтоитЛиЗапускатьСсинхронизацию =
+                                            new Class_Find_Setting_User_Network(getApplicationContext()).МетодПроветяетКакуюУстановкуВыбралПользовательСети();
+
+                                    if (РезультатПроВеркиУстановкиПользователяРежимРаботыСетиСтоитЛиЗапускатьСсинхронизацию == true) {
+
+                                        Boolean       РеальныйПингСервера = new Class_Connections_Server(getApplicationContext()).МетодПингаСервераРаботаетИлиНет(getApplicationContext());
+
+                                        if (РеальныйПингСервера==true) {
+                                            //TODO запукаем метод Афторизаиция по ЛОГИНУ И ПАРОЛЮ
+                                            БуферПолученнниеДанныхПолученияIDотСервера=new Class_MODEL_synchronized(getApplicationContext()).
+                                                    методАвторизацииЛогинИПаполь(getApplicationContext(),preferences,ПубличноеЛогин,ПубличноеПароль);
+
+
+
+
+                                            Log.d(this.getClass().getName(), " БуферПолученнниеДанныхПолученияIDотСервера "+ БуферПолученнниеДанныхПолученияIDотСервера) ;
+
+                                            // TODO: 24.08.2023 УСПЕШНЫЙ КОД ЛОГИРОВАНИЕ И ПАРОЛЬ
+                                            if (   БуферПолученнниеДанныхПолученияIDотСервера.toString().length()>0  &&
+                                                    БуферПолученнниеДанныхПолученияIDотСервера.toString().trim() .matches("(.*)[0-9](.*)") &&
+                                                    ! БуферПолученнниеДанныхПолученияIDотСервера.toString().trim() .matches("(.*)[Don't Login and Password](.*)")) {
+                                                ПубличноеIDПолученныйИзСервлетаДляUUID = Integer.parseInt(БуферПолученнниеДанныхПолученияIDотСервера.toString()) ;
+
+
+                                                Integer ПолученинныйПубличныйIDДлчЗаписиВБАзу=Integer.parseInt(БуферПолученнниеДанныхПолученияIDотСервера.toString());
+
+                                                МетодПослеУспешногоПолучениеДанныхОтСервераЗаписываемИх(ПолученинныйПубличныйIDДлчЗаписиВБАзу,v);
+                                                //TODO не прошёл аунтификайию
+                                            }else{
+                                                //TODO ПОСЛЕ ПИНГА ВИЗУАЛИЗАЦИЯ
+                                                МетодВизуальногоОтображениеРаботыКоннекта("Логин и пароль не правильные !!!" ,v);
+                                            }
+
+
+                                        }else {
+                                            МетодВизуальногоОтображениеРаботыКоннекта("Сервер выкл !!!" ,v);
+
+                                        }
+                                    } else {
+                                        МетодВизуальногоОтображениеРаботыКоннекта("Интернет выкл !!!" ,v);
                                     }
-                            }else {
-                                Log.d(this.getClass().getName(), " Вы не заполнили Логин/Пароль ") ;
-                                Snackbar.make(vКнопки, "Нет связи с с сервером !!! ", Snackbar.LENGTH_LONG).show();
-
+                                } else {
+                                    МетодВизуальногоОтображениеРаботыКоннекта(" Повторите Логин и пароль " ,v);
+                                }
+                                // TODO: 25.04.2023  end async pool
+                            } catch (Exception e) {
+                                Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
+                                        " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
+                                new Class_Generation_Errors(getApplicationContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(),
+                                        Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
                             }
-                        } else {
-                            Log.d(this.getClass().getName(), " Вы не заполнили Логин/Пароль ") ;
-                            Snackbar.make(vКнопки, "Нет связи с с сервером !!! ", Snackbar.LENGTH_LONG).show();
-                        }
-                    } else {
-                        Log.d(this.getClass().getName(), " Вы не заполнили Логин/Пароль ") ;
-                        Snackbar.make(v, " Вы не заполнили Логин/Пароль ", Snackbar.LENGTH_LONG).show();
-                    }
-                        ПрогрессБарДляВходаСистему.setVisibility(View.INVISIBLE);// при нажатии делаем видимый програсссбар
-                        ПрогрессБарДляВходаСистему.refreshDrawableState();
-                        ПрогрессБарДляВходаСистему.forceLayout();
-                    });
-                    // TODO: 25.04.2023  end async pool
+
+                        });
+
+
                 }
+                // TODO: 24.08.2023
             });
 
         } catch (Exception e) {
@@ -236,21 +251,21 @@ public class MainActivity_Tabels_Users_And_Passwords extends AppCompatActivity {
     }
 
 
+
+
+
+
+
+
+
+
+
+
     // TODO: 12.04.2023
     void messageGet(){
         message= Message.obtain(new Handler(Looper.myLooper()),()->{
             try{
                 Bundle bundle=   message.getData();
-    String БуферПолученнниеДанныхПолученияIDотСервера=          bundle.getString("БуферПолученнниеДанныхПолученияIDотСервера","");
-                // TODO: 12.04.2023 Как получаем ответ от сервра сообщаем это пользователю
-                МетодПослеАунтификациисСервером(vКнопки,new StringBuffer(БуферПолученнниеДанныхПолученияIDотСервера));
-                // TODO: 21.04.2023
-                message.getTarget().removeCallbacksAndMessages(null);
-                Log.i(this.getClass().getName(),  " Атоманически установкаОбновление ПО "+
-                        Thread.currentThread().getStackTrace()[2].getMethodName()+
-                        " время " +new Date().toLocaleString() + " bundle " +bundle );
-                Log.i(this.getClass().getName(), "bundle " +bundle);
-
             } catch (Exception e) {
                 e.printStackTrace();
                 Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
@@ -263,39 +278,10 @@ public class MainActivity_Tabels_Users_And_Passwords extends AppCompatActivity {
     }
 
 
-    private void МетодПослеАунтификациисСервером(View v,@NonNull StringBuffer БуферОтветаLoginPassword)  {
-        try{
-        if (БуферОтветаLoginPassword.toString().length()  > 0) {
-            if (БуферОтветаLoginPassword.toString().trim() .matches("(.*)[0-9](.*)") &&
-            ! БуферОтветаLoginPassword.toString().trim() .matches("(.*)[Don't Login and Password](.*)")) {
-                ПубличноеIDПолученныйИзСервлетаДляUUID = Integer.parseInt(БуферОтветаLoginPassword.toString()) ;
-                Log.d(this.getClass().getName(), "  ПроверкаПришёлЛиОтветОтСервлетаДляАунтификацииПользователя "
-                        + БуферОтветаLoginPassword + "  ID " +ПубличноеIDПолученныйИзСервлетаДляUUID);
-                Integer ПолученинныйПубличныйIDДлчЗаписиВБАзу=Integer.parseInt(БуферОтветаLoginPassword.toString());
-                Log.d(this.getClass().getName(), " ПолученинныйПубличныйIDДлчЗаписиВБАзу " +ПолученинныйПубличныйIDДлчЗаписиВБАзу);
-                // TODO: 11.03.2023 ПОСЛЕ УСПЕШНОГО ПЕРЕХОД НА АКТИВТИ
-                МетодПослеУспешногоПолучениеДанныхОтСервераЗаписываемИх(ПолученинныйПубличныйIDДлчЗаписиВБАзу,v);
-                //TODO не прошёл аунтификайию
-            }else{
-                //TODO ПОСЛЕ ПИНГА ВИЗУАЛИЗАЦИЯ
-                МетодВизуальногоОтображениеРаботыКоннекта("Логин и/или Пароль не правильный !!!" ,v);
-            }
-        }else {
-            //TODO ПОСЛЕ ПИНГА ВИЗУАЛИЗАЦИЯ
-            МетодВизуальногоОтображениеРаботыКоннекта("Сервер выкл !!!",v);
-        }
-    } catch (Exception e) {
-        e.printStackTrace();
-        Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
-                " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-        new Class_Generation_Errors(getApplicationContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(),
-                Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
-    }
-    }
 
 
-    private void МетодПослеУспешногоПолучениеДанныхОтСервераЗаписываемИх(Integer ПолученинныйПубличныйIDДлчЗаписиВБАзу,View v )
-            throws ExecutionException, InterruptedException {
+
+    private void МетодПослеУспешногоПолучениеДанныхОтСервераЗаписываемИх(Integer ПолученинныйПубличныйIDДлчЗаписиВБАзу,View v ) {
         //// todo после успешного получение имени и пароля записываем их в базу ЗАПУСК МЕТОДА ВСТАВКИ ИМЕНИ И ПАРОЛЯ ПРИ АУНТИФИКАЦИИ БОЛЕЕ 7 ДНЕЙ
         try{
             //todo ЗАПИСЬ ="SUCCENLOGIN";
