@@ -26,6 +26,7 @@ import androidx.fragment.app.FragmentResultListener;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.room.Room;
+import androidx.sqlite.db.SimpleSQLiteQuery;
 
 import com.dsy.dsu.AllDatabases.ORMSugar.AppDatabase;
 import com.dsy.dsu.AllDatabases.ORMSugar.RoomCreate;
@@ -37,6 +38,7 @@ import com.dsy.dsu.R;
 
 import java.io.File;
 import java.util.Date;
+import java.util.List;
 
 /////////////////////////////////////////////////////////////////////////
 public class MainActivity_Dashboard extends AppCompatActivity {
@@ -134,6 +136,14 @@ public class MainActivity_Dashboard extends AppCompatActivity {
             AppDatabase  appDatabas =new RoomCreate().RoomCreate(getApplicationContext());
 
             appDatabas.taskDao().insert(task);
+
+       List<Task> taskList=   appDatabas.taskDao().getAll();
+
+
+            SimpleSQLiteQuery query = new SimpleSQLiteQuery("SELECT * FROM Task WHERE id=?",
+                    new Object[]{1});
+            List<Task> user2 = appDatabas.taskDao3().getRaw(query);
+
 
             appDatabas.close();
 

@@ -15,6 +15,7 @@ public class RoomCreate {
                     appDatabas = Room.databaseBuilder(context,
                                     AppDatabase.class, "ROOOOOMMMM18.db")
                             .allowMainThreadQueries()
+                            .fallbackToDestructiveMigration()
                             .build();
                 }
             }

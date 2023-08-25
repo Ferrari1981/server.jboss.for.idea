@@ -1,15 +1,12 @@
 package com.dsy.dsu.AllDatabases.ORMSugar;
 
 
-import android.content.Context;
 import android.util.Log;
 
-import androidx.annotation.NonNull;
 import androidx.room.Database;
-import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
-@Database(entities = {Task.class}, version = 1)
+@Database(entities = {Task.class}, version = 2)
 public abstract class AppDatabase extends RoomDatabase {
     public AppDatabase() {
         Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -18,7 +15,7 @@ public abstract class AppDatabase extends RoomDatabase {
     }
 
     public abstract TaskDao taskDao();
-
+    public abstract TaskDao3 taskDao3();
 }
 
 
