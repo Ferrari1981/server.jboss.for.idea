@@ -25,11 +25,16 @@ import com.google.android.material.textview.MaterialTextView;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.function.IntSupplier;
+import java.util.function.LongToIntFunction;
 import java.util.stream.IntStream;
+import java.util.stream.LongStream;
+import java.util.stream.Stream;
 
 //TODO класс обновление Ячеек
 public class SubClassUpdatesCELL {
     Context context;
+    private LongToIntFunction longToIntFunction;
 
     public SubClassUpdatesCELL(Context context) {
         this.context = context;
@@ -39,17 +44,31 @@ public class SubClassUpdatesCELL {
     public Integer МетодВалидацияЯчеекSaveCell(@NonNull EditText editTextRowКликПоДАнными,@NonNull String  НовоеЗначениеЯчейки ) {
         Integer ОбновлениеЯчейки=0;
         try{
-            // TODO: 10.08.2023
-         Integer   НовоеЗначениеЯчейкиФинал=  Integer.parseInt(НовоеЗначениеЯчейки) ;
 
-                if (  НовоеЗначениеЯчейкиФинал<=24) {
-                    // TODO: 11.04.2023 Обновление Ячейки через ПРовайдер
-                    ОбновлениеЯчейки=    МетодСохранениеЯчейкиCellTabelSingle(editTextRowКликПоДАнными,НовоеЗначениеЯчейкиФинал,context);
-                    if (ОбновлениеЯчейки>0) {
-                        Bundle bundleперезаписьЯчейки=(Bundle) editTextRowКликПоДАнными.getTag();
-                        bundleперезаписьЯчейки.putString("ПослеЗначниеДня"  , String.valueOf(НовоеЗначениеЯчейкиФинал));
-                    }
-                }
+
+    if(НовоеЗначениеЯчейки.length()>0){
+        // TODO: 10.08.2023  ЦИФРА
+        Integer НовоеЗначениеЯчейкиФинал= Stream.of(НовоеЗначениеЯчейки).mapToInt(mint->Integer.parseInt(mint)).findFirst().orElse(0);
+        if ( НовоеЗначениеЯчейкиФинал>0 && НовоеЗначениеЯчейкиФинал<=24) {
+            // TODO: 11.04.2023 Обновление Ячейки через ПРовайдер
+            ОбновлениеЯчейки=    МетодСохранениеЯчейкиCellTabelSingle(editTextRowКликПоДАнными,НовоеЗначениеЯчейкиФинал,context);
+            if (ОбновлениеЯчейки>0) {
+                Bundle bundleперезаписьЯчейки=(Bundle) editTextRowКликПоДАнными.getTag();
+                bundleперезаписьЯчейки.putString("ПослеЗначниеДня"  , String.valueOf(НовоеЗначениеЯчейкиФинал));
+            }
+        }
+    }else{
+        // TODO: 11.04.2023 Обновление Ячейки через ПРовайдер
+        ОбновлениеЯчейки=    МетодСохранениеЯчейкиCellTabelSingle(editTextRowКликПоДАнными,0,context);
+        if (ОбновлениеЯчейки>0) {
+            Bundle bundleперезаписьЯчейки=(Bundle) editTextRowКликПоДАнными.getTag();
+            bundleперезаписьЯчейки.putString("ПослеЗначниеДня"  , String.valueOf(НовоеЗначениеЯчейки));
+        }
+    }
+
+
+
+
             Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"  +
@@ -163,7 +182,11 @@ public class SubClassUpdatesCELL {
 
             String День=bundleОбновлениеЯчейки.getString("День","");
             Long  uuid=bundleОбновлениеЯчейки.getLong("uuid",0l);
-            contentValuesОбноленияЯчейкиSingleTanel.put(День,ЗначениеИзЯчейки);
+            if (ЗначениеИзЯчейки>0) {
+                contentValuesОбноленияЯчейкиSingleTanel.put(День,ЗначениеИзЯчейки);
+            } else {
+                contentValuesОбноленияЯчейкиSingleTanel.putNull(День );
+            }
 
             String Дата =     new Class_Generation_Data(context).ГлавнаяДатаИВремяОперацийСБазойДанныхДОП();
             contentValuesОбноленияЯчейкиSingleTanel.put("date_update", Дата);
@@ -188,6 +211,30 @@ public class SubClassUpdatesCELL {
         }
         return  ОбновлениеЯчейки;
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     Integer МетодСохранениеЯчейкиМеткиТАбеля(@NonNull TextView viewЯчейка,@NonNull Context context ){ //TODO метод записи СМЕНЫ ПРОФЕСИИ
         Integer ОбновлениеЯчейки=0;
         try{
