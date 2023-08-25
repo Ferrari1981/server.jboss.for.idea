@@ -1,6 +1,8 @@
 package com.dsy.dsu.AllDatabases.ORMSugar;
 
 
+import android.util.Log;
+
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
@@ -43,6 +45,9 @@ public class Task implements Serializable {
 
     public void setTask(String task) {
         this.task = task;
+        Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"  );
     }
 
     public String getDesc() {

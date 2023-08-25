@@ -2,10 +2,8 @@ package com.dsy.dsu.Dashboard;
 
 import android.Manifest;
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.ComponentName;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.content.pm.ActivityInfo;
@@ -15,15 +13,11 @@ import android.os.IBinder;
 import android.os.Looper;
 import android.os.Message;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ScrollView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.UiThread;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
@@ -34,25 +28,14 @@ import androidx.lifecycle.LifecycleOwner;
 import androidx.room.Room;
 
 import com.dsy.dsu.AllDatabases.ORMSugar.AppDatabase;
-import com.dsy.dsu.AllDatabases.ORMSugar.DatabaseClient;
 import com.dsy.dsu.AllDatabases.ORMSugar.Task;
 import com.dsy.dsu.AllDatabases.ORMSugar.TaskDao;
-import com.dsy.dsu.Business_logic_Only_Class.Class_Clears_Tables;
-import com.dsy.dsu.Business_logic_Only_Class.Class_Connections_Server;
-import com.dsy.dsu.Business_logic_Only_Class.Class_Find_Setting_User_Network;
 import com.dsy.dsu.Business_logic_Only_Class.Class_Generation_Errors;
-import com.dsy.dsu.Business_logic_Only_Class.Class_Generations_PUBLIC_CURRENT_ID;
-import com.dsy.dsu.Business_logic_Only_Class.Class_Generator_One_WORK_MANAGER;
-import com.dsy.dsu.Business_logic_Only_Class.PUBLIC_CONTENT;
-import com.dsy.dsu.Business_logic_Only_Class.Websocet.WebSocketss;
-import com.dsy.dsu.Code_For_Firebase_AndOneSignal_Здесь_КодДЛяСлужбыУведомленияFirebase.Class_Generation_SendBroadcastReceiver_And_Firebase_OneSignal;
 import com.dsy.dsu.Code_For_Services.ServiceUpdatePoОбновлениеПО;
-import com.dsy.dsu.Dashboard.Fragments.DashboardFragmentHarmonyOS;
 import com.dsy.dsu.Dashboard.Fragments.DashboardFragmentMaterialDesign;
-import com.dsy.dsu.For_Code_Settings_DSU1.MainActivity_Settings;
 import com.dsy.dsu.R;
-import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
+import java.io.File;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 import java.util.function.Function;
@@ -145,7 +128,8 @@ public class MainActivity_Dashboard extends AppCompatActivity {
                         task.setFinished(false);
                         //adding to database
                         AppDatabase db = Room.databaseBuilder(getApplicationContext(),
-                                AppDatabase.class, "database-name").build();
+                                AppDatabase.class, "ROOM1.db")
+                                .allowMainThreadQueries().build();
 
                         TaskDao userDao = db.taskDao();
                         userDao.insert(task);
