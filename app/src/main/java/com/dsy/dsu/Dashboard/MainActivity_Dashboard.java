@@ -35,7 +35,7 @@ import com.dsy.dsu.Code_For_Services.ServiceUpdatePoОбновлениеПО;
 import com.dsy.dsu.Dashboard.Fragments.DashboardFragmentMaterialDesign;
 import com.dsy.dsu.R;
 
-import java.io.File;
+import java.util.Date;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 import java.util.function.Function;
@@ -122,18 +122,19 @@ public class MainActivity_Dashboard extends AppCompatActivity {
                     public Object get() {
                         //creating a task
                         Task task = new Task();
-                        task.setTask("w");
-                        task.setDesc("w");
-                        task.setFinishBy("w");
-                        task.setFinished(false);
+                        task.setTask("room 1 "+new Date().toLocaleString());
+                        task.setDesc("room 2 "+new Date().toLocaleString());
+                        task.setFinishBy("room 3 "+new Date().toLocaleString());
+                        task.setFinished(true);
                         //adding to database
-                        AppDatabase db = Room.databaseBuilder(getApplicationContext(),
-                                AppDatabase.class, "ROOM1.db")
-                                .allowMainThreadQueries().build();
 
-                        TaskDao userDao = db.taskDao();
-                        userDao.insert(task);
 
+                   /*     AppDatabase appDatabase=       Room.databaseBuilder( getApplicationContext(),
+                                        AppDatabase.class, "NewRoom8.db")
+                                .allowMainThreadQueries()
+                                .build();
+
+                        appDatabase.taskDao().insert(task);*/
 
                         Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
