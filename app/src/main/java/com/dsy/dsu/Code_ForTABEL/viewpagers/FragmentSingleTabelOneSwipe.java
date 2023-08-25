@@ -125,6 +125,7 @@ import io.reactivex.rxjava3.functions.Consumer;
 import io.reactivex.rxjava3.functions.Function;
 import io.reactivex.rxjava3.functions.Predicate;
 import io.reactivex.rxjava3.internal.observers.BlockingBaseObserver;
+import io.reactivex.rxjava3.schedulers.Schedulers;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -1674,7 +1675,7 @@ public class FragmentSingleTabelOneSwipe extends Fragment {
                                 disposableAfterTextChangeEvent=           RxTextView.afterTextChangeEvents( editTextRowКликПоДАнными)
                                         .skip(1)
                                         .debounce(300,TimeUnit.MILLISECONDS)///общее время event
-                                        .subscribeOn(AndroidSchedulers.mainThread())
+                                        .subscribeOn(Schedulers.single())
                                         .observeOn(AndroidSchedulers.mainThread())
                                         .throttleLatest(100,TimeUnit.MILLISECONDS)//из общего время  последних event
                                         .distinct().forEachWhile(new Predicate<TextViewAfterTextChangeEvent>() {

@@ -39,7 +39,7 @@ public class SubClassUpdatesCELL {
 
     if(НовоеЗначениеЯчейки.length()>0){
         // TODO: 10.08.2023  ЦИФРА
-        Integer НовоеЗначениеЯчейкиФинал= Stream.of(НовоеЗначениеЯчейки).mapToInt(mint->Integer.parseInt(mint)).findFirst().orElse(0);
+        Integer НовоеЗначениеЯчейкиФинал= Stream.of(НовоеЗначениеЯчейки).filter(f->f.length()<3).mapToInt(mint->Integer.parseInt(mint)).findFirst().orElse(0);
         if ( НовоеЗначениеЯчейкиФинал>0 && НовоеЗначениеЯчейкиФинал<=24) {
             // TODO: 11.04.2023 Обновление Ячейки через ПРовайдер
             ОбновлениеЯчейки=    МетодСохранениеЯчейкиCellТабель(editTextRowКликПоДАнными,НовоеЗначениеЯчейкиФинал,context);
