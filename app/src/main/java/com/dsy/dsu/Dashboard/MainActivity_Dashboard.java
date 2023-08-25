@@ -27,9 +27,9 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.room.Room;
 
-import com.dsy.dsu.AllDatabases.ORMSugar.AppDatabase2;
-import com.dsy.dsu.AllDatabases.ORMSugar.AppDatabase2;
+import com.dsy.dsu.AllDatabases.ORMSugar.RoomInisaziy;
 import com.dsy.dsu.AllDatabases.ORMSugar.Task;
+import com.dsy.dsu.AllDatabases.ORMSugar.roomCreate;
 import com.dsy.dsu.Business_logic_Only_Class.Class_Generation_Errors;
 import com.dsy.dsu.Code_For_Services.ServiceUpdatePoОбновлениеПО;
 import com.dsy.dsu.Dashboard.Fragments.DashboardFragmentMaterialDesign;
@@ -121,13 +121,19 @@ public class MainActivity_Dashboard extends AppCompatActivity {
                     task.setFinishBy("room 3 " + new Date().toLocaleString());
                     task.setFinished(true);
                     //adding to database
+            RoomInisaziy roomInisaziy=   roomCreate.getDatabase(getApplicationContext());
 
-
-            AppDatabase2 appDatabas2 = Room.databaseBuilder(getApplicationContext(),
-                            AppDatabase2.class, "room10333.db")
-                    .allowMainThreadQueries()
+       /*     ActivityPackageDatabase    INSTANCE = Room.databaseBuilder( getApplicationContext(),
+                            ActivityPackageDatabase.class, "appDB")
+                    .createFromAsset("database/assetDB.db")
                     .build();
 
+            INSTANCE.*/
+  /*    *//*      RoomInisaziy appDatabas2 = Room.databaseBuilder(getApplicationContext(),
+                            RoomInisaziy.class, "room10333.db")
+                    .allowMainThreadQueries()
+                    .build();*//*
+            RoomInisaziy appDatabas2=  RoomInisaziy.roomInisaziy;
 
 
             appDatabas2.taskDao().insert(task);
@@ -140,7 +146,7 @@ public class MainActivity_Dashboard extends AppCompatActivity {
             task.setFinished(true);
             //adding to database
 
-            appDatabas2.taskDao().insert(task);
+            appDatabas2.taskDao().insert(task);*/
                     Log.d(this.getClass().getName(), "\n" + " class "
                             + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
