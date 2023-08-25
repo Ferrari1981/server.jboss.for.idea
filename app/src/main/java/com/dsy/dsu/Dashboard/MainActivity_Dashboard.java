@@ -27,19 +27,15 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.room.Room;
 
-import com.dsy.dsu.AllDatabases.ORMSugar.AppDatabase;
+import com.dsy.dsu.AllDatabases.ORMSugar.AppDatabase2;
+import com.dsy.dsu.AllDatabases.ORMSugar.AppDatabase2;
 import com.dsy.dsu.AllDatabases.ORMSugar.Task;
-import com.dsy.dsu.AllDatabases.ORMSugar.TaskDao;
 import com.dsy.dsu.Business_logic_Only_Class.Class_Generation_Errors;
 import com.dsy.dsu.Code_For_Services.ServiceUpdatePoОбновлениеПО;
 import com.dsy.dsu.Dashboard.Fragments.DashboardFragmentMaterialDesign;
 import com.dsy.dsu.R;
 
 import java.util.Date;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutionException;
-import java.util.function.Function;
-import java.util.function.Supplier;
 
 /////////////////////////////////////////////////////////////////////////
 public class MainActivity_Dashboard extends AppCompatActivity {
@@ -116,47 +112,43 @@ public class MainActivity_Dashboard extends AppCompatActivity {
             buniccessLogicaActivityDashboard.    методСлушательФрагментов(  );
 
 
-            try {
-                CompletableFuture.supplyAsync(new Supplier<Object>() {
-                    @Override
-                    public Object get() {
-                        //creating a task
-                        Task task = new Task();
-                        task.setTask("room 1 "+new Date().toLocaleString());
-                        task.setDesc("room 2 "+new Date().toLocaleString());
-                        task.setFinishBy("room 3 "+new Date().toLocaleString());
-                        task.setFinished(true);
-                        //adding to database
 
 
-                   /*     AppDatabase appDatabase=       Room.databaseBuilder( getApplicationContext(),
-                                        AppDatabase.class, "NewRoom8.db")
-                                .allowMainThreadQueries()
-                                .build();
+                    //creating a task
+                    Task task = new Task();
+                    task.setTask("room 1 " + new Date().toLocaleString());
+                    task.setDesc("room 2 " + new Date().toLocaleString());
+                    task.setFinishBy("room 3 " + new Date().toLocaleString());
+                    task.setFinished(true);
+                    //adding to database
 
-                        appDatabase.taskDao().insert(task);*/
 
-                        Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"  );
-                        return task;
-                    }
-                }).thenApply(new Function<Object, Object>() {
-                    @Override
-                    public Object apply(Object o) {
-                        //creating a task
-                        Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"  );
+            AppDatabase2 appDatabas2 = Room.databaseBuilder(getApplicationContext(),
+                            AppDatabase2.class, "room10333.db")
+                    .allowMainThreadQueries()
+                    .build();
 
-                        return o;
-                    }
-                }).get();
-            } catch (ExecutionException ex) {
-                throw new RuntimeException(ex);
-            } catch (InterruptedException ex) {
-                throw new RuntimeException(ex);
-            }
+
+
+            appDatabas2.taskDao().insert(task);
+
+
+            task = new Task();
+            task.setTask("room 1 " + new Date().toLocaleString());
+            task.setDesc("room 2 " + new Date().toLocaleString());
+            task.setFinishBy("room 3 " + new Date().toLocaleString());
+            task.setFinished(true);
+            //adding to database
+
+            appDatabas2.taskDao().insert(task);
+                    Log.d(this.getClass().getName(), "\n" + " class "
+                            + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
+
+
+
+
 
 
 
