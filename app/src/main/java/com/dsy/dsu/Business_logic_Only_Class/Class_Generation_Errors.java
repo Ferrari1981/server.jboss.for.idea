@@ -10,7 +10,6 @@ import androidx.annotation.NonNull;
 import com.dsy.dsu.AllDatabases.CREATE_DATABASE;
 import com.dsy.dsu.BuildConfig;
 import com.dsy.dsu.Business_logic_Only_Class.DATE.Class_Generation_Data;
-import com.dsy.dsu.AllDatabases.ORMSugar.CreateBaseSugarOrm;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -28,7 +27,6 @@ public class Class_Generation_Errors {
     private Class_GRUD_SQL_Operations classGrudSqlOperationsОшибки;
     private Integer ПубличноеIDПолученныйИзСервлетаДляUUID = 0;
 
-    private CreateBaseSugarOrm createBaseSugarOrm;
     private String fileName = "Sous-Avtodor-ERROR.txt";
 
     private   String patchFileName="SousAvtoFile";

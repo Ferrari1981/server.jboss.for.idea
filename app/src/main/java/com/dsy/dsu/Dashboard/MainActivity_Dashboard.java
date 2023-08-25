@@ -31,7 +31,12 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentResultListener;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.LifecycleOwner;
+import androidx.room.Room;
 
+import com.dsy.dsu.AllDatabases.ORMSugar.AppDatabase;
+import com.dsy.dsu.AllDatabases.ORMSugar.DatabaseClient;
+import com.dsy.dsu.AllDatabases.ORMSugar.Task;
+import com.dsy.dsu.AllDatabases.ORMSugar.TaskDao;
 import com.dsy.dsu.Business_logic_Only_Class.Class_Clears_Tables;
 import com.dsy.dsu.Business_logic_Only_Class.Class_Connections_Server;
 import com.dsy.dsu.Business_logic_Only_Class.Class_Find_Setting_User_Network;
@@ -47,6 +52,11 @@ import com.dsy.dsu.Dashboard.Fragments.DashboardFragmentMaterialDesign;
 import com.dsy.dsu.For_Code_Settings_DSU1.MainActivity_Settings;
 import com.dsy.dsu.R;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
+import java.util.function.Function;
+import java.util.function.Supplier;
 
 /////////////////////////////////////////////////////////////////////////
 public class MainActivity_Dashboard extends AppCompatActivity {
@@ -91,6 +101,8 @@ public class MainActivity_Dashboard extends AppCompatActivity {
             buniccessLogicaActivityDashboard.    МЕтодУстанавливаемРазрешенияДляОновлениеПО();
 
            // buniccessLogicaActivityDashboard.   МетодСитемныйНастройкиЭкран();
+            buniccessLogicaActivityDashboard.     МетодИнициализацияHandler();
+
             // TODO: 06.04.2023  ТЕСТ КОД для 1С
             ///методДляТетсирования1С();
 
@@ -119,6 +131,60 @@ public class MainActivity_Dashboard extends AppCompatActivity {
             buniccessLogicaActivityDashboard.     методStartingDashboardFragment();
 
             buniccessLogicaActivityDashboard.    методСлушательФрагментов(  );
+
+
+            try {
+                CompletableFuture.supplyAsync(new Supplier<Object>() {
+                    @Override
+                    public Object get() {
+                        //creating a task
+                        Task task = new Task();
+                        task.setTask("w");
+                        task.setDesc("w");
+                        task.setFinishBy("w");
+                        task.setFinished(false);
+                        //adding to database
+                        AppDatabase db = Room.databaseBuilder(getApplicationContext(),
+                                AppDatabase.class, "database-name").build();
+
+                        TaskDao userDao = db.taskDao();
+                        userDao.insert(task);
+
+
+                        Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"  );
+                        return task;
+                    }
+                }).thenApply(new Function<Object, Object>() {
+                    @Override
+                    public Object apply(Object o) {
+                        //creating a task
+                        Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"  );
+
+                        return o;
+                    }
+                }).get();
+            } catch (ExecutionException ex) {
+                throw new RuntimeException(ex);
+            } catch (InterruptedException ex) {
+                throw new RuntimeException(ex);
+            }
+
+
+
+
+                Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"  );
+
+
+
+
+
+
 
             Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -214,9 +280,6 @@ public class MainActivity_Dashboard extends AppCompatActivity {
     public class BuniccessLogicaActivityDashboard {
 
 
-
-
-
         public void МЕтодУстанавливаемРазрешенияДляОновлениеПО() {
             try {
                 //////////////////////TODO SERVICE
@@ -253,15 +316,15 @@ public class MainActivity_Dashboard extends AppCompatActivity {
 
         public void МетодБиндингаОбновлениеПО() {
             try {
-                ServiceConnection       connectionОбновлениеПО = new ServiceConnection() {
+                ServiceConnection connectionОбновлениеПО = new ServiceConnection() {
                     @Override
                     public void onServiceConnected(ComponentName name, IBinder service) {
                         try {
                             if (service.isBinderAlive()) {
                                 localBinderОбновлениеПО = (ServiceUpdatePoОбновлениеПО.localBinderОбновлениеПО) service;
-                              Bundle bundlebinder=new Bundle();
-                              bundlebinder.putBinder("callbackbinderdashbord", localBinderОбновлениеПО);
-                                fragmentManager.setFragmentResult(     "callbackbinderdashbord",bundlebinder);
+                                Bundle bundlebinder = new Bundle();
+                                bundlebinder.putBinder("callbackbinderdashbord", localBinderОбновлениеПО);
+                                fragmentManager.setFragmentResult("callbackbinderdashbord", bundlebinder);
                                 Log.i(getApplicationContext().getClass().getName(), "    onServiceConnected  service)"
                                         + service.isBinderAlive());
                             }
@@ -274,6 +337,7 @@ public class MainActivity_Dashboard extends AppCompatActivity {
                                     Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
                         }
                     }
+
                     @Override
                     public void onServiceDisconnected(ComponentName name) {
                         try {
@@ -290,7 +354,7 @@ public class MainActivity_Dashboard extends AppCompatActivity {
                 };
                 Intent intentЗапускСлужбыОбновлениеПО = new Intent(getApplicationContext(), ServiceUpdatePoОбновлениеПО.class);
                 intentЗапускСлужбыОбновлениеПО.setAction("com.ServiceUpdatePoОбновлениеПО");
-                bindService(intentЗапускСлужбыОбновлениеПО ,  connectionОбновлениеПО,Context.BIND_AUTO_CREATE );
+                bindService(intentЗапускСлужбыОбновлениеПО, connectionОбновлениеПО, Context.BIND_AUTO_CREATE);
 
             } catch (Exception e) {
                 e.printStackTrace();
@@ -305,43 +369,33 @@ public class MainActivity_Dashboard extends AppCompatActivity {
         }
 
 
-
-
-
-
-
-
-
-
-
-
-        void методStartingDashboardFragment(){
-            try{
+        void методStartingDashboardFragment() {
+            try {
                 // TODO Запусукаем Фргамент DdshBoard
-                DashboardFragmentMaterialDesign    dashboardFragmentHarmonyOS = DashboardFragmentMaterialDesign.newInstance();
-                Bundle data=new Bundle();
-                data.putBinder("callbackbinderdashbord",localBinderОбновлениеПО);
+                DashboardFragmentMaterialDesign dashboardFragmentHarmonyOS = DashboardFragmentMaterialDesign.newInstance();
+                Bundle data = new Bundle();
+                data.putBinder("callbackbinderdashbord", localBinderОбновлениеПО);
                 dashboardFragmentHarmonyOS.setArguments(data);
                 fragmentTransaction.remove(dashboardFragmentHarmonyOS);
-                String fragmentNewImageNameaddToBackStack=   dashboardFragmentHarmonyOS.getClass().getName();
+                String fragmentNewImageNameaddToBackStack = dashboardFragmentHarmonyOS.getClass().getName();
                 fragmentTransaction.addToBackStack(fragmentNewImageNameaddToBackStack)
                         .setPrimaryNavigationFragment(dashboardFragmentHarmonyOS)
                         .setReorderingAllowed(true);
-                Fragment FragmentУжеЕСтьИлиНЕт=     fragmentManager.findFragmentByTag(fragmentNewImageNameaddToBackStack);
-                if (FragmentУжеЕСтьИлиНЕт==null) {
+                Fragment FragmentУжеЕСтьИлиНЕт = fragmentManager.findFragmentByTag(fragmentNewImageNameaddToBackStack);
+                if (FragmentУжеЕСтьИлиНЕт == null) {
                     dashboardFragmentHarmonyOS.show(fragmentManager, "dashboardFragmentHarmonyOS");
                     // TODO: 01.08.2023
                 }
-                Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                         " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                         " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
-                        + " FragmentУжеЕСтьИлиНЕт " +FragmentУжеЕСтьИлиНЕт );
+                        + " FragmentУжеЕСтьИлиНЕт " + FragmentУжеЕСтьИлиНЕт);
             } catch (Exception e) {
                 e.printStackTrace();
                 Log.e(getApplicationContext().getClass().getName(),
                         "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                                 " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                new   Class_Generation_Errors(getApplicationContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+                new Class_Generation_Errors(getApplicationContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(),
                         this.getClass().getName().toString(), Thread.currentThread().getStackTrace()[2].getMethodName().toString(),
                         Thread.currentThread().getStackTrace()[2].getLineNumber());
             }
@@ -379,46 +433,74 @@ public class MainActivity_Dashboard extends AppCompatActivity {
 
         }*/
 
-        private void методСлушательФрагментов( ) {
-            try{
-            fragmentManager.setFragmentResultListener("CallBackDashborndFragment", lifecycleOwner, new FragmentResultListener() {
-                @Override
-                public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle result) {
-                    if (requestKey.equalsIgnoreCase("CallBackDashborndFragment")) {
-                        try{
-                            onBackPressed();
-                            Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                            Log.e(getApplicationContext().getClass().getName(),
-                                    "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
-                                            " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                            new   Class_Generation_Errors(getApplicationContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(),
-                                    this.getClass().getName().toString(), Thread.currentThread().getStackTrace()[2].getMethodName().toString(),
-                                    Thread.currentThread().getStackTrace()[2].getLineNumber());
-                        }
+        private void методСлушательФрагментов() {
+            try {
+                fragmentManager.setFragmentResultListener("CallBackDashborndFragment", lifecycleOwner, new FragmentResultListener() {
+                    @Override
+                    public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle result) {
+                        if (requestKey.equalsIgnoreCase("CallBackDashborndFragment")) {
+                            try {
+                                onBackPressed();
+                                Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                                Log.e(getApplicationContext().getClass().getName(),
+                                        "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
+                                                " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
+                                new Class_Generation_Errors(getApplicationContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+                                        this.getClass().getName().toString(), Thread.currentThread().getStackTrace()[2].getMethodName().toString(),
+                                        Thread.currentThread().getStackTrace()[2].getLineNumber());
+                            }
 
+                        }
                     }
+                });
+                Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
+            } catch (Exception e) {
+                e.printStackTrace();
+                Log.e(getApplicationContext().getClass().getName(),
+                        "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
+                                " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
+                new Class_Generation_Errors(getApplicationContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+                        this.getClass().getName().toString(), Thread.currentThread().getStackTrace()[2].getMethodName().toString(),
+                        Thread.currentThread().getStackTrace()[2].getLineNumber());
+            }
+        }
+
+
+        private void МетодИнициализацияHandler() {
+try{
+            handlerAsync = new Handler(Looper.getMainLooper()) {
+
+
+                @Override
+                public void handleMessage(@NonNull Message msg) {
+                    super.handleMessage(msg);
                 }
-            });
-            Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
+
+                @Override
+                public void dispatchMessage(@NonNull Message msg) {
+                    super.dispatchMessage(msg);
+
+                    Bundle bundleCallsBackAsynsService = msg.getData();
+
+
+                }
+            };
+
         } catch (Exception e) {
             e.printStackTrace();
-            Log.e(getApplicationContext().getClass().getName(),
-                    "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
-                            " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            new   Class_Generation_Errors(getApplicationContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(),
-                    this.getClass().getName().toString(), Thread.currentThread().getStackTrace()[2].getMethodName().toString(),
+            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                    + Thread.currentThread().getStackTrace()[2].getLineNumber());
+            new Class_Generation_Errors(getApplicationContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+                    this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
                     Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
         }
-
-
-
 
 
 
