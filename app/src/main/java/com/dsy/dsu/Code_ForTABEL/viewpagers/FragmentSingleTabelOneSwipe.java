@@ -334,10 +334,9 @@ public class FragmentSingleTabelOneSwipe extends Fragment {
                 // TODO: 10.08.2023
             }
             if (disposableAfterTextChangeEvent!=null) {
-                if(disposableAfterTextChangeEvent.isDisposed()){
                     disposableAfterTextChangeEvent.dispose();
                 }
-            }
+
 
             Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -1671,12 +1670,18 @@ public class FragmentSingleTabelOneSwipe extends Fragment {
                             public void onViewAttachedToWindow(View v) {
                                 EditText editextViewAfterTextChangeEvent=null;
                                 try {
-                              RxTextView.afterTextChangeEvents( editTextRowКликПоДАнными)
+                   disposableAfterTextChangeEvent=           RxTextView.afterTextChangeEvents( editTextRowКликПоДАнными)
                                       .skip(1)
                                       .distinct()
-                               .debounce(2,TimeUnit.SECONDS)
+                               .debounce(100,TimeUnit.MILLISECONDS)
                                       .subscribeOn(AndroidSchedulers.mainThread())
                                       .observeOn(AndroidSchedulers.mainThread())
+                           .filter(new Predicate<TextViewAfterTextChangeEvent>() {
+                               @Override
+                               public boolean test(TextViewAfterTextChangeEvent textViewAfterTextChangeEvent) throws Throwable {
+                                   return textViewAfterTextChangeEvent.component1().isInputMethodTarget();
+                               }
+                           })
                                       .map(new Function<TextViewAfterTextChangeEvent, Object>() {
                                           @Override
                                           public Object apply(TextViewAfterTextChangeEvent textViewAfterTextChangeEvent) throws Throwable {

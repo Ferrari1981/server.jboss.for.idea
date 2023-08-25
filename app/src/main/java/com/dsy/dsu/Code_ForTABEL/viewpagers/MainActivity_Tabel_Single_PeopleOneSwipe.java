@@ -54,7 +54,10 @@ public class MainActivity_Tabel_Single_PeopleOneSwipe extends AppCompatActivity 
             Configuration   config = getBaseContext().getResources().getConfiguration();
             config.setLocale(locale);
             createConfigurationContext(config);
+
+
             fragmentManager = getSupportFragmentManager();
+            fragmentTransaction = fragmentManager.beginTransaction();
             // TODO: 20.06.2023 Инизиализация
             // TODO: 20.06.2023
             singleWithViewPager=  new SubClassBissnessLogicTableSingleWithViewPager( );
@@ -118,7 +121,6 @@ public class MainActivity_Tabel_Single_PeopleOneSwipe extends AppCompatActivity 
 
         private void методСозданиеФрагментаДляТабеляSingle(  ) {
             try{
-                fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.setCustomAnimations(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
                 Fragment      fragment_Single_Tabel_One_Swipe = new FragmentSingleTabelOneSwipe();
                 fragment_Single_Tabel_One_Swipe.setEnterTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
