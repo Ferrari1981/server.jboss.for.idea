@@ -28,12 +28,14 @@ import androidx.lifecycle.LifecycleOwner;
 import androidx.room.Room;
 
 import com.dsy.dsu.AllDatabases.ORMSugar.AppDatabase;
+import com.dsy.dsu.AllDatabases.ORMSugar.RoomCreate;
 import com.dsy.dsu.AllDatabases.ORMSugar.Task;
 import com.dsy.dsu.Business_logic_Only_Class.Class_Generation_Errors;
 import com.dsy.dsu.Code_For_Services.ServiceUpdatePoОбновлениеПО;
 import com.dsy.dsu.Dashboard.Fragments.DashboardFragmentMaterialDesign;
 import com.dsy.dsu.R;
 
+import java.io.File;
 import java.util.Date;
 
 /////////////////////////////////////////////////////////////////////////
@@ -124,10 +126,12 @@ public class MainActivity_Dashboard extends AppCompatActivity {
 
 
 
-            AppDatabase appDatabas = Room.databaseBuilder(getApplicationContext(),
-                            AppDatabase.class, "ROOOOOMMMM1.db")
+         /*   AppDatabase appDatabas = Room.databaseBuilder(getApplicationContext(),
+                            AppDatabase.class, "ROOOOOMMMM17.db")
                     .allowMainThreadQueries()
-                    .build();
+                    .build();*/
+
+            AppDatabase  appDatabas =new RoomCreate().RoomCreate(getApplicationContext());
 
             appDatabas.taskDao().insert(task);
 
