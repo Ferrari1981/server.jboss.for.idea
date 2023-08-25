@@ -244,7 +244,6 @@ this.context=context;
                         " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
                         + имяТаблицаAsync  + " ОперацияUpdate " +ОперацияUpdate  +"  sqLiteStatementInsert " +sqLiteStatementInsert);
             }
-
         } catch (Exception e) {
             e.printStackTrace();
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +

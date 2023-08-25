@@ -1663,17 +1663,69 @@ public class FragmentSingleTabelOneSwipe extends Fragment {
             // TODO: 08.11.2022 метод КЛИК ПО ДАННЫМ
             private void МетодаСохранениеДанныхЯчейкиRow(@NonNull   EditText editTextRowКликПоДАнными  ) {
                 try{
+
                     if (editTextRowКликПоДАнными!=null) {
                         final String[] До = new String[1];
                                 editTextRowКликПоДАнными.addOnAttachStateChangeListener(new View.OnAttachStateChangeListener() {
                             @Override
                             public void onViewAttachedToWindow(View v) {
+
+                                // TODO: 25.08.2023  тест код
+                                disposableAfterTextChangeEvent=           RxTextView.afterTextChangeEvents( editTextRowКликПоДАнными)
+                                        .skip(1)
+                                        .debounce(300,TimeUnit.MILLISECONDS)///общее время event
+                                        .subscribeOn(AndroidSchedulers.mainThread())
+                                        .observeOn(AndroidSchedulers.mainThread())
+                                        .throttleLatest(100,TimeUnit.MILLISECONDS)//из общего время  последних event
+                                        .distinct().forEachWhile(new Predicate<TextViewAfterTextChangeEvent>() {
+                                            @Override
+                                            public boolean test(TextViewAfterTextChangeEvent textViewAfterTextChangeEvent) throws Throwable {
+                                                // TODO: 24.08.2023
+                                                try{
+                                                if(textViewAfterTextChangeEvent.component1().isInputMethodTarget()){
+
+                                                    String   НовоеЗначенияДня   =(String) textViewAfterTextChangeEvent.component1().getText().toString();
+                                                    if (!НовоеЗначенияДня.isEmpty()) {
+                                                        НовоеЗначенияДня=   НовоеЗначенияДня.replaceAll("[^0-9]","").trim();
+                                                    }
+
+
+                                                    методListerAfterSaveNewDay (editTextRowКликПоДАнными,НовоеЗначенияДня);
+
+                                                    // TODO: 24.08.2023
+                                                    Log.d(this.getClass().getName(), "\n" + " class " +
+                                                            Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" );
+
+                                                    return true;
+                                                }
+
+                                            } catch (Exception e) {
+                                                e.printStackTrace();
+                                                Log.e(getContext().getClass().getName(),
+                                                        "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
+                                                                " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
+                                                new   Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+                                                        this.getClass().getName().toString(), Thread.currentThread().getStackTrace()[2].getMethodName().toString(),
+                                                        Thread.currentThread().getStackTrace()[2].getLineNumber());
+                                            }
+                                                return false;
+                                            }
+                                        });
+
+
+
+
+                                /*
+
+                                // TODO: 25.08.2023  Главный Код
                                 EditText editextViewAfterTextChangeEvent=null;
                                 try {
                    disposableAfterTextChangeEvent=           RxTextView.afterTextChangeEvents( editTextRowКликПоДАнными)
                                       .skip(1)
                                       .distinct()
-                               .debounce(100,TimeUnit.MILLISECONDS)
+                               .debounce(2,TimeUnit.SECONDS)
                                       .subscribeOn(AndroidSchedulers.mainThread())
                                       .observeOn(AndroidSchedulers.mainThread())
                            .filter(new Predicate<TextViewAfterTextChangeEvent>() {
@@ -1735,7 +1787,7 @@ public class FragmentSingleTabelOneSwipe extends Fragment {
                                             this.getClass().getName().toString(), Thread.currentThread().getStackTrace()[2].getMethodName().toString(),
                                             Thread.currentThread().getStackTrace()[2].getLineNumber());
                                 }
-                            }
+                            */}
 
                             @Override
                             public void onViewDetachedFromWindow(View v) {
@@ -1772,7 +1824,7 @@ public class FragmentSingleTabelOneSwipe extends Fragment {
                             методСчитаемЧасы(myRecycleViewAdapter.cursor);
                                  message.getTarget().postDelayed(()->{
                                      editTextRowКликПоДАнными.startAnimation(animation1);
-                                 },300);
+                                 },50);
 
                             // TODO: 19.06.2023 код когда данные в ячейке не сохранились
                         } else {
