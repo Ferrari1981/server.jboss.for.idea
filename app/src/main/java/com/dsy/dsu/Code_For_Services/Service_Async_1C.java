@@ -209,7 +209,7 @@ public class Service_Async_1C extends IntentService {
                                     Request newRequest = builder.build();
                                     return chain.proceed(newRequest);
                                 }
-                            }).connectTimeout(2, TimeUnit.SECONDS)
+                            }).connectTimeout(5, TimeUnit.SECONDS)
                       .writeTimeout(1, TimeUnit.HOURS)
                       .readTimeout(1, TimeUnit.HOURS).build();
                     //

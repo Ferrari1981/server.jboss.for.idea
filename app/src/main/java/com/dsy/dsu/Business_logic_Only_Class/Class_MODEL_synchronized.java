@@ -158,7 +158,7 @@ import okio.BufferedSink;
                             Request newRequest = builder.build();
                             return chain.proceed(newRequest);
                         }
-                    }).connectTimeout(2, TimeUnit.SECONDS)
+                    }).connectTimeout(5, TimeUnit.SECONDS)
                     .writeTimeout(1, TimeUnit.HOURS)
                     .readTimeout(1, TimeUnit.HOURS).build();
             ///  MediaType JSON = MediaType.parse("application/json; charset=utf-16");
@@ -293,7 +293,7 @@ import okio.BufferedSink;
                             Request newRequest = builder.build();
                             return chain.proceed(newRequest);
                         }
-                    }).connectTimeout(2, TimeUnit.SECONDS)
+                    }).connectTimeout(5, TimeUnit.SECONDS)
                     .writeTimeout(1, TimeUnit.HOURS)
                     .readTimeout(1, TimeUnit.HOURS).build();
             ///  MediaType JSON = MediaType.parse("application/json; charset=utf-16");
@@ -431,7 +431,7 @@ import okio.BufferedSink;
                             Request newRequest = builder.build();
                             return chain.proceed(newRequest);
                         }
-                    }).connectTimeout(4, TimeUnit.SECONDS)
+                    }).connectTimeout(5, TimeUnit.SECONDS)
                     .writeTimeout(1, TimeUnit.HOURS)
                     .readTimeout(1, TimeUnit.HOURS).build();
             ///  MediaType JSON = MediaType.parse("application/json; charset=utf-16");
@@ -610,7 +610,7 @@ import okio.BufferedSink;
                                     Request newRequest = builder.build();
                                     return chain.proceed(newRequest);
                                 }
-                            }).connectTimeout(2, TimeUnit.SECONDS)
+                            }).connectTimeout(5, TimeUnit.SECONDS)
                             .writeTimeout(1, TimeUnit.HOURS)
                             .readTimeout(1, TimeUnit.HOURS).build();
                     ///  MediaType JSON = MediaType.parse("application/json; charset=utf-16");
@@ -3132,7 +3132,7 @@ Class_GRUD_SQL_Operations classGrudSqlOperationsУдалениеДанныхЧе
                                     Request newRequest = builder.build();
                                     return chain.proceed(newRequest);
                                 }
-                            }).connectTimeout(2, TimeUnit.SECONDS)
+                            }).connectTimeout(5, TimeUnit.SECONDS)
                             .writeTimeout(1, TimeUnit.HOURS)
                             .readTimeout(1, TimeUnit.HOURS).build();
                     ///  MediaType JSON = MediaType.parse("application/json; charset=utf-16");
@@ -3586,7 +3586,7 @@ Class_GRUD_SQL_Operations classGrudSqlOperationsУдалениеДанныхЧе
                                 Request newRequest = builder.build();
                                 return chain.proceed(newRequest);
                             }
-                        }).connectTimeout(2, TimeUnit.SECONDS)
+                        }).connectTimeout(5, TimeUnit.SECONDS)
                         .writeTimeout(1, TimeUnit.HOURS)
                         .readTimeout(1, TimeUnit.HOURS).build();
                 ///  MediaType JSON = MediaType.parse("application/json; charset=utf-16");

@@ -28,6 +28,7 @@ import androidx.lifecycle.LifecycleOwner;
 import androidx.room.Room;
 import androidx.sqlite.db.SimpleSQLiteQuery;
 
+import com.dsy.dsu.AllDatabases.ORMSugar.App;
 import com.dsy.dsu.AllDatabases.ORMSugar.AppDatabase;
 import com.dsy.dsu.AllDatabases.ORMSugar.RoomCreate;
 import com.dsy.dsu.AllDatabases.ORMSugar.Task;
@@ -125,7 +126,7 @@ public class MainActivity_Dashboard extends AppCompatActivity {
                     task.setFinished(true);
                     //adding to database
 
-
+            AppDatabase db = App.getInstance().getDatabase();
 
 
          /*   AppDatabase appDatabas = Room.databaseBuilder(getApplicationContext(),

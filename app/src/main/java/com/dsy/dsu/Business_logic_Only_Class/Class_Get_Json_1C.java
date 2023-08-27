@@ -76,7 +76,7 @@ public StringBuffer МетодПолучемJSONОт1СДляСогласова�
                         Request newRequest = builder.build();
                         return chain.proceed(newRequest);
                     }
-                }).connectTimeout(2, TimeUnit.SECONDS)
+                }).connectTimeout(5, TimeUnit.SECONDS)
                 .readTimeout(60, TimeUnit.SECONDS).build();
         // TODO: 25.10.2022 Диспечер
          dispatcher=  okHttpClientПолучаемДанныеОт1С.dispatcher();
@@ -152,7 +152,7 @@ public StringBuffer МетодПолучемJSONОт1СДляСогласова�
                             Request newRequest = builder.build();
                             return chain.proceed(newRequest);
                         }
-                    }).connectTimeout(2, TimeUnit.SECONDS)
+                    }).connectTimeout(5, TimeUnit.SECONDS)
                     .readTimeout(60, TimeUnit.SECONDS).build();
             //
             ///  MediaType JSON = MediaType.parse("application/json; charset=utf-16");
@@ -237,7 +237,7 @@ public StringBuffer МетодПолучемJSONОт1СДляСогласова�
                             Request newRequest = builder.build();
                             return chain.proceed(newRequest);
                         }
-                    }).connectTimeout(2, TimeUnit.SECONDS)
+                    }).connectTimeout(5, TimeUnit.SECONDS)
                     .readTimeout(60, TimeUnit.SECONDS).build();
             //
             ///  MediaType JSON = MediaType.parse("application/json; charset=utf-16");
@@ -354,7 +354,7 @@ public StringBuffer МетодПолучемJSONОт1СДляСогласова�
                             Request newRequest = builder.build();
                             return chain.proceed(newRequest);
                         }
-                    }).connectTimeout(2, TimeUnit.SECONDS)
+                    }).connectTimeout(5, TimeUnit.SECONDS)
                     .readTimeout(60, TimeUnit.SECONDS).build();
                     dispatcher= okHttpClientОтправкаСоглоавания.dispatcher();
 
@@ -513,7 +513,7 @@ public StringBuffer МетодПолучемJSONОт1СДляСогласова�
                             Request newRequest = builder.build();
                             return chain.proceed(newRequest);
                         }
-                    }).connectTimeout(2, TimeUnit.SECONDS)
+                    }).connectTimeout(5, TimeUnit.SECONDS)
                     .writeTimeout(1, TimeUnit.HOURS)
                     .readTimeout(1, TimeUnit.HOURS)
                     .build();

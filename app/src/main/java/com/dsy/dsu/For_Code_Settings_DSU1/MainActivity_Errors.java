@@ -1,7 +1,6 @@
 package com.dsy.dsu.For_Code_Settings_DSU1;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.graphics.Color;
@@ -13,12 +12,9 @@ import android.os.Vibrator;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.UiThread;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -28,10 +24,8 @@ import com.dsy.dsu.AllDatabases.CREATE_DATABASE;
 import com.dsy.dsu.Business_logic_Only_Class.Class_Generation_Errors;
 import com.dsy.dsu.Business_logic_Only_Class.Class_Sendiing_Errors;
 import com.dsy.dsu.Dashboard.Fragments.DashboardFragmentSettings;
-import com.dsy.dsu.Dashboard.MainActivity_Dashboard;
 import com.dsy.dsu.R;
 import com.google.android.material.button.MaterialButton;
-import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -47,7 +41,7 @@ public class MainActivity_Errors extends AppCompatActivity  {
    private CREATE_DATABASE  create_database;
     private  TextView КонтейнерКудаЗагружаеютьсяОшибкиПрилоджения;
 
-    private  MaterialButton materialButtonОтправкаОшибокНАпочту;
+    private  MaterialButton materialButtonОтправка;
     private SharedPreferences preferences;
     private        File file;
 
@@ -56,15 +50,17 @@ public class MainActivity_Errors extends AppCompatActivity  {
     private   String patchFileName="SousAvtoFile";
 
 
-    private MaterialButton imageViewСтрелкаВнутриТабеля;
+    private MaterialButton imageViewBack;
 
     private FragmentManager fragmentManager;
     private FragmentTransaction fragmentTransaction;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         try {
                 super.onCreate(savedInstanceState);
-            setContentView(R.layout.activitymain_viewlogin); ///activitymain_viewlogin  /// fragment_dashboard
+            setContentView(R.layout.activitymain_errors); ///activitymain_viewlogin  /// fragment_dashboard
             getSupportActionBar().hide(); ///скрывать тул бар
 
             fragmentManager = getSupportFragmentManager();
@@ -79,15 +75,15 @@ public class MainActivity_Errors extends AppCompatActivity  {
                     | WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LOCKED);
-                        materialButtonОтправкаОшибокНАпочту   = (MaterialButton) findViewById(R.id.materialButtonОтправкаОшибокНАпочту);
+            materialButtonОтправка = (MaterialButton) findViewById(R.id.materialButtonОтправка);
             preferences=   getSharedPreferences("sharedPreferencesХранилище", Context.MODE_MULTI_PROCESS);
-            imageViewСтрелкаВнутриТабеля = (MaterialButton) findViewById(R.id.imageViewСтрелкаВнутриТабеля);
+            imageViewBack = (MaterialButton) findViewById(R.id.imageViewBack);
             методBackInError();
 
-            materialButtonОтправкаОшибокНАпочту.setClickable(false);
-            materialButtonОтправкаОшибокНАпочту.setFocusable(false);
-            materialButtonОтправкаОшибокНАпочту.setBackgroundColor(Color.GRAY);
-            materialButtonОтправкаОшибокНАпочту.setVisibility(View.INVISIBLE);
+            materialButtonОтправка.setClickable(false);
+            materialButtonОтправка.setFocusable(false);
+            materialButtonОтправка.setBackgroundColor(Color.GRAY);
+
 
             МетодПросмотраОшибокПриложения();
 
@@ -109,7 +105,7 @@ public class MainActivity_Errors extends AppCompatActivity  {
 
 
     private void методBackInError() {
-            imageViewСтрелкаВнутриТабеля.setOnClickListener(new View.OnClickListener() {
+            imageViewBack.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     try{
@@ -177,18 +173,23 @@ public class MainActivity_Errors extends AppCompatActivity  {
                     newBufferedReader = Files.newBufferedReader(Paths.get(file.getPath()), StandardCharsets.UTF_16);
 
 
-                    materialButtonОтправкаОшибокНАпочту.setClickable(true);
-                    materialButtonОтправкаОшибокНАпочту.setFocusable(true);
-                    materialButtonОтправкаОшибокНАпочту.setBackgroundColor(Color.parseColor("#00ACC1"));
-                    materialButtonОтправкаОшибокНАпочту.setVisibility(View.VISIBLE);
 
 
-                    String line;
-                    while ((line = newBufferedReader.readLine()) != null) {
-                        БуерДляОшибок.append(line);
+
+                 String    lineErrorsAll=null;
+                    while ((lineErrorsAll = newBufferedReader.readLine()) != null) {
+                        БуерДляОшибок.append(lineErrorsAll);
                         БуерДляОшибок.append('\n');
-                        Log.d(this.getClass().getName(), "line " +line  );
+                        Log.d(this.getClass().getName(), "line " +lineErrorsAll  );
                     }
+
+                    if (lineErrorsAll!=null){
+                        materialButtonОтправка.setClickable(true);
+                        materialButtonОтправка.setFocusable(true);
+                        materialButtonОтправка.setBackgroundColor(Color.parseColor("#00ACC1"));
+                        materialButtonОтправка.setVisibility(View.VISIBLE);
+                    }
+
 
 /*
             StringBuffer     БуферОшибок = newBufferedReader.lines().collect(StringBuffer::new, (sb, i) -> sb.append(i),
@@ -246,18 +247,16 @@ public class MainActivity_Errors extends AppCompatActivity  {
     } catch (Exception e) {
         e.printStackTrace();
         Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-        // TODO: 01.09.2021 метод вызова
         new   Class_Generation_Errors(getApplicationContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(),
                 this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
                 Thread.currentThread().getStackTrace()[2].getLineNumber());
-///////
     }
     }
 
 
     protected void МетодЗапускаAsynTaskОшибки( @NonNull  StringBuffer БуерДляОшибок, String ИнфоТелефон) {
         try {
-                materialButtonОтправкаОшибокНАпочту.setOnClickListener(new View.OnClickListener() {
+                materialButtonОтправка.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         //TODO полывоаем ошибки на почту
@@ -300,8 +299,6 @@ public class MainActivity_Errors extends AppCompatActivity  {
                 new Class_Sendiing_Errors(this)
                         .МетодПослываемОшибкиАдминистаторуПо(БуерДляОшибок,this,ПубличноеID, create_database.getССылкаНаСозданнуюБазу() );
 
-
-            методвыходизОшибок();
 
             Log.d(this.getClass().getName(), " Ошибок Нет. время :   " +new Date().toString());
 
