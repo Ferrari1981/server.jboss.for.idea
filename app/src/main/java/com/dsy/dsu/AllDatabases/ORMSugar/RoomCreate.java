@@ -5,21 +5,27 @@ import android.content.Context;
 import androidx.annotation.NonNull;
 import androidx.room.Room;
 
-public class RoomCreate {
-  public  static   AppDatabase appDatabas;
+import javax.inject.Singleton;
+
+
+@Singleton
+public  class RoomCreate {
+  public  static   AppDatabase ROOM;
 
     public  AppDatabase RoomCreate(@NonNull Context context) {
-        if (appDatabas == null) {
+        if (ROOM == null) {
             synchronized (this) {
-                if (appDatabas == null) {
-                    appDatabas = Room.databaseBuilder(context,
+                if (ROOM == null) {
+                    ROOM = Room.databaseBuilder(context,
                                     AppDatabase.class, "ROOOOOMMMM18.db")
                             .allowMainThreadQueries()
                             .fallbackToDestructiveMigration()
                             .build();
                 }
+
+
             }
         }
-       return appDatabas;
+       return ROOM;
     }
 }

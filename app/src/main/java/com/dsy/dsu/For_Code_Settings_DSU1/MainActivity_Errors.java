@@ -82,7 +82,6 @@ public class MainActivity_Errors extends AppCompatActivity  {
 
             materialButtonОтправка.setClickable(false);
             materialButtonОтправка.setFocusable(false);
-            materialButtonОтправка.setBackgroundColor(Color.GRAY);
 
 
             МетодПросмотраОшибокПриложения();
@@ -186,7 +185,6 @@ public class MainActivity_Errors extends AppCompatActivity  {
                     if (lineErrorsAll!=null){
                         materialButtonОтправка.setClickable(true);
                         materialButtonОтправка.setFocusable(true);
-                        materialButtonОтправка.setBackgroundColor(Color.parseColor("#00ACC1"));
                         materialButtonОтправка.setVisibility(View.VISIBLE);
                     }
 

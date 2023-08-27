@@ -28,7 +28,6 @@ import androidx.lifecycle.LifecycleOwner;
 import androidx.room.Room;
 import androidx.sqlite.db.SimpleSQLiteQuery;
 
-import com.dsy.dsu.AllDatabases.ORMSugar.App;
 import com.dsy.dsu.AllDatabases.ORMSugar.AppDatabase;
 import com.dsy.dsu.AllDatabases.ORMSugar.RoomCreate;
 import com.dsy.dsu.AllDatabases.ORMSugar.Task;
@@ -37,7 +36,6 @@ import com.dsy.dsu.Code_For_Services.ServiceUpdatePoОбновлениеПО;
 import com.dsy.dsu.Dashboard.Fragments.DashboardFragmentMaterialDesign;
 import com.dsy.dsu.R;
 
-import java.io.File;
 import java.util.Date;
 import java.util.List;
 
@@ -126,10 +124,9 @@ public class MainActivity_Dashboard extends AppCompatActivity {
                     task.setFinished(true);
                     //adding to database
 
-            AppDatabase db = App.getInstance().getDatabase();
 
 
-         /*   AppDatabase appDatabas = Room.databaseBuilder(getApplicationContext(),
+          /*  AppDatabase ROOM = Room.databaseBuilder(getApplicationContext(),
                             AppDatabase.class, "ROOOOOMMMM17.db")
                     .allowMainThreadQueries()
                     .build();*/
@@ -146,6 +143,8 @@ public class MainActivity_Dashboard extends AppCompatActivity {
             List<Task> user2 = appDatabas.taskDao3().getRaw(query);
 
 
+
+            AppDatabase  appDatabas2 =new RoomCreate().RoomCreate(getApplicationContext());
             appDatabas.close();
 
                     Log.d(this.getClass().getName(), "\n" + " class "
