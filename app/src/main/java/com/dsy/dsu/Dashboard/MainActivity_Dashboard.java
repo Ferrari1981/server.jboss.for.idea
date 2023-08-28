@@ -116,8 +116,10 @@ public class MainActivity_Dashboard extends AppCompatActivity {
         super.onStart();
         try {
             buniccessLogicaActivityDashboard.     методStartingDashboardFragment();
-
             buniccessLogicaActivityDashboard.    методСлушательФрагментов(  );
+
+
+
 
 // TODO: 28.08.2023 ПОЛУЧЕАМ КОМПОНЕТ ROOM
             AppDatabase GetROOM = CoreApp.getRoom();
@@ -129,44 +131,12 @@ public class MainActivity_Dashboard extends AppCompatActivity {
                     task.setFinishBy("room 11111 ROW 6868685 " + new Date().toLocaleString());
                     task.setFinished(true);
                     //adding to database
-
-
-
-         
-
-            //GetROOM.taskDao().
-            Log.d(this.getClass().getName(), "\n" + " class "
-                    + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + " GetROOM " +GetROOM);
-
-          /*  AppDatabase ROOM = Room.databaseBuilder(getApplicationContext(),
-                            AppDatabase.class, "ROOOOOMMMM17.db")
-                    .allowMainThreadQueries()
-                    .build();*/
-
-           /* AppDatabase  appDatabas =new RoomCreate().GetROOM(getApplicationContext());
-
-            appDatabas.taskDao().insert(task);
-*/
-       //List<Task> taskList=   GetROOM.taskDao().getAll();
-
-
-
-
-
-
             SimpleSQLiteQuery query = new SimpleSQLiteQuery("SELECT * FROM Task WHERE id=?",
                     new Object[]{1});
 
-
-
-/*
             SimpleSQLiteQuery query2 = new SimpleSQLiteQuery("  drop TRIGGER  if exists UPDATES  Task     ");
             SimpleSQLiteQuery query3 = new SimpleSQLiteQuery("  CREATE TRIGGER IF NOT EXISTS UPDATES Task   AFTER UPDATE   ON    BEGIN " +
-                    " UPDATE Task  SET  task='xyu' WHERE id='1'      END ;  ");*/
-
-
+                    " UPDATE Task  SET  task='xyu' WHERE id='1'      END ;  ");
 
        GetROOM.taskDao3().getRaw(query).subscribeOn(Schedulers.single()).blockingSubscribe(new MaybeObserver<List<Task>>() {
                @Override
@@ -213,9 +183,9 @@ public class MainActivity_Dashboard extends AppCompatActivity {
 
 
             Task    task2  =   new Task();
-            task2.setTask("room   222 ROW 99991 " + new Date().toLocaleString());
-            task2.setDesc("room  222 ROW 999992 " + new Date().toLocaleString());
-            task2.setFinishBy("room 222 ROW 9999993 " + new Date().toLocaleString());
+            task2.setTask("room   555 ROW 99991 " + new Date().toLocaleString());
+            task2.setDesc("room  555 ROW 999992 " + new Date().toLocaleString());
+            task2.setFinishBy("room 555 ROW 9999993 " + new Date().toLocaleString());
             task.setFinished(true);
             //adding to database
 
@@ -270,7 +240,9 @@ public class MainActivity_Dashboard extends AppCompatActivity {
 
 
 
-            GetROOM.close();
+
+
+        //    GetROOM.close();
 
                     Log.d(this.getClass().getName(), "\n" + " class "
                             + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +

@@ -51,10 +51,9 @@ public class CoreApp extends Application {
                 synchronized (this) {
                     if (ROOM == null) {
                         ROOM = Room.databaseBuilder(getApplicationContext(),
-                                        AppDatabase.class, "ROOOOOMMMM199.db")
-                                .addMigrations(AppDatabase.MIGRATION_1_2)
-                                .addMigrations(AppDatabase.MIGRATION_2_3)
-                                .fallbackToDestructiveMigration()
+                                        AppDatabase.class, "ROOOOOMMMM200.db")
+                                .addMigrations(AppDatabase. MIGRATION_1_4)
+                                .allowMainThreadQueries()
                                 .build();
                         // TODO: 17.04.2023
                         Log.d(this.getClass().getName(),"\n" + " class FaceAPp " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
