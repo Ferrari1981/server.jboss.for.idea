@@ -11,6 +11,8 @@ import com.dsy.dsu.Business_logic_Only_Class.Class_Generation_Errors;
 
 import javax.inject.Singleton;
 
+
+@Singleton
 public class CoreApp extends Application {
     private static AppDatabase ROOM;
 
@@ -42,7 +44,7 @@ public class CoreApp extends Application {
     // TODO: 28.08.2023  Класс Бизнем ЛОгика Длябазы ROOM
 
     @Singleton
-    class  ClassSetGetROOM{
+   private final class  ClassSetGetROOM{
         private void метоInizROOM() {
             try{
             if (ROOM == null) {
@@ -50,7 +52,6 @@ public class CoreApp extends Application {
                     if (ROOM == null) {
                         ROOM = Room.databaseBuilder(getApplicationContext(),
                                         AppDatabase.class, "ROOOOOMMMM199.db")
-                                .allowMainThreadQueries()
                                 .addMigrations(AppDatabase.MIGRATION_1_2)
                                 .addMigrations(AppDatabase.MIGRATION_1_3)
                                 .allowMainThreadQueries()

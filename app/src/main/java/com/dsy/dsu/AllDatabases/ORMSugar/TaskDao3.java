@@ -11,10 +11,16 @@ import androidx.sqlite.db.SupportSQLiteQuery;
 
 import java.util.List;
 
+import io.reactivex.rxjava3.core.Maybe;
+
 @Dao
 public interface TaskDao3 {
 
     @RawQuery
-    List<Task> getRaw(SupportSQLiteQuery query);
+    Maybe<List<Task> >getRaw(SupportSQLiteQuery query);
+
+
+
+
 
 }

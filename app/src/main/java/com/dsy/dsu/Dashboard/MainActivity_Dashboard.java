@@ -112,22 +112,22 @@ public class MainActivity_Dashboard extends AppCompatActivity {
 
             buniccessLogicaActivityDashboard.    методСлушательФрагментов(  );
 
-
-
+// TODO: 28.08.2023 ПОЛУЧЕАМ КОМПОНЕТ ROOM
+            AppDatabase GetROOM = CoreApp.getRoom();
 
                     //creating a task
                     Task task = new Task();
-                    task.setTask("room 3444 " + new Date().toLocaleString());
-                    task.setDesc("room 3444 " + new Date().toLocaleString());
-                    task.setFinishBy("room 4555 " + new Date().toLocaleString());
+                    task.setTask("room 11111 ROW  45452 " + new Date().toLocaleString());
+                    task.setDesc("room 11111 ROW 57573 " + new Date().toLocaleString());
+                    task.setFinishBy("room 11111 ROW 6868685 " + new Date().toLocaleString());
                     task.setFinished(true);
                     //adding to database
 
 
 
-            AppDatabase GetROOM = CoreApp.getRoom();
+         
 
-
+            //GetROOM.taskDao().
             Log.d(this.getClass().getName(), "\n" + " class "
                     + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -142,12 +142,12 @@ public class MainActivity_Dashboard extends AppCompatActivity {
 
             appDatabas.taskDao().insert(task);
 */
-       List<Task> taskList=   GetROOM.taskDao().getAll();
+       //List<Task> taskList=   GetROOM.taskDao().getAll();
 
 
             SimpleSQLiteQuery query = new SimpleSQLiteQuery("SELECT * FROM Task WHERE id=?",
                     new Object[]{1});
-            List<Task> user2 = GetROOM.taskDao3().getRaw(query);
+          //  List<Task> user2 = GetROOM.taskDao3().getRaw(query);
 
 
 
@@ -155,12 +155,12 @@ public class MainActivity_Dashboard extends AppCompatActivity {
 
 
             Task    task2  =   new Task();
-            task2.setTask("room 777 " + new Date().toLocaleString());
-            task2.setDesc("room 777 " + new Date().toLocaleString());
-            task2.setFinishBy("room 8777 " + new Date().toLocaleString());
+            task2.setTask("room   222 ROW 99991 " + new Date().toLocaleString());
+            task2.setDesc("room  222 ROW 999992 " + new Date().toLocaleString());
+            task2.setFinishBy("room 222 ROW 9999993 " + new Date().toLocaleString());
             task.setFinished(true);
             //adding to database
-            GetROOM.taskDao().insert(task2);
+           // GetROOM.taskDao().insert(task2);
 
             GetROOM.close();
 

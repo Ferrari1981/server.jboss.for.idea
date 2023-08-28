@@ -51,6 +51,7 @@ import com.google.type.TimeOfDayOrBuilder;
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.reactivestreams.Subscription;
 
 import java.io.Serializable;
 import java.io.StringWriter;
@@ -1522,9 +1523,9 @@ try{
 
                     if (РежимПерваяЗапускПослеPasswordИлиПовторная.equalsIgnoreCase("СамыйПервыйЗапускСинхронизации") ) {
                     // TODO: 21.08.2023  -многопоточный
-                        Flowable.fromIterable( public_contentДатыДляГлавныхТаблицСинхронизации.ВерсииВсехСерверныхТаблиц.keySet())
+                         Flowable.fromIterable( public_contentДатыДляГлавныхТаблицСинхронизации.ВерсииВсехСерверныхТаблиц.keySet())
                                 .parallel()
-                                .runOn(Schedulers.from(Executors.newCachedThreadPool()))
+                                .runOn(Schedulers.computation())
                                 .doOnNext(new io.reactivex.rxjava3.functions.Consumer<String>() {
                                     @Override
                                     public void accept(String ИмяТаблицыоТВерсияДанныхОтSqlServer) throws Throwable {

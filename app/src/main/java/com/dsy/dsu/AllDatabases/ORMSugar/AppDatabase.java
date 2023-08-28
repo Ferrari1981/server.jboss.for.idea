@@ -9,9 +9,7 @@ import androidx.room.RoomDatabase;
 import androidx.room.migration.Migration;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
-import com.dsy.dsu.Business_logic_Only_Class.Class_Generation_Errors;
-
-@Database(entities = {Task.class}, version = 2)
+@Database(entities = {Task.class}, version = 4)
 public abstract class AppDatabase extends RoomDatabase {
     public AppDatabase() {
         Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -19,8 +17,9 @@ public abstract class AppDatabase extends RoomDatabase {
                 " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"  );
     }
 
-    public abstract TaskDao taskDao();
+/*    public abstract DAO4 taskDao();*/
     public abstract TaskDao3 taskDao3();
+    public abstract Dao1 taskdao1();
 
 
     public static final Migration MIGRATION_1_2 = new Migration(1, 2) {
