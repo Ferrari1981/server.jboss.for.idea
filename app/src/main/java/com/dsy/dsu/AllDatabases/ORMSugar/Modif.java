@@ -18,8 +18,8 @@ public class Modif implements Serializable {
     @ColumnInfo(name = "task")
     private String task;
 
-    @ColumnInfo(name = "desc")
-    private String desc;
+    @ColumnInfo(name = "nameyask")
+    private String nameyask;
 
     @ColumnInfo(name = "finish_by")
     private String finishBy;
@@ -28,9 +28,6 @@ public class Modif implements Serializable {
     private boolean finished;
 
 
-    /*
-     * Getters and Setters
-     * */
     public int getId() {
         return id;
     }
@@ -45,17 +42,14 @@ public class Modif implements Serializable {
 
     public void setTask(String task) {
         this.task = task;
-        Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"  );
     }
 
-    public String getDesc() {
-        return desc;
+    public String getNameyask() {
+        return nameyask;
     }
 
-    public void setDesc(String desc) {
-        this.desc = desc;
+    public void setNameyask(String nameyask) {
+        this.nameyask = nameyask;
     }
 
     public String getFinishBy() {

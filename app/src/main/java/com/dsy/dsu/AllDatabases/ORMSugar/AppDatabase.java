@@ -9,7 +9,7 @@ import androidx.room.RoomDatabase;
 import androidx.room.migration.Migration;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
-@Database(entities = {Task.class}, version = 5)
+@Database(entities = {Task.class,Modif.class}, version = 7)
 public abstract class AppDatabase extends RoomDatabase {
     public AppDatabase() {
 
@@ -58,7 +58,7 @@ public abstract class AppDatabase extends RoomDatabase {
         }
     };
 
-    public static final Migration MIGRATION_2_3 = new Migration(3, 4) {
+    public static final Migration MIGRATION_2_3 = new Migration(8, 9) {
         @Override
         public void migrate(@NonNull SupportSQLiteDatabase database) {
             try{
@@ -69,8 +69,8 @@ public abstract class AppDatabase extends RoomDatabase {
             database.execSQL("CREATE TRIGGER audit_log AFTER INSERT \n" +
                     "ON Task \n" +
                     "BEGIN\n" +
-                    " INSERT INTO Modif (task )\n" +
-                    "VALUES ( 'john.doe@sqlitetutorial.net' );" +
+                    " INSERT INTO Modif (task, nameyask ,finish_by,finished)\n" +
+                    "VALUES('2Bud Powell','2Bud Powell','2Bud Powell',9451);" +
                     "END; ");
 
 
