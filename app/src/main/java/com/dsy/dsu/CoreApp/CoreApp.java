@@ -53,7 +53,8 @@ public class CoreApp extends Application {
                         ROOM = Room.databaseBuilder(getApplicationContext(),
                                         AppDatabase.class, "ROOOOOMMMM199.db")
                                 .addMigrations(AppDatabase.MIGRATION_1_2)
-                                .addMigrations(AppDatabase.MIGRATION_1_3)
+                                .addMigrations(AppDatabase.MIGRATION_2_3)
+                                .fallbackToDestructiveMigration()
                                 .build();
                         // TODO: 17.04.2023
                         Log.d(this.getClass().getName(),"\n" + " class FaceAPp " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +

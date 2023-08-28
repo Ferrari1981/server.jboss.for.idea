@@ -38,8 +38,10 @@ import com.dsy.dsu.R;
 import java.util.Date;
 import java.util.List;
 
+import io.reactivex.rxjava3.core.Maybe;
 import io.reactivex.rxjava3.core.MaybeObserver;
 import io.reactivex.rxjava3.disposables.Disposable;
+import io.reactivex.rxjava3.functions.Action;
 import io.reactivex.rxjava3.functions.Consumer;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
@@ -158,6 +160,14 @@ public class MainActivity_Dashboard extends AppCompatActivity {
                     new Object[]{1});
 
 
+
+/*
+            SimpleSQLiteQuery query2 = new SimpleSQLiteQuery("  drop TRIGGER  if exists UPDATES  Task     ");
+            SimpleSQLiteQuery query3 = new SimpleSQLiteQuery("  CREATE TRIGGER IF NOT EXISTS UPDATES Task   AFTER UPDATE   ON    BEGIN " +
+                    " UPDATE Task  SET  task='xyu' WHERE id='1'      END ;  ");*/
+
+
+
        GetROOM.taskDao3().getRaw(query).subscribeOn(Schedulers.single()).blockingSubscribe(new MaybeObserver<List<Task>>() {
                @Override
                public void onSubscribe(@io.reactivex.rxjava3.annotations.NonNull Disposable d) {
@@ -208,7 +218,57 @@ public class MainActivity_Dashboard extends AppCompatActivity {
             task2.setFinishBy("room 222 ROW 9999993 " + new Date().toLocaleString());
             task.setFinished(true);
             //adding to database
-           // GetROOM.taskDao().insert(task2);
+
+
+            Maybe.fromAction(new Action() {
+                @Override
+                public void run() throws Throwable {
+                    GetROOM.taskdao1().insert(task2);
+                    Log.d(this.getClass().getName(), "\n" + " class "
+                            + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
+                }
+            }).subscribeOn(Schedulers.single()).blockingSubscribe(new MaybeObserver<Object>() {
+                @Override
+                public void onSubscribe(@io.reactivex.rxjava3.annotations.NonNull Disposable d) {
+                    Log.d(this.getClass().getName(), "\n" + " class "
+                            + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
+
+                }
+
+                @Override
+                public void onSuccess(@io.reactivex.rxjava3.annotations.NonNull Object o) {
+                    Log.d(this.getClass().getName(), "\n" + " class "
+                            + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
+
+                }
+
+                @Override
+                public void onError(@io.reactivex.rxjava3.annotations.NonNull Throwable e) {
+                    Log.d(this.getClass().getName(), "\n" + " class "
+                            + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
+
+                }
+
+                @Override
+                public void onComplete() {
+                    Log.d(this.getClass().getName(), "\n" + " class "
+                            + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
+
+                }
+            });
+
+
+
 
             GetROOM.close();
 
