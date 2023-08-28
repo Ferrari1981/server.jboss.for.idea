@@ -32,6 +32,7 @@ import com.dsy.dsu.AllDatabases.ORMSugar.RoomCreate;
 import com.dsy.dsu.AllDatabases.ORMSugar.Task;
 import com.dsy.dsu.Business_logic_Only_Class.Class_Generation_Errors;
 import com.dsy.dsu.Code_For_Services.ServiceUpdatePoОбновлениеПО;
+import com.dsy.dsu.CoreApp.CoreApp;
 import com.dsy.dsu.Dashboard.Fragments.DashboardFragmentMaterialDesign;
 import com.dsy.dsu.R;
 
@@ -117,29 +118,37 @@ public class MainActivity_Dashboard extends AppCompatActivity {
 
                     //creating a task
                     Task task = new Task();
-                    task.setTask("room 1 " + new Date().toLocaleString());
-                    task.setDesc("room 2 " + new Date().toLocaleString());
-                    task.setFinishBy("room 3 " + new Date().toLocaleString());
+                    task.setTask("room 3 " + new Date().toLocaleString());
+                    task.setDesc("room 3 " + new Date().toLocaleString());
+                    task.setFinishBy("room 4 " + new Date().toLocaleString());
                     task.setFinished(true);
                     //adding to database
 
 
+
+            AppDatabase GetROOM = CoreApp.getDatabase();
+
+
+            Log.d(this.getClass().getName(), "\n" + " class "
+                    + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + " GetROOM " +GetROOM);
 
           /*  AppDatabase ROOM = Room.databaseBuilder(getApplicationContext(),
                             AppDatabase.class, "ROOOOOMMMM17.db")
                     .allowMainThreadQueries()
                     .build();*/
 
-            AppDatabase  appDatabas =new RoomCreate().GetROOM(getApplicationContext());
+           /* AppDatabase  appDatabas =new RoomCreate().GetROOM(getApplicationContext());
 
             appDatabas.taskDao().insert(task);
-
-       List<Task> taskList=   appDatabas.taskDao().getAll();
+*/
+       List<Task> taskList=   GetROOM.taskDao().getAll();
 
 
             SimpleSQLiteQuery query = new SimpleSQLiteQuery("SELECT * FROM Task WHERE id=?",
                     new Object[]{1});
-            List<Task> user2 = appDatabas.taskDao3().getRaw(query);
+            List<Task> user2 = GetROOM.taskDao3().getRaw(query);
 
 
 
@@ -148,14 +157,14 @@ public class MainActivity_Dashboard extends AppCompatActivity {
 
 
             Task    task2  =   new Task();
-            task2.setTask("room 1 " + new Date().toLocaleString());
-            task2.setDesc("room 2 " + new Date().toLocaleString());
-            task2.setFinishBy("room 3 " + new Date().toLocaleString());
+            task2.setTask("room 5 " + new Date().toLocaleString());
+            task2.setDesc("room 7 " + new Date().toLocaleString());
+            task2.setFinishBy("room 8 " + new Date().toLocaleString());
             task.setFinished(true);
             //adding to database
             appDatabas2.taskDao().insert(task2);
 
-            appDatabas.close();
+            GetROOM.close();
 
                     Log.d(this.getClass().getName(), "\n" + " class "
                             + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
