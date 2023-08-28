@@ -12,7 +12,7 @@ import javax.inject.Singleton;
 public  class RoomCreate {
   public  static   AppDatabase ROOM;
 
-    public  AppDatabase RoomCreate(@NonNull Context context) {
+    public  AppDatabase GetROOM(@NonNull Context context) {
         if (ROOM == null) {
             synchronized (this) {
                 if (ROOM == null) {

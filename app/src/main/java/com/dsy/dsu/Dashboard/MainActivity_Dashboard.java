@@ -25,7 +25,6 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentResultListener;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.LifecycleOwner;
-import androidx.room.Room;
 import androidx.sqlite.db.SimpleSQLiteQuery;
 
 import com.dsy.dsu.AllDatabases.ORMSugar.AppDatabase;
@@ -131,7 +130,7 @@ public class MainActivity_Dashboard extends AppCompatActivity {
                     .allowMainThreadQueries()
                     .build();*/
 
-            AppDatabase  appDatabas =new RoomCreate().RoomCreate(getApplicationContext());
+            AppDatabase  appDatabas =new RoomCreate().GetROOM(getApplicationContext());
 
             appDatabas.taskDao().insert(task);
 
@@ -144,7 +143,18 @@ public class MainActivity_Dashboard extends AppCompatActivity {
 
 
 
-            AppDatabase  appDatabas2 =new RoomCreate().RoomCreate(getApplicationContext());
+            AppDatabase  appDatabas2 =new RoomCreate().GetROOM(getApplicationContext());
+
+
+
+            Task    task2  =   new Task();
+            task2.setTask("room 1 " + new Date().toLocaleString());
+            task2.setDesc("room 2 " + new Date().toLocaleString());
+            task2.setFinishBy("room 3 " + new Date().toLocaleString());
+            task.setFinished(true);
+            //adding to database
+            appDatabas2.taskDao().insert(task2);
+
             appDatabas.close();
 
                     Log.d(this.getClass().getName(), "\n" + " class "
