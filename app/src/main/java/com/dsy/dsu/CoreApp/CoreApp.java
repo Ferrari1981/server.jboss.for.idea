@@ -13,6 +13,9 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
 import com.dsy.dsu.AllDatabases.ORMSugar.AppDatabase;
 import com.dsy.dsu.Business_logic_Only_Class.Class_Generation_Errors;
 
+import java.util.List;
+import java.util.concurrent.Executors;
+
 import javax.inject.Singleton;
 
 
@@ -57,6 +60,16 @@ public class CoreApp extends Application {
                         ROOM = Room.databaseBuilder(getApplicationContext(),
                                         AppDatabase.class, "ROOM7.db")
                                 .addMigrations(new ClassMigrations ().методMIGRATION_1_4)
+                                .setQueryExecutor(Executors.newSingleThreadExecutor())
+                                .setTransactionExecutor(Executors.newSingleThreadExecutor())
+                                .setQueryCallback(new RoomDatabase.QueryCallback() {
+                                    @Override
+                                    public void onQuery(@NonNull String sqlQuery, @NonNull List<Object> bindArgs) {
+                                        Log.d(this.getClass().getName(),"\n" + " class FaceAPp " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+" ROOM.getQueryExecutor() " +ROOM.getQueryExecutor());
+                                    }
+                                },Executors.newSingleThreadExecutor())
                                 .addCallback(new RoomDatabase.Callback() {
                                     @Override
                                     public void onCreate(@NonNull SupportSQLiteDatabase db) {

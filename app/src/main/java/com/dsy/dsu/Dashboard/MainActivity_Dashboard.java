@@ -37,6 +37,7 @@ import com.dsy.dsu.R;
 
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.Callable;
 
 import io.reactivex.rxjava3.core.Maybe;
 import io.reactivex.rxjava3.core.MaybeObserver;
@@ -183,7 +184,32 @@ public class MainActivity_Dashboard extends AppCompatActivity {
             //adding to database
 
 
-            Maybe.fromAction(new Action() {
+            GetROOM.getQueryExecutor().execute(new Runnable() {
+                @Override
+                public void run() {
+                    GetROOM.runInTransaction(new Runnable() {
+                        @Override
+                        public void run() {
+                            GetROOM.taskdao1().insert(task2);
+                            Log.d(this.getClass().getName(), "\n" + " class "
+                                    + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
+                        }
+                    });
+                }
+            });
+
+
+
+          //  GetROOM.taskdao1().insert(task2);
+            Log.d(this.getClass().getName(), "\n" + " class "
+                    + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
+
+
+      /*      Maybe.fromAction(new Action() {
                 @Override
                 public void run() throws Throwable {
                     GetROOM.taskdao1().insert(task2);
@@ -229,7 +255,7 @@ public class MainActivity_Dashboard extends AppCompatActivity {
 
                 }
             });
-
+*/
 
 
 
