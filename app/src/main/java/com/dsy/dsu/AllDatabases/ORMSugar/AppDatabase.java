@@ -9,7 +9,7 @@ import androidx.room.RoomDatabase;
 import androidx.room.migration.Migration;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
-@Database(entities = {Task.class,Modif.class}, version = 2)
+@Database(entities = {Task.class,Modif.class}, version = 7)
 public abstract class AppDatabase extends RoomDatabase {
     public AppDatabase() {
 
@@ -24,34 +24,6 @@ public abstract class AppDatabase extends RoomDatabase {
     public abstract Dao1 taskdao1();
 
 
-    public static final Migration  MIGRATION_1_4 = new Migration(2,3) {
-        @Override
-        public void migrate(@NonNull SupportSQLiteDatabase database) {
-            try{
-               // database.execSQL("ALTER TABLE Employee ADD COLUMN birthday INTEGER DEFAULT 0 NOT NULL");
-
-
-                //database.execSQL("ALTER TABLE Employee ADD COLUMN birthday INTEGER DEFAULT 0 NOT NULL");
-            database.execSQL("CREATE TRIGGER audit_log AFTER INSERT \n" +
-                    "ON Task \n" +
-                    "BEGIN\n" +
-                    " INSERT INTO Modif (task, nameyask ,finish_by,finished)\n" +
-                    "VALUES('2Bud Powell','2Bud Powell','2Bud Powell',9451);" +
-                    "END; ");
-
-
-                // TODO: 17.04.2023
-                Log.d(this.getClass().getName(),"\n" + " class FaceAPp " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" );
-
-            } catch (Exception e) {
-                e.printStackTrace();
-                Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
-                        + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            }
-        }
-    };
 }
 
 

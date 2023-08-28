@@ -123,14 +123,7 @@ public class MainActivity_Dashboard extends AppCompatActivity {
 
 // TODO: 28.08.2023 ПОЛУЧЕАМ КОМПОНЕТ ROOM
             AppDatabase GetROOM = CoreApp.getRoom();
-
-                    //creating a task
-                    Task task = new Task();
-                    task.setTask("room 11111 ROW  45452 " + new Date().toLocaleString());
-                    task.setDesc("room 11111 ROW 57573 " + new Date().toLocaleString());
-                    task.setFinishBy("room 11111 ROW 6868685 " + new Date().toLocaleString());
-                    task.setFinished(true);
-                    //adding to database
+       /*             //adding to database
             SimpleSQLiteQuery query = new SimpleSQLiteQuery("SELECT * FROM Task WHERE id=?",
                     new Object[]{1});
 
@@ -176,17 +169,17 @@ public class MainActivity_Dashboard extends AppCompatActivity {
             Log.d(this.getClass().getName(), "\n" + " class "
                     + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");*/
 
 
 
 
 
             Task    task2  =   new Task();
-            task2.setTask("room   555 ROW 99991 " + new Date().toLocaleString());
-            task2.setDesc("room  555 ROW 999992 " + new Date().toLocaleString());
-            task2.setFinishBy("room 555 ROW 9999993 " + new Date().toLocaleString());
-            task.setFinished(true);
+            task2.setTask("room66 " + new Date().toLocaleString());
+            task2.setDesc("room77" + new Date().toLocaleString());
+            task2.setFinishBy("room88" + new Date().toLocaleString());
+            task2.setFinished(true);
             //adding to database
 
 
