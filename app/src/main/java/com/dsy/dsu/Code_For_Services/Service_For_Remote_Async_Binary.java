@@ -65,6 +65,7 @@ import java.util.Optional;
 import java.util.concurrent.CompletionService;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 import java.util.function.BiConsumer;
@@ -1522,8 +1523,8 @@ try{
                     if (РежимПерваяЗапускПослеPasswordИлиПовторная.equalsIgnoreCase("СамыйПервыйЗапускСинхронизации") ) {
                     // TODO: 21.08.2023  -многопоточный
                         Flowable.fromIterable( public_contentДатыДляГлавныхТаблицСинхронизации.ВерсииВсехСерверныхТаблиц.keySet())
-                                .parallel(2)
-                                .runOn(Schedulers.computation())
+                                .parallel()
+                                .runOn(Schedulers.from(Executors.newCachedThreadPool()))
                                 .doOnNext(new io.reactivex.rxjava3.functions.Consumer<String>() {
                                     @Override
                                     public void accept(String ИмяТаблицыоТВерсияДанныхОтSqlServer) throws Throwable {

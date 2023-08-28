@@ -28,7 +28,6 @@ import androidx.lifecycle.LifecycleOwner;
 import androidx.sqlite.db.SimpleSQLiteQuery;
 
 import com.dsy.dsu.AllDatabases.ORMSugar.AppDatabase;
-import com.dsy.dsu.AllDatabases.ORMSugar.RoomCreate;
 import com.dsy.dsu.AllDatabases.ORMSugar.Task;
 import com.dsy.dsu.Business_logic_Only_Class.Class_Generation_Errors;
 import com.dsy.dsu.Code_For_Services.ServiceUpdatePoОбновлениеПО;
@@ -118,15 +117,15 @@ public class MainActivity_Dashboard extends AppCompatActivity {
 
                     //creating a task
                     Task task = new Task();
-                    task.setTask("room 3 " + new Date().toLocaleString());
-                    task.setDesc("room 3 " + new Date().toLocaleString());
-                    task.setFinishBy("room 4 " + new Date().toLocaleString());
+                    task.setTask("room 3444 " + new Date().toLocaleString());
+                    task.setDesc("room 3444 " + new Date().toLocaleString());
+                    task.setFinishBy("room 4555 " + new Date().toLocaleString());
                     task.setFinished(true);
                     //adding to database
 
 
 
-            AppDatabase GetROOM = CoreApp.getDatabase();
+            AppDatabase GetROOM = CoreApp.getRoom();
 
 
             Log.d(this.getClass().getName(), "\n" + " class "
@@ -152,17 +151,16 @@ public class MainActivity_Dashboard extends AppCompatActivity {
 
 
 
-            AppDatabase  appDatabas2 =new RoomCreate().GetROOM(getApplicationContext());
 
 
 
             Task    task2  =   new Task();
-            task2.setTask("room 5 " + new Date().toLocaleString());
-            task2.setDesc("room 7 " + new Date().toLocaleString());
-            task2.setFinishBy("room 8 " + new Date().toLocaleString());
+            task2.setTask("room 777 " + new Date().toLocaleString());
+            task2.setDesc("room 777 " + new Date().toLocaleString());
+            task2.setFinishBy("room 8777 " + new Date().toLocaleString());
             task.setFinished(true);
             //adding to database
-            appDatabas2.taskDao().insert(task2);
+            GetROOM.taskDao().insert(task2);
 
             GetROOM.close();
 

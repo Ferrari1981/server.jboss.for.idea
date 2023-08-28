@@ -24,7 +24,7 @@ public class CoreApp extends Application {
                 " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
     }
 
-    public  static AppDatabase getDatabase() {
+    public  static AppDatabase getRoom() {
         return ROOM;
     }
 
