@@ -25,10 +25,9 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentResultListener;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.LifecycleOwner;
-import androidx.sqlite.db.SimpleSQLiteQuery;
 
-import com.dsy.dsu.AllDatabases.ORMSugar.AppDatabase;
-import com.dsy.dsu.AllDatabases.ORMSugar.Task;
+import com.dsy.dsu.AllDatabases.ROOM.ROOMDatabase;
+import com.dsy.dsu.AllDatabases.ROOM.EntityMaterialBinary;
 import com.dsy.dsu.Business_logic_Only_Class.Class_Generation_Errors;
 import com.dsy.dsu.Code_For_Services.ServiceUpdatePoОбновлениеПО;
 import com.dsy.dsu.CoreApp.CoreApp;
@@ -36,15 +35,6 @@ import com.dsy.dsu.Dashboard.Fragments.DashboardFragmentMaterialDesign;
 import com.dsy.dsu.R;
 
 import java.util.Date;
-import java.util.List;
-import java.util.concurrent.Callable;
-
-import io.reactivex.rxjava3.core.Maybe;
-import io.reactivex.rxjava3.core.MaybeObserver;
-import io.reactivex.rxjava3.disposables.Disposable;
-import io.reactivex.rxjava3.functions.Action;
-import io.reactivex.rxjava3.functions.Consumer;
-import io.reactivex.rxjava3.schedulers.Schedulers;
 
 /////////////////////////////////////////////////////////////////////////
 public class MainActivity_Dashboard extends AppCompatActivity {
@@ -119,171 +109,9 @@ public class MainActivity_Dashboard extends AppCompatActivity {
             buniccessLogicaActivityDashboard.     методStartingDashboardFragment();
             buniccessLogicaActivityDashboard.    методСлушательФрагментов(  );
 
-
-
-
-// TODO: 28.08.2023 ПОЛУЧЕАМ КОМПОНЕТ ROOM
-            AppDatabase GetROOM = CoreApp.getRoom();
-       /*             //adding to database
-            SimpleSQLiteQuery query = new SimpleSQLiteQuery("SELECT * FROM Task WHERE id=?",
-                    new Object[]{1});
-
-            SimpleSQLiteQuery query2 = new SimpleSQLiteQuery("  drop TRIGGER  if exists UPDATES  Task     ");
-            SimpleSQLiteQuery query3 = new SimpleSQLiteQuery("  CREATE TRIGGER IF NOT EXISTS UPDATES Task   AFTER UPDATE   ON    BEGIN " +
-                    " UPDATE Task  SET  task='xyu' WHERE id='1'      END ;  ");
-
-       GetROOM.taskDao3().getRaw(query).subscribeOn(Schedulers.single()).blockingSubscribe(new MaybeObserver<List<Task>>() {
-               @Override
-               public void onSubscribe(@io.reactivex.rxjava3.annotations.NonNull Disposable d) {
-                   // TODO: 28.08.2023
-                   Log.d(this.getClass().getName(), "\n" + " class "
-                           + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                           " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                           " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
-               }
-
-               @Override
-               public void onSuccess(@io.reactivex.rxjava3.annotations.NonNull List<Task> tasks) {
-                   // TODO: 28.08.2023
-                   Log.d(this.getClass().getName(), "\n" + " class "
-                           + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                           " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                           " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + " tasks " +tasks);
-               }
-
-               @Override
-               public void onError(@io.reactivex.rxjava3.annotations.NonNull Throwable e) {
-                   Log.d(this.getClass().getName(), "\n" + " class "
-                           + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                           " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                           " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
-               }
-
-               @Override
-               public void onComplete() {
-                   Log.d(this.getClass().getName(), "\n" + " class "
-                           + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                           " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                           " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
-               }
-           });
-            Log.d(this.getClass().getName(), "\n" + " class "
-                    + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");*/
-
-
-
-
-
-            Task    task2  =   new Task();
-            task2.setTask("roomПавел01 " + new Date().toLocaleString());
-            task2.setDesc("roomИванович02" + new Date().toLocaleString());
-            task2.setFinishBy("roomМорару03" + new Date().toLocaleString());
-            task2.setFinished(true);
-            //adding to database
-
-
-            GetROOM.getQueryExecutor().execute(new Runnable() {
-                @Override
-                public void run() {
-                    GetROOM.runInTransaction(new Runnable() {
-                        @Override
-                        public void run() {
-                            GetROOM.taskdao1().insert(task2);
-                            Log.d(this.getClass().getName(), "\n" + " class "
-                                    + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
-                        }
-                    });
-                }
-            });
-
-
-
-          //  GetROOM.taskdao1().insert(task2);
-            Log.d(this.getClass().getName(), "\n" + " class "
-                    + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
-
-
-      /*      Maybe.fromAction(new Action() {
-                @Override
-                public void run() throws Throwable {
-                    GetROOM.taskdao1().insert(task2);
-                    Log.d(this.getClass().getName(), "\n" + " class "
-                            + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
-                }
-            }).subscribeOn(Schedulers.single()).blockingSubscribe(new MaybeObserver<Object>() {
-                @Override
-                public void onSubscribe(@io.reactivex.rxjava3.annotations.NonNull Disposable d) {
-                    Log.d(this.getClass().getName(), "\n" + " class "
-                            + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
-
-                }
-
-                @Override
-                public void onSuccess(@io.reactivex.rxjava3.annotations.NonNull Object o) {
-                    Log.d(this.getClass().getName(), "\n" + " class "
-                            + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
-
-                }
-
-                @Override
-                public void onError(@io.reactivex.rxjava3.annotations.NonNull Throwable e) {
-                    Log.d(this.getClass().getName(), "\n" + " class "
-                            + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
-
-                }
-
-                @Override
-                public void onComplete() {
-                    Log.d(this.getClass().getName(), "\n" + " class "
-                            + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
-
-                }
-            });
-*/
-
-
-
-
-
-        //    GetROOM.close();
-
-                    Log.d(this.getClass().getName(), "\n" + " class "
-                            + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
-
-
-
-
-
-
-
-
                 Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                         " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                         " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"  );
-
-
-
-
-
-
 
             Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -668,14 +496,6 @@ try{
 
 //TODO END BUNIVEESS Logic//TODO END BUNIVEESS Logic//TODO END BUNIVEESS Logic//TODO END BUNIVEESS Logic//TODO END BUNIVEESS Logic//TODO END BUNIVEESS Logic//TODO END BUNIVEESS Logic//TODO END BUNIVEESS Logic
     }//TODO END BUNIVEESS Logic //TODO END BUNIVEESS Logic//TODO END BUNIVEESS Logic//TODO END BUNIVEESS Logic//TODO END BUNIVEESS Logic//TODO END BUNIVEESS Logic//TODO END BUNIVEESS Logic
-
-
-
-
-
-
-
-
 
 
 

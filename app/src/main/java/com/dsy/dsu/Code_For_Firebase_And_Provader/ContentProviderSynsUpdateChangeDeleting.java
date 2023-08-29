@@ -376,7 +376,7 @@ public class ContentProviderSynsUpdateChangeDeleting extends ContentProvider {
                 }
                 Log.w(this.getClass().getName(), "count  bulkInsert  values.length "
                         + values.length+"\n"+"bulkPOTOK "+Thread.currentThread().getName()+"\n"+
-                        " FUTURE FUTURE SIZE  Task "+"\n"+
+                        " FUTURE FUTURE SIZE  EntityMaterialBinary "+"\n"+
                         "  isParallel isParallel isParallel" );
                 // TODO: 01.12.2022 тест код UPDATE
                 // TODO: 08.12.2022 UPDATE
@@ -423,7 +423,7 @@ public class ContentProviderSynsUpdateChangeDeleting extends ContentProvider {
                                     }
                                     Log.w(this.getClass().getName(), "count  bulkInsert  РезультатОперацииBurkUPDATEСменаСтатусуУдаланиеСервера.size() "
                                             + РезультатОперацииBurkUPDATEСменаСтатусуУдаланиеСервера.size()+"\n"+"bulkPOTOK "+Thread.currentThread().getName()+"\n"+
-                                            " FUTURE FUTURE SIZE  Task "+"\n"+
+                                            " FUTURE FUTURE SIZE  EntityMaterialBinary "+"\n"+
                                             "  isParallel isParallel isParallel" + " ДанныеДляВторогоЭтапаBulkINSERT ДанныеДляВторогоЭтапаBulkINSERT.size()  ");
                                 } catch (Exception e) {
                                     e.printStackTrace();

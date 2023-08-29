@@ -66,11 +66,11 @@
   java.lang.Thread.State: RUNNABLE
 	 Incompatible thread state: thread not suspended
 
-"WM.task-1@19812" prio=5 tid=0x2b nid=NA waiting
+"WM.entityMaterialBinary-1@19812" prio=5 tid=0x2b nid=NA waiting
   java.lang.Thread.State: WAITING
 	 Incompatible thread state: thread not suspended
 
-"WM.task-2@19859" prio=5 tid=0x2c nid=NA waiting
+"WM.entityMaterialBinary-2@19859" prio=5 tid=0x2c nid=NA waiting
   java.lang.Thread.State: WAITING
 	 Incompatible thread state: thread not suspended
 

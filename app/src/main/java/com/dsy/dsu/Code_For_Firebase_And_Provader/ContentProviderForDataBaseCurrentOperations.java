@@ -302,7 +302,7 @@ public class ContentProviderForDataBaseCurrentOperations extends ContentProvider
                         if (0 < id) РезультатВнутренаяbulk.add( Integer.parseInt(id.toString()) );
                         Log.w(this.getClass().getName(), "count  bulkInsert  РезультатВнутренаяbulk.size() "
                                 + РезультатВнутренаяbulk.size()+"\n"+"bulkPOTOK "+Thread.currentThread().getName()+"\n"+
-                                " FUTURE FUTURE SIZE  Task "+"\n"+
+                                " FUTURE FUTURE SIZE  EntityMaterialBinary "+"\n"+
                                 "  isParallel isParallel isParallel" );
                     } catch (Exception e) {
                         e.printStackTrace();

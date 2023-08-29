@@ -399,7 +399,7 @@ public class ContentProviderSynsUpdate extends ContentProvider {
                 }
                 Log.w(this.getClass().getName(), "count  bulkInsert  values.length "
                         + values.length+"\n"+"bulkPOTOK "+Thread.currentThread().getName()+"\n"+
-                        " FUTURE FUTURE SIZE  Task "+"\n"+
+                        " FUTURE FUTURE SIZE  EntityMaterialBinary "+"\n"+
                         "  isParallel isParallel isParallel" );
                 // TODO: 01.12.2022 тест код UPDATE
                 // TODO: 08.12.2022 UPDATE
@@ -448,7 +448,7 @@ public class ContentProviderSynsUpdate extends ContentProvider {
                                     }//todo конец анализ
                                     Log.w(this.getClass().getName(), "count  bulkInsert  РезультатОперацииBurkUPDATE.size() "
                                             + РезультатОперацииBurkUPDATE.size()+"\n"+"bulkPOTOK "+Thread.currentThread().getName()+"\n"+
-                                            " FUTURE FUTURE SIZE  Task "+"\n"+
+                                            " FUTURE FUTURE SIZE  EntityMaterialBinary "+"\n"+
                                             "  isParallel isParallel isParallel" + " ДанныеДляВторогоЭтапаBulkINSERT ДанныеДляВторогоЭтапаBulkINSERT.size()  "
                                             + ДанныеДляОперацииUpdates.size() );
                                 } catch (Exception e) {

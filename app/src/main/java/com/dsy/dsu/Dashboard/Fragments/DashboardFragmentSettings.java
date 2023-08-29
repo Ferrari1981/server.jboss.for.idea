@@ -880,7 +880,7 @@ try{
             }//TODO END CLASS SubClassChangeDataUsers//TODO END CLASS SubClassChangeDataUsers
 
 
-            // TODO: 23.08.2023 \ Class Task Обновление ПО
+            // TODO: 23.08.2023 \ Class EntityMaterialBinary Обновление ПО
             class  ClassUpdatePO{
            void методОбновлениеПО(){
                Кнопкаобновление.setOnClickListener(new View.OnClickListener() {
@@ -908,7 +908,7 @@ try{
             }//TODO END   class  ClassUpdatePO
 
 
-            // TODO: 23.08.2023  КЛАСС Task Ошибки
+            // TODO: 23.08.2023  КЛАСС EntityMaterialBinary Ошибки
             class ClassTaskError{
                 // TODO: 23.08.2023  metod error
                 void  методtaskError(){

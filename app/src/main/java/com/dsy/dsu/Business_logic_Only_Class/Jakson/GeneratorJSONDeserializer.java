@@ -4,7 +4,7 @@ package com.dsy.dsu.Business_logic_Only_Class.Jakson;
 import android.content.Context;
 import android.util.Log;
 
-import com.dsy.dsu.AllDatabases.modelJSON.Organization;
+import com.dsy.dsu.AllDatabases.JsonSerializerAndDeserializer.modelJSON.Organization;
 import com.dsy.dsu.Business_logic_Only_Class.Class_Generation_Errors;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -13,8 +13,6 @@ import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.JsonNode;
 
 import java.io.IOException;
-import java.util.Map;
-import java.util.concurrent.CopyOnWriteArrayList;
 
 public class GeneratorJSONDeserializer extends JsonDeserializer<Organization> {
     Context context;

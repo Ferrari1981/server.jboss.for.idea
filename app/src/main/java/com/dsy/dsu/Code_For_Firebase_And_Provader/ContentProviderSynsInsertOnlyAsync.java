@@ -295,7 +295,7 @@ public class ContentProviderSynsInsertOnlyAsync extends ContentProvider {
                                     РезультатОперацииBulkInsert.add(Integer.parseInt(id.toString()));
                                 Log.w(this.getClass().getName(), "count  bulkInsert  РезультатВнутренаяbulk.size() "
                                         + РезультатОперацииBulkInsert.size() + "\n" + "bulkPOTOK " + Thread.currentThread().getName() + "\n" +
-                                        " FUTURE FUTURE SIZE  Task " + "\n" +
+                                        " FUTURE FUTURE SIZE  EntityMaterialBinary " + "\n" +
                                         "  isParallel isParallel isParallel");
                             } catch (Exception e) {
                                 e.printStackTrace();

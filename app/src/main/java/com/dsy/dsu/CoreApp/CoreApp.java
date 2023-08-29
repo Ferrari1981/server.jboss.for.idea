@@ -10,7 +10,7 @@ import androidx.room.RoomDatabase;
 import androidx.room.migration.Migration;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
-import com.dsy.dsu.AllDatabases.ORMSugar.AppDatabase;
+import com.dsy.dsu.AllDatabases.ROOM.ROOMDatabase;
 import com.dsy.dsu.Business_logic_Only_Class.Class_Generation_Errors;
 
 import java.util.List;
@@ -21,7 +21,7 @@ import javax.inject.Singleton;
 
 @Singleton
 public class CoreApp extends Application {
-    private static AppDatabase ROOM;
+    private static ROOMDatabase ROOM;
 
     @Override
     public void onCreate() {
@@ -33,7 +33,7 @@ public class CoreApp extends Application {
                 " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
     }
 
-    public  static AppDatabase getRoom() {
+    public  static ROOMDatabase getRoom() {
         return ROOM;
     }
 
@@ -58,7 +58,7 @@ public class CoreApp extends Application {
                 synchronized (this) {
                     if (ROOM == null) {
                         ROOM = Room.databaseBuilder(getApplicationContext(),
-                                        AppDatabase.class, "ROOM7.db")
+                                        ROOMDatabase.class, "ROOM7.db")
                                 .addMigrations(new ClassMigrations ().методMIGRATION_1_4)
                                 .setQueryExecutor(Executors.newSingleThreadExecutor())
                                 .setTransactionExecutor(Executors.newSingleThreadExecutor())
@@ -140,7 +140,7 @@ public class CoreApp extends Application {
 
                         //database.execSQL("ALTER TABLE Employee ADD COLUMN birthday INTEGER DEFAULT 0 NOT NULL");
                     /*    database.execSQL("CREATE TRIGGER audit_log AFTER INSERT \n" +
-                                "ON Task \n" +
+                                "ON EntityMaterialBinary \n" +
                                 "BEGIN\n" +
                                 " INSERT INTO Modif (task, nameyask ,finish_by,finished)\n" +
                                 "VALUES('2Bud Powell','2Bud Powell','2Bud Powell',9451);" +

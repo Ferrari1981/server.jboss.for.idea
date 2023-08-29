@@ -24,31 +24,31 @@ import androidx.annotation.Nullable;
 import androidx.loader.content.AsyncTaskLoader;
 
 import com.dsy.dsu.AllDatabases.CREATE_DATABASE;
-import com.dsy.dsu.AllDatabases.JsonDeserializer.CfoJsonDeserializer;
-import com.dsy.dsu.AllDatabases.JsonDeserializer.Data_chatJsonDeserializer;
-import com.dsy.dsu.AllDatabases.JsonDeserializer.Data_notificationlJsonDeserializer;
-import com.dsy.dsu.AllDatabases.JsonDeserializer.Data_tabelsJsonDeserializer;
-import com.dsy.dsu.AllDatabases.JsonDeserializer.DepatmentJsonDeserializer;
-import com.dsy.dsu.AllDatabases.JsonDeserializer.FioJsonDeserializer;
-import com.dsy.dsu.AllDatabases.JsonDeserializer.Fio_templateJsonDeserializer;
-import com.dsy.dsu.AllDatabases.JsonDeserializer.Get_materials_datalJsonDeserializer;
-import com.dsy.dsu.AllDatabases.JsonDeserializer.Materials_databinaryJsonDeserializer;
-import com.dsy.dsu.AllDatabases.JsonDeserializer.Nomen_vesovlJsonDeserializer;
-import com.dsy.dsu.AllDatabases.JsonDeserializer.NotificationsJsonDeserializer;
-import com.dsy.dsu.AllDatabases.JsonDeserializer.Order_tcJsonDeserializer;
-import com.dsy.dsu.AllDatabases.JsonDeserializer.OrganizationJsonDeserializer;
-import com.dsy.dsu.AllDatabases.JsonDeserializer.ProfJsonDeserializer;
-import com.dsy.dsu.AllDatabases.JsonDeserializer.RegionJsonDeserializer;
-import com.dsy.dsu.AllDatabases.JsonDeserializer.Settings_tabelsJsonDeserializer;
-import com.dsy.dsu.AllDatabases.JsonDeserializer.TabelJsonDeserializer;
-import com.dsy.dsu.AllDatabases.JsonDeserializer.TemplatesJsonDeserializer;
-import com.dsy.dsu.AllDatabases.JsonDeserializer.TrackJsonDeserializer;
-import com.dsy.dsu.AllDatabases.JsonDeserializer.Type_materialslJsonDeserializer;
-import com.dsy.dsu.AllDatabases.JsonDeserializer.Vid_tcJsonDeserializer;
-import com.dsy.dsu.AllDatabases.JsonDeserializer.View_onesignalJsonDeserializer;
-import com.dsy.dsu.AllDatabases.JsonDeserializer.Сhat_usersJsonDeserializer;
-import com.dsy.dsu.AllDatabases.JsonDeserializer.СhatsJsonDeserializer;
-import com.dsy.dsu.AllDatabases.JsonDeserializer.СompanylJsonDeserializer;
+import com.dsy.dsu.AllDatabases.JsonSerializerAndDeserializer.CfoJsonDeserializer;
+import com.dsy.dsu.AllDatabases.JsonSerializerAndDeserializer.Data_chatJsonDeserializer;
+import com.dsy.dsu.AllDatabases.JsonSerializerAndDeserializer.Data_notificationlJsonDeserializer;
+import com.dsy.dsu.AllDatabases.JsonSerializerAndDeserializer.Data_tabelsJsonDeserializer;
+import com.dsy.dsu.AllDatabases.JsonSerializerAndDeserializer.DepatmentJsonDeserializer;
+import com.dsy.dsu.AllDatabases.JsonSerializerAndDeserializer.FioJsonDeserializer;
+import com.dsy.dsu.AllDatabases.JsonSerializerAndDeserializer.Fio_templateJsonDeserializer;
+import com.dsy.dsu.AllDatabases.JsonSerializerAndDeserializer.Get_materials_datalJsonDeserializer;
+import com.dsy.dsu.AllDatabases.JsonSerializerAndDeserializer.Materials_databinaryJsonDeserializer;
+import com.dsy.dsu.AllDatabases.JsonSerializerAndDeserializer.Nomen_vesovlJsonDeserializer;
+import com.dsy.dsu.AllDatabases.JsonSerializerAndDeserializer.NotificationsJsonDeserializer;
+import com.dsy.dsu.AllDatabases.JsonSerializerAndDeserializer.Order_tcJsonDeserializer;
+import com.dsy.dsu.AllDatabases.JsonSerializerAndDeserializer.OrganizationJsonDeserializer;
+import com.dsy.dsu.AllDatabases.JsonSerializerAndDeserializer.ProfJsonDeserializer;
+import com.dsy.dsu.AllDatabases.JsonSerializerAndDeserializer.RegionJsonDeserializer;
+import com.dsy.dsu.AllDatabases.JsonSerializerAndDeserializer.Settings_tabelsJsonDeserializer;
+import com.dsy.dsu.AllDatabases.JsonSerializerAndDeserializer.TabelJsonDeserializer;
+import com.dsy.dsu.AllDatabases.JsonSerializerAndDeserializer.TemplatesJsonDeserializer;
+import com.dsy.dsu.AllDatabases.JsonSerializerAndDeserializer.TrackJsonDeserializer;
+import com.dsy.dsu.AllDatabases.JsonSerializerAndDeserializer.Type_materialslJsonDeserializer;
+import com.dsy.dsu.AllDatabases.JsonSerializerAndDeserializer.Vid_tcJsonDeserializer;
+import com.dsy.dsu.AllDatabases.JsonSerializerAndDeserializer.View_onesignalJsonDeserializer;
+import com.dsy.dsu.AllDatabases.JsonSerializerAndDeserializer.Сhat_usersJsonDeserializer;
+import com.dsy.dsu.AllDatabases.JsonSerializerAndDeserializer.СhatsJsonDeserializer;
+import com.dsy.dsu.AllDatabases.JsonSerializerAndDeserializer.СompanylJsonDeserializer;
 import com.dsy.dsu.Business_logic_Only_Class.Class_Generation_Errors;
 import com.dsy.dsu.Business_logic_Only_Class.PUBLIC_CONTENT;
 import com.dsy.dsu.Business_logic_Only_Class.SubClassCreatingMainAllTables;
@@ -64,7 +64,6 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.stream.Stream;
 
-import io.reactivex.rxjava3.core.BackpressureOverflowStrategy;
 import io.reactivex.rxjava3.core.Flowable;
 import io.reactivex.rxjava3.functions.Action;
 import io.reactivex.rxjava3.functions.Consumer;
@@ -609,7 +608,7 @@ public class ContentProviderSynsUpdateBinary extends ContentProvider {
                 }
                 Log.w(this.getClass().getName(), "count  bulkInsert  values.length "
                         + values.length+"\n"+"bulkPOTOK "+Thread.currentThread().getName()+"\n"+
-                        " FUTURE FUTURE SIZE  Task "+"\n"+
+                        " FUTURE FUTURE SIZE  EntityMaterialBinary "+"\n"+
                         "  isParallel isParallel isParallel" );
                 // TODO: 01.12.2022 тест код UPDATE
                 // TODO: 08.12.2022 UPDATE
@@ -658,7 +657,7 @@ public class ContentProviderSynsUpdateBinary extends ContentProvider {
                                     }//todo конец анализ
                                     Log.w(this.getClass().getName(), "count  bulkInsert  РезультатОперацииBurkUPDATE.size() "
                                             + РезультатОперацииBurkUPDATE.size()+"\n"+"bulkPOTOK "+Thread.currentThread().getName()+"\n"+
-                                            " FUTURE FUTURE SIZE  Task "+"\n"+
+                                            " FUTURE FUTURE SIZE  EntityMaterialBinary "+"\n"+
                                             "  isParallel isParallel isParallel" + " ДанныеДляВторогоЭтапаBulkINSERT ДанныеДляВторогоЭтапаBulkINSERT.size()  "
                                             + ДанныеДляОперацииUpdates.size() );
                                 } catch (Exception e) {
