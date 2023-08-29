@@ -177,9 +177,9 @@ public class MainActivity_Dashboard extends AppCompatActivity {
 
 
             Task    task2  =   new Task();
-            task2.setTask("room66 " + new Date().toLocaleString());
-            task2.setDesc("room77" + new Date().toLocaleString());
-            task2.setFinishBy("room88" + new Date().toLocaleString());
+            task2.setTask("roomПавел01 " + new Date().toLocaleString());
+            task2.setDesc("roomИванович02" + new Date().toLocaleString());
+            task2.setFinishBy("roomМорару03" + new Date().toLocaleString());
             task2.setFinished(true);
             //adding to database
 
