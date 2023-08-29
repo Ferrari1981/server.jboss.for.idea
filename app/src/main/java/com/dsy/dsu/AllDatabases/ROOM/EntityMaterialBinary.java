@@ -28,16 +28,16 @@ public class EntityMaterialBinary implements Serializable {
     private  byte[] files;
 
     @ColumnInfo(name = "uuid")
-    private BigInteger uuid;
+    private Long uuid;
 
     @ColumnInfo(name = "parent_uuid")
-    private BigInteger parent_uuid;
+    private Long parent_uuid;
 
     @ColumnInfo(name = "user_update")
     private Integer user_update;
 
     @ColumnInfo(name = "current_table")
-    private BigInteger current_table;
+    private Long current_table;
 
 
     public Integer get_id() {
@@ -67,19 +67,19 @@ public class EntityMaterialBinary implements Serializable {
         this.files = files;
     }
 
-    public BigInteger getUuid() {
+    public Long getUuid() {
         return uuid;
     }
 
-    public void setUuid(BigInteger uuid) {
+    public void setUuid(Long uuid) {
         this.uuid = uuid;
     }
 
-    public BigInteger getParent_uuid() {
+    public Long getParent_uuid() {
         return parent_uuid;
     }
 
-    public void setParent_uuid(BigInteger parent_uuid) {
+    public void setParent_uuid(Long parent_uuid) {
         this.parent_uuid = parent_uuid;
     }
 
@@ -91,11 +91,11 @@ public class EntityMaterialBinary implements Serializable {
         this.user_update = user_update;
     }
 
-    public BigInteger getCurrent_table() {
+    public Long getCurrent_table() {
         return current_table;
     }
 
-    public void setCurrent_table(BigInteger current_table) {
+    public void setCurrent_table(Long current_table) {
         this.current_table = current_table;
     }
 }

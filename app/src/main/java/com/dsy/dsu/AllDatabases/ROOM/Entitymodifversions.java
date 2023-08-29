@@ -27,10 +27,10 @@ public class Entitymodifversions implements Serializable {
     private String versionserveraandroid;
 
     @ColumnInfo(name = "localversionandroid_version",defaultValue ="0")
-    private BigInteger localversionandroid_version;
+    private Long localversionandroid_version;
 
     @ColumnInfo(name = "versionserveraandroid_version",defaultValue ="0")
-    private BigInteger versionserveraandroid_version;
+    private Long versionserveraandroid_version;
 
 
     public Integer get_id() {
@@ -66,19 +66,19 @@ public class Entitymodifversions implements Serializable {
         this.versionserveraandroid = versionserveraandroid;
     }
 
-    public BigInteger getLocalversionandroid_version() {
+    public Long getLocalversionandroid_version() {
         return localversionandroid_version;
     }
 
-    public void setLocalversionandroid_version(BigInteger localversionandroid_version) {
+    public void setLocalversionandroid_version(Long localversionandroid_version) {
         this.localversionandroid_version = localversionandroid_version;
     }
 
-    public BigInteger getVersionserveraandroid_version() {
+    public Long getVersionserveraandroid_version() {
         return versionserveraandroid_version;
     }
 
-    public void setVersionserveraandroid_version(BigInteger versionserveraandroid_version) {
+    public void setVersionserveraandroid_version(Long versionserveraandroid_version) {
         this.versionserveraandroid_version = versionserveraandroid_version;
     }
 }
