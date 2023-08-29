@@ -15,7 +15,7 @@ public abstract class ROOMDatabase extends RoomDatabase {
                 " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"  );
     }
 
-    public abstract DaosROOM daoROOM();
+    public abstract DaoRoom daoROOM();
 
 
 

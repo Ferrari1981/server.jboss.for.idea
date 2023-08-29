@@ -22,10 +22,10 @@ public class EntityMaterialBinary implements Serializable {
     private Integer _id;
 
     @ColumnInfo(name = "image")
-    private Blob image;
+    private byte[] image;
 
     @ColumnInfo(name = "files")
-    private Blob files;
+    private  byte[] files;
 
     @ColumnInfo(name = "uuid")
     private BigInteger uuid;
@@ -48,19 +48,22 @@ public class EntityMaterialBinary implements Serializable {
         this._id = _id;
     }
 
-    public Blob getImage() {
+    public  byte[] getImage() {
+
         return image;
     }
 
-    public void setImage(Blob image) {
+    public void setImage( byte[] image) {
         this.image = image;
     }
 
-    public Blob getFiles() {
+    public  byte[] getFiles() {
+
         return files;
     }
 
-    public void setFiles(Blob files) {
+    public void setFiles( byte[] files) {
+
         this.files = files;
     }
 

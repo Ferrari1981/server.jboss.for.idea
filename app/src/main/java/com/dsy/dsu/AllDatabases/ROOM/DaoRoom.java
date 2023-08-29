@@ -17,12 +17,14 @@ import io.reactivex.rxjava3.core.Maybe;
 public interface DaoRoom {
 
     // TODO: 29.08.2023  запросы для всех таблиц GET ALL
-    @Query("SELECT * FROM MODIFITATION_Client_ROOM as mod")
+    @Query("SELECT * FROM materials_databinary as mod")
     Maybe<List<EntityMaterialBinary>> getAllMod();
 
     @Query("SELECT * FROM MODIFITATION_Client_ROOM as mamtbin")
     Maybe<List<Entitymodifversions>> getAllMatrBi();
 
+
+    // TODO: 29.08.2023 Прямые запросы SQL injects
 
     @RawQuery
     Maybe<List<Entitymodifversions> >getRawMod(SupportSQLiteQuery query);
