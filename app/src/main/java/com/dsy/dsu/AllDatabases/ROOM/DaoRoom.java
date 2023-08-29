@@ -34,23 +34,23 @@ public interface DaoRoom {
     // TODO: 29.08.2023  вставка данных и обновленние   Binary
 
     @Insert
-    void insert(EntityMaterialBinary entityMaterialBinary);
+    void insertBinary(EntityMaterialBinary entityMaterialBinary);
 
     @Delete
-    void delete(EntityMaterialBinary entityMaterialBinary);
+    void deleteBinary(EntityMaterialBinary entityMaterialBinary);
 
     @Update
-    void update(EntityMaterialBinary entityMaterialBinary);
+    void updateBinary(EntityMaterialBinary entityMaterialBinary);
 
     // TODO: 29.08.2023  вставка данных и обновленние  для всех таблиц Version
 
     @Insert
-    void insert(Entitymodifversions entitymodifversions);
+    void insertversions(Entitymodifversions entitymodifversions);
 
     @Delete
-    void delete(Entitymodifversions entitymodifversions);
+    void deleteversions(Entitymodifversions entitymodifversions);
 
     @Update
-    void update(Entitymodifversions entitymodifversions);
+    void updateversions(Entitymodifversions entitymodifversions);
 
 }
