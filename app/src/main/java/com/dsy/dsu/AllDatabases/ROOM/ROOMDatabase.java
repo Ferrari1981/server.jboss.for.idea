@@ -6,7 +6,7 @@ import android.util.Log;
 import androidx.room.Database;
 import androidx.room.RoomDatabase;
 
-@Database(entities = {EntityMaterialBinary.class }, version = 1,exportSchema = true)
+@Database(entities = {EntityMaterialBinary.class, Entitymodifversions.class }, version = 1,exportSchema = true)
 public abstract class ROOMDatabase extends RoomDatabase {
     public ROOMDatabase() {
 
@@ -15,9 +15,7 @@ public abstract class ROOMDatabase extends RoomDatabase {
                 " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"  );
     }
 
-
-    /*    public abstract DAO4 taskDao();*/
-    public abstract DaoROOM daoROOM();
+    public abstract DaosROOM daoROOM();
 
 
 

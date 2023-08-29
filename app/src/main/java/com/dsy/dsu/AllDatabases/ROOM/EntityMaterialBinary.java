@@ -5,72 +5,94 @@ import android.util.Log;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
 import java.io.Serializable;
+import java.math.BigInteger;
+import java.sql.Blob;
 
-@Entity
+@Entity(tableName = "materials_databinary",  indices = {
+        @Index(value = "uuid",unique = true),
+        @Index(value = "current_table", unique = true)}
+)
 public class EntityMaterialBinary implements Serializable {
 
     @PrimaryKey(autoGenerate = false)
-    private int id;
+    private Integer _id;
 
-    @ColumnInfo(name = "task")
-    private String task;
+    @ColumnInfo(name = "image")
+    private Blob image;
 
-    @ColumnInfo(name = "desc")
-    private String desc;
+    @ColumnInfo(name = "files")
+    private Blob files;
 
-    @ColumnInfo(name = "finish_by")
-    private String finishBy;
+    @ColumnInfo(name = "uuid")
+    private BigInteger uuid;
 
-    @ColumnInfo(name = "finished")
-    private boolean finished;
+    @ColumnInfo(name = "parent_uuid")
+    private BigInteger parent_uuid;
+
+    @ColumnInfo(name = "user_update")
+    private Integer user_update;
+
+    @ColumnInfo(name = "current_table")
+    private BigInteger current_table;
 
 
-    /*
-     * Getters and Setters
-     * */
-    public int getId() {
-        return id;
+    public Integer get_id() {
+        return _id;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void set_id(Integer _id) {
+        this._id = _id;
     }
 
-    public String getTask() {
-        return task;
+    public Blob getImage() {
+        return image;
     }
 
-    public void setTask(String task) {
-        this.task = task;
-        Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"  );
+    public void setImage(Blob image) {
+        this.image = image;
     }
 
-    public String getDesc() {
-        return desc;
+    public Blob getFiles() {
+        return files;
     }
 
-    public void setDesc(String desc) {
-        this.desc = desc;
+    public void setFiles(Blob files) {
+        this.files = files;
     }
 
-    public String getFinishBy() {
-        return finishBy;
+    public BigInteger getUuid() {
+        return uuid;
     }
 
-    public void setFinishBy(String finishBy) {
-        this.finishBy = finishBy;
+    public void setUuid(BigInteger uuid) {
+        this.uuid = uuid;
     }
 
-    public boolean isFinished() {
-        return finished;
+    public BigInteger getParent_uuid() {
+        return parent_uuid;
     }
 
-    public void setFinished(boolean finished) {
-        this.finished = finished;
+    public void setParent_uuid(BigInteger parent_uuid) {
+        this.parent_uuid = parent_uuid;
+    }
+
+    public Integer getUser_update() {
+        return user_update;
+    }
+
+    public void setUser_update(Integer user_update) {
+        this.user_update = user_update;
+    }
+
+    public BigInteger getCurrent_table() {
+        return current_table;
+    }
+
+    public void setCurrent_table(BigInteger current_table) {
+        this.current_table = current_table;
     }
 }

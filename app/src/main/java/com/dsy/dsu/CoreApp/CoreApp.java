@@ -130,9 +130,9 @@ public class CoreApp extends Application {
 
 
                         //database.execSQL("ALTER TABLE Employee ADD COLUMN birthday INTEGER DEFAULT 0 NOT NULL");
-                        database.execSQL(" drop TRIGGER  if exists   audit_log ");
-                        database.execSQL("    CREATE TRIGGER  IF NOT EXISTS  audit_log AFTER INSERT \n" +
-                                "ON Task \n" +
+                        database.execSQL(" drop TRIGGER  if exists   materials_databinary ");
+                        database.execSQL("    CREATE TRIGGER  IF NOT EXISTS  materials_databinary AFTER INSERT \n" +
+                                "ON EntityMaterialBinary \n" +
                                 "BEGIN\n" +
                                 " INSERT INTO Modif (task, nameyask ,finish_by,finished)\n" +
                                 "VALUES('1Bud Powell-','2Bud Powel--','3Bud Powell---',8888888);" +
