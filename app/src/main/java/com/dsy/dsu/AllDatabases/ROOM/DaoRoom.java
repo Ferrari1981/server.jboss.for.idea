@@ -16,15 +16,15 @@ import io.reactivex.rxjava3.core.Maybe;
 @Dao
 public interface DaoRoom {
 
-    // TODO: 29.08.2023  запросы для всех таблиц GET ALL
+/*    // TODO: 29.08.2023  запросы для всех таблиц GET ALL
     @Query("SELECT * FROM materials_databinary as mod")
     Maybe<List<EntityMaterialBinary>> getAllMod();
 
     @Query("SELECT * FROM MODIFITATION_Client_ROOM as mamtbin")
-    Maybe<List<Entitymodifversions>> getAllMatrBi();
+    Maybe<List<Entitymodifversions>> getAllMatrBi();*/
 
 
-    // TODO: 29.08.2023 Прямые запросы SQL injects
+    /*// TODO: 29.08.2023 Прямые запросы SQL injects
 
     @RawQuery
     Maybe<List<Entitymodifversions> >getRawMod(SupportSQLiteQuery query);
@@ -53,6 +53,6 @@ public interface DaoRoom {
     void deleteversions(Entitymodifversions entitymodifversions);
 
     @Update
-    void updateversions(Entitymodifversions entitymodifversions);
+    void updateversions(Entitymodifversions entitymodifversions);*/
 
 }

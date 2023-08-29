@@ -21,10 +21,10 @@ public class EntityMaterialBinary implements Serializable {
     @PrimaryKey(autoGenerate = false)
     private Integer _id;
 
-    @ColumnInfo(name = "image")
+    @ColumnInfo(name = "image", typeAffinity = ColumnInfo.BLOB)
     private byte[] image;
 
-    @ColumnInfo(name = "files")
+    @ColumnInfo(name = "files",typeAffinity = ColumnInfo.BLOB)
     private  byte[] files;
 
     @ColumnInfo(name = "uuid")

@@ -35,10 +35,12 @@ public class CREATE_DATABASE extends SQLiteOpenHelper{ ///SQLiteOpenHelper
         try{
             if (ССылкаНаСозданнуюБазу == null && context!=null ) {
             synchronized (this){
-            this.context =context;
-                        ССылкаНаСозданнуюБазу = this.getWritableDatabase(); //ссылка на схему базы данных;//ссылка на схему базы данных ГЛАВНАЯ ВСТАВКА НА БАЗУ ДСУ-1
-                        Log.d(this.getClass().getName(), " БАЗА  ДАННЫХ   ДСУ-1 ОТКРЫВАЕМ  ССылкаНаСозданнуюБазу==null   "
-                                + ССылкаНаСозданнуюБазу.isOpen());
+                if (ССылкаНаСозданнуюБазу == null && context!=null ) {
+                    this.context = context;
+                    ССылкаНаСозданнуюБазу = this.getWritableDatabase(); //ссылка на схему базы данных;//ссылка на схему базы данных ГЛАВНАЯ ВСТАВКА НА БАЗУ ДСУ-1
+                    Log.d(this.getClass().getName(), " БАЗА  ДАННЫХ   ДСУ-1 ОТКРЫВАЕМ  ССылкаНаСозданнуюБазу==null   "
+                            + ССылкаНаСозданнуюБазу.isOpen());
+                }
                     }
                 }
             Log.d(this.getClass().getName(),"\n" + " class " +

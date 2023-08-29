@@ -18,11 +18,12 @@ public class CoreApp extends Application {
     public void onCreate() {
         super.onCreate();
         try{
+            // TODO: 29.08.2023  CREATE ROOM
         ROOM=   new CreateROOM(getApplicationContext()).метоInizROOM();
         // TODO: 17.04.2023
         Log.d(this.getClass().getName(),"\n" + " class FaceAPp " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
+                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"  + " ROOM "+ROOM);
     } catch (Exception e) {
         e.printStackTrace();
         Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" +
