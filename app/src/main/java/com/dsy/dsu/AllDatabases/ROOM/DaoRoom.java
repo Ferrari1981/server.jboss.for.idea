@@ -16,6 +16,13 @@ import io.reactivex.rxjava3.core.Maybe;
 @Dao
 public interface DaoRoom {
 
+
+
+
+    @RawQuery
+    Maybe<List<Task> >getRawMatbin(SupportSQLiteQuery query);
+
+
 /*    // TODO: 29.08.2023  запросы для всех таблиц GET ALL
     @Query("SELECT * FROM materials_databinary as mod")
     Maybe<List<EntityMaterialBinary>> getAllMod();

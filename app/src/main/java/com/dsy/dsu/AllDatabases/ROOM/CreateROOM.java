@@ -39,6 +39,7 @@ public class CreateROOM {
                                 .addMigrations(new ClassMigrations ().методMIGRATION_1_4)
                                 .setQueryExecutor(Executors.newSingleThreadExecutor())
                                 .setTransactionExecutor(Executors.newSingleThreadExecutor())
+                                .allowMainThreadQueries()
                                 .setQueryCallback(new RoomDatabase.QueryCallback() {
                                     @Override
                                     public void onQuery(@NonNull String sqlQuery, @NonNull List<Object> bindArgs) {

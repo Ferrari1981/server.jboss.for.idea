@@ -7,13 +7,20 @@ import android.content.Context;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
+import androidx.sqlite.db.SimpleSQLiteQuery;
 
 import com.dsy.dsu.AllDatabases.ROOM.EntityMaterialBinary;
 import com.dsy.dsu.AllDatabases.ROOM.ROOMDatabase;
+import com.dsy.dsu.AllDatabases.ROOM.Task;
 import com.dsy.dsu.Business_logic_Only_Class.Class_Generation_Errors;
 import com.dsy.dsu.CoreApp.CoreApp;
 
 import java.util.Date;
+import java.util.List;
+
+import io.reactivex.rxjava3.core.MaybeObserver;
+import io.reactivex.rxjava3.disposables.Disposable;
+import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class ClassAllTests {
     private  Context context;
@@ -38,53 +45,51 @@ public class ClassAllTests {
 
 // TODO: 28.08.2023 ПОЛУЧЕАМ КОМПОНЕТ ROOM
               ROOMDatabase GetROOM = CoreApp.getRoom();
-       /*             //adding to database
-            SimpleSQLiteQuery query = new SimpleSQLiteQuery("SELECT * FROM EntityMaterialBinary WHERE id=?",
+                   //adding to database
+            SimpleSQLiteQuery query = new SimpleSQLiteQuery("SELECT * FROM Task WHERE id=?",
                     new Object[]{1});
 
             SimpleSQLiteQuery query2 = new SimpleSQLiteQuery("  drop TRIGGER  if exists UPDATES  EntityMaterialBinary     ");
             SimpleSQLiteQuery query3 = new SimpleSQLiteQuery("  CREATE TRIGGER IF NOT EXISTS UPDATES EntityMaterialBinary   AFTER UPDATE   ON    BEGIN " +
                     " UPDATE EntityMaterialBinary  SET  task='xyu' WHERE id='1'      END ;  ");
 
-       GetROOM.taskDao3().getRaw(query).subscribeOn(Schedulers.single()).blockingSubscribe(new MaybeObserver<List<EntityMaterialBinary>>() {
-               @Override
-               public void onSubscribe(@io.reactivex.rxjava3.annotations.NonNull Disposable d) {
-                   // TODO: 28.08.2023
-                   Log.d(this.getClass().getName(), "\n" + " class "
-                           + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                           " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                           " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
-               }
+       GetROOM.daoROOM().getRawMatbin(query).subscribeOn(Schedulers.single()).blockingSubscribe(new MaybeObserver<List<Task>>() {
+           @Override
+           public void onSubscribe(@io.reactivex.rxjava3.annotations.NonNull Disposable d) {
+               Log.d(this.getClass().getName(), "\n" + " class "
+                       + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                       " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                       " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
+           }
 
-               @Override
-               public void onSuccess(@io.reactivex.rxjava3.annotations.NonNull List<EntityMaterialBinary> tasks) {
-                   // TODO: 28.08.2023
-                   Log.d(this.getClass().getName(), "\n" + " class "
-                           + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                           " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                           " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + " tasks " +tasks);
-               }
+           @Override
+           public void onSuccess(@io.reactivex.rxjava3.annotations.NonNull List<Task> tasks) {
+               Log.d(this.getClass().getName(), "\n" + " class "
+                       + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                       " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                       " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
+           }
 
-               @Override
-               public void onError(@io.reactivex.rxjava3.annotations.NonNull Throwable e) {
-                   Log.d(this.getClass().getName(), "\n" + " class "
-                           + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                           " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                           " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
-               }
+           @Override
+           public void onError(@io.reactivex.rxjava3.annotations.NonNull Throwable e) {
+               Log.d(this.getClass().getName(), "\n" + " class "
+                       + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                       " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                       " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
+           }
 
-               @Override
-               public void onComplete() {
-                   Log.d(this.getClass().getName(), "\n" + " class "
-                           + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                           " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                           " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
-               }
-           });
+           @Override
+           public void onComplete() {
+               Log.d(this.getClass().getName(), "\n" + " class "
+                       + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                       " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                       " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
+           }
+       });
             Log.d(this.getClass().getName(), "\n" + " class "
                     + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");*/
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
 
 
 
