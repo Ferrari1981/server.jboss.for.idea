@@ -29,9 +29,9 @@ public class ClassAllTests {
 
 
 
-    class  ClassTestROOM{
+    public class  ClassTestROOM{
 
-        void методТестRoom(){
+        public void методТестRoom(){
 
             try{
 

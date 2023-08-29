@@ -35,7 +35,7 @@ public class CreateROOM {
                 synchronized (this) {
                     if (ROOM == null) {
                         ROOM = Room.databaseBuilder(context,
-                                        ROOMDatabase.class, "ROOM7.db")
+                                        ROOMDatabase.class, "ROOM.db")
                                 .addMigrations(new ClassMigrations ().методMIGRATION_1_4)
                                 .setQueryExecutor(Executors.newSingleThreadExecutor())
                                 .setTransactionExecutor(Executors.newSingleThreadExecutor())

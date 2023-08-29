@@ -33,6 +33,7 @@ import com.dsy.dsu.Code_For_Services.ServiceUpdatePoОбновлениеПО;
 import com.dsy.dsu.CoreApp.CoreApp;
 import com.dsy.dsu.Dashboard.Fragments.DashboardFragmentMaterialDesign;
 import com.dsy.dsu.R;
+import com.dsy.dsu.UnitTests.ClassAllTests;
 
 import java.util.Date;
 
@@ -84,6 +85,8 @@ public class MainActivity_Dashboard extends AppCompatActivity {
             // TODO: 06.04.2023  ТЕСТ КОД для 1С
             ///методДляТетсирования1С();
 
+            ClassAllTests classAllTests =    new ClassAllTests(getApplicationContext());
+            classAllTests.new ClassTestROOM().методТестRoom();
             Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"  );
@@ -108,6 +111,10 @@ public class MainActivity_Dashboard extends AppCompatActivity {
         try {
             buniccessLogicaActivityDashboard.     методStartingDashboardFragment();
             buniccessLogicaActivityDashboard.    методСлушательФрагментов(  );
+
+
+
+
 
                 Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                         " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
