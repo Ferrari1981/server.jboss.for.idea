@@ -91,11 +91,10 @@ public class SubClassSessionBeanPOST {//extends    DSU1JsonServlet
             ///TODO ПАРАМЕНТ #5
             switch (JobForServer.trim()) {
                 case "Получение JSON файла от Андройда":
-                    StringBuffer БуферJSONОтАндройда = МетодПолучениеJSONОтКлиента(request);
-                    ЛОГ.log("  БуферJSONОтАндройда " + БуферJSONОтАндройда.toString());///// ПРИШЕДШИХ
-                    if (БуферJSONОтАндройда.toString().toCharArray().length > 3) {///// ЗАХОДИМ											///// КОД
-                        ЛОГ.log("  БуферJSONОтАндройда " + БуферJSONОтАндройда.toString());///// ПРИШЕДШИХ
-                        БуферГлавныйГенерацииJSONДляAndroid = МетодПарсингаJSONФайлПришелОтКлиента(response, NameTable, БуферJSONОтАндройда);
+                    ServletInputStream requestInputStream = request.getInputStream();
+                    ЛОГ.log("  requestInputStream.isReady() " + requestInputStream.isReady());///// ПРИШЕДШИХ
+                    if (requestInputStream.available()>0) {///// ЗАХОДИМ											///// КО
+                        БуферГлавныйГенерацииJSONДляAndroid = МетодПарсингаJSONФайлПришелОтКлиента(response, NameTable, requestInputStream );
                         ЛОГ.log( " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                                 " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
@@ -118,16 +117,16 @@ public class SubClassSessionBeanPOST {//extends    DSU1JsonServlet
     protected StringBuffer МетодПарсингаJSONФайлПришелОтКлиента(
             @NotNull HttpServletResponse response,
             @NotNull String ТаблицаPOST,
-            @NotNull StringBuffer bufferОтКлиента)
+            @NotNull ServletInputStream requestInputStream)
             throws InterruptedException, SQLException, BrokenBarrierException, IOException {
         StringBuffer bufferCallsBackToServer = new StringBuffer();
         try {
-            bufferCallsBackToServer = subClassВставкаДанныхОтКлиентаPOST.методCompleteInsertorUpdateData(ЛОГ, bufferОтКлиента, ТаблицаPOST);  //TODO Пришли ДАнные От  Клиента
+            bufferCallsBackToServer = subClassВставкаДанныхОтКлиентаPOST.методCompleteInsertorUpdateData(ЛОГ, requestInputStream, ТаблицаPOST);  //TODO Пришли ДАнные От  Клиента
 
             ЛОГ.log( " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+
-                    " БуферJSONJackson " + bufferОтКлиента.length()+ " bufferCallsBackToServer " +bufferCallsBackToServer.toString());
+                    " БуферJSONJackson " + requestInputStream.available()+ " bufferCallsBackToServer " +bufferCallsBackToServer.toString());
         } catch (Exception e) {
             subClassWriterErros.
                     МетодаЗаписиОшибкиВЛог(e,
@@ -138,26 +137,5 @@ public class SubClassSessionBeanPOST {//extends    DSU1JsonServlet
         return bufferCallsBackToServer;
     }
 
-    // TODO: 22.04.2023 ПОЛУЧАЕМ JSON ОТ КЛИЕНТА
-    protected StringBuffer МетодПолучениеJSONОтКлиента(@NotNull HttpServletRequest request)
-            throws IOException, InterruptedException, ExecutionException {
-        StringBuffer buffer = new StringBuffer();
-        try (ServletInputStream ОткрываемПотокДляПолученогоJSONотАндройда = request.getInputStream();
-             BufferedReader bufferedReader = new BufferedReader(
-                     new InputStreamReader(new GZIPInputStream(ОткрываемПотокДляПолученогоJSONотАндройда), StandardCharsets.UTF_16))) {
-            buffer = bufferedReader.lines().parallel().collect(StringBuffer::new, (sb, i) -> sb.append(i), StringBuffer::append);            // TODO: 22.04.2023 ПОЛУЧАЕМ ДАННЫЕ ОТ КЛИЕНТА
 
-            ЛОГ.log("\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
-                    " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
-                    " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+
-                    " buffer "+buffer.toString());
-        } catch (Exception e) {
-            subClassWriterErros.
-                    МетодаЗаписиОшибкиВЛог(e,
-                            Thread.currentThread().
-                                    getStackTrace(),
-                            ЛОГ,"ErrorsLogs/ErrorJbossServletDSU1.txt");
-        }
-        return buffer;
-    }
 }

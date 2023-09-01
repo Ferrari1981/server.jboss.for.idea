@@ -13,6 +13,7 @@ import javax.inject.Inject;
 import javax.persistence.ParameterMode;
 import javax.persistence.StoredProcedureQuery;
 import javax.servlet.ServletContext;
+import javax.servlet.ServletInputStream;
 import javax.swing.*;
 
 import com.fasterxml.jackson.databind.JsonNode;
@@ -43,7 +44,7 @@ public class SubClassВставкаДанныхОтКлиентаPOST {
     // TODO: 09.03.2023
     StringBuffer методCompleteInsertorUpdateData(
             @NotNull ServletContext ЛОГ,
-            @NotNull StringBuffer bufferОтКлиента
+            @NotNull ServletInputStream requestInputStream
             , @NotNull String ТаблицаPOST) throws SQLException {
         // TODO: 06.08.2023  вставкялем POST на сервер  
         StringBuffer bufferCallsBackToAndroid=new StringBuffer();
@@ -58,7 +59,7 @@ public class SubClassВставкаДанныхОтКлиентаPOST {
             // TODO: 23.04.2023 ЗапускТарнзакции
             методЗапускТранзакции(ЛОГ );
             // TODO: 22.04.2023 Новый ПАРСИНГ ОТ JAKSON JSON
-            JsonNode jsonNodeParent= getGeneratorJackson.readTree(bufferОтКлиента.toString());
+            JsonNode jsonNodeParent= getGeneratorJackson.readTree(requestInputStream);
             // TODO: 06.08.2023 ГЛАВНЫЙ ЦЦМИКЛ РАСПАРСИВАНИЯ
             jsonNodeParent.fields().forEachRemaining(new java.util.function.Consumer<Entry<String, JsonNode>>() {
                 @Override
