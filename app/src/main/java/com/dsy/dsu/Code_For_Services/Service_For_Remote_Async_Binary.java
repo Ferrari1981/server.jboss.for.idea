@@ -27,7 +27,8 @@ import androidx.annotation.BinderThread;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.dsy.dsu.AllDatabases.CREATE_DATABASE;
+
+import com.dsy.dsu.AllDatabases.GetSQLiteDatabase;
 import com.dsy.dsu.Business_logic_Only_Class.Class_Connections_Server;
 import com.dsy.dsu.Business_logic_Only_Class.Class_GRUD_SQL_Operations;
 import com.dsy.dsu.Business_logic_Only_Class.Class_Generation_Errors;
@@ -450,7 +451,8 @@ try{
         // TODO: 28.07.2022  переменые
         public    Context context;
         private CopyOnWriteArrayList<String> ГлавныеТаблицыСинхронизации =new CopyOnWriteArrayList();
-        private  SQLiteDatabase СсылкаНаБазуSqlite =null;
+
+        private   SQLiteDatabase sqLiteDatabase ;
         private  PUBLIC_CONTENT public_contentДатыДляГлавныхТаблицСинхронизации;
         private boolean ФлагУказываетЧтоТОлькоОбработкаТаблицДляЧАТА = false;
         private  String ФлагКакуюЧастьСинхронизацииЗапускаем =new String();
@@ -461,8 +463,8 @@ try{
             super(context);
             this.context=context;
             public_contentДатыДляГлавныхТаблицСинхронизации=new PUBLIC_CONTENT(context);
-            СсылкаНаБазуSqlite =new CREATE_DATABASE(context).getССылкаНаСозданнуюБазу();
-            Log.w(context.getClass().getName(), "Create_Database_СамаБАзаSQLite_КЛОННастоящейБазы" + СсылкаНаБазуSqlite);
+            sqLiteDatabase=    GetSQLiteDatabase.SqliteDatabase();
+            Log.w(context.getClass().getName(), "sqLiteDatabase" + sqLiteDatabase);
         }
 
         // TODO метод запуска СИНХРОНИЗАЦИИ  в фоне
@@ -619,7 +621,7 @@ try{
                 // TODO: 27.08.2021  ПОЛУЧЕНИЕ ДАННЫХ ОТ КЛАССА GRUD-ОПЕРАЦИ
                 SQLiteCursor     Курсор_ВычисляемПУбличныйID= (SQLiteCursor)  class_grud_sql_operationsПолучаемПубличныйIDЛокальноИеСЛИЕгоНЕтНАчинаемЕгоИСктьВНИтренете.
                         new GetData(context).getdata(class_grud_sql_operationsПолучаемПубличныйIDЛокальноИеСЛИЕгоНЕтНАчинаемЕгоИСктьВНИтренете.
-                        concurrentHashMapНабор,public_contentменеджер.МенеджерПотоков, СсылкаНаБазуSqlite);
+                        concurrentHashMapНабор,public_contentменеджер.МенеджерПотоков, sqLiteDatabase);
                 Log.d(this.getClass().getName(), "GetData "+Курсор_ВычисляемПУбличныйID  );
                 StringBuffer БуферПолучениеДанных = new StringBuffer();
                 if (Курсор_ВычисляемПУбличныйID.getCount() > 0) {
@@ -835,7 +837,7 @@ try{
                 // TODO: 27.08.2021  ПОЛУЧЕНИЕ ДАННЫХ ОТ КЛАССА GRUD-ОПЕРАЦИИ
                 КурсорДляАнализаВерсииДанныхАндройда= (SQLiteCursor)  class_grud_sql_operationsgetdata
                         .getdata(class_grud_sql_operationsАнализаВресииДАнныхКлиента.concurrentHashMapНабор,new PUBLIC_CONTENT(context).МенеджерПотоков,
-                                СсылкаНаБазуSqlite);
+                                sqLiteDatabase);
                 Log.d(this.getClass().getName(), "GetData "+КурсорДляАнализаВерсииДанныхАндройда  );
                 /////
                 if (КурсорДляАнализаВерсииДанныхАндройда.getCount() > 0) {////ВЫЖНОЕ УСЛОВИЕ ЕСЛИ КУРСОР ВЕРНУЛ БОЛЬШЕ НУЛЯ  ДАННАЕ ТОЛЬКО ТОГДА НАЧИНАЕМ АНАЛИЗ ВЕРСИИ ДАННЫХ НА АНДРОЙДЕ
@@ -1017,21 +1019,11 @@ try{
 
         private void методПослеОтпаркиУспешноНаСерверПовышаемВерсию(@NonNull String ИмяТаблицыОтАндройда_Локальноая) {
             try{
-                if (!getССылкаНаСозданнуюБазу().inTransaction()) {
-                    getССылкаНаСозданнуюБазу().beginTransaction();
-                }
                 // TODO: 19.11.2022 ПОДНИМАЕМ ВЕРИСЮ ДАННЫХ
               Integer РезультатПовышенииВерсииДанных =
-                      new SubClassUpVersionDATA().МетодVesrionUPMODIFITATION_Client(ИмяТаблицыОтАндройда_Локальноая,context,getССылкаНаСозданнуюБазу());
+                      new SubClassUpVersionDATA().МетодVesrionUPMODIFITATION_Client(ИмяТаблицыОтАндройда_Локальноая,context);
                 Log.d(this.getClass().getName(), " РезультатПовышенииВерсииДанных  " + РезультатПовышенииВерсииДанных);
 
-                if (РезультатПовышенииВерсииДанных>0) {
-                    getССылкаНаСозданнуюБазу().setTransactionSuccessful();
-                }
-
-                if (getССылкаНаСозданнуюБазу().inTransaction()) {
-                    getССылкаНаСозданнуюБазу().endTransaction();
-                }
             Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+
@@ -1597,8 +1589,8 @@ try{
                     }
 
                     Log.w(this.getClass().getName(), " doOnTerminate ОБРАБОТКА ВСЕХ ТАБЛИЦ ЛистТаблицыОбмена.stream().reduce(0, (a, b) -> a + b).intValue()"
-                            + ЛистТаблицыОбмена.stream().reduce(0, (a, b) -> a + b).intValue()+ " СсылкаНаБазуSqlite.isOpen() "
-                            +СсылкаНаБазуSqlite.isOpen()+ " РежимПерваяЗапускПослеPasswordИлиПовторная " +РежимПерваяЗапускПослеPasswordИлиПовторная);
+                            + ЛистТаблицыОбмена.stream().reduce(0, (a, b) -> a + b).intValue()+ " sqLiteDatabase.isOpen() "
+                            +sqLiteDatabase.isOpen()+ " РежимПерваяЗапускПослеPasswordИлиПовторная " +РежимПерваяЗапускПослеPasswordИлиПовторная);
 
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -1714,37 +1706,7 @@ try{
         }
     }
 
-    private Integer МетодIdПрофесии(@NonNull Context context) {
-        Integer IDПрофесии=0;
-        try{
-        Class_GRUD_SQL_Operations         class_grud_sql_operationsПрофесии=new Class_GRUD_SQL_Operations(context);
-        class_grud_sql_operationsПрофесии.concurrentHashMapНабор.put("НазваниеОбрабоатываемойТаблицы","prof");
-        class_grud_sql_operationsПрофесии.concurrentHashMapНабор.put("СтолбцыОбработки","_id");
-        class_grud_sql_operationsПрофесии.concurrentHashMapНабор.put("ФорматПосика", "   name=? " );
-        class_grud_sql_operationsПрофесии.concurrentHashMapНабор.put("УсловиеПоиска1", "Выбрать должность".trim());
-        // TODO: 12.10.2021  Ссылка Менеджер Потоков
-        SQLiteCursor Курсор_Професии= (SQLiteCursor) class_grud_sql_operationsПрофесии.
-                new GetData(context).getdata(class_grud_sql_operationsПрофесии.concurrentHashMapНабор,
-                new PUBLIC_CONTENT(context).МенеджерПотоков,new CREATE_DATABASE(context).getССылкаНаСозданнуюБазу());
-        if (Курсор_Професии.getCount()>0){
-            Курсор_Професии.moveToFirst();
-            IDПрофесии=Курсор_Професии.getInt(0);
-            Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
-                    + " IDПрофесии "+IDПрофесии );
-        }
-        Курсор_Професии.close();
-    } catch (Exception e) {
-        e.printStackTrace();
-        Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
-                " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-        // TODO: 01.09.2021 метод вызова
-        new Class_Generation_Errors(context).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(),
-                Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
-    }
-        return  IDПрофесии;
-    }
+
 
     public void МетодБиндинuCлужбыPublic(@NonNull Context context) {
         try {
