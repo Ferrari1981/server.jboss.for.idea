@@ -10,9 +10,7 @@ import androidx.room.RoomDatabase;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
 
-import com.dsy.dsu.AllDatabases.GetSQLites;
-import com.dsy.dsu.AllDatabases.ROOM.CreateROOM;
-import com.dsy.dsu.AllDatabases.ROOM.ROOMDatabase;
+import com.dsy.dsu.AllDatabases.GetSQLiteDatabase;
 import com.dsy.dsu.Business_logic_Only_Class.Class_Generation_Errors;
 
 import java.util.List;
@@ -28,7 +26,7 @@ public class GetSqlite {
 
     public void методGetSqlite(@NonNull Context context) {
         try{
-            GetSQLites getSQLites=       new GetSQLites(context);
+            GetSQLiteDatabase getSQLites=       new GetSQLiteDatabase(context);
                         // TODO: 17.04.2023
                         Log.d(this.getClass().getName(),"\n" + " class FaceAPp " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +

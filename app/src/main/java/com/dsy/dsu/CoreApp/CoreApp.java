@@ -5,7 +5,7 @@ import android.app.Application;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
-import com.dsy.dsu.AllDatabases.CREATE_DATABASE;
+
 import com.dsy.dsu.AllDatabases.ROOM.CreateROOM;
 import com.dsy.dsu.AllDatabases.ROOM.ROOMDatabase;
 import com.dsy.dsu.AllDatabases.SQLTE.GetSqlite;
