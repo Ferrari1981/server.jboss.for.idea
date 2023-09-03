@@ -9,7 +9,8 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
-import com.dsy.dsu.AllDatabases.CREATE_DATABASE;
+
+import com.dsy.dsu.AllDatabases.GetSQLites;
 import com.dsy.dsu.AllDatabases.ROOM.CreateROOM;
 import com.dsy.dsu.AllDatabases.ROOM.ROOMDatabase;
 import com.dsy.dsu.Business_logic_Only_Class.Class_Generation_Errors;
@@ -22,24 +23,16 @@ import javax.inject.Singleton;
 
 @Singleton
 public class GetSqlite {
-
-    private  SQLiteDatabase getSqlite;
     private Context context;
 
 
-    public SQLiteDatabase методGetSqlite(@NonNull Context context) {
+    public void методGetSqlite(@NonNull Context context) {
         try{
-                        CREATE_DATABASE create_databaseSqlite=       new CREATE_DATABASE(context);
-
-            getSqlite=create_databaseSqlite.GetSqlite();
+            GetSQLites getSQLites=       new GetSQLites(context);
                         // TODO: 17.04.2023
                         Log.d(this.getClass().getName(),"\n" + " class FaceAPp " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+" getSqlite  " +getSqlite );
-            // TODO: 17.04.2023
-            Log.d(this.getClass().getName(),"\n" + " class FaceAPp " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+" getSqlite  " +getSqlite );
+                                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"  );
         } catch (Exception e) {
             e.printStackTrace();
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" +
@@ -49,7 +42,7 @@ public class GetSqlite {
                     this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
                     Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
-        return  getSqlite;
+
     }
 
 }

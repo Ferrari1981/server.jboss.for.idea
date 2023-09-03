@@ -103,8 +103,7 @@ public class SubClassUpVersionDATA {
 
     // TODO:MAX cURRENT table
     public Long МетодПовышаемВерсииCurrentTable( @NotNull String Текущаятаблицы,
-                                                 @NotNull Context context,
-                                                 @NotNull SQLiteDatabase getБазаДанныхДЛяОперацийВнутри) {
+                                                 @NotNull Context context) {
         Long  ПовышенняВерсияMAXCurrentTable=0l;
         if (getБазаДанныхДЛяОперацийВнутри!=null) {
             try  ( Cursor Курсор_АнализMODIFITATION_Client= ( Cursor) getБазаДанныхДЛяОперацийВнутри.rawQuery(" SELECT *  FROM " +

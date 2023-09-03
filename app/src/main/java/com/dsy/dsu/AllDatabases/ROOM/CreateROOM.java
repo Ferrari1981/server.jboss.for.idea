@@ -22,14 +22,15 @@ import javax.inject.Singleton;
 @Singleton
 public class CreateROOM {
 
-    private    ROOMDatabase ROOM;
+    private static volatile    ROOMDatabase ROOM;
     private  Context context;
 
     public CreateROOM(@NonNull Context context) {
+
         this.context=context;
     }
 
-    public ROOMDatabase метоInizROOM() {
+    public void метоInizROOM() {
         try{
             if (ROOM == null) {
                 synchronized (this) {
@@ -98,10 +99,13 @@ public class CreateROOM {
                     this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
                     Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
-        return  ROOM;
+
     }
 
 
+    public      ROOMDatabase getRoom() {
+        return ROOM;
+    }
     // TODO: 28.08.2023  Class MIGRAZION
     class  ClassMigrations{
         private final Migration методMIGRATION_1_4 = new Migration(1,2) {

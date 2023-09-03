@@ -20,15 +20,15 @@ import java.util.function.Consumer;
 import javax.inject.Singleton;
 
 //этот класс создает базу данных SQLite
-public class CREATE_DATABASE extends SQLiteOpenHelper{ ///SQLiteOpenHelper
+public class GetSQLites extends SQLiteOpenHelper{ ///SQLiteOpenHelper
      static final int VERSION =              1069;//ПРИ ЛЮБОМ ИЗМЕНЕНИЕ В СТРУКТУРЕ БАЗЫ ДАННЫХ НУЖНО ДОБАВИТЬ ПЛЮС ОДНУ ЦИФРУ К ВЕРСИИ 1=1+1=2 ИТД.1
    private   Context context;
-    private    static       SQLiteDatabase getSqlite;
+    private    static  volatile      SQLiteDatabase Sqlite;
     private     CopyOnWriteArrayList<String> ИменаТаблицыОтАндройда;
 
 
 @Singleton
-    public  CREATE_DATABASE( @NotNull Context context) {/////КОНСТРУКТОР КЛАССА ПО СОЗДАНИЮ БАЗЫ ДАННЫХ
+    public  GetSQLites( @NotNull Context context) {/////КОНСТРУКТОР КЛАССА ПО СОЗДАНИЮ БАЗЫ ДАННЫХ
         super(context, "Database DSU-1.db", null, VERSION ); // определяем имя базы данных  и ее версию
         try{
                     this.context = context;
@@ -39,7 +39,7 @@ public class CREATE_DATABASE extends SQLiteOpenHelper{ ///SQLiteOpenHelper
                     + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+
-                    " getSqlite " +getSqlite);
+                    " Sqlite " +Sqlite);
         } catch (Exception e) {
             e.printStackTrace();
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
@@ -53,17 +53,17 @@ public class CREATE_DATABASE extends SQLiteOpenHelper{ ///SQLiteOpenHelper
 
     public void методCreatingSqlite() {
     try{
-        if (getSqlite == null) {
+        if (Sqlite == null) {
             synchronized (this) {
-                if (getSqlite == null) {
+                if (Sqlite == null) {
 
-                    getSqlite = this.getWritableDatabase(); //ссылка на схему базы данных;//ссылка на схему базы данных ГЛАВНАЯ ВСТАВКА НА БАЗУ ДСУ-
+                    Sqlite = this.getWritableDatabase(); //ссылка на схему базы данных;//ссылка на схему базы данных ГЛАВНАЯ ВСТАВКА НА БАЗУ ДСУ-
                     Log.d(this.getClass().getName(),"\n" + " class " +
                             Thread.currentThread().getStackTrace()[2].getClassName()
                             + "\n" +
                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                             " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+
-                            " getSqlite " +getSqlite);
+                            " Sqlite " +Sqlite);
                 }}}
     } catch (Exception e) {
         e.printStackTrace();
@@ -77,9 +77,9 @@ public class CREATE_DATABASE extends SQLiteOpenHelper{ ///SQLiteOpenHelper
     }
 
     // TODO: 02.09.2023 длявный метод получение Базы Данныз  Sqlite
-    public  SQLiteDatabase  GetSqlite() {
+    public  SQLiteDatabase  Sqlite() {
 
-    return  getSqlite;
+    return  Sqlite;
     }
     //  Cоздание ТАблиц
     @Override
