@@ -103,7 +103,7 @@ public class CreateROOM {
     }
 
 
-    public      ROOMDatabase getRoom() {
+    public  static     ROOMDatabase getRoom() {
         return ROOM;
     }
     // TODO: 28.08.2023  Class MIGRAZION

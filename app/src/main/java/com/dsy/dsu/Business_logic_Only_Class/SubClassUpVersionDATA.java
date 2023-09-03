@@ -10,7 +10,6 @@ import android.os.Build;
 import android.util.Log;
 
 import com.dsy.dsu.AllDatabases.GetSQLiteDatabase;
-import com.dsy.dsu.AllDatabases.GetSQLites;
 import com.dsy.dsu.Business_logic_Only_Class.DATE.Class_Generation_Data;
 
 import org.jetbrains.annotations.NotNull;
@@ -93,9 +92,9 @@ public class SubClassUpVersionDATA {
                 contentValuesДляПоднятияВерсии.put("versionserveraandroid_version", ВерсияДанныхПослеСинхронизацииОтСервера);
 
                 // TODO: 01.07.2023  после выравниванию ДЛЯ ЛОКАЛЬНАЯ
-                //  contentValuesДляПоднятияВерсии.put("localversionandroid_version", ВерсияДанныхПослеСинхрониазацииДляЗаписи);
+                  contentValuesДляПоднятияВерсии.put("localversionandroid_version", ВерсияДанныхПослеСинхронизацииОтСервера);
 
-                //  contentValuesДляПоднятияВерсии.put("localversionandroid", СгенерированованныйДата);
+                  contentValuesДляПоднятияВерсии.put("localversionandroid", СгенерированованныйДата);
 
                 SQLBuilderВерсияДанныхСистемнаяТАблицы.setTables(ТаблицаСистемная);
 
