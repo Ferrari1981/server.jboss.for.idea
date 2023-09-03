@@ -22,7 +22,7 @@ import javax.inject.Singleton;
 @Singleton
 public class CreateROOM {
 
-    private   ROOMDatabase ROOM;
+    private    ROOMDatabase ROOM;
     private  Context context;
 
     public CreateROOM(@NonNull Context context) {
@@ -176,7 +176,7 @@ public class CreateROOM {
         };
 // TODO: 29.08.2023  NEW TRIGGER
 
-        private final Migration методMIGRATION_ModificationNewTrigger = new Migration(3,4) {
+        private final Migration методMIGRATION_ModificationNewTrigger = new Migration(4,5) {
             @Override
             public void migrate(@NonNull SupportSQLiteDatabase database) {
                 try{
@@ -193,7 +193,7 @@ public class CreateROOM {
                             "BEGIN\n" +
                             "  UPDATE MODIFITATION_Client_ROOM " +
                                     "  SET  localversionandroid_version=(SELECT MAX(current_table) " +
-                                    "  FROM trigger_mat_binary_ints ),localversionandroid= datetime() WHERE name = trigger_mat_binary_ints ;"+
+                                    "  FROM materials_databinary ),localversionandroid= datetime() WHERE name = trigger_mat_binary_ints ;"+
                             "END; ");
 // TODO: 29.08.2023 UPDATE TRIGGER
                     database.execSQL(" drop TRIGGER  if exists   trigger_mat_binary_update ");
@@ -202,7 +202,7 @@ public class CreateROOM {
                             "BEGIN\n" +
                             "  UPDATE MODIFITATION_Client_ROOM " +
                             "  SET  localversionandroid_version=(SELECT MAX(current_table) " +
-                            "  FROM trigger_mat_binary_ints ),localversionandroid= datetime() WHERE name = trigger_mat_binary_ints ;"+
+                            "  FROM materials_databinary ),localversionandroid= datetime() WHERE name = trigger_mat_binary_ints ;"+
                             "END; ");
 
 

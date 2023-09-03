@@ -23,32 +23,23 @@ import javax.inject.Singleton;
 public class CREATE_DATABASE extends SQLiteOpenHelper{ ///SQLiteOpenHelper
      static final int VERSION =              1069;//ПРИ ЛЮБОМ ИЗМЕНЕНИЕ В СТРУКТУРЕ БАЗЫ ДАННЫХ НУЖНО ДОБАВИТЬ ПЛЮС ОДНУ ЦИФРУ К ВЕРСИИ 1=1+1=2 ИТД.1
    private   Context context;
-    private  static      SQLiteDatabase ССылкаНаСозданнуюБазу;
+    private    static       SQLiteDatabase getSqlite;
     private     CopyOnWriteArrayList<String> ИменаТаблицыОтАндройда;
 
-    public static synchronized SQLiteDatabase getССылкаНаСозданнуюБазу() {
-        return ССылкаНаСозданнуюБазу;
-    }
+
 @Singleton
     public  CREATE_DATABASE( @NotNull Context context) {/////КОНСТРУКТОР КЛАССА ПО СОЗДАНИЮ БАЗЫ ДАННЫХ
         super(context, "Database DSU-1.db", null, VERSION ); // определяем имя базы данных  и ее версию
         try{
-            if (ССылкаНаСозданнуюБазу == null && context!=null ) {
-            synchronized (this){
-                if (ССылкаНаСозданнуюБазу == null && context!=null ) {
                     this.context = context;
-                    ССылкаНаСозданнуюБазу = this.getWritableDatabase(); //ссылка на схему базы данных;//ссылка на схему базы данных ГЛАВНАЯ ВСТАВКА НА БАЗУ ДСУ-1
-                    Log.d(this.getClass().getName(), " БАЗА  ДАННЫХ   ДСУ-1 ОТКРЫВАЕМ  ССылкаНаСозданнуюБазу==null   "
-                            + ССылкаНаСозданнуюБазу.isOpen());
-                }
-                    }
-                }
+
+            методCreatingSqlite();
             Log.d(this.getClass().getName(),"\n" + " class " +
                     Thread.currentThread().getStackTrace()[2].getClassName()
                     + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+
-                    " ССылкаНаСозданнуюБазу.isDbLockedByCurrentThread() " +ССылкаНаСозданнуюБазу.isDbLockedByCurrentThread());
+                    " getSqlite " +getSqlite);
         } catch (Exception e) {
             e.printStackTrace();
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
@@ -56,14 +47,39 @@ public class CREATE_DATABASE extends SQLiteOpenHelper{ ///SQLiteOpenHelper
             new Class_Generation_Errors(this.context).МетодЗаписиВЖурналНовойОшибки(e.toString(),
                     this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
                     Thread.currentThread().getStackTrace()[2].getLineNumber());
-            // TODO: 21.08.2023
-            if(ССылкаНаСозданнуюБазу!=null){
-                if(ССылкаНаСозданнуюБазу.inTransaction()){
-                    ССылкаНаСозданнуюБазу.endTransaction();
-                }
-                ССылкаНаСозданнуюБазу.close();
-            }
+
         }
+    }
+
+    public void методCreatingSqlite() {
+    try{
+        if (getSqlite == null) {
+            synchronized (this) {
+                if (getSqlite == null) {
+
+                    getSqlite = this.getWritableDatabase(); //ссылка на схему базы данных;//ссылка на схему базы данных ГЛАВНАЯ ВСТАВКА НА БАЗУ ДСУ-
+                    Log.d(this.getClass().getName(),"\n" + " class " +
+                            Thread.currentThread().getStackTrace()[2].getClassName()
+                            + "\n" +
+                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+
+                            " getSqlite " +getSqlite);
+                }}}
+    } catch (Exception e) {
+        e.printStackTrace();
+        Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
+                " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
+        new Class_Generation_Errors(this.context).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+                this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
+                Thread.currentThread().getStackTrace()[2].getLineNumber());
+
+    }
+    }
+
+    // TODO: 02.09.2023 длявный метод получение Базы Данныз  Sqlite
+    public  SQLiteDatabase  GetSqlite() {
+
+    return  getSqlite;
     }
     //  Cоздание ТАблиц
     @Override

@@ -2,10 +2,13 @@ package com.dsy.dsu.CoreApp;
 
 
 import android.app.Application;
+import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
+import com.dsy.dsu.AllDatabases.CREATE_DATABASE;
 import com.dsy.dsu.AllDatabases.ROOM.CreateROOM;
 import com.dsy.dsu.AllDatabases.ROOM.ROOMDatabase;
+import com.dsy.dsu.AllDatabases.SQLTE.GetSqlite;
 import com.dsy.dsu.Business_logic_Only_Class.Class_Generation_Errors;
 
 import javax.inject.Singleton;
@@ -13,17 +16,22 @@ import javax.inject.Singleton;
 
 @Singleton
 public class CoreApp extends Application {
-    private static ROOMDatabase ROOM;
+    private static   ROOMDatabase ROOM;
+    private   SQLiteDatabase getSqlite;
     @Override
     public void onCreate() {
         super.onCreate();
         try{
+
+            // TODO: 02.09.2023  CREATE get SQLITE
+            getSqlite=new GetSqlite().методGetSqlite(getApplicationContext());
+
             // TODO: 29.08.2023  CREATE ROOM
         ROOM=   new CreateROOM(getApplicationContext()).метоInizROOM();
         // TODO: 17.04.2023
         Log.d(this.getClass().getName(),"\n" + " class FaceAPp " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"  + " ROOM "+ROOM);
+                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"  + " ROOM "+ROOM + "  getSqlite "+getSqlite);
     } catch (Exception e) {
         e.printStackTrace();
         Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" +
@@ -37,9 +45,14 @@ public class CoreApp extends Application {
 
 
 
-    public  static   ROOMDatabase getRoom() {
+    public   static   ROOMDatabase getRoom() {
         return ROOM;
     }
+
+    public       SQLiteDatabase GetSqlite() {
+        return getSqlite;
+    }
+
 }
 
 
