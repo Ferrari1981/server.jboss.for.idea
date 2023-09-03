@@ -2,30 +2,32 @@ package com.dsy.dsu.Business_logic_Only_Class;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
+import com.dsy.dsu.AllDatabases.GetSQLiteDatabase;
 import com.dsy.dsu.Business_logic_Only_Class.DATE.Class_Generation_Data;
-import com.dsy.dsu.AllDatabases.CREATE_DATABASE;
+
 
 import java.util.concurrent.ExecutionException;
 
 public class Class_Begin_Update_End_Insert_Data_Project {
 
-    Context contextДляКлассДляВставкиДанныхВПроектеСначалаМыПытаемсяОбновитьАПотомВставить;
+    Context context;
     //todo
 
     PUBLIC_CONTENT public_contentcГдеНаходитьсяМенеджерПотоков=null;
 
-    CREATE_DATABASE Create_Database_СсылкаНАБазовыйКласс;
+    private SQLiteDatabase sqLiteDatabase ;
 
     public Class_Begin_Update_End_Insert_Data_Project(Context context) {
 
-        contextДляКлассДляВставкиДанныхВПроектеСначалаМыПытаемсяОбновитьАПотомВставить = context;
+        this.context = context;
         // TODO: 13.10.2021
-        public_contentcГдеНаходитьсяМенеджерПотоков = new PUBLIC_CONTENT(contextДляКлассДляВставкиДанныхВПроектеСначалаМыПытаемсяОбновитьАПотомВставить);
+        public_contentcГдеНаходитьсяМенеджерПотоков = new PUBLIC_CONTENT(this.context);
         //
 
-        Create_Database_СсылкаНАБазовыйКласс = new CREATE_DATABASE(contextДляКлассДляВставкиДанныхВПроектеСначалаМыПытаемсяОбновитьАПотомВставить);
+        sqLiteDatabase=    GetSQLiteDatabase.SqliteDatabase();
 
     }
 
@@ -49,13 +51,13 @@ public class Class_Begin_Update_End_Insert_Data_Project {
 
             ////TODO ДАТА
             String ДатаДЛяОчисткиИВстсвкиИмениИПароль=
-                    new Class_Generation_Data(contextДляКлассДляВставкиДанныхВПроектеСначалаМыПытаемсяОбновитьАПотомВставить).ГлавнаяДатаИВремяОперацийСБазойДанных();
+                    new Class_Generation_Data(context).ГлавнаяДатаИВремяОперацийСБазойДанных();
             //////////////////////////////////////////////////////////////
 
             // TODO: 30.08.2021    КОД ВСТАВКИ  ДАННЫХ   ЧЕРЕЗ
 
             concurrentHashMapНаборПараментовSQLBuilder_Для_GRUD_Операций =
-                    new Class_GRUD_SQL_Operations(contextДляКлассДляВставкиДанныхВПроектеСначалаМыПытаемсяОбновитьАПотомВставить);
+                    new Class_GRUD_SQL_Operations(context);
 
 
             ///
@@ -89,7 +91,7 @@ public class Class_Begin_Update_End_Insert_Data_Project {
 
        /*     ///TODO РЕЗУЛЬТАТ ВСТАВКИ ДАННЫХ
             Результат_АдаптерДляДобавлениеПолученогоУспешноИмяиПарольДляСемидневнойАунтификации = (Integer) concurrentHashMapНабор.
-                    new UpdateData(contextДляКлассДляВставкиДанныхВПроектеСначалаМыПытаемсяОбновитьАПотомВставить).updatedata(concurrentHashMapНабор.concurrentHashMapНабор,
+                    new UpdateData(context).updatedata(concurrentHashMapНабор.concurrentHashMapНабор,
                     concurrentHashMapНабор.contentValuesДляSQLBuilder_Для_GRUD_Операций,
                     public_contentcГдеНаходитьсяМенеджерПотоков.МенеджерПотоков,
                     Create_Database_СсылкаНАБазовыйКласс.getССылкаНаСозданнуюБазуORM());
@@ -125,10 +127,10 @@ public class Class_Begin_Update_End_Insert_Data_Project {
                 ///TODO РЕЗУЛЬТАТ ВСТАВКИ ДАННЫХ
                 Результат_АдаптерДляДобавлениеПолученогоУспешноИмяиПарольДляСемидневнойАунтификации =
                         (Long) concurrentHashMapНаборПараментовSQLBuilder_Для_GRUD_Операций.
-                        new InsertData(contextДляКлассДляВставкиДанныхВПроектеСначалаМыПытаемсяОбновитьАПотомВставить)
+                        new InsertData(context)
                         .insertdata(concurrentHashMapНаборПараментовSQLBuilder_Для_GRUD_Операций.concurrentHashMapНабор,
                         concurrentHashMapНаборПараментовSQLBuilder_Для_GRUD_Операций.contentValuesДляSQLBuilder_Для_GRUD_Операций,
-                        public_contentcГдеНаходитьсяМенеджерПотоков.МенеджерПотоков,Create_Database_СсылкаНАБазовыйКласс.getССылкаНаСозданнуюБазу());
+                        public_contentcГдеНаходитьсяМенеджерПотоков.МенеджерПотоков,sqLiteDatabase);
 //
 
                 Log.d(this.getClass().getName(), "Результат_АдаптерДляДобавлениеПолученогоУспешноИмяиПарольДляСемидневнойАунтификации "
@@ -151,7 +153,7 @@ public class Class_Begin_Update_End_Insert_Data_Project {
             ///метод запись ошибок в таблицу
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
                     + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            new Class_Generation_Errors(contextДляКлассДляВставкиДанныхВПроектеСначалаМыПытаемсяОбновитьАПотомВставить).
+            new Class_Generation_Errors(context).
                     МетодЗаписиВЖурналНовойОшибки(e.toString(),
                     this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
                     Thread.currentThread().getStackTrace()[2].getLineNumber());

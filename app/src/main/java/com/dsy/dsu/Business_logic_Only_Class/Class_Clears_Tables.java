@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.SQLException;
+import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Handler;
 import android.util.Log;
@@ -15,8 +16,9 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
+import com.dsy.dsu.AllDatabases.GetSQLiteDatabase;
 import com.dsy.dsu.Business_logic_Only_Class.DATE.Class_Generation_Data;
-import com.dsy.dsu.AllDatabases.CREATE_DATABASE;
+
 import com.dsy.dsu.For_Code_Settings_DSU1.MainActivity_Tabels_Users_And_Passwords;
 
 import java.security.InvalidKeyException;
@@ -38,13 +40,14 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 public class Class_Clears_Tables {
     Context context;
       Handler handlerУдалениеТаблицПринудительно;
-    CREATE_DATABASE Create_Database_СсылкаНАБазовыйКласс;
+
+    private SQLiteDatabase sqLiteDatabase ;
     private SharedPreferences preferences;
     private  ProgressDialog progressDialogДляУдалениеТаблиц;
     // TODO: 24.02.2022
     public Class_Clears_Tables(Context context, Handler handlerУдалениеТаблицПринудительно, ProgressDialog progressDialogДляУдалениеТаблиц) throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException {
         this.context = context;
-        this.Create_Database_СсылкаНАБазовыйКласс = new CREATE_DATABASE(context);
+        sqLiteDatabase=    GetSQLiteDatabase.SqliteDatabase();
         this.handlerУдалениеТаблицПринудительно = handlerУдалениеТаблицПринудительно;
         this.progressDialogДляУдалениеТаблиц=progressDialogДляУдалениеТаблиц;
         preferences = context.getSharedPreferences("sharedPreferencesХранилище", Context.MODE_MULTI_PROCESS);
@@ -290,7 +293,8 @@ public class Class_Clears_Tables {
             ДобавлениеДатыПослеУдалниеТаблиц= (Integer)  class_grud_sql_operationsПослеУдаленияДобавляемДатуВерсии.
                     new UpdateData(context).updatedata(class_grud_sql_operationsПослеУдаленияДобавляемДатуВерсии.concurrentHashMapНабор,
                     class_grud_sql_operationsПослеУдаленияДобавляемДатуВерсии.contentValuesДляSQLBuilder_Для_GRUD_Операций,
-                    МенеджерПотоковВнутрений,Create_Database_СсылкаНАБазовыйКласс.getССылкаНаСозданнуюБазу());
+                    МенеджерПотоковВнутрений,
+                    sqLiteDatabase);
             Log.d(this.getClass().getName(), " сработала ...  обнуление версии в MODIFITATION_Client для таблицы " + ИмяТаблицы+
                     " ДобавлениеДатыПослеУдалниеТаблиц  " +ДобавлениеДатыПослеУдалниеТаблиц);
 

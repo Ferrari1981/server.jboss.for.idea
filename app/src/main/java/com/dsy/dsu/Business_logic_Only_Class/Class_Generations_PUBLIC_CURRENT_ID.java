@@ -2,28 +2,36 @@ package com.dsy.dsu.Business_logic_Only_Class;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteCursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
-import com.dsy.dsu.AllDatabases.CREATE_DATABASE;
+import com.dsy.dsu.AllDatabases.GetSQLiteDatabase;
+
 
 public class Class_Generations_PUBLIC_CURRENT_ID {
-    Context contextДляКлассПУБЛИЧНЫЙID;
+    Context context;
+    private SQLiteDatabase sqLiteDatabase ;
+
+    public Class_Generations_PUBLIC_CURRENT_ID( ) {
+        sqLiteDatabase=    GetSQLiteDatabase.SqliteDatabase();
+    }
+
     //todo функция получающая время операции ДАННАЯ ФУНКЦИЯ ВРЕМЯ ПРИМЕНЯЕТЬСЯ ВО ВСЕЙ ПРОГРАММЕ
     public Integer ПолучениеПубличногоТекущегоПользователяID(Context context) {
         ///TODO --первая вставка
-        this.contextДляКлассПУБЛИЧНЫЙID=context;
+        this.context =context;
         Integer ПубличныйIDДляФрагмента = 0;
         try{
-            if (contextДляКлассПУБЛИЧНЫЙID!=null) {
+            if (this.context !=null) {
                 SQLiteCursor Курсор_ВычисляемПУбличныйIDПриСозданииНовогоСообщения = null;
-                Class_GRUD_SQL_Operations class_grud_sql_operationsРабоатемВФрагментечитатьПисатьШестаяЧасть = new Class_GRUD_SQL_Operations(contextДляКлассПУБЛИЧНЫЙID);
+                Class_GRUD_SQL_Operations class_grud_sql_operationsРабоатемВФрагментечитатьПисатьШестаяЧасть = new Class_GRUD_SQL_Operations(this.context);
                 class_grud_sql_operationsРабоатемВФрагментечитатьПисатьШестаяЧасть.concurrentHashMapНабор.put("СамFreeSQLКОд",
                         " SELECT id FROM SuccessLogin ORDER BY date_update DESC LIMIT 1 ");
                 Курсор_ВычисляемПУбличныйIDПриСозданииНовогоСообщения = (SQLiteCursor) class_grud_sql_operationsРабоатемВФрагментечитатьПисатьШестаяЧасть.
-                        new GetаFreeData(contextДляКлассПУБЛИЧНЫЙID).getfreedata(class_grud_sql_operationsРабоатемВФрагментечитатьПисатьШестаяЧасть.
+                        new GetаFreeData(this.context).getfreedata(class_grud_sql_operationsРабоатемВФрагментечитатьПисатьШестаяЧасть.
                                 concurrentHashMapНабор,
-                        new PUBLIC_CONTENT(contextДляКлассПУБЛИЧНЫЙID).МенеджерПотоков
-                        , new CREATE_DATABASE(contextДляКлассПУБЛИЧНЫЙID).getССылкаНаСозданнуюБазу());
+                        new PUBLIC_CONTENT(this.context).МенеджерПотоков
+                        , sqLiteDatabase);
                 Log.d(this.getClass().getName(), "GetData " + Курсор_ВычисляемПУбличныйIDПриСозданииНовогоСообщения);
                 // TODO: 09.09.2021 resultat
                 if (Курсор_ВычисляемПУбличныйIDПриСозданииНовогоСообщения.getCount() > 0) {
@@ -38,7 +46,7 @@ public class Class_Generations_PUBLIC_CURRENT_ID {
             ///метод запись ошибок в таблицу
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                     " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            new   Class_Generation_Errors(contextДляКлассПУБЛИЧНЫЙID).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+            new   Class_Generation_Errors(this.context).МетодЗаписиВЖурналНовойОшибки(e.toString(),
                     this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
                     Thread.currentThread().getStackTrace()[2].getLineNumber());
         }

@@ -4,22 +4,23 @@ import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteCursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
-import com.dsy.dsu.AllDatabases.CREATE_DATABASE;
+import com.dsy.dsu.AllDatabases.GetSQLiteDatabase;
+
 
 public class Class_Generations_New_Customers_For_Tabels {
 
-    Context contextДляКлассДляВставкиНовогоСотрудника;
+    Context context;
     ///
-    CREATE_DATABASE Create_Database_СсылкаНАБазовыйКласс;
+    private SQLiteDatabase sqLiteDatabase ;
 
     public Class_Generations_New_Customers_For_Tabels(Context context) {
 
-        contextДляКлассДляВставкиНовогоСотрудника=context;
+        this.context =context;
 
-///////TODO
-          Create_Database_СсылкаНАБазовыйКласс=new CREATE_DATABASE(contextДляКлассДляВставкиНовогоСотрудника);
+        sqLiteDatabase=    GetSQLiteDatabase.SqliteDatabase();
     }
 
 
@@ -157,7 +158,7 @@ public class Class_Generations_New_Customers_For_Tabels {
                 // TODO: 02.09.2021 exe sql
                 SQLiteCursor КурсорУзнаемСохраненыйРежимРаботыССетью= (SQLiteCursor) class_grud_sql_operationsУзнаемСохраненыйРежимРаботыССетью.
                         new GetData(activity).getdata(class_grud_sql_operationsУзнаемСохраненыйРежимРаботыССетью.concurrentHashMapНабор,
-                        Class_Engine_SQLГдеНаходитьсяМенеджерПотоков.МенеджерПотоков,Create_Database_СсылкаНАБазовыйКласс.getССылкаНаСозданнуюБазу());
+                        Class_Engine_SQLГдеНаходитьсяМенеджерПотоков.МенеджерПотоков,sqLiteDatabase);
 
                 Log.d(this.getClass().getName(), "GetData " +КурсорУзнаемСохраненыйРежимРаботыССетью );
                 if (КурсорУзнаемСохраненыйРежимРаботыССетью.getCount() > 0) {

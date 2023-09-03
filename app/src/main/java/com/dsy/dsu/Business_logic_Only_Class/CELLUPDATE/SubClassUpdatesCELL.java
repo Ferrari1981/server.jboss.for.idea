@@ -4,6 +4,7 @@ package com.dsy.dsu.Business_logic_Only_Class.CELLUPDATE;
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -11,7 +12,7 @@ import android.widget.EditText;
 
 import androidx.annotation.NonNull;
 
-import com.dsy.dsu.AllDatabases.CREATE_DATABASE;
+import com.dsy.dsu.AllDatabases.GetSQLiteDatabase;
 import com.dsy.dsu.Business_logic_Only_Class.Class_Generation_Errors;
 import com.dsy.dsu.Business_logic_Only_Class.DATE.Class_Generation_Data;
 import com.dsy.dsu.Business_logic_Only_Class.SubClassUpVersionDATA;
@@ -26,9 +27,11 @@ import java.util.stream.Stream;
 public class SubClassUpdatesCELL {
     Context context;
     private LongToIntFunction longToIntFunction;
-
+    private SQLiteDatabase sqLiteDatabase ;
     public SubClassUpdatesCELL(Context context) {
+
         this.context = context;
+        sqLiteDatabase=    GetSQLiteDatabase.SqliteDatabase();
     }
 
 
@@ -133,8 +136,7 @@ public class SubClassUpdatesCELL {
             String Дата =     new Class_Generation_Data(context).ГлавнаяДатаИВремяОперацийСБазойДанныхДОП();
             contentValuesОбноленияЯчейкиSingleTanel.put("date_update", Дата);
 
-            Long Версия = new SubClassUpVersionDATA().МетодПовышаемВерсииCurrentTable(    ТаблицаОбработки
-                    ,context,new CREATE_DATABASE(context).getССылкаНаСозданнуюБазу());
+            Long Версия = new SubClassUpVersionDATA().МетодПовышаемВерсииCurrentTable(    ТаблицаОбработки,context);
             contentValuesОбноленияЯчейкиSingleTanel.put("current_table", Версия);
 
             // TODO: 12.04.2023 отправялем в провайдеор
@@ -176,8 +178,7 @@ public class SubClassUpdatesCELL {
             String Дата =     new Class_Generation_Data(context).ГлавнаяДатаИВремяОперацийСБазойДанныхДОП();
             contentValuesОбноленияЯчейкиSingleTanel.put("date_update", Дата);
 
-            Long Версия = new SubClassUpVersionDATA().МетодПовышаемВерсииCurrentTable(    ТаблицаОбработки
-                    ,context,new CREATE_DATABASE(context).getССылкаНаСозданнуюБазу());
+            Long Версия = new SubClassUpVersionDATA().МетодПовышаемВерсииCurrentTable(    ТаблицаОбработки,context);
             contentValuesОбноленияЯчейкиSingleTanel.put("current_table", Версия);
 
             // TODO: 12.04.2023 отправялем в провайдеор

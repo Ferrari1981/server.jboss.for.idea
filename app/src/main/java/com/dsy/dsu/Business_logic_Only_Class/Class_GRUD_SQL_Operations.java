@@ -12,8 +12,9 @@ import android.util.Log;
 
 import androidx.loader.content.AsyncTaskLoader;
 
+import com.dsy.dsu.AllDatabases.SQLTE.GetSqlite;
 import com.dsy.dsu.Business_logic_Only_Class.DATE.Class_Generation_Data;
-import com.dsy.dsu.AllDatabases.CREATE_DATABASE;
+
 
 import org.jetbrains.annotations.NotNull;
 
@@ -32,7 +33,7 @@ import java.util.stream.Stream;
 
 
 ///////TODO КЛАСС ВСЕ ОПЕРАЦИИ ВСТАВКИ УДАЛЕНИЕ ОБНОВЛЕНИЯ ВЫБОРКА ДАННЫХ В ОДНОМ МЕСТЕ
-public class Class_GRUD_SQL_Operations extends CREATE_DATABASE {
+public class Class_GRUD_SQL_Operations extends GetSqlite {
     public AsyncTaskLoader asyncTaskLoaderАунтификацияПользователя = null;
     protected Stream Стрим=null;
     public Context context;
@@ -42,12 +43,14 @@ public class Class_GRUD_SQL_Operations extends CREATE_DATABASE {
   public  ContentValues contentValuesДляSQLBuilder_Для_GRUD_Операций  = new ContentValues();
     SQLiteQueryBuilder    SQLBuilder_Для_GRUD_Операций =null;
     List <String> subQueriesОбьединенныйЗапросыUNION;
-    // TODO: 22.09.2022
-    public Class_GRUD_SQL_Operations(@NotNull  Context context) {
-        super(context);
+
+    public Class_GRUD_SQL_Operations(Context context) {
+        this.context = context;
         this.context =context;
         subQueriesОбьединенныйЗапросыUNION=Collections.synchronizedList(new ArrayList());
     }
+    // TODO: 22.09.2022
+
     //TODO КЛАСС ПОЛУЧЕНИЕ ДАННЫХ
     public class  GetData extends Class_GRUD_SQL_Operations {
         Context context;
