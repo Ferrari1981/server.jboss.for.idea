@@ -20,7 +20,8 @@ import androidx.annotation.BinderThread;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.dsy.dsu.AllDatabases.CREATE_DATABASE;
+
+import com.dsy.dsu.AllDatabases.GetSQLiteDatabase;
 import com.dsy.dsu.Business_logic_Only_Class.Class_GRUD_SQL_Operations;
 import com.dsy.dsu.Business_logic_Only_Class.Class_Generation_Errors;
 import com.dsy.dsu.Business_logic_Only_Class.Class_Generation_UUID;
@@ -70,6 +71,7 @@ public class Service_For_Public extends IntentService {
     protected         SibClassApplyFromBackPeriodof_ЗаполененияТабеляИзПрошлогоМесяца sibClassApplyFromBackPeriodof_заполененияТабеляИзПрошлогоМесяца;
     private Context context;
     private  Intent intentОтActivityListPeoples;
+    private  SQLiteDatabase sqLiteDatabase ;
     public Service_For_Public() {
         super("Service_For_Public");
     }
@@ -78,6 +80,7 @@ public class Service_For_Public extends IntentService {
     public void onCreate() {
         super.onCreate();
         try{
+            sqLiteDatabase=    GetSQLiteDatabase.SqliteDatabase();
         Log.d(context.getClass().getName(), "\n"
                 + " время: " + new Date()+"\n+" +
                 " Класс в процессе... " +  this.getClass().getName()+"\n"+
@@ -247,7 +250,7 @@ public Cursor МетодПолучениеДанныхЧерезCursorLoader(@No
                 // TODO: 21.04.2023  
                 SubClassCursorLoader cursorLoader=     new SubClassCursorLoader();
                 Log.w(this.getClass().getName(), "   context  " + context);
-                SQLiteDatabase sqLiteDatabaseДляЗаполенеяИзПрошлогоМесяца = new CREATE_DATABASE(getApplicationContext()).getССылкаНаСозданнуюБазу();
+
                 Integer ПубличныйIDДляЗаполененияИзПрошлогоМесяца = new Class_Generations_PUBLIC_CURRENT_ID()
                         .ПолучениеПубличногоТекущегоПользователяID(getApplicationContext());
                  Bundle bundleПолучаемДанных =(Bundle)  intent.getExtras();
@@ -592,7 +595,8 @@ public Cursor МетодПолучениеДанныхЧерезCursorLoader(@No
                 // TODO: 22.09.2022 дополнительные параменты ДатаТабель
                 // TODO: 18.03.2023  получаем ВЕСИЮ ДАННЫХ
                 Long РезультатУвеличиваемВерсияДатаТАбель =
-                        new SubClassUpVersionDATA().МетодПовышаемВерсииCurrentTable(    НазваниеОбрабоатываемойТаблицы,getApplicationContext(),new CREATE_DATABASE(getApplicationContext()).getССылкаНаСозданнуюБазу());
+                        new SubClassUpVersionDATA()
+                                .МетодПовышаемВерсииCurrentTable(    НазваниеОбрабоатываемойТаблицы,getApplicationContext());
                 Log.d(this.getClass().getName(), " РезультатУвеличиваемВерсияДатаТАбель  " + РезультатУвеличиваемВерсияДатаТАбель);
                 contentValuesДляДатаТабель.put("current_table", РезультатУвеличиваемВерсияДатаТАбель);
                 Uri uri = Uri.parse("content://com.dsy.dsu.providerdatabase/" + НазваниеОбрабоатываемойТаблицы + "");
@@ -651,8 +655,7 @@ public Cursor МетодПолучениеДанныхЧерезCursorLoader(@No
                 // TODO: 22.09.2022 дополнительные параменты ДатаТабель
                 // TODO: 18.03.2023  получаем ВЕСИЮ ДАННЫХ
                 Long РезультатУвеличиваемВерсияДатаТАбель =
-                        new SubClassUpVersionDATA().МетодПовышаемВерсииCurrentTable(    НазваниеОбрабоатываемойТаблицы,getApplicationContext(),
-                                new CREATE_DATABASE(getApplicationContext()).getССылкаНаСозданнуюБазу());
+                        new SubClassUpVersionDATA().МетодПовышаемВерсииCurrentTable(    НазваниеОбрабоатываемойТаблицы,getApplicationContext());
                 Log.d(this.getClass().getName(), " РезультатУвеличиваемВерсияДатаТАбель  " + РезультатУвеличиваемВерсияДатаТАбель);
                 contentValuesДляТабель.put("current_table", РезультатУвеличиваемВерсияДатаТАбель);
                 Uri uri = Uri.parse("content://com.dsy.dsu.providerdatabase/" + НазваниеОбрабоатываемойТаблицы + "");
