@@ -91,10 +91,19 @@ public class SubClassSessionBeanPOST {//extends    DSU1JsonServlet
             ///TODO ПАРАМЕНТ #5
             switch (JobForServer.trim()) {
                 case "Получение JSON файла от Андройда":
-                    ServletInputStream requestInputStream = request.getInputStream();
-                    ЛОГ.log("  requestInputStream.isReady() " + requestInputStream.isReady());///// ПРИШЕДШИХ
+
+
+
+
+                    GZIPInputStream requestInputStream =       new GZIPInputStream(request.getInputStream());
+                InputStream inputStream=    new ByteArrayInputStream(requestInputStream.readAllBytes());
+
+
+                  /*  GZIPInputStream requestInputStream =       new GZIPInputStream(request.getInputStream());
+                    ByteArrayInputStream streamBuilder = new ByteArrayInputStream(requestInputStream.readAllBytes());*/
+                    ЛОГ.log("  requestInputStream.isReady() " + inputStream.available());///// ПРИШЕДШИХ
                     if (requestInputStream.available()>0) {///// ЗАХОДИМ											///// КО
-                        БуферГлавныйГенерацииJSONДляAndroid = МетодПарсингаJSONФайлПришелОтКлиента(response, NameTable, requestInputStream );
+                        БуферГлавныйГенерацииJSONДляAndroid = МетодПарсингаJSONФайлПришелОтКлиента(response, NameTable,   inputStream );
                         ЛОГ.log( " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                                 " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
@@ -117,7 +126,7 @@ public class SubClassSessionBeanPOST {//extends    DSU1JsonServlet
     protected StringBuffer МетодПарсингаJSONФайлПришелОтКлиента(
             @NotNull HttpServletResponse response,
             @NotNull String ТаблицаPOST,
-            @NotNull ServletInputStream requestInputStream)
+            @NotNull InputStream requestInputStream)
             throws InterruptedException, SQLException, BrokenBarrierException, IOException {
         StringBuffer bufferCallsBackToServer = new StringBuffer();
         try {
@@ -126,7 +135,7 @@ public class SubClassSessionBeanPOST {//extends    DSU1JsonServlet
             ЛОГ.log( " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+
-                    " БуферJSONJackson " + requestInputStream.available()+ " bufferCallsBackToServer " +bufferCallsBackToServer.toString());
+                    " БуферJSONJackson " + requestInputStream+ " bufferCallsBackToServer " +bufferCallsBackToServer.toString());
         } catch (Exception e) {
             subClassWriterErros.
                     МетодаЗаписиОшибкиВЛог(e,

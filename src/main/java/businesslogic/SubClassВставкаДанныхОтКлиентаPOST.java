@@ -1,6 +1,7 @@
 package businesslogic;
 
 
+import java.io.InputStream;
 import java.sql.Array;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -44,7 +45,7 @@ public class SubClassВставкаДанныхОтКлиентаPOST {
     // TODO: 09.03.2023
     StringBuffer методCompleteInsertorUpdateData(
             @NotNull ServletContext ЛОГ,
-            @NotNull ServletInputStream requestInputStream
+            @NotNull InputStream requestInputStream
             , @NotNull String ТаблицаPOST) throws SQLException {
         // TODO: 06.08.2023  вставкялем POST на сервер  
         StringBuffer bufferCallsBackToAndroid=new StringBuffer();
