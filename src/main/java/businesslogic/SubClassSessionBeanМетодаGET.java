@@ -655,7 +655,7 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
         try {
             ЛОГ.log(" listОтHiberideДляГенерации" + listОтHiberideДляГенерации );
             ObjectWriter writer = getGeneratorJackson.writerWithDefaultPrettyPrinter();
-            String Сгенерированыйjson = 	  writer.writeValueAsString(listОтHiberideДляГенерации);
+            //String Сгенерированыйjson = 	  writer.writeValueAsString(listОтHiberideДляГенерации);
 
             БуферСозданогоJSONJackson=   writer.writeValueAsBytes(listОтHiberideДляГенерации);
 
