@@ -33,7 +33,18 @@ public class GetSQLiteDatabase extends SQLiteOpenHelper{ ///SQLiteOpenHelper
         try{
                     this.context = context;
 
-            методCreatingSqlite();
+            if (SqliteDatabase == null  && context!=null) {
+                synchronized (this) {
+                    if (SqliteDatabase == null) {
+
+                        SqliteDatabase = this.getWritableDatabase(); //ссылка на схему базы данных;//ссылка на схему базы данных ГЛАВНАЯ ВСТАВКА НА БАЗУ ДСУ-
+                        Log.d(this.getClass().getName(),"\n" + " class " +
+                                Thread.currentThread().getStackTrace()[2].getClassName()
+                                + "\n" +
+                                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+
+                                " SqliteDatabase " +SqliteDatabase);
+                    }}}
             Log.d(this.getClass().getName(),"\n" + " class " +
                     Thread.currentThread().getStackTrace()[2].getClassName()
                     + "\n" +
@@ -51,30 +62,6 @@ public class GetSQLiteDatabase extends SQLiteOpenHelper{ ///SQLiteOpenHelper
         }
     }
 
-    public void методCreatingSqlite() {
-    try{
-        if (SqliteDatabase == null) {
-            synchronized (this) {
-                if (SqliteDatabase == null) {
-
-                    SqliteDatabase = this.getWritableDatabase(); //ссылка на схему базы данных;//ссылка на схему базы данных ГЛАВНАЯ ВСТАВКА НА БАЗУ ДСУ-
-                    Log.d(this.getClass().getName(),"\n" + " class " +
-                            Thread.currentThread().getStackTrace()[2].getClassName()
-                            + "\n" +
-                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+
-                            " SqliteDatabase " +SqliteDatabase);
-                }}}
-    } catch (Exception e) {
-        e.printStackTrace();
-        Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
-                " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-        new Class_Generation_Errors(this.context).МетодЗаписиВЖурналНовойОшибки(e.toString(),
-                this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
-                Thread.currentThread().getStackTrace()[2].getLineNumber());
-
-    }
-    }
 
     // TODO: 02.09.2023 длявный метод получение Базы Данныз  Sqlite
     public static SQLiteDatabase  SqliteDatabase() {

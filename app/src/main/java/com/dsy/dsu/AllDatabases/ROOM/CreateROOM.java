@@ -32,7 +32,7 @@ public class CreateROOM {
 
     public void метоInizROOM() {
         try{
-            if (ROOM == null) {
+            if (ROOM == null && context!=null) {
                 synchronized (this) {
                     if (ROOM == null) {
                         ROOM = Room.databaseBuilder(context,

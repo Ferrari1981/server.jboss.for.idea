@@ -1,4 +1,4 @@
-package com.dsy.dsu.Provaders;
+package com.dsy.dsu.Providers;
 
 import android.content.ContentProvider;
 import android.content.ContentProviderOperation;
@@ -21,7 +21,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.loader.content.AsyncTaskLoader;
 
+import com.dsy.dsu.AllDatabases.ROOM.CreateROOM;
 import com.dsy.dsu.AllDatabases.SQLTE.GetSQLiteDatabase;
+import com.dsy.dsu.AllDatabases.SQLTE.GetSqlite;
 import com.dsy.dsu.BusinessLogicAll.Class_Generation_Errors;
 import com.dsy.dsu.BusinessLogicAll.PUBLIC_CONTENT;
 import com.dsy.dsu.BusinessLogicAll.SubClassCreatingMainAllTables;
@@ -45,6 +47,7 @@ public class ContentProviderForDataBaseCurrentOperations extends ContentProvider
     private     ContentResolvers contentResolvers;
     public ContentProviderForDataBaseCurrentOperations() throws InterruptedException {
         try{
+
             CopyOnWriteArrayList<String> ИменаТаблицыОтАндройда=
                     new SubClassCreatingMainAllTables(getContext()).
                             методCreatingMainTabels(getContext());
@@ -344,6 +347,13 @@ public class ContentProviderForDataBaseCurrentOperations extends ContentProvider
     @Override
     public boolean onCreate() {
         try{
+            // TODO: 02.09.2023  CREATE get SQLITE
+            new GetSqlite().методGetSqlite(getContext());
+
+            // TODO: 29.08.2023  CREATE ROOM
+            new CreateROOM(getContext()).метоInizROOM();
+
+
             sqLiteDatabase=    GetSQLiteDatabase.SqliteDatabase();
             Log.w(this.getClass().getName(), "sqLiteDatabase " + sqLiteDatabase  );
     } catch (Exception e) {

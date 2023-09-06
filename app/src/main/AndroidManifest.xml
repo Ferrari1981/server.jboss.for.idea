@@ -1044,7 +1044,7 @@
                 android:resource="@xml/provider_paths" />
         </provider> <!-- ПРОВАЙДЕР ДЛЯ БАЗЫ ДАННЫХ  ${applicationId}.file  content://com.dsy.dsu/Database DSU-1.db  content://com.example.app.provider/table2/dataset1  content://com.example.app.provider/table1    uriMatcher.addURI("com.example.app.provider", "table3/#", 2); -->
         <provider
-            android:name=".Provaders.ContentProviderSynsInsert"
+            android:name=".Providers.ContentProviderSynsInsert"
             android:authorities="com.dsy.dsu.providerdatabase"
             android:directBootAware="true"
             android:enabled="true"
@@ -1056,7 +1056,7 @@
             android:writePermission="true" />
 
         <provider
-            android:name=".Provaders.ContentProviderSynsInsertOnlyAsync"
+            android:name=".Providers.ContentProviderSynsInsertOnlyAsync"
             android:authorities="com.dsy.dsu.providerdatabaseonlyasync"
             android:directBootAware="true"
             android:enabled="true"
@@ -1068,7 +1068,7 @@
             android:writePermission="true" />
 
         <provider
-            android:name=".Provaders.ContentProviderSynsUpdate"
+            android:name=".Providers.ContentProviderSynsUpdate"
             android:authorities="com.dsy.dsu.providerdatabasemirror"
             android:directBootAware="true"
             android:enabled="true"
@@ -1079,7 +1079,7 @@
             android:readPermission="true"
             android:writePermission="true" />
         <provider
-            android:name=".Provaders.ContentProviderSynsUpdateBinary"
+            android:name=".Providers.ContentProviderSynsUpdateBinary"
             android:authorities="com.dsy.dsu.providerdatabasemirrorbinary"
             android:directBootAware="true"
             android:enabled="true"
@@ -1090,7 +1090,7 @@
             android:readPermission="true"
             android:writePermission="true" />
         <provider
-            android:name=".Provaders.ContentProviderSynsUpdateChangeDeleting"
+            android:name=".Providers.ContentProviderSynsUpdateChangeDeleting"
             android:authorities="com.dsy.dsu.providerdatachangedeleting"
             android:directBootAware="true"
             android:enabled="true"
@@ -1101,7 +1101,7 @@
             android:readPermission="true"
             android:writePermission="true" />
         <provider
-            android:name=".Provaders.ContentProviderForAdminissionMaterial"
+            android:name=".Providers.ContentProviderForAdminissionMaterial"
             android:authorities="com.dsy.dsu.providerdataadminissionmaterial"
             android:directBootAware="true"
             android:enabled="true"
@@ -1112,7 +1112,7 @@
             android:readPermission="true"
             android:writePermission="true" />
         <provider
-            android:name=".Provaders.ContentProviderForDataBaseCurrentOperations"
+            android:name=".Providers.ContentProviderForDataBaseCurrentOperations"
             android:authorities="com.dsy.dsu.providerdatabasecurrentoperations"
             android:directBootAware="true"
             android:enabled="true"
