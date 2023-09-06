@@ -1,5 +1,6 @@
 package businesslogic;
 
+import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.sun.istack.NotNull;
@@ -18,9 +19,9 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.Produces;
-import java.io.IOException;
-import java.io.StringWriter;
+import java.io.*;
 import java.math.BigDecimal;
+import java.nio.charset.StandardCharsets;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -73,7 +74,7 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
     }
 
     @SuppressWarnings({ "unused", "deprecation", "rawtypes", "unchecked" })
-    protected StringBuffer ГлавныйМетод_МетодаGET(@NotNull HttpServletRequest request,
+    protected StringBuffer ГлавныйМетод_МетодаGETService(@NotNull HttpServletRequest request,
                                                   @NotNull ServletContext ЛОГ) throws SecurityException, SQLException {
         // TODO Auto-generated method stub
         System.out.println("Конструктор  ЗАПУСК МЕТОДА ИЗ GET ()  ГлавныйМетод_МетодаGET()");
@@ -125,6 +126,137 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
 
             switch (JobForServer) {
                 // TODO ЗАДАНИЕ ДЛЯ СЕРВЕР JOBSERVERTASK #2
+                case "Хотим Получить Статус Реальной Работы SQL SERVER":
+                    // TODO РЕАЛЬНЫЙ СТАТУС РАБОТЫ SQL SERVER
+                    ЛистДанныеОтHibenide = Метод_РеальнаяСтатусSqlServer();
+                    ЛОГ.log(" Отправили Хотим Получить Статус Реальной Работы SQL SERVER  JobForServer " + JobForServer
+                            + " ЛистДанныеОтHibenide "
+                            + ЛистДанныеОтHibenide.size());
+                    break;
+                // TODO ЗАДАНИЯ ДЛЯ СЕРВЕРА НЕТУ
+                // TODO ЗАДАНИЕ ДЛЯ СЕРВЕР JOBSERVERTASK #1
+                case "Хотим Получить Версию Данных Сервера":
+                    ЛистДанныеОтHibenide = МетодДляКлиентаMODIFITATION_Server(session);
+                    ЛОГ.log("Хотим Получить Версию Данных Сервера" + new Date() + " ПараметрФильтрЗадааниеДляСервлета "
+                            + ЛистДанныеОтHibenide + "  ЛистДанныеОтHibenide ");
+                    break;
+                // TODO ЗАДАНИЕ ДЛЯ СЕРВЕР JOBSERVERTASK #3
+                case "Хотим Получить ID для Генерации  UUID":
+                    БуферCallsBackДляAndroid = Метод_МетодаGETОтпалавляемПубличныйIDПользователюАндройду(
+                            response, IdUser);
+                    ЛОГ.log(" БуферCallsBackДляAndroid "
+                            + БуферCallsBackДляAndroid.toString());
+                    break;
+                // TODO ЗАДАНИЕ ДЛЯ СЕРВЕР JOBSERVERTASK #4
+                case "Хотим Получить Статус Блокировки Пользователя по ID":
+                    // TODO ОПРЕДЕЛЯЕМ СТАТУС ПОЛЬЗОВАТЕЛЯ
+                    ЛистДанныеОтHibenide = Метод_МетодаСтатусЗаблорированогоКлиента( IdUser,session);
+                    ЛОГ.log(" Отправили  Хотим Получить Статус Блокировки Пользователя по ID "
+                            + JobForServer + " ЛистДанныеОтHibenide " + ЛистДанныеОтHibenide.size() + " IDПолученныйИзSQlServerПосик "+IdUser);
+                    break;
+                // TODO ЗАДАНИЯ ДЛЯ СЕРВЕРА НЕТУ
+                default:
+                    ЛОГ.log("\n"+"  default:  Starting.... class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
+                            " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
+                            " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+
+                            "Метод_РеальнаяСтатусSqlServer  ЛистДанныеОтHibenide " +ЛистДанныеОтHibenide.size());
+                    break;
+            }
+
+
+            ЛОГ.log(" ОТВЕТ КЛИЕНТУ OTBEN LKIENTYY JobForServer " + JobForServer
+                    + " БуферCallsBackДляAndroid " + БуферCallsBackДляAndroid.toString()+  "ЛистДанныеОтHibenide "+ ЛистДанныеОтHibenide);
+
+
+
+            //TODO ГЕНЕРАЦИЯ JSON ПО НОВОМУ
+            if (ЛистДанныеОтHibenide!=null && ЛистДанныеОтHibenide.size()>0) {
+                БуферCallsBackДляAndroid = МетодГенерацияJSONJackson(ЛистДанныеОтHibenide);
+            }
+
+            // TODO КОГДА ЛОГИН И ПАРОЛЬ НЕТ ДОСТУПА
+            МетодЗакрываемСессиюHibernate();
+            //// TODO ЗАКРЫЫВАЕМ КУРСОРЫ ПОСЛЕ ГЕНЕРАЦИИ JSON ДЛЯ КЛИЕНТА
+            // TODO
+            ЛОГ.log("\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
+                    " БуферCallsBackДляAndroid " + БуферCallsBackДляAndroid.toString() +
+                    " session  " + session + " sessionSousJboss " + sessionSousJboss
+                    + " ЛОГИН "+ЛОГ.getAttribute("ЛогинПолученныйОтКлиента")+
+                    " ID ТЕЛЕФОНА "+  ЛОГ.getAttribute("АдуДевайсяКлиента"));
+        } catch (Exception e) {
+            ЛОГ.log("\n" + " ERROR class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
+            if (session!=null) {
+                session.getTransaction().rollback();
+                session.close();
+            }
+            subClassWriterErros.
+                    МетодаЗаписиОшибкиВЛог(e,
+                            Thread.currentThread().
+                                    getStackTrace(),
+                            ЛОГ,"ErrorsLogs/ErrorJbossServletDSU1.txt");
+        }
+        return БуферCallsBackДляAndroid; // TODO return new
+        // AsyncResult<StringBuffer>(БуферCallsBackДляAndroid);
+    }
+
+
+    // TODO: 06.09.2023  ТОЛЬКО JSON JAJKSON
+    @SuppressWarnings({ "unused", "deprecation", "rawtypes", "unchecked" })
+    protected byte[] ГлавныйМетод_МетодаGETByte(@NotNull HttpServletRequest request,
+                                                  @NotNull ServletContext ЛОГ) throws SecurityException, SQLException {
+        // TODO Auto-generated method stub
+        System.out.println("Конструктор  ЗАПУСК МЕТОДА ИЗ GET ()  ГлавныйМетод_МетодаGET()");
+        byte[] БуферCallsBackДляAndroid = new byte[0];
+        try   {
+            this.ЛОГ = ЛОГ;
+            // TODO
+            this.request = request;
+            /// TODO
+            this.response = response;
+            // TODO получаем session
+            ЛОГ.log("ЗАПУСКАЕТСЯ....... ГЛАВНЫЙ МЕТОД GET() СЕРВЛЕТА " + new Date() + "\n" + ЛОГ.getServerInfo()
+                    + "  request " + request + " response " + response + " ЛОГ" + ЛОГ);
+            // TODO ГАЛВНЫЙ МЕТОД GET НАЧИНАЕТ РАБОТАТЬ
+            ЛОГ.log("\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
+                    " session  " + session + " sessionSousJboss " + sessionSousJboss
+                    + " ЛОГИН "+ЛОГ.getAttribute("ЛогинПолученныйОтКлиента")+
+                    " ID ТЕЛЕФОНА "+  ЛОГ.getAttribute("АдуДевайсяКлиента"));
+            /// TODO ПАРАМЕНТ #1
+            Integer IdUser = Optional.ofNullable(ЛОГ.getAttribute("IdUser").toString()).map(Integer::new).orElse(0);
+            /// TODO ПАРАМЕНТ #2
+            String     NameTable = Optional.ofNullable(request.getParameter("NameTable")).map(String::trim).orElse("");
+            /// TODO ПАРАМЕНТ #3
+            String      JobForServer = Optional.ofNullable(request.getParameter("JobForServer")).map(String::trim).orElse("");
+            /// TODO ПАРАМЕНТ #4
+            Long VersionData = Optional.ofNullable(request.getParameter("VersionData")).map(Long::new).orElse(0l);
+
+
+            System.out.println("  IdUser " + IdUser);
+            org.hibernate.Query queryДляHiberite = null;
+            org.hibernate.Criteria criteriaquery=null;
+            List<?> ЛистДанныеОтHibenide  = new ArrayList<>();
+
+            if (IdUser>0) {
+                // TODO: 10.03.2023 получение сессиии HIREBIANTE
+                session=   sessionSousJboss.getCurrentSession();
+                // TODO: 17.03.2023 ЗАПУСКАЕТ ТРАНЗАКЦИЮ BEGIN
+                if (session.getTransaction().getStatus()== TransactionStatus.NOT_ACTIVE) {
+                    session.getTransaction().begin();
+                }
+                ЛОГ.log("\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
+                        " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
+                        " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+ " session " +session  + " session.getTransaction() " +session.getTransaction());
+                /// TODO КОНЕЦ  НОВЫЕ ПАРАМЕТРЫ HIREBIANTE
+            }
+
+            switch (JobForServer) {
+                // TODO ЗАДАНИЕ ДЛЯ СЕРВЕР JOBSERVERTASK #2
                 case "Хотим Получить  JSON":
                     ЛОГ.log("Хотим Получить  JSON" + new Date() + " JobForServer "
                             + JobForServer+"  VersionData" + VersionData
@@ -145,7 +277,7 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
                             // TODO
                             queryДляHiberite = session.createQuery(
                                     "SELECT d FROM  Depatment d   WHERE d.currentTable > :id ");
-                      
+
                             queryДляHiberite.setParameter("id",new BigDecimal(VersionData ));
                             ЛистДанныеОтHibenide =( List<model.Depatment>)  queryДляHiberite.getResultList();
                             ЛОГ.  log(" ЛистДанныеОтHibenide "+ЛистДанныеОтHibenide+ " ЛистДанныеОтHibenide.size() " +ЛистДанныеОтHibenide.size()+
@@ -321,7 +453,7 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
                             // TODO
                             queryДляHiberite = session.createQuery(
                                     " SELECT  typem FROM TypeMaterial typem  WHERE typem .currentTable > :id");
-                      
+
                             queryДляHiberite.setParameter("id",new BigDecimal(VersionData));//8641 8625
                             ЛистДанныеОтHibenide =( List<model.TypeMaterial>)  queryДляHiberite.getResultList();
                             ЛОГ.  log(" ЛистДанныеОтHibenide "+ЛистДанныеОтHibenide+ " ЛистДанныеОтHibenide.size() " +ЛистДанныеОтHibenide.size()+
@@ -343,7 +475,7 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
                             // TODO
                             queryДляHiberite = session.createQuery(
                                     " SELECT  comp FROM  Company  comp  WHERE comp .currentTable > :id");
-                      
+
                             queryДляHiberite.setParameter("id",new BigDecimal(VersionData));//8641 8625
                             ЛистДанныеОтHibenide =( List<model.Company>)  queryДляHiberite.getResultList();
                             ЛОГ.  log(" ЛистДанныеОтHibenide "+ЛистДанныеОтHibenide+ " ЛистДанныеОтHibenide.size() " +ЛистДанныеОтHibenide.size()+
@@ -353,7 +485,7 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
                             // TODO
                             queryДляHiberite = session.createQuery(
                                     " SELECT  tr FROM  Track tr  WHERE tr .currentTable > :id");
-                      
+
                             queryДляHiberite.setParameter("id",new BigDecimal(VersionData));//8641 8625
                             ЛистДанныеОтHibenide =( List<model.Track>)  queryДляHiberite.getResultList();
                             ЛОГ.  log(" ЛистДанныеОтHibenide "+ЛистДанныеОтHibenide+ " ЛистДанныеОтHibenide.size() " +ЛистДанныеОтHibenide.size()+
@@ -364,7 +496,7 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
                             // TODO
                             queryДляHiberite = session.createQuery(
                                     " SELECT  pr FROM Prof pr  WHERE pr .currentTable > :id");
-                      
+
                             queryДляHiberite.setParameter("id",new BigDecimal(VersionData));//8641 8625
                             ЛистДанныеОтHibenide =( List<model.Prof>)  queryДляHiberite.getResultList();
                             ЛОГ.  log(" ЛистДанныеОтHibenide "+ЛистДанныеОтHibenide+ " ЛистДанныеОтHibenide.size() " +ЛистДанныеОтHibenide.size()+
@@ -382,13 +514,13 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
                                     "  queryДляHiberite  " +queryДляHiberite);//gson Gson
                             break;
 
-                       case "vid_tc":
+                        case "vid_tc":
                             // TODO
-                           criteriaquery= session.createCriteria(VidTc.class);
-                           criteriaquery.add(org.hibernate.criterion.Restrictions.gt("currentTable", new BigDecimal(VersionData)));
-                           ЛистДанныеОтHibenide =  ( List<model.VidTc>)     criteriaquery.list();
-                           ЛОГ.  log(" ЛистДанныеОтHibenide "+ЛистДанныеОтHibenide+ " ЛистДанныеОтHibenide.size() " +ЛистДанныеОтHibenide.size()+
-                                   "  queryДляHiberite  " +queryДляHiberite);//gson Gson
+                            criteriaquery= session.createCriteria(VidTc.class);
+                            criteriaquery.add(org.hibernate.criterion.Restrictions.gt("currentTable", new BigDecimal(VersionData)));
+                            ЛистДанныеОтHibenide =  ( List<model.VidTc>)     criteriaquery.list();
+                            ЛОГ.  log(" ЛистДанныеОтHibenide "+ЛистДанныеОтHibenide+ " ЛистДанныеОтHibenide.size() " +ЛистДанныеОтHibenide.size()+
+                                    "  queryДляHiberite  " +queryДляHiberite);//gson Gson
                             break;
 
                         case "materials_databinary":
@@ -397,7 +529,7 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
                             criteriaquery.add(org.hibernate.criterion.Restrictions.gt("currentTable", new BigDecimal(VersionData)));
                             criteriaquery.add(org.hibernate.criterion.Restrictions.eq("userUpdate", IdUser));
                             ЛистДанныеОтHibenide = ( List<MateriBinary>)   criteriaquery.list();
-                             ЛОГ.  log(" ЛистДанныеОтHibenide "+ЛистДанныеОтHibenide+ " ЛистДанныеОтHibenide.size() " +ЛистДанныеОтHibenide.size()+
+                            ЛОГ.  log(" ЛистДанныеОтHibenide "+ЛистДанныеОтHibenide+ " ЛистДанныеОтHibenide.size() " +ЛистДанныеОтHibenide.size()+
                                     "  queryДляHiberite  " +queryДляHiberite);//gson Gson
                     /*        // TODO: 14.07.2023 TEST code
                             DecodeByteArray_Image decodeByteArray_image=new DecodeByteArray_Image();
@@ -407,48 +539,8 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
 
 
                     }//TODO КОНЕЦ РАСПРЕДЕНИЕ ТАБЛИЦ 	switch (NameTable.trim()) {
-
                     ЛОГ.log(" КоличествоСтрокКоторыеМыОтправимНаКлиент  " + КоличествоСтрокКоторыеМыОтправимНаКлиент+
                             " NameTable " +NameTable);
-                    //TODO ФИНАЛЬЯ СТАДИЯ ГЕНЕРИРУЕМ САМ JSON
-                    ЛОГ.  log(" ЛистДанныеОтHibenide "+ЛистДанныеОтHibenide+ " ЛистДанныеОтHibenide.size() " +ЛистДанныеОтHibenide.size()+
-                            "  queryДляHiberite  " +queryДляHiberite);//gson Gson
-                    // TODO конец МЕНЕДЖЕН ПОТОКА ДАННЫХ ПРИ
-                    // ОТПРАВЛЕНИЕ ДАННЫ
-                    // TODO ВЫХОД ИЗ КОНКРЕТНОГО УСЛОВИЯ
-                    // ВЫПОЛЕННИЯ
-                    break;
-                // TODO ЗАДАНИЯ ДЛЯ СЕРВЕРА НЕТУ
-                // TODO ЗАДАНИЕ ДЛЯ СЕРВЕР JOBSERVERTASK #5
-                case "Хотим Получить Статус Реальной Работы SQL SERVER":
-                    // TODO РЕАЛЬНЫЙ СТАТУС РАБОТЫ SQL SERVER
-                    ЛистДанныеОтHibenide = Метод_РеальнаяСтатусSqlServer();
-                    ЛОГ.log(" Отправили Хотим Получить Статус Реальной Работы SQL SERVER  JobForServer " + JobForServer
-                            + " ЛистДанныеОтHibenide "
-                            + ЛистДанныеОтHibenide.size());
-                    break;
-                // TODO ЗАДАНИЯ ДЛЯ СЕРВЕРА НЕТУ
-                // TODO ЗАДАНИЕ ДЛЯ СЕРВЕР JOBSERVERTASK #1
-                case "Хотим Получить Версию Данных Сервера":
-                    ЛистДанныеОтHibenide = МетодДляКлиентаMODIFITATION_Server(session);
-                    ЛОГ.log("Хотим Получить Версию Данных Сервера" + new Date() + " ПараметрФильтрЗадааниеДляСервлета "
-                            + ЛистДанныеОтHibenide + "  ЛистДанныеОтHibenide ");
-                    break;
-                // TODO ЗАДАНИЕ ДЛЯ СЕРВЕР JOBSERVERTASK #3
-                case "Хотим Получить ID для Генерации  UUID":
-                    БуферCallsBackДляAndroid = Метод_МетодаGETОтпалавляемПубличныйIDПользователюАндройду(
-                            response, IdUser);
-                    ЛОГ.log(" БуферCallsBackДляAndroid "
-                            + БуферCallsBackДляAndroid.toString());
-                    break;
-                // TODO ЗАДАНИЕ ДЛЯ СЕРВЕР JOBSERVERTASK #4
-                case "Хотим Получить Статус Блокировки Пользователя по ID":
-                    // TODO ОПРЕДЕЛЯЕМ СТАТУС ПОЛЬЗОВАТЕЛЯ
-                    ЛистДанныеОтHibenide = Метод_МетодаСтатусЗаблорированогоКлиента( IdUser,session);
-                    ЛОГ.log(" Отправили  Хотим Получить Статус Блокировки Пользователя по ID "
-                            + JobForServer + " ЛистДанныеОтHibenide " + ЛистДанныеОтHibenide.size() + " IDПолученныйИзSQlServerПосик "+IdUser);
-                    break;
-                // TODO ЗАДАНИЯ ДЛЯ СЕРВЕРА НЕТУ
                 default:
                     ЛОГ.log("\n"+"  default:  Starting.... class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
                             " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
@@ -459,13 +551,13 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
 
 
             ЛОГ.log(" ОТВЕТ КЛИЕНТУ OTBEN LKIENTYY JobForServer " + JobForServer
-                    + " БуферCallsBackДляAndroid " + БуферCallsBackДляAndroid.toString()+  "ЛистДанныеОтHibenide "+ ЛистДанныеОтHibenide);
+                    + " БуферCallsBackДляAndroid " + БуферCallsBackДляAndroid+  "ЛистДанныеОтHibenide "+ ЛистДанныеОтHibenide);
 
 
 
             //TODO ГЕНЕРАЦИЯ JSON ПО НОВОМУ
             if (ЛистДанныеОтHibenide!=null && ЛистДанныеОтHibenide.size()>0) {
-                БуферCallsBackДляAndroid = МетодГенерацияJSONJackson(ЛистДанныеОтHibenide);
+                БуферCallsBackДляAndroid = МетодГенерацияJSONJacksonByte(ЛистДанныеОтHibenide);
             }
 
             // TODO КОГДА ЛОГИН И ПАРОЛЬ НЕТ ДОСТУПА
@@ -496,6 +588,9 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
         return БуферCallsBackДляAndroid; // TODO return new
         // AsyncResult<StringBuffer>(БуферCallsBackДляAndroid);
     }
+
+
+
 
     private void МетодЗакрываемСессиюHibernate() {
         try{
@@ -537,28 +632,11 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
             ЛОГ.log(" listОтHiberideДляГенерации" + listОтHiberideДляГенерации );
             ObjectWriter writer = getGeneratorJackson.writerWithDefaultPrettyPrinter();
             String Сгенерированыйjson = 	  writer.writeValueAsString(listОтHiberideДляГенерации);
-            ЛОГ.  log(" Сгенерированыйjson "+Сгенерированыйjson.length());//gson
             БуферСозданогоJSONJackson.append(Сгенерированыйjson);
          ЛОГ.log("\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
                 " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
                 " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+
             "БуферСозданогоJSONJackson " + БуферСозданогоJSONJackson.toString());
-            /*
-             * // Create custom configuration JsonbConfig nillableConfig = new
-             * JsonbConfig().withNullValues(true);
-             * nillableConfig.withDateFormat("yyyy-MM-dd HH:mm:ss.SSS", new Locale("ru"));
-             * Jsonb jsonb = JsonbBuilder.create(nillableConfig); String resultjsonb =
-             * jsonb.toJson(listОтHiberideДляГенерации); ЛОГ.
-             * log(" resultjsonb "+resultjsonb.length());//gson
-             *  //TODO Jacson парсинг JSON
-            JsonFactory factory = new JsonFactory();
-            DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS", new Locale("ru"));
-            final ObjectMapper mapperJackson = new ObjectMapper(factory);
-            mapperJackson.setDateFormat(df);
-            mapperJackson.setLocale(new Locale("ru"));
-            mapperJackson.setSerializationInclusion(JsonInclude.Include.NON_NULL);
-            mapperJackson.setPropertyNamingStrategy(PropertyNamingStrategy.CAMEL_CASE_TO_LOWER_CASE_WITH_UNDERSCORES);
-             */
         } catch (Exception e) {
             subClassWriterErros.
                     МетодаЗаписиОшибкиВЛог(e,
@@ -568,6 +646,38 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
         }
         return БуферСозданогоJSONJackson;
     }
+
+
+    // TODO ГЕНЕРАЦИЯ JSON ПО  НОВОМУ Jackson
+    byte[] МетодГенерацияJSONJacksonByte(@javax.validation.constraints.NotNull List<?> listОтHiberideДляГенерации)
+            throws SQLException, SecurityException {
+        byte[] БуферСозданогоJSONJackson = new byte[0];
+        try {
+            ЛОГ.log(" listОтHiberideДляГенерации" + listОтHiberideДляГенерации );
+            ObjectWriter writer = getGeneratorJackson.writerWithDefaultPrettyPrinter();
+            String Сгенерированыйjson = 	  writer.writeValueAsString(listОтHiberideДляГенерации);
+
+            БуферСозданогоJSONJackson=   writer.writeValueAsBytes(listОтHiberideДляГенерации);
+
+            ЛОГ.log("\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
+                    " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
+                    " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+
+                    "БуферСозданогоJSONJackson " + БуферСозданогоJSONJackson.toString());
+        } catch (Exception e) {
+            subClassWriterErros.
+                    МетодаЗаписиОшибкиВЛог(e,
+                            Thread.currentThread().
+                                    getStackTrace(),
+                            ЛОГ,"ErrorsLogs/ErrorJbossServletDSU1.txt");
+        }
+        return БуферСозданогоJSONJackson;
+    }
+
+
+
+
+
+
 
 
 
