@@ -188,9 +188,9 @@ public class SessionBeanGETRuntimeJboss {// extends WITH
     protected List<model.UsersEntity> Метод_РеальнаяСтатусSqlServer() {
         List<model.UsersEntity> ЛистДанныеОтHibenide  = new ArrayList<>();
         try {
-            org.hibernate.Query queryДляHiberite   = session.createQuery("SELECT  us as id FROM model.UsersEntity us WHERE us.rights =:rights   ");
-            queryДляHiberite.setParameter("rights",new Integer(2));//8641 8625
-            ЛистДанныеОтHibenide =( List<model.UsersEntity>) queryДляHiberite.setMaxResults(1).getResultList();
+            ЛистДанныеОтHibenide =( List<model.UsersEntity>)
+                    session.createQuery("SELECT   usersentity. id FROM model.UsersEntity  as  usersentity WHERE usersentity.rights =:rights   ")
+                            .setParameter("rights",new Integer(2)).setMaxResults(1).getResultList();
             ЛОГ.log("\n"+" Starting.... class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
                     " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
                     " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+
