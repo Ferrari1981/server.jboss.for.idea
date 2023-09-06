@@ -4,9 +4,9 @@ import static java.util.Calendar.getInstance;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteCursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
-
-import com.dsy.dsu.AllDatabases.CREATE_DATABASE;
+import com.dsy.dsu.AllDatabases.GetSQLiteDatabase;
 
 import java.math.BigInteger;
 import java.text.DateFormat;
@@ -18,17 +18,17 @@ import java.util.TimeZone;
 public class Class_Generation_UUID {
  private    Context context;
     private  Integer ПубличныйID =0;
-    private CREATE_DATABASE Create_Database_СсылкаНАБазовыйКласс=null;
 
+    private SQLiteDatabase sqLiteDatabase ;
     public Class_Generation_UUID(Context context) {
         this.context = context;
 ///////TODO
-        Create_Database_СсылкаНАБазовыйКласс = new CREATE_DATABASE(context);
+        sqLiteDatabase=    GetSQLiteDatabase.SqliteDatabase();
     }
     public Long МетодГенерацииUUID() {
         Long UUID = 0l;
         try {
-            if (context!=null && Create_Database_СсылкаНАБазовыйКласс!=null) {
+            if (context!=null) {
                 // TODO ГЕНЕРАЦИЯ UUID ВВИДЕ ЦИФРЫ
                 //"yyyyMMddHHmmssSSS" //"EEEEE MMMMM yyyy HH:mm:ss.SSSSSSZ"
                 Date Дата = getInstance().getTime();
@@ -48,7 +48,7 @@ public class Class_Generation_UUID {
 
                 SQLiteCursor            Курсор_Получаемsuccesslogin= (SQLiteCursor) class_grud_sql_operationsПолучаемНаБазуUUIDфиоПолучаемИзТаблицыФИОИМЯ.
                         new GetаFreeData(context).getfreedata(class_grud_sql_operationsПолучаемНаБазуUUIDфиоПолучаемИзТаблицыФИОИМЯ.concurrentHashMapНабор,
-                        Class_Engine_SQLГдеНаходитьсяМенеджерПотоков.МенеджерПотоков,Create_Database_СсылкаНАБазовыйКласс.getССылкаНаСозданнуюБазу());
+                        Class_Engine_SQLГдеНаходитьсяМенеджерПотоков.МенеджерПотоков,sqLiteDatabase);
 
                 if(Курсор_Получаемsuccesslogin.getCount()>0){
                     Курсор_Получаемsuccesslogin.moveToFirst();

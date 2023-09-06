@@ -8,6 +8,7 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 
 
+import com.dsy.dsu.AllDatabases.GetSQLiteDatabase;
 import com.dsy.dsu.BuildConfig;
 import com.dsy.dsu.Business_logic_Only_Class.DATE.Class_Generation_Data;
 
@@ -30,9 +31,11 @@ public class Class_Generation_Errors {
     private String fileName = "Sous-Avtodor-ERROR.txt";
 
     private   String patchFileName="SousAvtoFile";
-
+    private SQLiteDatabase sqLiteDatabase ;
     public Class_Generation_Errors(@NonNull Context context) {
+
         this.context = context;
+        sqLiteDatabase=    GetSQLiteDatabase.SqliteDatabase();
     }
     //функция получающая время операции ДАННАЯ ФУНКЦИЯ ВРЕМЯ ПРИМЕНЯЕТЬСЯ ВО ВСЕЙ ПРОГРАММЕ
     // TODO: 05.07.2021
@@ -46,9 +49,8 @@ public class Class_Generation_Errors {
         Long PезультатВставкиНовойОшибки = 0l;
         try {
             if (context != null) {
-                SQLiteDatabase create_database = new CREATE_DATABASE(context).getССылкаНаСозданнуюБазу();
                 Long Версия = new SubClassUpVersionDATA().МетодПовышаемВерсииCurrentTable("errordsu1"
-                        , context, create_database);
+                        , context );
                 Long UUID = (Long)
                         new Class_Generation_UUID(context).МетодГенерацииUUID();
                 Integer ПубличныйIDДляАсих = new Class_Generations_PUBLIC_CURRENT_ID().
@@ -78,7 +80,7 @@ public class Class_Generation_Errors {
                         && !ТекстОшибки.matches("(.*)java.net.sockettimeoutexception: failed to connect(.*)")) {
 
                     // TODO: 21.12.2022  главная  файл ErrorDSU1
-                   метометодЗаписьОшибкиОбынуюТаблицуErrorDSU1(PезультатВставкиНовойОшибки, create_database);
+                   метометодЗаписьОшибкиОбынуюТаблицуErrorDSU1( );
 
                     // TODO: 20.12.2022  дополнительный механизм записи ошибкок
                     методЗаписиОшибкиВФайлErrorDSU1txt(ТекстОшибки, КлассГнерацииОшибки, МетодаОшибки, ЛинияОшибки);
@@ -124,20 +126,16 @@ public class Class_Generation_Errors {
     }
     }
 
-    private void метометодЗаписьОшибкиОбынуюТаблицуErrorDSU1(Long pезультатВставкиНовойОшибки,
-                                                             SQLiteDatabase create_database)
+    private void метометодЗаписьОшибкиОбынуюТаблицуErrorDSU1( )
             throws ExecutionException, InterruptedException {
         Long PезультатВставкиНовойОшибки=0l;
         try{
-        pезультатВставкиНовойОшибки = (Long) classGrudSqlOperationsОшибки.
+     Long   pезультатВставкиНовойОшибки = (Long) classGrudSqlOperationsОшибки.
                 new InsertData(context).insertdata(classGrudSqlOperationsОшибки.concurrentHashMapНабор,
                 classGrudSqlOperationsОшибки.contentValuesДляSQLBuilder_Для_GRUD_Операций,
                 new PUBLIC_CONTENT(context).МенеджерПотоков,
-                create_database);
+                sqLiteDatabase);
         Log.d(this.getClass().getName(), " date " + new Date().toGMTString().toString() + " PезультатВставкиНовойОшибки " + pезультатВставкиНовойОшибки);
-        if (create_database.inTransaction()) {
-            create_database.endTransaction();
-        }
     } catch (Exception e) {
         e.printStackTrace();
         System.err.println("  Ошибка в самом классе записи ошибок нет КОНТЕКСТА Class_Generation_Errors");
