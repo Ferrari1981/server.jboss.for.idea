@@ -6,12 +6,14 @@ import android.database.sqlite.SQLiteCursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
-import com.dsy.dsu.AllDatabases.CREATE_DATABASE;
+import com.dsy.dsu.AllDatabases.GetSQLiteDatabase;
+
 
 public class SubClassGET_FIO {
 
     Context context;
 
+    private SQLiteDatabase sqLiteDatabase ;
     public SubClassGET_FIO(Context context) {
 
         this.context = context;
@@ -30,7 +32,7 @@ public class SubClassGET_FIO {
 
         PUBLIC_CONTENT Class_Engine_SQLГдеНаходитьсяМенеджерПотоков=new PUBLIC_CONTENT(context);
 
-        SQLiteDatabase sqLiteDatabaseКлонДляПоискаФИО=new CREATE_DATABASE(context).getССылкаНаСозданнуюБазу();
+        sqLiteDatabase=    GetSQLiteDatabase.SqliteDatabase();
 
         Class_GRUD_SQL_Operations.GetData class_grud_sql_operationsФрагментМСообщения;
 
@@ -79,7 +81,7 @@ public class SubClassGET_FIO {
 
             КурсорДанныеДляКонтактовФИОЧата = (SQLiteCursor)class_grud_sql_operationsФрагментМСообщения
                     .getdata(class_grud_sql_operationsПолучениеФИОНАОснованииIDВыбранногоСотрудникаЧетвертаяЧасть.concurrentHashMapНабор,
-                    Class_Engine_SQLГдеНаходитьсяМенеджерПотоков.МенеджерПотоков, sqLiteDatabaseКлонДляПоискаФИО);
+                    Class_Engine_SQLГдеНаходитьсяМенеджерПотоков.МенеджерПотоков,  sqLiteDatabase);
 
             Log.d(context.getClass().getName(), "GetData " + КурсорДанныеДляКонтактовФИОЧата);
 

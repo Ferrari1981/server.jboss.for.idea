@@ -6,6 +6,7 @@ import android.content.ContentValues;
 import android.content.Intent;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Binder;
 import android.os.Bundle;
@@ -18,7 +19,8 @@ import androidx.annotation.BinderThread;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.dsy.dsu.AllDatabases.CREATE_DATABASE;
+
+import com.dsy.dsu.AllDatabases.GetSQLiteDatabase;
 import com.dsy.dsu.Business_logic_Only_Class.Class_Generation_Errors;
 import com.dsy.dsu.Business_logic_Only_Class.DATE.Class_Generation_Data;
 import com.dsy.dsu.Business_logic_Only_Class.DATE.SubClassCursorLoader;
@@ -47,7 +49,7 @@ import java.util.Random;
 public class ServiceOrserTransportService extends IntentService {
 
     private  SubClassOrderTransport subClassOrderTransport;
-
+    private SQLiteDatabase sqLiteDatabase ;
    protected LocalBinderOrderTransport localBinderOrderTransport= new LocalBinderOrderTransport();
     public ServiceOrserTransportService() {
 
@@ -58,7 +60,7 @@ public class ServiceOrserTransportService extends IntentService {
     @Override
     public void onCreate() {
         super.onCreate();
-
+        sqLiteDatabase=    GetSQLiteDatabase.SqliteDatabase();
         subClassOrderTransport=new SubClassOrderTransport();
         Log.d(getApplicationContext().getClass().getName(), "\n"
                 + " время: " + new Date()+"\n+" +
@@ -549,7 +551,7 @@ public class ServiceOrserTransportService extends IntentService {
                 String Дата =     new Class_Generation_Data(getApplicationContext()).ГлавнаяДатаИВремяОперацийСБазойДанныхДОП();
                 contentValuesУданиеЗаказаТраспорта.put("date_update", Дата);
                 Long Версия = new SubClassUpVersionDATA().МетодПовышаемВерсииCurrentTable(    ТаблицаОбработки
-                        ,getApplicationContext(),new CREATE_DATABASE(getApplicationContext()).getССылкаНаСозданнуюБазу());
+                        ,getApplicationContext() );
                 contentValuesУданиеЗаказаТраспорта.put("current_table", Версия);
                 // TODO: 12.04.2023 удаление ЗАказа Траспрта
                 ContentResolver contentResolver=getApplicationContext().getContentResolver();

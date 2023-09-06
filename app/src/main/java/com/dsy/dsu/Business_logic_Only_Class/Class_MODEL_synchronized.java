@@ -15,8 +15,9 @@ import android.view.View;
 
 import androidx.annotation.NonNull;
 
+import com.dsy.dsu.AllDatabases.GetSQLiteDatabase;
 import com.dsy.dsu.Business_logic_Only_Class.DATE.Class_Generation_Data;
-import com.dsy.dsu.AllDatabases.CREATE_DATABASE;
+
 import com.google.firebase.crashlytics.buildtools.reloc.org.apache.commons.io.FileUtils;
 
 import org.jetbrains.annotations.NotNull;
@@ -60,36 +61,22 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 import okio.BufferedSink;
-
-
 ///////Универсальный Класс Обмена Данными  Два Стачичных Метода и Плюс Сттичный Курсор
- public class Class_MODEL_synchronized extends CREATE_DATABASE {
+ public class Class_MODEL_synchronized extends GetSQLiteDatabase {
   public     Context context;
     private  PUBLIC_CONTENT Class_Engine_SQLГдеНаходитьсяМенеджерПотоков =null;
     private Class_MODEL_synchronized ссылка_MODELsynchronized = null;
     private String ПубличноеЛогин =      new String();
     private  String ПубличноеПароль =   new String();
-    ////шифрование
-/*    public SecretKey ГлавныйКлючДляШифрованиеИРасшифровки;
-    ////
-    public Cipher ПолитикаШифрование;
-    ///////
-    public Cipher ПолитикаРасшифровки;*/
     public Integer ID = 0;
-    public CREATE_DATABASE Create_Database_СсылкаНАБазовыйКласс;
+    private SQLiteDatabase sqLiteDatabase ;
     public Class_MODEL_synchronized(  @NotNull Context context) {
         super(context);
        this. context=context;
         //TODO контроль потоков
         Class_Engine_SQLГдеНаходитьсяМенеджерПотоков =new PUBLIC_CONTENT(context);
-      Create_Database_СсылкаНАБазовыйКласс=new CREATE_DATABASE(context);
+        sqLiteDatabase=    GetSQLiteDatabase.SqliteDatabase();
     }
-
-
-
-
-
-
 
 
     //todo #GET    //#GET    //#GET    //#GET    //#GET    //#GET    //#GET    //#GET    //#GET    //#GET    //#GET    //#GET    //#GET    //#GET    //#GET    //#GET    //#GET    //#GET    //#GET    //#GET    //#GET    //#GET    //#GET    //#GET    //#GET    //#GET    //#GET    //#GET
@@ -129,7 +116,7 @@ import okio.BufferedSink;
                                 Курсор_ПолучаемИмяСотрудникаИзТаблицыФИО = (SQLiteCursor) grudSqlOperations.
                                         new GetаFreeData(context).getfreedata(grudSqlOperations.
                                                 concurrentHashMapНабор,
-                                        classEngineSQLГдеНаходитьсяМенеджерПотоков.МенеджерПотоков,Create_Database_СсылкаНАБазовыйКласс.getССылкаНаСозданнуюБазу());
+                                        classEngineSQLГдеНаходитьсяМенеджерПотоков.МенеджерПотоков,   sqLiteDatabase);
                             } catch (ExecutionException e) {
                                 throw new RuntimeException(e);
                             } catch (InterruptedException e) {
@@ -264,7 +251,7 @@ import okio.BufferedSink;
                                 Курсор_ПолучаемИмяСотрудникаИзТаблицыФИО = (SQLiteCursor) grudSqlOperations.
                                         new GetаFreeData(context).getfreedata(grudSqlOperations.
                                                 concurrentHashMapНабор,
-                                        classEngineSQLГдеНаходитьсяМенеджерПотоков.МенеджерПотоков,Create_Database_СсылкаНАБазовыйКласс.getССылкаНаСозданнуюБазу());
+                                        classEngineSQLГдеНаходитьсяМенеджерПотоков.МенеджерПотоков,sqLiteDatabase);
                             } catch (ExecutionException e) {
                                 throw new RuntimeException(e);
                             } catch (InterruptedException e) {
@@ -405,7 +392,7 @@ import okio.BufferedSink;
                                 Курсор_ПолучаемИмяСотрудникаИзТаблицыФИО = (SQLiteCursor) grudSqlOperations.
                                         new GetаFreeData(context).getfreedata(grudSqlOperations.
                                                 concurrentHashMapНабор,
-                                        publicContent.МенеджерПотоков, Create_Database_СсылкаНАБазовыйКласс.getССылкаНаСозданнуюБазу());
+                                        publicContent.МенеджерПотоков,sqLiteDatabase);
                             } catch (ExecutionException e) {
                                 throw new RuntimeException(e);
                             } catch (InterruptedException e) {
@@ -584,7 +571,7 @@ import okio.BufferedSink;
                                         Курсор_ПолучаемИмяСотрудникаИзТаблицыФИО = (SQLiteCursor) grudSqlOperations.
                                                 new GetаFreeData(context).getfreedata(grudSqlOperations.
                                                         concurrentHashMapНабор,
-                                                publicContent.МенеджерПотоков, Create_Database_СсылкаНАБазовыйКласс.getССылкаНаСозданнуюБазу());
+                                                publicContent.МенеджерПотоков, sqLiteDatabase);
                                     } catch (ExecutionException e) {
                                         throw new RuntimeException(e);
                                     } catch (InterruptedException e) {
@@ -1089,7 +1076,7 @@ import okio.BufferedSink;
                             new UpdateData(context).updatedata(class_grud_sql_operationsЛокальноеОбновление.concurrentHashMapНабор,
                             class_grud_sql_operationsЛокальноеОбновление.contentValuesДляSQLBuilder_Для_GRUD_Операций,
                             Class_Engine_SQLГдеНаходитьсяМенеджерПотоков.МенеджерПотоков,
-                            Create_Database_СсылкаНАБазовыйКласс.getССылкаНаСозданнуюБазу());
+                            sqLiteDatabase);
 
 
                     Log.d(this.getClass().getName(), "Результат_ЛокальногоОбновлениеДанных   " + Результат_ЛокальногоОбновлениеДанных);
@@ -1154,7 +1141,7 @@ import okio.BufferedSink;
                             new InsertData(context).insertdata(class_grud_sql_operationsВставкаСотрудника.concurrentHashMapНабор,
                             class_grud_sql_operationsВставкаСотрудника.contentValuesДляSQLBuilder_Для_GRUD_Операций ,
                             Class_Engine_SQLГдеНаходитьсяМенеджерПотоков.МенеджерПотоков,
-                            Create_Database_СсылкаНАБазовыйКласс.getССылкаНаСозданнуюБазу());
+                            sqLiteDatabase);
                     Log.d(this.getClass().getName(), " Результат_ВставкиДанныхТолькоДляСотрудникаНового  "+Результат_ВставкиДанныхТолькоДляСотрудникаНового);
                     if(Результат_ВставкиДанныхТолькоДляСотрудникаНового==null){
                         Результат_ВставкиДанныхТолькоДляСотрудникаНового=0l;
@@ -1236,7 +1223,7 @@ import okio.BufferedSink;
                             new InsertData(context).insertdata(class_grud_sql_operationsВставкаЧата.concurrentHashMapНабор,
                             class_grud_sql_operationsВставкаЧата.contentValuesДляSQLBuilder_Для_GRUD_Операций,
                             Class_Engine_SQLГдеНаходитьсяМенеджерПотоков.МенеджерПотоков,
-                            Create_Database_СсылкаНАБазовыйКласс.getССылкаНаСозданнуюБазу());
+                            sqLiteDatabase);
 //
 
                     Log.d(this.getClass().getName(), "Результат_ВставкиДанныхПриСозданииНСообщенияДЛЯЧата   " + Результат_ВставкиДанныхПриСозданииНСообщенияДЛЯЧата);
@@ -1411,7 +1398,7 @@ import okio.BufferedSink;
                             new UpdateData(context).updatedata(class_grud_sql_operationsВставкаИлиОбвновлениеНовойОрганизации.concurrentHashMapНабор,
                             class_grud_sql_operationsВставкаИлиОбвновлениеНовойОрганизации.contentValuesДляSQLBuilder_Для_GRUD_Операций,
                             Class_Engine_SQLГдеНаходитьсяМенеджерПотоков.МенеджерПотоков,
-                            Create_Database_СсылкаНАБазовыйКласс.getССылкаНаСозданнуюБазу());
+                            sqLiteDatabase);
 
                 Log.d(this.getClass().getName(), "Результат_ОбновленияДанныхОрганизация   " + Результат_ОбновленияДанныхОрганизация);
 
@@ -1460,7 +1447,7 @@ import okio.BufferedSink;
                                 new InsertData(context).insertdata(class_grud_sql_operationsВставкаИлиОбвновлениеНовойОрганизации.concurrentHashMapНабор,
                                 class_grud_sql_operationsВставкаИлиОбвновлениеНовойОрганизации.contentValuesДляSQLBuilder_Для_GRUD_Операций ,
                                 Class_Engine_SQLГдеНаходитьсяМенеджерПотоков.МенеджерПотоков,
-                                Create_Database_СсылкаНАБазовыйКласс.getССылкаНаСозданнуюБазу());
+                                sqLiteDatabase);
 
                         Log.d(this.getClass().getName(), "Результат_ВставкиДанныхОрганизация   " + Результат_ВставкиДанныхОрганизация);
 /*
@@ -1571,7 +1558,7 @@ import okio.BufferedSink;
                     new InsertData(context).insertdata(class_grud_sql_operationsПолученныйПубличныйID.concurrentHashMapНабор,
                     class_grud_sql_operationsПолученныйПубличныйID.contentValuesДляSQLBuilder_Для_GRUD_Операций ,
                     Class_Engine_SQLГдеНаходитьсяМенеджерПотоков.МенеджерПотоков,
-                    Create_Database_СсылкаНАБазовыйКласс.getССылкаНаСозданнуюБазу());
+                    sqLiteDatabase);
 
 
             Log.d(this.getClass().getName(), " Результат_ВставкиДанныхОрганизация   " + Результат_ВставкиДанныхОрганизация);
@@ -1697,7 +1684,7 @@ Class_GRUD_SQL_Operations class_grud_sql_operationsОбвовлениеСозд�
                         new UpdateData(context).updatedata(class_grud_sql_operationsОбвовлениеСозданииНовогоСотрудника.concurrentHashMapНабор,
                         class_grud_sql_operationsОбвовлениеСозданииНовогоСотрудника.contentValuesДляSQLBuilder_Для_GRUD_Операций ,
                         Class_Engine_SQLГдеНаходитьсяМенеджерПотоков.МенеджерПотоков,
-                        Create_Database_СсылкаНАБазовыйКласс.getССылкаНаСозданнуюБазу());
+                        sqLiteDatabase);
 
                 Log.d(this.getClass().getName(), "Результат_ОбновлениеДанныхОбновлениеСозданииНового   " + Результат_ОбновлениеДанныхОбновлениеСозданииНового);
 /*
@@ -1809,7 +1796,7 @@ Class_GRUD_SQL_Operations class_grud_sql_operationsОбвовлениеСозд�
                         new InsertData(context).insertdata(class_grud_sql_operationsДляВставкиОшибок.concurrentHashMapНабор,
                         class_grud_sql_operationsДляВставкиОшибок.contentValuesДляSQLBuilder_Для_GRUD_Операций,
                         Class_Engine_SQLГдеНаходитьсяМенеджерПотоков.МенеджерПотоков,
-                        Create_Database_СсылкаНАБазовыйКласс.getССылкаНаСозданнуюБазу());
+                        sqLiteDatabase);
 
                 Log.d(this.getClass().getName(), "Результат_ВставкиДанныхДляЗаписиОшибки   " + Результат_ВставкиДанныхДляЗаписиОшибки);
               /*      ///////
@@ -1876,7 +1863,7 @@ Class_GRUD_SQL_Operations classGrudSqlOperationsУдалениеДанныхЧе
                 // TODO: 30.01.2022
 
                 // TODO: 19.11.2022 ПОДНИМАЕМ ВЕРИСЮ ДАННЫХ
-                Long РезультатУвеличинаяВерсияДАныхЧата = new SubClassUpVersionDATA().МетодПовышаемВерсииCurrentTable(ТаблицаОткудаУдлаяемЗапись,context,getССылкаНаСозданнуюБазу());
+                Long РезультатУвеличинаяВерсияДАныхЧата = new SubClassUpVersionDATA().МетодПовышаемВерсииCurrentTable(ТаблицаОткудаУдлаяемЗапись,context );
                 Log.d(this.getClass().getName(), " РезультатУвеличинаяВерсияДАныхЧата  " + РезультатУвеличинаяВерсияДАныхЧата);
 
                 classGrudSqlOperationsУдалениеДанныхЧерезКонтейнерУниверсальная.contentValuesДляSQLBuilder_Для_GRUD_Операций.put("current_table",
@@ -1886,8 +1873,7 @@ Class_GRUD_SQL_Operations classGrudSqlOperationsУдалениеДанныхЧе
                         new UpdateData(context).updatedata(classGrudSqlOperationsУдалениеДанныхЧерезКонтейнерУниверсальная.
                                 concurrentHashMapНабор,
                         classGrudSqlOperationsУдалениеДанныхЧерезКонтейнерУниверсальная.contentValuesДляSQLBuilder_Для_GRUD_Операций,
-                        Class_Engine_SQLГдеНаходитьсяМенеджерПотоков.МенеджерПотоков, Create_Database_СсылкаНАБазовыйКласс
-                                .getССылкаНаСозданнуюБазу());
+                        Class_Engine_SQLГдеНаходитьсяМенеджерПотоков.МенеджерПотоков, sqLiteDatabase);
                 Log.d(this.getClass().getName(), "Результат_УдалениеДанных " + Результат_УдалениеДанных);
                 } catch (Exception e) {///////ошибки
                     e.printStackTrace();
@@ -1976,7 +1962,7 @@ Class_GRUD_SQL_Operations classGrudSqlOperationsУдалениеДанныхЧе
 
 
                 // TODO: 18.03.2023  получаем ВЕСИЮ ДАННЫХ
-                Long РезультатУвеличинаяВерсияПриудалениеСотрудника = new SubClassUpVersionDATA().МетодПовышаемВерсииCurrentTable(ТаблицаОткудаУдлаяемЗапись,context,getССылкаНаСозданнуюБазу());
+                Long РезультатУвеличинаяВерсияПриудалениеСотрудника = new SubClassUpVersionDATA().МетодПовышаемВерсииCurrentTable(ТаблицаОткудаУдлаяемЗапись,context );
                 Log.d(this.getClass().getName(), " РезультатУвеличинаяВерсияПриудалениеСотрудника  " + РезультатУвеличинаяВерсияПриудалениеСотрудника);
 
                 //TODO  конец курант ча
@@ -1987,7 +1973,7 @@ Class_GRUD_SQL_Operations classGrudSqlOperationsУдалениеДанныхЧе
                         Результат_ОбновлениеДанных= (Integer)  classGrudSqlOperationsДляУдаленияСотрудника.
                                 new SleepData(context).sleepdata(classGrudSqlOperationsДляУдаленияСотрудника.concurrentHashMapНабор,
                                 classGrudSqlOperationsДляУдаленияСотрудника.contentValuesДляSQLBuilder_Для_GRUD_Операций,
-                                Class_Engine_SQLГдеНаходитьсяМенеджерПотоков.МенеджерПотоков,Create_Database_СсылкаНАБазовыйКласс.getССылкаНаСозданнуюБазу());
+                                Class_Engine_SQLГдеНаходитьсяМенеджерПотоков.МенеджерПотоков,sqLiteDatabase);
                         Log.d(this.getClass().getName(), "Результат_ОбновлениеДанных   " + Результат_ОбновлениеДанных);
                     }
                     Log.d(this.getClass().getName(), " Результат_ОбновлениеДанных   " + Результат_ОбновлениеДанных);
@@ -2085,7 +2071,7 @@ Class_GRUD_SQL_Operations classGrudSqlOperationsУдалениеДанныхЧе
 
 
                 // TODO: 18.03.2023  получаем ВЕСИЮ ДАННЫХ
-                Long РезультатУвеличинаяВерсияДАныхЧата = new SubClassUpVersionDATA().МетодПовышаемВерсииCurrentTable(ТаблицаОткудаУдлаяемЗапись,context,getССылкаНаСозданнуюБазу());
+                Long РезультатУвеличинаяВерсияДАныхЧата = new SubClassUpVersionDATA().МетодПовышаемВерсииCurrentTable(ТаблицаОткудаУдлаяемЗапись,context);
                 Log.d(this.getClass().getName(), " РезультатУвеличинаяВерсияДАныхЧата  " + РезультатУвеличинаяВерсияДАныхЧата);
 
                 //TODO  конец курант ча
@@ -2111,7 +2097,7 @@ Class_GRUD_SQL_Operations classGrudSqlOperationsУдалениеДанныхЧе
                         Результат_УдалениеТолькоШАблон= (Integer)   classGrudSqlOperationsДляУдаленияСотрудника.
                                 new UpdateData(context).updatedata(classGrudSqlOperationsДляУдаленияСотрудника.concurrentHashMapНабор,
                                 classGrudSqlOperationsДляУдаленияСотрудника.contentValuesДляSQLBuilder_Для_GRUD_Операций ,
-                                Class_Engine_SQLГдеНаходитьсяМенеджерПотоков.МенеджерПотоков,Create_Database_СсылкаНАБазовыйКласс.getССылкаНаСозданнуюБазу());
+                                Class_Engine_SQLГдеНаходитьсяМенеджерПотоков.МенеджерПотоков,sqLiteDatabase);
 
 
                         Log.d(this.getClass().getName(), "Результат_УдалениеТолькоШАблон   " + Результат_УдалениеТолькоШАблон);
@@ -2190,7 +2176,7 @@ Class_GRUD_SQL_Operations classGrudSqlOperationsУдалениеДанныхЧе
                     ///////
                     SQLiteCursor            Курсор_ПолучаемИмяСотрудникаИзТаблицыФИО= (SQLiteCursor) class_grud_sql_operationsПолучаемНаБазуUUIDфиоПолучаемИзТаблицыФИОИМЯ.
                             new GetаFreeData(context).getfreedata(class_grud_sql_operationsПолучаемНаБазуUUIDфиоПолучаемИзТаблицыФИОИМЯ.concurrentHashMapНабор,
-                            Class_Engine_SQLГдеНаходитьсяМенеджерПотоков.МенеджерПотоков,Create_Database_СсылкаНАБазовыйКласс.getССылкаНаСозданнуюБазу());
+                            Class_Engine_SQLГдеНаходитьсяМенеджерПотоков.МенеджерПотоков,sqLiteDatabase);
 
                     if(Курсор_ПолучаемИмяСотрудникаИзТаблицыФИО.getCount()>0){
                         //
@@ -2260,7 +2246,7 @@ Class_GRUD_SQL_Operations classGrudSqlOperationsУдалениеДанныхЧе
                     РезультатОбновлениеЧерезКонтрейнер= (Integer)  class_grud_sql_operationsЗаписываемВыбранныйРежимИнтрернетаWifiИлиMobil.
                             new UpdateData(context).updatedata(class_grud_sql_operationsЗаписываемВыбранныйРежимИнтрернетаWifiИлиMobil.concurrentHashMapНабор,
                             class_grud_sql_operationsЗаписываемВыбранныйРежимИнтрернетаWifiИлиMobil.contentValuesДляSQLBuilder_Для_GRUD_Операций ,
-                            Class_Engine_SQLГдеНаходитьсяМенеджерПотоков.МенеджерПотоков,Create_Database_СсылкаНАБазовыйКласс.getССылкаНаСозданнуюБазу());
+                            Class_Engine_SQLГдеНаходитьсяМенеджерПотоков.МенеджерПотоков,sqLiteDatabase);
 
 
                     Log.d(this.getClass().getName(), "РезультатОбновлениеЧерезКонтрейнер   " + РезультатОбновлениеЧерезКонтрейнер);
@@ -2353,7 +2339,7 @@ Class_GRUD_SQL_Operations classGrudSqlOperationsУдалениеДанныхЧе
 
             Курсор_ПолучениеИмяСистемы= (SQLiteCursor)  class_grud_sql_operationsПолучениеИмяСистемы.
                     new GetData(context).getdata(class_grud_sql_operationsПолучениеИмяСистемы.concurrentHashMapНабор,
-                    Class_Engine_SQLГдеНаходитьсяМенеджерПотоков.МенеджерПотоков,Create_Database_СсылкаНАБазовыйКласс.getССылкаНаСозданнуюБазу());
+                    Class_Engine_SQLГдеНаходитьсяМенеджерПотоков.МенеджерПотоков,sqLiteDatabase);
 
             Log.d(this.getClass().getName(), "GetData "  +Курсор_ПолучениеИмяСистемы);
 
@@ -2464,7 +2450,7 @@ Class_GRUD_SQL_Operations classGrudSqlOperationsУдалениеДанныхЧе
 
             Курсор_ДляЗагрузкиСотрудниковНепостредственнов= (SQLiteCursor)  class_grud_sql_operationsСотрудниковListViewТабел.
                     new GetData(контекстLIstView).getdata(class_grud_sql_operationsСотрудниковListViewТабел.concurrentHashMapНабор,
-                    Class_Engine_SQLГдеНаходитьсяМенеджерПотоков.МенеджерПотоков,Create_Database_СсылкаНАБазовыйКласс.getССылкаНаСозданнуюБазу());
+                    Class_Engine_SQLГдеНаходитьсяМенеджерПотоков.МенеджерПотоков,sqLiteDatabase);
 
             Log.d(this.getClass().getName(), "GetData "  );
 
@@ -2587,7 +2573,7 @@ Class_GRUD_SQL_Operations classGrudSqlOperationsУдалениеДанныхЧе
 
                             КурсорДляСпинераСамиМЕсяцы= (SQLiteCursor)  class_grud_sql_operationsЗначенияНовгоСотрудник.new GetData(context).getdata(class_grud_sql_operationsЗначенияНовгоСотрудник.
                                             concurrentHashMapНабор,
-                                    Class_Engine_SQLГдеНаходитьсяМенеджерПотоков.МенеджерПотоков,Create_Database_СсылкаНАБазовыйКласс.getССылкаНаСозданнуюБазу());
+                                    Class_Engine_SQLГдеНаходитьсяМенеджерПотоков.МенеджерПотоков,sqLiteDatabase);
 
                             Log.d(this.getClass().getName(), "КурсорДляСпинераСамиМЕсяцы " +КурсорДляСпинераСамиМЕсяцы );
 
@@ -2668,7 +2654,7 @@ Class_GRUD_SQL_Operations classGrudSqlOperationsУдалениеДанныхЧе
 
             Курсор_ЗагружаетАрайдистЗначенийНовогоШаблонаВнутри= (SQLiteCursor)  class_grud_sql_operationsЗначенияШаблонов.
                     new GetData(context).getdata(class_grud_sql_operationsЗначенияШаблонов.concurrentHashMapНабор,
-                    Class_Engine_SQLГдеНаходитьсяМенеджерПотоков.МенеджерПотоков,Create_Database_СсылкаНАБазовыйКласс.getССылкаНаСозданнуюБазу());
+                    Class_Engine_SQLГдеНаходитьсяМенеджерПотоков.МенеджерПотоков,sqLiteDatabase);
 
             Log.d(this.getClass().getName(), "GetData " +Курсор_ЗагружаетАрайдистЗначенийНовогоШаблонаВнутри );
 
@@ -2765,7 +2751,7 @@ Class_GRUD_SQL_Operations classGrudSqlOperationsУдалениеДанныхЧе
 
             Курсор_ЗагружаемТабеляСозданныйВнутрений= (SQLiteCursor)  class_grud_sql_operationsУжеготовыеТабеля.
                     new GetData(context).getdata(class_grud_sql_operationsУжеготовыеТабеля.concurrentHashMapНабор,
-                    Class_Engine_SQLГдеНаходитьсяМенеджерПотоков.МенеджерПотоков,Create_Database_СсылкаНАБазовыйКласс.getССылкаНаСозданнуюБазу());
+                    Class_Engine_SQLГдеНаходитьсяМенеджерПотоков.МенеджерПотоков,sqLiteDatabase);
 
             Log.d(this.getClass().getName(), "GetData " +Курсор_ЗагружаемТабеляСозданныйВнутрений );
             ////
@@ -2861,7 +2847,7 @@ Class_GRUD_SQL_Operations classGrudSqlOperationsУдалениеДанныхЧе
 
             Курсор_ЗагружаемТабеляСозданныйВнутрений= (SQLiteCursor)  class_grud_sql_operationsУжеготовыеТабеляДляСкролаПОТабелю.
                     new GetData(context).getdata(class_grud_sql_operationsУжеготовыеТабеляДляСкролаПОТабелю.concurrentHashMapНабор,
-                    Class_Engine_SQLГдеНаходитьсяМенеджерПотоков.МенеджерПотоков,Create_Database_СсылкаНАБазовыйКласс.getССылкаНаСозданнуюБазу());
+                    Class_Engine_SQLГдеНаходитьсяМенеджерПотоков.МенеджерПотоков,sqLiteDatabase);
 
             Log.d(this.getClass().getName(), "GetData " +Курсор_ЗагружаемТабеляСозданныйВнутрений );
 
@@ -2922,7 +2908,7 @@ Class_GRUD_SQL_Operations classGrudSqlOperationsУдалениеДанныхЧе
                     class_grud_sql_operationsТабеляДляСкролаПОТабелюТолькоКоличествоСТорочек_ПервыйЗапускаПриЗАгрузкеАктивти.
                     new GetData(context).getdata(class_grud_sql_operationsТабеляДляСкролаПОТабелюТолькоКоличествоСТорочек_ПервыйЗапускаПриЗАгрузкеАктивти.
                                     concurrentHashMapНабор,
-                            Class_Engine_SQLГдеНаходитьсяМенеджерПотоков.МенеджерПотоков,Create_Database_СсылкаНАБазовыйКласс.getССылкаНаСозданнуюБазу());
+                            Class_Engine_SQLГдеНаходитьсяМенеджерПотоков.МенеджерПотоков,sqLiteDatabase);
             Log.d(this.getClass().getName(), "GetData "+Курсор_ЗагружаемТабеляСозданный_ПервыйКурсорКоторыйСамЗагружаетьсяКогадМыЗаходимНААктивти  );
         } catch (Exception e) {
             e.printStackTrace();
@@ -2972,7 +2958,7 @@ Class_GRUD_SQL_Operations classGrudSqlOperationsУдалениеДанныхЧе
                             class_grud_sql_operationsЗАписиПолученогоОтСервреаIDПубличного.concurrentHashMapНабор.put("УсловиеСортировки","date_update DESC");
                             Курсор_УзнаемЕслиUUIDВТАблицеОрганизация= (SQLiteCursor)  class_grud_sql_operationsЗАписиПолученогоОтСервреаIDПубличного.
                                     new GetData(context).getdata(class_grud_sql_operationsЗАписиПолученогоОтСервреаIDПубличного.concurrentHashMapНабор,
-                                    Class_Engine_SQLГдеНаходитьсяМенеджерПотоков.МенеджерПотоков,Create_Database_СсылкаНАБазовыйКласс.getССылкаНаСозданнуюБазу());
+                                    Class_Engine_SQLГдеНаходитьсяМенеджерПотоков.МенеджерПотоков,sqLiteDatabase);
 
                             Log.d(this.getClass().getName(), "GetData " +Курсор_УзнаемЕслиUUIDВТАблицеОрганизация );
                             int UUIDдлянастроуки = 0;
@@ -3004,7 +2990,7 @@ Class_GRUD_SQL_Operations classGrudSqlOperationsУдалениеДанныхЧе
 
                                     // TODO: 18.03.2023  получаем ВЕСИЮ ДАННЫХ
                                     Long РезультатУвеличинаяВерсияДЛяТАБЛИЦЫНАСТРОЙКИ =
-                                            new SubClassUpVersionDATA().МетодПовышаемВерсииCurrentTable(ТаблицаКоторуюнадоИзменитьВерсиюДанных,context,getССылкаНаСозданнуюБазу());
+                                            new SubClassUpVersionDATA().МетодПовышаемВерсииCurrentTable(ТаблицаКоторуюнадоИзменитьВерсиюДанных,context);
                                     Log.d(this.getClass().getName(), " РезультатУвеличинаяВерсияДЛяТАБЛИЦЫНАСТРОЙКИ  " + РезультатУвеличинаяВерсияДЛяТАБЛИЦЫНАСТРОЙКИ);
 
                                     АдаптерВставкиПолученогоПубличногоID.put("current_table", РезультатУвеличинаяВерсияДЛяТАБЛИЦЫНАСТРОЙКИ);
@@ -3034,7 +3020,7 @@ Class_GRUD_SQL_Operations classGrudSqlOperationsУдалениеДанныхЧе
                                                 new ChangesVesionData(context)
                                                     .changesvesiondata(classGrudSqlOperationsПриписиИзменнийВерсииДанныхВФонеАунтификацииИЗАписьВsettings_tabels.
                                                                     concurrentHashMapНабор,
-                                                        Class_Engine_SQLГдеНаходитьсяМенеджерПотоков.МенеджерПотоков,Create_Database_СсылкаНАБазовыйКласс.getССылкаНаСозданнуюБазу());
+                                                        Class_Engine_SQLГдеНаходитьсяМенеджерПотоков.МенеджерПотоков,sqLiteDatabase);
 
                                         Log.d(this.getClass().getName(), "Результат_ПриписиИзменнийВерсииДанныхВТАБЛИЦУ_settings_tabels "
                                                 +Результат_ПриписиИзменнийВерсииДанныхВТАБЛИЦУ_settings_tabels );
@@ -3105,7 +3091,7 @@ Class_GRUD_SQL_Operations classGrudSqlOperationsУдалениеДанныхЧе
                                         Курсор_ПолучаемИмяСотрудникаИзТаблицыФИО = (SQLiteCursor) grudSqlOperations.
                                                 new GetаFreeData(context).getfreedata(grudSqlOperations.
                                                         concurrentHashMapНабор,
-                                                publicContent.МенеджерПотоков, Create_Database_СсылкаНАБазовыйКласс.getССылкаНаСозданнуюБазу());
+                                                publicContent.МенеджерПотоков, sqLiteDatabase);
                                     } catch (ExecutionException e) {
                                         throw new RuntimeException(e);
                                     } catch (InterruptedException e) {
@@ -3359,7 +3345,7 @@ Class_GRUD_SQL_Operations classGrudSqlOperationsУдалениеДанныхЧе
                     concurrentHashMapНаборПараментовSQLBuilder_Для_GRUD_ОперацийпОЛУЧЕНИЯнАЗВАНИЕСФО.concurrentHashMapНабор.put("УсловиеЛимита","1");
                     Курсор_ЗагружаетНазваниеТабеляНАОснованииСФО= (SQLiteCursor)  concurrentHashMapНаборПараментовSQLBuilder_Для_GRUD_ОперацийпОЛУЧЕНИЯнАЗВАНИЕСФО.
                             new GetData(КонтекстДляРежимаИнтрента).getdata(concurrentHashMapНаборПараментовSQLBuilder_Для_GRUD_ОперацийпОЛУЧЕНИЯнАЗВАНИЕСФО.concurrentHashMapНабор,
-                            Class_Engine_SQLГдеНаходитьсяМенеджерПотоков.МенеджерПотоков,Create_Database_СсылкаНАБазовыйКласс.getССылкаНаСозданнуюБазу());
+                            Class_Engine_SQLГдеНаходитьсяМенеджерПотоков.МенеджерПотоков,sqLiteDatabase);
                     Log.d(this.getClass().getName(), "GetData "  +Курсор_ЗагружаетНазваниеТабеляНАОснованииСФО);
                     if (Курсор_ЗагружаетНазваниеТабеляНАОснованииСФО.getCount() > 0) {
                         Курсор_ЗагружаетНазваниеТабеляНАОснованииСФО.moveToFirst();
@@ -3463,7 +3449,7 @@ Class_GRUD_SQL_Operations classGrudSqlOperationsУдалениеДанныхЧе
 
             Курсор_КоторыйПолучаетМаксимальюнуВерсиюДанных= (SQLiteCursor)  class_grud_sql_operationsВерсииДаныхЧатаДляОтправкиЕгоНАСервер.
                     new GetData(this.context).getdata(class_grud_sql_operationsВерсииДаныхЧатаДляОтправкиЕгоНАСервер.concurrentHashMapНабор,
-                    Class_Engine_SQLГдеНаходитьсяМенеджерПотоков.МенеджерПотоков,Create_Database_СсылкаНАБазовыйКласс.getССылкаНаСозданнуюБазу());
+                    Class_Engine_SQLГдеНаходитьсяМенеджерПотоков.МенеджерПотоков,sqLiteDatabase);
 
             Log.d(this.getClass().getName(), "GetData " +Курсор_КоторыйПолучаетМаксимальюнуВерсиюДанных );
             if(Курсор_КоторыйПолучаетМаксимальюнуВерсиюДанных.getCount()>0){

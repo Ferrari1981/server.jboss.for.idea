@@ -42,7 +42,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.dsy.dsu.AllDatabases.CREATE_DATABASE;
+
 import com.dsy.dsu.Business_logic_Only_Class.Class_Generation_Errors;
 import com.dsy.dsu.Business_logic_Only_Class.Class_Generation_UUID;
 import com.dsy.dsu.Business_logic_Only_Class.Class_Generations_PUBLIC_CURRENT_ID;
@@ -843,8 +843,7 @@ public class FragmentNewOrderTransport extends Fragment {
                                         Uri uri = Uri.parse("content://com.dsy.dsu.providerdatabasecurrentoperations/" + table + "");
                                         ContentValues valuesNewOrderTransport = new ContentValues();
                                         valuesNewOrderTransport.put("user_update", ПубличныйID);
-                                        Long ВерсияДанныхUp = new SubClassUpVersionDATA().МетодПовышаемВерсииCurrentTable(table, getContext(),
-                                                new CREATE_DATABASE(getContext()).getССылкаНаСозданнуюБазу());
+                                        Long ВерсияДанныхUp = new SubClassUpVersionDATA().МетодПовышаемВерсииCurrentTable(table, getContext());
                                         valuesNewOrderTransport.put("current_table", ВерсияДанныхUp);
                                         String ДатаОбновления = new Class_Generation_Data(getContext()).ГлавнаяДатаИВремяОперацийСБазойДанных();
                                         valuesNewOrderTransport.put("date_update", ДатаОбновления);

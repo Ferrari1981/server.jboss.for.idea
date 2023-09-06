@@ -2,26 +2,20 @@ package com.dsy.dsu.Business_logic_Only_Class;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteCursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
-import com.dsy.dsu.AllDatabases.CREATE_DATABASE;
+import com.dsy.dsu.AllDatabases.GetSQLiteDatabase;
+
 
 public class Class_Search_Changes_Data {
-
-    Context contextДляКлассаИщемБылеИзменениевБазе;
-
+    Context context;
     ///////TODO
-    CREATE_DATABASE Create_Database_СсылкаНАБазовыйКласс;
-
+    private SQLiteDatabase sqLiteDatabase ;
     ////
     public Class_Search_Changes_Data(Context context) {
-
-        contextДляКлассаИщемБылеИзменениевБазе=context;
-
-
-
-///////TODO
-           Create_Database_СсылкаНАБазовыйКласс=new CREATE_DATABASE(contextДляКлассаИщемБылеИзменениевБазе);
+        this.context =context;
+        sqLiteDatabase=    GetSQLiteDatabase.SqliteDatabase();
     }
     //функция получающая время операции ДАННАЯ ФУНКЦИЯ ВРЕМЯ ПРИМЕНЯЕТЬСЯ ВО ВСЕЙ ПРОГРАММЕ
 
@@ -29,7 +23,7 @@ public class Class_Search_Changes_Data {
     public boolean МетодВычислемБылиИзменениВДанныхВДанныхПоДатам(String КакиеТаблицаОбработкиЧерезДату) {
         // TODO: 26.08.2021 НОВЫЙ ВЫЗОВ НОВОГО КЛАСС GRUD - ОПЕРАЦИИ
         boolean РезультатБылиБЫИзмегнениевБазе = false;
-        Class_GRUD_SQL_Operations class_grud_sql_operationsВычислемБылиЛиИзмененияВТаблицеТабель = new Class_GRUD_SQL_Operations(contextДляКлассаИщемБылеИзменениевБазе);
+        Class_GRUD_SQL_Operations class_grud_sql_operationsВычислемБылиЛиИзмененияВТаблицеТабель = new Class_GRUD_SQL_Operations(context);
         try {
         class_grud_sql_operationsВычислемБылиЛиИзмененияВТаблицеТабель.concurrentHashMapНабор.put("НазваниеОбрабоатываемойТаблицы", "MODIFITATION_Client");
         class_grud_sql_operationsВычислемБылиЛиИзмененияВТаблицеТабель.concurrentHashMapНабор.put("СтолбцыОбработки", "localversionandroid_version,versionserveraandroid_version");
@@ -55,10 +49,10 @@ public class Class_Search_Changes_Data {
             /// class_grud_sql_operations. concurrentHashMapНабор.put("УсловиеЛимита","1");*/
         ////
         // TODO: 27.08.2021  ПОЛУЧЕНИЕ ДАННЫХ ОТ КЛАССА GRUD-ОПЕРАЦИИ
-            PUBLIC_CONTENT Class_Engine_SQLГдеНаходитьсяМенеджерПотоков = new PUBLIC_CONTENT(contextДляКлассаИщемБылеИзменениевБазе);
+            PUBLIC_CONTENT Class_Engine_SQLГдеНаходитьсяМенеджерПотоков = new PUBLIC_CONTENT(context);
             SQLiteCursor    Курсор_ВычислемБылиЛиИзмененияВТаблицеТабель = (SQLiteCursor) class_grud_sql_operationsВычислемБылиЛиИзмененияВТаблицеТабель.
-                new GetData(contextДляКлассаИщемБылеИзменениевБазе).getdata(class_grud_sql_operationsВычислемБылиЛиИзмененияВТаблицеТабель.concurrentHashMapНабор,
-                Class_Engine_SQLГдеНаходитьсяМенеджерПотоков.МенеджерПотоков,Create_Database_СсылкаНАБазовыйКласс.getССылкаНаСозданнуюБазу());
+                new GetData(context).getdata(class_grud_sql_operationsВычислемБылиЛиИзмененияВТаблицеТабель.concurrentHashMapНабор,
+                Class_Engine_SQLГдеНаходитьсяМенеджерПотоков.МенеджерПотоков,sqLiteDatabase);
         Log.d(this.getClass().getName(), "GetData " + Курсор_ВычислемБылиЛиИзмененияВТаблицеТабель);
         if (Курсор_ВычислемБылиЛиИзмененияВТаблицеТабель.getCount() > 0) {
             Курсор_ВычислемБылиЛиИзмененияВТаблицеТабель.moveToFirst();
@@ -78,7 +72,7 @@ public class Class_Search_Changes_Data {
         e.printStackTrace();
         Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                 " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-        new   Class_Generation_Errors(contextДляКлассаИщемБылеИзменениевБазе).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
+        new   Class_Generation_Errors(context).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
                 Thread.currentThread().getStackTrace()[2].getLineNumber());
     }
         return  РезультатБылиБЫИзмегнениевБазе;
@@ -98,7 +92,7 @@ public class Class_Search_Changes_Data {
         boolean РезультатБылиБЫИзмегнениевБазе=false;
 
         ///
-        Class_GRUD_SQL_Operations class_grud_sql_operationsВычислемБылиЛиИзмененияВТаблицеТабелВерсияДанных = new Class_GRUD_SQL_Operations(contextДляКлассаИщемБылеИзменениевБазе);
+        Class_GRUD_SQL_Operations class_grud_sql_operationsВычислемБылиЛиИзмененияВТаблицеТабелВерсияДанных = new Class_GRUD_SQL_Operations(context);
 
         try{
 
@@ -140,14 +134,14 @@ public class Class_Search_Changes_Data {
 
             // TODO: 12.10.2021  Ссылка Менеджер Потоков
 
-            PUBLIC_CONTENT  Class_Engine_SQLГдеНаходитьсяМенеджерПотоков =new PUBLIC_CONTENT (contextДляКлассаИщемБылеИзменениевБазе);
+            PUBLIC_CONTENT  Class_Engine_SQLГдеНаходитьсяМенеджерПотоков =new PUBLIC_CONTENT (context);
 
             ///
 
             Курсор_ВычислемБылиЛиИзмененияВТаблицеТабель = (SQLiteCursor) class_grud_sql_operationsВычислемБылиЛиИзмененияВТаблицеТабелВерсияДанных.
-                    new GetData(contextДляКлассаИщемБылеИзменениевБазе).
+                    new GetData(context).
                     getdata(class_grud_sql_operationsВычислемБылиЛиИзмененияВТаблицеТабелВерсияДанных.concurrentHashMapНабор,
-                            Class_Engine_SQLГдеНаходитьсяМенеджерПотоков.МенеджерПотоков,Create_Database_СсылкаНАБазовыйКласс.getССылкаНаСозданнуюБазу());
+                            Class_Engine_SQLГдеНаходитьсяМенеджерПотоков.МенеджерПотоков,sqLiteDatabase);
             //////////////
 
 
@@ -209,10 +203,10 @@ public class Class_Search_Changes_Data {
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                     " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
             /////////
-            new   Class_Generation_Errors(contextДляКлассаИщемБылеИзменениевБазе).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
+            new   Class_Generation_Errors(context).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
                     Thread.currentThread().getStackTrace()[2].getLineNumber());
 
-         //   Log.e(contextДляКлассаИщемБылеИзменениевБазе.getClass().getName(), " Стоп СЛУЖБА MyWork_Async_Public из FaceApp в MyWork_Async_Public Exception  ошибка в классе MyWork_Async_Public" + e.toString());
+         //   Log.e(context.getClass().getName(), " Стоп СЛУЖБА MyWork_Async_Public из FaceApp в MyWork_Async_Public Exception  ошибка в классе MyWork_Async_Public" + e.toString());
 
 
         }

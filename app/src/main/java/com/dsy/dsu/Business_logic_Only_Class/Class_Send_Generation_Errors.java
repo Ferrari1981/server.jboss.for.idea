@@ -3,33 +3,33 @@ package com.dsy.dsu.Business_logic_Only_Class;
 import android.app.Activity;
 import android.content.Context;
 import android.database.sqlite.SQLiteCursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
-import com.dsy.dsu.AllDatabases.CREATE_DATABASE;
+
+import com.dsy.dsu.AllDatabases.GetSQLiteDatabase;
 
 import java.util.concurrent.ExecutionException;
 
 public class Class_Send_Generation_Errors {
-
-    Context contextДляКлассаПосылаемОшибкиНАСервер;
-    //
+    Context context;
     Activity activity;
     //
-    CREATE_DATABASE Create_Database_СсылкаНАБазовыйКласс;
+    private SQLiteDatabase sqLiteDatabase ;
 
     public Class_Send_Generation_Errors(Context context, String СамаОшибка, Activity activityВнутри) {
 
-        contextДляКлассаПосылаемОшибкиНАСервер=context;
+        this.context =context;
 
         activity=   activityВнутри;
-
+        sqLiteDatabase=    GetSQLiteDatabase.SqliteDatabase();
 
         StringBuffer БуферОшибкаПриПодключениекСерверуДляАунтификацииПользователяПриВходе=new StringBuffer(СамаОшибка);
 
 
 
         // TODO: 26.08.2021 НОВЫЙ ВЫЗОВ НОВОГО КЛАСС GRUD - ОПЕРАЦИИ
-        Class_GRUD_SQL_Operations class_grud_sql_operationsПолучаемНаБазуUUIDфиоПолучаемИзТаблицыФИОИМЯ= new Class_GRUD_SQL_Operations(contextДляКлассаПосылаемОшибкиНАСервер);
+        Class_GRUD_SQL_Operations class_grud_sql_operationsПолучаемНаБазуUUIDфиоПолучаемИзТаблицыФИОИМЯ= new Class_GRUD_SQL_Operations(this.context);
         ///
         class_grud_sql_operationsПолучаемНаБазуUUIDфиоПолучаемИзТаблицыФИОИМЯ.concurrentHashMapНабор.put("СамFreeSQLКОд",
                 " SELECT id  FROM successlogin  ORDER BY date_update DESC ;");
@@ -38,16 +38,16 @@ public class Class_Send_Generation_Errors {
 
         // TODO: 12.10.2021  Ссылка Менеджер Потоков
 
-        PUBLIC_CONTENT Class_Engine_SQLГдеНаходитьсяМенеджерПотоков = new PUBLIC_CONTENT(contextДляКлассаПосылаемОшибкиНАСервер);
+        PUBLIC_CONTENT Class_Engine_SQLГдеНаходитьсяМенеджерПотоков = new PUBLIC_CONTENT(this.context);
 
 
         ///////
         SQLiteCursor Курсор_ПолучаемИмяСотрудникаИзТаблицыФИО= null;
         try {
             Курсор_ПолучаемИмяСотрудникаИзТаблицыФИО = (SQLiteCursor) class_grud_sql_operationsПолучаемНаБазуUUIDфиоПолучаемИзТаблицыФИОИМЯ.
-                    new GetаFreeData(contextДляКлассаПосылаемОшибкиНАСервер).getfreedata(class_grud_sql_operationsПолучаемНаБазуUUIDфиоПолучаемИзТаблицыФИОИМЯ.
+                    new GetаFreeData(this.context).getfreedata(class_grud_sql_operationsПолучаемНаБазуUUIDфиоПолучаемИзТаблицыФИОИМЯ.
                             concurrentHashMapНабор,
-                    Class_Engine_SQLГдеНаходитьсяМенеджерПотоков.МенеджерПотоков,Create_Database_СсылкаНАБазовыйКласс.getССылкаНаСозданнуюБазу());
+                    Class_Engine_SQLГдеНаходитьсяМенеджерПотоков.МенеджерПотоков,sqLiteDatabase);
         } catch (ExecutionException executionException) {
             executionException.printStackTrace();
         } catch (InterruptedException interruptedException) {

@@ -2,9 +2,11 @@ package com.dsy.dsu.Business_logic_Only_Class;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteCursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
-import com.dsy.dsu.AllDatabases.CREATE_DATABASE;
+
+import com.dsy.dsu.AllDatabases.GetSQLiteDatabase;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
@@ -16,25 +18,20 @@ import java.util.concurrent.TimeoutException;
 
 public class Class_Get_Status_Works_SERVER {
 
-    Context contextДляПолучениеСтатусаСервераДванныеНаНемЕстьИлиНет;
+    Context context;
 
     // TODO: 13.10.2021
 
     ///////TODO
-    CREATE_DATABASE Create_Database_СсылкаНАБазовыйКласс;
+    private SQLiteDatabase sqLiteDatabase ;
 
     String    ПубличноеИмяПользовательДлСервлета=         new String();
-
     /////
     String      ПубличноеПарольДлСервлета=         new String();
-
     public Class_Get_Status_Works_SERVER(Context context) {
 
-        contextДляПолучениеСтатусаСервераДванныеНаНемЕстьИлиНет=context;
-
-
-///////TODO
-         Create_Database_СсылкаНАБазовыйКласс=new CREATE_DATABASE(contextДляПолучениеСтатусаСервераДванныеНаНемЕстьИлиНет);
+        this.context =context;
+        sqLiteDatabase=    GetSQLiteDatabase.SqliteDatabase();
     }
     //функция получающая время операции ДАННАЯ ФУНКЦИЯ ВРЕМЯ ПРИМЕНЯЕТЬСЯ ВО ВСЕЙ ПРОГРАММЕ
 
@@ -133,7 +130,7 @@ public class Class_Get_Status_Works_SERVER {
                     //TODO  ПУБЛИЧНЫЙ ЛОГИН и ПАРОЛЬ
 
                     // TODO: 26.08.2021 НОВЫЙ ВЫЗОВ НОВОГО КЛАСС GRUD - ОПЕРАЦИИ
-                    Class_GRUD_SQL_Operations class_grud_sql_operationsПолучаемНаБазуUUIDфиоПолучаемИзТаблицыФИОИМЯ= new Class_GRUD_SQL_Operations(contextДляПолучениеСтатусаСервераДванныеНаНемЕстьИлиНет);
+                    Class_GRUD_SQL_Operations class_grud_sql_operationsПолучаемНаБазуUUIDфиоПолучаемИзТаблицыФИОИМЯ= new Class_GRUD_SQL_Operations(context);
                     ///
                     class_grud_sql_operationsПолучаемНаБазуUUIDфиоПолучаемИзТаблицыФИОИМЯ.concurrentHashMapНабор.put("СамFreeSQLКОд",
                             " SELECT success_users,success_login  FROM successlogin  ORDER BY date_update DESC ;");
@@ -141,13 +138,13 @@ public class Class_Get_Status_Works_SERVER {
 
                     // TODO: 12.10.2021  Ссылка Менеджер Потоков
 
-                    PUBLIC_CONTENT Class_Engine_SQLГдеНаходитьсяМенеджерПотоков = new PUBLIC_CONTENT(contextДляПолучениеСтатусаСервераДванныеНаНемЕстьИлиНет);
+                    PUBLIC_CONTENT Class_Engine_SQLГдеНаходитьсяМенеджерПотоков = new PUBLIC_CONTENT(context);
 
 
                     ///////
                     SQLiteCursor Курсор_ПолучаемИмяСотрудникаИзТаблицыФИО= (SQLiteCursor) class_grud_sql_operationsПолучаемНаБазуUUIDфиоПолучаемИзТаблицыФИОИМЯ.
-                            new GetаFreeData(contextДляПолучениеСтатусаСервераДванныеНаНемЕстьИлиНет).getfreedata(class_grud_sql_operationsПолучаемНаБазуUUIDфиоПолучаемИзТаблицыФИОИМЯ.concurrentHashMapНабор,
-                            Class_Engine_SQLГдеНаходитьсяМенеджерПотоков.МенеджерПотоков,Create_Database_СсылкаНАБазовыйКласс.getССылкаНаСозданнуюБазу());
+                            new GetаFreeData(context).getfreedata(class_grud_sql_operationsПолучаемНаБазуUUIDфиоПолучаемИзТаблицыФИОИМЯ.concurrentHashMapНабор,
+                            Class_Engine_SQLГдеНаходитьсяМенеджерПотоков.МенеджерПотоков,sqLiteDatabase);
 
                     if(Курсор_ПолучаемИмяСотрудникаИзТаблицыФИО.getCount()>0){
 
@@ -223,7 +220,7 @@ public class Class_Get_Status_Works_SERVER {
                     ///метод запись ошибок в таблицу
                     Log.e(Class_MODEL_synchronized.class.getName(), "Ошибка " + ОшибкаТекущегоМетода + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                             " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber() + " ОшибкаТекущегоМетода " + ОшибкаТекущегоМетода.toString());
-                    new   Class_Generation_Errors(contextДляПолучениеСтатусаСервераДванныеНаНемЕстьИлиНет).МетодЗаписиВЖурналНовойОшибки(ex.toString(), Class_MODEL_synchronized.class.getName(),
+                    new   Class_Generation_Errors(context).МетодЗаписиВЖурналНовойОшибки(ex.toString(), Class_MODEL_synchronized.class.getName(),
                             Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
                     ///todo
 
