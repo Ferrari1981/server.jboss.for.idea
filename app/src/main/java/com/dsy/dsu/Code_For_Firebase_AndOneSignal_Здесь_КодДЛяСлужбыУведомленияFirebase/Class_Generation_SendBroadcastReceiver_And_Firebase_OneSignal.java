@@ -4,17 +4,19 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.database.sqlite.SQLiteCursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
 
+import com.dsy.dsu.AllDatabases.GetSQLiteDatabase;
 import com.dsy.dsu.Business_logic_Only_Class.Class_GRUD_SQL_Operations;
 import com.dsy.dsu.Business_logic_Only_Class.DATE.Class_Generation_Data;
 import com.dsy.dsu.Business_logic_Only_Class.Class_Generation_Errors;
 import com.dsy.dsu.Business_logic_Only_Class.Class_Generations_PUBLIC_CURRENT_ID;
-import com.dsy.dsu.AllDatabases.CREATE_DATABASE;
+
 import com.dsy.dsu.Business_logic_Only_Class.Class_Generator_One_WORK_MANAGER;
 import com.dsy.dsu.Business_logic_Only_Class.SubClassUpVersionDATA;
 import com.dsy.dsu.Code_For_Starting_BroadcastReciever_ЗдесьКодЗапускаБроадКастеров.BroadcastReceiver_Sous_Asyns_Glassfish;
@@ -57,9 +59,12 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
      private Context context;
      private  String НовыйКлючОтOneSingnal = null;
      private  Class_Generator_One_WORK_MANAGER class_generator_one_work_manager;
+
+     private SQLiteDatabase sqLiteDatabase ;
     public Class_Generation_SendBroadcastReceiver_And_Firebase_OneSignal(@NonNull  Context context) {
         this.context=context;
         if (context!=null) {
+            sqLiteDatabase=    GetSQLiteDatabase.SqliteDatabase();
             class_generator_one_work_manager=new Class_Generator_One_WORK_MANAGER(context);
             Log.d(this.getClass().getName(), " Class_Generation_SendBroadcastReceiver_And_Firebase_OneSignal   context  "+context);
         }
@@ -295,11 +300,15 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
                         concurrentHashMapНабор.put("УсловиеСортировки","date_update DESC");
                 class_grud_sql_operationsПолучаемПубличныйПолучениеВсегоСпискаIDДляOneSignal.
                         concurrentHashMapНабор.put("УсловиеЛимита","1");
+
                 // TODO: 03.08.2023  вытаскиваем Данные
-                SQLiteCursor     Курсор_ПолучаемУжеЗагруженныйЕслиНОНЕИзменильсяIDДляONESIGNAL = (SQLiteCursor)  class_grud_sql_operationsПолучаемПубличныйПолучениеВсегоСпискаIDДляOneSignal.
+                SQLiteCursor     Курсор_ПолучаемУжеЗагруженныйЕслиНОНЕИзменильсяIDДляONESIGNAL = (SQLiteCursor)
+                        class_grud_sql_operationsПолучаемПубличныйПолучениеВсегоСпискаIDДляOneSignal.
                         new GetData(context).getdata(class_grud_sql_operationsПолучаемПубличныйПолучениеВсегоСпискаIDДляOneSignal.
-                        concurrentHashMapНабор,public_contentменеджер.МенеджерПотоков,new CREATE_DATABASE(context).getССылкаНаСозданнуюБазу());
-                Log.d(this.getClass().getName(), "Курсор_ПолучаемУжеЗагруженныйЕслиНОНЕИзменильсяIDДляONESIGNAL "+Курсор_ПолучаемУжеЗагруженныйЕслиНОНЕИзменильсяIDДляONESIGNAL  );
+                        concurrentHashMapНабор,public_contentменеджер.МенеджерПотоков, sqLiteDatabase);
+
+                Log.d(this.getClass().getName(), "Курсор_ПолучаемУжеЗагруженныйЕслиНОНЕИзменильсяIDДляONESIGNAL "
+                        +Курсор_ПолучаемУжеЗагруженныйЕслиНОНЕИзменильсяIDДляONESIGNAL  );
                 if(Курсор_ПолучаемУжеЗагруженныйЕслиНОНЕИзменильсяIDДляONESIGNAL.getCount()>0){
                     // TODO: 22.12.2021
                     Курсор_ПолучаемУжеЗагруженныйЕслиНОНЕИзменильсяIDДляONESIGNAL.moveToFirst();
@@ -317,7 +326,7 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
                                 equalsIgnoreCase(НовыйКлючОтOneSingnal)) {
                     // TODO: 04.01.2022  ПРИШЕЛ НОВЫЙ КЛЮЧ И ЕГО НАДО ЗАПИСАТЬ ДЛЯ ONESINGNAL
                     new Класс_ЗаписываетНовоеЗначениееслиОноИзменилосьНаСервреаOneSignalДляТекущегоПользователя(context,
-                            НовыйКлючОтOneSingnal);
+                            НовыйКлючОтOneSingnal,  sqLiteDatabase);
                     Log.w("OneSignalExample", " ВНИМАНИЕ !!!!!!  ЗАПИСЬ НОВОГО КЛЮЧА ДЛЯ ДАННОГО ПОЛЬЗОВАТЕЛЯ ONESIGNAL " +
                             "РезультатЗаписиНовогоIDОтСервреаOneSignal " + "\n"
                             + "РезультатЗаписиНовогоIDОтСервреаOneSignal   " + НовыйКлючОтOneSingnal +"\n"+
@@ -360,7 +369,7 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
                 SQLiteCursor     Курсор_ПолучаемВесьСписокIDДляONESIGNAL = (SQLiteCursor)  class_grud_sql_operationsПолучаемПубличныйПолучениеВсегоСпискаIDДляOneSignal.
                         new GetData(context).getdata(class_grud_sql_operationsПолучаемПубличныйПолучениеВсегоСпискаIDДляOneSignal.
                                 concurrentHashMapНабор,public_contentменеджер.МенеджерПотоков,
-                        new CREATE_DATABASE(context).getССылкаНаСозданнуюБазу());
+                        sqLiteDatabase);
                 Log.d(this.getClass().getName(), "Курсор_ПолучаемВесьСписокIDДляONESIGNAL "+Курсор_ПолучаемВесьСписокIDДляONESIGNAL  );
                 // TODO: 15.12.2021
                 if(Курсор_ПолучаемВесьСписокIDДляONESIGNAL.getCount()>0){
@@ -532,11 +541,14 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 // TODO: 15.12.2021 КЛАСС ЗАПИСЫВАЕТ ЕСЛИ ИЗМЕННЕНОЕ ЗНАЧЕНИЕ НА СЕРВЕРА ДЛЯ ТЕКУЩЕГО ПОЛЬЗВОАТЕЛЯ ИЗМЕНИЛОСЬ НА ONESIGNAL
 
    class Класс_ЗаписываетНовоеЗначениееслиОноИзменилосьНаСервреаOneSignalДляТекущегоПользователя{
-       public Класс_ЗаписываетНовоеЗначениееслиОноИзменилосьНаСервреаOneSignalДляТекущегоПользователя(Context context,String НовыйIdОТСервтераOneSignal) {
+       private SQLiteDatabase sqLiteDatabase ;
+       public Класс_ЗаписываетНовоеЗначениееслиОноИзменилосьНаСервреаOneSignalДляТекущегоПользователя(Context context,
+                                                                                                      String НовыйIdОТСервтераOneSignal,
+                                                                                                      SQLiteDatabase sqLiteDatabase ) {
            Class_GRUD_SQL_Operations   class_grud_sql_operationsОбновлениеДляТаблицыOneSignal=new Class_GRUD_SQL_Operations(context);
            Class_GRUD_SQL_Operations        class_grud_sql_operationsПовышаемВерсиюДанныхДляOneSignal=new Class_GRUD_SQL_Operations(context);
-           CREATE_DATABASE create_databaseДЛяOneSignal=new CREATE_DATABASE(context);
            try{
+               this.sqLiteDatabase=sqLiteDatabase;
 // TODO: 22.12.2021  находими пуличный id
                // TODO: 14.11.2021  ПОВТОРЫЙ ЗАПУСК ВОРК МЕНЕДЖЕР
                // TODO: 30.09.2021 МЕТОД ЗАПУСКА СИНХРОНИЗАЦИИ ЧАТА ПО РАСПИСАНИЮ , НЕ ВЗАВИСИМОСТИ ОТ СОЗДАВАЛ ЛИ СООБЩЕНИЕ ИЛИ НЕТ
@@ -555,7 +567,7 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
                                                НовыйIdОТСервтераOneSignal,
                                                class_grud_sql_operationsОбновлениеДляТаблицыOneSignal,
                                                class_grud_sql_operationsПовышаемВерсиюДанныхДляOneSignal,
-                                               create_databaseДЛяOneSignal, ПубличныйIDДляОдноразовойСинхрониазции
+                                               ПубличныйIDДляОдноразовойСинхрониазции
                                                ,ТаблицаДляПолучениеКлючаONESIGNAL);
                                Log.i(this.getClass().getName(), "  РезультатОбновленияКлючаДляПервойТаблицыsettings_tabelssОбаview_onesignal   "
                                        + РезультатОбновленияКлючаДляПервойТаблицыsettings_tabelssОбаview_onesignal);
@@ -633,8 +645,10 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
            Class_GRUD_SQL_Operations class_grud_sql_operationsПовышаемВерсиюДанныхПриПолученииНовогоКлючаONESINGLE=new Class_GRUD_SQL_Operations(context);
                // TODO: 18.03.2023  получаем ВЕСИЮ ДАННЫХ
                Long РезультатУвеличинаяВерсияПриУвеличенияПриПолученияКлючаONESINGLE=
-                       new SubClassUpVersionDATA().МетодПовышаемВерсииCurrentTable(    ТаблицаКоторуюнадоИзменитьВерсиюДанныхТАюдицы_VIEW_ONESIGNAL,context,new CREATE_DATABASE(context).getССылкаНаСозданнуюБазу());
-               Log.d(this.getClass().getName(), " РезультатУвеличинаяВерсияПриУвеличенияПриПолученияКлючаONESINGLE  " + РезультатУвеличинаяВерсияПриУвеличенияПриПолученияКлючаONESINGLE);
+                       new SubClassUpVersionDATA().МетодПовышаемВерсииCurrentTable(
+                               ТаблицаКоторуюнадоИзменитьВерсиюДанныхТАюдицы_VIEW_ONESIGNAL,context);
+               Log.d(this.getClass().getName(), " РезультатУвеличинаяВерсияПриУвеличенияПриПолученияКлючаONESINGLE  " +
+                       РезультатУвеличинаяВерсияПриУвеличенияПриПолученияКлючаONESINGLE);
 
            } catch (Exception e ) {
            e.printStackTrace();
@@ -651,7 +665,7 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
                                   String НовыйIdОТСервтераOneSignal,
                                   Class_GRUD_SQL_Operations class_grud_sql_operationsОбновлениеДляТаблицыOneSignal,
                                   Class_GRUD_SQL_Operations class_grud_sql_operationsПовышаемВерсиюДанныхДляOneSignal,
-                                  CREATE_DATABASE create_databaseДЛяOneSignal, Integer ПубличныйIDДляФрагмента,
+                                    Integer ПубличныйIDДляФрагмента,
                                                                                           String ТаблицаОбрработкиВСдлужбеOneSignal)
                throws ExecutionException, InterruptedException, NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException {
            Integer РезультатОбновленияКлючаOneSignal = 0;
@@ -687,7 +701,7 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 
                // TODO: 18.03.2023  получаем ВЕСИЮ ДАННЫХ
                Long РезультатУвеличинаяВерсияДАныхЧата=
-                       new SubClassUpVersionDATA().МетодПовышаемВерсииCurrentTable(    ТаблицаОбрработкиВСдлужбеOneSignal,context,create_databaseДЛяOneSignal.getССылкаНаСозданнуюБазу());
+                       new SubClassUpVersionDATA().МетодПовышаемВерсииCurrentTable(    ТаблицаОбрработкиВСдлужбеOneSignal,context);
                Log.d(this.getClass().getName(), " РезультатУвеличинаяВерсияДАныхЧата  " + РезультатУвеличинаяВерсияДАныхЧата);
 
                // TODO: 27.08.2021 само значние
@@ -738,7 +752,7 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
            РезультатОбновленияКлючаOneSignal = (Integer)  class_grud_sql_operationsОбновлениеДляТаблицыOneSignal.
                    new UpdateData(context).updatedata(class_grud_sql_operationsОбновлениеДляТаблицыOneSignal.concurrentHashMapНабор,
                    class_grud_sql_operationsОбновлениеДляТаблицыOneSignal.contentValuesДляSQLBuilder_Для_GRUD_Операций,
-                   new PUBLIC_CONTENT(context). МенеджерПотоков, create_databaseДЛяOneSignal.getССылкаНаСозданнуюБазу());
+                   new PUBLIC_CONTENT(context). МенеджерПотоков,  sqLiteDatabase);
 
 
            // TODO: 15.12.2021  увеличиваем версию данных в таблице обшей модификацион клиенв
@@ -832,7 +846,7 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
                РЕзультаПосикаИУдаления = (Integer) class_grud_sql_operationclass_grud_sql_operationsОчисткаsОчистакаталиц.
                        new DeleteData(context).deletedata(class_grud_sql_operationclass_grud_sql_operationsОчисткаsОчистакаталиц.
                                concurrentHashMapНабор,
-                      new PUBLIC_CONTENT(context). МенеджерПотоков,new CREATE_DATABASE(context).getССылкаНаСозданнуюБазу());
+                      new PUBLIC_CONTENT(context). МенеджерПотоков, sqLiteDatabase);
 
 
                Log.i(this.getClass().getName(), "  РЕзультаПосикаИУдаления" +

@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.res.Configuration;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteCursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Binder;
 import android.os.Bundle;
 import android.os.IBinder;
@@ -15,7 +16,8 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.dsy.dsu.AllDatabases.CREATE_DATABASE;
+
+import com.dsy.dsu.AllDatabases.GetSQLiteDatabase;
 import com.dsy.dsu.Business_logic_Only_Class.Class_GRUD_SQL_Operations;
 import com.dsy.dsu.Business_logic_Only_Class.DATE.Class_Generation_Data;
 import com.dsy.dsu.Business_logic_Only_Class.Class_Generation_Errors;
@@ -50,7 +52,8 @@ public class Service_Для_ЧатаСменаСтатусаПрочитаноИ
     private Context context;
 
     private Class_GRUD_SQL_Operations    class_grud_sql_operations ;
-    private CREATE_DATABASE Create_Database_СсылкаНАБазовыйКласс   ;
+
+    private SQLiteDatabase sqLiteDatabase ;
     private  Class_MODEL_synchronized  modelДляФрагментаДляОперацииЗаписиНовгоСтатусаПрочитанного ;
     private PUBLIC_CONTENT   Class_Engine_SQLГдеНаходитьсяМенеджерПотоков ;
     private Class_Generation_Errors class_generation_errors;
@@ -89,6 +92,7 @@ public class Service_Для_ЧатаСменаСтатусаПрочитаноИ
    @Override
     public void onCreate() {
         super.onCreate();
+       sqLiteDatabase=    GetSQLiteDatabase.SqliteDatabase();
         Log.i(getApplicationContext().getClass().getName(), " public class Service_Для_ЧатаСменаСтатусаПрочитаноИлиНет extends JobIntentService { " + new Date()+"\n"+
                 " Thread.currentThread().getName()  " +Thread.currentThread().getName());
     }
@@ -206,9 +210,7 @@ public class Service_Для_ЧатаСменаСтатусаПрочитаноИ
         String ТаблицаОбработкиВнутриЧтатаПриУвеличсенииВерсииДаннвъКоглаПрочинаноСообещния = "data_chat";
 
         try {
-
            class_grud_sql_operations = new Class_GRUD_SQL_Operations(context);
-           Create_Database_СсылкаНАБазовыйКласс=   new CREATE_DATABASE(context);
          modelДляФрагментаДляОперацииЗаписиНовгоСтатусаПрочитанного = new Class_MODEL_synchronized(context);
              Class_Engine_SQLГдеНаходитьсяМенеджерПотоков = new PUBLIC_CONTENT(context);
             class_generation_errors=new Class_Generation_Errors(context);
@@ -221,7 +223,7 @@ public class Service_Для_ЧатаСменаСтатусаПрочитаноИ
             // TODO: 18.03.2023  получаем ВЕСИЮ ДАННЫХ
           РезультатУвеличинаяВерсияДАныхЧата =
                     new SubClassUpVersionDATA().МетодПовышаемВерсииCurrentTable(    ТаблицаОбработкиВнутриЧтатаПриУвеличсенииВерсииДаннвъКоглаПрочинаноСообещния
-                            ,getApplicationContext(),Create_Database_СсылкаНАБазовыйКласс.getССылкаНаСозданнуюБазу());
+                            ,getApplicationContext() );
             Log.d(this.getClass().getName(), " РезультатУвеличинаяВерсияДАныхЧата  " + РезультатУвеличинаяВерсияДАныхЧата);
 
             contentValuesОбновленниВТАблицеКакПрочитанныйМеняемСтатусЗаписисВчатеПостлеПросмотра.put("current_table", РезультатУвеличинаяВерсияДАныхЧата);
@@ -256,7 +258,6 @@ public class Service_Для_ЧатаСменаСтатусаПрочитаноИ
         try {
             this.context=context;
             class_grud_sql_operations = new Class_GRUD_SQL_Operations(context);
-            Create_Database_СсылкаНАБазовыйКласс=   new CREATE_DATABASE(context);
             modelДляФрагментаДляОперацииЗаписиНовгоСтатусаПрочитанного = new Class_MODEL_synchronized(context);
             Class_Engine_SQLГдеНаходитьсяМенеджерПотоков = new PUBLIC_CONTENT(context);
             class_generation_errors=new Class_Generation_Errors(context);
@@ -280,7 +281,7 @@ public class Service_Для_ЧатаСменаСтатусаПрочитаноИ
                         new GetData(context).getdata(class_grud_sql_operations.
                                 concurrentHashMapНабор,
                         Class_Engine_SQLГдеНаходитьсяМенеджерПотоков.МенеджерПотоков
-                        , Create_Database_СсылкаНАБазовыйКласс.getССылкаНаСозданнуюБазу());
+                        ,    sqLiteDatabase);
                 if (КурсорДанныеДлязаписиичтнияЧата != null) {
                     if (КурсорДанныеДлязаписиичтнияЧата.getCount() > 0) {
                         КурсорДанныеДлязаписиичтнияЧата.moveToFirst();
@@ -321,7 +322,6 @@ private Long МетодЗаписиНовогоСообщенияТольков�
     try {
         this.context=context;
         class_grud_sql_operations = new Class_GRUD_SQL_Operations(context);
-        Create_Database_СсылкаНАБазовыйКласс=   new CREATE_DATABASE(context);
         modelДляФрагментаДляОперацииЗаписиНовгоСтатусаПрочитанного = new Class_MODEL_synchronized(context);
         Class_Engine_SQLГдеНаходитьсяМенеджерПотоков = new PUBLIC_CONTENT(context);
         class_generation_errors=new Class_Generation_Errors(context);
@@ -355,7 +355,7 @@ private Long МетодЗаписиНовогоСообщенияТольков�
 
        // TODO: 18.03.2023  получаем ВЕСИЮ ДАННЫХ
        Long РезультатУвеличинаяВерсияДАныхЧата=
-               new SubClassUpVersionDATA().МетодПовышаемВерсииCurrentTable(    ПерваяТаблицыОбработкиТаблицаЧат,getApplicationContext(),Create_Database_СсылкаНАБазовыйКласс.getССылкаНаСозданнуюБазу());
+               new SubClassUpVersionDATA().МетодПовышаемВерсииCurrentTable(    ПерваяТаблицыОбработкиТаблицаЧат,getApplicationContext());
        Log.d(this.getClass().getName(), " РезультатУвеличинаяВерсияДАныхЧата  " + РезультатУвеличинаяВерсияДАныхЧата);
 
 
@@ -408,7 +408,6 @@ private Long МетодЗаписиНовогоСообщенияТольков�
         try {
             this.context=context;
             class_grud_sql_operations = new Class_GRUD_SQL_Operations(context);
-            Create_Database_СсылкаНАБазовыйКласс=   new CREATE_DATABASE(context);
             modelДляФрагментаДляОперацииЗаписиНовгоСтатусаПрочитанного = new Class_MODEL_synchronized(context);
             Class_Engine_SQLГдеНаходитьсяМенеджерПотоков = new PUBLIC_CONTENT(context);
             class_generation_errors=new Class_Generation_Errors(context);
@@ -430,7 +429,7 @@ private Long МетодЗаписиНовогоСообщенияТольков�
 
                 // TODO: 18.03.2023  получаем ВЕСИЮ ДАННЫХ
                 Long РезультатУвеличинаяВерсияДАныхДатЧата=
-                        new SubClassUpVersionDATA().МетодПовышаемВерсииCurrentTable(    ТаблицаВторойОбработкиДляТаблицыДата_Табеля,context,Create_Database_СсылкаНАБазовыйКласс.getССылкаНаСозданнуюБазу());
+                        new SubClassUpVersionDATA().МетодПовышаемВерсииCurrentTable(    ТаблицаВторойОбработкиДляТаблицыДата_Табеля,context);
                 Log.d(this.getClass().getName(), " РезультатУвеличинаяВерсияДАныхДатЧата  " + РезультатУвеличинаяВерсияДАныхДатЧата);
 
                 // TODO: 18.11.2022
@@ -471,7 +470,6 @@ private Long МетодЗаписиНовогоСообщенияТольков�
         try {
             this.context=context;
             class_grud_sql_operations = new Class_GRUD_SQL_Operations(context);
-            Create_Database_СсылкаНАБазовыйКласс=   new CREATE_DATABASE(context);
             modelДляФрагментаДляОперацииЗаписиНовгоСтатусаПрочитанного = new Class_MODEL_synchronized(context);
             Class_Engine_SQLГдеНаходитьсяМенеджерПотоков = new PUBLIC_CONTENT(context);
             class_generation_errors=new Class_Generation_Errors(context);
@@ -487,8 +485,7 @@ private Long МетодЗаписиНовогоСообщенияТольков�
             // TODO: 15.07.2022 ПОЛУЧАЕМ ФИО
             SQLiteCursor   Курсор_соЗначениемФИО = (SQLiteCursor) class_grud_sql_operations.
                     new GetData(context).getdata(class_grud_sql_operations.concurrentHashMapНабор,
-                    Class_Engine_SQLГдеНаходитьсяМенеджерПотоков.МенеджерПотоков
-                    , Create_Database_СсылкаНАБазовыйКласс.getССылкаНаСозданнуюБазу());
+                    Class_Engine_SQLГдеНаходитьсяМенеджерПотоков.МенеджерПотоков,   sqLiteDatabase);
             if (Курсор_соЗначениемФИО.getCount() > 0) {
                 Курсор_соЗначениемФИО.moveToFirst();
                 КтопанисалСообщениеФИО = Курсор_соЗначениемФИО.getString(0).trim();
@@ -519,7 +516,6 @@ private Long МетодЗаписиНовогоСообщенияТольков�
         try {
             this.context=context;
             class_grud_sql_operations = new Class_GRUD_SQL_Operations(context);
-            Create_Database_СсылкаНАБазовыйКласс=   new CREATE_DATABASE(context);
             modelДляФрагментаДляОперацииЗаписиНовгоСтатусаПрочитанного = new Class_MODEL_synchronized(context);
             Class_Engine_SQLГдеНаходитьсяМенеджерПотоков = new PUBLIC_CONTENT(context);
             class_generation_errors=new Class_Generation_Errors(context);
@@ -546,7 +542,7 @@ private Long МетодЗаписиНовогоСообщенияТольков�
                             new GetData(context).getdata(class_grud_sql_operations.
                                     concurrentHashMapНабор,
                             Class_Engine_SQLГдеНаходитьсяМенеджерПотоков.МенеджерПотоков
-                            , Create_Database_СсылкаНАБазовыйКласс.getССылкаНаСозданнуюБазу());
+                            ,    sqLiteDatabase);
 
             if (КурсорПрочиталСообщениеДанноеИлиНет.getCount() > 0) {
                 ПолученныйРезультаЗаписьЖирнаяИлиНет = true;
@@ -584,7 +580,6 @@ private Long МетодЗаписиНовогоСообщенияТольков�
         try {
             this.context=context;
             class_grud_sql_operations = new Class_GRUD_SQL_Operations(context);
-            Create_Database_СсылкаНАБазовыйКласс=   new CREATE_DATABASE(context);
             modelДляФрагментаДляОперацииЗаписиНовгоСтатусаПрочитанного = new Class_MODEL_synchronized(context);
             Class_Engine_SQLГдеНаходитьсяМенеджерПотоков = new PUBLIC_CONTENT(context);
             class_generation_errors=new Class_Generation_Errors(context);
@@ -599,8 +594,8 @@ private Long МетодЗаписиНовогоСообщенияТольков�
 
             // TODO: 18.03.2023  получаем ВЕСИЮ ДАННЫХ
             Long РезультатУвеличинаяВерсияДАныхЧата=
-                    new SubClassUpVersionDATA().МетодПовышаемВерсииCurrentTable(    ТаблицаОбработкиВнутриЧтатаПриУвеличсенииВерсииДаннвъКоглаПрочинаноСообещния,context,
-                            Create_Database_СсылкаНАБазовыйКласс.getССылкаНаСозданнуюБазу());
+                    new SubClassUpVersionDATA().МетодПовышаемВерсииCurrentTable(
+                            ТаблицаОбработкиВнутриЧтатаПриУвеличсенииВерсииДаннвъКоглаПрочинаноСообещния,context);
             Log.d(this.getClass().getName(), " РезультатУвеличинаяВерсияДАныхЧата  " + РезультатУвеличинаяВерсияДАныхЧата);
 
 // TODO: 18.11.2022
@@ -638,7 +633,6 @@ private Long МетодЗаписиНовогоСообщенияТольков�
 
             this.context=context;
             class_grud_sql_operations = new Class_GRUD_SQL_Operations(context);
-            Create_Database_СсылкаНАБазовыйКласс=   new CREATE_DATABASE(context);
             modelДляФрагментаДляОперацииЗаписиНовгоСтатусаПрочитанного = new Class_MODEL_synchronized(context);
             Class_Engine_SQLГдеНаходитьсяМенеджерПотоков = new PUBLIC_CONTENT(context);
             class_generation_errors=new Class_Generation_Errors(context);
@@ -706,7 +700,6 @@ private Long МетодЗаписиНовогоСообщенияТольков�
         try {
             this.context=context;
             class_grud_sql_operations = new Class_GRUD_SQL_Operations(context);
-            Create_Database_СсылкаНАБазовыйКласс=   new CREATE_DATABASE(context);
             modelДляФрагментаДляОперацииЗаписиНовгоСтатусаПрочитанного = new Class_MODEL_synchronized(context);
             Class_Engine_SQLГдеНаходитьсяМенеджерПотоков = new PUBLIC_CONTENT(context);
             class_generation_errors=new Class_Generation_Errors(context);

@@ -31,7 +31,8 @@ import androidx.work.WorkInfo;
 import androidx.work.Worker;
 import androidx.work.WorkerParameters;
 
-import com.dsy.dsu.AllDatabases.CREATE_DATABASE;
+
+import com.dsy.dsu.AllDatabases.GetSQLiteDatabase;
 import com.dsy.dsu.Business_logic_Only_Class.Class_GRUD_SQL_Operations;
 import com.dsy.dsu.Business_logic_Only_Class.Class_Generation_Errors;
 import com.dsy.dsu.Business_logic_Only_Class.PUBLIC_CONTENT;
@@ -61,7 +62,7 @@ public class MyWork_Notifocations_Уведомления_Для_Задачи ext
     private   WorkInfo ИнформацияОЗапущенойСлужбе_Уведомления_Одноразовая;
     private  Integer ОбщееКоличествоНЕпрочитанныхСтрок = 0;
     private NotificationCompat.Builder builder_Для_Задачи = null;
-    private  CREATE_DATABASE Create_Database_СсылкаНАБазовыйКласс;
+    private SQLiteDatabase sqLiteDatabase ;
     private Class_GRUD_SQL_Operations class_grud_sql_operationsIDпользоввателяДляСлужб;
     private  SimpleDateFormat ФоорматДат ;
     private    int     ID_ТаблицаУвендомлений;
@@ -105,7 +106,7 @@ public class MyWork_Notifocations_Уведомления_Для_Задачи ext
     public Result doWork() {
         Boolean ФинальныйФлагЛюбогоЗапущеногоАктивти = false;
         try {
-            Create_Database_СсылкаНАБазовыйКласс = new CREATE_DATABASE(getApplicationContext());
+            sqLiteDatabase=    GetSQLiteDatabase.SqliteDatabase();
             ActivityManager ЗапущенныйПроуессыДляУведомленийЧата = (ActivityManager) context.getSystemService(ACTIVITY_SERVICE);
             if (ЗапущенныйПроуессыДляУведомленийЧата!=null) {
                 List<ActivityManager.AppTask> КоличествоЗапущенныйПроуессыДляЧата = ЗапущенныйПроуессыДляУведомленийЧата.getAppTasks();
@@ -892,7 +893,7 @@ public class MyWork_Notifocations_Уведомления_Для_Задачи ext
             // TODO: 18.03.2023  получаем ВЕСИЮ ДАННЫХ
             Long РезультатУвеличинаяВерсияВнутриСамогоТабелСтрудникаПервая=
                     new SubClassUpVersionDATA().МетодПовышаемВерсииCurrentTable(    ТаблицаОбрабокаиПриСменсатусаУведомленияЧтоЕгоУжекПоказхывали
-                            ,getApplicationContext(),Create_Database_СсылкаНАБазовыйКласс.getССылкаНаСозданнуюБазу());
+                            ,getApplicationContext() );
             Log.d(this.getClass().getName(), " РезультатУвеличинаяВерсияВнутриСамогоТабелСтрудникаПервая  " + РезультатУвеличинаяВерсияВнутриСамогоТабелСтрудникаПервая);
 
 
@@ -916,7 +917,7 @@ public class MyWork_Notifocations_Уведомления_Для_Задачи ext
         Integer  ОбновляемСтатусЗадачиУведомленияЧТоЕЕУжеПоказывали= (Integer)  class_grud_sql_operationsПослеУдаленияДобавляемДатуВерсии.
                 new UpdateData(getApplicationContext()).updatedata(class_grud_sql_operationsПослеУдаленияДобавляемДатуВерсии.concurrentHashMapНабор,
                 class_grud_sql_operationsПослеУдаленияДобавляемДатуВерсии.contentValuesДляSQLBuilder_Для_GRUD_Операций,
-                new PUBLIC_CONTENT(getApplicationContext()).МенеджерПотоков,Create_Database_СсылкаНАБазовыйКласс.getССылкаНаСозданнуюБазу());
+                new PUBLIC_CONTENT(getApplicationContext()).МенеджерПотоков,   sqLiteDatabase);
 
         Log.d(this.getClass().getName(), " ОбновляемСтатусЗадачиУведомленияЧТоЕЕУжеПоказывали  " +ОбновляемСтатусЗадачиУведомленияЧТоЕЕУжеПоказывали
                 +" UUIDРочитаногоЗаданиеДляКотрогоДалееБудетПроизведенаСменаСтсусаНАОзнакомленный "+UUIDРочитаногоЗаданиеДляКотрогоДалееБудетПроизведенаСменаСтсусаНАОзнакомленный);
@@ -927,7 +928,7 @@ public class MyWork_Notifocations_Уведомления_Для_Задачи ext
 
                 Integer РезультатПослеВставкиДанныхУвеличиваемВерсиюДанных =
                         МетодПослеУспешнойЗаписиЗначенияВТаблицуПоднимаемВерсиюДанных(class_grud_sql_operationsПослеУдаленияДобавляемДатуВерсии,
-                                Create_Database_СсылкаНАБазовыйКласс.getССылкаНаСозданнуюБазу(),
+                                sqLiteDatabase,
                                 РезультатУвеличинаяВерсияВнутриСамогоТабелСтрудникаПервая, ТаблицаОбрабокаиПриСменсатусаУведомленияЧтоЕгоУжекПоказхывали);
                 // TODO: 21.03.2022
                 // TODO: 21.03.2022
@@ -1067,7 +1068,7 @@ public class MyWork_Notifocations_Уведомления_Для_Задачи ext
             Курсор_ВычисляемПУбличныйID= (SQLiteCursor)
                     class_grud_sql_operationsПолучаемПубличныйIDЛокальноИеСЛИЕгоНЕтНАчинаемЕгоИСктьВНИтренете.
                     new GetData(getApplicationContext()).getdata(class_grud_sql_operationsПолучаемПубличныйIDЛокальноИеСЛИЕгоНЕтНАчинаемЕгоИСктьВНИтренете.
-                            concurrentHashMapНабор,public_contentменеджер.МенеджерПотоков,Create_Database_СсылкаНАБазовыйКласс.getССылкаНаСозданнуюБазу() );
+                            concurrentHashMapНабор,public_contentменеджер.МенеджерПотоков,   sqLiteDatabase );
 
             Log.d(this.getClass().getName(), "GetData "+Курсор_ВычисляемПУбличныйID  );
 
@@ -1142,7 +1143,7 @@ public class MyWork_Notifocations_Уведомления_Для_Задачи ext
 
             Курсор_ДляСлужбыУведомлений_ТолькоДляЧата= (SQLiteCursor)  class_grud_sql_operationsIDпользоввателяДляСлужб.
                     new GetData(getApplicationContext()).getdata(class_grud_sql_operationsIDпользоввателяДляСлужб.concurrentHashMapНабор,
-                    Class_Engine_SQLГдеНаходитьсяМенеджерПотоков.МенеджерПотоков,Create_Database_СсылкаНАБазовыйКласс.getССылкаНаСозданнуюБазу() );
+                    Class_Engine_SQLГдеНаходитьсяМенеджерПотоков.МенеджерПотоков,   sqLiteDatabase );
 
 
             ////////
@@ -1277,7 +1278,7 @@ public class MyWork_Notifocations_Уведомления_Для_Задачи ext
 
         Курсор_ДляСлужбыУведомлений_ТолькоДляЧатаТОлькоКоличествоЗадач= (SQLiteCursor)  class_grud_sql_operationsIDпользоввателяДляСлужб.
                 new GetData(getApplicationContext()).getdata(class_grud_sql_operationsIDпользоввателяДляСлужб.concurrentHashMapНабор,
-                Class_Engine_SQLГдеНаходитьсяМенеджерПотоков.МенеджерПотоков,Create_Database_СсылкаНАБазовыйКласс.getССылкаНаСозданнуюБазу() );
+                Class_Engine_SQLГдеНаходитьсяМенеджерПотоков.МенеджерПотоков,   sqLiteDatabase );
 
 
         ////////
@@ -1372,7 +1373,7 @@ public class MyWork_Notifocations_Уведомления_Для_Задачи ext
 
                 Курсор_ДляСлужбыУведомлений_ВычисляемНстоящееФИОКтоНаписал= (SQLiteCursor)  class_grud_sql_operationsIDпользоввателяДляСлужб.
                         new GetData(getApplicationContext()).getdata(class_grud_sql_operationsIDпользоввателяДляСлужб.concurrentHashMapНабор,
-                        Class_Engine_SQLГдеНаходитьсяМенеджерПотоков.МенеджерПотоков,Create_Database_СсылкаНАБазовыйКласс.getССылкаНаСозданнуюБазу() );
+                        Class_Engine_SQLГдеНаходитьсяМенеджерПотоков.МенеджерПотоков,   sqLiteDatabase );
 
 
                 ////////

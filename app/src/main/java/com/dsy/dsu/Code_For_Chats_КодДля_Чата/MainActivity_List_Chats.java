@@ -3,6 +3,7 @@ package com.dsy.dsu.Code_For_Chats_КодДля_Чата;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.database.sqlite.SQLiteCursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.WindowManager;
@@ -17,9 +18,10 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.work.WorkInfo;
 import androidx.work.WorkManager;
 
+import com.dsy.dsu.AllDatabases.GetSQLiteDatabase;
 import com.dsy.dsu.Business_logic_Only_Class.Class_GRUD_SQL_Operations;
 import com.dsy.dsu.Business_logic_Only_Class.Class_Generation_Errors;
-import com.dsy.dsu.AllDatabases.CREATE_DATABASE;
+
 import com.dsy.dsu.Business_logic_Only_Class.Class_Generations_PUBLIC_CURRENT_ID;
 import com.dsy.dsu.Business_logic_Only_Class.Class_Generator_One_WORK_MANAGER;
 import com.dsy.dsu.Business_logic_Only_Class.PUBLIC_CONTENT;
@@ -53,12 +55,15 @@ HashMap<String, Object> ХэщЗапусАктивтиИзФрагмента=nul
 
     final  private  String ИмяСлужбыСинхронизацииОдноразовая = "WorkManager Synchronizasiy_Data Disposable";
     private WorkInfo WorkInfoИнформацияОЗапущенойСлужбеОдноразовая;
+
+
+    private SQLiteDatabase sqLiteDatabase ;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         try{
             super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_main_history_chat);
-
+            sqLiteDatabase=    GetSQLiteDatabase.SqliteDatabase();
 
 
             ////
@@ -238,7 +243,7 @@ HashMap<String, Object> ХэщЗапусАктивтиИзФрагмента=nul
                                 (SQLiteCursor) class_grud_sql_operationsРабоатемВФрагментечитатьПисатьШестаяЧасть.
                                         new GetаFreeData(getApplicationContext()).getfreedata(class_grud_sql_operationsРабоатемВФрагментечитатьПисатьШестаяЧасть.concurrentHashMapНабор,
                                         new PUBLIC_CONTENT(getApplicationContext()).МенеджерПотоков
-                                        , new CREATE_DATABASE(getApplicationContext()).getССылкаНаСозданнуюБазу());
+                                        ,     sqLiteDatabase);
 
 
                         Log.d(this.getClass().getName(), "Курсор_ПосикUUIDУжеСозданныйУжеЧатМеждуользователсиИЛНЕТ " + Курсор_ПосикUUIDУжеСозданныйУжеЧатМеждуользователсиИЛНЕТ);

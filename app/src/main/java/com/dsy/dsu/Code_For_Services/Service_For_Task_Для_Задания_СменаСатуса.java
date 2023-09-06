@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.database.sqlite.SQLiteCursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Binder;
 import android.os.Build;
 import android.os.Bundle;
@@ -19,7 +20,8 @@ import androidx.annotation.Nullable;
 import androidx.work.WorkInfo;
 import androidx.work.WorkManager;
 
-import com.dsy.dsu.AllDatabases.CREATE_DATABASE;
+
+import com.dsy.dsu.AllDatabases.GetSQLiteDatabase;
 import com.dsy.dsu.Business_logic_Only_Class.Class_GRUD_SQL_Operations;
 import com.dsy.dsu.Business_logic_Only_Class.Class_Generation_Errors;
 import com.dsy.dsu.Business_logic_Only_Class.Class_Generations_PUBLIC_CURRENT_ID;
@@ -56,8 +58,7 @@ public class Service_For_Task_Для_Задания_СменаСатуса exten
 
     private Service_For_Task_Для_Задания_СменаСатуса.LocalBinderДляСлужбыСменаСтатуса binder = new Service_For_Task_Для_Задания_СменаСатуса.LocalBinderДляСлужбыСменаСтатуса();
     private Context context;
-
-
+    private SQLiteDatabase sqLiteDatabase ;
     public Service_For_Task_Для_Задания_СменаСатуса() {
         //TODO
         super("Service_For_Task_Для_Задания_СменаСатуса");
@@ -67,6 +68,7 @@ public class Service_For_Task_Для_Задания_СменаСатуса exten
     @Override
     public void onCreate() {
         super.onCreate();
+        sqLiteDatabase=    GetSQLiteDatabase.SqliteDatabase();
         Log.d(context.getClass().getName(), "\n"
                 + " время: " + new Date()+"\n+" +
                 " Класс в процессе... " +  this.getClass().getName()+"\n"+
@@ -371,7 +373,6 @@ public class Service_For_Task_Для_Задания_СменаСатуса exten
             try{
                 Log.i(context.getClass().getName(), "SubClass_FindПоискIDОтКогоЗаданияДляКогоЗапускатFirebase"+new Date());
                 Class_GRUD_SQL_Operations      class_grud_sql_operations = new Class_GRUD_SQL_Operations(getApplicationContext());
-                CREATE_DATABASE    Create_Database_СсылкаНАБазовыйКласс = new CREATE_DATABASE(getApplicationContext());
                 Class_Engine_SQLГдеНаходитьсяМенеджерПотоков=new PUBLIC_CONTENT(getApplicationContext());
                  class_grud_sql_operations.
                          concurrentHashMapНабор.put("ПодЗапросНомер1",
@@ -383,7 +384,7 @@ public class Service_For_Task_Для_Задания_СменаСатуса exten
                         new GetData(getApplicationContext()).getdata(class_grud_sql_operations.
                                 concurrentHashMapНабор,
                         Class_Engine_SQLГдеНаходитьсяМенеджерПотоков.МенеджерПотоков
-                        , Create_Database_СсылкаНАБазовыйКласс.getССылкаНаСозданнуюБазу());
+                        , sqLiteDatabase);
                 if (КурсорДанныеДлязаписиичтнияЧата != null) {
                     if (КурсорДанныеДлязаписиичтнияЧата.getCount() > 0) {
                         КурсорДанныеДлязаписиичтнияЧата.moveToFirst();

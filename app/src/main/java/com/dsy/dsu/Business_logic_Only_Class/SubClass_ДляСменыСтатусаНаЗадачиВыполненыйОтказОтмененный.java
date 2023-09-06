@@ -7,13 +7,15 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
+import com.dsy.dsu.AllDatabases.GetSQLiteDatabase;
 import com.dsy.dsu.Business_logic_Only_Class.DATE.Class_Generation_Data;
-import com.dsy.dsu.AllDatabases.CREATE_DATABASE;
+
 
 import java.util.Date;
 
 public class SubClass_ДляСменыСтатусаНаЗадачиВыполненыйОтказОтмененный {
     // TODO: 07.02.2022
+    private SQLiteDatabase sqLiteDatabase ;
     public Boolean МетодСменыСтатусаНаОзкомленныйЗадениеСамимПользователем(
             @NonNull Context context,
    @NonNull Long UUID_ПоКоторомуМыИИщменимСтатусОзнакомлнныйВТаблицыУведомления,
@@ -22,10 +24,13 @@ public class SubClass_ДляСменыСтатусаНаЗадачиВыполн
         // TODO: 07.02.2022
         Boolean РезультатСменыСтатусаНАОзнакомленый = false;
         try {
+
+            sqLiteDatabase=    GetSQLiteDatabase.SqliteDatabase();
+
+
             Log.d(context.getClass().getName(), "ПримечанияОтКлинетаВыполнилИлиНетЗадачу "
                     + ПримечанияОтКлинетаВыполнилИлиНетЗадачу);
-            SQLiteDatabase sqLiteDatabase_КлонКонкретноДляДАннойОперации =
-                    new CREATE_DATABASE(context).getССылкаНаСозданнуюБазу();
+
 
             Long РезультатУвеличинаяВерсияВнутриСамогоТабелСтрудника = 0l;
 
@@ -40,7 +45,7 @@ public class SubClass_ДляСменыСтатусаНаЗадачиВыполн
 // TODO: 07.02.2022  увеличиваем верисю данных
             // TODO: 18.03.2023  получаем ВЕСИЮ ДАННЫХ
             Long РезультатУвеличинаяВерсияДАныхЧата =
-                    new SubClassUpVersionDATA().МетодПовышаемВерсииCurrentTable(    НазваниеТаблицыобработки,context,sqLiteDatabase_КлонКонкретноДляДАннойОперации);
+                    new SubClassUpVersionDATA().МетодПовышаемВерсииCurrentTable(    НазваниеТаблицыобработки,context);
             Log.d(this.getClass().getName(), " РезультатУвеличинаяВерсияДАныхЧата  " + РезультатУвеличинаяВерсияДАныхЧата);
 
             //TODO  конец курант ча

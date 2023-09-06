@@ -116,7 +116,7 @@ this.context=context;
                      if ( РезультатОперацииBurkUPDATE.size()>0) {
                          // TODO: 04.07.2023 После Успешной Операции Повышаем Версию ДАнных Для Данной Тваблицы  
                          Integer РезультатПовышенииВерсииДанных =
-                                 new SubClassUpVersionDATA().МетодVesrionUPMODIFITATION_Client(имяТаблицаAsync, context, Create_Database_СамаБАзаSQLite);
+                                 new SubClassUpVersionDATA().МетодVesrionUPMODIFITATION_Client(имяТаблицаAsync, context );
                          Log.d(this.getClass().getName(), " РезультатПовышенииВерсииДанных  " + РезультатПовышенииВерсииДанных);
                          // TODO: 04.07.2023 ЗАВЕРШАЕТ ТРНЗАКЦИЮ НА 50 СТРОЧКЕ
                          Create_Database_СамаБАзаSQLite.setTransactionSuccessful();

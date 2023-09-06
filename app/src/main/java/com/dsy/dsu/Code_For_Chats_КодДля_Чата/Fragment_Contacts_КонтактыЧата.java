@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteCursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
@@ -24,9 +25,10 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
+import com.dsy.dsu.AllDatabases.GetSQLiteDatabase;
 import com.dsy.dsu.Business_logic_Only_Class.Class_GRUD_SQL_Operations;
 import com.dsy.dsu.Business_logic_Only_Class.Class_Generation_Errors;
-import com.dsy.dsu.AllDatabases.CREATE_DATABASE;
+
 import com.dsy.dsu.Business_logic_Only_Class.PUBLIC_CONTENT;
 import com.dsy.dsu.R;
 
@@ -59,7 +61,7 @@ public class Fragment_Contacts_КонтактыЧата extends Fragment    {
 
 
     ///////TODO
-    CREATE_DATABASE Create_Database_СсылкаНАБазовыйКласс;
+    private SQLiteDatabase sqLiteDatabase ;
 
 
     @Override
@@ -69,65 +71,39 @@ public class Fragment_Contacts_КонтактыЧата extends Fragment    {
         Log.d(this.getClass().getName(), "  onStop");
     }
 
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        try {
+        sqLiteDatabase=    GetSQLiteDatabase.SqliteDatabase();
+    } catch (Exception e) {
+        e.printStackTrace();
+        Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
+                " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
+        new Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(),
+                Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
+        ///
+
+
+    }
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
         try{
 
-
-
-            // Inflate the layout for this fragment
             viewДляКонтактов= inflater.inflate(R.layout.fragment2_layout, container, false);// viewДляКонтактов= inflater.inflate(R.layout.fragment2_layout, container, false);
             ////
             ЛистВьюДляКонтактыЧата = (ListView) viewДляКонтактов.findViewById(R.id.list);
-
-
-            ///
-
             Class_Engine_SQLГдеНаходитьсяМенеджерПотоков =new     PUBLIC_CONTENT(getActivity());
-
-
-
-
-
-
-
-
-
-///////TODO
-             Create_Database_СсылкаНАБазовыйКласс=new CREATE_DATABASE(getContext());
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
             // TODO ////////////////////////////МОДЕЛЬ MVC ////////////////////////////////////////////////////////////////////////////////////////////////
-
-
             new Fragment_Contacts_КонтактыЧата. MODEL(getActivity()).   МетодЗагрузкиДанныхДляФрагентаКонтакты();
-
             new Fragment_Contacts_КонтактыЧата.VIEW(getActivity());
-
-
             new Fragment_Contacts_КонтактыЧата. CONTROLLER(getActivity());
-
-
-
-
         } catch (Exception e) {
             e.printStackTrace();
-            ///метод запись ошибок в таблицу
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                     " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
           new Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(),
@@ -673,7 +649,7 @@ public class Fragment_Contacts_КонтактыЧата extends Fragment    {
                 Курсор_ВычисляемПУбличныйID= (SQLiteCursor)  class_grud_sql_operationsЗагрузкиДанныхДляФрагентаКонтактыПерваяЧасть.
                         new GetData(getActivity()).getdata(class_grud_sql_operationsЗагрузкиДанныхДляФрагентаКонтактыПерваяЧасть.concurrentHashMapНабор,
                         Class_Engine_SQLГдеНаходитьсяМенеджерПотоков.МенеджерПотоков
-                        ,Create_Database_СсылкаНАБазовыйКласс.getССылкаНаСозданнуюБазу());
+                        , sqLiteDatabase);
                 //////
 
                 Log.d(this.getClass().getName(), "GetData "  +Курсор_ВычисляемПУбличныйID);
@@ -750,7 +726,7 @@ public class Fragment_Contacts_КонтактыЧата extends Fragment    {
                 КурсорДанныеДляКонтактовЧата= (SQLiteCursor)  class_grud_sql_operationsЗагрузкиДанныхДляФрагентаКонтактыВтораяЧасть.
                         new GetData(getActivity()).getdata(class_grud_sql_operationsЗагрузкиДанныхДляФрагентаКонтактыВтораяЧасть.concurrentHashMapНабор,
                         Class_Engine_SQLГдеНаходитьсяМенеджерПотоков.МенеджерПотоков
-                        ,Create_Database_СсылкаНАБазовыйКласс.getССылкаНаСозданнуюБазу());
+                        , sqLiteDatabase);
                 /////
 
                 Log.d(this.getClass().getName(), "GetData "  +КурсорДанныеДляКонтактовЧата);

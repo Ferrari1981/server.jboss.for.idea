@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.database.sqlite.SQLiteCursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
@@ -34,12 +35,14 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.work.WorkInfo;
 import androidx.work.WorkManager;
+
+import com.dsy.dsu.AllDatabases.GetSQLiteDatabase;
 import com.dsy.dsu.Business_logic_Only_Class.Class_GRUD_SQL_Operations;
 import com.dsy.dsu.Business_logic_Only_Class.Class_Generation_Errors;
 import com.dsy.dsu.Business_logic_Only_Class.Class_Generations_PUBLIC_CURRENT_ID;
 import com.dsy.dsu.Business_logic_Only_Class.Class_Generator_One_WORK_MANAGER;
 import com.dsy.dsu.Business_logic_Only_Class.SubClass_RetryGEtRowInChatsКлассПроверемЕщеРАзПоявилосЛИПуббличныйUUIDМеждуУчасникамиЧата;
-import com.dsy.dsu.AllDatabases.CREATE_DATABASE;
+
 import com.dsy.dsu.Business_logic_Only_Class.Class_MODEL_synchronized;
 import com.dsy.dsu.Business_logic_Only_Class.PUBLIC_CONTENT;
 import com.dsy.dsu.Code_For_Services.Service_Для_ЧатаСменаСтатусаПрочитаноИлиНет;
@@ -70,7 +73,7 @@ public class Fragment_Writer_Read_ЧитатьПисатьЧата extends Fragm
     protected FloatingActionButton floatingActionButtonВФагментеReadandWrite;
     protected EditText editTextТелоНаписаногоСообщенияДругимСотрудникам;
     protected Activity ActivityДляСинхронизацииОбмена = null;
-    protected CREATE_DATABASE Create_Database_СсылкаНАБазовыйКласс;
+    private SQLiteDatabase sqLiteDatabase ;
     protected String ПолученыйФИОIDДляЧата = new String();
     protected Class_MODEL_synchronized modelДляФрагментаДляОперацииЗаписиНовгоСтатусаПрочитанного;
     protected PUBLIC_CONTENT Class_Engine_SQLГдеНаходитьсяМенеджерПотоков = null;
@@ -92,7 +95,21 @@ public class Fragment_Writer_Read_ЧитатьПисатьЧата extends Fragm
     protected Service_Для_ЧатаСменаСтатусаПрочитаноИлиНет СсылкаНаСлужбуЧата;
 
 
-
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        try{
+        sqLiteDatabase=    GetSQLiteDatabase.SqliteDatabase();
+        Log.d(this.getClass().getName(), " " + " viewДляСообщений" + viewДляСообщенийЧата);
+    } catch (Exception e) {
+        e.printStackTrace();
+        Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
+                " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
+        class_generation_errors.МетодЗаписиВЖурналНовойОшибки(e.toString(),
+                this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
+                Thread.currentThread().getStackTrace()[2].getLineNumber());
+    }
+    }
 
     // TODO: 14.07.2022  начинаеться код ЧАТА
     @Override
@@ -154,7 +171,7 @@ public class Fragment_Writer_Read_ЧитатьПисатьЧата extends Fragm
         try {
             class_grud_sql_operations = new Class_GRUD_SQL_Operations(getContext());
             class_generation_errors=new Class_Generation_Errors(getContext());
-            Create_Database_СсылкаНАБазовыйКласс = new CREATE_DATABASE(getContext());
+
             Class_Engine_SQLГдеНаходитьсяМенеджерПотоков = new PUBLIC_CONTENT(getContext());
             modelДляФрагментаДляОперацииЗаписиНовгоСтатусаПрочитанного = new Class_MODEL_synchronized(getContext());
 
@@ -615,7 +632,7 @@ public class Fragment_Writer_Read_ЧитатьПисатьЧата extends Fragm
                                 ПолученыйIDДляЧата,
                                 ПубличныйIDДляФрагмента
                                 , Class_Engine_SQLГдеНаходитьсяМенеджерПотоков.МенеджерПотоков,
-                                Create_Database_СсылкаНАБазовыйКласс.getССылкаНаСозданнуюБазу());
+                                sqLiteDatabase);
             }
 
   /*          if (ПолученыйУжеСуществующийUUIDИзПерепискиДляЧата > 0) {
