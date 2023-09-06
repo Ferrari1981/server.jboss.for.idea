@@ -51,17 +51,11 @@ public class BEANCallsBack {
 
             // TODO: 19.07.2023  writeing
             БуферДанныеДляКлиента.write(ГлавныйБуферОтправкиДанныхНААндройд.toString());
-
-
-            // TODO: 26.04.2023 flushing
+            // TODO: 06.09.2023
             БуферДанныеДляКлиента.flush();
-
             // TODO: 26.04.2023 finish
             МеханизмОтправкиДанныхКлиенту.finish();
-
             // TODO: 19.07.2023 close
-            БуферДанныеДляКлиента.close();
-            МеханизмОтправкиДанныхКлиенту.close();
             // TODO: 23.04.2023 exit asynccontext
             if(request.isAsyncStarted() && request.isAsyncSupported()){
                 request.getAsyncContext().complete();
@@ -111,13 +105,9 @@ public class BEANCallsBack {
                 // TODO: 19.07.2023  writeing
                 МеханизмОтправкиДанныхКлиенту.write(ГлавныйБуферОтправкиДанныхНААндройд);
 
-                // TODO: 06.09.2023 fluing
-                МеханизмОтправкиДанныхКлиенту.flush();
-
                 // TODO: 26.04.2023 finish
                 МеханизмОтправкиДанныхКлиенту.finish();
-                // TODO: 19.07.2023 close
-                МеханизмОтправкиДанныхКлиенту.close();
+
                 // TODO: 23.04.2023 exit asynccontext
                 if(request.isAsyncStarted() && request.isAsyncSupported()){
                     request.getAsyncContext().complete();

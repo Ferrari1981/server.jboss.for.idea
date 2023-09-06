@@ -92,15 +92,9 @@ public class SubClassSessionBeanPOST {//extends    DSU1JsonServlet
             switch (JobForServer.trim()) {
                 case "Получение JSON файла от Андройда":
 
-
-
-
-                    GZIPInputStream requestInputStream =       new GZIPInputStream(request.getInputStream());
+                    GZIPInputStream requestInputStream =       new GZIPInputStream(request.getInputStream() );
                 InputStream inputStream=    new ByteArrayInputStream(requestInputStream.readAllBytes());
 
-
-                  /*  GZIPInputStream requestInputStream =       new GZIPInputStream(request.getInputStream());
-                    ByteArrayInputStream streamBuilder = new ByteArrayInputStream(requestInputStream.readAllBytes());*/
                     ЛОГ.log("  requestInputStream.isReady() " + inputStream.available());///// ПРИШЕДШИХ
                     if (requestInputStream.available()>0) {///// ЗАХОДИМ											///// КО
                         БуферГлавныйГенерацииJSONДляAndroid = МетодПарсингаJSONФайлПришелОтКлиента(response, NameTable,   inputStream );
