@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
@@ -41,7 +42,8 @@ import androidx.core.app.ActivityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.lifecycle.Observer;
 
-import com.dsy.dsu.AllDatabases.CREATE_DATABASE;
+
+import com.dsy.dsu.AllDatabases.GetSQLiteDatabase;
 import com.dsy.dsu.Business_logic_Only_Class.Class_Clears_Tables;
 import com.dsy.dsu.Business_logic_Only_Class.Class_Connections_Server;
 import com.dsy.dsu.Business_logic_Only_Class.Class_Find_Setting_User_Network;
@@ -67,7 +69,8 @@ import java.util.Date;
 /////////////////////////////////////////////////////////////////////////
 public class MainActivity_Face_App_OLd extends AppCompatActivity {
     private ImageView imageView_ЗначекApp;
-    private CREATE_DATABASE Create_Database_СсылкаНАБазовыйКласс;
+
+    private SQLiteDatabase sqLiteDatabase ;
     private LinearLayout LinearLayoutFaceApp;
     private ScrollView ScrollFaceAppСкорол;
     private Observer observerОдноразоваяFACEAPP;
@@ -103,7 +106,8 @@ public class MainActivity_Face_App_OLd extends AppCompatActivity {
             ((Activity) context).setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
             ((Activity) context).setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LOCKED);
             Class_Engine_SQLГдеНаходитьсяМенеджерПотоков = new PUBLIC_CONTENT(getApplicationContext());
-            Create_Database_СсылкаНАБазовыйКласс = new CREATE_DATABASE(getApplicationContext());
+            // TODO: 06.09.2023
+            sqLiteDatabase=    GetSQLiteDatabase.SqliteDatabase();
 
             // TODO: 19.05.2023  Кнопки
             КнопкаТабель = (TextView) findViewById(R.id.textViewtabel); ///// TODO КНОПКА ТАБЕЛЬНОГО УЧЕТА

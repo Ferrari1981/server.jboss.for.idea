@@ -336,7 +336,7 @@ public class ContentProviderSynsInsert extends ContentProvider {
             new Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
                     Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
-        return true;
+        return  sqLiteDatabase.isOpen();
     }
     @Nullable
     @Override

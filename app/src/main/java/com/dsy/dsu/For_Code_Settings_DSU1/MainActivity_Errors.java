@@ -3,6 +3,7 @@ package com.dsy.dsu.For_Code_Settings_DSU1;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -20,7 +21,8 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.dsy.dsu.AllDatabases.CREATE_DATABASE;
+
+import com.dsy.dsu.AllDatabases.GetSQLiteDatabase;
 import com.dsy.dsu.Business_logic_Only_Class.Class_Generation_Errors;
 import com.dsy.dsu.Business_logic_Only_Class.Class_Sendiing_Errors;
 import com.dsy.dsu.Dashboard.Fragments.DashboardFragmentSettings;
@@ -38,7 +40,7 @@ import java.util.Date;
 
 //вывод данных на Автивити
 public class MainActivity_Errors extends AppCompatActivity  {
-   private CREATE_DATABASE  create_database;
+    private SQLiteDatabase sqLiteDatabase ;
     private  TextView КонтейнерКудаЗагружаеютьсяОшибкиПрилоджения;
 
     private  MaterialButton materialButtonОтправка;
@@ -67,7 +69,7 @@ public class MainActivity_Errors extends AppCompatActivity  {
             fragmentTransaction = fragmentManager.beginTransaction();
 
             КонтейнерКудаЗагружаеютьсяОшибкиПрилоджения = (TextView) findViewById(R.id.textViewDATA);
-            create_database =new CREATE_DATABASE(getApplicationContext());
+            sqLiteDatabase=    GetSQLiteDatabase.SqliteDatabase();
             getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
             getSupportActionBar().hide(); ///скрывать тул бар
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD
@@ -295,7 +297,7 @@ public class MainActivity_Errors extends AppCompatActivity  {
             // TODO: 06.07.2023  оправлем ощибки на ПОЧТУ
             // TODO: 06.07.2023  оправлем ощибки на ПРЧТУ
                 new Class_Sendiing_Errors(this)
-                        .МетодПослываемОшибкиАдминистаторуПо(БуерДляОшибок,this,ПубличноеID, create_database.getССылкаНаСозданнуюБазу() );
+                        .МетодПослываемОшибкиАдминистаторуПо(БуерДляОшибок,this,ПубличноеID,   sqLiteDatabase );
 
 
             Log.d(this.getClass().getName(), " Ошибок Нет. время :   " +new Date().toString());

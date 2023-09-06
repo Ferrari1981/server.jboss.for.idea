@@ -36,8 +36,8 @@ import androidx.core.content.ContextCompat;
 import androidx.loader.content.AsyncTaskLoader;
 import androidx.loader.content.Loader;
 
-import com.dsy.dsu.AllDatabases.CREATE_DATABASE;
 
+import com.dsy.dsu.AllDatabases.GetSQLiteDatabase;
 import com.dsy.dsu.Business_logic_Only_Class.Class_Connections_Server;
 import com.dsy.dsu.Business_logic_Only_Class.Class_GRUD_SQL_Operations;
 import com.dsy.dsu.Business_logic_Only_Class.Class_Generation_Errors;
@@ -64,7 +64,7 @@ public class MainActivity_Face_Start extends AppCompatActivity {
     private  String success_login =         new String();
 
     private  String date_update;
-    private  CREATE_DATABASE   Create_Database_СсылкаНАБазовыйКласс;
+    private SQLiteDatabase sqLiteDatabase ;
     private  Context КонтекстДляFAceapp;
     private  Activity activity;
     // TODO: 24.02.202
@@ -87,7 +87,7 @@ public class MainActivity_Face_Start extends AppCompatActivity {
 try{
     setContentView(R.layout.activity_main__face);
     // TODO: 26.06.2023 БАЗА ДАННЫХ ОСНОВНАЯ
-    Create_Database_СсылкаНАБазовыйКласс=new CREATE_DATABASE(getApplicationContext());
+    sqLiteDatabase=    GetSQLiteDatabase.SqliteDatabase();
     // TODO: 26.06.2023 БАЗА ДАННЫХ ВСТМПОГАТЕЛЬЫНЕ
     img_animation = (ImageView) findViewById(R.id.imageviewstart);
     progressBarFace = (ProgressBar) findViewById(R.id.progressBarFace);

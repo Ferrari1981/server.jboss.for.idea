@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteCursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Build;
@@ -30,8 +31,9 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.dsy.dsu.AllDatabases.GetSQLiteDatabase;
 import com.dsy.dsu.BuildConfig;
-import com.dsy.dsu.AllDatabases.CREATE_DATABASE;
+
 import com.dsy.dsu.Business_logic_Only_Class.Class_GRUD_SQL_Operations;
 import com.dsy.dsu.Business_logic_Only_Class.DATE.Class_Generation_Data;
 import com.dsy.dsu.Business_logic_Only_Class.Class_Generation_Errors;
@@ -58,7 +60,8 @@ import java.util.stream.Collectors;
 public class MainActivity_Settings extends AppCompatActivity {
 
      private      Map<String, String> ХэшДанныеИзБазыДляЗАполенияСпинеровыОрганизация = Collections.synchronizedMap(new LinkedHashMap<String, String>());
-    private       CREATE_DATABASE   Create_Database_СсылкаНАБазовыйКласс;
+
+    private SQLiteDatabase sqLiteDatabase ;
     private Spinner СпинерВыборОрганизации;
     private     Cursor Курсор_СамиДанные_Logins=null;
             private int ЕстьСтроки;
@@ -99,7 +102,7 @@ public class MainActivity_Settings extends AppCompatActivity {
             getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
             getSupportActionBar().hide(); ///скрывать тул бар
             context =this;
-             Create_Database_СсылкаНАБазовыйКласс=new CREATE_DATABASE(getApplicationContext());
+            sqLiteDatabase=    GetSQLiteDatabase.SqliteDatabase();
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LOCKED);
             imageViewСтрелкаВнутриНастроек = (Button) findViewById(R.id.imageViewСтрелкаВнутриНастроек);
             СпинерДляСозданииОрганизации= (Spinner) findViewById(R.id.СпинерДляСозданииОрганизации);
@@ -210,7 +213,7 @@ Class_GRUD_SQL_Operations class_grud_sql_operationsВычисляетПосле�
 
              Курсор_ВытаскиваемПоследнуюДатуСинхрониазииССерором= (SQLiteCursor)  new Class_GRUD_SQL_Operations(getApplicationContext()).
                      new GetData(getApplicationContext()).getdata(class_grud_sql_operationsВычисляетПоследнуюДатуСинхронищацииССервром.concurrentHashMapНабор,
-                     Class_Engine_SQLГдеНаходитьсяМенеджерПотоков.МенеджерПотоков,Create_Database_СсылкаНАБазовыйКласс.getССылкаНаСозданнуюБазу());
+                     Class_Engine_SQLГдеНаходитьсяМенеджерПотоков.МенеджерПотоков,sqLiteDatabase);
 
              Log.d(this.getClass().getName(), "GetData "  +Курсор_ВытаскиваемПоследнуюДатуСинхрониазииССерором);
      ////TODO   результат
@@ -328,7 +331,7 @@ Class_GRUD_SQL_Operations class_grud_sql_operationsВычисляетПосле�
             SQLiteCursor КурсорУзнаемСохраненыйРежимРаботыССетьюВЫборWIFIИЛИMObile=null;
             КурсорУзнаемСохраненыйРежимРаботыССетьюВЫборWIFIИЛИMObile= (SQLiteCursor)  concurrentHashMapНаборПараментовSQLBuilder_Для_GRUD_ОперацийДляОпределенияРЕжимаРаботыСетиВЫборWIFIИЛИMOBILE.
                     new GetData(getApplicationContext()).getdata(concurrentHashMapНаборПараментовSQLBuilder_Для_GRUD_ОперацийДляОпределенияРЕжимаРаботыСетиВЫборWIFIИЛИMOBILE.concurrentHashMapНабор,
-                    Class_Engine_SQLГдеНаходитьсяМенеджерПотоков.МенеджерПотоков,Create_Database_СсылкаНАБазовыйКласс.getССылкаНаСозданнуюБазу());
+                    Class_Engine_SQLГдеНаходитьсяМенеджерПотоков.МенеджерПотоков,sqLiteDatabase);
             Log.d(this.getClass().getName(), "GetData " +КурсорУзнаемСохраненыйРежимРаботыССетьюВЫборWIFIИЛИMObile );
             if (КурсорУзнаемСохраненыйРежимРаботыССетьюВЫборWIFIИЛИMObile.getCount() > 0) {
                 КурсорУзнаемСохраненыйРежимРаботыССетьюВЫборWIFIИЛИMObile.moveToFirst();
@@ -445,7 +448,7 @@ Class_GRUD_SQL_Operations class_grud_sql_operationsВычисляетПосле�
             КурсорУзнаемСохраненыйРежимАрботыВыходныхДней= (SQLiteCursor) concurrentHashMapНаборПараментовSQLBuilder_Для_GRUD_ОперацийДляПолучениеСтатусаВключенРЕжимВыходныхДней.
                     new GetData(getApplicationContext()).getdata(concurrentHashMapНаборПараментовSQLBuilder_Для_GRUD_ОперацийДляПолучениеСтатусаВключенРЕжимВыходныхДней.
                             concurrentHashMapНабор,
-                    Class_Engine_SQLГдеНаходитьсяМенеджерПотоков.МенеджерПотоков,Create_Database_СсылкаНАБазовыйКласс.getССылкаНаСозданнуюБазу());
+                    Class_Engine_SQLГдеНаходитьсяМенеджерПотоков.МенеджерПотоков,sqLiteDatabase);
 
             Log.d(this.getClass().getName(), "GetData " +КурсорУзнаемСохраненыйРежимАрботыВыходныхДней );
 
@@ -749,7 +752,7 @@ return (int) РезультатВставкиНовогоСотрудникар�
        ///
        Курсор_ИщемПУбличныйIDКогдаегоНетВстатике= (SQLiteCursor)  new Class_GRUD_SQL_Operations(getApplicationContext()).
                new GetData(getApplicationContext()).getdata(class_grud_sql_operationsЗаполенияДаннымиПриВставкеОрганизации.concurrentHashMapНабор,
-               Class_Engine_SQLГдеНаходитьсяМенеджерПотоков.МенеджерПотоков,Create_Database_СсылкаНАБазовыйКласс.getССылкаНаСозданнуюБазу());
+               Class_Engine_SQLГдеНаходитьсяМенеджерПотоков.МенеджерПотоков,sqLiteDatabase);
 
        Log.d(this.getClass().getName(), "GetData "  +Курсор_ИщемПУбличныйIDКогдаегоНетВстатике);
 
@@ -831,7 +834,7 @@ return (int) РезультатВставкиНовогоСотрудникар�
        SQLiteCursor     Курсор_УзнаемЕслиUUIDВТАблицеОрганизация=null;
        Курсор_УзнаемЕслиUUIDВТАблицеОрганизация= (SQLiteCursor)  new Class_GRUD_SQL_Operations(getApplicationContext()).
                new GetData(getApplicationContext()).getdata(class_grud_sql_operationsЗаполенияДаннымиПриВставкеОрганизации.concurrentHashMapНабор,
-               Class_Engine_SQLГдеНаходитьсяМенеджерПотоков.МенеджерПотоков,Create_Database_СсылкаНАБазовыйКласс.getССылкаНаСозданнуюБазу());
+               Class_Engine_SQLГдеНаходитьсяМенеджерПотоков.МенеджерПотоков,sqLiteDatabase);
        Log.d(this.getClass().getName(), "GetData "  +Курсор_УзнаемЕслиUUIDВТАблицеОрганизация);
         int UUIDдлянастроуки = 0;
             // TODO: 07.09.2021  РЕЗУЛЬТАТ
@@ -1175,7 +1178,7 @@ return (int) РезультатВставкиНовогоСотрудникар�
             /////////
             Курсор_ЗагружаетДанныеПриСозданииТабеля= (SQLiteCursor)  new Class_GRUD_SQL_Operations(getApplicationContext()).
                     new GetData(getApplicationContext()).getdata(class_grud_sql_operationsЗаполненияНазваниеОрганизации.concurrentHashMapНабор,
-                    Class_Engine_SQLГдеНаходитьсяМенеджерПотоков.МенеджерПотоков,Create_Database_СсылкаНАБазовыйКласс.getССылкаНаСозданнуюБазу());
+                    Class_Engine_SQLГдеНаходитьсяМенеджерПотоков.МенеджерПотоков,sqLiteDatabase);
 
             Log.d(this.getClass().getName(), "GetData "  +Курсор_ЗагружаетДанныеПриСозданииТабеля);
 
@@ -1381,7 +1384,7 @@ return (int) РезультатВставкиНовогоСотрудникар�
 
             Курсор_ИщемВыбраннуюОрганизацию= (SQLiteCursor)  new Class_GRUD_SQL_Operations(getApplicationContext()).
                     new GetData(getApplicationContext()).getdata(class_grud_sql_operationsКоторыйСортируетАрайЛистПоУсловияКакаяОрганизацияУжеВыбрана.concurrentHashMapНабор,
-                    Class_Engine_SQLГдеНаходитьсяМенеджерПотоков.МенеджерПотоков,Create_Database_СсылкаНАБазовыйКласс.getССылкаНаСозданнуюБазу());
+                    Class_Engine_SQLГдеНаходитьсяМенеджерПотоков.МенеджерПотоков,sqLiteDatabase);
 
             Log.d(this.getClass().getName(), "GetData "  +Курсор_ИщемВыбраннуюОрганизацию);
 

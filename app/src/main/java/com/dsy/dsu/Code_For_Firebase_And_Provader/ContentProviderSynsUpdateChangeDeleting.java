@@ -22,7 +22,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.loader.content.AsyncTaskLoader;
 
-import com.dsy.dsu.AllDatabases.CREATE_DATABASE;
+
+import com.dsy.dsu.AllDatabases.GetSQLiteDatabase;
 import com.dsy.dsu.Business_logic_Only_Class.Class_Generation_Errors;
 import com.dsy.dsu.Business_logic_Only_Class.DATE.Class_Generation_Data;
 import com.dsy.dsu.Business_logic_Only_Class.PUBLIC_CONTENT;
@@ -41,7 +42,7 @@ import io.reactivex.rxjava3.functions.Predicate;
 
 public class ContentProviderSynsUpdateChangeDeleting extends ContentProvider {
   private   UriMatcher uriMatcherДЛяПровайдераКонтентБазаДанных;
-    private SQLiteDatabase Create_Database_СамаБАзаSQLite;
+    private SQLiteDatabase sqLiteDatabase ;
     private  PUBLIC_CONTENT public_contentМенеджерПотоковМассвойОперацииВставки;
     private AsyncTaskLoader<?> asyncTaskLoader;
     private Handler handler;
@@ -49,7 +50,7 @@ public class ContentProviderSynsUpdateChangeDeleting extends ContentProvider {
     private SharedPreferences preferences;
     public ContentProviderSynsUpdateChangeDeleting() throws InterruptedException {
         try{
-
+            sqLiteDatabase=    GetSQLiteDatabase.SqliteDatabase();
         CopyOnWriteArrayList<String> ИменаТаблицыОтАндройда=
                 new SubClassCreatingMainAllTables(getContext()).
                         методCreatingMainTabels(getContext());
@@ -96,7 +97,6 @@ public class ContentProviderSynsUpdateChangeDeleting extends ContentProvider {
         // TODO: 04.10.2022
     } catch (Exception e) {
         e.printStackTrace();
-        Create_Database_СамаБАзаSQLite.endTransaction();
         Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
                 + Thread.currentThread().getStackTrace()[2].getLineNumber());
         new Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
@@ -110,25 +110,18 @@ public class ContentProviderSynsUpdateChangeDeleting extends ContentProvider {
     @Override
     public boolean onCreate() {
         try {
-        if (Create_Database_СамаБАзаSQLite==null) {
-            Log.w(this.getClass().getName(), "Create_Database_СамаБАзаSQLite " + Create_Database_СамаБАзаSQLite);
-            Create_Database_СамаБАзаSQLite=new CREATE_DATABASE(getContext()).getССылкаНаСозданнуюБазу();
-            Log.w(this.getClass().getName(), "Create_Database_СамаБАзаSQLite " + Create_Database_СамаБАзаSQLite + " getContext()) " +getContext());
+            sqLiteDatabase=    GetSQLiteDatabase.SqliteDatabase();
+            Log.w(this.getClass().getName(), "sqLiteDatabase " + sqLiteDatabase + " getContext()) " +getContext());
             preferences =getContext(). getSharedPreferences("sharedPreferencesХранилище", Context.MODE_MULTI_PROCESS);
-        }
+
     } catch (Exception e) {
         e.printStackTrace();
-        Create_Database_СамаБАзаSQLite.endTransaction();
         Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
                 + Thread.currentThread().getStackTrace()[2].getLineNumber());
         new Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
                 Thread.currentThread().getStackTrace()[2].getLineNumber());
     }
-        if (Create_Database_СамаБАзаSQLite!=null) {
-            return true;
-        } else {
-            return false;
-        }
+        return  sqLiteDatabase.isOpen();
     }
 
 
@@ -137,37 +130,26 @@ public class ContentProviderSynsUpdateChangeDeleting extends ContentProvider {
     public int delete(Uri uri, String selection, String[] selectionArgs) {
         Integer РезультатУдалениеСтатуса=0;
         try{
-          //  Create_Database_СамаБАзаSQLite=new CREATE_DATABASE(getContext()).getССылкаНаСозданнуюБазуORM();
-        if (!Create_Database_СамаБАзаSQLite.inTransaction()) {
-            Create_Database_СамаБАзаSQLite.beginTransaction();
-        }
         Log.d(this.getClass().getName(), " uri"+uri );
             // TODO: 14.10.2022 метод определения текущней таблицы
             String table = МетодОпределяемТаблицу(uri);
             if (table!=null) {
-                Integer РезультатУдаления  = Create_Database_СамаБАзаSQLite.delete(table, selection, selectionArgs);
+                Integer РезультатУдаления  = sqLiteDatabase.delete(table, selection, selectionArgs);
                 // TODO: 30.10.2021
                 Log.w(getContext().getClass().getName(), " РезультатУдаления  " + РезультатУдаления);/////
                 Uri ОтветВставкиДанных  = Uri.parse("content://"+РезультатУдаления.toString());
                String ответОперцииВставки=    Optional.ofNullable(ОтветВставкиДанных).map(Emmeter->Emmeter.toString().replace("content://","")).get();
                 РезультатУдалениеСтатуса= Integer.parseInt(ответОперцииВставки);
+                // TODO: 06.09.2023
                 if (РезультатУдаления> 0) {
-                    if (Create_Database_СамаБАзаSQLite.inTransaction()) {
-                         
-                        Create_Database_СамаБАзаSQLite.setTransactionSuccessful();
                         getContext().getContentResolver().notifyChange(uri, null);
                         // TODO: 22.09.2022 увеличивает версию данных
-                    }
                 }
             }else {
                 Log.w(getContext().getClass().getName(), " table  " + table);/////
             }
-            if (Create_Database_СамаБАзаSQLite.inTransaction()) {
-                Create_Database_СамаБАзаSQLite.endTransaction();
-            }
     } catch (Exception e) {
         e.printStackTrace();
-        Create_Database_СамаБАзаSQLite.endTransaction();
         Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
                 + Thread.currentThread().getStackTrace()[2].getLineNumber());
         new Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
@@ -187,7 +169,6 @@ public class ContentProviderSynsUpdateChangeDeleting extends ContentProvider {
             Log.d(this.getClass().getName(), " table"+ table);
     } catch (Exception e) {
         e.printStackTrace();
-        Create_Database_СамаБАзаSQLite.endTransaction();
         Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
                 + Thread.currentThread().getStackTrace()[2].getLineNumber());
         new Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
@@ -208,35 +189,20 @@ public class ContentProviderSynsUpdateChangeDeleting extends ContentProvider {
         // TODO: Implement this to handle requests to insert a new row.
         Uri  ОтветВставкиДанных = null;
         try {
-            //Create_Database_СамаБАзаSQLite=new CREATE_DATABASE(getContext()).getССылкаНаСозданнуюБазуORM();
-            if (!Create_Database_СамаБАзаSQLite.inTransaction()) {
-                Create_Database_СамаБАзаSQLite.beginTransaction();
-            }
             Log.d(this.getClass().getName(), " uri"+uri );
             // TODO: 14.10.2022 метод определения текущней таблицы
             String table = МетодОпределяемТаблицу(uri);
-
-
-            Long   РезультатВставкиДанных  = Create_Database_СамаБАзаSQLite.insertOrThrow(table, null, values);
+            Long   РезультатВставкиДанных  =   sqLiteDatabase.insertOrThrow(table, null, values);
             // TODO: 30.10.2021
             Log.w(getContext().getClass().getName(), " РезультатВставкиДанных  " + РезультатВставкиДанных);/////
-
             ОтветВставкиДанных  = Uri.parse("content://"+РезультатВставкиДанных.toString());
             if (РезультатВставкиДанных> 0) {
-                if (Create_Database_СамаБАзаSQLite.inTransaction()) {
-                     
-                    Create_Database_СамаБАзаSQLite.setTransactionSuccessful();
-                    // TODO: 22.09.2022 увеличивает версию данных
-                }
-            }
-            if (Create_Database_СамаБАзаSQLite.inTransaction()) {
-                Create_Database_СамаБАзаSQLite.endTransaction();
+                getContext().getContentResolver().notifyChange(uri, null);
             }
             // TODO: 30.10.2021
             getContext().getContentResolver().notifyChange(uri, null);
         } catch (Exception e) {
             e.printStackTrace();
-            Create_Database_СамаБАзаSQLite.endTransaction();
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
                     + Thread.currentThread().getStackTrace()[2].getLineNumber());
             new Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
@@ -266,10 +232,6 @@ public class ContentProviderSynsUpdateChangeDeleting extends ContentProvider {
                @Override
                public Object loadInBackground() {
                    Cursor cursor=null;
-        //   Create_Database_СамаБАзаSQLite=new CREATE_DATABASE(getContext()).getССылкаНаСозданнуюБазуORM();
-           if (!Create_Database_СамаБАзаSQLite.inTransaction()) {
-               Create_Database_СамаБАзаSQLite.beginTransaction();
-           }
         Integer  ПубличныйIDДляФрагмента=queryArgs.getInt("ПубличныйIDДляФрагмента",0);
         Integer  ТекущаяЦФО=queryArgs.getInt("ТекущаяЦФО",0);
         Integer  ТекущаяНомерМатериала=queryArgs.getInt("ТекущаяНомерМатериала",0);
@@ -280,21 +242,17 @@ public class ContentProviderSynsUpdateChangeDeleting extends ContentProvider {
            // TODO: 07.11.2022  данные курсор для групировки
            switch (ФлагКакиеДанныеНужныПолучениеМатериалов.trim()) {
                case "ПолучениеНомерМатериала":
-               cursor=     SQLBuilder_Для_GRUD_Операций.query(Create_Database_СамаБАзаSQLite,new String[]{"*"},
+               cursor=     SQLBuilder_Для_GRUD_Операций.query(  sqLiteDatabase,new String[]{"*"},
                        null,null
                        ,"nomenvesov_zifra, nomenvesov, moneys, kolichstvo, cfo", "cfo="+ТекущаяЦФО, null,null);
                break;
                case "ПолучениеСгрупированныеСамиДанные":
-                   cursor=     SQLBuilder_Для_GRUD_Операций.query(Create_Database_СамаБАзаSQLite,new String[]{"*"},
+                   cursor=     SQLBuilder_Для_GRUD_Операций.query(  sqLiteDatabase,new String[]{"*"},
                            null,null
                            ,"nomenvesov_zifra, nomenvesov, moneys, kolichstvo, cfo", "cfo="+ТекущаяЦФО+" AND nomenvesov_zifra="+ТекущаяНомерМатериала , null,null);
                    break;
            }
-
            Log.w(getContext().getClass().getName(), " Полученый для Получение Материалов cursor  " + cursor);/////
-           if (Create_Database_СамаБАзаSQLite.inTransaction()) {
-               Create_Database_СамаБАзаSQLite.endTransaction();
-           }
            commitContentChanged();
                    return cursor;
                }
@@ -365,15 +323,13 @@ public class ContentProviderSynsUpdateChangeDeleting extends ContentProvider {
             String     table = МетодОпределяемТаблицу(uri);
 
             final Long[] ПовышенаяВерсияДанных = {new SubClassUpVersionDATA().
-                    МетодПовышаемВерсииCurrentTable(table, getContext(), Create_Database_СамаБАзаSQLite)};
+                    МетодПовышаемВерсииCurrentTable(table, getContext() )};
             Log.d(this.getClass().getName(), " ПовышенаяВерсияДанных  " + ПовышенаяВерсияДанных[0]);
 
             String ФлагКакойСинхронизацияПерваяИлиНет=         preferences.getString("РежимЗапускаСинхронизации", "");
             if (ФлагКакойСинхронизацияПерваяИлиНет.equalsIgnoreCase("ПовторныйЗапускСинхронизации") ||
                     table.equalsIgnoreCase("settings_tabels") ||  table.equalsIgnoreCase("view_onesignal") ) {
-                      if (!Create_Database_СамаБАзаSQLite.inTransaction()) {
-                    Create_Database_СамаБАзаSQLite.beginTransaction();
-                }
+
                 Log.w(this.getClass().getName(), "count  bulkInsert  values.length "
                         + values.length+"\n"+"bulkPOTOK "+Thread.currentThread().getName()+"\n"+
                         " FUTURE FUTURE SIZE  EntityMaterialBinary "+"\n"+
@@ -412,7 +368,7 @@ public class ContentProviderSynsUpdateChangeDeleting extends ContentProvider {
                                     contentValuesСменыСтатусаУдаленногоСервера.put("date_update", ДатаДляТекущеОперации);
                                     String table = МетодОпределяемТаблицу(uri);
                                     ОперацияUPDATEСменыСтатусаУдаление  =
-                                            Create_Database_СамаБАзаSQLite.update(table,contentValuesСменыСтатусаУдаленногоСервера,"status_send=? AND uuid=?",
+                                            sqLiteDatabase.update(table,contentValuesСменыСтатусаУдаленногоСервера,"status_send=? AND uuid=?",
                                                     new String[]{"УдалитьФлагСервера",UUID.toString()});
                                  /*   ОперацияUPDATEСменыСтатусаУдаление  = update(uri,contentValuesСменыСтатусаУдаленногоСервера,"status_send=?, uuid=?", new String[]{"УдалитьФлагСервера",UUID.toString()});;*/
                                     Log.w(this.getClass().getName(), " Вставка массовая через contentValuesInsert  burkInsert   ОперацияUPDATEСменыСтатусаУдаление " +  ОперацияUPDATEСменыСтатусаУдаление);
@@ -427,7 +383,6 @@ public class ContentProviderSynsUpdateChangeDeleting extends ContentProvider {
                                             "  isParallel isParallel isParallel" + " ДанныеДляВторогоЭтапаBulkINSERT ДанныеДляВторогоЭтапаBulkINSERT.size()  ");
                                 } catch (Exception e) {
                                     e.printStackTrace();
-                                    Create_Database_СамаБАзаSQLite.endTransaction();
                                     Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" +
                                             Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
                                             + Thread.currentThread().getStackTrace()[2].getLineNumber());
@@ -440,15 +395,10 @@ public class ContentProviderSynsUpdateChangeDeleting extends ContentProvider {
                         .doOnComplete(new Action() {
                             @Override
                             public void run() throws Throwable {
-                                // TODO: 19.11.2022 ПОДНИМАЕМ ВЕРИСЮ ДАННЫХ
-                                if (Create_Database_СамаБАзаSQLite.inTransaction()  ) {
                                     // TODO: 09.11.2022 закрывает ТРАНЗАКЦИИ ВНУТРИ
                                     if ( РезультатОперацииBurkUPDATEСменаСтатусуУдаланиеСервера.size()>0) {
-                                         
-                                        Create_Database_СамаБАзаSQLite.setTransactionSuccessful();
+                                        getContext().getContentResolver().notifyChange(uri, null);
                                     }
-                                    Create_Database_СамаБАзаSQLite.endTransaction();
-                                }
                                 // TODO: 20.03.2023 Смена Статуса С Сервера  По СТАТУСУ УДАЛАЛИТЬ НА УДАЛЕННЫЙ
                                 Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                         " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -474,7 +424,6 @@ public class ContentProviderSynsUpdateChangeDeleting extends ContentProvider {
             Log.w(this.getClass().getName(), " BULK insert updaet РезультатОперацииBurkUPDATEСменаСтатусуУдаланиеСервера.size()" + РезультатОперацииBurkUPDATEСменаСтатусуУдаланиеСервера.size());
         } catch (Exception e) {
             e.printStackTrace();
-            Create_Database_СамаБАзаSQLite.endTransaction();
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
                     + Thread.currentThread().getStackTrace()[2].getLineNumber());
             new Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),

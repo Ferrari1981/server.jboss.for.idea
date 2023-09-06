@@ -23,7 +23,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.loader.content.AsyncTaskLoader;
 
-import com.dsy.dsu.AllDatabases.CREATE_DATABASE;
+
+import com.dsy.dsu.AllDatabases.GetSQLiteDatabase;
 import com.dsy.dsu.AllDatabases.JsonSerializerAndDeserializer.CfoJsonDeserializer;
 import com.dsy.dsu.AllDatabases.JsonSerializerAndDeserializer.Data_chatJsonDeserializer;
 import com.dsy.dsu.AllDatabases.JsonSerializerAndDeserializer.Data_notificationlJsonDeserializer;
@@ -71,7 +72,7 @@ import io.reactivex.rxjava3.functions.Predicate;
 
 public class ContentProviderSynsUpdateBinary extends ContentProvider {
   private   UriMatcher uriMatcherДЛяПровайдераКонтентБазаДанных;
-    private SQLiteDatabase Create_Database_СамаБАзаSQLite;
+    private SQLiteDatabase sqLiteDatabase ;
     private  PUBLIC_CONTENT public_contentМенеджерПотоковМассвойОперацииВставки;
     private AsyncTaskLoader<?> asyncTaskLoader;
     private Handler handler;
@@ -79,7 +80,7 @@ public class ContentProviderSynsUpdateBinary extends ContentProvider {
     private SharedPreferences preferences;
     public ContentProviderSynsUpdateBinary() throws InterruptedException {
         try{
-
+            sqLiteDatabase=    GetSQLiteDatabase.SqliteDatabase();
         CopyOnWriteArrayList<String> ИменаТаблицыОтАндройда=
                 new SubClassCreatingMainAllTables(getContext()).
                         методCreatingMainTabels(getContext());
@@ -126,7 +127,6 @@ public class ContentProviderSynsUpdateBinary extends ContentProvider {
         // TODO: 04.10.2022
     } catch (Exception e) {
         e.printStackTrace();
-        Create_Database_СамаБАзаSQLite.endTransaction();
         Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
                 + Thread.currentThread().getStackTrace()[2].getLineNumber());
         new Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
@@ -140,25 +140,19 @@ public class ContentProviderSynsUpdateBinary extends ContentProvider {
     @Override
     public boolean onCreate() {
         try {
-        if (Create_Database_СамаБАзаSQLite==null) {
-            Log.w(this.getClass().getName(), "Create_Database_СамаБАзаSQLite " + Create_Database_СамаБАзаSQLite);
-            Create_Database_СамаБАзаSQLite=new CREATE_DATABASE(getContext()).getССылкаНаСозданнуюБазу();
-            Log.w(this.getClass().getName(), "Create_Database_СамаБАзаSQLite " + Create_Database_СамаБАзаSQLite + " getContext()) " +getContext());
+            sqLiteDatabase=    GetSQLiteDatabase.SqliteDatabase();
+            Log.w(this.getClass().getName(), "sqLiteDatabase " + sqLiteDatabase + " getContext()) " +getContext());
             preferences =getContext(). getSharedPreferences("sharedPreferencesХранилище", Context.MODE_MULTI_PROCESS);
-        }
+
     } catch (Exception e) {
         e.printStackTrace();
-        Create_Database_СамаБАзаSQLite.endTransaction();
         Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
                 + Thread.currentThread().getStackTrace()[2].getLineNumber());
         new Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
                 Thread.currentThread().getStackTrace()[2].getLineNumber());
     }
-        if (Create_Database_СамаБАзаSQLite!=null) {
-            return true;
-        } else {
-            return false;
-        }
+        return  sqLiteDatabase.isOpen();
+
     }
 
 
@@ -167,37 +161,25 @@ public class ContentProviderSynsUpdateBinary extends ContentProvider {
     public int delete(Uri uri, String selection, String[] selectionArgs) {
         Integer РезультатУдалениеСтатуса=0;
         try{
-          //  Create_Database_СамаБАзаSQLite=new CREATE_DATABASE(getContext()).getССылкаНаСозданнуюБазуORM();
-        if (!Create_Database_СамаБАзаSQLite.inTransaction()) {
-            Create_Database_СамаБАзаSQLite.beginTransaction();
-        }
         Log.d(this.getClass().getName(), " uri"+uri );
             // TODO: 14.10.2022 метод определения текущней таблицы
             String table = МетодОпределяемТаблицу(uri);
             if (table!=null) {
-                Integer РезультатУдаления  = Create_Database_СамаБАзаSQLite.delete(table, selection, selectionArgs);
+                Integer РезультатУдаления  =  sqLiteDatabase.delete(table, selection, selectionArgs);
                 // TODO: 30.10.2021
                 Log.w(getContext().getClass().getName(), " РезультатУдаления  " + РезультатУдаления);/////
                 Uri ОтветВставкиДанных  = Uri.parse("content://"+РезультатУдаления.toString());
                String ответОперцииВставки=    Optional.ofNullable(ОтветВставкиДанных).map(Emmeter->Emmeter.toString().replace("content://","")).get();
                 РезультатУдалениеСтатуса= Integer.parseInt(ответОперцииВставки);
                 if (РезультатУдаления> 0) {
-                    if (Create_Database_СамаБАзаSQLite.inTransaction()) {
-                         
-                        Create_Database_СамаБАзаSQLite.setTransactionSuccessful();
                         getContext().getContentResolver().notifyChange(uri, null);
                         // TODO: 22.09.2022 увеличивает версию данных
-                    }
                 }
             }else {
                 Log.w(getContext().getClass().getName(), " table  " + table);/////
             }
-            if (Create_Database_СамаБАзаSQLite.inTransaction()) {
-                Create_Database_СамаБАзаSQLite.endTransaction();
-            }
     } catch (Exception e) {
         e.printStackTrace();
-        Create_Database_СамаБАзаSQLite.endTransaction();
         Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
                 + Thread.currentThread().getStackTrace()[2].getLineNumber());
         new Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
@@ -217,7 +199,6 @@ public class ContentProviderSynsUpdateBinary extends ContentProvider {
             Log.d(this.getClass().getName(), " table"+ table);
     } catch (Exception e) {
         e.printStackTrace();
-        Create_Database_СамаБАзаSQLite.endTransaction();
         Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
                 + Thread.currentThread().getStackTrace()[2].getLineNumber());
         new Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
@@ -238,35 +219,20 @@ public class ContentProviderSynsUpdateBinary extends ContentProvider {
         // TODO: Implement this to handle requests to insert a new row.
         Uri  ОтветВставкиДанных = null;
         try {
-            //Create_Database_СамаБАзаSQLite=new CREATE_DATABASE(getContext()).getССылкаНаСозданнуюБазуORM();
-            if (!Create_Database_СамаБАзаSQLite.inTransaction()) {
-                Create_Database_СамаБАзаSQLite.beginTransaction();
-            }
             Log.d(this.getClass().getName(), " uri"+uri );
             // TODO: 14.10.2022 метод определения текущней таблицы
             String table = МетодОпределяемТаблицу(uri);
-
-
-            Long   РезультатВставкиДанных  = Create_Database_СамаБАзаSQLite.insertOrThrow(table, null, values);
+            Long   РезультатВставкиДанных  =  sqLiteDatabase.insertOrThrow(table, null, values);
             // TODO: 30.10.2021
             Log.w(getContext().getClass().getName(), " РезультатВставкиДанных  " + РезультатВставкиДанных);/////
-
             ОтветВставкиДанных  = Uri.parse("content://"+РезультатВставкиДанных.toString());
             if (РезультатВставкиДанных> 0) {
-                if (Create_Database_СамаБАзаSQLite.inTransaction()) {
-                     
-                    Create_Database_СамаБАзаSQLite.setTransactionSuccessful();
-                    // TODO: 22.09.2022 увеличивает версию данных
-                }
-            }
-            if (Create_Database_СамаБАзаSQLite.inTransaction()) {
-                Create_Database_СамаБАзаSQLite.endTransaction();
+                getContext().getContentResolver().notifyChange(uri, null);
             }
             // TODO: 30.10.2021
             getContext().getContentResolver().notifyChange(uri, null);
         } catch (Exception e) {
             e.printStackTrace();
-            Create_Database_СамаБАзаSQLite.endTransaction();
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
                     + Thread.currentThread().getStackTrace()[2].getLineNumber());
             new Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
@@ -296,10 +262,6 @@ public class ContentProviderSynsUpdateBinary extends ContentProvider {
                @Override
                public Object loadInBackground() {
                    Cursor cursor=null;
-        //   Create_Database_СамаБАзаSQLite=new CREATE_DATABASE(getContext()).getССылкаНаСозданнуюБазуORM();
-           if (!Create_Database_СамаБАзаSQLite.inTransaction()) {
-               Create_Database_СамаБАзаSQLite.beginTransaction();
-           }
         Integer  ПубличныйIDДляФрагмента=queryArgs.getInt("ПубличныйIDДляФрагмента",0);
         Integer  ТекущаяЦФО=queryArgs.getInt("ТекущаяЦФО",0);
         Integer  ТекущаяНомерМатериала=queryArgs.getInt("ТекущаяНомерМатериала",0);
@@ -310,21 +272,17 @@ public class ContentProviderSynsUpdateBinary extends ContentProvider {
            // TODO: 07.11.2022  данные курсор для групировки
            switch (ФлагКакиеДанныеНужныПолучениеМатериалов.trim()) {
                case "ПолучениеНомерМатериала":
-               cursor=     SQLBuilder_Для_GRUD_Операций.query(Create_Database_СамаБАзаSQLite,new String[]{"*"},
+               cursor=     SQLBuilder_Для_GRUD_Операций.query(  sqLiteDatabase,new String[]{"*"},
                        null,null
                        ,"nomenvesov_zifra, nomenvesov, moneys, kolichstvo, cfo", "cfo="+ТекущаяЦФО, null,null);
                break;
                case "ПолучениеСгрупированныеСамиДанные":
-                   cursor=     SQLBuilder_Для_GRUD_Операций.query(Create_Database_СамаБАзаSQLite,new String[]{"*"},
+                   cursor=     SQLBuilder_Для_GRUD_Операций.query(  sqLiteDatabase,new String[]{"*"},
                            null,null
                            ,"nomenvesov_zifra, nomenvesov, moneys, kolichstvo, cfo", "cfo="+ТекущаяЦФО+" AND nomenvesov_zifra="+ТекущаяНомерМатериала , null,null);
                    break;
            }
-
            Log.w(getContext().getClass().getName(), " Полученый для Получение Материалов cursor  " + cursor);/////
-           if (Create_Database_СамаБАзаSQLite.inTransaction()) {
-               Create_Database_СамаБАзаSQLite.endTransaction();
-           }
            commitContentChanged();
                    return cursor;
                }
@@ -385,175 +343,175 @@ public class ContentProviderSynsUpdateBinary extends ContentProvider {
                                 РезультатJsonDeserializer=
                                 new OrganizationJsonDeserializer()
                                         .методOrganizationJsonDeserializer( jsonNodeParentMAP, getContext(),имяТаблицаAsync,
-                                                Create_Database_СамаБАзаSQLite,ФлагКакойСинхронизацияПерваяИлиНет);
+                                                sqLiteDatabase,ФлагКакойСинхронизацияПерваяИлиНет);
                                 bundleОперацииUpdateOrinsert.putInt("completeasync",РезультатJsonDeserializer);
                                 break;
                             case "depatment":
                                 РезультатJsonDeserializer=
                                         new DepatmentJsonDeserializer()
                                                 .методOrganizationJsonDeserializer( jsonNodeParentMAP, getContext(),имяТаблицаAsync,
-                                                        Create_Database_СамаБАзаSQLite,ФлагКакойСинхронизацияПерваяИлиНет);
+                                                        sqLiteDatabase,ФлагКакойСинхронизацияПерваяИлиНет);
                                 bundleОперацииUpdateOrinsert.putInt("completeasync",РезультатJsonDeserializer);
                                 break;
                             case "fio":
                                 РезультатJsonDeserializer=
                                         new FioJsonDeserializer()
                                                 .методOrganizationJsonDeserializer( jsonNodeParentMAP, getContext(),имяТаблицаAsync,
-                                                        Create_Database_СамаБАзаSQLite,ФлагКакойСинхронизацияПерваяИлиНет);
+                                                        sqLiteDatabase,ФлагКакойСинхронизацияПерваяИлиНет);
                                 bundleОперацииUpdateOrinsert.putInt("completeasync",РезультатJsonDeserializer);
                                 break;
                             case "region":
                                 РезультатJsonDeserializer=
                                         new RegionJsonDeserializer()
                                                 .методOrganizationJsonDeserializer( jsonNodeParentMAP, getContext(),имяТаблицаAsync,
-                                                        Create_Database_СамаБАзаSQLite,ФлагКакойСинхронизацияПерваяИлиНет);
+                                                        sqLiteDatabase,ФлагКакойСинхронизацияПерваяИлиНет);
                                 bundleОперацииUpdateOrinsert.putInt("completeasync",РезультатJsonDeserializer);
                                 break;
                             case "cfo":
                                 РезультатJsonDeserializer=
                                         new CfoJsonDeserializer()
                                                 .методOrganizationJsonDeserializer( jsonNodeParentMAP, getContext(),имяТаблицаAsync,
-                                                        Create_Database_СамаБАзаSQLite,ФлагКакойСинхронизацияПерваяИлиНет);
+                                                        sqLiteDatabase,ФлагКакойСинхронизацияПерваяИлиНет);
                                 bundleОперацииUpdateOrinsert.putInt("completeasync",РезультатJsonDeserializer);
                                 break;
                             case "notifications":
                                 РезультатJsonDeserializer=
                                         new NotificationsJsonDeserializer()
                                                 .методOrganizationJsonDeserializer( jsonNodeParentMAP, getContext(),имяТаблицаAsync,
-                                                        Create_Database_СамаБАзаSQLite,ФлагКакойСинхронизацияПерваяИлиНет);
+                                                        sqLiteDatabase,ФлагКакойСинхронизацияПерваяИлиНет);
                                 bundleОперацииUpdateOrinsert.putInt("completeasync",РезультатJsonDeserializer);
                                 break;
                             case "templates":
                                 РезультатJsonDeserializer=
                                         new TemplatesJsonDeserializer()
                                                 .методOrganizationJsonDeserializer( jsonNodeParentMAP, getContext(),имяТаблицаAsync,
-                                                        Create_Database_СамаБАзаSQLite,ФлагКакойСинхронизацияПерваяИлиНет);
+                                                        sqLiteDatabase,ФлагКакойСинхронизацияПерваяИлиНет);
                                 bundleОперацииUpdateOrinsert.putInt("completeasync",РезультатJsonDeserializer);
                                 break;
                             case "fio_template":
                                 РезультатJsonDeserializer=
                                         new Fio_templateJsonDeserializer()
                                                 .методOrganizationJsonDeserializer( jsonNodeParentMAP, getContext(),имяТаблицаAsync,
-                                                        Create_Database_СамаБАзаSQLite,ФлагКакойСинхронизацияПерваяИлиНет);
+                                                        sqLiteDatabase,ФлагКакойСинхронизацияПерваяИлиНет);
                                 bundleОперацииUpdateOrinsert.putInt("completeasync",РезультатJsonDeserializer);
                                 break;
                             case "chat_users":
                                 РезультатJsonDeserializer=
                                         new Сhat_usersJsonDeserializer()
                                                 .методOrganizationJsonDeserializer( jsonNodeParentMAP, getContext(),имяТаблицаAsync,
-                                                        Create_Database_СамаБАзаSQLite,ФлагКакойСинхронизацияПерваяИлиНет);
+                                                        sqLiteDatabase,ФлагКакойСинхронизацияПерваяИлиНет);
                                 bundleОперацииUpdateOrinsert.putInt("completeasync",РезультатJsonDeserializer);
                                 break;
                             case "chats":
                                 РезультатJsonDeserializer=
                                         new СhatsJsonDeserializer()
                                                 .методOrganizationJsonDeserializer( jsonNodeParentMAP, getContext(),имяТаблицаAsync,
-                                                        Create_Database_СамаБАзаSQLite,ФлагКакойСинхронизацияПерваяИлиНет);
+                                                        sqLiteDatabase,ФлагКакойСинхронизацияПерваяИлиНет);
                                 bundleОперацииUpdateOrinsert.putInt("completeasync",РезультатJsonDeserializer);
                                 break;
                             case "data_chat":
                                 РезультатJsonDeserializer=
                                         new Data_chatJsonDeserializer()
                                                 .методOrganizationJsonDeserializer( jsonNodeParentMAP, getContext(),имяТаблицаAsync,
-                                                        Create_Database_СамаБАзаSQLite,ФлагКакойСинхронизацияПерваяИлиНет);
+                                                        sqLiteDatabase,ФлагКакойСинхронизацияПерваяИлиНет);
                                 bundleОперацииUpdateOrinsert.putInt("completeasync",РезультатJsonDeserializer);
                                 break;
                             case "tabel":
                                 РезультатJsonDeserializer=
                                         new TabelJsonDeserializer()
                                                 .методOrganizationJsonDeserializer( jsonNodeParentMAP, getContext(),имяТаблицаAsync,
-                                                        Create_Database_СамаБАзаSQLite,ФлагКакойСинхронизацияПерваяИлиНет);
+                                                        sqLiteDatabase,ФлагКакойСинхронизацияПерваяИлиНет);
                                 bundleОперацииUpdateOrinsert.putInt("completeasync",РезультатJsonDeserializer);
                                 break;
                             case "data_tabels":
                                 РезультатJsonDeserializer=
                                         new Data_tabelsJsonDeserializer()
                                                 .методOrganizationJsonDeserializer( jsonNodeParentMAP, getContext(),имяТаблицаAsync,
-                                                        Create_Database_СамаБАзаSQLite,ФлагКакойСинхронизацияПерваяИлиНет);
+                                                        sqLiteDatabase,ФлагКакойСинхронизацияПерваяИлиНет);
                                 bundleОперацииUpdateOrinsert.putInt("completeasync",РезультатJsonDeserializer);
                                 break;
                             case "view_onesignal":
                                 РезультатJsonDeserializer=
                                         new View_onesignalJsonDeserializer()
                                                 .методOrganizationJsonDeserializer( jsonNodeParentMAP, getContext(),имяТаблицаAsync,
-                                                        Create_Database_СамаБАзаSQLite,ФлагКакойСинхронизацияПерваяИлиНет);
+                                                        sqLiteDatabase,ФлагКакойСинхронизацияПерваяИлиНет);
                                 bundleОперацииUpdateOrinsert.putInt("completeasync",РезультатJsonDeserializer);
                                 break;
                             case "data_notification":
                                 РезультатJsonDeserializer=
                                         new Data_notificationlJsonDeserializer()
                                                 .методOrganizationJsonDeserializer( jsonNodeParentMAP, getContext(),имяТаблицаAsync,
-                                                        Create_Database_СамаБАзаSQLite,ФлагКакойСинхронизацияПерваяИлиНет);
+                                                        sqLiteDatabase,ФлагКакойСинхронизацияПерваяИлиНет);
                                 bundleОперацииUpdateOrinsert.putInt("completeasync",РезультатJsonDeserializer);
                                 break;
                             case "nomen_vesov":
                                 РезультатJsonDeserializer=
                                         new Nomen_vesovlJsonDeserializer()
                                                 .методOrganizationJsonDeserializer( jsonNodeParentMAP, getContext(),имяТаблицаAsync,
-                                                        Create_Database_СамаБАзаSQLite,ФлагКакойСинхронизацияПерваяИлиНет);
+                                                        sqLiteDatabase,ФлагКакойСинхронизацияПерваяИлиНет);
                                 bundleОперацииUpdateOrinsert.putInt("completeasync",РезультатJsonDeserializer);
                                 break;
                             case "type_materials":
                                 РезультатJsonDeserializer=
                                         new Type_materialslJsonDeserializer()
                                                 .методOrganizationJsonDeserializer( jsonNodeParentMAP, getContext(),имяТаблицаAsync,
-                                                        Create_Database_СамаБАзаSQLite,ФлагКакойСинхронизацияПерваяИлиНет);
+                                                        sqLiteDatabase,ФлагКакойСинхронизацияПерваяИлиНет);
                                 bundleОперацииUpdateOrinsert.putInt("completeasync",РезультатJsonDeserializer);
                                 break;
                             case "get_materials_data":
                                 РезультатJsonDeserializer=
                                         new Get_materials_datalJsonDeserializer()
                                                 .методOrganizationJsonDeserializer( jsonNodeParentMAP, getContext(),имяТаблицаAsync,
-                                                        Create_Database_СамаБАзаSQLite,ФлагКакойСинхронизацияПерваяИлиНет);
+                                                        sqLiteDatabase,ФлагКакойСинхронизацияПерваяИлиНет);
                                 bundleОперацииUpdateOrinsert.putInt("completeasync",РезультатJsonDeserializer);
                                 break;
                             case "company":
                                 РезультатJsonDeserializer=
                                         new СompanylJsonDeserializer()
                                                 .методOrganizationJsonDeserializer( jsonNodeParentMAP, getContext(),имяТаблицаAsync,
-                                                        Create_Database_СамаБАзаSQLite,ФлагКакойСинхронизацияПерваяИлиНет);
+                                                        sqLiteDatabase,ФлагКакойСинхронизацияПерваяИлиНет);
                                 bundleОперацииUpdateOrinsert.putInt("completeasync",РезультатJsonDeserializer);
                                 break;
                             case "track":
                                 РезультатJsonDeserializer=
                                         new TrackJsonDeserializer()
                                                 .методOrganizationJsonDeserializer( jsonNodeParentMAP, getContext(),имяТаблицаAsync,
-                                                        Create_Database_СамаБАзаSQLite,ФлагКакойСинхронизацияПерваяИлиНет);
+                                                        sqLiteDatabase,ФлагКакойСинхронизацияПерваяИлиНет);
                                 bundleОперацииUpdateOrinsert.putInt("completeasync",РезультатJsonDeserializer);
                                 break;
                             case "prof":
                                 РезультатJsonDeserializer=
                                         new ProfJsonDeserializer()
                                                 .методOrganizationJsonDeserializer( jsonNodeParentMAP, getContext(),имяТаблицаAsync,
-                                                        Create_Database_СамаБАзаSQLite,ФлагКакойСинхронизацияПерваяИлиНет);
+                                                        sqLiteDatabase,ФлагКакойСинхронизацияПерваяИлиНет);
                                 bundleОперацииUpdateOrinsert.putInt("completeasync",РезультатJsonDeserializer);
                                 break;
                             case "order_tc":
                                 РезультатJsonDeserializer=
                                         new Order_tcJsonDeserializer()
                                                 .методOrganizationJsonDeserializer( jsonNodeParentMAP, getContext(),имяТаблицаAsync,
-                                                        Create_Database_СамаБАзаSQLite,ФлагКакойСинхронизацияПерваяИлиНет);
+                                                        sqLiteDatabase,ФлагКакойСинхронизацияПерваяИлиНет);
                                 bundleОперацииUpdateOrinsert.putInt("completeasync",РезультатJsonDeserializer);
                                 break;
                             case "vid_tc":
                                 РезультатJsonDeserializer=
                                         new Vid_tcJsonDeserializer()
                                                 .методOrganizationJsonDeserializer( jsonNodeParentMAP, getContext(),имяТаблицаAsync,
-                                                        Create_Database_СамаБАзаSQLite,ФлагКакойСинхронизацияПерваяИлиНет);
+                                                        sqLiteDatabase,ФлагКакойСинхронизацияПерваяИлиНет);
                                 bundleОперацииUpdateOrinsert.putInt("completeasync",РезультатJsonDeserializer);
                                 break;
                             case "settings_tabels":
                                 РезультатJsonDeserializer=
                                         new Settings_tabelsJsonDeserializer()
                                                 .методOrganizationJsonDeserializer( jsonNodeParentMAP, getContext(),имяТаблицаAsync,
-                                                        Create_Database_СамаБАзаSQLite,ФлагКакойСинхронизацияПерваяИлиНет);
+                                                        sqLiteDatabase,ФлагКакойСинхронизацияПерваяИлиНет);
                                 bundleОперацииUpdateOrinsert.putInt("completeasync",РезультатJsonDeserializer);
                                 break;
                             case "materials_databinary":
                                 РезультатJsonDeserializer=
                                         new Materials_databinaryJsonDeserializer()
                                                 .методOrganizationJsonDeserializer( jsonNodeParentMAP, getContext(),имяТаблицаAsync,
-                                                        Create_Database_СамаБАзаSQLite,ФлагКакойСинхронизацияПерваяИлиНет);
+                                                        sqLiteDatabase,ФлагКакойСинхронизацияПерваяИлиНет);
                                 bundleОперацииUpdateOrinsert.putInt("completeasync",РезультатJsonDeserializer);
                                 break;
 
@@ -603,9 +561,6 @@ public class ContentProviderSynsUpdateBinary extends ContentProvider {
             String ФлагКакойСинхронизацияПерваяИлиНет=         preferences.getString("РежимЗапускаСинхронизации", "");
             if (ФлагКакойСинхронизацияПерваяИлиНет.equalsIgnoreCase("ПовторныйЗапускСинхронизации") ||
                     table.equalsIgnoreCase("settings_tabels") ||  table.equalsIgnoreCase("view_onesignal") ) {
-                      if (!Create_Database_СамаБАзаSQLite.inTransaction()) {
-                    Create_Database_СамаБАзаSQLite.beginTransaction();
-                }
                 Log.w(this.getClass().getName(), "count  bulkInsert  values.length "
                         + values.length+"\n"+"bulkPOTOK "+Thread.currentThread().getName()+"\n"+
                         " FUTURE FUTURE SIZE  EntityMaterialBinary "+"\n"+
@@ -635,7 +590,7 @@ public class ContentProviderSynsUpdateBinary extends ContentProvider {
                                     Integer     ОперацияUPDATE=0;
                                     Object UUID= contentValuesInsert.get(СтолбикСравнения);
                                     System.out.println("  ИзменяемыйСтлобикСравенения  " + СтолбикСравнения);
-                                        ОперацияUPDATE  = Create_Database_СамаБАзаSQLite.update(table, contentValuesInsert,     СтолбикСравнения +"=?"
+                                        ОперацияUPDATE  =   sqLiteDatabase.update(table, contentValuesInsert,     СтолбикСравнения +"=?"
                                                 ,new String[]{(String) UUID});
                                     Log.w(this.getClass().getName(), " Вставка массовая через contentValuesInsert  burkInsert   ОперацияUPDATE " +  ОперацияUPDATE);
                                     if (ОперацияUPDATE>0) {
@@ -644,7 +599,7 @@ public class ContentProviderSynsUpdateBinary extends ContentProvider {
                                         ДанныеДляОперацииUpdates.remove(contentValuesInsert);
                                         // TODO: 20.03.2023 МЕняем Статуст УдалелитьсСервера на Удаленный
                                     }else{
-                                           Cursor cursor=        Create_Database_СамаБАзаSQLite.rawQuery(" select "+
+                                           Cursor cursor=          sqLiteDatabase.rawQuery(" select "+
                                                     СтолбикСравнения+" from "+ table +" WHERE  "+СтолбикСравнения+" =?  ",new String[]{UUID.toString()});
                                         if (cursor!=null) {
                                             if ( cursor.getCount() > 0) {
@@ -662,7 +617,6 @@ public class ContentProviderSynsUpdateBinary extends ContentProvider {
                                             + ДанныеДляОперацииUpdates.size() );
                                 } catch (Exception e) {
                                     e.printStackTrace();
-                                    Create_Database_СамаБАзаSQLite.endTransaction();
                                     Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" +
                                             Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
                                             + Thread.currentThread().getStackTrace()[2].getLineNumber());
@@ -679,18 +633,12 @@ public class ContentProviderSynsUpdateBinary extends ContentProvider {
                                 Integer РезультатПовышенииВерсииДанных=0;
                                 if(РезультатОперацииBurkUPDATE.size()>0 ){
                                     РезультатПовышенииВерсииДанных =
-                                            new SubClassUpVersionDATA().МетодVesrionUPMODIFITATION_Client(table,getContext(),Create_Database_СамаБАзаSQLite);
+                                            new SubClassUpVersionDATA().МетодVesrionUPMODIFITATION_Client(table,getContext());
                                     Log.d(this.getClass().getName(), " РезультатПовышенииВерсииДанных  " + РезультатПовышенииВерсииДанных);
                                 }
-
-                                if (Create_Database_СамаБАзаSQLite.inTransaction()  ) {
                                     // TODO: 09.11.2022 закрывает ТРАНЗАКЦИИ ВНУТРИ
                                     if ( РезультатПовышенииВерсииДанных>0) {
-                                         
-                                        Create_Database_СамаБАзаSQLite.setTransactionSuccessful();
                                     }
-                                    Create_Database_СамаБАзаSQLite.endTransaction();
-                                }
                             }
                         })
                         .onErrorComplete(new Predicate<Throwable>() {
@@ -730,7 +678,6 @@ public class ContentProviderSynsUpdateBinary extends ContentProvider {
 
         } catch (Exception e) {
             e.printStackTrace();
-            Create_Database_СамаБАзаSQLite.endTransaction();
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
                     + Thread.currentThread().getStackTrace()[2].getLineNumber());
             new Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
@@ -755,9 +702,6 @@ class SubClassJsonParserOtServer{
             Bundle bundleОперацииUpdateOrinsert=new Bundle();
             try{
             String ФлагКакойСинхронизацияПерваяИлиНет = preferences.getString("РежимЗапускаСинхронизации", "");
-                if (!Create_Database_СамаБАзаSQLite.inTransaction()) {
-                    Create_Database_СамаБАзаSQLite.beginTransaction();
-                }
                                 // TODO: 23.04.2023  ПЕРВЫЙ  Flowable
                                 Flowable.fromIterable(jsonNodeParent)
                                         .onBackpressureBuffer( )
@@ -906,7 +850,7 @@ class SubClassJsonParserOtServer{
                                                         },jsonNodesBuffer500.size());
                                                 if (РезультатОперацииBurkUPDATE.size() > 0) {
                                                     Integer РезультатПовышенииВерсииДанных =
-                                                            new SubClassUpVersionDATA().МетодVesrionUPMODIFITATION_Client(имяТаблицаAsync, getContext(), Create_Database_СамаБАзаSQLite);
+                                                            new SubClassUpVersionDATA().МетодVesrionUPMODIFITATION_Client(имяТаблицаAsync, getContext() );
                                                     Log.d(this.getClass().getName(), " РезультатПовышенииВерсииДанных  " + РезультатПовышенииВерсииДанных);
                                                 }
                                                 Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -922,19 +866,11 @@ class SubClassJsonParserOtServer{
                 // TODO: 11.10.2022 ПОСЛЕ ОПЕРАЦИИ ВИЗАУЛИЗИРУЕМ КОНЕЦ ОПЕРАЦИИ ПОЛЬЗОВАТЕЛЮ
                 if (РезультатОперацииBurkUPDATE.size() > 0) {
                     Integer РезультатПовышенииВерсииДанных =
-                            new SubClassUpVersionDATA().МетодVesrionUPMODIFITATION_Client(имяТаблицаAsync, getContext(), Create_Database_СамаБАзаSQLite);
+                            new SubClassUpVersionDATA().МетодVesrionUPMODIFITATION_Client(имяТаблицаAsync, getContext() );
                     Log.d(this.getClass().getName(), " РезультатПовышенииВерсииДанных  " + РезультатПовышенииВерсииДанных);
                 }
                 // TODO: 27.04.2023  сохраняем количество операций
                 bundleОперацииUpdateOrinsert.putLong("ResultAsync", РезультатОперацииBurkUPDATE.size());
-
-                if (Create_Database_СамаБАзаSQLite.inTransaction()) {
-                    if (РезультатОперацииBurkUPDATE.size() > 0) {
-                         
-                        Create_Database_СамаБАзаSQLite.setTransactionSuccessful();
-                    }
-                    Create_Database_СамаБАзаSQLite.endTransaction();
-                }
                 Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                         " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                         " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
@@ -959,7 +895,7 @@ class SubClassJsonParserOtServer{
                 String СтолбикСравнения = "uuid";
                 Object UUID = ТекущийАдаптерДляВсего.get(СтолбикСравнения);
                 System.out.println("  ИзменяемыйСтлобикСравенения  " + СтолбикСравнения);
-                ОперацияUPDATE = Create_Database_СамаБАзаSQLite.update(имяТаблицаAsync, ТекущийАдаптерДляВсего,
+                ОперацияUPDATE = sqLiteDatabase.update(имяТаблицаAsync, ТекущийАдаптерДляВсего,
                         СтолбикСравнения + "=?"
                         , new String[]{(String) UUID});
                 Log.w(this.getClass().getName(), " Вставка массовая через contentValuesInsert  burkInsert   ОперацияUPDATE "
@@ -977,7 +913,7 @@ class SubClassJsonParserOtServer{
 
 
                 } else {
-                    Cursor cursor = Create_Database_СамаБАзаSQLite.rawQuery(" select " +
+                    Cursor cursor = sqLiteDatabase.rawQuery(" select " +
                                     СтолбикСравнения + " from " + имяТаблицаAsync + " WHERE  " + СтолбикСравнения + " =?  ",
                             new String[]{UUID.toString()});
                     if (cursor != null) {
@@ -1013,7 +949,7 @@ class SubClassJsonParserOtServer{
             Long      ОперацияInsert=0l;
             try{
                 if(ОперацияUPDATE ==0 && ТекущийАдаптерДляВсего.size()>0){
-                    ОперацияInsert = Create_Database_СамаБАзаSQLite.insertOrThrow(имяТаблицаAsync,
+                    ОперацияInsert = sqLiteDatabase.insertOrThrow(имяТаблицаAsync,
                             null, ТекущийАдаптерДляВсего);
                     if (ОперацияInsert>0) {
                         РезультатОперацииBurkUPDATE.add(Integer.parseInt(ОперацияInsert.toString()));

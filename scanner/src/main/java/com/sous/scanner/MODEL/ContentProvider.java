@@ -19,7 +19,7 @@ import java.util.function.Consumer;
 
 public class ContentProvider extends android.content.ContentProvider {
     private   UriMatcher uriMatcherДЛяПровайдераКонтентБазаДанных;
-    private SQLiteDatabase Create_Database_СамаБАзаSQLite;
+    private SQLiteDatabase sqLiteDatabase ;
     private AsyncTaskLoader<?> asyncTaskLoader;
     private Handler handler;
     private Integer ТекущаяСтрокаПриДОбавлениииURL=0;
@@ -27,6 +27,7 @@ public class ContentProvider extends android.content.ContentProvider {
     private  CopyOnWriteArrayList<String> ИменаТаблицыОтАндройда;
     public ContentProvider() throws InterruptedException {
         try{
+            sqLiteDatabase=    GetSQLiteDatabase.SqliteDatabase();
             ИменаТаблицыОтАндройда=new CopyOnWriteArrayList<>();
             ИменаТаблицыОтАндройда.add("errordsu1");
             ИменаТаблицыОтАндройда.add("tablescannerandroid");
@@ -63,11 +64,9 @@ public class ContentProvider extends android.content.ContentProvider {
     @Override
     public boolean onCreate() {
         try{
-            if (Create_Database_СамаБАзаSQLite==null) {
-                Log.w(this.getClass().getName(), "Create_Database_СамаБАзаSQLite " + Create_Database_СамаБАзаSQLite);
-                Create_Database_СамаБАзаSQLite=new CREATE_DATABASEScanner(getContext()).getССылкаНаСозданнуюБазу();
+                sqLiteDatabase=    GetSQLiteDatabase.SqliteDatabase();
                 Log.w(this.getClass().getName(), "Create_Database_СамаБАзаSQLite " + Create_Database_СамаБАзаSQLite + " getContext()) " +getContext());
-            }
+
         } catch (Exception e) {
             e.printStackTrace();
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
@@ -82,11 +81,7 @@ public class ContentProvider extends android.content.ContentProvider {
             valuesЗаписываемОшибки.put("whose_error",ЛокальнаяВерсияПОСравнение);
             new SubClassErrors(getContext()).МетодЗаписиОшибок(valuesЗаписываемОшибки);
         }
-        if (Create_Database_СамаБАзаSQLite!=null) {
-            return true;
-        } else {
-            return false;
-        }
+        return  sqLiteDatabase.isOpen();
 
     }
 

@@ -9,6 +9,7 @@ import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.database.sqlite.SQLiteCursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
@@ -29,7 +30,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
-import com.dsy.dsu.AllDatabases.CREATE_DATABASE;
+
+import com.dsy.dsu.AllDatabases.GetSQLiteDatabase;
 import com.dsy.dsu.BootAndAsync.MainActivityBootAndAsync;
 import com.dsy.dsu.Business_logic_Only_Class.Class_Clears_Tables;
 import com.dsy.dsu.Business_logic_Only_Class.Class_Connections_Server;
@@ -63,7 +65,7 @@ public class MainActivity_Tabels_Users_And_Passwords extends AppCompatActivity {
     private String ПубличноеЛогин =new String();
     private String ПубличноеПароль =new String();
     private   Integer ПубличноеIDПолученныйИзСервлетаДляUUID;
-    private  CREATE_DATABASE   Create_Database_СсылкаНАБазовыйКласс;
+    private SQLiteDatabase sqLiteDatabase ;
     private SharedPreferences preferences;
     private   String ОшибкиПришлиПослеПингаОтСервера = null;
     private  Message message;
@@ -84,7 +86,8 @@ public class MainActivity_Tabels_Users_And_Passwords extends AppCompatActivity {
             Intent ИнтентКакаяПоСчетуСинхронизация = getIntent();
              КакойРежимСинхрониазции = ИнтентКакаяПоСчетуСинхронизация.getStringExtra("РежимЗапускаСинхронизации");
             Log.d(this.getClass().getName(), " КакойРежимСинхрониазции "+КакойРежимСинхрониазции);
-               Create_Database_СсылкаНАБазовыйКласс=new CREATE_DATABASE(getApplicationContext());
+            /* TODO: 06.09.2023 tabase */
+            sqLiteDatabase=    GetSQLiteDatabase.SqliteDatabase();
 
             getSupportActionBar().hide(); ///скрывать тул бар
             getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
@@ -412,7 +415,7 @@ public class MainActivity_Tabels_Users_And_Passwords extends AppCompatActivity {
                 class_grud_sql_operationsГлавныйСинхронизацииДанныхКлиентСервер.concurrentHashMapНабор.put("СтолбцыОбработки", "mode_connection");
                 SQLiteCursor КурсорУзнаемСохраненыйРежимРаботыССетью = (SQLiteCursor) class_grud_sql_operationsГлавныйСинхронизацииДанныхКлиентСервер.
                         new GetData(getApplicationContext()).getdata(class_grud_sql_operationsГлавныйСинхронизацииДанныхКлиентСервер.concurrentHashMapНабор,
-                        Class_Engine_SQLГдеНаходитьсяМенеджерПотоков.МенеджерПотоков,Create_Database_СсылкаНАБазовыйКласс.getССылкаНаСозданнуюБазу());
+                        Class_Engine_SQLГдеНаходитьсяМенеджерПотоков.МенеджерПотоков, sqLiteDatabase);
                 Log.d(this.getClass().getName(), "GetData "+КурсорУзнаемСохраненыйРежимРаботыССетью);
                 String РезутьтатПроверкиВБазуЗаписаннаяНстройкаСетьWifiИлиMobile = new String();
                 Log.d(getApplicationContext().getClass().getName(), " КурсорУзнаемСохраненыйРежимРаботыССетью  " + "--" + КурсорУзнаемСохраненыйРежимРаботыССетью);/////
