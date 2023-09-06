@@ -25,7 +25,8 @@ import androidx.annotation.WorkerThread;
 import androidx.loader.content.AsyncTaskLoader;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
-import com.dsy.dsu.AllDatabases.CREATE_DATABASE;
+
+import com.dsy.dsu.AllDatabases.GetSQLiteDatabase;
 import com.dsy.dsu.Business_logic_Only_Class.Class_GRUD_SQL_Operations;
 import com.dsy.dsu.Business_logic_Only_Class.Class_Generation_Errors;
 import com.dsy.dsu.Business_logic_Only_Class.Class_Generation_UUID;
@@ -75,6 +76,7 @@ public class Service_for_AdminissionMaterial extends IntentService {
     public LocalBinderДляПолучениеМатериалов binder = new LocalBinderДляПолучениеМатериалов();
     private Context context;
     private String ПолученныйПоследнийМесяцДляСортировкиЕгоВСпиноре;
+    private SQLiteDatabase sqLiteDatabase ;
     public Service_for_AdminissionMaterial() {
         super(
                 "Service_for_AdminissionMaterial");
@@ -84,6 +86,7 @@ public class Service_for_AdminissionMaterial extends IntentService {
     @Override
     public void onCreate() {
         super.onCreate();
+        sqLiteDatabase=    GetSQLiteDatabase.SqliteDatabase();
         Log.d(context.getClass().getName(), "\n"
                 + " время: " + new Date() + "\n+" +
                 " Класс в процессе... " + this.getClass().getName() + "\n" +
@@ -436,7 +439,6 @@ public class Service_for_AdminissionMaterial extends IntentService {
         private void МетодЗапускЗаполенеияИзПрошлыхМесяцев(@NonNull Context context, @NonNull Intent intent) {
             try {
                 Log.w(this.getClass().getName(), "   context  " + context);
-                SQLiteDatabase sqLiteDatabaseДляЗаполенеяИзПрошлогоМесяца = new CREATE_DATABASE(getApplicationContext()).getССылкаНаСозданнуюБазу();
                 Integer ПубличныйIDДляЗаполененияИзПрошлогоМесяца = new Class_Generations_PUBLIC_CURRENT_ID().ПолучениеПубличногоТекущегоПользователяID(getApplicationContext());
                 Bundle bundleПолучаемДанных = intent.getExtras();
                 Long UUIDРОДИТЕЛЬСКАЯУжеСозданогоТАбеля = bundleПолучаемДанных.getLong("UUIDРОДИТЕЛЬСКАЯУжеСозданогоТАбеля", 0l);
@@ -481,7 +483,7 @@ public class Service_for_AdminissionMaterial extends IntentService {
                 SQLiteCursor Курсор_ВытаскиваемПоследнийМесяцТабеля = (SQLiteCursor) class_grud_sql_operationЗаполнениеИзПрошлогоМесяца.
                         new GetData(getApplicationContext()).getdata(class_grud_sql_operationЗаполнениеИзПрошлогоМесяца.concurrentHashMapНабор,
                         new PUBLIC_CONTENT(getApplicationContext()).МенеджерПотоков
-                        , sqLiteDatabaseДляЗаполенеяИзПрошлогоМесяца);
+                        ,   sqLiteDatabase);
                 Log.d(this.getClass().getName(), "Курсор_ВытаскиваемПоследнийМесяцТабеля.getCount() " + Курсор_ВытаскиваемПоследнийМесяцТабеля.getCount());
                 class_grud_sql_operationЗаполнениеИзПрошлогоМесяца = new Class_GRUD_SQL_Operations(getApplicationContext());
                 // TODO: 22.09.2022
@@ -555,7 +557,7 @@ public class Service_for_AdminissionMaterial extends IntentService {
 
                 // TODO: 22.09.2022 ПОЛУЧЕМ ПОВЫШЕНУЮ ВЕРИСЮ ДАННЫХ
                 Long РезультатУвеличиваемВерсияДатаТАбель =
-                        new SubClassUpVersionDATA().МетодПовышаемВерсииCurrentTable(НазваниеОбрабоатываемойТаблицы,context,new CREATE_DATABASE(getApplicationContext()).getССылкаНаСозданнуюБазу());
+                        new SubClassUpVersionDATA().МетодПовышаемВерсииCurrentTable(НазваниеОбрабоатываемойТаблицы,context);
                 Log.d(this.getClass().getName(), " РезультатУвеличиваемВерсияДатаТАбель  " + РезультатУвеличиваемВерсияДатаТАбель);
                 // TODO: 18.11.2022
                 contentValuesДляДатаТабель.put("current_table", РезультатУвеличиваемВерсияДатаТАбель);
@@ -867,7 +869,7 @@ public class Service_for_AdminissionMaterial extends IntentService {
 
                         // TODO: 18.03.2023  получаем ВЕСИЮ ДАННЫХ
                         Long РезультатУвеличиваемВерсияПолучениеНовогоМатериала =
-                                new SubClassUpVersionDATA().МетодПовышаемВерсииCurrentTable(НазваниеОбрабоатываемойТаблицы,getApplicationContext(),new CREATE_DATABASE(context).getССылкаНаСозданнуюБазу());
+                                new SubClassUpVersionDATA().МетодПовышаемВерсииCurrentTable(НазваниеОбрабоатываемойТаблицы,getApplicationContext());
                         Log.d(this.getClass().getName(), " РезультатУвеличиваемВерсияПолучениеНовогоМатериала  " + РезультатУвеличиваемВерсияПолучениеНовогоМатериала);
 
                         contentValuesСозданиеНовогоМатериала.put("current_table", РезультатУвеличиваемВерсияПолучениеНовогоМатериала);
@@ -954,8 +956,7 @@ public class Service_for_AdminissionMaterial extends IntentService {
                                 // TODO: 18.03.2023  получаем ВЕСИЮ ДАННЫХ
                                 Long РезультатУвеличиваемВерсияПолучениеНовогоМатериала =
                                         new SubClassUpVersionDATA()
-                                                .МетодПовышаемВерсииCurrentTable(НазваниеОбрабоатываемойТаблицы,getApplicationContext(),
-                                                        new CREATE_DATABASE(context).getССылкаНаСозданнуюБазу());
+                                                .МетодПовышаемВерсииCurrentTable(НазваниеОбрабоатываемойТаблицы,getApplicationContext());
                                 Log.d(this.getClass().getName(), " РезультатУвеличиваемВерсияПолучениеНовогоМатериала  " + РезультатУвеличиваемВерсияПолучениеНовогоМатериала);
 
                                 contentValuesСозданиеНовогоМатериала.put("current_table", РезультатУвеличиваемВерсияПолучениеНовогоМатериала);
@@ -1254,7 +1255,7 @@ public class Service_for_AdminissionMaterial extends IntentService {
 
                         // TODO: 18.03.2023  получаем ВЕСИЮ ДАННЫХ
                         Long РезультатУвеличиваемВерсияПолучениеНовогоМатериала =
-                                new SubClassUpVersionDATA().МетодПовышаемВерсииCurrentTable(НазваниеОбрабоатываемойТаблицы,getApplicationContext(),new CREATE_DATABASE(context).getССылкаНаСозданнуюБазу());
+                                new SubClassUpVersionDATA().МетодПовышаемВерсииCurrentTable(НазваниеОбрабоатываемойТаблицы,getApplicationContext());
                         Log.d(this.getClass().getName(), " РезультатУвеличиваемВерсияПолучениеНовогоМатериала  " + РезультатУвеличиваемВерсияПолучениеНовогоМатериала);
 
                         // TODO: 18.11.2022

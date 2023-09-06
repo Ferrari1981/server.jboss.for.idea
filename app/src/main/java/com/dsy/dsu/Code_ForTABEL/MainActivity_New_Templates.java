@@ -12,6 +12,7 @@ import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteCursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
@@ -37,7 +38,8 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.dsy.dsu.AllDatabases.CREATE_DATABASE;
+
+import com.dsy.dsu.AllDatabases.GetSQLiteDatabase;
 import com.dsy.dsu.Business_logic_Only_Class.Class_GRUD_SQL_Operations;
 import com.dsy.dsu.Business_logic_Only_Class.DATE.Class_Generation_Data;
 import com.dsy.dsu.Business_logic_Only_Class.Class_Generation_Errors;
@@ -113,7 +115,7 @@ public class MainActivity_New_Templates extends AppCompatActivity implements Dat
 
 
     private  LinkedList<String> МассивДляВыбораВСпинерДата = new LinkedList<>(); //////АКАРЛИСТ ДЛЯ ПОЛУЧЕНЫЙ НОВЫХ ДАТ
-    private  CREATE_DATABASE Create_Database_СсылкаНАБазовыйКласс;
+    private SQLiteDatabase sqLiteDatabase ;
     private  Context КонтекстШаблоны;
     private String МесяцТабеляФиналИзВсехСотрудниковВТАбеле;
     private String ГодТабеляФиналИзВсехСотрудниковВТАбел;
@@ -155,7 +157,7 @@ public class MainActivity_New_Templates extends AppCompatActivity implements Dat
         TExtvieeСловоТабельВсегоШАблонов = (TextView) findViewById(R.id.textView3СловоТабель);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LOCKED);
         ///////TODO
-        Create_Database_СсылкаНАБазовыйКласс = new CREATE_DATABASE(getApplicationContext());
+            sqLiteDatabase=    GetSQLiteDatabase.SqliteDatabase();
         // Locale locale = Locale.ROOT;
         Locale locale = new Locale("rus");
         setDefault(locale);
@@ -787,7 +789,7 @@ public class MainActivity_New_Templates extends AppCompatActivity implements Dat
             ///////
             SQLiteCursor Курсор_ПолучаемПубличныйID = (SQLiteCursor) class_grud_sql_operationsПолучаемНаБазуUUIDфиоПолучаемИзТаблицыФИОИМЯ.
                     new GetаFreeData(getApplicationContext()).getfreedata(class_grud_sql_operationsПолучаемНаБазуUUIDфиоПолучаемИзТаблицыФИОИМЯ.concurrentHashMapНабор,
-                    Class_Engine_SQLГдеНаходитьсяМенеджерПотоков.МенеджерПотоков, Create_Database_СсылкаНАБазовыйКласс.getССылкаНаСозданнуюБазу());
+                    Class_Engine_SQLГдеНаходитьсяМенеджерПотоков.МенеджерПотоков,  sqLiteDatabase);
             if (Курсор_ПолучаемПубличныйID.getCount() > 0) {
                 Курсор_ПолучаемПубличныйID.moveToFirst();
                 ПубличноеIDПолученныйИзСервлетаДляUUID = Курсор_ПолучаемПубличныйID.getInt(0);
@@ -832,7 +834,7 @@ public class MainActivity_New_Templates extends AppCompatActivity implements Dat
             ////
             Курсор_КоторыйЗагружаетГотовыеШаблоны = (SQLiteCursor) class_grud_sql_operationsСозданиеТабеляИзБазы.
                     new GetData(getApplicationContext()).getdata(class_grud_sql_operationsСозданиеТабеляИзБазы.concurrentHashMapНабор,
-                    Class_Engine_SQLГдеНаходитьсяМенеджерПотоков.МенеджерПотоков, Create_Database_СсылкаНАБазовыйКласс.getССылкаНаСозданнуюБазу());
+                    Class_Engine_SQLГдеНаходитьсяМенеджерПотоков.МенеджерПотоков,  sqLiteDatabase);
             Log.d(this.getClass().getName(), "GetData " + Курсор_КоторыйЗагружаетГотовыеШаблоны);
             //////todo работающий NULL в query
             Log.d(this.getClass().getName(), " Курсор_КоторыйЗагружаетГотовыеШаблоны.getCount() " + Курсор_КоторыйЗагружаетГотовыеШаблоны.getCount());
@@ -1059,7 +1061,7 @@ public class MainActivity_New_Templates extends AppCompatActivity implements Dat
                                 Курсор_СДаннымиИзШаблонаДАнныхСозданныйПользовательм = (SQLiteCursor) class_grud_sql_operationsЗапускаетПереходНаЗаполенияСозданнымШАБЛОНОМВТабель.
                                         new GetData(getApplicationContext()).getdata(class_grud_sql_operationsЗапускаетПереходНаЗаполенияСозданнымШАБЛОНОМВТабель.
                                                 concurrentHashMapНабор,
-                                        Class_Engine_SQLГдеНаходитьсяМенеджерПотоков.МенеджерПотоков, Create_Database_СсылкаНАБазовыйКласс.getССылкаНаСозданнуюБазу());
+                                        Class_Engine_SQLГдеНаходитьсяМенеджерПотоков.МенеджерПотоков,  sqLiteDatabase);
                                 //////
 
 
@@ -1195,7 +1197,7 @@ public class MainActivity_New_Templates extends AppCompatActivity implements Dat
                                             Курсор_ТаблицаФИО = (SQLiteCursor) class_grud_sql_operationsЗапускаетПереходНаЗаполенияСозданнымШАБЛОНОМВТабель.
                                                     new GetData(getApplicationContext()).getdata(class_grud_sql_operationsЗапускаетПереходНаЗаполенияСозданнымШАБЛОНОМВТабель.
                                                             concurrentHashMapНабор,
-                                                    Class_Engine_SQLГдеНаходитьсяМенеджерПотоков.МенеджерПотоков, Create_Database_СсылкаНАБазовыйКласс.getССылкаНаСозданнуюБазу());
+                                                    Class_Engine_SQLГдеНаходитьсяМенеджерПотоков.МенеджерПотоков,  sqLiteDatabase);
 
 
                                             //////
@@ -1383,7 +1385,7 @@ public class MainActivity_New_Templates extends AppCompatActivity implements Dat
             // TODO: 27.08.2021  ПОЛУЧЕНИЕ ДАННЫХ ОТ КЛАССА GRUD-ОПЕРАЦИИ
             Курсор_НаОсновеПолученогоЭлектроногоНазваниеОрганицииПонемуПолучаемВсеИнформацииОТабеле = (SQLiteCursor) class_grud_sql_operationsЗаполненияТабеляИзЗаранееСозданогоШабона.
                     new GetData(getApplicationContext()).getdata(class_grud_sql_operationsЗаполненияТабеляИзЗаранееСозданогоШабона.concurrentHashMapНабор,
-                    Class_Engine_SQLГдеНаходитьсяМенеджерПотоков.МенеджерПотоков, Create_Database_СсылкаНАБазовыйКласс.getССылкаНаСозданнуюБазу());
+                    Class_Engine_SQLГдеНаходитьсяМенеджерПотоков.МенеджерПотоков, sqLiteDatabase);
             Log.d(this.getClass().getName(), "GetData " + Курсор_НаОсновеПолученогоЭлектроногоНазваниеОрганицииПонемуПолучаемВсеИнформацииОТабеле);
 // TODO: 12.03.2021  мы получили даные на основании ЦИФРОВОГО ИИЕНИ ДАЛЕЕ БУДЕМ ЗАПОЛНЯТЬ ЕГО ДАННЫМИ
         } catch (Exception e) {
@@ -1412,7 +1414,7 @@ public class MainActivity_New_Templates extends AppCompatActivity implements Dat
             class_grud_sql_operationsторыйПоказываетМаксимальнуюДатуИзменения.concurrentHashMapНабор.put("УсловиеЛимита", "1");
             Курсор_КоторыйЗагружаетГотовыеШаблоныМаксимальнаяДата = (SQLiteCursor) class_grud_sql_operationsторыйПоказываетМаксимальнуюДатуИзменения.
                     new GetData(getApplicationContext()).getdata(class_grud_sql_operationsторыйПоказываетМаксимальнуюДатуИзменения.concurrentHashMapНабор,
-                    Class_Engine_SQLГдеНаходитьсяМенеджерПотоков.МенеджерПотоков, Create_Database_СсылкаНАБазовыйКласс.getССылкаНаСозданнуюБазу());
+                    Class_Engine_SQLГдеНаходитьсяМенеджерПотоков.МенеджерПотоков,  sqLiteDatabase);
             Log.d(this.getClass().getName(), "GetData " + Курсор_КоторыйЗагружаетГотовыеШаблоныМаксимальнаяДата);
         } catch (Exception e) {
             e.printStackTrace();
@@ -1443,7 +1445,7 @@ public class MainActivity_New_Templates extends AppCompatActivity implements Dat
             class_grud_sql_operationsКоторыйПоказываетМаксимальнуюДатуИзмененияДляСпинера.concurrentHashMapНабор.put("УсловиеЛимита", "1");
             Курсор_КоторыйЗагружаетГотовыеШАблоныМаксимальнаяДатаДляСпинера = (SQLiteCursor) class_grud_sql_operationsКоторыйПоказываетМаксимальнуюДатуИзмененияДляСпинера.
                     new GetData(getApplicationContext()).getdata(class_grud_sql_operationsКоторыйПоказываетМаксимальнуюДатуИзмененияДляСпинера.concurrentHashMapНабор,
-                    Class_Engine_SQLГдеНаходитьсяМенеджерПотоков.МенеджерПотоков, Create_Database_СсылкаНАБазовыйКласс.getССылкаНаСозданнуюБазу());
+                    Class_Engine_SQLГдеНаходитьсяМенеджерПотоков.МенеджерПотоков,  sqLiteDatabase);
             Log.d(this.getClass().getName(), "GetData " + Курсор_КоторыйЗагружаетГотовыеШАблоныМаксимальнаяДатаДляСпинера);
         } catch (Exception e) {
             e.printStackTrace();
@@ -1788,7 +1790,7 @@ public class MainActivity_New_Templates extends AppCompatActivity implements Dat
             ///////
             SQLiteCursor Курсор_ПолучаемПубличныйID = (SQLiteCursor) class_grud_sql_operationsПолучаемНаБазуUUIDфиоПолучаемИзТаблицыФИОИМЯ.
                     new GetаFreeData(getApplicationContext()).getfreedata(class_grud_sql_operationsПолучаемНаБазуUUIDфиоПолучаемИзТаблицыФИОИМЯ.concurrentHashMapНабор,
-                    Class_Engine_SQLГдеНаходитьсяМенеджерПотоков.МенеджерПотоков, Create_Database_СсылкаНАБазовыйКласс.getССылкаНаСозданнуюБазу());
+                    Class_Engine_SQLГдеНаходитьсяМенеджерПотоков.МенеджерПотоков,  sqLiteDatabase);
 
             if (Курсор_ПолучаемПубличныйID.getCount() > 0) {
 ////
@@ -2030,7 +2032,7 @@ public class MainActivity_New_Templates extends AppCompatActivity implements Dat
 
             Курсор_КоторыйВЫгружемНазваниеОрганизацииДляЭтогоСотркдникаТекущего = (SQLiteCursor) new Class_GRUD_SQL_Operations(getApplicationContext()).
                     new GetData(getApplicationContext()).getdata(class_grud_sql_operationsПолучениеОрганизацииНепосрдственодляДанногоСОтрудника.concurrentHashMapНабор,
-                    Class_Engine_SQLГдеНаходитьсяМенеджерПотоков.МенеджерПотоков, Create_Database_СсылкаНАБазовыйКласс.getССылкаНаСозданнуюБазу());
+                    Class_Engine_SQLГдеНаходитьсяМенеджерПотоков.МенеджерПотоков,  sqLiteDatabase);
 
             Log.d(this.getClass().getName(), "GetData " + Курсор_КоторыйВЫгружемНазваниеОрганизацииДляЭтогоСотркдникаТекущего);
 
@@ -2391,8 +2393,7 @@ public class MainActivity_New_Templates extends AppCompatActivity implements Dat
                     = new Class_GRUD_SQL_Operations(getApplicationContext());
             // TODO: 18.03.2023  получаем ВЕСИЮ ДАННЫХ
             Long РезультатУвеличинаяВерсияДАныхЧата =
-                    new SubClassUpVersionDATA().МетодПовышаемВерсииCurrentTable(    "data_tabels",getApplicationContext(),
-                            Create_Database_СсылкаНАБазовыйКласс.getССылкаНаСозданнуюБазу());
+                    new SubClassUpVersionDATA().МетодПовышаемВерсииCurrentTable(    "data_tabels",getApplicationContext());
             Log.d(this.getClass().getName(), " РезультатУвеличинаяВерсияДАныхЧата  " + РезультатУвеличинаяВерсияДАныхЧата);
 
             АдаптерДляВставкиИзГотоваШаблонаВТаблицуТабель.put("current_table", РезультатУвеличинаяВерсияДАныхЧата);

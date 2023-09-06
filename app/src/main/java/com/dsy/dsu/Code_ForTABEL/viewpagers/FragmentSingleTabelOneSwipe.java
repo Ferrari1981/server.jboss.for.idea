@@ -12,6 +12,7 @@ import android.content.res.Configuration;
 import android.database.ContentObserver;
 import android.database.Cursor;
 import android.database.DataSetObserver;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -75,7 +76,6 @@ import androidx.work.WorkInfo;
 import androidx.work.WorkManager;
 
 import com.dsy.dsu.Business_logic_Only_Class.CELLUPDATE.SubClassUpdatesCELL;
-import com.dsy.dsu.AllDatabases.CREATE_DATABASE;
 import com.dsy.dsu.Business_logic_Only_Class.Class_Generation_Errors;
 import com.dsy.dsu.Business_logic_Only_Class.Class_Generations_PUBLIC_CURRENT_ID;
 import com.dsy.dsu.Business_logic_Only_Class.Class_MODEL_synchronized;
@@ -155,7 +155,7 @@ public class FragmentSingleTabelOneSwipe extends Fragment {
     private  Boolean    СтаттусТабеля= false;
     private   String ДробимДляТабеляГод,ДробимДляТебеляМесяц;
     private  View ГлавныйКонтентТабеляИнфлейтер;
-    private CREATE_DATABASE Create_Database_СсылкаНАБазовыйКласс;
+    private SQLiteDatabase sqLiteDatabase ;
     private  String МесяцДляЗагрузкиТабелей= "";
 
     private  String ПубличноеIDЗагрузкиТабелей= "";
@@ -2900,8 +2900,7 @@ public class FragmentSingleTabelOneSwipe extends Fragment {
                     ContentValues valuesСменаПрофесси=new ContentValues();
                     Integer ПолучаемIDПрофессии=      bundleСменаПрофессии.getInt("ПолучаемIDПрофессии",0);
                     valuesСменаПрофесси.put("prof",ПолучаемIDПрофессии);
-                    Long ВерсияДанныхUp = new SubClassUpVersionDATA().МетодПовышаемВерсииCurrentTable(ТаблицаОбработки,getContext(),
-                            new CREATE_DATABASE(getContext()).getССылкаНаСозданнуюБазу());
+                    Long ВерсияДанныхUp = new SubClassUpVersionDATA().МетодПовышаемВерсииCurrentTable(ТаблицаОбработки,getContext());
                     valuesСменаПрофесси.put("current_table",ВерсияДанныхUp);
                     String ДатаОбновления=     new Class_Generation_Data(getContext()).ГлавнаяДатаИВремяОперацийСБазойДанных();
                     valuesСменаПрофесси.put("date_update",ДатаОбновления);

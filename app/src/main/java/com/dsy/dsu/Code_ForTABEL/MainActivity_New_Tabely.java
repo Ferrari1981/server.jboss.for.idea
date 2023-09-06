@@ -9,6 +9,7 @@ import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteCursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.graphics.Rect;
 import android.graphics.Typeface;
@@ -41,7 +42,8 @@ import androidx.cursoradapter.widget.CursorAdapter;
 import androidx.cursoradapter.widget.SimpleCursorAdapter;
 import androidx.loader.content.AsyncTaskLoader;
 
-import com.dsy.dsu.AllDatabases.CREATE_DATABASE;
+
+import com.dsy.dsu.AllDatabases.GetSQLiteDatabase;
 import com.dsy.dsu.Business_logic_Only_Class.Class_GRUD_SQL_Operations;
 import com.dsy.dsu.Business_logic_Only_Class.Class_Generations_PUBLIC_CURRENT_ID;
 import com.dsy.dsu.Business_logic_Only_Class.DATE.Class_Generation_Data;
@@ -74,7 +76,8 @@ public class MainActivity_New_Tabely extends AppCompatActivity {
     private Button КнопкаСозданиеТабеля;
     private  Button КнопкаНазадПриСозданииНовогоТабеля;
     private  Context Контекст;
-    private  CREATE_DATABASE Create_Database_СсылкаНАБазовыйКласс;
+
+    private SQLiteDatabase sqLiteDatabase ;
     private  PUBLIC_CONTENT Class_Engine_SQLГдеНаходитьсяМенеджерПотоков = null;
    private ArrayAdapter<String> АдаптерДляСпинераЦФО;
     private  Service_for_AdminissionMaterial.LocalBinderДляПолучениеМатериалов binderДляПолучениеМатериалов;
@@ -115,7 +118,7 @@ public class MainActivity_New_Tabely extends AppCompatActivity {
             progressBar =  findViewById(R.id.ProgressBar);
             progressBar.setVisibility(View.VISIBLE);
             // TODO: 01.11.2022 методы до начало запуска
-            Create_Database_СсылкаНАБазовыйКласс = new CREATE_DATABASE(getApplicationContext());
+            sqLiteDatabase=    GetSQLiteDatabase.SqliteDatabase();
             МетодHandlerCallBack();
             МетодСозданиеКодBACK();
             методБиндингСлужбы();
@@ -400,7 +403,7 @@ public class MainActivity_New_Tabely extends AppCompatActivity {
                     new GetData(getApplicationContext()).getdata(class_grud_sql_operationsПроверяемЕслиТакойНазваниеТабеляВБазеУжеЕсть.
                             concurrentHashMapНабор,
                     МенеджерПотоковВнутри
-                    ,Create_Database_СсылкаНАБазовыйКласс.getССылкаНаСозданнуюБазу());
+                    ,  sqLiteDatabase);
             Log.d(this.getClass().getName(), "GetData "  +Курсор_ПроверяемЕслиТакоеНазваниеТабеляУжеЕстьИлиНет);
         if (   Курсор_ПроверяемЕслиТакоеНазваниеТабеляУжеЕстьИлиНет.getCount() > 0) {
             Курсор_ПроверяемЕслиТакоеНазваниеТабеляУжеЕстьИлиНет.close();
@@ -957,7 +960,7 @@ while(iterator.hasNext()){
                 SQLiteCursor  Курсор_ИщемПУбличныйIDКогдаегоНетВстатике= (SQLiteCursor)  class_grud_sql_operationsаполениеБазыДанныхПолученнымиНовымиСведениямиНовогоТабеля.
                     new GetData(getApplicationContext()).getdata(class_grud_sql_operationsаполениеБазыДанныхПолученнымиНовымиСведениямиНовогоТабеля.
                                 concurrentHashMapНабор,
-                    Class_Engine_SQLГдеНаходитьсяМенеджерПотоков.МенеджерПотоков,Create_Database_СсылкаНАБазовыйКласс.getССылкаНаСозданнуюБазу());
+                    Class_Engine_SQLГдеНаходитьсяМенеджерПотоков.МенеджерПотоков,  sqLiteDatabase);
             Log.d(this.getClass().getName(), "GetData "  +Курсор_ИщемПУбличныйIDКогдаегоНетВстатике);
             if(Курсор_ИщемПУбличныйIDКогдаегоНетВстатике.getCount()>0){
                 Курсор_ИщемПУбличныйIDКогдаегоНетВстатике.moveToFirst();
@@ -972,7 +975,7 @@ while(iterator.hasNext()){
 
                 // TODO: 18.03.2023  получаем ВЕСИЮ ДАННЫХ
                 Long РезультатУвеличинаяВерсияДАныхЧата =
-                        new SubClassUpVersionDATA().МетодПовышаемВерсииCurrentTable(   "tabel",getApplicationContext(),Create_Database_СсылкаНАБазовыйКласс.getССылкаНаСозданнуюБазу());
+                        new SubClassUpVersionDATA().МетодПовышаемВерсииCurrentTable(   "tabel",getApplicationContext() );
                 Log.d(this.getClass().getName(), " РезультатУвеличинаяВерсияДАныхЧата  " + РезультатУвеличинаяВерсияДАныхЧата);
 
                 АдаптерВставкиНовгоТабеля.put("current_table", РезультатУвеличинаяВерсияДАныхЧата);

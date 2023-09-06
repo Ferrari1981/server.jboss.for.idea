@@ -23,7 +23,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.loader.content.AsyncTaskLoader;
 
-import com.dsy.dsu.AllDatabases.CREATE_DATABASE;
+
+import com.dsy.dsu.AllDatabases.GetSQLiteDatabase;
 import com.dsy.dsu.Business_logic_Only_Class.Class_GRUD_SQL_Operations;
 import com.dsy.dsu.Business_logic_Only_Class.Class_Generation_Errors;
 import com.dsy.dsu.Business_logic_Only_Class.PUBLIC_CONTENT;
@@ -45,7 +46,7 @@ import io.reactivex.rxjava3.functions.Predicate;
 
 public class ContentProviderForAdminissionMaterial extends ContentProvider {
   private   UriMatcher uriMatcherДЛяПровайдераКонтентБазаДанных;
-    private SQLiteDatabase Create_Database_СамаБАзаSQLite;
+    private SQLiteDatabase sqLiteDatabase ;
     private  PUBLIC_CONTENT public_contentМенеджерПотоковМассвойОперацииВставки;
     private AsyncTaskLoader<?> asyncTaskLoader;
     private Handler handler;
@@ -100,7 +101,6 @@ public class ContentProviderForAdminissionMaterial extends ContentProvider {
         // TODO: 04.10.2022
     } catch (Exception e) {
         e.printStackTrace();
-        Create_Database_СамаБАзаSQLite.endTransaction();
         Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
                 + Thread.currentThread().getStackTrace()[2].getLineNumber());
         new Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
@@ -114,25 +114,19 @@ public class ContentProviderForAdminissionMaterial extends ContentProvider {
     @Override
     public boolean onCreate() {
         try {
-        if (Create_Database_СамаБАзаSQLite==null) {
-            Log.w(this.getClass().getName(), "Create_Database_СамаБАзаSQLite " + Create_Database_СамаБАзаSQLite);
-            Create_Database_СамаБАзаSQLite=new CREATE_DATABASE(getContext()).getССылкаНаСозданнуюБазу();
-            Log.w(this.getClass().getName(), "Create_Database_СамаБАзаSQLite " + Create_Database_СамаБАзаSQLite + " getContext()) " +getContext());
+            sqLiteDatabase=    GetSQLiteDatabase.SqliteDatabase();
+            Log.w(this.getClass().getName(), "sqLiteDatabase " + sqLiteDatabase + " getContext()) " +getContext());
             preferences =getContext(). getSharedPreferences("sharedPreferencesХранилище", Context.MODE_MULTI_PROCESS);
-        }
+
     } catch (Exception e) {
         e.printStackTrace();
-        Create_Database_СамаБАзаSQLite.endTransaction();
         Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
                 + Thread.currentThread().getStackTrace()[2].getLineNumber());
         new Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
                 Thread.currentThread().getStackTrace()[2].getLineNumber());
     }
-        if (Create_Database_СамаБАзаSQLite!=null) {
             return true;
-        } else {
-            return false;
-        }
+
     }
 
 
@@ -141,37 +135,26 @@ public class ContentProviderForAdminissionMaterial extends ContentProvider {
     public int delete(Uri uri, String selection, String[] selectionArgs) {
         Integer РезультатУдалениеСтатуса=0;
         try{
-          //  Create_Database_СамаБАзаSQLite=new CREATE_DATABASE(getContext()).getССылкаНаСозданнуюБазуORM();
-        if (!Create_Database_СамаБАзаSQLite.inTransaction()) {
-            Create_Database_СамаБАзаSQLite.beginTransaction();
-        }
         Log.d(this.getClass().getName(), " uri"+uri );
             // TODO: 14.10.2022 метод определения текущней таблицы
             String table = МетодОпределяемТаблицу(uri);
             if (table!=null) {
-                Integer РезультатУдаления  = Create_Database_СамаБАзаSQLite.delete(table, selection, selectionArgs);
+                Integer РезультатУдаления  = sqLiteDatabase.delete(table, selection, selectionArgs);
                 // TODO: 30.10.2021
                 Log.w(getContext().getClass().getName(), " РезультатУдаления  " + РезультатУдаления);/////
                 Uri ОтветВставкиДанных  = Uri.parse("content://"+РезультатУдаления.toString());
                String ответОперцииВставки=    Optional.ofNullable(ОтветВставкиДанных).map(Emmeter->Emmeter.toString().replace("content://","")).get();
                 РезультатУдалениеСтатуса= Integer.parseInt(ответОперцииВставки);
                 if (РезультатУдаления> 0) {
-                    if (Create_Database_СамаБАзаSQLite.inTransaction()) {
-                         
-                        Create_Database_СамаБАзаSQLite.setTransactionSuccessful();
                         getContext().getContentResolver().notifyChange(uri, null);
                         // TODO: 22.09.2022 увеличивает версию данных
-                    }
                 }
             }else {
                 Log.w(getContext().getClass().getName(), " table  " + table);/////
             }
-            if (Create_Database_СамаБАзаSQLite.inTransaction()) {
-                Create_Database_СамаБАзаSQLite.endTransaction();
-            }
+
     } catch (Exception e) {
         e.printStackTrace();
-        Create_Database_СамаБАзаSQLite.endTransaction();
         Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
                 + Thread.currentThread().getStackTrace()[2].getLineNumber());
         new Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
@@ -191,7 +174,6 @@ public class ContentProviderForAdminissionMaterial extends ContentProvider {
             Log.d(this.getClass().getName(), " table"+ table);
     } catch (Exception e) {
         e.printStackTrace();
-        Create_Database_СамаБАзаSQLite.endTransaction();
         Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
                 + Thread.currentThread().getStackTrace()[2].getLineNumber());
         new Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
@@ -212,35 +194,17 @@ public class ContentProviderForAdminissionMaterial extends ContentProvider {
         // TODO: Implement this to handle requests to insert a new row.
         Uri  ОтветВставкиДанных = null;
         try {
-            //Create_Database_СамаБАзаSQLite=new CREATE_DATABASE(getContext()).getССылкаНаСозданнуюБазуORM();
-            if (!Create_Database_СамаБАзаSQLite.inTransaction()) {
-                Create_Database_СамаБАзаSQLite.beginTransaction();
-            }
             Log.d(this.getClass().getName(), " uri"+uri );
             // TODO: 14.10.2022 метод определения текущней таблицы
             String table = МетодОпределяемТаблицу(uri);
-
-
-            Long   РезультатВставкиДанных  = Create_Database_СамаБАзаSQLite.insertOrThrow(table, null, values);
+            Long   РезультатВставкиДанных  =       sqLiteDatabase.insertOrThrow(table, null, values);
             // TODO: 30.10.2021
             Log.w(getContext().getClass().getName(), " РезультатВставкиДанных  " + РезультатВставкиДанных);/////
-
             ОтветВставкиДанных  = Uri.parse("content://"+РезультатВставкиДанных.toString());
-            if (РезультатВставкиДанных> 0) {
-                if (Create_Database_СамаБАзаSQLite.inTransaction()) {
-                     
-                    Create_Database_СамаБАзаSQLite.setTransactionSuccessful();
-                    // TODO: 22.09.2022 увеличивает версию данных
-                }
-            }
-            if (Create_Database_СамаБАзаSQLite.inTransaction()) {
-                Create_Database_СамаБАзаSQLite.endTransaction();
-            }
             // TODO: 30.10.2021
             getContext().getContentResolver().notifyChange(uri, null);
         } catch (Exception e) {
             e.printStackTrace();
-            Create_Database_СамаБАзаSQLite.endTransaction();
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
                     + Thread.currentThread().getStackTrace()[2].getLineNumber());
             new Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
@@ -269,9 +233,6 @@ public class ContentProviderForAdminissionMaterial extends ContentProvider {
                    CompletableFuture.supplyAsync(new Supplier<Cursor>() {
                @Override
                public Cursor get() {
-                   if (!Create_Database_СамаБАзаSQLite.inTransaction()) {
-                       Create_Database_СамаБАзаSQLite.beginTransaction();
-                   }
                    Cursor cursorins = null;
                    Integer  ПубличныйIDДляФрагмента=queryArgs.getInt("ПубличныйIDДляФрагмента",0);
                    Integer  ТекущаяЦифраЦФО=queryArgs.getInt("ТекущаяЦифраЦФО",0);
@@ -283,20 +244,17 @@ public class ContentProviderForAdminissionMaterial extends ContentProvider {
                    // TODO: 07.11.2022  данные курсор для групировки
                    switch (ФлагКакиеДанныеНужныПолучениеМатериалов.trim()) {
                        case "ПолучениеНомерМатериала":
-                           cursorins=     SQLBuilder_Для_GRUD_Операций.query(Create_Database_СамаБАзаSQLite,new String[]{"*"},
+                           cursorins=     SQLBuilder_Для_GRUD_Операций.query(   sqLiteDatabase,new String[]{"*"},
                                    null,null
                                    ,"nomenvesov_zifra, nomenvesov, moneys, kolichstvo, cfo", "cfo="+ТекущаяЦифраЦФО, null,null);
                            break;
                        case "ПолучениеСгрупированныеСамиДанные":
-                           cursorins=     SQLBuilder_Для_GRUD_Операций.query(Create_Database_СамаБАзаSQLite,new String[]{"*"},
+                           cursorins=     SQLBuilder_Для_GRUD_Операций.query(   sqLiteDatabase,new String[]{"*"},
                                    null,null
                                    ,"nomenvesov_zifra, nomenvesov, moneys, kolichstvo, cfo", "cfo="+ТекущаяЦифраЦФО+" AND nomenvesov_zifra="+ТекущаяНомерМатериала , null,null);
                            break;
                    }
                    Log.w(getContext().getClass().getName(), " Полученый для Получение Материалов cursor  " + cursorins);/////
-                   if (Create_Database_СамаБАзаSQLite.inTransaction()) {
-                       Create_Database_СамаБАзаSQLite.endTransaction();
-                   }
                    return cursorins;
                }
            }).exceptionally(throwable -> {
@@ -376,9 +334,6 @@ public class ContentProviderForAdminissionMaterial extends ContentProvider {
             String ФлагКакойСинхронизацияПерваяИлиНет=         preferences.getString("РежимЗапускаСинхронизации", "");
             if (ФлагКакойСинхронизацияПерваяИлиНет.equalsIgnoreCase("ПовторныйЗапускСинхронизации") ||
                     table.equalsIgnoreCase("settings_tabels") ||  table.equalsIgnoreCase("view_onesignal") ) {
-                      if (!Create_Database_СамаБАзаSQLite.inTransaction()) {
-                    Create_Database_СамаБАзаSQLite.beginTransaction();
-                }
                 Log.w(this.getClass().getName(), "count  bulkInsert  values.length "
                         + values.length+"\n"+"bulkPOTOK "+Thread.currentThread().getName()+"\n"+
                         " FUTURE FUTURE SIZE  EntityMaterialBinary "+"\n"+
@@ -408,7 +363,7 @@ public class ContentProviderForAdminissionMaterial extends ContentProvider {
                                     Integer     ОперацияUPDATE=0;
                                     Object UUID= contentValuesInsert.get(СтолбикСравнения);
                                     System.out.println("  ИзменяемыйСтлобикСравенения  " + СтолбикСравнения);
-                                        ОперацияUPDATE  = Create_Database_СамаБАзаSQLite.update(table, contentValuesInsert,     СтолбикСравнения +"=?"
+                                        ОперацияUPDATE  =    sqLiteDatabase.update(table, contentValuesInsert,     СтолбикСравнения +"=?"
                                                 ,new String[]{(String) UUID});
                                     Log.w(this.getClass().getName(), " Вставка массовая через contentValuesInsert  burkInsert   ОперацияUPDATE " +  ОперацияUPDATE);
                                     if (ОперацияUPDATE>0) {
@@ -416,7 +371,7 @@ public class ContentProviderForAdminissionMaterial extends ContentProvider {
                                         // TODO: 24.11.2022  удаление с последующей вставкой
                                         ДанныеДляВторогоЭтапаBulkINSERT.remove(contentValuesInsert);
                                     }else{
-                                           Cursor cursor=        Create_Database_СамаБАзаSQLite.rawQuery(" select "+
+                                           Cursor cursor=           sqLiteDatabase.rawQuery(" select "+
                                                     СтолбикСравнения+" from "+ table +" WHERE  "+СтолбикСравнения+" =?  ",new String[]{UUID.toString()});
                                         if (cursor!=null) {
                                             if ( cursor.getCount() > 0) {
@@ -434,7 +389,6 @@ public class ContentProviderForAdminissionMaterial extends ContentProvider {
                                             + ДанныеДляВторогоЭтапаBulkINSERT.size() );
                                 } catch (Exception e) {
                                     e.printStackTrace();
-                                    Create_Database_СамаБАзаSQLite.endTransaction();
                                     Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" +
                                             Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
                                             + Thread.currentThread().getStackTrace()[2].getLineNumber());
@@ -448,12 +402,6 @@ public class ContentProviderForAdminissionMaterial extends ContentProvider {
                             @Override
                             public void run() throws Throwable {
                                 // TODO: 09.11.2022 закрывает ТРАНЗАКЦИИ ВНУТРИ
-                                if (Create_Database_СамаБАзаSQLite.inTransaction()) {
-                                     
-                                    Create_Database_СамаБАзаSQLite.setTransactionSuccessful();
-                                    Create_Database_СамаБАзаSQLite.endTransaction();
-                                }
-
                             }
                         })
                         .onErrorComplete(new Predicate<Throwable>() {
@@ -486,7 +434,6 @@ public class ContentProviderForAdminissionMaterial extends ContentProvider {
                     +ФинальныйРезультаUpdateAndInsert);
         } catch (Exception e) {
             e.printStackTrace();
-            Create_Database_СамаБАзаSQLite.endTransaction();
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
                     + Thread.currentThread().getStackTrace()[2].getLineNumber());
             new Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),

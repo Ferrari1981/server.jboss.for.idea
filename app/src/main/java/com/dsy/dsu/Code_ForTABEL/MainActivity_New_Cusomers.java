@@ -10,6 +10,7 @@ import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteCursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -31,7 +32,8 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
-import com.dsy.dsu.AllDatabases.CREATE_DATABASE;
+
+import com.dsy.dsu.AllDatabases.GetSQLiteDatabase;
 import com.dsy.dsu.Business_logic_Only_Class.Class_GRUD_SQL_Operations;
 import com.dsy.dsu.Business_logic_Only_Class.DATE.Class_Generation_Data;
 import com.dsy.dsu.Business_logic_Only_Class.Class_Generation_Errors;
@@ -88,7 +90,8 @@ public class MainActivity_New_Cusomers extends AppCompatActivity implements Date
     private   int DigitalNameCFO;
     private  LinkedHashMap<String,Integer> ЛистДляАдаптераСпинерОрганизацияСамоЗначениеIDДляЗаписи;
     private   Activity activity;
-    private CREATE_DATABASE   Create_Database_СсылкаНАБазовыйКласс;
+
+    private SQLiteDatabase sqLiteDatabase ;
     private Context КонтекстДляАктивтиСозданиеНовогоСотрудника;
     private  Spinner СпинерВыборОрганизацииПриСозданииНовогоСотрудника;/////спинеры для создание табеля
     private    String ПолученноеТекущееЗначениеСпинераОрганизация;
@@ -114,7 +117,7 @@ public class MainActivity_New_Cusomers extends AppCompatActivity implements Date
 
         Log.d(this.getClass().getName(), " constraintLayout   "+constraintLayout);
 ///////TODO
-        Create_Database_СсылкаНАБазовыйКласс=new CREATE_DATABASE(getApplicationContext());
+            sqLiteDatabase=    GetSQLiteDatabase.SqliteDatabase();
 
         activity=this;
         ////
@@ -251,7 +254,7 @@ public class MainActivity_New_Cusomers extends AppCompatActivity implements Date
 
             Курсор_ИщемВсеОрганизации= (SQLiteCursor)  class_grud_sql_operationsСозданиеСпинеровОрганизации.
                     new GetData(getApplicationContext()).getdata(class_grud_sql_operationsСозданиеСпинеровОрганизации.concurrentHashMapНабор,
-                    МенеджерПотоковВнутри,Create_Database_СсылкаНАБазовыйКласс.getССылкаНаСозданнуюБазу());
+                    МенеджерПотоковВнутри,sqLiteDatabase);
             ////////////
 
             Log.d(this.getClass().getName(), "GetData " +Курсор_ИщемВсеОрганизации );
@@ -760,7 +763,7 @@ private void МетодВозврещениеНаПредыдущуюАктив�
                     new GetData(getApplicationContext()).getdata(class_grud_sql_operationsПроверяетЭтоПустаяЯчейкаUUIDЕслиПустоеНоЭтоНовыйТабельБезСотрудниковиМыНеВставляемАОбновлем.
                             concurrentHashMapНабор,
                     Class_Engine_SQLГдеНаходитьсяМенеджерПотоков.МенеджерПотоков
-                    ,Create_Database_СсылкаНАБазовыйКласс.getССылкаНаСозданнуюБазу());
+                    ,sqLiteDatabase);
 
             Log.d(this.getClass().getName(), "GetData "  +Курсор_КоторыйПроверяетЭтоПустаяЯчейкаUUIDЕслиПустоеНоЭтоНовыйТабельБезСотрудниковиМыНеВставляемАОбновлем);
 
@@ -1033,7 +1036,7 @@ private void МетодВозврещениеНаПредыдущуюАктив�
                 }
                 Log.d(this.getClass().getName(), "  АдаптерДляСозданиеНовогоСотрудаТАблицаФИО " + АдаптерДляСозданиеНовогоСотрудаТАблицаФИО);
                 Long РезультатВычисляемВреисюДанных =
-                        new SubClassUpVersionDATA().МетодПовышаемВерсииCurrentTable(    "fio",getApplicationContext(),Create_Database_СсылкаНАБазовыйКласс.getССылкаНаСозданнуюБазу());
+                        new SubClassUpVersionDATA().МетодПовышаемВерсииCurrentTable(    "fio",getApplicationContext() );
                 АдаптерДляСозданиеНовогоСотрудаТАблицаФИО.put("current_table",РезультатВычисляемВреисюДанных);
                 АдаптерДляСозданиеНовогоСотрудаТАблицаФИО.put("BirthDate",ЗначениеДеньРождения);
                 АдаптерДляСозданиеНовогоСотрудаТАблицаФИО.put("snils",ПолученныйСНИЛСНовогоСотрудника);
@@ -1050,7 +1053,7 @@ private void МетодВозврещениеНаПредыдущуюАктив�
                 class_grud_sql_operationsИщемВТАблицеФИОНЕтЛИСлучайноТАковожеСотрудника.concurrentHashMapНабор.put("УсловиеЛимита", "1");
                 SQLiteCursor     Курсор_ИщемЕслиТАкойСнилсУже = (SQLiteCursor) class_grud_sql_operationsИщемВТАблицеФИОНЕтЛИСлучайноТАковожеСотрудника.
                         new GetData(getApplicationContext()).getdata(class_grud_sql_operationsИщемВТАблицеФИОНЕтЛИСлучайноТАковожеСотрудника.concurrentHashMapНабор,
-                        Class_Engine_SQLГдеНаходитьсяМенеджерПотоков.МенеджерПотоков, Create_Database_СсылкаНАБазовыйКласс.getССылкаНаСозданнуюБазу());
+                        Class_Engine_SQLГдеНаходитьсяМенеджерПотоков.МенеджерПотоков, sqLiteDatabase);
                 Log.d(this.getClass().getName(), "Курсор_ИщемЕслиТАкойСнилсУже " + Курсор_ИщемЕслиТАкойСнилсУже);
                 // TODO: 01.11.2021
                 if( Курсор_ИщемЕслиТАкойСнилсУже.getCount()==0){
@@ -1230,7 +1233,7 @@ private void МетодВозврещениеНаПредыдущуюАктив�
         //    АдаптерДляСозданиеНовогоСотрудаТАблицаТабель.putNull("_id");
             АдаптерДляСозданиеНовогоСотрудаТАблицаТабель.put("status_carried_out", "False");
             Long РезультатПовышаемВреисюДанныхТаблицы_Дата_Табеля =
-                    new SubClassUpVersionDATA().МетодПовышаемВерсииCurrentTable(    "data_tabels",getApplicationContext(),Create_Database_СсылкаНАБазовыйКласс.getССылкаНаСозданнуюБазу());
+                    new SubClassUpVersionDATA().МетодПовышаемВерсииCurrentTable(    "data_tabels",getApplicationContext() );
             // TODO: 23.09.2021  повышаем верисю таблицы фио
             АдаптерДляСозданиеНовогоСотрудаТАблицаТабель.put("current_table",РезультатПовышаемВреисюДанныхТаблицы_Дата_Табеля);
 
