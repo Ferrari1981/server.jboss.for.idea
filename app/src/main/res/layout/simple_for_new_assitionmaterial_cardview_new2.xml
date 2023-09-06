@@ -18,7 +18,7 @@
     app:strokeWidth="3dp"
     android:translationZ="150dp"
     android:animateLayoutChanges="true"
-    tools:context=".Code_For_AdmissionMaterials.Window.MainActivity_AdmissionMaterials">
+    tools:context=".AdmissionMaterials.Window.MainActivity_AdmissionMaterials">
 
 
    <LinearLayout
@@ -561,7 +561,7 @@
          android:scrollbarTrackVertical="@drawable/stylesingletablerowiine"
          android:scrollbarSize="20dp"
           android:theme="@style/Theme.MaterialComponents.Light.NoActionBar"
-          tools:context=".CodeOrdersAnTransports.Window.MainActivityOrdersTransports">
+          tools:context=".OrdersTransports.Window.MainActivityOrdersTransports">
 
          <HorizontalScrollView
              android:id="@+id/ГоризонтльнаяПрокруткаВнутриСамТабель_mm"

@@ -8,7 +8,7 @@
     android:padding="1dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="#F0F1FF"
-    tools:context=".Code_For_AdmissionMaterials.Window.MainActivity_AdmissionMaterials">
+    tools:context=".AdmissionMaterials.Window.MainActivity_AdmissionMaterials">
 
 
 

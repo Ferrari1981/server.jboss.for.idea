@@ -8,7 +8,7 @@
     android:layout_height="wrap_content"
     android:theme="@style/Theme.MaterialComponents.Light.NoActionBar"
     android:background="#F5FFFA"
-    tools:context=".Code_For_Commit_Payments_КодДля_Согласование.MainActivity_CommitPay">
+    tools:context=".CommitsPayments.MainActivity_CommitPay">
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/cardviewmatireacommitpay"

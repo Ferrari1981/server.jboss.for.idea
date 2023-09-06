@@ -7,7 +7,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#F5FFFA"
-    tools:context=".Code_For_Tasks_КодДля_Задания.MainActivity_Tasks"
+    tools:context=".Tasks.MainActivity_Tasks"
     android:orientation="vertical">
 
 
@@ -19,7 +19,7 @@
         android:gravity="center_horizontal"
         android:padding="5dp"
         android:orientation="horizontal"
-        tools:context=".Code_For_Tasks_КодДля_Задания.MainActivity_Tasks">
+        tools:context=".Tasks.MainActivity_Tasks">
 
         <RelativeLayout
             android:id="@+id/activitynain_for_Taskslinelayoutrela3nameAndLine"
@@ -27,7 +27,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal|center_vertical"
             android:background="#F5FFFA"
-            tools:context=".Code_For_Tasks_КодДля_Задания.MainActivity_Tasks">
+            tools:context=".Tasks.MainActivity_Tasks">
 
 
             <TextView
@@ -72,7 +72,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal|center_vertical"
         android:background="#F5FFFA"
-        tools:context=".Code_For_Tasks_КодДля_Задания.MainActivity_Tasks">
+        tools:context=".Tasks.MainActivity_Tasks">
 
 
         <TextView

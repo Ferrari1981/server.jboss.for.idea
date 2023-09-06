@@ -19,7 +19,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal|center_vertical"
         android:background="#FFFFFF"
-        tools:context=".Code_For_Tasks_КодДля_Задания.MainActivity_Tasks">
+        tools:context=".Tasks.MainActivity_Tasks">
 
 
         <TextView
@@ -65,7 +65,7 @@
         android:orientation="vertical"
         android:background="#FFFFFF"
 
-        tools:context=".Code_For_Tasks_КодДля_Задания.MainActivity_Tasks">
+        tools:context=".Tasks.MainActivity_Tasks">
 
 
         <androidx.recyclerview.widget.RecyclerView

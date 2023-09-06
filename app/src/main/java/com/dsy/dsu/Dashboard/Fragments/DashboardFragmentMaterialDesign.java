@@ -1,27 +1,19 @@
 package com.dsy.dsu.Dashboard.Fragments;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
-import android.os.Message;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatImageButton;
-import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -29,13 +21,13 @@ import androidx.fragment.app.FragmentResultListener;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.LifecycleOwner;
 
-import com.dsy.dsu.Business_logic_Only_Class.Class_Generation_Errors;
-import com.dsy.dsu.CodeOrdersAnTransports.Window.MainActivityOrdersTransports;
-import com.dsy.dsu.Code_ForTABEL.MainActivity_List_Tabels;
-import com.dsy.dsu.Code_For_AdmissionMaterials.Window.MainActivity_AdmissionMaterials;
-import com.dsy.dsu.Code_For_Commit_Payments_КодДля_Согласование.MainActivity_CommitPay;
-import com.dsy.dsu.Code_For_Firebase_AndOneSignal_Здесь_КодДЛяСлужбыУведомленияFirebase.Class_Generation_SendBroadcastReceiver_And_Firebase_OneSignal;
-import com.dsy.dsu.Code_For_Services.ServiceUpdatePoОбновлениеПО;
+import com.dsy.dsu.BusinessLogicAll.Class_Generation_Errors;
+import com.dsy.dsu.OrdersTransports.Window.MainActivityOrdersTransports;
+import com.dsy.dsu.Tabels.MainActivity_List_Tabels;
+import com.dsy.dsu.AdmissionMaterials.Window.MainActivity_AdmissionMaterials;
+import com.dsy.dsu.CommitsPayments.MainActivity_CommitPay;
+import com.dsy.dsu.OneSignals.Class_Generation_SendBroadcastReceiver_And_Firebase_OneSignal;
+import com.dsy.dsu.Services.ServiceUpdatePoОбновлениеПО;
 import com.dsy.dsu.R;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.card.MaterialCardView;

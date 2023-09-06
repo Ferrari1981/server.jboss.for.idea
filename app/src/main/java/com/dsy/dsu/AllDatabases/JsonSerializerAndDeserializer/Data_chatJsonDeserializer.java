@@ -7,8 +7,8 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
-import com.dsy.dsu.Business_logic_Only_Class.Class_Generation_Errors;
-import com.dsy.dsu.Business_logic_Only_Class.SubClassUpVersionDATA;
+import com.dsy.dsu.BusinessLogicAll.Class_Generation_Errors;
+import com.dsy.dsu.BusinessLogicAll.SubClassUpVersionDATA;
 import com.fasterxml.jackson.databind.JsonNode;
 
 import java.util.List;
@@ -115,7 +115,7 @@ this.context=context;
                      if ( РезультатОперацииBurkUPDATE.size()>0) {
                          // TODO: 04.07.2023 После Успешной Операции Повышаем Версию ДАнных Для Данной Тваблицы  
                          Integer РезультатПовышенииВерсииДанных =
-                                 new SubClassUpVersionDATA().МетодVesrionUPMODIFITATION_Client(имяТаблицаAsync, context, Create_Database_СамаБАзаSQLite);
+                                 new SubClassUpVersionDATA().МетодVesrionUPMODIFITATION_Client(имяТаблицаAsync, context );
                          Log.d(this.getClass().getName(), " РезультатПовышенииВерсииДанных  " + РезультатПовышенииВерсииДанных);
                          // TODO: 04.07.2023 ЗАВЕРШАЕТ ТРНЗАКЦИЮ НА 50 СТРОЧКЕ
                          Create_Database_СамаБАзаSQLite.setTransactionSuccessful();

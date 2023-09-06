@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="#FFFFFF"
     android:orientation="vertical"
-    tools:context=".Code_For_Chats_КодДля_Чата.MainActivity_List_Chats">
+    tools:context=".Chats.MainActivity_List_Chats">
 
 
 </LinearLayout>

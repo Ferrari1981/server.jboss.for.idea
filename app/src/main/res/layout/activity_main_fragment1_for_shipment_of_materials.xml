@@ -7,7 +7,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="#FFFFFF"
-    tools:context=".Code_Shipment_of_Materials_ОтгрузкаМатериалов.MainActivity_shipment_of_materials"
+    tools:context=".MaterialsShipment.MainActivity_shipment_of_materials"
     android:orientation="vertical">
 
 
@@ -19,7 +19,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal|center_vertical"
             android:background="#FFFFFF"
-            tools:context=".Code_For_Tasks_КодДля_Задания.MainActivity_Tasks">
+            tools:context=".Tasks.MainActivity_Tasks">
 
 
             <TextView
@@ -88,7 +88,7 @@
         android:layout_gravity="center_horizontal|center_vertical"
         android:orientation="vertical"
         android:background="#FFFFFF"
-        tools:context=".Code_Shipment_of_Materials_ОтгрузкаМатериалов.MainActivity_shipment_of_materials">
+        tools:context=".MaterialsShipment.MainActivity_shipment_of_materials">
 
 
         <HorizontalScrollView

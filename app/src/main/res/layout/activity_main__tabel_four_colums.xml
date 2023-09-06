@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#FFFFFF"
-    tools:context=".Code_ForTABEL.MainActivity_Tabel_Single_People"
+    tools:context=".Tabels.MainActivity_Tabel_Single_People"
     tools:visibility="visible">
 
 

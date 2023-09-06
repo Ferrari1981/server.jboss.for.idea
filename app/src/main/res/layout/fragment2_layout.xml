@@ -7,7 +7,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#FFFFFF"
-    tools:context=".Code_For_Chats_КодДля_Чата.Fragment_Contacts_КонтактыЧата">
+    tools:context=".Chats.Fragment_Contacts_КонтактыЧата">
 
     <!-- TODO: Update blank fragment layout -->
 

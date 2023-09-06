@@ -20,7 +20,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.dsy.dsu.Business_logic_Only_Class.Class_Generation_Errors;
+import com.dsy.dsu.BusinessLogicAll.Class_Generation_Errors;
 import com.dsy.dsu.R;
 import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.textview.MaterialTextView;

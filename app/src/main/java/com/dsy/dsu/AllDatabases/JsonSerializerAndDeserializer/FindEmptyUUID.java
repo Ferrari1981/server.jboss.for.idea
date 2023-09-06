@@ -7,7 +7,7 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
-import com.dsy.dsu.Business_logic_Only_Class.Class_Generation_Errors;
+import com.dsy.dsu.BusinessLogicAll.Class_Generation_Errors;
 import com.fasterxml.jackson.databind.JsonNode;
 
 public class FindEmptyUUID {

@@ -7,7 +7,7 @@
     android:layout_width="wrap_content"
     android:background="@color/colorPrimaryDark"
     android:theme="@style/Theme.MaterialComponents.Light.NoActionBar"
-    tools:context=".Code_Shipment_of_Materials_ОтгрузкаМатериалов.MainActivity_shipment_of_materials">
+    tools:context=".MaterialsShipment.MainActivity_shipment_of_materials">
 
                 <!--  //TODO ТРЕТЬЯ строчка САМИ ДАННЫЕ  -->
 

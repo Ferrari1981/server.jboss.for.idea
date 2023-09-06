@@ -8,7 +8,7 @@
     android:minHeight="50dp"
     android:theme="@style/Theme.MaterialComponents.Light.NoActionBar"
     android:background="#F5FFFA"
-    tools:context=".Code_Shipment_of_Materials_ОтгрузкаМатериалов.MainActivity_shipment_of_materials">
+    tools:context=".MaterialsShipment.MainActivity_shipment_of_materials">
 
     <!--TODO ПЕРВЫЙ КЛЮЧ -->
     <com.google.android.material.textview.MaterialTextView

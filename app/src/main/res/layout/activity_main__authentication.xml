@@ -11,7 +11,7 @@
     android:visibility="visible"
     app:layout_collapseMode="pin"
     app:layout_scrollFlags="snapMargins|scroll|enterAlways|enterAlwaysCollapsed|exitUntilCollapsed|snap"
-    tools:context=".For_Code_Settings_DSU1.MainActivity_Tabels_Users_And_Passwords"
+    tools:context=".Settings.MainActivity_Tabels_Users_And_Passwords"
     tools:layout_editor_absoluteY="-97dp">
 
     <ScrollView

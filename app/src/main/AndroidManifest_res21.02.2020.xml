@@ -8,24 +8,24 @@
             android:label="@string/title_activity_main2__pati"
             android:parentActivityName=".MainActivity" android:theme="@style/AppTheme.NoActionBar">
             <meta-data android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.dsy.dsu.For_Code_Settings_DSU1.MainActivity_Face_App_OLd" />
+                android:value="com.dsy.dsu.Settings.MainActivity_Face_App_OLd" />
         </activity>
         <activity android:name=".Main2ActivityFour"
             android:label="@string/title_activity_main2_four"
             android:parentActivityName=".MainActivity" android:theme="@style/AppTheme.NoActionBar">
             <meta-data android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.dsy.dsu.For_Code_Settings_DSU1.MainActivity_Face_App_OLd" />
+                android:value="com.dsy.dsu.Settings.MainActivity_Face_App_OLd" />
         </activity>
         <activity android:name=".Main2ActivityTree"
             android:label="@string/title_activity_main2_tree"
             android:parentActivityName=".MainActivity" android:theme="@style/AppTheme.NoActionBar">
             <meta-data android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.dsy.dsu.For_Code_Settings_DSU1.MainActivity_Face_App_OLd" />
+                android:value="com.dsy.dsu.Settings.MainActivity_Face_App_OLd" />
         </activity>
         <activity android:name=".Main2ActivityTwo" android:label="@string/title_activity_main2_two"
             android:parentActivityName=".MainActivity" android:theme="@style/AppTheme.NoActionBar">
             <meta-data android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.dsy.dsu.For_Code_Settings_DSU1.MainActivity_Face_App_OLd" />
+                android:value="com.dsy.dsu.Settings.MainActivity_Face_App_OLd" />
         </activity> <!-- главное активити -->
         <activity android:name=".MainActivity">
             <intent-filter>

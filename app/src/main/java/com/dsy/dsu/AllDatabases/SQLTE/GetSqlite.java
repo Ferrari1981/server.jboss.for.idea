@@ -1,20 +1,12 @@
 package com.dsy.dsu.AllDatabases.SQLTE;
 
 import android.content.Context;
-import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
-import androidx.room.Room;
-import androidx.room.RoomDatabase;
-import androidx.sqlite.db.SupportSQLiteDatabase;
 
 
-import com.dsy.dsu.AllDatabases.GetSQLiteDatabase;
-import com.dsy.dsu.Business_logic_Only_Class.Class_Generation_Errors;
-
-import java.util.List;
-import java.util.concurrent.Executors;
+import com.dsy.dsu.BusinessLogicAll.Class_Generation_Errors;
 
 import javax.inject.Singleton;
 

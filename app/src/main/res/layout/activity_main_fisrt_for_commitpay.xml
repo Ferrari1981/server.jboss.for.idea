@@ -7,7 +7,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#FFFFFF"
-    tools:context=".Code_For_Commit_Payments_КодДля_Согласование.MainActivity_CommitPay"
+    tools:context=".CommitsPayments.MainActivity_CommitPay"
     android:orientation="vertical">
 </LinearLayout>
 

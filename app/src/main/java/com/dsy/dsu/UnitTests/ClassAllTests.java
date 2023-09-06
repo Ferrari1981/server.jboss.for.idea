@@ -9,13 +9,11 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.sqlite.db.SimpleSQLiteQuery;
 
-import com.dsy.dsu.AllDatabases.ROOM.EntityMaterialBinary;
+import com.dsy.dsu.AllDatabases.ROOM.CreateROOM;
 import com.dsy.dsu.AllDatabases.ROOM.ROOMDatabase;
 import com.dsy.dsu.AllDatabases.ROOM.Task;
-import com.dsy.dsu.Business_logic_Only_Class.Class_Generation_Errors;
-import com.dsy.dsu.CoreApp.CoreApp;
+import com.dsy.dsu.BusinessLogicAll.Class_Generation_Errors;
 
-import java.util.Date;
 import java.util.List;
 
 import io.reactivex.rxjava3.core.MaybeObserver;
@@ -39,12 +37,9 @@ public class ClassAllTests {
     public class  ClassTestROOM{
 
         public void методТестRoom(){
-
             try{
-
-
 // TODO: 28.08.2023 ПОЛУЧЕАМ КОМПОНЕТ ROOM
-              ROOMDatabase GetROOM = CoreApp.getRoom();
+              ROOMDatabase GetROOM = CreateROOM.getRoom();
                    //adding to database
             SimpleSQLiteQuery query = new SimpleSQLiteQuery("SELECT * FROM Task WHERE id=?",
                     new Object[]{1});

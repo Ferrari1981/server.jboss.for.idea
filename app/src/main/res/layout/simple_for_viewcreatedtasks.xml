@@ -8,7 +8,7 @@
     android:theme="@style/Theme.MaterialComponents.DayNight.DarkActionBar"
     android:background="#F5FFFA"
     android:orientation="vertical"
-    tools:context=".Code_For_Tasks_КодДля_Задания.MainActivity_Tasks">
+    tools:context=".Tasks.MainActivity_Tasks">
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/cardviewmatirealtask"

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#FFFFFF"
-    tools:context=".For_Code_Settings_DSU1.MainActivity_Settings">
+    tools:context=".Settings.MainActivity_Settings">
 
 
     <TextView
