@@ -44,7 +44,7 @@ import com.dsy.dsu.BusinessLogicAll.Class_Generator_One_WORK_MANAGER;
 import com.dsy.dsu.BusinessLogicAll.SubClass_RetryGEtRowInChatsКлассПроверемЕщеРАзПоявилосЛИПуббличныйUUIDМеждуУчасникамиЧата;
 
 import com.dsy.dsu.BusinessLogicAll.Class_MODEL_synchronized;
-import com.dsy.dsu.BusinessLogicAll.PUBLIC_CONTENT;
+import com.dsy.dsu.CnangeServers.PUBLIC_CONTENT;
 import com.dsy.dsu.Services.Service_Для_ЧатаСменаСтатусаПрочитаноИлиНет;
 import com.dsy.dsu.R;
 import com.google.android.material.card.MaterialCardView;

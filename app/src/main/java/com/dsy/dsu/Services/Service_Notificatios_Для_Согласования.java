@@ -14,7 +14,7 @@ import androidx.annotation.Nullable;
 import com.dsy.dsu.BusinessLogicAll.Class_Generation_Errors;
 import com.dsy.dsu.BusinessLogicAll.Class_Generations_PUBLIC_CURRENT_ID;
 import com.dsy.dsu.BusinessLogicAll.Class_Get_Json_1C;
-import com.dsy.dsu.BusinessLogicAll.PUBLIC_CONTENT;
+import com.dsy.dsu.CnangeServers.PUBLIC_CONTENT;
 
 import java.util.Date;
 import java.util.HashMap;

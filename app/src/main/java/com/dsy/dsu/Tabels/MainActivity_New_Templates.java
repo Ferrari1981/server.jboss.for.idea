@@ -47,7 +47,7 @@ import com.dsy.dsu.BusinessLogicAll.Class_Generation_UUID;
 import com.dsy.dsu.BusinessLogicAll.Class_Generation_Weekend_For_Tabels;
 import com.dsy.dsu.BusinessLogicAll.Class_MODEL_synchronized;
 import com.dsy.dsu.BusinessLogicAll.DATE.SubClassCursorLoader;
-import com.dsy.dsu.BusinessLogicAll.PUBLIC_CONTENT;
+import com.dsy.dsu.CnangeServers.PUBLIC_CONTENT;
 import com.dsy.dsu.BusinessLogicAll.SubClassGetPublicId;
 import com.dsy.dsu.BusinessLogicAll.SubClassUpVersionDATA;
 import com.dsy.dsu.Dashboard.Fragments.DashboardFragmentSettings;

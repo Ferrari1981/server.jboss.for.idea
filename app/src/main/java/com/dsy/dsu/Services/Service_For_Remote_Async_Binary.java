@@ -36,7 +36,7 @@ import com.dsy.dsu.BusinessLogicAll.Class_Generations_PUBLIC_CURRENT_ID;
 import com.dsy.dsu.BusinessLogicAll.Class_MODEL_synchronized;
 import com.dsy.dsu.BusinessLogicAll.Class_Visible_Processing_Async;
 import com.dsy.dsu.BusinessLogicAll.Jakson.GeneratorJSONSerializer;
-import com.dsy.dsu.BusinessLogicAll.PUBLIC_CONTENT;
+import com.dsy.dsu.CnangeServers.PUBLIC_CONTENT;
 import com.dsy.dsu.BusinessLogicAll.SubClassUpVersionDATA;
 import com.dsy.dsu.BusinessLogicAll.SubClass_Connection_BroadcastReceiver_Sous_Asyns_Glassfish;
 import com.dsy.dsu.OneSignals.Class_Generation_SendBroadcastReceiver_And_Firebase_OneSignal;
@@ -49,6 +49,7 @@ import com.google.firebase.annotations.concurrent.Background;
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONException;
 
+import java.io.InputStream;
 import java.io.Serializable;
 import java.io.StringWriter;
 import java.security.InvalidKeyException;
@@ -1075,7 +1076,7 @@ try{
                                               ,Long  ВерсияДанных) {
 
             Integer РезультатФоновнойСинхронизации=0;
-            StringBuffer BufferGetData = null;
+            InputStream BufferGetData = null;
             try {
                 Log.d(this.getClass().getName(), "  МетодПолучаемДаннныесСервера" + "  имяТаблицыОтАндройда_локальноая" + ИмяТаблицы);
                 // TODO: 02.05.2023  Ответ Обратно ПрограссБару
@@ -1083,7 +1084,7 @@ try{
                     String   ИмяСерверИзХранилица = preferences.getString("ИмяСервера","");
                     Integer    ПортСерверИзХранилица = preferences.getInt("ИмяПорта",0);
                     // TODO: 10.11.2022  Получение JSON-потока
-                BufferGetData = МетодУниверсальныйДанныесСервера(
+                BufferGetData = методGetByteFromServerAsync(
                             ИмяТаблицы,
                           "application/gzip",
                             "Хотим Получить  JSON"
@@ -1092,12 +1093,10 @@ try{
                             ИмяСерверИзХранилица
                             ,ПортСерверИзХранилица);
                     Log.d(this.getClass().getName(), "  БУФЕР получаем даннные BufferGetData.toString() " + BufferGetData.toString());
-                    if(BufferGetData==null){
-                        BufferGetData = new StringBuffer();
-                    }
-                    Log.d(this.getClass().getName(), "  BufferGetData.length()" + BufferGetData.length());
 
-                if ( BufferGetData.toString().toCharArray().length > 3) {
+                    Log.d(this.getClass().getName(), "  BufferGetData.length()" + BufferGetData);
+
+                if ( BufferGetData.available()>0) {
                     Log.d(this.getClass().getName(), "  BufferGetData.toString()) " + BufferGetData.toString() + " ИмяТаблицы " +ИмяТаблицы);
 
                     //////TODO запускаем метод распарстивая JSON
@@ -1118,12 +1117,12 @@ try{
             return РезультатФоновнойСинхронизации;
         }
         /////// TODO МЕТОД ПАСРИНГА ПРИШЕДШЕГО  С СЕРВЕРА ВНУТРИ ASYNSTASK В ФОНЕ
-        Integer МетодПарсингJSONФайлаОтСервреравФоне(@NonNull  StringBuffer БуферПолученныйJSON,
+        Integer МетодПарсингJSONФайлаОтСервреравФоне(@NonNull  InputStream БуферGetByteJson,
                                                    @NonNull  String имяТаблицаAsync) throws InterruptedException, JSONException {
             // TODO: 05.07.2023 result suync
             Integer РезультСинхрониазции=0;
             try {
-                Log.d(this.getClass().getName(), " имяТаблицаAsync " + имяТаблицаAsync + " БуферПолученныйJSON " +БуферПолученныйJSON.toString() );
+                Log.d(this.getClass().getName(), " имяТаблицаAsync " + имяТаблицаAsync + " БуферПолученныйJSON " +БуферGetByteJson.available()  );
                     //TODO БУфер JSON от Сервера
                   /*   TypeReference< CopyOnWriteArrayList<Map<String,String>>> typeReference=   new TypeReference< CopyOnWriteArrayList<Map<String,String>>>() {};
                CopyOnWriteArrayList<Map<String,String>> jsonNodeParentMAP= jsonGenerator.readValue(БуферПолученныйJSON.toString(), typeReference);*/
@@ -1133,14 +1132,14 @@ try{
                 module.addDeserializer(  Organization .class , new GeneratorJSONDeserializer(context));
                 jsonGenerator.registerModule(module);*/
                 ObjectMapper jsonGenerator = new PUBLIC_CONTENT(context).getGeneratorJackson();
-                JsonNode jsonNodeParentMAP=   jsonGenerator.readTree(БуферПолученныйJSON.toString());
+                JsonNode jsonNodeParentMAP=   jsonGenerator.readTree(БуферGetByteJson);
 
                 Log.d(this.getClass().getName(),"\n" + " class " +
                         Thread.currentThread().getStackTrace()[2].getClassName()
                         + "\n" +
                         " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                         " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+
-                        " БуферПолученныйJSON " +БуферПолученныйJSON + " jsonNodeParentMAP " +jsonNodeParentMAP);
+                        " БуферGetByteJson " +БуферGetByteJson + " jsonNodeParentMAP " +jsonNodeParentMAP);
                 // TODO: 26.03.2023  Количество Максимальное СТРОК
               //  МаксималноеКоличествоСтрочекJSON = jsonNodeParentMAP.size();
                 // TODO: 11.10.2022 callback метод обратно в актвити #1
@@ -1161,7 +1160,7 @@ try{
                 методCallBackPrograssBars(7, Проценты,имяТаблицаAsync,ПозицияТекущейТаблицы);
 
 
-                Bundle bundleРезультатОбновлениеМассовой =resolver.call(uri,имяТаблицаAsync,БуферПолученныйJSON.toString(),bundle);
+                Bundle bundleРезультатОбновлениеМассовой =resolver.call(uri,имяТаблицаAsync,БуферGetByteJson.toString(),bundle);
 
                 РезультСинхрониазции=bundleРезультатОбновлениеМассовой.getInt("completeasync",0)   ;
 

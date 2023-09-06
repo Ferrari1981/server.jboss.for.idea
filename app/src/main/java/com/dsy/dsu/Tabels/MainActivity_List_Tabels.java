@@ -54,7 +54,7 @@ import com.dsy.dsu.BusinessLogicAll.Class_Generations_PUBLIC_CURRENT_ID;
 import com.dsy.dsu.BusinessLogicAll.Class_Generator_One_WORK_MANAGER;
 import com.dsy.dsu.BusinessLogicAll.Class_MODEL_synchronized;
 import com.dsy.dsu.BusinessLogicAll.DATE.SubClassCursorLoader;
-import com.dsy.dsu.BusinessLogicAll.PUBLIC_CONTENT;
+import com.dsy.dsu.CnangeServers.PUBLIC_CONTENT;
 import com.dsy.dsu.Services.Service_For_Public;
 import com.dsy.dsu.Dashboard.MainActivity_Dashboard;
 import com.dsy.dsu.R;

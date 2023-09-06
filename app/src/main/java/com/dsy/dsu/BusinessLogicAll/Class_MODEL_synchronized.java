@@ -17,12 +17,14 @@ import androidx.annotation.NonNull;
 import com.dsy.dsu.AllDatabases.SQLTE.GetSQLiteDatabase;
 import com.dsy.dsu.BusinessLogicAll.DATE.Class_Generation_Data;
 
+import com.dsy.dsu.CnangeServers.PUBLIC_CONTENT;
 import com.google.firebase.crashlytics.buildtools.reloc.org.apache.commons.io.FileUtils;
 
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONObject;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -62,7 +64,7 @@ import okio.BufferedSink;
 ///////Универсальный Класс Обмена Данными  Два Стачичных Метода и Плюс Сттичный Курсор
  public class Class_MODEL_synchronized extends GetSQLiteDatabase {
   public     Context context;
-    private  PUBLIC_CONTENT Class_Engine_SQLГдеНаходитьсяМенеджерПотоков =null;
+    private PUBLIC_CONTENT Class_Engine_SQLГдеНаходитьсяМенеджерПотоков =null;
     private Class_MODEL_synchronized ссылка_MODELsynchronized = null;
     private String ПубличноеЛогин =      new String();
     private  String ПубличноеПароль =   new String();
@@ -347,6 +349,136 @@ import okio.BufferedSink;
 
     }
 
+    // TODO: 06.09.2023  пришли данные байтовые от сервера
+    ///МЕТОД ПОЛУЧЕНИЕ ДАННЫХ С СЕРВЕРА
+    public   InputStream     методGetByteFromServerAsync(String ИмяТаблицы,
+                                                                              String Тип,
+                                                                              String JobForServer,
+                                                                              Long Версия,
+                                                                              Integer ID,
+                                                                              String ИмяСервера,
+                                                                              Integer ИмяПорта) {
+
+        final InputStream[] inputStreamJaksonByte = {null};
+        try {
+            String СтрокаСвязиСсервером ="http://"+ИмяСервера+":"+ИмяПорта+"/"+new PUBLIC_CONTENT(context).getСсылкаНаРежимСервераТабель();;
+            СтрокаСвязиСсервером = СтрокаСвязиСсервером.replace(" ", "%20");
+            Log.d(this.getClass().getName(), "   СтрокаСвязиСсервером "+  СтрокаСвязиСсервером);
+            String Params = "?" + "NameTable= " + ИмяТаблицы.trim() +
+                    "&" + "JobForServer=" + JobForServer.trim() + ""
+                    + "&" + "IdUser=" + ID + ""
+                    + "&" + "VersionData=" + Версия + "";
+            СтрокаСвязиСсервером=   СтрокаСвязиСсервером + Params;
+            СтрокаСвязиСсервером = СтрокаСвязиСсервером.replace(" ", "%20");
+            URL Adress = new URL(СтрокаСвязиСсервером);
+            Log.d(this.getClass().getName(), " СтрокаСвязиСсервером " + СтрокаСвязиСсервером);
+            OkHttpClient okHttpClientДанныеОтСервера = new OkHttpClient().newBuilder().addInterceptor(new Interceptor() {
+                        @Override
+                        public Response intercept(Chain chain) throws IOException {
+                            Class_GRUD_SQL_Operations grudSqlOperations= new Class_GRUD_SQL_Operations(context);
+                            grudSqlOperations.concurrentHashMapНабор.put("СамFreeSQLКОд",
+                                    " SELECT success_users,success_login  FROM successlogin  ORDER BY date_update DESC ;");
+                            PUBLIC_CONTENT  classEngineSQLГдеНаходитьсяМенеджерПотоков =new PUBLIC_CONTENT (context);
+                            SQLiteCursor            Курсор_ПолучаемИмяСотрудникаИзТаблицыФИО= null;
+                            try {
+                                Курсор_ПолучаемИмяСотрудникаИзТаблицыФИО = (SQLiteCursor) grudSqlOperations.
+                                        new GetаFreeData(context).getfreedata(grudSqlOperations.
+                                                concurrentHashMapНабор,
+                                        classEngineSQLГдеНаходитьсяМенеджерПотоков.МенеджерПотоков,sqLiteDatabase);
+                            } catch (ExecutionException e) {
+                                throw new RuntimeException(e);
+                            } catch (InterruptedException e) {
+                                throw new RuntimeException(e);
+                            }
+
+                            if(Курсор_ПолучаемИмяСотрудникаИзТаблицыФИО.getCount()>0){
+                                Курсор_ПолучаемИмяСотрудникаИзТаблицыФИО.moveToFirst();
+                                ПубличноеЛогин =         Курсор_ПолучаемИмяСотрудникаИзТаблицыФИО.getString(0).trim();
+                                ПубличноеПароль =           Курсор_ПолучаемИмяСотрудникаИзТаблицыФИО.getString(1).trim();
+                            }
+                            Log.d(this.getClass().getName(), "  PUBLIC_CONTENT.ПубличноеИмяПользовательДлСервлета  " + ПубличноеЛогин +
+                                    " PUBLIC_CONTENT.ПубличноеПарольДлСервлета " + ПубличноеПароль);
+                            String ANDROID_ID = Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID);
+                            // TODO: 26.08.2021 НОВЫЙ ВЫЗОВ НОВОГО КЛАСС GRUD - ОПЕРАЦИИ
+                            Log.d(this.getClass().getName(), "  ПубличноеЛогин " + ПубличноеЛогин + " ПубличноеПароль " + ПубличноеПароль+" ANDROID_ID "+ANDROID_ID);
+                            Request originalRequest = chain.request();
+                            Request.Builder builder = originalRequest.newBuilder()
+                                    .header("Content-Type", Тип + " ;charset=UTF-8")
+                                    .header("Accept-Encoding", "gzip,deflate,sdch")
+                                    .header("Connection", "Keep-Alive")
+                                    .header("Accept-Language", "ru-RU")
+                                    .header("identifier", ПубличноеЛогин)
+                                    .header("p_identifier", ПубличноеПароль)
+                                    .header("id_device_androis", ANDROID_ID);
+                            Request newRequest = builder.build();
+                            return chain.proceed(newRequest);
+                        }
+                    }).connectTimeout(5, TimeUnit.SECONDS)
+                    .writeTimeout(1, TimeUnit.HOURS)
+                    .readTimeout(1, TimeUnit.HOURS).build();
+            ///  MediaType JSON = MediaType.parse("application/json; charset=utf-16");
+            Request requestGET = new Request.Builder().get().url(Adress).build();
+            Log.d(this.getClass().getName(), "  request  " + requestGET);
+            // TODO  Call callGET = client.newCall(requestGET);
+            Dispatcher dispatcherДанныеОтСервера = okHttpClientДанныеОтСервера.dispatcher();
+            okHttpClientДанныеОтСервера.newCall(requestGET).enqueue(new Callback() {
+                @Override
+                public void onFailure(@NonNull Call call, @NonNull IOException e) {
+                    Log.e(this.getClass().getName(), "  ERROR call  " + call + "  e" + e.toString());
+                    Log.e(Class_MODEL_synchronized.class.getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
+                            " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber() + " ОшибкаТекущегоМетода " + e.getMessage());
+                    new Class_Generation_Errors(context).МетодЗаписиВЖурналНовойОшибки(e.toString(), Class_MODEL_synchronized.class.getName(),
+                            Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
+                    // TODO: 31.05.2022
+                    dispatcherДанныеОтСервера.executorService().shutdown();
+                    //TODO закрываем п отоки
+                }
+                @Override
+                public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                    try{
+                        if (response.isSuccessful()) {
+                            Long РазмерПришедшегоПотока = Long.parseLong(   response.header("stream_size"));
+                            if (РазмерПришедшегоПотока>0l) {
+                                inputStreamJaksonByte[0] = new GZIPInputStream(response.body().source().inputStream());
+
+                       /*         BufferedReader РидерОтСервераМетодаGET = new BufferedReader(new InputStreamReader(inputStreamОтПинга, StandardCharsets.UTF_16));//
+                                БуферСамиДанныеОтСервера[0] = РидерОтСервераМетодаGET.lines().collect(StringBuffer::new, (sb, i) -> sb.append(i),
+                                        StringBuffer::append);*/
+                                Log.d(this.getClass().getName(), "inputStreamJaksonByte[0] " + inputStreamJaksonByte[0] + " РазмерПришедшегоПотока " + РазмерПришедшегоПотока);
+
+                            }
+                            // TODO: 31.05.2022
+                            dispatcherДанныеОтСервера.executorService().shutdown();
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                                + Thread.currentThread().getStackTrace()[2].getLineNumber());
+                        new   Class_Generation_Errors(context).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+                                this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
+                                Thread.currentThread().getStackTrace()[2].getLineNumber());
+                    }
+                }
+            });
+            //TODO
+            dispatcherДанныеОтСервера.executorService().awaitTermination(1, TimeUnit.DAYS);
+        } catch (IOException | InterruptedException e) {
+            e.printStackTrace();
+            String ОшибкаТекущегоМетода = e.toString();
+            if (!ОшибкаТекущегоМетода.toString().matches("(.*)java.io.EOFException(.*)") &&
+                    !ОшибкаТекущегоМетода.toString().matches("(.*)java.net.sockettimeoutexception(.*)")
+                    &&
+                    !ОшибкаТекущегоМетода.toString().matches("(.*)SocketTimeout(.*)")) {
+                Log.e(Class_MODEL_synchronized.class.getName(), "Ошибка " + ОшибкаТекущегоМетода + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
+                        " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber() + " ОшибкаТекущегоМетода " + ОшибкаТекущегоМетода.toString());
+                new Class_Generation_Errors(context).МетодЗаписиВЖурналНовойОшибки(e.toString(), Class_MODEL_synchronized.class.getName(),
+                        Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
+            }
+        }
+        //// todo get ASYNtASK
+        return   inputStreamJaksonByte[0];
+
+    }
 
     //todo #GET     //#GET  только для ПИНГА     //#GET  только для ПИНГА  //#GET  только для ПИНГА //#GET  только для ПИНГА //#GET  только для ПИНГА //#GET  только для ПИНГА //#GET  только для ПИНГА //#GET  только для ПИНГА
     ///МЕТОД ПОЛУЧЕНИЕ ДАННЫХ С СЕРВЕРА

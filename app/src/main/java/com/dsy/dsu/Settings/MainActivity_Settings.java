@@ -37,7 +37,7 @@ import com.dsy.dsu.BusinessLogicAll.Class_GRUD_SQL_Operations;
 import com.dsy.dsu.BusinessLogicAll.DATE.Class_Generation_Data;
 import com.dsy.dsu.BusinessLogicAll.Class_Generation_Errors;
 import com.dsy.dsu.BusinessLogicAll.Class_MODEL_synchronized;
-import com.dsy.dsu.BusinessLogicAll.PUBLIC_CONTENT;
+import com.dsy.dsu.CnangeServers.PUBLIC_CONTENT;
 import com.dsy.dsu.Dashboard.Fragments.DashboardFragmentSettings;
 import com.dsy.dsu.R;
 

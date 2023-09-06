@@ -53,11 +53,12 @@ import com.dsy.dsu.AllDatabases.JsonSerializerAndDeserializer.СhatsJsonDeserial
 import com.dsy.dsu.AllDatabases.JsonSerializerAndDeserializer.СompanylJsonDeserializer;
 import com.dsy.dsu.AllDatabases.SQLTE.GetSqlite;
 import com.dsy.dsu.BusinessLogicAll.Class_Generation_Errors;
-import com.dsy.dsu.BusinessLogicAll.PUBLIC_CONTENT;
+import com.dsy.dsu.CnangeServers.PUBLIC_CONTENT;
 import com.dsy.dsu.BusinessLogicAll.SubClassCreatingMainAllTables;
 import com.dsy.dsu.BusinessLogicAll.SubClassUpVersionDATA;
 import com.fasterxml.jackson.databind.JsonNode;
 
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -330,7 +331,7 @@ public class ContentProviderSynsUpdateBinary extends ContentProvider {
 
     @Nullable
     @Override
-    public Bundle call(@NonNull String method, @Nullable String БуферПолученныйJSON, @Nullable Bundle extras) {
+    public Bundle call(@NonNull String method, @Nullable String БуферGetByteJson, @Nullable Bundle extras) {
         Bundle bundleОперацииUpdateOrinsert =new Bundle();
         try{
             Integer РезультатJsonDeserializer=0;

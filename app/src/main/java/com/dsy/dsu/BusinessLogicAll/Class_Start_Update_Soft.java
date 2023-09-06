@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.content.Context;
 import android.util.Log;
 
+import com.dsy.dsu.CnangeServers.PUBLIC_CONTENT;
+
 public class Class_Start_Update_Soft {
 
     Context context;

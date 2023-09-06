@@ -40,7 +40,7 @@ import com.dsy.dsu.BusinessLogicAll.Class_GRUD_SQL_Operations;
 import com.dsy.dsu.BusinessLogicAll.Class_Generation_Errors;
 import com.dsy.dsu.BusinessLogicAll.Class_Generations_PUBLIC_CURRENT_ID;
 import com.dsy.dsu.BusinessLogicAll.Class_Generator_One_WORK_MANAGER;
-import com.dsy.dsu.BusinessLogicAll.PUBLIC_CONTENT;
+import com.dsy.dsu.CnangeServers.PUBLIC_CONTENT;
 import com.dsy.dsu.OneSignals.Class_Generation_SendBroadcastReceiver_And_Firebase_OneSignal;
 import com.dsy.dsu.Services.Service_For_Task_Для_Задания_СменаСатуса;
 import com.dsy.dsu.R;

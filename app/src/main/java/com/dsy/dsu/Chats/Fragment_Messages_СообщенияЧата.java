@@ -41,7 +41,7 @@ import com.dsy.dsu.BusinessLogicAll.Class_Generations_PUBLIC_CURRENT_ID;
 import com.dsy.dsu.BusinessLogicAll.SubClassGET_FIO;
 
 import com.dsy.dsu.OneSignals.Class_Generation_SendBroadcastReceiver_And_Firebase_OneSignal;
-import com.dsy.dsu.BusinessLogicAll.PUBLIC_CONTENT;
+import com.dsy.dsu.CnangeServers.PUBLIC_CONTENT;
 import com.dsy.dsu.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 

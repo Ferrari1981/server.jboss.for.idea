@@ -79,7 +79,7 @@ import com.dsy.dsu.BusinessLogicAll.Class_Generations_PUBLIC_CURRENT_ID;
 import com.dsy.dsu.BusinessLogicAll.Class_MODEL_synchronized;
 import com.dsy.dsu.BusinessLogicAll.DATE.Class_Generation_Data;
 import com.dsy.dsu.BusinessLogicAll.DATE.SubClassCursorLoader;
-import com.dsy.dsu.BusinessLogicAll.PUBLIC_CONTENT;
+import com.dsy.dsu.CnangeServers.PUBLIC_CONTENT;
 import com.dsy.dsu.BusinessLogicAll.SubClassUpVersionDATA;
 import com.dsy.dsu.Tabels.MainActivity_List_Peoples;
 import com.dsy.dsu.Tabels.MainActivity_Metki_Tabel;

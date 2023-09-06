@@ -6,6 +6,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 import com.dsy.dsu.AllDatabases.SQLTE.GetSQLiteDatabase;
+import com.dsy.dsu.CnangeServers.PUBLIC_CONTENT;
 
 
 public class Class_Search_Changes_Data {

@@ -36,7 +36,7 @@ import com.dsy.dsu.BusinessLogicAll.DATE.Class_Generation_Data;
 import com.dsy.dsu.BusinessLogicAll.DATE.SubClassMONTHONLY_ТолькоАнализ;
 import com.dsy.dsu.BusinessLogicAll.DATE.SubClassYEARONLY;
 import com.dsy.dsu.BusinessLogicAll.DATE.SubClassYearHONLY_ТолькоАнализ;
-import com.dsy.dsu.BusinessLogicAll.PUBLIC_CONTENT;
+import com.dsy.dsu.CnangeServers.PUBLIC_CONTENT;
 import com.dsy.dsu.BusinessLogicAll.DATE.SubClassMONTHONLY;
 import com.dsy.dsu.BusinessLogicAll.SubClassUpVersionDATA;
 

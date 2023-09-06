@@ -40,7 +40,7 @@ import com.dsy.dsu.BusinessLogicAll.Class_GRUD_SQL_Operations;
 import com.dsy.dsu.BusinessLogicAll.Class_Generation_Errors;
 import com.dsy.dsu.BusinessLogicAll.Class_MODEL_synchronized;
 import com.dsy.dsu.BusinessLogicAll.Class_Type_Connenction_Tel;
-import com.dsy.dsu.BusinessLogicAll.PUBLIC_CONTENT;
+import com.dsy.dsu.CnangeServers.PUBLIC_CONTENT;
 import com.dsy.dsu.BusinessLogicAll.SubClassWriterPUBLICIDtoDatabase;
 import com.dsy.dsu.R;
 import com.google.android.material.snackbar.Snackbar;
