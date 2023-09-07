@@ -1096,16 +1096,14 @@ try{
 
                     Log.d(this.getClass().getName(), "  BufferGetData.length()" + BufferGetData);
 
-                if ( BufferGetData.available()>0) {
+
                     Log.d(this.getClass().getName(), "  BufferGetData.toString()) " + BufferGetData.toString() + " ИмяТаблицы " +ИмяТаблицы);
 
                     //////TODO запускаем метод распарстивая JSON
                     РезультатФоновнойСинхронизации=        МетодПарсингJSONФайлаОтСервреравФоне(BufferGetData, ИмяТаблицы);
                     Log.i(this.getClass().getName(), " РезультатФоновнойСинхронизации  "  +РезультатФоновнойСинхронизации);
-                } else {////ОШИБКА В ПОЛУЧЕНИИ С СЕРВЕРА ТАБЛИУЦЫ МОДИФИКАЦИИ ДАННЫХ СЕРВЕРА
-                    Log.d(this.getClass().getName(), "  BufferGetData.toString()) " + BufferGetData.toString() + " ИмяТаблицы " +ИмяТаблицы);
-                }
-                Log.i(this.getClass().getName(), " РезультатФоновнойСинхронизации "+РезультатФоновнойСинхронизации);
+
+
             } catch (Exception e) {
                 e.printStackTrace();
                 Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
@@ -1142,27 +1140,33 @@ try{
                         " БуферGetByteJson " +БуферGetByteJson + " jsonNodeParentMAP " +jsonNodeParentMAP);
                 // TODO: 26.03.2023  Количество Максимальное СТРОК
               //  МаксималноеКоличествоСтрочекJSON = jsonNodeParentMAP.size();
-                // TODO: 11.10.2022 callback метод обратно в актвити #1
-                ИндексВизуальнойДляPrograssBar=0;
+                if (jsonNodeParentMAP.size()>0) {
+                    // TODO: 11.10.2022 callback метод обратно в актвити #1
+                    Log.d(this.getClass().getName(),"\n" + " class " +
+                            Thread.currentThread().getStackTrace()[2].getClassName()
+                            + "\n" +
+                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+
+                            " БуферGetByteJson " +БуферGetByteJson + " jsonNodeParentMAP " +jsonNodeParentMAP);
+                    ИндексВизуальнойДляPrograssBar=0;
 
-                Uri uri = Uri.parse("content://com.dsy.dsu.providerdatabasemirrorbinary/" + имяТаблицаAsync + "");
+                    Uri uri = Uri.parse("content://com.dsy.dsu.providerdatabasemirrorbinary/" + имяТаблицаAsync + "");
 
-                ContentResolver resolver = context.getContentResolver();
-                Bundle bundle=new Bundle();
-                bundle.putSerializable("jsonNodeParentMAP", (Serializable) jsonNodeParentMAP);
-                bundle.putString("nametable",имяТаблицаAsync);
-
-
+                    ContentResolver resolver = context.getContentResolver();
+                    Bundle bundle=new Bundle();
+                    bundle.putSerializable("jsonNodeParentMAP", (Serializable) jsonNodeParentMAP);
+                    bundle.putString("nametable",имяТаблицаAsync);
 
 
-                Проценты = new Class_Visible_Processing_Async(context).ГенерируемПРОЦЕНТЫДляAsync(ПозицияТекущейТаблицы, ГлавныеТаблицыСинхронизации.size());
+                    Проценты = new Class_Visible_Processing_Async(context).ГенерируемПРОЦЕНТЫДляAsync(ПозицияТекущейТаблицы, ГлавныеТаблицыСинхронизации.size());
 
-                методCallBackPrograssBars(7, Проценты,имяТаблицаAsync,ПозицияТекущейТаблицы);
+                    методCallBackPrograssBars(7, Проценты,имяТаблицаAsync,ПозицияТекущейТаблицы);
 
 
-                Bundle bundleРезультатОбновлениеМассовой =resolver.call(uri,имяТаблицаAsync,БуферGetByteJson.toString(),bundle);
+                    Bundle bundleРезультатОбновлениеМассовой =resolver.call(uri,имяТаблицаAsync,БуферGetByteJson.toString(),bundle);
 
-                РезультСинхрониазции=bundleРезультатОбновлениеМассовой.getInt("completeasync",0)   ;
+                    РезультСинхрониазции=bundleРезультатОбновлениеМассовой.getInt("completeasync",0)   ;
+                }
 
 
                 Log.d(this.getClass().getName(),"\n" + " class " +
@@ -1500,8 +1504,8 @@ try{
                     if (РежимПерваяЗапускПослеPasswordИлиПовторная.equalsIgnoreCase("СамыйПервыйЗапускСинхронизации") ) {
                     // TODO: 21.08.2023  -многопоточный
                          Flowable.fromIterable( public_contentДатыДляГлавныхТаблицСинхронизации.ВерсииВсехСерверныхТаблиц.keySet())
-                                .parallel()
-                                .runOn(Schedulers.computation())
+                            /*    .parallel(1)
+                                .runOn(Schedulers.single())*/
                                 .doOnNext(new io.reactivex.rxjava3.functions.Consumer<String>() {
                                     @Override
                                     public void accept(String ИмяТаблицыоТВерсияДанныхОтSqlServer) throws Throwable {
@@ -1533,7 +1537,7 @@ try{
                                                 " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
                                     }
                                 })
-                                .sequentialDelayError().blockingSubscribe();
+                                .blockingSubscribe();
 
 
                     }else{
@@ -1644,7 +1648,6 @@ try{
                                                                 @NonNull String Таблицы) {
                 /////
                 Integer РезультатУспешнойВставкиИлиОбновлениеCallBacksОтСервера = 0;
-                String ДанныеПришёлВОтветОтМетодаPOST = new String();
                 StringBuffer BufferSetDataServer = new StringBuffer();
                 try {
                     Log.d(this.getClass().getName(), "  МЕТОД НЕПОСТРЕДСТВЕННО ОТПРАВЛЯЕМ ДАННЫЕ НА СЕРВЕР МЕТОД POST ");
@@ -1654,7 +1657,6 @@ try{
                             " ГенерацияJSONОтAndroida.toString().toCharArray().length  "
                             + ГенерацияJSONОтAndroida.toString().toCharArray().length +
                             " Таблицы " + Таблицы);
-                    PUBLIC_CONTENT public_content=   new PUBLIC_CONTENT(context);
                     String   ИмяСерверИзХранилица = preferences.getString("ИмяСервера","");
                     Integer    ПортСерверИзХранилица = preferences.getInt("ИмяПорта",0);
                     // TODO: 21.09.2022 ОТПРАВЯЛЕТ ДАННЫЕ НА СЕРВЕР

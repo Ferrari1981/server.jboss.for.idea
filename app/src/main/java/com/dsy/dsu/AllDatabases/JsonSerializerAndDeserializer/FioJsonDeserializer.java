@@ -136,7 +136,7 @@ this.context=context;
              .doOnComplete(new Action() {
                  @Override
                  public void run() throws Throwable {
-                     Log.e(this.getClass().getName(), "doOnComplete "  + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
+                     Log.d(this.getClass().getName(), "doOnComplete "  + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                              " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
                  }
              })
