@@ -96,7 +96,7 @@ public class SubClassSessionBeanPOST {//extends    DSU1JsonServlet
                 InputStream inputStream=    new ByteArrayInputStream(requestInputStream.readAllBytes());
 
                     ЛОГ.log("  requestInputStream.isReady() " + inputStream.available());///// ПРИШЕДШИХ
-                    if (requestInputStream.available()>0) {///// ЗАХОДИМ											///// КО
+                    if (inputStream.available()>0) {///// ЗАХОДИМ											///// КО
                         БуферГлавныйГенерацииJSONДляAndroid = МетодПарсингаJSONФайлПришелОтКлиента(response, NameTable,   inputStream );
                         ЛОГ.log( " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
