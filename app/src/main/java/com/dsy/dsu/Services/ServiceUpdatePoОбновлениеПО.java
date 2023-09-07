@@ -329,13 +329,15 @@ public class ServiceUpdatePoОбновлениеПО extends IntentService {////
             // TODO: 10.04.2022
             File[] Files = ФайлыДляОбновлениеПОУдалениеПриАнализеJSONВерсии.listFiles();
 
-            for (int i = 0; i < Files.length; i++) {
-                String ИмяФайла = Files[i].getName();
-                // TODO: 10.04.2022//    boolean ПосикПоНазваниюФайла=Files[j].getName().matches("(.*).json(.*)");
-                boolean ФайлУдаленияJson = ИмяФайла.matches("(.*)update_dsu1(.*)") ;//    boolean ПосикПоНазваниюФайла=Files[j].getName().matches("(.*).json(.*)");
-                if(ФайлУдаленияJson==true){
-                    Files[i].delete();
-                    Log.d(this.getClass().getName(), "ФайлУдаленияJson" + ФайлУдаленияJson );
+            if (Files!=null) {
+                for (int i = 0; i < Files.length; i++) {
+                    String ИмяФайла = Files[i].getName();
+                    // TODO: 10.04.2022//    boolean ПосикПоНазваниюФайла=Files[j].getName().matches("(.*).json(.*)");
+                    boolean ФайлУдаленияJson = ИмяФайла.matches("(.*)update_dsu1(.*)") ;//    boolean ПосикПоНазваниюФайла=Files[j].getName().matches("(.*).json(.*)");
+                    if(ФайлУдаленияJson==true){
+                        Files[i].delete();
+                        Log.d(this.getClass().getName(), "ФайлУдаленияJson" + ФайлУдаленияJson );
+                    }
                 }
             }
             Log.d(this.getClass().getName(), "Files" + Files);
