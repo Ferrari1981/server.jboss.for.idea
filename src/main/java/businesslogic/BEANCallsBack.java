@@ -40,9 +40,9 @@ public class BEANCallsBack {
         if (  response.isCommitted() ==false &&
                 response.getStatus()==HttpServletResponse.SC_OK ) {
         try  (
-                GZIPOutputStream МеханизмОтправкиДанныхКлиенту=      new GZIPOutputStream(response.getOutputStream(),true);
+                GZIPOutputStream gzipOutputStream=      new GZIPOutputStream(response.getOutputStream(),true);
 
-                BufferedWriter БуферДанныеДляКлиента = new BufferedWriter(new OutputStreamWriter(МеханизмОтправкиДанныхКлиенту, StandardCharsets.UTF_16));) {
+                BufferedWriter БуферДанныеДляКлиента = new BufferedWriter(new OutputStreamWriter(gzipOutputStream, StandardCharsets.UTF_16));) {
             // TODO: 18.07.2023 send
             Long ОбщийРазмерЗаписываемогоФайла = Long.valueOf(ГлавныйБуферОтправкиДанныхНААндройд.toString().toCharArray().length);
              response.addHeader("stream_size", String.valueOf(ОбщийРазмерЗаписываемогоФайла));
@@ -53,9 +53,15 @@ public class BEANCallsBack {
             БуферДанныеДляКлиента.write(ГлавныйБуферОтправкиДанныхНААндройд.toString());
             // TODO: 06.09.2023
             БуферДанныеДляКлиента.flush();
+
+            gzipOutputStream.flush();
             // TODO: 26.04.2023 finish
-            МеханизмОтправкиДанныхКлиенту.finish();
+            gzipOutputStream.finish();
             // TODO: 19.07.2023 close
+            БуферДанныеДляКлиента.close();
+
+            gzipOutputStream.close();
+
             // TODO: 23.04.2023 exit asynccontext
             if(request.isAsyncStarted() && request.isAsyncSupported()){
                 request.getAsyncContext().complete();
@@ -95,7 +101,7 @@ public class BEANCallsBack {
         if (  response.isCommitted() ==false &&
                 response.getStatus()==HttpServletResponse.SC_OK ) {
             try  (
-                    GZIPOutputStream МеханизмОтправкиДанныхКлиенту=      new GZIPOutputStream(response.getOutputStream(),true);) {
+                    GZIPOutputStream gzipOutputStream=      new GZIPOutputStream(response.getOutputStream(),true);) {
                 // TODO: 18.07.2023 send
                 Long ОбщийРазмерЗаписываемогоФайла = Long.valueOf(ГлавныйБуферОтправкиДанныхНААндройд.toString().toCharArray().length);
                 response.addHeader("stream_size", String.valueOf(ОбщийРазмерЗаписываемогоФайла));
@@ -103,10 +109,12 @@ public class BEANCallsBack {
                 response.addHeader("pool", String.valueOf( Thread.currentThread().getName()));
 
                 // TODO: 19.07.2023  writeing
-                МеханизмОтправкиДанныхКлиенту.write(ГлавныйБуферОтправкиДанныхНААндройд);
+                gzipOutputStream.write(ГлавныйБуферОтправкиДанныхНААндройд);
 
+                gzipOutputStream.flush();
                 // TODO: 26.04.2023 finish
-                МеханизмОтправкиДанныхКлиенту.finish();
+                gzipOutputStream.finish();
+                gzipOutputStream.close();
 
                 // TODO: 23.04.2023 exit asynccontext
                 if(request.isAsyncStarted() && request.isAsyncSupported()){
