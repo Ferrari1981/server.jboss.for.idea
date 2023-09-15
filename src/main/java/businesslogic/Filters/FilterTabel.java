@@ -95,7 +95,7 @@ public class FilterTabel implements Filter {
     private void МетодФильтраНеПрошлаАунтификацию(HttpServletResponse asyresponse,  HttpServletRequest asyrequest)
             throws IOException, ServletException {
         try {
-        String СерверРаботаетБезПараметров= "Server Running...... Don't Login and Password"+new Date().toGMTString().toString();
+        String СерверРаботаетБезПараметров= "Server Running...... Don't Login and Password" ;
         // TODO: 10.03.2023 Ответ От Сервера
         bEANCallsBack.МетодBackДанныеКлиентуByte(asyresponse, СерверРаботаетБезПараметров.getBytes(StandardCharsets.UTF_8), ЛОГ,asyrequest );
     } catch (Exception e) {
