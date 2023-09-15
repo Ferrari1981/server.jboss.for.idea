@@ -64,7 +64,7 @@ public class BeanGET {
       }else {
           БуферРезультатGETByte=		subClassSessionBeanМетодаGET.ГлавныйМетод_МетодаGETService(request,  ЛОГ);
       }
-            ///Todo отправляем  клиенту ответ от серверац
+            ///TODO ОТВЕТ КЛИЕНТУ ОТ СЕРВЕРА
             bEANCallsBack.МетодBackДанныеКлиентуByte(response, БуферРезультатGETByte, ЛОГ,request  );
 
 
