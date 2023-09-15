@@ -805,8 +805,8 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
     protected     List<model.UsersEntitySuccess>  Метод_МетодаGETОтпалавляемПубличныйIDПользователюАндройду() throws IOException {
         List<model.UsersEntitySuccess> ЛистДанныеОтHibenide  = new ArrayList<>();
         try {
-                org.hibernate.Query queryДляHiberite   = session.createQuery("SELECT id " +
-                        " us FROM model.UsersEntitySuccess us WHERE   us.login=:login  ");
+                org.hibernate.Query queryДляHiberite   = session.createQuery("SELECT   usersentity. id FROM model.UsersEntitySuccess" +
+                        "  as  usersentity WHERE usersentity.login =:login   ");
 
             String ЛогинПолученныйОтКлиента =
                     Optional.ofNullable(ЛОГ.getAttribute("ЛогинПолученныйОтКлиента").toString()).map(String::new).get() ;

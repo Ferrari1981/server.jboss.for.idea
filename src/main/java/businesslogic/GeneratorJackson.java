@@ -31,8 +31,8 @@ public class GeneratorJackson {
         ObjectMapper mapperJackson = null;
         try{
             //TODO Jacson парсинг JSON
-         //   JsonFactory factory = new JsonFactory();
-            CBORFactory factory = new CBORFactory();
+            JsonFactory factory = new JsonFactory();
+           // CBORFactory factory = new CBORFactory();
             mapperJackson = new ObjectMapper(factory);
             mapperJackson.writerWithDefaultPrettyPrinter();
             mapperJackson.setPropertyNamingStrategy(PropertyNamingStrategy.CAMEL_CASE_TO_LOWER_CASE_WITH_UNDERSCORES);

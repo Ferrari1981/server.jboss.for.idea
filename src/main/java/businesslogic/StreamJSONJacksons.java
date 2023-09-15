@@ -12,9 +12,11 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.inject.Any;
 import javax.enterprise.inject.Produces;
 import javax.inject.Inject;
+import java.nio.charset.StandardCharsets;
 import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 
@@ -30,7 +32,7 @@ public  class StreamJSONJacksons{
         try {
             ObjectWriter writer = getGeneratorJackson.writerWithDefaultPrettyPrinter();
            // String Сгенерированыйjson = 	  writer.writeValueAsString(listОтHiberideДляГенерации);
-           БуферСозданогоJSONJackson = 	  writer.writeValueAsBytes(listОтHiberideДляГенерации);
+           БуферСозданогоJSONJackson = 	  writer.writeValueAsBytes(listОтHiberideДляГенерации );
             System.out.println( " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + " БуферСозданогоJSONJackson "+ БуферСозданогоJSONJackson.toString());

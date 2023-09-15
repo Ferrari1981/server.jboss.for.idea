@@ -55,14 +55,24 @@ public class BeanGET {
                               @NotNull  HttpServletResponse response) throws InterruptedException, ExecutionException {
         try {
             // TODO: 10.03.2023  данные от GET метода
-          byte[]    БуферРезультатGETByte=		subClassSessionBeanМетодаGET.ГлавныйМетод_МетодаGETByte(request,  ЛОГ);
-          ///Todo отправляем  клиенту ответ от серверац
-          bEANCallsBack.МетодBackДанныеКлиентуByte(response, БуферРезультатGETByte, ЛОГ,request  );
+            byte[]    БуферРезультатGETByte=new byte[0];
+
+                    String      JobForServer = Optional.ofNullable(request.getParameter("JobForServer")).map(String::trim).orElse("");
+      if(JobForServer.trim().equalsIgnoreCase("Хотим Получить  JSON")){
+           БуферРезультатGETByte=		subClassSessionBeanМетодаGET.ГлавныйМетод_МетодаGETByte(request,  ЛОГ);
+
+      }else {
+          БуферРезультатGETByte=		subClassSessionBeanМетодаGET.ГлавныйМетод_МетодаGETService(request,  ЛОГ);
+      }
+            ///Todo отправляем  клиенту ответ от серверац
+            bEANCallsBack.МетодBackДанныеКлиентуByte(response, БуферРезультатGETByte, ЛОГ,request  );
+
 
             ЛОГ.log( " Класс"+Thread.currentThread().getStackTrace()[2].getClassName()
                     +"\n"+
                     " метод "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"
-                    + "Строка " + Thread.currentThread().getStackTrace()[2].getLineNumber());
+                    + "Строка " + Thread.currentThread().getStackTrace()[2].getLineNumber()  +  "БуферРезультатGETByte " +БуферРезультатGETByte+
+            " JobForServer " +JobForServer);
         } catch (Exception e) {
             subClassWriterErros.
                     МетодаЗаписиОшибкиВЛог(e,
