@@ -2,10 +2,6 @@ package businesslogic;
 
 
 
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.security.NoSuchAlgorithmException;
@@ -13,16 +9,11 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.*;
 import java.util.concurrent.BrokenBarrierException;
-import java.util.concurrent.CopyOnWriteArrayList;
-import java.util.concurrent.ExecutionException;
-import java.util.function.Consumer;
-import java.util.stream.Stream;
 import java.util.zip.GZIPInputStream;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.servlet.ServletContext;
-import javax.servlet.ServletInputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.constraints.NotNull;
@@ -64,14 +55,15 @@ public class SubClassSessionBeanPOST {//extends    DSU1JsonServlet
      * @param request
      * @param response
      * @throws SecurityException
+     * @return
      */
     @SuppressWarnings("unused")
-    protected StringBuffer МетодЗапускаPOST(
+    protected byte[] МетодЗапускаPOST(
             @NotNull HttpServletRequest request,
             @NotNull HttpServletResponse response,
             @NotNull ServletContext ЛОГ) throws SecurityException {
 
-        StringBuffer БуферГлавныйГенерацииJSONДляAndroid = null;
+        byte[] БуферГлавныйГенерацииJSONДляAndroid = new byte[0];
         try {
             ЛОГ.log("Конструктор  ЗАПУСК МЕТОДА ИЗ POST ()  ГлавныйМетод_МетодаPOST()");
             this.ЛОГ = ЛОГ;
@@ -117,7 +109,7 @@ public class SubClassSessionBeanPOST {//extends    DSU1JsonServlet
 
     }
 
-    protected StringBuffer МетодПарсингаJSONФайлПришелОтКлиента(
+    protected byte[] МетодПарсингаJSONФайлПришелОтКлиента(
             @NotNull HttpServletResponse response,
             @NotNull String ТаблицаPOST,
             @NotNull InputStream requestInputStream)
@@ -137,7 +129,7 @@ public class SubClassSessionBeanPOST {//extends    DSU1JsonServlet
                                     getStackTrace(),
                             ЛОГ,"ErrorsLogs/ErrorJbossServletDSU1.txt");
         }
-        return bufferCallsBackToServer;
+        return bufferCallsBackToServer.toString().getBytes(StandardCharsets.UTF_8);
     }
 
 

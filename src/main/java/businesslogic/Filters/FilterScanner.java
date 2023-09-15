@@ -95,9 +95,9 @@ public class FilterScanner implements Filter {
     private void МетодФильтраНеПрошлаАунтификацию(HttpServletResponse asyresponse,  HttpServletRequest asyrequest)
             throws IOException, ServletException {
         try {
-        StringBuffer СерверРаботаетБезПараметров=new StringBuffer("Server Running...... Don't Login and Password"+new Date().toGMTString().toString());
+        String НеПрошолАунтификацию="Server Running...... Don't Login and Password"+new Date().toGMTString() ;
         // TODO: 10.03.2023 Ответ От Сервера
-        bEANCallsBack.МетодBackДанныеКлиенту(asyresponse, СерверРаботаетБезПараметров, ЛОГ,asyrequest );
+        bEANCallsBack.МетодBackДанныеКлиентуByte(asyresponse, НеПрошолАунтификацию.getBytes(StandardCharsets.UTF_8), ЛОГ,asyrequest );
     } catch (Exception e) {
             subClassWriterErros.
                     МетодаЗаписиОшибкиВЛог(e,

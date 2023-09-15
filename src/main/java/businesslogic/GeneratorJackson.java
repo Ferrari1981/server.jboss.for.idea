@@ -1,28 +1,25 @@
 package businesslogic;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
+
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.dataformat.cbor.CBORFactory;
 import dsu1glassfishatomic.workinterfaces.ProducedJacson;
+import dsu1glassfishatomic.workinterfaces.ProducedJacsonCbor;
 
 import javax.enterprise.context.ApplicationScoped;
-import javax.enterprise.context.RequestScoped;
-import javax.enterprise.context.SessionScoped;
 import javax.enterprise.inject.Produces;
 import javax.inject.Inject;
-import java.sql.SQLException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.List;
+import javax.inject.Named;
 import java.util.Locale;
 import java.util.TimeZone;
 
 
 @ApplicationScoped
+@Named("generatorJackson")
 @ProducedJacson
 public class GeneratorJackson {
     @Inject
@@ -34,7 +31,8 @@ public class GeneratorJackson {
         ObjectMapper mapperJackson = null;
         try{
             //TODO Jacson парсинг JSON
-            JsonFactory factory = new JsonFactory();
+         //   JsonFactory factory = new JsonFactory();
+            CBORFactory factory = new CBORFactory();
             mapperJackson = new ObjectMapper(factory);
             mapperJackson.writerWithDefaultPrettyPrinter();
             mapperJackson.setPropertyNamingStrategy(PropertyNamingStrategy.CAMEL_CASE_TO_LOWER_CASE_WITH_UNDERSCORES);
@@ -64,6 +62,8 @@ public class GeneratorJackson {
         return  mapperJackson;
 
     }
+
+
 
 }
 

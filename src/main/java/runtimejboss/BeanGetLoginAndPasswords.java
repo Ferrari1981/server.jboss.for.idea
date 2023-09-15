@@ -10,6 +10,7 @@ import org.hibernate.Transaction;
 import org.hibernate.resource.transaction.spi.TransactionStatus;
 
 import javax.ejb.*;
+import javax.enterprise.inject.Any;
 import javax.inject.Inject;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -76,7 +77,7 @@ public class BeanGetLoginAndPasswords {
                 // TODO: 11.07.2023 ЕСЛИ ЕСТь ЧТо то создаем JSON
                 if (ЛистДанныеОтHibenide !=null && ЛистДанныеОтHibenide.size() > 0) {
                     // TODO: 02.04.2023 Вытаскиваем Из ПРишедзиъ данных логин и пароль
-                    StringBuffer БуферСозданогоJSONJacksonАунтификация = МетодГенерацияJSONJackson(ЛОГ, ЛистДанныеОтHibenide);
+                    byte[] БуферСозданогоJSONJacksonАунтификация = МетодГенерацияJSONJackson(ЛОГ, ЛистДанныеОтHibenide);
 
                     Integer IDПолученныйИзSQlServer = ЛистДанныеОтHibenide.get(0).getId();
                     String ЛогинОтКлиентаИзSQlServer= ЛистДанныеОтHibenide.get(0).getLogin();
@@ -149,16 +150,15 @@ public class BeanGetLoginAndPasswords {
         }
         return     РезультатАунтификацииПользователя ;
     }
-    public StringBuffer МетодГенерацияJSONJackson(@NotNull ServletContext ЛОГ,
+    public byte[]  МетодГенерацияJSONJackson(@NotNull ServletContext ЛОГ,
                                              @javax.validation.constraints.NotNull List<?> listОтHiberideДляГенерации) {
-        StringBuffer БуферСозданогоJSONJackson = new StringBuffer();
+        byte[] БуферСозданогоJSONJackson = new byte[0];
         try {
-
             ЛОГ.log(" listОтHiberideДляГенерации" + listОтHiberideДляГенерации );
             ObjectWriter writer = getGeneratorJackson.writerWithDefaultPrettyPrinter();
-            String Сгенерированыйjson = 	  writer.writeValueAsString(listОтHiberideДляГенерации);
-            ЛОГ.  log(" Сгенерированыйjson "+Сгенерированыйjson.length());//gson
-            БуферСозданогоJSONJackson.append(Сгенерированыйjson);
+          //  String Сгенерированыйjson = 	  writer.writeValueAsString(listОтHiberideДляГенерации);
+            byte[] Сгенерированыйjson = 	  writer.writeValueAsBytes(listОтHiberideДляГенерации);
+            ЛОГ.  log(" Сгенерированыйjson "+Сгенерированыйjson);//gson
             ЛОГ.log("\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
                     " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
                     " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+

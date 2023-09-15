@@ -65,7 +65,7 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
 
 
     @Inject
-    ObjectMapper getGeneratorJackson;
+    ObjectMapper getGeneratorJacksonCbor;
 
     public SubClassSessionBeanМетодаGET() {
 
@@ -74,11 +74,11 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
     }
 
     @SuppressWarnings({ "unused", "deprecation", "rawtypes", "unchecked" })
-    protected StringBuffer ГлавныйМетод_МетодаGETService(@NotNull HttpServletRequest request,
+    protected byte[] ГлавныйМетод_МетодаGETService(@NotNull HttpServletRequest request,
                                                   @NotNull ServletContext ЛОГ) throws SecurityException, SQLException {
         // TODO Auto-generated method stub
         System.out.println("Конструктор  ЗАПУСК МЕТОДА ИЗ GET ()  ГлавныйМетод_МетодаGET()");
-        StringBuffer БуферCallsBackДляAndroid = new StringBuffer();;
+        byte[] БуферCallsBackДляAndroid = new byte[0];
         try   {
             this.ЛОГ = ЛОГ;
             // TODO
@@ -125,14 +125,6 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
             }
 
             switch (JobForServer) {
-                // TODO ЗАДАНИЕ ДЛЯ СЕРВЕР JOBSERVERTASK #2
-                case "Хотим Получить Статус Реальной Работы SQL SERVER":
-                    // TODO РЕАЛЬНЫЙ СТАТУС РАБОТЫ SQL SERVER
-                    ЛистДанныеОтHibenide = Метод_РеальнаяСтатусSqlServer();
-                    ЛОГ.log(" Отправили Хотим Получить Статус Реальной Работы SQL SERVER  JobForServer " + JobForServer
-                            + " ЛистДанныеОтHibenide "
-                            + ЛистДанныеОтHibenide.size());
-                    break;
                 // TODO ЗАДАНИЯ ДЛЯ СЕРВЕРА НЕТУ
                 // TODO ЗАДАНИЕ ДЛЯ СЕРВЕР JOBSERVERTASK #1
                 case "Хотим Получить Версию Данных Сервера":
@@ -142,8 +134,7 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
                     break;
                 // TODO ЗАДАНИЕ ДЛЯ СЕРВЕР JOBSERVERTASK #3
                 case "Хотим Получить ID для Генерации  UUID":
-                    БуферCallsBackДляAndroid = Метод_МетодаGETОтпалавляемПубличныйIDПользователюАндройду(
-                            response, IdUser);
+                    ЛистДанныеОтHibenide = Метод_МетодаGETОтпалавляемПубличныйIDПользователюАндройду();
                     ЛОГ.log(" БуферCallsBackДляAndroid "
                             + БуферCallsBackДляAndroid.toString());
                     break;
@@ -625,14 +616,14 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
 
 
     // TODO ГЕНЕРАЦИЯ JSON ПО  НОВОМУ Jackson
-    StringBuffer МетодГенерацияJSONJackson(@javax.validation.constraints.NotNull List<?> listОтHiberideДляГенерации)
+    byte[] МетодГенерацияJSONJackson(@javax.validation.constraints.NotNull List<?> listОтHiberideДляГенерации)
             throws SQLException, SecurityException {
-        StringBuffer БуферСозданогоJSONJackson = new StringBuffer();
+        byte[] БуферСозданогоJSONJackson = new byte[0];
         try {
             ЛОГ.log(" listОтHiberideДляГенерации" + listОтHiberideДляГенерации );
-            ObjectWriter writer = getGeneratorJackson.writerWithDefaultPrettyPrinter();
-            String Сгенерированыйjson = 	  writer.writeValueAsString(listОтHiberideДляГенерации);
-            БуферСозданогоJSONJackson.append(Сгенерированыйjson);
+            ObjectWriter writer = getGeneratorJacksonCbor.writerWithDefaultPrettyPrinter();
+            //String Сгенерированыйjson = 	  writer.writeValueAsString(listОтHiberideДляГенерации);
+            БуферСозданогоJSONJackson = 	  writer.writeValueAsBytes(listОтHiberideДляГенерации);
          ЛОГ.log("\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
                 " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
                 " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+
@@ -654,7 +645,7 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
         byte[] БуферСозданогоJSONJackson = new byte[0];
         try {
             ЛОГ.log(" listОтHiberideДляГенерации" + listОтHiberideДляГенерации );
-            ObjectWriter writer = getGeneratorJackson.writerWithDefaultPrettyPrinter();
+            ObjectWriter writer = getGeneratorJacksonCbor.writerWithDefaultPrettyPrinter();
             //String Сгенерированыйjson = 	  writer.writeValueAsString(listОтHiberideДляГенерации);
 
             БуферСозданогоJSONJackson=   writer.writeValueAsBytes(listОтHiberideДляГенерации);
@@ -811,17 +802,23 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
     // TODO еще один перенесенный в метод GEt метод
 
 
-    protected StringBuffer Метод_МетодаGETОтпалавляемПубличныйIDПользователюАндройду(HttpServletResponse response,
-                                                                                     Integer IDПолученныйИзSQlServerПосик) throws IOException {
-        StringBuffer ПолученныйИзSqlServerПубличныйIDДляОтправкиНААндройд = new StringBuffer();
+    protected     List<model.UsersEntitySuccess>  Метод_МетодаGETОтпалавляемПубличныйIDПользователюАндройду() throws IOException {
+        List<model.UsersEntitySuccess> ЛистДанныеОтHibenide  = new ArrayList<>();
         try {
-            System.out.println("ИмяПолученныйИзSQlServerПосик			 " + ИмяПолученныйИзSQlServerПосик);
-            /// TODO проверяем если мся и пароль н
-            ПолученныйИзSqlServerПубличныйIDДляОтправкиНААндройд.append(IDПолученныйИзSQlServerПосик);
-            ЛОГ.log("ИмяПолученныйИзSQlServerПосик			 " + ИмяПолученныйИзSQlServerПосик
-                    + " ПолученныйИзSqlServerПубличныйIDДляОтправкиНААндройд "
-                    + ПолученныйИзSqlServerПубличныйIDДляОтправкиНААндройд.toString()
-                    + " finalIDПолученныйИзSQlServerПосик " + IDПолученныйИзSQlServerПосик);
+                org.hibernate.Query queryДляHiberite   = session.createQuery("SELECT id " +
+                        " us FROM model.UsersEntitySuccess us WHERE   us.login=:login  ");
+
+            String ЛогинПолученныйОтКлиента =
+                    Optional.ofNullable(ЛОГ.getAttribute("ЛогинПолученныйОтКлиента").toString()).map(String::new).get() ;
+            queryДляHiberite.setParameter("login",ЛогинПолученныйОтКлиента);//8641 8625
+
+            ЛистДанныеОтHibenide =( List<model.UsersEntitySuccess>) queryДляHiberite.setMaxResults(1).getResultList();
+
+                ЛОГ.log("\n"+" Starting.... class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
+                        " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
+                        " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+
+                        " ЛистДанныеОтHibenide " +ЛистДанныеОтHibenide.toString());
+
         } catch (Exception e) {
             subClassWriterErros.
                     МетодаЗаписиОшибкиВЛог(e,
@@ -829,7 +826,7 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
                                     getStackTrace(),
                             ЛОГ,"ErrorsLogs/ErrorJbossServletAuntification.txt");
         }
-        return ПолученныйИзSqlServerПубличныйIDДляОтправкиНААндройд;
+        return ЛистДанныеОтHibenide;
     }
 
 

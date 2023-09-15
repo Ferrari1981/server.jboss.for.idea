@@ -9,6 +9,7 @@ import dsu1glassfishatomic.workinterfaces.ProducedJacson;
 import dsu1glassfishatomic.workinterfaces.ProducedStreamJacsons;
 
 import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.inject.Any;
 import javax.enterprise.inject.Produces;
 import javax.inject.Inject;
 import java.sql.SQLException;
@@ -23,13 +24,13 @@ public  class StreamJSONJacksons{
     @Inject
     ObjectMapper getGeneratorJackson;
         // TODO ГЕНЕРАЦИЯ JSON ПО  НОВОМУ Jackson
-   public StringBuffer getStreamJacksons(@javax.validation.constraints.NotNull List<?> listОтHiberideДляГенерации)
+   public byte[] getStreamJacksons(@javax.validation.constraints.NotNull List<?> listОтHiberideДляГенерации)
             throws SQLException, SecurityException {
-        StringBuffer БуферСозданогоJSONJackson = new StringBuffer();
+       byte[] БуферСозданогоJSONJackson = new byte[0];
         try {
             ObjectWriter writer = getGeneratorJackson.writerWithDefaultPrettyPrinter();
-            String Сгенерированыйjson = 	  writer.writeValueAsString(listОтHiberideДляГенерации);
-            БуферСозданогоJSONJackson.append(Сгенерированыйjson);
+           // String Сгенерированыйjson = 	  writer.writeValueAsString(listОтHiberideДляГенерации);
+           БуферСозданогоJSONJackson = 	  writer.writeValueAsBytes(listОтHiberideДляГенерации);
             System.out.println( " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + " БуферСозданогоJSONJackson "+ БуферСозданогоJSONJackson.toString());

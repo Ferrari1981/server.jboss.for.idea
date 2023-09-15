@@ -78,9 +78,9 @@ public class SessionBeanGETRuntimeJboss {// extends WITH
                                                  @NotNull  HttpServletResponse response) throws InterruptedException, ExecutionException {;
         try {
             ///Todo  получаем данные от клиента
-           StringBuffer БуферРезультатRuntime= 	 МетодЗапускаRuntime(request,ЛОГ,response);
+            byte[] БуферРезультатRuntime= 	 МетодЗапускаRuntime(request,ЛОГ,response);
             ///Todo получаем данные от Клиента на Сервер
-            bEANCallsBack.МетодBackДанныеКлиенту(response, БуферРезультатRuntime, ЛОГ ,request );
+            bEANCallsBack.МетодBackДанныеКлиентуByte(response, БуферРезультатRuntime, ЛОГ ,request );
             ЛОГ.log("\n"+" Starting.... class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
                     " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
                     " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+"  БуферРезультатRuntime  "
@@ -101,11 +101,11 @@ public class SessionBeanGETRuntimeJboss {// extends WITH
 
 
     @SuppressWarnings({ "unused", "deprecation", "rawtypes", "unchecked" })
-    public StringBuffer МетодЗапускаRuntime(@NotNull HttpServletRequest request,
+    public byte[] МетодЗапускаRuntime(@NotNull HttpServletRequest request,
                                                     @NotNull ServletContext ЛОГ,
                                                     @NotNull  HttpServletResponse response) throws SecurityException, SQLException {
         // TODO Auto-generated method stub
-        StringBuffer БуферCallsBackДляAndroid = null;
+        byte[] БуферCallsBackДляAndroid = new byte[0];
         try  {
             List<?>         ЛистДанныеОтHibenide = null;
             Integer ПубличныйID=0;
@@ -117,7 +117,6 @@ public class SessionBeanGETRuntimeJboss {// extends WITH
             // TODO Коннектимся к Базе SQl Server
             ЛОГ.log("ЛОГ  GET() " + ЛОГ + " request " + request + " response " + response);
             ////
-            БуферCallsBackДляAndroid = new StringBuffer();
             // TODO получаем session
             ЛОГ.log("ЗАПУСКАЕТСЯ....... ГЛАВНЫЙ МЕТОД GET() СЕРВЛЕТА " + new Date() + "\n" + ЛОГ.getServerInfo()
                     + "  request " + request + " response " + response + " ЛОГ" + ЛОГ);
