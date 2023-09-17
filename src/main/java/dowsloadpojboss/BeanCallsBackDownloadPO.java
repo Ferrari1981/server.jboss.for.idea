@@ -220,8 +220,8 @@ private   SubClassWriterErros subClassWriterErros;
 
         if (  response.isCommitted()==false && ОтправкаФайлаJsonAPK.isFile() &&
                 response.getStatus()==HttpServletResponse.SC_OK) {
-            //try  (GZIPOutputStream БуферДанныеДляОбновлениеПО =new GZIPOutputStream( response.getOutputStream(),true)) {
-            try  (ServletOutputStream БуферДанныеДляОбновлениеПО =  ( response.getOutputStream() )) {
+            try  (GZIPOutputStream БуферДанныеДляОбновлениеПО =new GZIPOutputStream( response.getOutputStream(),true)) {
+           // try  (ServletOutputStream БуферДанныеДляОбновлениеПО =  ( response.getOutputStream() )) {
                 Long ОбщийРазмерЗаписываемогоФайла = Long.valueOf(ОтправкаФайлаJsonAPK.length());
                 response.addHeader("stream_size", String.valueOf(ОбщийРазмерЗаписываемогоФайла));
                 response.addHeader("stream_status", String.valueOf( (  response).getStatus()));
@@ -233,6 +233,10 @@ private   SubClassWriterErros subClassWriterErros;
                     БуферДанныеДляОбновлениеПО.write(fis.readAllBytes());
                     // TODO: 18.07.2023 fulsh
                     БуферДанныеДляОбновлениеПО.flush();
+                    // TODO: 17.09.2023 finif
+                    БуферДанныеДляОбновлениеПО.finish();
+                    // TODO: 17.09.2023  close
+                    БуферДанныеДляОбновлениеПО.close();
                 }
                 // TODO: 23.04.2023 exit asynccontext
                 if(request.isAsyncStarted() && request.isAsyncSupported()){
@@ -242,8 +246,7 @@ private   SubClassWriterErros subClassWriterErros;
                 ЛОГ.log("\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                         " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                         " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
-                        + " ОтправкаФайлаJsonAPK " + ОтправкаФайлаJsonAPK + "  response.isCommitted() "
-                        + response.isCommitted() + "   ((HttpServletResponse) response).getStatus() " +
+                        + " ОтправкаФайлаJsonAPK " + ОтправкаФайлаJsonAPK + "  response.isCommitted() "+
                         ((HttpServletResponse) response).getStatus());
 
             } catch (IOException e) {
@@ -257,7 +260,7 @@ private   SubClassWriterErros subClassWriterErros;
             ЛОГ.log("\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
-                    + "  ОтправкаФайлаJsonAPK.length() " + ОтправкаФайлаJsonAPK.length() + "  response.isCommitted() " + response.isCommitted()
+                    + "  ОтправкаФайлаJsonAPK.length() " + ОтправкаФайлаJsonAPK.length()
                     + "   ((HttpServletResponse) response).getStatus() " +
                     ((HttpServletResponse) response).getStatus());
         }
