@@ -47,6 +47,7 @@ public class GeneratorJackson {
             mapperJackson.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
             mapperJackson.enable(SerializationFeature.FLUSH_AFTER_WRITE_VALUE);
             mapperJackson .enable(SerializationFeature.INDENT_OUTPUT);
+            mapperJackson.disable(SerializationFeature.FAIL_ON_EMPTY_BEANS);
 
           System.out.println( " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
