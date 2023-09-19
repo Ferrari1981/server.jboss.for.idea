@@ -221,12 +221,12 @@ private   SubClassWriterErros subClassWriterErros;
         if (  response.isCommitted()==false && ОтправкаФайлаJsonAPK.isFile() &&
                 response.getStatus()==HttpServletResponse.SC_OK) {
             try  (GZIPOutputStream БуферДанныеДляОбновлениеПО =new GZIPOutputStream( response.getOutputStream(),true)) {
-           // try  (ServletOutputStream БуферДанныеДляОбновлениеПО =  ( response.getOutputStream() )) {
+           // try  (ServletOutputStream БуферДанныеДляОбновлениеПО =  ( response.getOutputStream() )) {            response.addHeader("GZIPOutputStream", String.valueOf("false"));
                 Long ОбщийРазмерЗаписываемогоФайла = Long.valueOf(ОтправкаФайлаJsonAPK.length());
                 response.addHeader("stream_size", String.valueOf(ОбщийРазмерЗаписываемогоФайла));
                 response.addHeader("stream_status", String.valueOf( (  response).getStatus()));
                 response.addHeader("pool", String.valueOf( Thread.currentThread().getName()));
-                response.addHeader("GZIPOutputStream", String.valueOf("false"));
+                response.addHeader("GZIPOutputStream", String.valueOf("true"));
                 InputStream fis = new FileInputStream(ОтправкаФайлаJsonAPK);
                 if (fis.available()>0) {
                     // TODO: 19.07.2023  writing
