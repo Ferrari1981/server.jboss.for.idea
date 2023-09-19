@@ -162,7 +162,7 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
 
             //TODO ГЕНЕРАЦИЯ JSON ПО НОВОМУ
             if (ЛистДанныеОтHibenide!=null && ЛистДанныеОтHibenide.size()>0) {
-                БуферCallsBackДляAndroid = МетодГенерацияJSONJackson(ЛистДанныеОтHibenide);
+                БуферCallsBackДляAndroid = МетодГенерацияJSONJacksonByte(ЛистДанныеОтHibenide);
             }
 
             // TODO КОГДА ЛОГИН И ПАРОЛЬ НЕТ ДОСТУПА
@@ -615,28 +615,6 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
 
 
 
-    // TODO ГЕНЕРАЦИЯ JSON ПО  НОВОМУ Jackson
-    byte[] МетодГенерацияJSONJackson(@javax.validation.constraints.NotNull List<?> listОтHiberideДляГенерации)
-            throws SQLException, SecurityException {
-        byte[] БуферСозданогоJSONJackson = new byte[0];
-        try {
-            ЛОГ.log(" listОтHiberideДляГенерации" + listОтHiberideДляГенерации );
-            ObjectWriter writer = getGeneratorJacksonCbor.writerWithDefaultPrettyPrinter();
-            //String Сгенерированыйjson = 	  writer.writeValueAsString(listОтHiberideДляГенерации);
-            БуферСозданогоJSONJackson = 	  writer.writeValueAsBytes(listОтHiberideДляГенерации);
-         ЛОГ.log("\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
-                " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
-                " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+
-            "БуферСозданогоJSONJackson " + БуферСозданогоJSONJackson.toString());
-        } catch (Exception e) {
-            subClassWriterErros.
-                    МетодаЗаписиОшибкиВЛог(e,
-                            Thread.currentThread().
-                                    getStackTrace(),
-                            ЛОГ,"ErrorsLogs/ErrorJbossServletDSU1.txt");
-        }
-        return БуферСозданогоJSONJackson;
-    }
 
 
     // TODO ГЕНЕРАЦИЯ JSON ПО  НОВОМУ Jackson
@@ -673,133 +651,8 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
 
 
 
-    StringBuffer МетодВторойПослеГенрацииJSONСтрочкеДляФорматируемЕгоВБуфер(
-            @NotNull JsonObjectBuilder СгенерированныйJSONДЛяКонфертациивБуфер) {
-        StringWriter stringWriterМассив = new StringWriter();
-        StringBuffer БуферJSONДляКлиента = new StringBuffer();
-        try {
-            ЛОГ.log("СгенерированныйJSONДЛяКонфертациивБуфер " + СгенерированныйJSONДЛяКонфертациивБуфер.toString());
-            JsonWriter jsonWriter = Json.createWriter(stringWriterМассив);/// ОТКРЫВАЕМ
-            jsonWriter.writeObject(СгенерированныйJSONДЛяКонфертациивБуфер.build());// САМО
-            БуферJSONДляКлиента.append(stringWriterМассив.getBuffer().toString()).append("\n");//// ПЕРЕВОДИТ
-            ЛОГ.log(" БуферJSONДляКлиента  для Отправки Клиенту " + БуферJSONДляКлиента);
-
-        } catch (Exception e) {
-            subClassWriterErros.
-                    МетодаЗаписиОшибкиВЛог(e,
-                            Thread.currentThread().
-                                    getStackTrace(),
-                            ЛОГ,"ErrorsLogs/ErrorJbossServletDSU1.txt");;
-        }
-        return БуферJSONДляКлиента;
-    }
 
     // todo ЕЩЕ ОДИН КОД ПЕРЕНЕСЛИВ МЕТОД GET()
-
-
-    JsonObjectBuilder МетодГенерацииJSONПОтокаДЛяОтправкиКлиенту(@NotNull int КоличествоСтолбцовВБАзеSQLSERVERРАзное,
-                                                                 @NotNull ResultSet КурсорГенерацияJSONДляКлиента) throws SQLException, SecurityException {
-        JsonObjectBuilder СгенерированныйJSONДляКлиента = Json.createObjectBuilder(); // TODO
-        try {
-
-            System.out.println("  ВЫПОЕЛНИЯ СтрокаКлиентJSON " + КурсорГенерацияJSONДляКлиента);
-            while (КурсорГенерацияJSONДляКлиента.next()) {
-                JsonObjectBuilder JsonгенерацияТекущейСтроки = Json.createObjectBuilder();// TODO стока одна
-                String СодержимоеКолонкиВSqlServer = null;
-                System.out.println(" количество стобцов  " + КоличествоСтолбцовВБАзеSQLSERVERРАзное);
-                int ИндексПоКолонкам;
-                String ИдиДляJSONПоле = null;
-                for (ИндексПоКолонкам = 1; ИндексПоКолонкам <= КоличествоСтолбцовВБАзеSQLSERVERРАзное; ИндексПоКолонкам++) {
-                    String НазваниеСтлбикаДляГенерацииJSON = КурсорГенерацияJSONДляКлиента.getMetaData()
-                            .getColumnName(ИндексПоКолонкам);
-                    СодержимоеКолонкиВSqlServer = КурсорГенерацияJSONДляКлиента.getString(ИндексПоКолонкам);
-                    ИдиДляJSONПоле = String.valueOf(КурсорГенерацияJSONДляКлиента.getString(1)); /// данное
-
-                    ЛОГ.log(" НазваниеСтлбикаДляГенерацииJSON " + НазваниеСтлбикаДляГенерацииJSON
-                            + " СодержимоеКолонкиВSqlServer " + СодержимоеКолонкиВSqlServer + " ИдиДляJSONПоле "
-                            + ИдиДляJSONПоле + " СтрочкагерериацииJSON " + КурсорГенерацияJSONДляКлиента);
-                    if (СодержимоеКолонкиВSqlServer != null && НазваниеСтлбикаДляГенерацииJSON != null) {
-                        ЛОГ.log(" НазваниеСтлбикаДляГенерацииJSON " + НазваниеСтлбикаДляГенерацииJSON
-                                + " СодержимоеКолонкиВSqlServer " + СодержимоеКолонкиВSqlServer + " ИдиДляJSONПоле "
-                                + ИдиДляJSONПоле);
-                        JsonгенерацияТекущейСтроки.add(НазваниеСтлбикаДляГенерацииJSON, СодержимоеКолонкиВSqlServer);//// заполение
-                        ЛОГ.log(" JsonгенерацияТекущейСтроки " + JsonгенерацияТекущейСтроки.toString()
-                                + "   СодержимоеКолонкиВSqlServer " + СодержимоеКолонкиВSqlServer);
-                    }
-                    ЛОГ.log(" JsonгенерацияТекущейСтроки " + JsonгенерацияТекущейСтроки.toString()
-                            + "   СодержимоеКолонкиВSqlServer " + СодержимоеКолонкиВSqlServer);
-                }
-                СгенерированныйJSONДляКлиента.add(ИдиДляJSONПоле, JsonгенерацияТекущейСтроки.build());
-            }
-            ;
-            // TODO конец генерации полей JSON для отпарви
-            if (!КурсорГенерацияJSONДляКлиента.isClosed()) {
-                КурсорГенерацияJSONДляКлиента.close();
-            }
-            // TODO
-        } catch (Exception e) {
-            subClassWriterErros.
-                    МетодаЗаписиОшибкиВЛог(e,
-                            Thread.currentThread().
-                                    getStackTrace(),
-                            ЛОГ,"ErrorsLogs/ErrorJbossServletDSU1.txt");
-        }
-        ЛОГ.log(" РЕЗУЛЬТАТ ОБРАБОКИ ГЕНЕРАЦИИ JSON-ПОЛЕЙ   ОТПРАВКИ НА АНДРОЙД  JSONВерхнийКлюч ");
-        return СгенерированныйJSONДляКлиента;
-    }
-    // TODO Еще ОДИН КОД ПЕРЕНЕСЛИ В МЕТОД GET() МОЖЕТ ПОСЛЕДНИЙ А МОЖЕТ И НЕТ
-
-    //// ТУТ---ГЕНРИРУЕМ JSON СПИСОК ТАБЛИЦ КОТОРЫХ НАДО ОТПАРВМТЬ КЛИЕНТУ
-// TODO реальный статус POST SQl Servera
-    protected List<model.UsersEntity> Метод_РеальнаяСтатусSqlServer() {
-        List<model.UsersEntity> ЛистДанныеОтHibenide  = new ArrayList<>();
-        try {
-            org.hibernate.Query queryДляHiberite   = session.createQuery("SELECT  us as id FROM model.UsersEntity us WHERE us.rights =:rights   ");
-            queryДляHiberite.setParameter("rights",new Integer(2));//8641 8625
-            ЛистДанныеОтHibenide =( List<model.UsersEntity>) queryДляHiberite.setMaxResults(1).getResultList();
-            ЛОГ.log("\n"+" Starting.... class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
-                    " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
-                    " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+
-                    "Метод_РеальнаяСтатусSqlServer  ЛистДанныеОтHibenide " +ЛистДанныеОтHibenide.size());
-        } catch (Exception e) {
-            subClassWriterErros.
-                    МетодаЗаписиОшибкиВЛог(e,
-                            Thread.currentThread().
-                                    getStackTrace(),
-                            ЛОГ,"ErrorsLogs/ErrorJbossServletDSU1.txt");
-        }
-        return ЛистДанныеОтHibenide;
-    }
-    private void МетодЗакрываемСессиюHibernate(@javax.validation.constraints.NotNull ServletContext ЛОГ) {
-        try{
-            if (session!=null) {
-                if (session.getTransaction().getStatus()== TransactionStatus.ACTIVE) {
-                    session.getTransaction().commit();
-                }
-                if (session.isOpen()   || session.isConnected()) {
-                    session.close();
-                }
-                ЛОГ.log("\n МетодЗакрываемСессиюHibernate "+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
-                        " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
-                        " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n" +  "session " +session);
-            }
-        } catch (Exception e) {
-            ЛОГ.log( "ERROR class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber()  + " e " +e.getMessage() );
-            if (session!=null) {
-                session.getTransaction().rollback();
-                session.close();
-            }
-            subClassWriterErros.
-                    МетодаЗаписиОшибкиВЛог(e,
-                            Thread.currentThread().
-                                    getStackTrace(),
-                            ЛОГ,"ErrorsLogs/ErrorJbossServletDSU1.txt");
-        }
-    }
-
-    // TODO еще один перенесенный в метод GEt метод
 
 
     protected     List<model.UsersEntitySuccess>  Метод_МетодаGETОтпалавляемПубличныйIDПользователюАндройду() throws IOException {
