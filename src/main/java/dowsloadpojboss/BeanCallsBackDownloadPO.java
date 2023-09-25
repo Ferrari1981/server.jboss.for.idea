@@ -238,6 +238,15 @@ private   SubClassWriterErros subClassWriterErros;
                     // TODO: 17.09.2023  close
                     БуферДанныеДляОбновлениеПО.close();
                 }
+
+                //TODO ЗАПЫИСЫВАМ ПУБЛИЧНЫЙ В ЛОГ
+                ЛОГ.removeAttribute("IdUser" );
+                ЛОГ.removeAttribute("АдуДевайсяКлиента" );
+                //TODO ЗАПЫИСЫВАМ ПУБЛИЧНЫЙ В Session
+
+
+
+
                 // TODO: 23.04.2023 exit asynccontext
                 if(request.isAsyncStarted() && request.isAsyncSupported()){
                     request.getAsyncContext().complete();
@@ -246,7 +255,7 @@ private   SubClassWriterErros subClassWriterErros;
                 ЛОГ.log("\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                         " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                         " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
-                        + " ОтправкаФайлаJsonAPK " + ОтправкаФайлаJsonAPK + "  response.isCommitted() "+
+                        + " ОтправкаФайлаJsonAPK " + ОтправкаФайлаJsonAPK + "  response.getStatus() "+
                         ((HttpServletResponse) response).getStatus());
 
             } catch (IOException e) {

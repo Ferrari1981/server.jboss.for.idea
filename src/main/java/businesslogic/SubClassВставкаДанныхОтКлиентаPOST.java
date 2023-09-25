@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.Map.Entry;
 
 
-@Transactional
+
 //TODO
 public class SubClassВставкаДанныхОтКлиентаPOST {
     private   ServletContext ЛОГ;

@@ -33,8 +33,8 @@ import java.util.Optional;
 
 
 
-@Transactional
-@RequestScoped
+
+
 public class SubClassSessionBeanМетодаGET {// extends WITH
 
     private ServletContext ЛОГ;
@@ -99,8 +99,9 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
                     + " ЛОГИН "+ЛОГ.getAttribute("ЛогинПолученныйОтКлиента")+
                     " ID ТЕЛЕФОНА "+  ЛОГ.getAttribute("АдуДевайсяКлиента"));
             /// TODO ПАРАМЕНТ #1
-            Integer IdUser = Optional.ofNullable( Optional.ofNullable(ЛОГ.getAttribute("IdUser").toString() )
-                    .map(String::new ).orElse("0")).stream().mapToInt(Integer::new).findFirst().getAsInt();
+
+            Object IdUserПред =   Optional.ofNullable(ЛОГ.getAttribute("IdUser") ).orElse("0");
+            Integer IdUser = Optional.ofNullable( IdUserПред.toString()).stream() .mapToInt(Integer::new).findFirst().orElse(0);
             /// TODO ПАРАМЕНТ #2
            String     NameTable = Optional.ofNullable(request.getParameter("NameTable")).map(String::trim).orElse("");
             /// TODO ПАРАМЕНТ #3
@@ -222,8 +223,9 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
                     + " ЛОГИН "+ЛОГ.getAttribute("ЛогинПолученныйОтКлиента")+
                     " ID ТЕЛЕФОНА "+  ЛОГ.getAttribute("АдуДевайсяКлиента"));
             /// TODO ПАРАМЕНТ #1
-            Integer IdUser = Optional.ofNullable( Optional.ofNullable(ЛОГ.getAttribute("IdUser").toString() )
-                    .map(String::new ).orElse("0")).stream().mapToInt(Integer::new).findFirst().getAsInt();
+
+            Object IdUserПред =   Optional.ofNullable(ЛОГ.getAttribute("IdUser") ).orElse("0");
+            Integer IdUser = Optional.ofNullable( IdUserПред.toString()).stream() .mapToInt(Integer::new).findFirst().orElse(0);
             /// TODO ПАРАМЕНТ #2
             String     NameTable = Optional.ofNullable(request.getParameter("NameTable")).map(String::trim).orElse("");
             /// TODO ПАРАМЕНТ #3
@@ -665,8 +667,9 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
                 org.hibernate.Query queryДляHiberite   = session.createQuery("SELECT   usersentity. id FROM model.UsersEntitySuccess" +
                         "  as  usersentity WHERE usersentity.id =:id   ");
 
-            Integer IdUser = Optional.ofNullable( Optional.ofNullable(ЛОГ.getAttribute("IdUser").toString() )
-                    .map(String::new ).orElse("0")).stream().mapToInt(Integer::new).findFirst().getAsInt();
+
+            Object IdUserПред =   Optional.ofNullable(ЛОГ.getAttribute("IdUser") ).orElse("0");
+            Integer IdUser = Optional.ofNullable( IdUserПред.toString()).stream() .mapToInt(Integer::new).findFirst().orElse(0);
             queryДляHiberite.setParameter("id",IdUser);//8641 8625
 
             ЛистДанныеОтHibenide =( List<model.UsersEntitySuccess>) queryДляHiberite.setMaxResults(1).getResultList();

@@ -78,33 +78,27 @@ public class BeanGetLoginAndPasswords {
                 if (ЛистДанныеОтHibenide !=null && ЛистДанныеОтHibenide.size() > 0) {
                     // TODO: 02.04.2023 Вытаскиваем Из ПРишедзиъ данных логин и пароль
                     byte[] БуферСозданогоJSONJacksonАунтификация = МетодГенерацияJSONJackson(ЛОГ, ЛистДанныеОтHibenide);
-
-                    Integer IdUser = Optional.ofNullable( Optional.ofNullable(ЛОГ.getAttribute("IdUser").toString() )
-                            .map(String::new ).orElse("0")).stream().mapToInt(Integer::new).findFirst().getAsInt();
+                    // TODO: 25.09.2023  логин пароль
                     String ЛогинОтКлиентаИзSQlServer= ЛистДанныеОтHibenide.get(0).getLogin();
                     String ПарольИзSQlServer= ЛистДанныеОтHibenide.get(0).getPassword();
+                    int IdUser= ЛистДанныеОтHibenide.get(0).getId();
 
 
                     ЛОГ.log("\n"+" Starting.... class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
                             " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
                             " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+
                             " ЛистДанныеОтHibenide " +ЛистДанныеОтHibenide.toString()  +  "ЛогинОтКлиентаИзSQlServer "+ЛогинОтКлиентаИзSQlServer +
-                            "ПарольИзSQlServer " +ПарольИзSQlServer  + "IdUser " +IdUser);
+                            "ПарольИзSQlServer " +ПарольИзSQlServer  + " IdUser " +IdUser  );
 
 
                     //// TODO СЮДА ЗАХОДИМ КОГДА ПОЛЬЗОВАТЕЛЬ
                         if (ЛогинОтКлиента.compareTo(ЛогинОтКлиентаИзSQlServer.toString())==0
-                                &&  ПарольОтКлиента.compareTo(ПарольИзSQlServer.toString())==0
-                                && Integer.parseInt(IdUser.toString())>0
-                                && IDДевайсаКлиента.toString().length()>5) { ///// TODO
+                                &&  ПарольОтКлиента.compareTo(ПарольИзSQlServer.toString())==0) { ///// TODO
 
 
                             //TODO ЗАПЫИСЫВАМ ПУБЛИЧНЫЙ В ЛОГ
                             ЛОГ.setAttribute("IdUser", IdUser);
                             ЛОГ.setAttribute("АдуДевайсяКлиента", IDДевайсаКлиента.trim());
-                            //TODO ЗАПЫИСЫВАМ ПУБЛИЧНЫЙ В Session
-                            sessionEJB.setAttribute("IdUser", IdUser);
-                            sessionEJB.setAttribute("АдуДевайсяКлиента", IDДевайсаКлиента);
 
                             //TODO меняем статут и пускак клиента на сервер ВАЖНО
                             РезультатАунтификацииПользователя=true;

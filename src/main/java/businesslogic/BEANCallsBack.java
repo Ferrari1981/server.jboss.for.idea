@@ -59,15 +59,24 @@ public class BEANCallsBack {
                 gzipOutputStream.finish();
                 gzipOutputStream.close();
 
+                // TODO: 25.09.2023 Clear LOG CONTEXT
+
+                //TODO ЗАПЫИСЫВАМ ПУБЛИЧНЫЙ В ЛОГ
+                ЛОГ.removeAttribute("IdUser" );
+                ЛОГ.removeAttribute("АдуДевайсяКлиента" );
+                //TODO ЗАПЫИСЫВАМ ПУБЛИЧНЫЙ В Session
+
+
                 // TODO: 23.04.2023 exit asynccontext
                 if(request.isAsyncStarted() && request.isAsyncSupported()){
                     request.getAsyncContext().complete();
+
                 }
                 ЛОГ.log("\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                         " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                         " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
-                        + " ГлавныйБуферОтправкиДанныхНААндройд " + ГлавныйБуферОтправкиДанныхНААндройд.toString() + "  response.isCommitted() "
-                        + response.isCommitted() + "   ((HttpServletResponse) response).getStatus() " +
+                        + " ГлавныйБуферОтправкиДанныхНААндройд " + ГлавныйБуферОтправкиДанныхНААндройд.toString()
+                        + "   ((HttpServletResponse) response).getStatus() " +
                         ((HttpServletResponse) response).getStatus()+"POOL CURRENT Thread "+Thread.currentThread().getName());
 
             } catch (IOException e) {
@@ -82,7 +91,7 @@ public class BEANCallsBack {
             ЛОГ.log("\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
-                    + " ГлавныйБуферОтправкиДанныхНААндройд " + ГлавныйБуферОтправкиДанныхНААндройд.toString() + "  response.isCommitted() " + response.isCommitted()
+                    + " ГлавныйБуферОтправкиДанныхНААндройд " + ГлавныйБуферОтправкиДанныхНААндройд.toString() + "  response.getStatus() " + response.isCommitted()
                     + "   ((HttpServletResponse) response).getStatus() " +
                     ((HttpServletResponse) response).getStatus());
         }

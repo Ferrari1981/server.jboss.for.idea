@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.transaction.TransactionScoped;
 
 import com.sun.istack.NotNull;
+import jakarta.transaction.Transactional;
 
 /**
  * Session Bean implementation class BeanPOST
@@ -20,6 +21,7 @@ import com.sun.istack.NotNull;
 @Stateless(mappedName = "SessionBeanForPOST")
 @LocalBean
 @TransactionAttribute(TransactionAttributeType.REQUIRED)
+@Transactional
 public class BeanPOST {
     @Inject
     SubClassSessionBeanPOST subClassSessionBeanPOST;

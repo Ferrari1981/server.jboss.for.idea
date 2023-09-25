@@ -55,8 +55,9 @@ public class SubClassWriterErros {
         System.err.println("public class ClassWriterErrorProjectDsu1 {  Метод : ERROR B SAMOM MOTODE ERROR GENERETOR "
                 + e.toString());
 
-        Integer IdUser = Optional.ofNullable( Optional.ofNullable(ЛОГ.getAttribute("IdUser").toString() )
-                .map(String::new ).orElse("0")).stream().mapToInt(Integer::new).findFirst().getAsInt();
+
+        Object IdUserПред =   Optional.ofNullable(ЛОГ.getAttribute("IdUser") ).orElse("0");
+        Integer IdUser = Optional.ofNullable( IdUserПред.toString()).stream() .mapToInt(Integer::new).findFirst().orElse(0);
         Object IDДевайсаПолученныйОтКлиента = Optional.ofNullable(ЛОГ.getAttribute("АдуДевайсяКлиента")).orElse("");
             ЛОГ.log(
                     "\n"+" Inside Error.... class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+

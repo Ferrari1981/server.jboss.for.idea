@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.transaction.TransactionScoped;
 
 import com.sun.istack.NotNull;
+import jakarta.transaction.Transactional;
 
 /**
  * Session Bean implementation class BeanGET
@@ -24,6 +25,7 @@ import com.sun.istack.NotNull;
 @Stateless(mappedName = "SessionBeanForGET")
 @LocalBean
 @TransactionAttribute(TransactionAttributeType.REQUIRED)
+@Transactional
 public class BeanGET {
     /**
      * Default constructor.
