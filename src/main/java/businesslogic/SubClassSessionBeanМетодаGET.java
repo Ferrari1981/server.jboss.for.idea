@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.sun.istack.NotNull;
 import dsu1glassfishatomic.workinterfaces.ProducedCard;
+import jakarta.transaction.Transactional;
 import model.*;
 import org.hibernate.*;
 import org.hibernate.resource.transaction.spi.TransactionStatus;
@@ -31,8 +32,9 @@ import java.util.List;
 import java.util.Optional;
 
 
+
+@Transactional
 @RequestScoped
-@Produces
 public class SubClassSessionBeanМетодаGET {// extends WITH
 
     private ServletContext ЛОГ;

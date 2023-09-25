@@ -1,34 +1,26 @@
 package businesslogic;
 
 
-import java.io.InputStream;
-import java.sql.Array;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map.Entry;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-import javax.enterprise.context.RequestScoped;
-import javax.inject.Inject;
-import javax.persistence.ParameterMode;
-import javax.persistence.StoredProcedureQuery;
-import javax.servlet.ServletContext;
-import javax.servlet.ServletInputStream;
-import javax.swing.*;
-
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sun.istack.NotNull;
 import dsu1glassfishatomic.workinterfaces.ProducedCard;
-import model.UsersEntity;
-import org.hibernate.LockOptions;
+import jakarta.transaction.Transactional;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
-import org.hibernate.query.Query;
 import org.hibernate.resource.transaction.spi.TransactionStatus;
 
+import javax.inject.Inject;
+import javax.persistence.ParameterMode;
+import javax.persistence.StoredProcedureQuery;
+import javax.servlet.ServletContext;
+import java.io.InputStream;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Map.Entry;
+
+
+@Transactional
 //TODO
 public class SubClassВставкаДанныхОтКлиентаPOST {
     private   ServletContext ЛОГ;

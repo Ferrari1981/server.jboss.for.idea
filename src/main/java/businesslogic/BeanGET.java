@@ -61,11 +61,13 @@ public class BeanGET {
       if(JobForServer.trim().equalsIgnoreCase("Хотим Получить  JSON")){
            БуферРезультатGETByte=		subClassSessionBeanМетодаGET.ГлавныйМетод_МетодаGETByte(request,  ЛОГ);
 
+          ///TODO ОТВЕТ КЛИЕНТУ ОТ СЕРВЕРА
+          bEANCallsBack.МетодBackДанныеКлиентуByte(response, БуферРезультатGETByte, ЛОГ,request  );
+
       }else {
           БуферРезультатGETByte=		subClassSessionBeanМетодаGET.ГлавныйМетод_МетодаGETService(request,  ЛОГ);
       }
-            ///TODO ОТВЕТ КЛИЕНТУ ОТ СЕРВЕРА
-            bEANCallsBack.МетодBackДанныеКлиентуByte(response, БуферРезультатGETByte, ЛОГ,request  );
+
 
 
             ЛОГ.log( " Класс"+Thread.currentThread().getStackTrace()[2].getClassName()
