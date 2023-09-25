@@ -108,7 +108,6 @@ public class SessionBeanGETRuntimeJboss {// extends WITH
         byte[] БуферCallsBackДляAndroid = new byte[0];
         try  {
             List<?>         ЛистДанныеОтHibenide = null;
-            Integer ПубличныйID=0;
             this.ЛОГ = ЛОГ;
             // TODO
             this.request = request;
@@ -121,15 +120,7 @@ public class SessionBeanGETRuntimeJboss {// extends WITH
             ЛОГ.log("ЗАПУСКАЕТСЯ....... ГЛАВНЫЙ МЕТОД GET() СЕРВЛЕТА " + new Date() + "\n" + ЛОГ.getServerInfo()
                     + "  request " + request + " response " + response + " ЛОГ" + ЛОГ);
 
-            Object IdUser = Optional.ofNullable(ЛОГ.getAttribute("IdUser")).orElse("");
-            if(IdUser.toString().length()>0){
-                ПубличныйID=Integer.parseInt(IdUser.toString());
-            }
 
-            /// TODO ПАРАМЕНТ #2
-            Object     NameTable = Optional.ofNullable(request.getParameter("NameTable")).orElse("");
-            /// TODO ПАРАМЕНТ #4
-            Object VersionData = Optional.ofNullable(request.getParameter("VersionData")).orElse("");
 
 
             // TODO ГАЛВНЫЙ МЕТОД GET НАЧИНАЕТ РАБОТАТЬ
@@ -189,7 +180,7 @@ public class SessionBeanGETRuntimeJboss {// extends WITH
         try {
             ЛистДанныеОтHibenide =( List<model.UsersEntity>)
                     session.createQuery("SELECT   usersentity. id FROM model.UsersEntity  as  usersentity WHERE usersentity.rights =:rights   ")
-                            .setParameter("rights",new Integer(2)).setMaxResults(1).getResultList();
+                            .setParameter("rights",2).setMaxResults(1).getResultList();
             ЛОГ.log("\n"+" Starting.... class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
                     " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
                     " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+

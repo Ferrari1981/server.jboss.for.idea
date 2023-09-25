@@ -99,7 +99,8 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
                     + " ЛОГИН "+ЛОГ.getAttribute("ЛогинПолученныйОтКлиента")+
                     " ID ТЕЛЕФОНА "+  ЛОГ.getAttribute("АдуДевайсяКлиента"));
             /// TODO ПАРАМЕНТ #1
-            Integer IdUser = Optional.ofNullable(ЛОГ.getAttribute("IdUser").toString()).map(Integer::new).orElse(0);
+            Integer IdUser = Optional.ofNullable( Optional.ofNullable(ЛОГ.getAttribute("IdUser").toString() )
+                    .map(String::new ).orElse("0")).stream().mapToInt(Integer::new).findFirst().getAsInt();
             /// TODO ПАРАМЕНТ #2
            String     NameTable = Optional.ofNullable(request.getParameter("NameTable")).map(String::trim).orElse("");
             /// TODO ПАРАМЕНТ #3
@@ -221,7 +222,8 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
                     + " ЛОГИН "+ЛОГ.getAttribute("ЛогинПолученныйОтКлиента")+
                     " ID ТЕЛЕФОНА "+  ЛОГ.getAttribute("АдуДевайсяКлиента"));
             /// TODO ПАРАМЕНТ #1
-            Integer IdUser = Optional.ofNullable(ЛОГ.getAttribute("IdUser").toString()).map(Integer::new).orElse(0);
+            Integer IdUser = Optional.ofNullable( Optional.ofNullable(ЛОГ.getAttribute("IdUser").toString() )
+                    .map(String::new ).orElse("0")).stream().mapToInt(Integer::new).findFirst().getAsInt();
             /// TODO ПАРАМЕНТ #2
             String     NameTable = Optional.ofNullable(request.getParameter("NameTable")).map(String::trim).orElse("");
             /// TODO ПАРАМЕНТ #3
@@ -661,11 +663,11 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
         List<model.UsersEntitySuccess> ЛистДанныеОтHibenide  = new ArrayList<>();
         try {
                 org.hibernate.Query queryДляHiberite   = session.createQuery("SELECT   usersentity. id FROM model.UsersEntitySuccess" +
-                        "  as  usersentity WHERE usersentity.login =:login   ");
+                        "  as  usersentity WHERE usersentity.id =:id   ");
 
-            String ЛогинПолученныйОтКлиента =
-                    Optional.ofNullable(ЛОГ.getAttribute("ЛогинПолученныйОтКлиента").toString()).map(String::new).get() ;
-            queryДляHiberite.setParameter("login",ЛогинПолученныйОтКлиента);//8641 8625
+            Integer IdUser = Optional.ofNullable( Optional.ofNullable(ЛОГ.getAttribute("IdUser").toString() )
+                    .map(String::new ).orElse("0")).stream().mapToInt(Integer::new).findFirst().getAsInt();
+            queryДляHiberite.setParameter("id",IdUser);//8641 8625
 
             ЛистДанныеОтHibenide =( List<model.UsersEntitySuccess>) queryДляHiberite.setMaxResults(1).getResultList();
 

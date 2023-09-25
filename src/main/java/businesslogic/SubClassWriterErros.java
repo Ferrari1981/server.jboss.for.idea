@@ -54,12 +54,14 @@ public class SubClassWriterErros {
         ////// начало запись в файл
         System.err.println("public class ClassWriterErrorProjectDsu1 {  Метод : ERROR B SAMOM MOTODE ERROR GENERETOR "
                 + e.toString());
-        Object ЛогинПолученныйОтКлиента = Optional.ofNullable(ЛОГ.getAttribute("ЛогинПолученныйОтКлиента")).orElse("");
+
+        Integer IdUser = Optional.ofNullable( Optional.ofNullable(ЛОГ.getAttribute("IdUser").toString() )
+                .map(String::new ).orElse("0")).stream().mapToInt(Integer::new).findFirst().getAsInt();
         Object IDДевайсаПолученныйОтКлиента = Optional.ofNullable(ЛОГ.getAttribute("АдуДевайсяКлиента")).orElse("");
             ЛОГ.log(
                     "\n"+" Inside Error.... class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
                             " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"
-                            + " ЛогинПолученныйОтКлиента " +ЛогинПолученныйОтКлиента+
+                            + " IdUser " +IdUser+
              " IDДевайсаПолученныйОтКлиента "+ IDДевайсаПолученныйОтКлиента+" САМАОШИБКАДЛЯЗАПИСИ " +САМАОШИБКАДЛЯЗАПИСИ);
         try  (PrintWriter pw =
                       new PrintWriter(new OutputStreamWriter(new FileOutputStream(new File(ПутьНАхожденияФайлаЛогами),
@@ -75,9 +77,9 @@ public class SubClassWriterErros {
             pw.append("\n");
             pw.println(ПутьНАхожденияФайлаЛогами);
             pw.append("\n");
-            pw.append("Логин чья ошибка");
+            pw.append("ID чья ошибка");
             pw.append("\n");
-            pw.append(ЛогинПолученныйОтКлиента.toString());
+            pw.append(IdUser.toString());
             pw.println("НАЗВАНИЕ ТАБЛИЦЫ ГДЕ ПРОИЗОШДА ОШИБКА//CURRENT TABLE ASYNC :: ");
             pw.append("\n");
             pw.append("ID Девайса Пользователя чья ошибка");

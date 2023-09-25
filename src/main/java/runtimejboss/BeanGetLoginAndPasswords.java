@@ -79,7 +79,8 @@ public class BeanGetLoginAndPasswords {
                     // TODO: 02.04.2023 Вытаскиваем Из ПРишедзиъ данных логин и пароль
                     byte[] БуферСозданогоJSONJacksonАунтификация = МетодГенерацияJSONJackson(ЛОГ, ЛистДанныеОтHibenide);
 
-                    Integer IDПолученныйИзSQlServer = ЛистДанныеОтHibenide.get(0).getId();
+                    Integer IdUser = Optional.ofNullable( Optional.ofNullable(ЛОГ.getAttribute("IdUser").toString() )
+                            .map(String::new ).orElse("0")).stream().mapToInt(Integer::new).findFirst().getAsInt();
                     String ЛогинОтКлиентаИзSQlServer= ЛистДанныеОтHibenide.get(0).getLogin();
                     String ПарольИзSQlServer= ЛистДанныеОтHibenide.get(0).getPassword();
 
@@ -88,30 +89,37 @@ public class BeanGetLoginAndPasswords {
                             " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
                             " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+
                             " ЛистДанныеОтHibenide " +ЛистДанныеОтHibenide.toString()  +  "ЛогинОтКлиентаИзSQlServer "+ЛогинОтКлиентаИзSQlServer +
-                            "ПарольИзSQlServer " +ПарольИзSQlServer  + "IDПолученныйИзSQlServer " +IDПолученныйИзSQlServer);
+                            "ПарольИзSQlServer " +ПарольИзSQlServer  + "IdUser " +IdUser);
 
 
                     //// TODO СЮДА ЗАХОДИМ КОГДА ПОЛЬЗОВАТЕЛЬ
                         if (ЛогинОтКлиента.compareTo(ЛогинОтКлиентаИзSQlServer.toString())==0
                                 &&  ПарольОтКлиента.compareTo(ПарольИзSQlServer.toString())==0
-                                && Integer.parseInt(IDПолученныйИзSQlServer.toString())>0
+                                && Integer.parseInt(IdUser.toString())>0
                                 && IDДевайсаКлиента.toString().length()>5) { ///// TODO
+
+
                             //TODO ЗАПЫИСЫВАМ ПУБЛИЧНЫЙ В ЛОГ
-                            ЛОГ.setAttribute("IdUser", IDПолученныйИзSQlServer);
-                            ЛОГ.setAttribute("ЛогинПолученныйОтКлиента", ЛогинОтКлиента.trim());
+                            ЛОГ.setAttribute("IdUser", IdUser);
                             ЛОГ.setAttribute("АдуДевайсяКлиента", IDДевайсаКлиента.trim());
                             //TODO ЗАПЫИСЫВАМ ПУБЛИЧНЫЙ В Session
-                            sessionEJB.setAttribute("IDПолученныйИзSQlServerПосик", IDПолученныйИзSQlServer);
-                            sessionEJB.setAttribute("ЛогинПолученныйОтКлиента", ЛогинОтКлиента);
+                            sessionEJB.setAttribute("IdUser", IdUser);
                             sessionEJB.setAttribute("АдуДевайсяКлиента", IDДевайсаКлиента);
 
                             //TODO меняем статут и пускак клиента на сервер ВАЖНО
                             РезультатАунтификацииПользователя=true;
                             ЛОГ.log("  ЛогинОтКлиента  "
                                     + ЛогинОтКлиента +
-                                    " IDПолученныйИзSQlServer " +IDПолученныйИзSQlServer
+                                    " IdUser " +IdUser
                                     + " ПарольОтКлиента " +ПарольОтКлиента +
                                     " ЛогинОтКлиента " +ЛогинОтКлиента+ " IDДевайсаКлиента "+IDДевайсаКлиента);
+                        }else{
+                            //TODO меняем статут и пускак клиента на сервер
+                            РезультатАунтификацииПользователя=false;
+                            ЛОГ.log( " Класс"+Thread.currentThread().getStackTrace()[2].getClassName()
+                                    +"\n"+
+                                    " метод "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"
+                                    + "Строка " + Thread.currentThread().getStackTrace()[2].getLineNumber()+  "РезультатАунтификацииПользователя " +РезультатАунтификацииПользователя);
                         }
                 }else {
                     //TODO меняем статут и пускак клиента на сервер
