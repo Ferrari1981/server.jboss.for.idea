@@ -31,7 +31,7 @@ public class SubClassВставкаДанныхОтКлиентаPOST {
     private   SubClassWriterErros subClassWriterErros;
     @Inject
     private  ObjectMapper getGeneratorJackson;
-    private         Integer MaxOperations=0;
+
     private StoredProcedureQuery queryprocedure=null;
 
     // TODO: 09.03.2023
@@ -43,7 +43,7 @@ public class SubClassВставкаДанныхОтКлиентаPOST {
         StringBuffer bufferCallsBackToAndroid=new StringBuffer();
       
         try {
-            ArrayList<Integer> arrayListMaxBackOperation=new ArrayList();
+            ArrayList<Long> arrayListMaxBackOperation=new ArrayList();
             this.ЛОГ=ЛОГ;
             session =sessionSousJboss.getCurrentSession();      // TODO: 11.03.2023  Получении Сесии Hiberrnate
             if (session.getTransaction().getStatus()== TransactionStatus.NOT_ACTIVE) {
@@ -101,22 +101,20 @@ public class SubClassВставкаДанныхОтКлиентаPOST {
                     Integer РезультатОперацииВставкииОбновлениея=  МетодВыполениеУдаленнойПроцедуры(queryprocedure,ЛОГ);
 
                     
-                    Integer РезультатСовершнойОперацииФинал = 0;
                     if (РезультатОперацииВставкииОбновлениея>0) {
+                        // TODO: 25.09.2023 Результат работы
                         String     РезультатСовершнойОперации = (String) queryprocedure.getOutputParameterValue("ResultatMERGE");
+                        // TODO: 25.09.2023
+                    Boolean РезультатЕслиЦыфры=    РезультатСовершнойОперации.chars().allMatch( Character::isDigit );
                         // TODO: 22.04.2023 clear
-                        if (РезультатСовершнойОперации!=null  ){
+                        if (РезультатСовершнойОперации!=null && РезультатЕслиЦыфры==true ){
                             // TODO: 21.07.2023 после успешно обнолвние вставки
-                           Integer РезультатБезОшибок= РезультатСовершнойОперации.length();
-                            if (РезультатБезОшибок< 150) {
-                                РезультатСовершнойОперацииФинал=Integer.parseInt(РезультатСовершнойОперации);
-                                // TODO: 20.07.2023
-                                ЛОГ.log("\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
-                                        + " РезультатСовершнойОперацииФинал " + РезультатСовершнойОперацииФинал);
-                            }
-
+                         Long   РезультатСовершнойОперацииФинал=Long.parseLong(РезультатСовершнойОперации);
+                            // TODO: 22.04.2023 записываем новую версию после успешной вставки
+                            arrayListMaxBackOperation.add(РезультатСовершнойОперацииФинал);
+                            ЛОГ.log("\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
+                                    " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
+                                    " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n" + " arrayListMaxBackOperation" + arrayListMaxBackOperation.size());
 
                         }
                         ЛОГ.log("\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -125,26 +123,24 @@ public class SubClassВставкаДанныхОтКлиентаPOST {
                                 + " РезультатОперацииВставкииОбновлениея " + РезультатОперацииВставкииОбновлениея 
                                 + " РезультатСовершнойОперации " + РезультатСовершнойОперации);
                     }
-                    // TODO: 22.04.2023 записываем новую версию после успешной вставки
-                    arrayListMaxBackOperation.add(РезультатСовершнойОперацииФинал);
-                    ЛОГ.log("\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
-                            " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
-                            " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n" + " arrayListMaxBackOperation" + arrayListMaxBackOperation.size());
+
                 }
             });
             // TODO: 22.04.2023
-            MaxOperations = arrayListMaxBackOperation
+          Long  MaxВсеОперации = arrayListMaxBackOperation
                     .stream()
-                    .mapToInt(v -> v)
-                    .max().orElse(0);
+                    .mapToLong(v -> v)
+                    .max().orElse(0l);
             // TODO: 22.04.2023 ОТВЕТ
-            bufferCallsBackToAndroid.append(MaxOperations.toString());
+            bufferCallsBackToAndroid.append(MaxВсеОперации.toString());
             // TODO: 18.04.2023 ЗАВЕРШЕНИ СЕАНСА ПОСЛЕ ВЫПОЛЕНИЕ
             МетодЗавершенияСеанса();
             ЛОГ.log("\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
                     " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
                     " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+
                     " arrayListMaxBackOperation "+ arrayListMaxBackOperation);
+
+
         } catch (Exception   e) {
             if (session!=null) {
                 session.getTransaction().rollback();

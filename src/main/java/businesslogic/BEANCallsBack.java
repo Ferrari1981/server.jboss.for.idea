@@ -50,6 +50,7 @@ public class BEANCallsBack {
                 response.addHeader("stream_size", String.valueOf(ОбщийРазмерЗаписываемогоФайла));
                 response.addHeader("stream_status", String.valueOf(response.getStatus()));
                 response.addHeader("pool", String.valueOf( Thread.currentThread().getName()));
+                response.addHeader("getcharsets", String.valueOf( "8"));
 
                 // TODO: 19.07.2023  writeing
                 gzipOutputStream.write(ГлавныйБуферОтправкиДанныхНААндройд);

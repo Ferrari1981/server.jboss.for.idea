@@ -226,6 +226,8 @@ private   SubClassWriterErros subClassWriterErros;
                 response.addHeader("stream_size", String.valueOf(ОбщийРазмерЗаписываемогоФайла));
                 response.addHeader("stream_status", String.valueOf( (  response).getStatus()));
                 response.addHeader("pool", String.valueOf( Thread.currentThread().getName()));
+                response.addHeader("getcharsets", String.valueOf( "8"));
+
                 response.addHeader("GZIPOutputStream", String.valueOf("true"));
                 InputStream fis = new FileInputStream(ОтправкаФайлаJsonAPK);
                 if (fis.available()>0) {
