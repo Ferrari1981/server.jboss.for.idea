@@ -128,7 +128,8 @@ public class SessionBeanGETRuntimeJboss {// extends WITH
             if (JobForServer.length()>0) {
                 // TODO: 10.03.2023 получение сессиии HIREBIANTE
                 session=   sessionSousJboss.getCurrentSession();
-                if (session.getTransaction().getStatus()== TransactionStatus.NOT_ACTIVE) {
+                // TODO: 17.03.2023 ЗАПУСКАЕТ ТРАНЗАКЦИЮ BEGIN
+                if (!session.getTransaction().isActive() && session.isOpen()) {
                     session.getTransaction().begin();
                 }
             }
@@ -160,8 +161,9 @@ public class SessionBeanGETRuntimeJboss {// extends WITH
             /////// ошибки метода doGET
         } catch (Exception e) {
             if (session!=null) {
-                session.getTransaction().rollback();
-                session.close();
+                if (  session.isOpen()) {
+                    session.close();
+                }
             }
             subClassWriterErros.
                     МетодаЗаписиОшибкиВЛог(e,
@@ -197,23 +199,28 @@ public class SessionBeanGETRuntimeJboss {// extends WITH
     private void МетодЗакрываемСессиюHibernate(@javax.validation.constraints.NotNull ServletContext ЛОГ) {
         try{
             if (session!=null) {
-                if (session.getTransaction().getStatus()== TransactionStatus.ACTIVE) {
+                // TODO: 26.09.2023 transaction
+                if (session.getTransaction().isActive() && session.isOpen()) {
                     session.getTransaction().commit();
+
+                    //todo  session
+                    if (  session.isOpen()) {
+                        session.close();
+                    }
                 }
-                if (session.isOpen()   || session.isConnected()) {
-                    session.close();
                 }
                 ЛОГ.log("\n МетодЗакрываемСессиюHibernate "+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
                         " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
                         " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n" +  "session " +session);
-            }
+
         } catch (Exception e) {
             ЛОГ.log( "ERROR class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber()  + " e " +e.getMessage() );
             if (session!=null) {
-                session.getTransaction().rollback();
-                session.close();
+                if (  session.isOpen()) {
+                    session.close();
+                }
             }
             subClassWriterErros.
                     МетодаЗаписиОшибкиВЛог(e,

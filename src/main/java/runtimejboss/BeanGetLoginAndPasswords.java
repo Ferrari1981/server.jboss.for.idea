@@ -62,7 +62,8 @@ public class BeanGetLoginAndPasswords {
                 // TODO: 10.03.2023 получение сессиии HIREBIANTE
                 session = sessionSousJboss.getCurrentSession();
                 // TODO: 10.03.2023 получение сессиии Transaction
-                if (session.getTransaction().getStatus()== TransactionStatus.NOT_ACTIVE) {
+                // TODO: 17.03.2023 ЗАПУСКАЕТ ТРАНЗАКЦИЮ BEGIN
+                if (!session.getTransaction().isActive() && session.isOpen()) {
                     session.getTransaction().begin();
                 }
                 // TODO: 02.04.2023 Проводим Аунтификаций через пароли логин
@@ -141,8 +142,9 @@ public class BeanGetLoginAndPasswords {
             МетодЗакрываемСессиюHibernate(ЛОГ);
         } catch (Exception e) {
             if (session!=null) {
-                session.getTransaction().rollback();
-                session.close();
+                if (  session.isOpen()) {
+                    session.close();
+                }
             }
             subClassWriterErros.
                     МетодаЗаписиОшибкиВЛог(e,
@@ -168,8 +170,9 @@ public class BeanGetLoginAndPasswords {
 
         } catch (Exception e) {
             if (session!=null) {
-                session.getTransaction().rollback();
-                session.close();
+                if (  session.isOpen()) {
+                    session.close();
+                }
             }
             subClassWriterErros.
                     МетодаЗаписиОшибкиВЛог(e,
@@ -182,24 +185,27 @@ public class BeanGetLoginAndPasswords {
     private void МетодЗакрываемСессиюHibernate(@NotNull ServletContext ЛОГ) {
         try{
             if (session!=null) {
-                if (session.getTransaction().getStatus()== TransactionStatus.ACTIVE) {
+                // TODO: 26.09.2023 transaction
+                if (session.getTransaction().isActive() && session.isOpen()) {
                     session.getTransaction().commit();
-                }
 
-                if (session.isOpen()   || session.isConnected()) {
-                    session.close();
+                    //todo  session
+                    if (  session.isOpen()) {
+                        session.close();
+                    }
                 }
+            }
                 ЛОГ.log("\n МетодЗакрываемСессиюHibernate "+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
                         " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
                         " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n" +  "session " +session);
-            }
         } catch (Exception e) {
             ЛОГ.log( "ERROR class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber()  + " e " +e.getMessage() );
             if (session!=null) {
-                session.getTransaction().rollback();
-                session.close();
+                if (  session.isOpen()) {
+                    session.close();
+                }
             }
             subClassWriterErros.
                     МетодаЗаписиОшибкиВЛог(e,
