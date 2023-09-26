@@ -25,7 +25,6 @@ import jakarta.transaction.Transactional;
 @Stateless(mappedName = "SessionBeanForGET")
 @LocalBean
 @TransactionAttribute(TransactionAttributeType.REQUIRED)
-@Transactional
 public class BeanGET {
     /**
      * Default constructor.

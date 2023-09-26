@@ -21,7 +21,6 @@ import jakarta.transaction.Transactional;
 @Stateless(mappedName = "SessionBeanForPOST")
 @LocalBean
 @TransactionAttribute(TransactionAttributeType.REQUIRED)
-@Transactional
 public class BeanPOST {
     @Inject
     SubClassSessionBeanPOST subClassSessionBeanPOST;
