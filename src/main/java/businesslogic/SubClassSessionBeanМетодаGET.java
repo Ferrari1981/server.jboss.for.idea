@@ -132,7 +132,7 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
                 // TODO ЗАДАНИЯ ДЛЯ СЕРВЕРА НЕТУ
                 // TODO ЗАДАНИЕ ДЛЯ СЕРВЕР JOBSERVERTASK #1
                 case "Хотим Получить Версию Данных Сервера":
-                    ЛистДанныеОтHibenide = МетодДляКлиентаMODIFITATION_Server(session);
+                    ЛистДанныеОтHibenide = МетодДляКлиентаMODIFITATION_Server();
                     ЛОГ.log("Хотим Получить Версию Данных Сервера" + new Date() + " ПараметрФильтрЗадааниеДляСервлета "
                             + ЛистДанныеОтHibenide + "  ЛистДанныеОтHibenide ");
                     break;
@@ -698,7 +698,7 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
 
 
     // todo МЕТОД генерируем для килента MODIFITATIONServer
-    protected    List<model.ModificationServerEntity> МетодДляКлиентаMODIFITATION_Server(@javax.validation.constraints.NotNull Session session) {
+    protected    List<model.ModificationServerEntity> МетодДляКлиентаMODIFITATION_Server( ) {
         /////// ВЕРСИЮ ДАННЫХ НА СЕРВЕРЕ
         List<model.ModificationServerEntity> ЛистДанныеОтHibenide  = new ArrayList<>();
         try {
