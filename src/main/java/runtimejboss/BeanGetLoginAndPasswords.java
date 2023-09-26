@@ -188,12 +188,14 @@ public class BeanGetLoginAndPasswords {
                 // TODO: 26.09.2023 transaction
                 if (session.getTransaction().isActive() && session.isOpen()) {
                     session.getTransaction().commit();
-
-                    //todo  session
-                    if (  session.isOpen()) {
-                        session.close();
-                    }
+                }else{
+                    session.getTransaction().rollback();
                 }
+                //todo  session clear
+                if (  session.isOpen()) {
+                    session.close();
+                }
+
             }
                 ЛОГ.log("\n МетодЗакрываемСессиюHibernate "+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
                         " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
