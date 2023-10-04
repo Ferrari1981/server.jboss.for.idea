@@ -8,6 +8,7 @@ import dsu1glassfishatomic.workinterfaces.ProducedCard;
 import jakarta.transaction.Transactional;
 import model.*;
 import org.hibernate.*;
+import org.hibernate.criterion.Projections;
 import org.hibernate.resource.transaction.spi.TransactionStatus;
 
 import javax.enterprise.context.RequestScoped;
@@ -265,7 +266,7 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
                         case "organization":
                             // TODO
                             queryДляHiberite  = session.createQuery(
-                                    " SELECT o FROM  Organization o WHERE o.currentTable > :id ");
+                                    " SELECT DISTINCT o FROM  Organization o WHERE o.currentTable > :id ");
                             queryДляHiberite.setParameter("id",new BigDecimal(VersionData ));//
                             ЛистДанныеОтHibenide =( List<model.Organization>)  queryДляHiberite.getResultList();
                             ЛОГ.  log(" ЛистДанныеОтHibenide "+ЛистДанныеОтHibenide+ " ЛистДанныеОтHibenide.size() " +ЛистДанныеОтHibenide.size()+
@@ -274,7 +275,7 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
                         case "depatment":
                             // TODO
                             queryДляHiberite = session.createQuery(
-                                    "SELECT d FROM  Depatment d   WHERE d.currentTable > :id ");
+                                    "SELECT  DISTINCT  d FROM  Depatment d   WHERE d.currentTable > :id ");
 
                             queryДляHiberite.setParameter("id",new BigDecimal(VersionData ));
                             ЛистДанныеОтHibenide =( List<model.Depatment>)  queryДляHiberite.getResultList();
@@ -284,7 +285,7 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
                         case "fio":
                             // TODO
                             queryДляHiberite = session.createQuery(
-                                    "SELECT f FROM Fio f   WHERE f.currentTable > :id ");
+                                    "SELECT   DISTINCT f FROM Fio f   WHERE f.currentTable > :id ");
                             queryДляHiberite.setParameter("id",new BigDecimal(VersionData ));//
                             ЛистДанныеОтHibenide =( List<model.Fio>)  queryДляHiberite.getResultList();
                             ЛОГ.  log(" ЛистДанныеОтHibenide "+ЛистДанныеОтHibenide+ " ЛистДанныеОтHibenide.size() " +ЛистДанныеОтHibenide.size()+
@@ -293,7 +294,7 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
                         case "region":
                             // TODO
                             queryДляHiberite = session.createQuery(
-                                    "SELECT r  FROM Region r   WHERE r.currentTable > :id");
+                                    "SELECT  DISTINCT  r  FROM Region r   WHERE r.currentTable > :id");
                             queryДляHiberite.setParameter("id",new BigDecimal(VersionData ));//
                             ЛистДанныеОтHibenide =( List<model.Region>)  queryДляHiberite.getResultList();
                             ЛОГ.  log(" ЛистДанныеОтHibenide "+ЛистДанныеОтHibenide+ " ЛистДанныеОтHibenide.size() " +ЛистДанныеОтHibenide.size()+
@@ -302,7 +303,7 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
                         case "cfo":
                             // TODO
                             queryДляHiberite = session.createQuery(
-                                    "SELECT c FROM Cfo  c  WHERE c.currentTable > :id  AND c.closed=:closed");
+                                    "SELECT  DISTINCT c FROM Cfo  c  WHERE c.currentTable > :id  AND c.closed=:closed");
                             queryДляHiberite.setParameter("id",new BigDecimal(VersionData ));//
                             queryДляHiberite.setParameter("closed",   new Boolean(false));//
                             ЛистДанныеОтHibenide =( List<model.Cfo>)  queryДляHiberite.getResultList();
@@ -312,7 +313,7 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
                         case "settings_tabels":
                             // TODO
                             queryДляHiberite = session.createQuery(
-                                    "SELECT st FROM Settingtab  st  WHERE st.currentTable > :id  AND  st.userUpdate=:user_update ");
+                                    "SELECT  DISTINCT  st FROM Settingtab  st  WHERE st.currentTable > :id  AND  st.userUpdate=:user_update ");
                             queryДляHiberite.setParameter("id",new BigDecimal(VersionData ));//
                             queryДляHiberite.setParameter("user_update",IdUser);//8641 8625
                             ЛистДанныеОтHibenide =( List<model.Settingtab>) queryДляHiberite.getResultList();
@@ -322,7 +323,7 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
                         case "notifications":
                             // TODO
                             queryДляHiberite = session.createQuery(
-                                    " SELECT notif FROM Notification  notif  WHERE notif.currentTable > :id "
+                                    " SELECT  DISTINCT notif FROM Notification  notif  WHERE notif.currentTable > :id "
                                             + " AND   notif.userUpdate=:user_update   "
                                             + "  OR notif.currentTable > :id  AND     notif.idUser=:id_user ");
                             queryДляHiberite.setParameter("id",new BigDecimal(VersionData));//8641 8625
@@ -336,7 +337,7 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
                         case "data_notification":
                             // TODO
                             queryДляHiberite = session.createQuery(
-                                    " SELECT da  FROM  DataNotification da WHERE"
+                                    " SELECT  DISTINCT da  FROM  DataNotification da WHERE"
                                             + "  da. currentTable > :id "
                                             + "  AND da.uuidNotifications "
                                             + " IN (SELECT     no.uuid FROM    Notification no  WHERE   no.userUpdate=:user_update   OR  no .idUser=:id_user ) ");
@@ -350,7 +351,7 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
                         case "templates":
                             // TODO
                             queryДляHiberite = session.createQuery(
-                                    " SELECT te FROM Template  te WHERE te.currentTable > :id  AND te.userUpdate=:user_update  ");
+                                    " SELECT  DISTINCT te FROM Template  te WHERE te.currentTable > :id  AND te.userUpdate=:user_update  ");
                             queryДляHiberite.setParameter("id",new BigDecimal(VersionData));//8641 8625
                             queryДляHiberite.setParameter("user_update",IdUser);//8641 8625
                             ЛистДанныеОтHibenide =( List<model.Template>) queryДляHiberite.getResultList();
@@ -361,7 +362,7 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
                         case "fio_template":
                             // TODO
                             queryДляHiberite = session.createQuery(
-                                    " SELECT fiot FROM FioTemplate  fiot  WHERE fiot.currentTable > :id   AND fiot.userUpdate=:user_update ");
+                                    " SELECT  DISTINCT fiot FROM FioTemplate  fiot  WHERE fiot.currentTable > :id   AND fiot.userUpdate=:user_update ");
                             queryДляHiberite.setParameter("id",new BigDecimal(VersionData));//8641 8625
                             queryДляHiberite.setParameter("user_update",IdUser);//8641 8625
                             ЛистДанныеОтHibenide =( List<model.FioTemplate>) queryДляHiberite.getResultList();
@@ -373,7 +374,7 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
                         case "chat_users":
                             // TODO
                             queryДляHiberite = session.createQuery(
-                                    " SELECT  ca FROM ChatUser ca  WHERE ca .currentTable > :id");
+                                    " SELECT  DISTINCT  ca FROM ChatUser ca  WHERE ca .currentTable > :id");
                             queryДляHiberite.setParameter("id",new BigDecimal(VersionData));//8641 8625
                             ЛистДанныеОтHibenide =( List<model.ChatUser>)  queryДляHiberite.getResultList();
                             ЛОГ.  log(" ЛистДанныеОтHibenide "+ЛистДанныеОтHibenide+ " ЛистДанныеОтHibenide.size() " +ЛистДанныеОтHibenide.size()+
@@ -382,7 +383,7 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
                         case "chats":
                             // TODO
                             queryДляHiberite = session.createQuery(
-                                    " SELECT    cat FROM Chat  cat WHERE cat .currentTable > :id "
+                                    " SELECT  DISTINCT  cat FROM Chat  cat WHERE cat .currentTable > :id "
                                             + " AND   cat .userUpdate=:user_update"
                                             + " OR "
                                             + " cat .currentTable > :id AND   cat .idUser=:id_user  ");
@@ -395,7 +396,7 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
                             break;
                         case "data_chat":
                             // TODO
-                            queryДляHiberite = session.createQuery( " SELECT    da FROM  DataChat da WHERE  da. currentTable > :id "
+                            queryДляHiberite = session.createQuery( " SELECT DISTINCT   da FROM  DataChat da WHERE  da. currentTable > :id "
                                     + "							  AND da.chatUuid "
                                     + "							 IN (SELECT    ch.uuid FROM    Chat  ch"
                                     + "  WHERE  ch.userUpdate=:user_update  OR ch.idUser=:id_user )   ");
@@ -409,7 +410,7 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
                         case "tabel":
                             // TODO
                             queryДляHiberite = session.createQuery(
-                                    "SELECT  tab FROM Tabel tab  WHERE tab .currentTable > :id  AND tab.userUpdate=:user_update AND tab.statusSend!=:statusSend ");
+                                    "SELECT  DISTINCT  tab FROM Tabel tab  WHERE tab .currentTable > :id  AND tab.userUpdate=:user_update AND tab.statusSend!=:statusSend ");
                             queryДляHiberite.setParameter("id",new BigDecimal(VersionData));//8641 8625
                             queryДляHiberite.setParameter("user_update",IdUser);//8641 8625
                             queryДляHiberite.setParameter("statusSend","Удаленная");//8641 8625
@@ -420,7 +421,7 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
                         case "data_tabels":
                             // TODO
                             queryДляHiberite = session.createQuery(
-                                    "SELECT  dat FROM DataTabel dat WHERE dat .currentTable > :id  AND dat.userUpdate=:user_update" +
+                                    "SELECT DISTINCT  dat FROM DataTabel dat WHERE dat .currentTable > :id  AND dat.userUpdate=:user_update" +
                                             "  AND dat.statusSend!=:statusSend  ");
                             queryДляHiberite.setParameter("id",new BigDecimal(VersionData));//8641 8625
                             queryДляHiberite.setParameter("user_update",IdUser);//8641 8625
@@ -432,7 +433,7 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
                         case "view_onesignal":
                             // TODO
                             queryДляHiberite = session.createQuery(
-                                    " SELECT  viewone FROM ViewOnesignal viewone WHERE viewone .currentTable > :id");
+                                    " SELECT   DISTINCT  viewone FROM ViewOnesignal viewone WHERE viewone .currentTable > :id");
                             queryДляHiberite.setParameter("id",new BigDecimal(VersionData));//8641 8625
                             ЛистДанныеОтHibenide =( List<model.ViewOnesignal>)  queryДляHiberite.getResultList();
                             ЛОГ.  log(" ЛистДанныеОтHibenide "+ЛистДанныеОтHibenide+ " ЛистДанныеОтHibenide.size() " +ЛистДанныеОтHibenide.size()+
@@ -441,7 +442,7 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
                         case "nomen_vesov":
                             // TODO
                             queryДляHiberite = session.createQuery(
-                                    " SELECT  nome FROM NomenVesov nome WHERE nome .currentTable > :id");
+                                    " SELECT   DISTINCT nome FROM NomenVesov nome WHERE nome .currentTable > :id");
                             queryДляHiberite.setParameter("id",new BigDecimal(VersionData));//8641 8625
                             ЛистДанныеОтHibenide =( List<model.NomenVesov>)  queryДляHiberite.getResultList();
                             ЛОГ.  log(" ЛистДанныеОтHibenide "+ЛистДанныеОтHibenide+ " ЛистДанныеОтHibenide.size() " +ЛистДанныеОтHibenide.size()+
@@ -450,7 +451,7 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
                         case "type_materials":
                             // TODO
                             queryДляHiberite = session.createQuery(
-                                    " SELECT  typem FROM TypeMaterial typem  WHERE typem .currentTable > :id");
+                                    " SELECT  DISTINCT typem FROM TypeMaterial typem  WHERE typem .currentTable > :id");
 
                             queryДляHiberite.setParameter("id",new BigDecimal(VersionData));//8641 8625
                             ЛистДанныеОтHibenide =( List<model.TypeMaterial>)  queryДляHiberite.getResultList();
@@ -460,7 +461,7 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
                         case "get_materials_data":
                             // TODO
                             queryДляHiberite = session.createQuery(
-                                    " SELECT  getmat FROM  GetMaterialsData  getmat  WHERE getmat .currentTable > :id  AND getmat.userUpdate=:user_update  " +
+                                    " SELECT  DISTINCT  getmat FROM  GetMaterialsData  getmat  WHERE getmat .currentTable > :id  AND getmat.userUpdate=:user_update  " +
                                             " AND getmat.statusSend!=:statusSend ");
                             queryДляHiberite.setParameter("id",new BigDecimal(VersionData));//8641 8625
                             queryДляHiberite.setParameter("user_update",IdUser);//8641 8625
@@ -472,7 +473,7 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
                         case "company":
                             // TODO
                             queryДляHiberite = session.createQuery(
-                                    " SELECT  comp FROM  Company  comp  WHERE comp .currentTable > :id");
+                                    " SELECT  DISTINCT  comp FROM  Company  comp  WHERE comp .currentTable > :id");
 
                             queryДляHiberite.setParameter("id",new BigDecimal(VersionData));//8641 8625
                             ЛистДанныеОтHibenide =( List<model.Company>)  queryДляHiberite.getResultList();
@@ -482,7 +483,7 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
                         case "track":
                             // TODO
                             queryДляHiberite = session.createQuery(
-                                    " SELECT  tr FROM  Track tr  WHERE tr .currentTable > :id");
+                                    " SELECT   DISTINCT  tr FROM  Track tr  WHERE tr .currentTable > :id");
 
                             queryДляHiberite.setParameter("id",new BigDecimal(VersionData));//8641 8625
                             ЛистДанныеОтHibenide =( List<model.Track>)  queryДляHiberite.getResultList();
@@ -493,7 +494,7 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
                         case "prof":
                             // TODO
                             queryДляHiberite = session.createQuery(
-                                    " SELECT  pr FROM Prof pr  WHERE pr .currentTable > :id");
+                                    " SELECT   DISTINCT  pr FROM Prof pr  WHERE pr .currentTable > :id");
 
                             queryДляHiberite.setParameter("id",new BigDecimal(VersionData));//8641 8625
                             ЛистДанныеОтHibenide =( List<model.Prof>)  queryДляHiberite.getResultList();
@@ -504,6 +505,7 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
                         case "order_tc":
                             // TODO
                             criteriaquery = session.createCriteria(OrderTc.class);
+                            criteriaquery .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
                             criteriaquery.add(org.hibernate.criterion.Restrictions.gt("currentTable", new BigDecimal(VersionData)));
                             criteriaquery.add(org.hibernate.criterion.Restrictions.eq("userUpdate", IdUser));
                             criteriaquery.add(org.hibernate.criterion.Restrictions.ne("status", 5));
@@ -515,6 +517,7 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
                         case "vid_tc":
                             // TODO
                             criteriaquery= session.createCriteria(VidTc.class);
+                            criteriaquery .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
                             criteriaquery.add(org.hibernate.criterion.Restrictions.gt("currentTable", new BigDecimal(VersionData)));
                             ЛистДанныеОтHibenide =  ( List<model.VidTc>)     criteriaquery.list();
                             ЛОГ.  log(" ЛистДанныеОтHibenide "+ЛистДанныеОтHibenide+ " ЛистДанныеОтHibenide.size() " +ЛистДанныеОтHibenide.size()+
@@ -524,6 +527,7 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
                         case "materials_databinary":
                             // TODO  byte
                             criteriaquery = session.createCriteria(MateriBinary.class);
+                            criteriaquery .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
                             criteriaquery.add(org.hibernate.criterion.Restrictions.gt("currentTable", new BigDecimal(VersionData)));
                             criteriaquery.add(org.hibernate.criterion.Restrictions.eq("userUpdate", IdUser));
                             ЛистДанныеОтHibenide = ( List<MateriBinary>)   criteriaquery.list();
