@@ -233,9 +233,18 @@ private   SubClassWriterErros subClassWriterErros;
                 response.addHeader("GZIPOutputStream", String.valueOf("true"));
 
 
+          /*      if (targetStreamPO.available()>0) {
+                    // TODO: 19.07.2023  writing
+                        БуферДанныеДляОбновлениеПО.write(targetStreamPO.readAllBytes());
+                        // TODO: 21.09.2023
+                        БуферДанныеДляОбновлениеПО.flush();
+
+                    БуферДанныеДляОбновлениеПО.finish();
+                    БуферДанныеДляОбновлениеПО.close();
+                }*/
                 if (targetStreamPO.available()>0) {
                     // TODO: 19.07.2023  writing
-                     //   БуферДанныеДляОбновлениеПО.write(targetStreamPO.readAllBytes());
+                    //   БуферДанныеДляОбновлениеПО.write(targetStreamPO.readAllBytes());
                     byte[] buffer = new byte[2048];
                     int    len;
                     while ((len = targetStreamPO.read(buffer)) != -1) {
@@ -246,7 +255,6 @@ private   SubClassWriterErros subClassWriterErros;
                     БуферДанныеДляОбновлениеПО.finish();
                     БуферДанныеДляОбновлениеПО.close();
                 }
-
 
                 //TODO ЗАПЫИСЫВАМ ПУБЛИЧНЫЙ В ЛОГ
                 ЛОГ.removeAttribute("IdUser" );
