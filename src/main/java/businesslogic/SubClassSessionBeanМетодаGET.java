@@ -505,7 +505,7 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
                         case "order_tc":
                             // TODO
                             criteriaquery = session.createCriteria(OrderTc.class);
-                            criteriaquery .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+                            criteriaquery.setProjection(Projections.distinct(Projections.property("id")));//  criteriaquery .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
                             criteriaquery.add(org.hibernate.criterion.Restrictions.gt("currentTable", new BigDecimal(VersionData)));
                             criteriaquery.add(org.hibernate.criterion.Restrictions.eq("userUpdate", IdUser));
                             criteriaquery.add(org.hibernate.criterion.Restrictions.ne("status", 5));
@@ -517,7 +517,7 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
                         case "vid_tc":
                             // TODO
                             criteriaquery= session.createCriteria(VidTc.class);
-                            criteriaquery .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+                            criteriaquery.setProjection(Projections.distinct(Projections.property("id")));//    criteriaquery .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
                             criteriaquery.add(org.hibernate.criterion.Restrictions.gt("currentTable", new BigDecimal(VersionData)));
                             ЛистДанныеОтHibenide =  ( List<model.VidTc>)     criteriaquery.list();
                             ЛОГ.  log(" ЛистДанныеОтHibenide "+ЛистДанныеОтHibenide+ " ЛистДанныеОтHibenide.size() " +ЛистДанныеОтHibenide.size()+
@@ -527,7 +527,7 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
                         case "materials_databinary":
                             // TODO  byte
                             criteriaquery = session.createCriteria(MateriBinary.class);
-                            criteriaquery .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+                            criteriaquery.setProjection(Projections.distinct(Projections.property("id")));
                             criteriaquery.add(org.hibernate.criterion.Restrictions.gt("currentTable", new BigDecimal(VersionData)));
                             criteriaquery.add(org.hibernate.criterion.Restrictions.eq("userUpdate", IdUser));
                             ЛистДанныеОтHibenide = ( List<MateriBinary>)   criteriaquery.list();

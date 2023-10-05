@@ -220,24 +220,27 @@ private   SubClassWriterErros subClassWriterErros;
 
         if (  response.isCommitted()==false && ОтправкаФайлаJsonAPK.isFile() &&
                 response.getStatus()==HttpServletResponse.SC_OK) {
-            try  (GZIPOutputStream БуферДанныеДляОбновлениеПО =new GZIPOutputStream( response.getOutputStream(),true)) {
+            try  (GZIPOutputStream БуферДанныеДляОбновлениеПО =new GZIPOutputStream( response.getOutputStream(),true);
+                  InputStream targetStreamPO = new FileInputStream(ОтправкаФайлаJsonAPK);) {
            // try  (ServletOutputStream БуферДанныеДляОбновлениеПО =  ( response.getOutputStream() )) {            response.addHeader("GZIPOutputStream", String.valueOf("false"));
                 Long ОбщийРазмерЗаписываемогоФайла = Long.valueOf(ОтправкаФайлаJsonAPK.length());
                 response.addHeader("stream_size", String.valueOf(ОбщийРазмерЗаписываемогоФайла));
                 response.addHeader("stream_status", String.valueOf( (  response).getStatus()));
                 response.addHeader("pool", String.valueOf( Thread.currentThread().getName()));
                 response.addHeader("getcharsets", String.valueOf( "8"));
-
                 response.addHeader("GZIPOutputStream", String.valueOf("true"));
-                InputStream fis = new FileInputStream(ОтправкаФайлаJsonAPK);
-                if (fis.available()>0) {
+
+
+                if (targetStreamPO.available()>0) {
                     // TODO: 19.07.2023  writing
-                    БуферДанныеДляОбновлениеПО.write(fis.readAllBytes());
-                    // TODO: 18.07.2023 fulsh
-                    БуферДанныеДляОбновлениеПО.flush();
-                    // TODO: 17.09.2023 finif
+                    final int EOF = -1;
+                    byte[] buffer = new byte[2048];
+                    while (EOF != ( targetStreamPO.read(buffer))) {
+                        БуферДанныеДляОбновлениеПО.write(buffer, 0,buffer.length);
+                        // TODO: 21.09.2023
+                        БуферДанныеДляОбновлениеПО.flush();
+                    }
                     БуферДанныеДляОбновлениеПО.finish();
-                    // TODO: 17.09.2023  close
                     БуферДанныеДляОбновлениеПО.close();
                 }
 
