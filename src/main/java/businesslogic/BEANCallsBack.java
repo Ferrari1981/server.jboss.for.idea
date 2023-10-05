@@ -43,7 +43,8 @@ public class BEANCallsBack {
         if (  response.isCommitted() ==false &&
                 response.getStatus()==HttpServletResponse.SC_OK ) {
             try  (
-                    GZIPOutputStream gzipOutputStream=      new GZIPOutputStream(response.getOutputStream(),true);) {
+                    GZIPOutputStream gzipOutputStream=      new GZIPOutputStream(response.getOutputStream(),true);
+                    InputStream targetStream = new ByteArrayInputStream(ГлавныйБуферОтправкиДанныхНААндройд);) {
                 // TODO: 18.07.2023 send
                 Long ОбщийРазмерЗаписываемогоФайла = Long.valueOf(ГлавныйБуферОтправкиДанныхНААндройд.toString().toCharArray().length);
                 response.addHeader("stream_size", String.valueOf(ОбщийРазмерЗаписываемогоФайла));
@@ -51,10 +52,13 @@ public class BEANCallsBack {
                 response.addHeader("pool", String.valueOf( Thread.currentThread().getName()));
                 response.addHeader("getcharsets", String.valueOf( "8"));
 
-
-                    gzipOutputStream.write(ГлавныйБуферОтправкиДанныхНААндройд);
-                    // TODO: 21.09.2023
-                    gzipOutputStream.flush();
+                    final int EOF = -1;
+                    byte[] buffer = new byte[2048];
+                    while (EOF != ( targetStream.read(buffer))) {
+                        gzipOutputStream.write(buffer, 0,buffer.length);
+                        // TODO: 21.09.2023
+                        gzipOutputStream.flush();
+                    }
                     gzipOutputStream.finish();
                     gzipOutputStream.close();
 

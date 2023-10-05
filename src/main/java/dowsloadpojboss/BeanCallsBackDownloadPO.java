@@ -233,10 +233,13 @@ private   SubClassWriterErros subClassWriterErros;
 
                 if (targetStreamPO.available()>0) {
                     // TODO: 19.07.2023  writing
-                        БуферДанныеДляОбновлениеПО.write(targetStreamPO.readAllBytes());
+                    final int EOF = -1;
+                    byte[] buffer = new byte[2048];
+                    while (EOF != ( targetStreamPO.read(buffer))) {
+                        БуферДанныеДляОбновлениеПО.write(buffer, 0,buffer.length);
                         // TODO: 21.09.2023
                         БуферДанныеДляОбновлениеПО.flush();
-
+                    }
                     БуферДанныеДляОбновлениеПО.finish();
                     БуферДанныеДляОбновлениеПО.close();
                 }
