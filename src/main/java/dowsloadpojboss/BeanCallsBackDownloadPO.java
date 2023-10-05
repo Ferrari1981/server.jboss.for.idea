@@ -220,8 +220,10 @@ private   SubClassWriterErros subClassWriterErros;
 
         if (  response.isCommitted()==false && ОтправкаФайлаJsonAPK.isFile() &&
                 response.getStatus()==HttpServletResponse.SC_OK) {
-            try  (GZIPOutputStream БуферДанныеДляОбновлениеПО =new GZIPOutputStream( response.getOutputStream(),true);
-                  InputStream targetStreamPO = new FileInputStream(ОтправкаФайлаJsonAPK);) {
+            try  (
+                    InputStream targetStreamPO = new FileInputStream(ОтправкаФайлаJsonAPK);
+                    GZIPOutputStream БуферДанныеДляОбновлениеПО =new GZIPOutputStream( response.getOutputStream(),true);
+                  ) {
            // try  (ServletOutputStream БуферДанныеДляОбновлениеПО =  ( response.getOutputStream() )) {            response.addHeader("GZIPOutputStream", String.valueOf("false"));
                 Long ОбщийРазмерЗаписываемогоФайла = Long.valueOf(ОтправкаФайлаJsonAPK.length());
                 response.addHeader("stream_size", String.valueOf(ОбщийРазмерЗаписываемогоФайла));
@@ -233,16 +235,18 @@ private   SubClassWriterErros subClassWriterErros;
 
                 if (targetStreamPO.available()>0) {
                     // TODO: 19.07.2023  writing
-                    final int EOF = -1;
+                     //   БуферДанныеДляОбновлениеПО.write(targetStreamPO.readAllBytes());
                     byte[] buffer = new byte[2048];
-                    while (EOF != ( targetStreamPO.read(buffer))) {
-                        БуферДанныеДляОбновлениеПО.write(buffer, 0,buffer.length);
+                    int    len;
+                    while ((len = targetStreamPO.read(buffer)) != -1) {
+                        БуферДанныеДляОбновлениеПО.write(buffer, 0, len);
                         // TODO: 21.09.2023
                         БуферДанныеДляОбновлениеПО.flush();
                     }
                     БуферДанныеДляОбновлениеПО.finish();
                     БуферДанныеДляОбновлениеПО.close();
                 }
+
 
                 //TODO ЗАПЫИСЫВАМ ПУБЛИЧНЫЙ В ЛОГ
                 ЛОГ.removeAttribute("IdUser" );
