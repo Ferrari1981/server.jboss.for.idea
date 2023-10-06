@@ -13,6 +13,7 @@ import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.concurrent.ExecutionException;
@@ -219,10 +220,9 @@ private   SubClassWriterErros subClassWriterErros;
                                               @NotNull ServletContext ЛОГ,
                                               @NotNull HttpServletRequest request) throws IOException, ServletException {
 
-        if (  response.isCommitted()==false && ОтправкаФайлаJsonAPK.isFile() &&
+        if (  response.isCommitted()==false &&
                 response.getStatus()==HttpServletResponse.SC_OK) {
             try  (
-                    InputStream targetStreamPO = new FileInputStream(ОтправкаФайлаJsonAPK);
                     GZIPOutputStream БуферДанныеДляОбновлениеПО =new GZIPOutputStream( response.getOutputStream(),true);
                   ) {
            // try  (ServletOutputStream БуферДанныеДляОбновлениеПО =  ( response.getOutputStream() )) {            response.addHeader("GZIPOutputStream", String.valueOf("false"));
@@ -234,7 +234,9 @@ private   SubClassWriterErros subClassWriterErros;
                 response.addHeader("GZIPOutputStream", String.valueOf("true"));
 
 
-          /*      if (targetStreamPO.available()>0) {
+                if(ОтправкаФайлаJsonAPK.isFile() ==true){
+                    InputStream targetStreamPO = new FileInputStream(ОтправкаФайлаJsonAPK);
+                         /*      if (targetStreamPO.available()>0) {
                     // TODO: 19.07.2023  writing
                         БуферДанныеДляОбновлениеПО.write(targetStreamPO.readAllBytes());
                         // TODO: 21.09.2023
@@ -243,26 +245,35 @@ private   SubClassWriterErros subClassWriterErros;
                     БуферДанныеДляОбновлениеПО.finish();
                     БуферДанныеДляОбновлениеПО.close();
                 }*/
-                if (targetStreamPO.available()>0) {
-                    // TODO: 19.07.2023  writing
-                    //   БуферДанныеДляОбновлениеПО.write(targetStreamPO.readAllBytes());
-                    byte[] buffer = new byte[2048];
-                    int    len;
-                    while ((len = targetStreamPO.read(buffer)) != -1) {
-                        БуферДанныеДляОбновлениеПО.write(buffer, 0, len);
-                        // TODO: 21.09.2023
-                        БуферДанныеДляОбновлениеПО.flush();
+                    if (targetStreamPO.available()>0) {
+                        // TODO: 19.07.2023  writing
+                        //   БуферДанныеДляОбновлениеПО.write(targetStreamPO.readAllBytes());
+                        byte[] buffer = new byte[2048];
+                        int    len;
+                        while ((len = targetStreamPO.read(buffer)) != -1) {
+                            БуферДанныеДляОбновлениеПО.write(buffer, 0, len);
+                            // TODO: 21.09.2023
+                            БуферДанныеДляОбновлениеПО.flush();
+                        }
+
                     }
-                    БуферДанныеДляОбновлениеПО.finish();
-                    БуферДанныеДляОбновлениеПО.close();
+                }else {
+                    byte[] bytesISnull=new String("0").getBytes(StandardCharsets.UTF_8);
+                    БуферДанныеДляОбновлениеПО.write(bytesISnull);
+                    // TODO: 21.09.2023
+                    БуферДанныеДляОбновлениеПО.flush();
+
                 }
+
+                // TODO: 06.10.2023 exit clear
+
+                БуферДанныеДляОбновлениеПО.finish();
+                БуферДанныеДляОбновлениеПО.close();
 
                 //TODO ЗАПЫИСЫВАМ ПУБЛИЧНЫЙ В ЛОГ
                 ЛОГ.removeAttribute("IdUser" );
                 ЛОГ.removeAttribute("АдуДевайсяКлиента" );
                 //TODO ЗАПЫИСЫВАМ ПУБЛИЧНЫЙ В Session
-
-
 
 
                 // TODO: 23.04.2023 exit asynccontext
