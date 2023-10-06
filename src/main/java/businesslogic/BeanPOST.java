@@ -7,6 +7,7 @@ import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 
 import javax.ejb.*;
+import javax.enterprise.inject.Produces;
 import javax.inject.Inject;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -15,7 +16,10 @@ import javax.transaction.TransactionScoped;
 
 
 import com.sun.istack.NotNull;
+import dsu1glassfishatomic.workinterfaces.ProducedStreamJacsons;
 import jakarta.transaction.Transactional;
+import org.jboss.ejb3.annotation.ClusteredSingleton;
+import org.jboss.ejb3.annotation.Pool;
 import org.jboss.ejb3.annotation.TransactionTimeout;
 
 /**
@@ -44,7 +48,6 @@ public class BeanPOST {
 
 
 
-    @TransactionScoped
     @Asynchronous
     public void МетодБинаPOST(@NotNull ServletContext ЛОГ,
                                       @NotNull HttpServletRequest request,
