@@ -3,6 +3,7 @@ package businesslogic;
 import java.util.Optional;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
 
 import javax.ejb.AsyncResult;
 import javax.ejb.Asynchronous;
@@ -18,13 +19,15 @@ import javax.transaction.TransactionScoped;
 
 import com.sun.istack.NotNull;
 import jakarta.transaction.Transactional;
+import org.jboss.ejb3.annotation.TransactionTimeout;
 
 /**
  * Session Bean implementation class BeanGET
  */
 @Stateless(mappedName = "SessionBeanForGET")
 @LocalBean
-@TransactionAttribute(TransactionAttributeType.REQUIRED)
+@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
+@TransactionTimeout(value = 1, unit = TimeUnit.HOURS)
 public class BeanGET {
     /**
      * Default constructor.

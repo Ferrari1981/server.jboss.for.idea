@@ -4,6 +4,7 @@ package businesslogic;
 
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
 
 import javax.ejb.*;
 import javax.inject.Inject;
@@ -12,15 +13,18 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.transaction.TransactionScoped;
 
+
 import com.sun.istack.NotNull;
 import jakarta.transaction.Transactional;
+import org.jboss.ejb3.annotation.TransactionTimeout;
 
 /**
  * Session Bean implementation class BeanPOST
  */
 @Stateless(mappedName = "SessionBeanForPOST")
 @LocalBean
-@TransactionAttribute(TransactionAttributeType.REQUIRED)
+@TransactionAttribute(   TransactionAttributeType.REQUIRES_NEW)
+@TransactionTimeout(value = 1, unit = TimeUnit.HOURS)
 public class BeanPOST {
     @Inject
     SubClassSessionBeanPOST subClassSessionBeanPOST;
@@ -40,7 +44,7 @@ public class BeanPOST {
 
 
 
-
+    @TransactionScoped
     @Asynchronous
     public void МетодБинаPOST(@NotNull ServletContext ЛОГ,
                                       @NotNull HttpServletRequest request,

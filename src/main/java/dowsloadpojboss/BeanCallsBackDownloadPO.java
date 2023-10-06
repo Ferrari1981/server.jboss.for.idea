@@ -5,6 +5,7 @@ package dowsloadpojboss;
 
 import businesslogic.SubClassWriterErros;
 import com.sun.istack.NotNull;
+import org.jboss.ejb3.annotation.TransactionTimeout;
 
 import javax.ejb.*;
 import javax.inject.Inject;
@@ -24,8 +25,8 @@ import java.util.zip.GZIPOutputStream;
  */
 @Singleton(mappedName = "BeanCallsBackDownloadPO")
 @LocalBean
-@TransactionAttribute(TransactionAttributeType.REQUIRED)
-@AccessTimeout(value = 20, unit = TimeUnit.MINUTES)
+@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
+@TransactionTimeout(value = 1, unit = TimeUnit.HOURS)
 @Lock(LockType.READ)
 public class BeanCallsBackDownloadPO {
 

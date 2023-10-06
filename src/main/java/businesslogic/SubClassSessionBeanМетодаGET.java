@@ -121,6 +121,7 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
                 session=   sessionSousJboss.getCurrentSession();
                 // TODO: 17.03.2023 ЗАПУСКАЕТ ТРАНЗАКЦИЮ BEGIN
                 if (!session.getTransaction().isActive() && session.isOpen()) {
+                    session.getTransaction().setTimeout(1800000);
                     session.getTransaction().begin();
                 }
                 ЛОГ.log("\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
@@ -246,6 +247,7 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
                 session=   sessionSousJboss.getCurrentSession();
                 // TODO: 17.03.2023 ЗАПУСКАЕТ ТРАНЗАКЦИЮ BEGIN
                 if (!session.getTransaction().isActive() && session.isOpen()) {
+                    session.getTransaction().setTimeout(1800000);
                     session.getTransaction().begin();
                 }
                 ЛОГ.log("\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+

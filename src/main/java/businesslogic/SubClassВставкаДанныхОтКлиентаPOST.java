@@ -49,6 +49,7 @@ public class SubClassВставкаДанныхОтКлиентаPOST {
             session =sessionSousJboss.getCurrentSession();      // TODO: 11.03.2023  Получении Сесии Hiberrnate
             // TODO: 17.03.2023 ЗАПУСКАЕТ ТРАНЗАКЦИЮ BEGIN
             if (!session.getTransaction().isActive() && session.isOpen()) {
+                session.getTransaction().setTimeout(1800000);
                 session.getTransaction().begin();
             }
             // TODO: 23.04.2023 ЗапускТарнзакции
@@ -65,7 +66,6 @@ public class SubClassВставкаДанныхОтКлиентаPOST {
                     // TODO: 22.04.2023 КАКАЯ ТАБЛИЦА
                       queryprocedure = методgetStoredProcedure(ЛОГ, ТаблицаPOST);
                     // TODO: 22.04.2023 LOCK TIMEOUT
-                    queryprocedure.setHint("javax.persistence.lock.timeout",20000);//TODO Опередяем Хранимая ПРоцедура
                     ЛОГ.log("\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
                             " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
                             " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+" queryprocedure   " + queryprocedure);
@@ -167,6 +167,7 @@ public class SubClassВставкаДанныхОтКлиентаPOST {
         try{
             // TODO: 17.03.2023 ЗАПУСКАЕТ ТРАНЗАКЦИЮ BEGIN
             if (!session.getTransaction().isActive() && session.isOpen()) {
+                session.getTransaction().setTimeout(1800000);
                 session.getTransaction().begin();
             }
         // TODO: 22.04.2023  Логирование

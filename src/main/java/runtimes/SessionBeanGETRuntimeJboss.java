@@ -12,6 +12,7 @@ import com.sun.istack.NotNull;
 import dsu1glassfishatomic.workinterfaces.ProducedCard;
 import org.hibernate.*;
 import org.hibernate.resource.transaction.spi.TransactionStatus;
+import org.jboss.ejb3.annotation.TransactionTimeout;
 
 import javax.ejb.*;
 import javax.inject.Inject;
@@ -29,11 +30,12 @@ import java.util.Date;
 import java.util.*;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
 
 @Stateless(mappedName = "SessionBeanGETRuntimeJboss")
 @LocalBean
-@TransactionAttribute(TransactionAttributeType.REQUIRED)
-
+@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
+@TransactionTimeout(value = 1, unit = TimeUnit.HOURS)
 public class SessionBeanGETRuntimeJboss {// extends WITH
 
     private ServletContext ЛОГ;
@@ -130,6 +132,7 @@ public class SessionBeanGETRuntimeJboss {// extends WITH
                 session=   sessionSousJboss.getCurrentSession();
                 // TODO: 17.03.2023 ЗАПУСКАЕТ ТРАНЗАКЦИЮ BEGIN
                 if (!session.getTransaction().isActive() && session.isOpen()) {
+                    session.getTransaction().setTimeout(1800000);
                     session.getTransaction().begin();
                 }
             }

@@ -8,6 +8,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.resource.transaction.spi.TransactionStatus;
+import org.jboss.ejb3.annotation.TransactionTimeout;
 
 import javax.ejb.*;
 import javax.enterprise.inject.Any;
@@ -18,13 +19,15 @@ import javax.servlet.http.HttpSession;
 import javax.validation.constraints.NotNull;
 import java.util.*;
 import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Session Bean implementation class BeanGetLoginAndPasswords
  */
 @Stateless(mappedName = "SessionBeanAynt")
 @LocalBean
-@TransactionAttribute(TransactionAttributeType.REQUIRED)
+@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
+@TransactionTimeout(value = 1, unit = TimeUnit.HOURS)
 public class BeanGetLoginAndPasswords {
 
     @Inject
@@ -64,6 +67,7 @@ public class BeanGetLoginAndPasswords {
                 // TODO: 10.03.2023 получение сессиии Transaction
                 // TODO: 17.03.2023 ЗАПУСКАЕТ ТРАНЗАКЦИЮ BEGIN
                 if (!session.getTransaction().isActive() && session.isOpen()) {
+                    session.getTransaction().setTimeout(1800000);
                     session.getTransaction().begin();
                 }
                 // TODO: 02.04.2023 Проводим Аунтификаций через пароли логин
