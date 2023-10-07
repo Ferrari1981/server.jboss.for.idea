@@ -222,10 +222,8 @@ private   SubClassWriterErros subClassWriterErros;
 
         if (  response.isCommitted()==false &&
                 response.getStatus()==HttpServletResponse.SC_OK) {
-            try  (
-                    GZIPOutputStream БуферДанныеДляОбновлениеПО =new GZIPOutputStream( response.getOutputStream(),true);
-                  ) {
-           // try  (ServletOutputStream БуферДанныеДляОбновлениеПО =  ( response.getOutputStream() )) {            response.addHeader("GZIPOutputStream", String.valueOf("false"));
+            try  (GZIPOutputStream БуферДанныеДляОбновлениеПО =new GZIPOutputStream( response.getOutputStream(),2048,true);) {
+                // TODO: 07.10.2023
                 Long ОбщийРазмерЗаписываемогоФайла = Long.valueOf(ОтправкаФайлаJsonAPK.length());
                 response.addHeader("stream_size", String.valueOf(ОбщийРазмерЗаписываемогоФайла));
                 response.addHeader("stream_status", String.valueOf( (  response).getStatus()));
@@ -236,39 +234,20 @@ private   SubClassWriterErros subClassWriterErros;
 
                 if(ОтправкаФайлаJsonAPK.isFile() ==true){
                     InputStream targetStreamPO = new FileInputStream(ОтправкаФайлаJsonAPK);
-                         /*      if (targetStreamPO.available()>0) {
-                    // TODO: 19.07.2023  writing
-                        БуферДанныеДляОбновлениеПО.write(targetStreamPO.readAllBytes());
-                        // TODO: 21.09.2023
-                        БуферДанныеДляОбновлениеПО.flush();
-
-                    БуферДанныеДляОбновлениеПО.finish();
-                    БуферДанныеДляОбновлениеПО.close();
-                }*/
                     if (targetStreamPO.available()>0) {
-                        // TODO: 19.07.2023  writing
-                        //   БуферДанныеДляОбновлениеПО.write(targetStreamPO.readAllBytes());
-                        byte[] buffer = new byte[2048];
-                        int    len;
-                        while ((len = targetStreamPO.read(buffer)) != -1) {
-                            БуферДанныеДляОбновлениеПО.write(buffer, 0, len);
-                            // TODO: 21.09.2023
-                            БуферДанныеДляОбновлениеПО.flush();
-                        }
-
+                        // TODO: 19.07.2023  wtiring...
+                        БуферДанныеДляОбновлениеПО.write(targetStreamPO.readAllBytes());
                     }
+                    // TODO: 07.10.2023 dont files......
                 }else {
                     byte[] bytesISnull=new String("0").getBytes(StandardCharsets.UTF_8);
+                    // TODO: 19.07.2023  wtiring...
                     БуферДанныеДляОбновлениеПО.write(bytesISnull);
-                    // TODO: 21.09.2023
-                    БуферДанныеДляОбновлениеПО.flush();
-
                 }
-
                 // TODO: 06.10.2023 exit clear
-
                 БуферДанныеДляОбновлениеПО.finish();
                 БуферДанныеДляОбновлениеПО.close();
+
 
                 //TODO ЗАПЫИСЫВАМ ПУБЛИЧНЫЙ В ЛОГ
                 ЛОГ.removeAttribute("IdUser" );

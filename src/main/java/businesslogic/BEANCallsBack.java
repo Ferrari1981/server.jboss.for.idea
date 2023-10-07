@@ -43,8 +43,7 @@ public class BEANCallsBack {
         if (  response.isCommitted() ==false &&
                 response.getStatus()==HttpServletResponse.SC_OK ) {
             try  (
-                    GZIPOutputStream gzipOutputStream=      new GZIPOutputStream(response.getOutputStream(),true);
-                    InputStream targetStream = new ByteArrayInputStream(ГлавныйБуферОтправкиДанныхНААндройд);) {
+                    GZIPOutputStream gzipOutputStream=      new GZIPOutputStream(response.getOutputStream(),2048,true);) {
                 // TODO: 18.07.2023 send
                 Long ОбщийРазмерЗаписываемогоФайла = Long.valueOf(ГлавныйБуферОтправкиДанныхНААндройд.toString().toCharArray().length);
                 response.addHeader("stream_size", String.valueOf(ОбщийРазмерЗаписываемогоФайла));
@@ -52,15 +51,12 @@ public class BEANCallsBack {
                 response.addHeader("pool", String.valueOf( Thread.currentThread().getName()));
                 response.addHeader("getcharsets", String.valueOf( "8"));
 
-                    final int EOF = -1;
-                    byte[] buffer = new byte[2048];
-                    while (EOF != ( targetStream.read(buffer))) {
-                        gzipOutputStream.write(buffer, 0,buffer.length);
-                        // TODO: 21.09.2023
-                        gzipOutputStream.flush();
-                    }
-                    gzipOutputStream.finish();
-                    gzipOutputStream.close();
+                // TODO: 07.10.2023 writing,, 
+                        gzipOutputStream.write(ГлавныйБуферОтправкиДанныхНААндройд);
+
+                // TODO: 07.10.2023 exit finich
+                            gzipOutputStream.finish();
+                            gzipOutputStream.close();
 
                 // TODO: 25.09.2023 Clear LOG CONTEXT
                 //TODO ЗАПЫИСЫВАМ ПУБЛИЧНЫЙ В ЛОГ
