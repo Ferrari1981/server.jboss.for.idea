@@ -21,7 +21,7 @@ public class SubClassAllFilers {
     public void методСлушатель(@NotNull AsyncContext asy, @NotNull  ServletContext ЛОГ) {
         try {
             if (asy.getRequest().isAsyncStarted()) {
-                asy.setTimeout(300000);
+                asy.setTimeout(18000000);
                 asy.addListener(new AsyncListener() {
                     @Override
                     public void onComplete(AsyncEvent asyncEvent) throws IOException {

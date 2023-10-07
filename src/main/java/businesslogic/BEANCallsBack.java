@@ -13,7 +13,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.constraints.NotNull;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
+import java.util.jar.JarOutputStream;
 import java.util.zip.GZIPOutputStream;
+import java.util.zip.ZipOutputStream;
 
 
 @Named
@@ -42,8 +44,7 @@ public class BEANCallsBack {
 
         if (  response.isCommitted() ==false &&
                 response.getStatus()==HttpServletResponse.SC_OK ) {
-            try  (
-                    GZIPOutputStream gzipOutputStream=      new GZIPOutputStream(response.getOutputStream(),2048,true);) {
+            try  (GZIPOutputStream gzipOutputStreamJsonJakson=      new GZIPOutputStream(response.getOutputStream(),2048,true);) {
                 // TODO: 18.07.2023 send
                 Long ОбщийРазмерЗаписываемогоФайла = Long.valueOf(ГлавныйБуферОтправкиДанныхНААндройд.toString().toCharArray().length);
                 response.addHeader("stream_size", String.valueOf(ОбщийРазмерЗаписываемогоФайла));
@@ -52,11 +53,10 @@ public class BEANCallsBack {
                 response.addHeader("getcharsets", String.valueOf( "8"));
 
                 // TODO: 07.10.2023 writing,, 
-                        gzipOutputStream.write(ГлавныйБуферОтправкиДанныхНААндройд);
-
+                gzipOutputStreamJsonJakson.write(ГлавныйБуферОтправкиДанныхНААндройд);
                 // TODO: 07.10.2023 exit finich
-                            gzipOutputStream.finish();
-                            gzipOutputStream.close();
+                gzipOutputStreamJsonJakson.finish();
+                gzipOutputStreamJsonJakson.close();
 
                 // TODO: 25.09.2023 Clear LOG CONTEXT
                 //TODO ЗАПЫИСЫВАМ ПУБЛИЧНЫЙ В ЛОГ
