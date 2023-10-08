@@ -119,8 +119,15 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
             if (IdUser>0) {
                 // TODO: 10.03.2023 получение сессиии HIREBIANTE
                 session=   sessionSousJboss.getCurrentSession();
+
+                ЛОГ.log("\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
+                        + "    session.getTransaction().getStatus() " +  session.getTransaction().getStatus());
+
                 // TODO: 17.03.2023 ЗАПУСКАЕТ ТРАНЗАКЦИЮ BEGIN
-                if (!session.getTransaction().isActive() && session.isOpen()) {
+                if (session.getTransaction().getStatus()==TransactionStatus.NOT_ACTIVE
+                        && session.getTransaction().getStatus()!=TransactionStatus.ROLLED_BACK) {
                     session.getTransaction().setTimeout(1800000);
                     session.getTransaction().begin();
                 }
@@ -183,14 +190,12 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
                     + " ЛОГИН "+ЛОГ.getAttribute("ЛогинПолученныйОтКлиента")+
                     " ID ТЕЛЕФОНА "+  ЛОГ.getAttribute("АдуДевайсяКлиента"));
         } catch (Exception e) {
+            // TODO: 08.10.2023 for error astating rollback
+            session.getTransaction().rollback();
+
             ЛОГ.log("\n" + " ERROR class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
-            if (session!=null) {
-                if (  session.isOpen()) {
-                    session.close();
-                }
-            }
             subClassWriterErros.
                     МетодаЗаписиОшибкиВЛог(e,
                             Thread.currentThread().
@@ -245,14 +250,19 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
             if (IdUser>0) {
                 // TODO: 10.03.2023 получение сессиии HIREBIANTE
                 session=   sessionSousJboss.getCurrentSession();
+
+                ЛОГ.log("\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
+                        + "    session.getTransaction().getStatus() " +  session.getTransaction().getStatus());
+
                 // TODO: 17.03.2023 ЗАПУСКАЕТ ТРАНЗАКЦИЮ BEGIN
-                if (!session.getTransaction().isActive() && session.isOpen()) {
+                if (session.getTransaction().getStatus()==TransactionStatus.NOT_ACTIVE
+                        && session.getTransaction().getStatus()!=TransactionStatus.ROLLED_BACK) {
                     session.getTransaction().setTimeout(1800000);
                     session.getTransaction().begin();
                 }
-                ЛОГ.log("\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
-                        " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
-                        " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+ " session " +session  + " session.getTransaction() " +session.getTransaction());
+
                 /// TODO КОНЕЦ  НОВЫЕ ПАРАМЕТРЫ HIREBIANTE
             }
 
@@ -576,14 +586,12 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
                     + " ЛОГИН "+ЛОГ.getAttribute("ЛогинПолученныйОтКлиента")+
                     " ID ТЕЛЕФОНА "+  ЛОГ.getAttribute("АдуДевайсяКлиента"));
         } catch (Exception e) {
+            // TODO: 08.10.2023 for error astating rollback
+            session.getTransaction().rollback();
+
             ЛОГ.log("\n" + " ERROR class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
-            if (session!=null) {
-                if (  session.isOpen()) {
-                    session.close();
-                }
-            }
             subClassWriterErros.
                     МетодаЗаписиОшибкиВЛог(e,
                             Thread.currentThread().
@@ -601,7 +609,7 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
         try{
             if (session!=null) {
                 // TODO: 26.09.2023 transaction
-                if (session.getTransaction().isActive() && session.isOpen()) {
+                if (session.getTransaction().getStatus()==TransactionStatus.ACTIVE) {
                     session.getTransaction().commit();
                 }else{
                     session.getTransaction().rollback();
@@ -612,18 +620,19 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
                 }
 
             }
-                ЛОГ.log("\n МетодЗакрываемСессиюHibernate "+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
-                        " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
-                        " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n" +  "session " +session);
-    } catch (Exception e) {
+            ЛОГ.log("\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
+                    + "    session.getTransaction().getStatus() " +  session.getTransaction().getStatus());
+
+
+        } catch (Exception e) {
+
+            // TODO: 08.10.2023 for error astating rollback
+            session.getTransaction().rollback();
             ЛОГ.log( "ERROR class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber()  + " e " +e.getMessage() );
-            if (session!=null) {
-                if (  session.isOpen()) {
-                    session.close();
-                }
-            }
             subClassWriterErros.
                     МетодаЗаписиОшибкиВЛог(e,
                             Thread.currentThread().

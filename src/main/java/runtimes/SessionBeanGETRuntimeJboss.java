@@ -130,8 +130,15 @@ public class SessionBeanGETRuntimeJboss {// extends WITH
             if (JobForServer.length()>0) {
                 // TODO: 10.03.2023 получение сессиии HIREBIANTE
                 session=   sessionSousJboss.getCurrentSession();
+
+                ЛОГ.log("\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
+                        + "    session.getTransaction().getStatus() " +  session.getTransaction().getStatus());
+
                 // TODO: 17.03.2023 ЗАПУСКАЕТ ТРАНЗАКЦИЮ BEGIN
-                if (!session.getTransaction().isActive() && session.isOpen()) {
+                if (session.getTransaction().getStatus()==TransactionStatus.NOT_ACTIVE
+                        && session.getTransaction().getStatus()!=TransactionStatus.ROLLED_BACK) {
                     session.getTransaction().setTimeout(1800000);
                     session.getTransaction().begin();
                 }
@@ -163,11 +170,8 @@ public class SessionBeanGETRuntimeJboss {// extends WITH
             МетодЗакрываемСессиюHibernate(ЛОГ);
             /////// ошибки метода doGET
         } catch (Exception e) {
-            if (session!=null) {
-                if (  session.isOpen()) {
-                    session.close();
-                }
-            }
+            // TODO: 08.10.2023 for error astating rollback
+            session.getTransaction().rollback();
             subClassWriterErros.
                     МетодаЗаписиОшибкиВЛог(e,
                             Thread.currentThread().
@@ -203,7 +207,7 @@ public class SessionBeanGETRuntimeJboss {// extends WITH
         try{
             if (session!=null) {
                 // TODO: 26.09.2023 transaction
-                if (session.getTransaction().isActive() && session.isOpen()) {
+                if (session.getTransaction().getStatus()==TransactionStatus.ACTIVE) {
                     session.getTransaction().commit();
                 }else{
                     session.getTransaction().rollback();
@@ -214,19 +218,17 @@ public class SessionBeanGETRuntimeJboss {// extends WITH
                 }
 
                 }
-                ЛОГ.log("\n МетодЗакрываемСессиюHibernate "+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
-                        " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
-                        " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n" +  "session " +session);
+            ЛОГ.log("\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
+                    + "    session.getTransaction().getStatus() " +  session.getTransaction().getStatus());
 
         } catch (Exception e) {
+            // TODO: 08.10.2023 for error astating rollback
+            session.getTransaction().rollback();
             ЛОГ.log( "ERROR class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber()  + " e " +e.getMessage() );
-            if (session!=null) {
-                if (  session.isOpen()) {
-                    session.close();
-                }
-            }
             subClassWriterErros.
                     МетодаЗаписиОшибкиВЛог(e,
                             Thread.currentThread().

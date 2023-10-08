@@ -65,8 +65,16 @@ public class BeanGetLoginAndPasswords {
                 // TODO: 10.03.2023 получение сессиии HIREBIANTE
                 session = sessionSousJboss.getCurrentSession();
                 // TODO: 10.03.2023 получение сессиии Transaction
+
+                ЛОГ.log("\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
+                        + "    session.getTransaction().getStatus() " +  session.getTransaction().getStatus());
+
+
                 // TODO: 17.03.2023 ЗАПУСКАЕТ ТРАНЗАКЦИЮ BEGIN
-                if (!session.getTransaction().isActive() && session.isOpen()) {
+                if (session.getTransaction().getStatus()==TransactionStatus.NOT_ACTIVE
+                        && session.getTransaction().getStatus()!=TransactionStatus.ROLLED_BACK) {
                     session.getTransaction().setTimeout(1800000);
                     session.getTransaction().begin();
                 }
@@ -145,11 +153,8 @@ public class BeanGetLoginAndPasswords {
             // TODO: 02.04.2023 закрываем сессию
             МетодЗакрываемСессиюHibernate(ЛОГ);
         } catch (Exception e) {
-            if (session!=null) {
-                if (  session.isOpen()) {
-                    session.close();
-                }
-            }
+            // TODO: 08.10.2023 for error astating rollback
+            session.getTransaction().rollback();
             subClassWriterErros.
                     МетодаЗаписиОшибкиВЛог(e,
                             Thread.currentThread().
@@ -173,11 +178,8 @@ public class BeanGetLoginAndPasswords {
                     "БуферСозданогоJSONJackson " + БуферСозданогоJSONJackson.toString());
 
         } catch (Exception e) {
-            if (session!=null) {
-                if (  session.isOpen()) {
-                    session.close();
-                }
-            }
+            // TODO: 08.10.2023 for error astating rollback
+            session.getTransaction().rollback();
             subClassWriterErros.
                     МетодаЗаписиОшибкиВЛог(e,
                             Thread.currentThread().
@@ -190,7 +192,7 @@ public class BeanGetLoginAndPasswords {
         try{
             if (session!=null) {
                 // TODO: 26.09.2023 transaction
-                if (session.getTransaction().isActive() && session.isOpen()) {
+                if (session.getTransaction().getStatus()==TransactionStatus.ACTIVE) {
                     session.getTransaction().commit();
                 }else{
                     session.getTransaction().rollback();
@@ -201,18 +203,19 @@ public class BeanGetLoginAndPasswords {
                 }
 
             }
-                ЛОГ.log("\n МетодЗакрываемСессиюHibernate "+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
-                        " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
-                        " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n" +  "session " +session);
+            ЛОГ.log("\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
+                    + "    session.getTransaction().getStatus() " +  session.getTransaction().getStatus());
+
+
         } catch (Exception e) {
+
+// TODO: 08.10.2023 for error astating rollback
+            session.getTransaction().rollback();
             ЛОГ.log( "ERROR class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber()  + " e " +e.getMessage() );
-            if (session!=null) {
-                if (  session.isOpen()) {
-                    session.close();
-                }
-            }
             subClassWriterErros.
                     МетодаЗаписиОшибкиВЛог(e,
                             Thread.currentThread().

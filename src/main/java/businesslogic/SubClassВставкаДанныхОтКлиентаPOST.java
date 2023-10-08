@@ -47,8 +47,17 @@ public class SubClassВставкаДанныхОтКлиентаPOST {
             ArrayList<Long> arrayListMaxBackOperation=new ArrayList();
             this.ЛОГ=ЛОГ;
             session =sessionSousJboss.getCurrentSession();      // TODO: 11.03.2023  Получении Сесии Hiberrnate
+
+
             // TODO: 17.03.2023 ЗАПУСКАЕТ ТРАНЗАКЦИЮ BEGIN
-            if (!session.getTransaction().isActive() && session.isOpen()) {
+            ЛОГ.log("\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
+                    + "    session.getTransaction().getStatus() " +  session.getTransaction().getStatus());
+
+
+            if (session.getTransaction().getStatus()==TransactionStatus.NOT_ACTIVE
+                    && session.getTransaction().getStatus()!=TransactionStatus.ROLLED_BACK) {
                 session.getTransaction().setTimeout(1800000);
                 session.getTransaction().begin();
             }
@@ -145,11 +154,8 @@ public class SubClassВставкаДанныхОтКлиентаPOST {
 
 
         } catch (Exception   e) {
-            if (session!=null) {
-                if (  session.isOpen()) {
-                    session.close();
-                }
-            }
+            // TODO: 08.10.2023
+            session.getTransaction().rollback();
             ЛОГ.log( "ERROR class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber()  + " e " +e.getMessage() );
@@ -165,8 +171,14 @@ public class SubClassВставкаДанныхОтКлиентаPOST {
 
     private void методЗапускТранзакции(ServletContext ЛОГ) {
         try{
+            ЛОГ.log("\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
+                    + "    session.getTransaction().getStatus() " +  session.getTransaction().getStatus());
+
             // TODO: 17.03.2023 ЗАПУСКАЕТ ТРАНЗАКЦИЮ BEGIN
-            if (!session.getTransaction().isActive() && session.isOpen()) {
+            if (session.getTransaction().getStatus()==TransactionStatus.NOT_ACTIVE
+                    && session.getTransaction().getStatus()!=TransactionStatus.ROLLED_BACK) {
                 session.getTransaction().setTimeout(1800000);
                 session.getTransaction().begin();
             }
@@ -176,11 +188,8 @@ public class SubClassВставкаДанныхОтКлиентаPOST {
                 " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+
                 " session  " +session + " session.getTransaction().getStatus() "+session.getTransaction().getStatus());
     } catch (Exception   e) {
-            if (session!=null) {
-                if (  session.isOpen()) {
-                    session.close();
-                }
-            }
+            // TODO: 08.10.2023 for error astating rollback
+            session.getTransaction().rollback();
             ЛОГ.log( "ERROR class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                 " line " + Thread.currentThread().getStackTrace()[2].getLineNumber()  + " e " +e.getMessage() );
@@ -209,11 +218,8 @@ public class SubClassВставкаДанныхОтКлиентаPOST {
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
                     " getvalue" + getvalue + " getKey " + getKey  );
         } catch (Exception   e) {
-            if (session!=null) {
-                if (  session.isOpen()) {
-                    session.close();
-                }
-            }
+            // TODO: 08.10.2023 for error astating rollback
+            session.getTransaction().rollback();
             ЛОГ.log( "ERROR class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber()  + " e " +e.getMessage() );
@@ -262,11 +268,8 @@ public class SubClassВставкаДанныхОтКлиентаPOST {
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" );
         } catch (Exception   e) {
-            if (session!=null) {
-                if (  session.isOpen()) {
-                    session.close();
-                }
-            }
+            // TODO: 08.10.2023 for error astating rollback
+            session.getTransaction().rollback();
             ЛОГ.log( "ERROR class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber()  + " e " +e.getMessage() );
@@ -371,7 +374,7 @@ public class SubClassВставкаДанныхОтКлиентаPOST {
         try{
             if (session!=null) {
                 // TODO: 26.09.2023 transaction
-                if (session.getTransaction().isActive() && session.isOpen()) {
+                if (session.getTransaction().getStatus()==TransactionStatus.ACTIVE) {
                     session.getTransaction().commit();
                 }else{
                     session.getTransaction().rollback();
@@ -382,18 +385,18 @@ public class SubClassВставкаДанныхОтКлиентаPOST {
                 }
 
             }
-                ЛОГ.log("\n МетодЗакрываемСессиюHibernate "+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
-                        " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
-                        " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n" +  "session " +session);
-    } catch (Exception   e) {
+            ЛОГ.log("\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
+                    + "    session.getTransaction().getStatus() " +  session.getTransaction().getStatus());
+
+
+        } catch (Exception   e) {
             ЛОГ.log( "ERROR class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber()  + " e " +e.getMessage() );
-            if (session!=null) {
-                if (  session.isOpen()) {
-                    session.close();
-                }
-            }
+            // TODO: 08.10.2023 for error astating rollback
+            session.getTransaction().rollback();
             subClassWriterErros.
                     МетодаЗаписиОшибкиВЛог(e,
                             Thread.currentThread().
