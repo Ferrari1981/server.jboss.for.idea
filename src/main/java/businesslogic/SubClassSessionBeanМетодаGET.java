@@ -126,11 +126,12 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
                         + "    session.getTransaction().getStatus() " +  session.getTransaction().getStatus());
 
                 // TODO: 17.03.2023 ЗАПУСКАЕТ ТРАНЗАКЦИЮ BEGIN
-                if (session.getTransaction().getStatus()==TransactionStatus.NOT_ACTIVE
-                        && session.getTransaction().getStatus()!=TransactionStatus.ROLLED_BACK) {
-                    session.getTransaction().setTimeout(1800000);
-                    session.getTransaction().begin();
+                // TODO: 17.03.2023 ЗАПУСКАЕТ ТРАНЗАКЦИЮ BEGIN
+                if (session.getTransaction().getStatus()==TransactionStatus.ACTIVE) {
+                    session.getTransaction().rollback();
                 }
+                session.getTransaction().setTimeout(1800000);
+                session.getTransaction().begin();
                 ЛОГ.log("\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
                         " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
                         " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+ " session " +session  + " session.getTransaction() " +session.getTransaction());
@@ -179,7 +180,7 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
             }
 
             // TODO КОГДА ЛОГИН И ПАРОЛЬ НЕТ ДОСТУПА
-            МетодЗакрываемСессиюHibernate();
+            new CommitSessionHibernate().  МетодЗакрываемСессиюHibernate(ЛОГ,session);
             //// TODO ЗАКРЫЫВАЕМ КУРСОРЫ ПОСЛЕ ГЕНЕРАЦИИ JSON ДЛЯ КЛИЕНТА
             // TODO
             ЛОГ.log("\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -191,8 +192,6 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
                     " ID ТЕЛЕФОНА "+  ЛОГ.getAttribute("АдуДевайсяКлиента"));
         } catch (Exception e) {
             // TODO: 08.10.2023 for error astating rollback
-            session.getTransaction().rollback();
-
             ЛОГ.log("\n" + " ERROR class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
@@ -257,11 +256,12 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
                         + "    session.getTransaction().getStatus() " +  session.getTransaction().getStatus());
 
                 // TODO: 17.03.2023 ЗАПУСКАЕТ ТРАНЗАКЦИЮ BEGIN
-                if (session.getTransaction().getStatus()==TransactionStatus.NOT_ACTIVE
-                        && session.getTransaction().getStatus()!=TransactionStatus.ROLLED_BACK) {
-                    session.getTransaction().setTimeout(1800000);
-                    session.getTransaction().begin();
+                // TODO: 17.03.2023 ЗАПУСКАЕТ ТРАНЗАКЦИЮ BEGIN
+                if (session.getTransaction().getStatus()==TransactionStatus.ACTIVE) {
+                    session.getTransaction().rollback();
                 }
+                session.getTransaction().setTimeout(1800000);
+                session.getTransaction().begin();
 
                 /// TODO КОНЕЦ  НОВЫЕ ПАРАМЕТРЫ HIREBIANTE
             }
@@ -575,7 +575,7 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
             }
 
             // TODO КОГДА ЛОГИН И ПАРОЛЬ НЕТ ДОСТУПА
-            МетодЗакрываемСессиюHibernate();
+            new CommitSessionHibernate().  МетодЗакрываемСессиюHibernate(ЛОГ,session);
             //// TODO ЗАКРЫЫВАЕМ КУРСОРЫ ПОСЛЕ ГЕНЕРАЦИИ JSON ДЛЯ КЛИЕНТА
             // TODO
             ЛОГ.log("\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -587,8 +587,6 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
                     " ID ТЕЛЕФОНА "+  ЛОГ.getAttribute("АдуДевайсяКлиента"));
         } catch (Exception e) {
             // TODO: 08.10.2023 for error astating rollback
-            session.getTransaction().rollback();
-
             ЛОГ.log("\n" + " ERROR class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
@@ -605,41 +603,8 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
 
 
 
-    private void МетодЗакрываемСессиюHibernate() {
-        try{
-            if (session!=null) {
-                // TODO: 26.09.2023 transaction
-                if (session.getTransaction().getStatus()==TransactionStatus.ACTIVE) {
-                    session.getTransaction().commit();
-                }else{
-                    session.getTransaction().rollback();
-                }
-                //todo  session clear
-                if (  session.isOpen()) {
-                    session.close();
-                }
-
-            }
-            ЛОГ.log("\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
-                    + "    session.getTransaction().getStatus() " +  session.getTransaction().getStatus());
 
 
-        } catch (Exception e) {
-
-            // TODO: 08.10.2023 for error astating rollback
-            session.getTransaction().rollback();
-            ЛОГ.log( "ERROR class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber()  + " e " +e.getMessage() );
-            subClassWriterErros.
-                    МетодаЗаписиОшибкиВЛог(e,
-                            Thread.currentThread().
-                                    getStackTrace(),
-                            ЛОГ,"ErrorsLogs/ErrorJbossServletDSU1.txt");
-    }
-    }
 
 
 
