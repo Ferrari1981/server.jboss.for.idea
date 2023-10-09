@@ -126,12 +126,8 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
                         + "    session.getTransaction().getStatus() " +  session.getTransaction().getStatus());
 
                 // TODO: 17.03.2023 ЗАПУСКАЕТ ТРАНЗАКЦИЮ BEGIN
-                // TODO: 17.03.2023 ЗАПУСКАЕТ ТРАНЗАКЦИЮ BEGIN
-                if (session.getTransaction().getStatus()==TransactionStatus.ACTIVE) {
-                    session.getTransaction().rollback();
-                }
-                session.getTransaction().setTimeout(1800000);
-                session.getTransaction().begin();
+                // TODO: 23.04.2023 ЗапускТарнзакции
+                new CommitSessionHibernate().   методЗапускТранзакции(ЛОГ,session );
                 ЛОГ.log("\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
                         " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
                         " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n"+ " session " +session  + " session.getTransaction() " +session.getTransaction());
@@ -256,12 +252,8 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
                         + "    session.getTransaction().getStatus() " +  session.getTransaction().getStatus());
 
                 // TODO: 17.03.2023 ЗАПУСКАЕТ ТРАНЗАКЦИЮ BEGIN
-                // TODO: 17.03.2023 ЗАПУСКАЕТ ТРАНЗАКЦИЮ BEGIN
-                if (session.getTransaction().getStatus()==TransactionStatus.ACTIVE) {
-                    session.getTransaction().rollback();
-                }
-                session.getTransaction().setTimeout(1800000);
-                session.getTransaction().begin();
+                // TODO: 23.04.2023 ЗапускТарнзакции
+                new CommitSessionHibernate().   методЗапускТранзакции(ЛОГ,session );
 
                 /// TODO КОНЕЦ  НОВЫЕ ПАРАМЕТРЫ HIREBIANTE
             }

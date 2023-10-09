@@ -138,12 +138,8 @@ public class SessionBeanGETRuntimeJboss {// extends WITH
                         + "    session.getTransaction().getStatus() " +  session.getTransaction().getStatus());
 
                 // TODO: 17.03.2023 ЗАПУСКАЕТ ТРАНЗАКЦИЮ BEGIN
-                if (session.getTransaction().getStatus()==TransactionStatus.ACTIVE) {
-                    session.getTransaction().rollback();
-                }
-                    session.getTransaction().setTimeout(1800000);
-                    session.getTransaction().begin();
-
+                // TODO: 23.04.2023 ЗапускТарнзакции
+                new CommitSessionHibernate().   методЗапускТранзакции(ЛОГ,session );
 
 
     }

@@ -74,12 +74,8 @@ public class BeanGetLoginAndPasswords {
 
 
                 // TODO: 17.03.2023 ЗАПУСКАЕТ ТРАНЗАКЦИЮ BEGIN
-                // TODO: 17.03.2023 ЗАПУСКАЕТ ТРАНЗАКЦИЮ BEGIN
-                if (session.getTransaction().getStatus()==TransactionStatus.ACTIVE) {
-                    session.getTransaction().rollback();
-                }
-                session.getTransaction().setTimeout(1800000);
-                session.getTransaction().begin();
+                // TODO: 23.04.2023 ЗапускТарнзакции
+                new CommitSessionHibernate().   методЗапускТранзакции(ЛОГ,session );
                 // TODO: 02.04.2023 Проводим Аунтификаций через пароли логин
                 org.hibernate.Query queryДляHiberite   = session.createQuery("SELECT " +
                         " us FROM model.UsersEntitySuccess us WHERE us.rights =:rights  AND us.login=:login AND us.password=:password ");
