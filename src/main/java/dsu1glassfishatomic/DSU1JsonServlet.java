@@ -1,27 +1,23 @@
 package dsu1glassfishatomic;
 
 
-import businesslogic.BeanGET;
-import businesslogic.BeanPOST;
-import businesslogic.Filters.SubClassAllFilers;
+import SessionBeans.BeanGET;
+import SessionBeans.BeanPOST;
+import Filters.SubClassAllFilers;
 import businesslogic.SubClassWriterErros;
 import dsu1glassfishatomic.workinterfaces.ProducedCard;
 import org.hibernate.SessionFactory;
 
 import javax.ejb.EJB;
-import javax.enterprise.context.ApplicationScoped;
-import javax.enterprise.inject.Produces;
 import javax.inject.Inject;
 import javax.servlet.AsyncContext;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
-import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 
 @WebServlet( value="/sous.jboss.tabel",asyncSupported = true)
 public class DSU1JsonServlet extends HttpServlet {
@@ -39,11 +35,16 @@ public class DSU1JsonServlet extends HttpServlet {
 
     private  ServletContext   ЛОГ;
 
+
     DSU1JsonServlet(){
+        // TODO: 10.10.2023 ihit
+        subClassAllFilers=  new SubClassAllFilers();
+        //sessionSousJboss.openSession();
         System.out.println(" class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                 " line " + Thread.currentThread().getStackTrace()[2].getLineNumber());
-        subClassAllFilers=  new SubClassAllFilers();
+
+
     }
 
 

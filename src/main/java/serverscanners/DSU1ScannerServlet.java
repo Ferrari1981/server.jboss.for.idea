@@ -1,7 +1,6 @@
 package serverscanners;
 
 
-import businesslogic.Filters.SubClassAllFilers;
 import businesslogic.SubClassWriterErros;
 
 import javax.inject.Inject;
@@ -12,7 +11,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 
 @WebServlet( value="/sous.jboss.scanner",asyncSupported = true)
 public class DSU1ScannerServlet extends HttpServlet {

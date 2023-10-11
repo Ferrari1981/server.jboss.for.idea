@@ -69,7 +69,7 @@
 
     <filter>
         <filter-name>FilterForGET</filter-name>
-        <filter-class>businesslogic.Filters.FilterTabel</filter-class>
+        <filter-class>Filters.FilterTabel</filter-class>
         <async-supported>true</async-supported>
     </filter>
     <filter-mapping>
@@ -86,7 +86,7 @@
 
     <filter>
         <filter-name>FilterForGETRuntimeJboss</filter-name>
-        <filter-class>businesslogic.Filters.FilterRuntime</filter-class>
+        <filter-class>Filters.FilterRuntime</filter-class>
         <async-supported>true</async-supported>
     </filter>
     <filter-mapping>
@@ -103,7 +103,7 @@
 
     <filter>
         <filter-name>FilterForUpdatePO</filter-name>
-        <filter-class>businesslogic.Filters.FilterUpdatePO</filter-class>
+        <filter-class>Filters.FilterUpdatePO</filter-class>
         <async-supported>true</async-supported>
     </filter>
     <filter-mapping>
@@ -118,7 +118,7 @@
 
     <filter>
         <filter-name>FilterForScanner</filter-name>
-        <filter-class>businesslogic.Filters.FilterScanner</filter-class>
+        <filter-class>Filters.FilterScanner</filter-class>
         <async-supported>true</async-supported>
     </filter>
     <filter-mapping>

@@ -1,7 +1,7 @@
 package dowsloadpojboss;
 
 
-import businesslogic.Filters.SubClassAllFilers;
+import Filters.SubClassAllFilers;
 import businesslogic.SubClassWriterErros;
 
 import javax.ejb.EJB;

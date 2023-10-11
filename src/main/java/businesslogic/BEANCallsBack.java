@@ -18,8 +18,7 @@ import java.util.zip.GZIPOutputStream;
 import java.util.zip.ZipOutputStream;
 
 
-@Named
-@RequestScoped
+@Named ("bEANCallsBack")
 public class BEANCallsBack {
     @Inject
     SubClassWriterErros subClassWriterErros;

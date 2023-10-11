@@ -40,22 +40,15 @@ public class MateriBinary implements Serializable {
     @Lob
     @Column(name = "image", nullable = true)
     protected java.sql.Blob image;*/
-
+    @Basic
     @Lob
     @Column(name = "image", columnDefinition="varbinary(MAX)")
     private byte[] image;
 
 
-/*
-    @Type(type = "org.hibernate.type.BlobType")
-    @Lob
-    @Column(name = "files", nullable = true)
-    protected java.sql.Blob files;*/
-
-
-    @Lob
-    @Column(name = "files", columnDefinition="varbinary(MAX)")
-    private byte[] files;
+    @Basic
+    @Column(name = "files", columnDefinition="nvarchar(250)")
+    private String files;
 
 
 
@@ -110,14 +103,16 @@ public class MateriBinary implements Serializable {
     }
 
     public void setImage(byte[] image) {
+
         this.image = image;
     }
 
-    public byte[] getFiles() {
+    public String getFiles() {
         return files;
     }
 
-    public void setFiles(byte[] files) {
+    public void setFiles(String files) {
+
         this.files = files;
     }
 

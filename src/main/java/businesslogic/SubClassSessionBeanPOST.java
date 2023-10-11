@@ -19,8 +19,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.constraints.NotNull;
 import javax.ws.rs.Produces;
 
-@RequestScoped
-@Produces
+
 public class SubClassSessionBeanPOST {//extends    DSU1JsonServlet
 
     @Inject
@@ -58,7 +57,7 @@ public class SubClassSessionBeanPOST {//extends    DSU1JsonServlet
      * @return
      */
     @SuppressWarnings("unused")
-    protected byte[] МетодЗапускаPOST(
+    public byte[] МетодЗапускаPOST(
             @NotNull HttpServletRequest request,
             @NotNull HttpServletResponse response,
             @NotNull ServletContext ЛОГ) throws SecurityException {

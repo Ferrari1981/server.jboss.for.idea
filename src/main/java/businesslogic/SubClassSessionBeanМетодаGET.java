@@ -77,8 +77,8 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
     }
 
     @SuppressWarnings({ "unused", "deprecation", "rawtypes", "unchecked" })
-    protected byte[] ГлавныйМетод_МетодаGETService(@NotNull HttpServletRequest request,
-                                                  @NotNull ServletContext ЛОГ) throws SecurityException, SQLException {
+    public byte[] ГлавныйМетод_МетодаGETService(@NotNull HttpServletRequest request,
+                                                @NotNull ServletContext ЛОГ) throws SecurityException, SQLException {
         // TODO Auto-generated method stub
         System.out.println("Конструктор  ЗАПУСК МЕТОДА ИЗ GET ()  ГлавныйМетод_МетодаGET()");
         byte[] БуферCallsBackДляAndroid = new byte[0];
@@ -204,8 +204,8 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
 
     // TODO: 06.09.2023  ТОЛЬКО JSON JAJKSON
     @SuppressWarnings({ "unused", "deprecation", "rawtypes", "unchecked" })
-    protected byte[] ГлавныйМетод_МетодаGETByte(@NotNull HttpServletRequest request,
-                                                  @NotNull ServletContext ЛОГ) throws SecurityException, SQLException {
+    public byte[] ГлавныйМетод_МетодаGETByte(@NotNull HttpServletRequest request,
+                                             @NotNull ServletContext ЛОГ) throws SecurityException, SQLException {
         // TODO Auto-generated method stub
         System.out.println("Конструктор  ЗАПУСК МЕТОДА ИЗ GET ()  ГлавныйМетод_МетодаGET()");
         byte[] БуферCallsBackДляAndroid = new byte[0];
