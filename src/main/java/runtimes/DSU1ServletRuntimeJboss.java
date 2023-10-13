@@ -31,7 +31,7 @@ public class DSU1ServletRuntimeJboss extends HttpServlet {
         System.out.println(" class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                 " line " + Thread.currentThread().getStackTrace()[2].getLineNumber());
-        subClassAllFilers=  new SubClassAllFilers();
+        subClassAllFilers=  new SubClassAllFilers();//
     }
 
 
