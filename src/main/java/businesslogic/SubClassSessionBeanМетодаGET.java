@@ -188,6 +188,10 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
                     " ID ТЕЛЕФОНА "+  ЛОГ.getAttribute("АдуДевайсяКлиента"));
         } catch (Exception e) {
             // TODO: 08.10.2023 for error astating rollback
+
+            // TODO КОГДА ЛОГИН И ПАРОЛЬ НЕТ ДОСТУПА
+            new CommitSessionHibernate().  МетодЗакрываемСессиюHibernate(ЛОГ,session);
+
             ЛОГ.log("\n" + " ERROR class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
@@ -578,6 +582,9 @@ public class SubClassSessionBeanМетодаGET {// extends WITH
                     + " ЛОГИН "+ЛОГ.getAttribute("ЛогинПолученныйОтКлиента")+
                     " ID ТЕЛЕФОНА "+  ЛОГ.getAttribute("АдуДевайсяКлиента"));
         } catch (Exception e) {
+            // TODO КОГДА ЛОГИН И ПАРОЛЬ НЕТ ДОСТУПА
+            new CommitSessionHibernate().  МетодЗакрываемСессиюHibernate(ЛОГ,session);
+
             // TODO: 08.10.2023 for error astating rollback
             ЛОГ.log("\n" + " ERROR class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +

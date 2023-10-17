@@ -154,7 +154,10 @@ public class SubClassВставкаДанныхОтКлиентаPOST {
 
 
         } catch (Exception   e) {
-            // TODO: 08.10.2023
+            // TODO: 08.10.2023 close session
+            // TODO КОГДА ЛОГИН И ПАРОЛЬ НЕТ ДОСТУПА
+            new CommitSessionHibernate().  МетодЗакрываемСессиюHibernate(ЛОГ,session);
+
             ЛОГ.log( "ERROR class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber()  + " e " +e.getMessage() );

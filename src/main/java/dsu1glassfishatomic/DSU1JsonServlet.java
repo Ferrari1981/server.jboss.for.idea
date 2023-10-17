@@ -3,7 +3,7 @@ package dsu1glassfishatomic;
 
 import SessionBeans.BeanGET;
 import SessionBeans.BeanPOST;
-import Filters.SubClassAllFilers;
+import Filters.ClassListrerForAsyncProccer;
 import businesslogic.SubClassWriterErros;
 import dsu1glassfishatomic.workinterfaces.ProducedCard;
 import org.hibernate.SessionFactory;
@@ -31,14 +31,16 @@ public class DSU1JsonServlet extends HttpServlet {
     @Inject
     private   SubClassWriterErros subClassWriterErros;
 
-    private  SubClassAllFilers subClassAllFilers;
+    @Inject
+    private ClassListrerForAsyncProccer classListrerForAsyncProccer;
 
     private  ServletContext   ЛОГ;
+    private    AsyncContext     asyncContext;
 
 
     DSU1JsonServlet(){
         // TODO: 10.10.2023 ihit
-        subClassAllFilers=  new SubClassAllFilers();
+        classListrerForAsyncProccer =  new ClassListrerForAsyncProccer();
         //sessionSousJboss.openSession();
         System.out.println(" class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -53,14 +55,16 @@ public class DSU1JsonServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
      // super.doGet(req, resp);
        ЛОГ = getServletContext();
-       final AsyncContext     asyncContext=req.getAsyncContext();
-            // TODO: 22.05.2023 lister asynccontext
-            subClassAllFilers.методСлушатель(    asyncContext,ЛОГ);
-
+        // TODO: 17.10.2023 init async context 
+           asyncContext=req.getAsyncContext();
         asyncContext.start(new Runnable() {
             @Override
             public void run() {
                 try{
+                    // TODO: 22.05.2023 lister asynccontext
+                    classListrerForAsyncProccer.методСлушатель(    asyncContext,ЛОГ);
+                    
+                    
                 //TODO ЗАПУСКАЕМ КОДЕ МЕТОДА GET()
                 СессионыйБинGET.МетодБинаGET(ЛОГ, (HttpServletRequest) asyncContext.getRequest(),  (HttpServletResponse) asyncContext.getResponse());
                 ЛОГ.log("\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -89,14 +93,16 @@ public class DSU1JsonServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         //super.doPost(req, resp);
            ЛОГ = getServletContext();
-        final AsyncContext     asyncContext=req.getAsyncContext();
-            // TODO: 22.05.2023 lister asynccontext
-            subClassAllFilers.методСлушатель(    asyncContext,ЛОГ);
+        // TODO: 17.10.2023 init Async Context
+           asyncContext=req.getAsyncContext();
             //TODO ПОТОК ДЛЯ МЕТОДА POST
         asyncContext.start(new Runnable() {
             @Override
             public void run() {
                 try {
+                    // TODO: 22.05.2023 lister asynccontext
+                    classListrerForAsyncProccer.методСлушатель(    asyncContext,ЛОГ);
+                    
                 //TODO ЗАПУСКАЕМ КОДЕ МЕТОДА POST()
                 СессионыйБинPOST.МетодБинаPOST(ЛОГ, (HttpServletRequest) asyncContext.getRequest(),  (HttpServletResponse) asyncContext.getResponse());
                 ЛОГ.log("\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +

@@ -153,6 +153,9 @@ public class BeanGetLoginAndPasswords {
 
 
         } catch (Exception e) {
+            // TODO: 17.10.2023 exit
+            // TODO КОГДА ЛОГИН И ПАРОЛЬ НЕТ ДОСТУПА
+            new CommitSessionHibernate().  МетодЗакрываемСессиюHibernate(ЛОГ,session);
             subClassWriterErros.
                     МетодаЗаписиОшибкиВЛог(e,
                             Thread.currentThread().

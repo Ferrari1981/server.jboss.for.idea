@@ -1,7 +1,7 @@
 package runtimes;
 
 
-import Filters.SubClassAllFilers;
+import Filters.ClassListrerForAsyncProccer;
 import businesslogic.SubClassWriterErros;
 
 import javax.ejb.EJB;
@@ -22,16 +22,19 @@ public class DSU1ServletRuntimeJboss extends HttpServlet {
     @Inject
     private SubClassWriterErros subClassWriterErros;
 
-    private  SubClassAllFilers subClassAllFilers;
+    @Inject
+    private ClassListrerForAsyncProccer classListrerForAsyncProccer;
 
     private  ServletContext   ЛОГ;
+
+    private AsyncContext asyncContext;
 
 
     DSU1ServletRuntimeJboss(){
         System.out.println(" class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                 " line " + Thread.currentThread().getStackTrace()[2].getLineNumber());
-        subClassAllFilers=  new SubClassAllFilers();//
+        classListrerForAsyncProccer =  new ClassListrerForAsyncProccer();//
     }
 
 
@@ -42,13 +45,15 @@ public class DSU1ServletRuntimeJboss extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
      // super.doGet(req, resp);
            ЛОГ = getServletContext();
-        final AsyncContext asyncContext=req.getAsyncContext();
-            // TODO: 22.05.2023 lister asynccontext
-        subClassAllFilers.методСлушатель(    asyncContext,ЛОГ);
+         asyncContext=req.getAsyncContext();
+
         asyncContext.start(new Runnable() {
             @Override
             public void run() {
                 try {
+                    // TODO: 22.05.2023 lister asynccontext
+                    classListrerForAsyncProccer.методСлушатель(    asyncContext,ЛОГ);
+
                     //TODO ЗАПУСКАЕМ КОДЕ МЕТОДА GET()
                     sessionBeanGETRuntimeJboss.МетодГлавныйRuntimeJboss(ЛОГ,  (HttpServletRequest) asyncContext.getRequest(),  (HttpServletResponse) asyncContext.getResponse());
                     ЛОГ.log("\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +

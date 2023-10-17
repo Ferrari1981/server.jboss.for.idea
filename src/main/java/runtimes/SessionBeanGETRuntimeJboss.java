@@ -173,6 +173,9 @@ public class SessionBeanGETRuntimeJboss {// extends WITH
           new CommitSessionHibernate().  МетодЗакрываемСессиюHibernate(ЛОГ,session);
             /////// ошибки метода doGET
         } catch (Exception e) {
+            // TODO: 17.10.2023 exit
+            // TODO КОГДА ЛОГИН И ПАРОЛЬ НЕТ ДОСТУПА
+            new CommitSessionHibernate().  МетодЗакрываемСессиюHibernate(ЛОГ,session);
             subClassWriterErros.
                     МетодаЗаписиОшибкиВЛог(e,
                             Thread.currentThread().
