@@ -1,15 +1,14 @@
 package Filters;
 
 import businesslogic.SubClassWriterErros;
+import com.sun.research.ws.wadl.Request;
 
 import javax.inject.Inject;
 import javax.inject.Named;
-import javax.servlet.AsyncContext;
-import javax.servlet.AsyncEvent;
-import javax.servlet.AsyncListener;
-import javax.servlet.ServletContext;
+import javax.servlet.*;
 import java.io.IOException;
 import java.util.Optional;
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.constraints.NotNull;
 @Named("classListrerForAsyncProccer")
 public class ClassListrerForAsyncProccer {
@@ -20,11 +19,10 @@ public class ClassListrerForAsyncProccer {
     private ServletContext ЛОГ;
 
 
-    public void методСлушатель(@NotNull AsyncContext asy, @NotNull  ServletContext ЛОГ) {
+    public void методСлушатель(@NotNull AsyncContext asyncContext, @NotNull  ServletContext ЛОГ) {
         try {
-            if (asy.getRequest().isAsyncStarted()) {
-                asy.setTimeout(36000000);
-                asy.addListener(new AsyncListener() {
+                asyncContext.setTimeout(36000000);
+                asyncContext.addListener(new AsyncListener() {
                     @Override
                     public void onComplete(AsyncEvent asyncEvent) throws IOException {
                         Object CurrentUSers =   Optional.ofNullable(ЛОГ.getAttribute("IdUser") ).orElse("0");
@@ -80,7 +78,6 @@ public class ClassListrerForAsyncProccer {
                                 " CurrentUSers " +CurrentUSers);
                     }
                 });
-            }
             } catch(Exception e){
                 subClassWriterErros.
                         МетодаЗаписиОшибкиВЛог(e,

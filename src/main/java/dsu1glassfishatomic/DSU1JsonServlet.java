@@ -40,7 +40,6 @@ public class DSU1JsonServlet extends HttpServlet {
 
     DSU1JsonServlet(){
         // TODO: 10.10.2023 ihit
-        classListrerForAsyncProccer =  new ClassListrerForAsyncProccer();
         //sessionSousJboss.openSession();
         System.out.println(" class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -63,8 +62,7 @@ public class DSU1JsonServlet extends HttpServlet {
                 try{
                     // TODO: 22.05.2023 lister asynccontext
                     classListrerForAsyncProccer.методСлушатель(    asyncContext,ЛОГ);
-                    
-                    
+
                 //TODO ЗАПУСКАЕМ КОДЕ МЕТОДА GET()
                 СессионыйБинGET.МетодБинаGET(ЛОГ, (HttpServletRequest) asyncContext.getRequest(),  (HttpServletResponse) asyncContext.getResponse());
                 ЛОГ.log("\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -102,7 +100,7 @@ public class DSU1JsonServlet extends HttpServlet {
                 try {
                     // TODO: 22.05.2023 lister asynccontext
                     classListrerForAsyncProccer.методСлушатель(    asyncContext,ЛОГ);
-                    
+
                 //TODO ЗАПУСКАЕМ КОДЕ МЕТОДА POST()
                 СессионыйБинPOST.МетодБинаPOST(ЛОГ, (HttpServletRequest) asyncContext.getRequest(),  (HttpServletResponse) asyncContext.getResponse());
                 ЛОГ.log("\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +

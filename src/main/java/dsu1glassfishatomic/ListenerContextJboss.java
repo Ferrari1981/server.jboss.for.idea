@@ -1,13 +1,13 @@
 package dsu1glassfishatomic;
 
+import Filters.ClassListrerForAsyncProccer;
 import businesslogic.SubClassWriterErros;
+import com.sun.research.ws.wadl.Request;
 
 import javax.inject.Inject;
-import javax.servlet.ServletContext;
-import javax.servlet.ServletContextListener;
-import javax.servlet.ServletRequestEvent;
-import javax.servlet.ServletRequestListener;
+import javax.servlet.*;
 import javax.servlet.annotation.WebListener;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSessionEvent;
 import javax.servlet.http.HttpSessionListener;
 
@@ -17,7 +17,8 @@ public class ListenerContextJboss implements ServletContextListener,ServletReque
     ServletContext ЛОГ ;
     @Inject
     SubClassWriterErros subClassWriterErros;
-
+    @Inject
+    private ClassListrerForAsyncProccer classListrerForAsyncProccer;
     /**
      * Default constructor.
      */
@@ -53,6 +54,7 @@ public class ListenerContextJboss implements ServletContextListener,ServletReque
         // TODO Auto-generated method stub
         try {
             ЛОГ = sre.getServletContext();
+
             ЛОГ.log("\n"+" class "+Thread.currentThread().getStackTrace()[2].getClassName() +"\n"+
                     " metod "+Thread.currentThread().getStackTrace()[2].getMethodName() +"\n"+
                     " line "+  Thread.currentThread().getStackTrace()[2].getLineNumber()+"\n");

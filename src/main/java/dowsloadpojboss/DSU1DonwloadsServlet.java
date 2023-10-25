@@ -48,10 +48,8 @@ public class DSU1DonwloadsServlet extends HttpServlet {
                         @Override
                         public void run() {
                             try {
-
                                 // TODO: 22.05.2023 lister asynccontext
                                 classListrerForAsyncProccer.методСлушатель(    asyncContext,ЛОГ);
-
                                 // TODO: 24.07.2023 запуск обновение ПО
                             beanCallsBackDownloadPO.     МетодЗапускаОбновлениеПО(ЛОГ, (HttpServletRequest) asyncContext.getRequest(),  (HttpServletResponse) asyncContext.getResponse());
                           //  beanCallsBackDownloadPO.     МетодЗапускаОбновлениеПО(ЛОГ, req,  resp);
