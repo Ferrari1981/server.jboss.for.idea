@@ -33,9 +33,8 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 
-@Stateless(mappedName = "SessionBeanGETRuntimeJboss")
+@Stateless(mappedName = "sessionBeanGETRuntimeJboss")
 @LocalBean
-@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
 @TransactionTimeout(value = 1, unit = TimeUnit.HOURS)
 public class SessionBeanGETRuntimeJboss {// extends WITH
 

@@ -56,13 +56,12 @@ public class DSU1JsonServlet extends HttpServlet {
        ЛОГ = getServletContext();
         // TODO: 17.10.2023 init async context 
            asyncContext=req.getAsyncContext();
+        // TODO: 22.05.2023 lister asynccontext
+        classListrerForAsyncProccer.методСлушатель(    asyncContext,ЛОГ);
         asyncContext.start(new Runnable() {
             @Override
             public void run() {
                 try{
-                    // TODO: 22.05.2023 lister asynccontext
-                    classListrerForAsyncProccer.методСлушатель(    asyncContext,ЛОГ);
-
                 //TODO ЗАПУСКАЕМ КОДЕ МЕТОДА GET()
                 СессионыйБинGET.МетодБинаGET(ЛОГ, (HttpServletRequest) asyncContext.getRequest(),  (HttpServletResponse) asyncContext.getResponse());
                 ЛОГ.log("\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -93,14 +92,13 @@ public class DSU1JsonServlet extends HttpServlet {
            ЛОГ = getServletContext();
         // TODO: 17.10.2023 init Async Context
            asyncContext=req.getAsyncContext();
+        // TODO: 22.05.2023 lister asynccontext
+        classListrerForAsyncProccer.методСлушатель(    asyncContext,ЛОГ);
             //TODO ПОТОК ДЛЯ МЕТОДА POST
         asyncContext.start(new Runnable() {
             @Override
             public void run() {
                 try {
-                    // TODO: 22.05.2023 lister asynccontext
-                    classListrerForAsyncProccer.методСлушатель(    asyncContext,ЛОГ);
-
                 //TODO ЗАПУСКАЕМ КОДЕ МЕТОДА POST()
                 СессионыйБинPOST.МетодБинаPOST(ЛОГ, (HttpServletRequest) asyncContext.getRequest(),  (HttpServletResponse) asyncContext.getResponse());
                 ЛОГ.log("\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +

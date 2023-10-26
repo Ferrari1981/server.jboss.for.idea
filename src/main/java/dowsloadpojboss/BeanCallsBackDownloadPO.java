@@ -24,9 +24,8 @@ import java.util.zip.GZIPOutputStream;
 /**
  * Session Bean implementation class BeanCallsBackDownloadPO
  */
-@Singleton(mappedName = "BeanCallsBackDownloadPO")
+@Singleton(mappedName = "beanCallsBackDownloadPO")
 @LocalBean
-@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
 @TransactionTimeout(value = 1, unit = TimeUnit.HOURS)
 @Lock(LockType.READ)
 public class BeanCallsBackDownloadPO {

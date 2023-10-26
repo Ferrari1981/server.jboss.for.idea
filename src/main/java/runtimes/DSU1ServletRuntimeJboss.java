@@ -46,15 +46,12 @@ public class DSU1ServletRuntimeJboss extends HttpServlet {
      // super.doGet(req, resp);
            ЛОГ = getServletContext();
          asyncContext=req.getAsyncContext();
-
+        // TODO: 22.05.2023 lister asynccontext
+        classListrerForAsyncProccer.методСлушатель(    asyncContext,ЛОГ);
         asyncContext.start(new Runnable() {
             @Override
             public void run() {
                 try {
-                    // TODO: 22.05.2023 lister asynccontext
-                    classListrerForAsyncProccer.методСлушатель(    asyncContext,ЛОГ);
-
-
                     //TODO ЗАПУСКАЕМ КОДЕ МЕТОДА GET()
                     sessionBeanGETRuntimeJboss.МетодГлавныйRuntimeJboss(ЛОГ,  (HttpServletRequest) asyncContext.getRequest(),  (HttpServletResponse) asyncContext.getResponse());
                     ЛОГ.log("\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +

@@ -25,9 +25,8 @@ import java.util.concurrent.TimeUnit;
 /**
  * Session Bean implementation class BeanGetLoginAndPasswords
  */
-@Stateless(mappedName = "SessionBeanAynt")
+@Stateless(mappedName = "beanGetLoginAndPasswords")
 @LocalBean
-@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
 @TransactionTimeout(value = 1, unit = TimeUnit.HOURS)
 public class BeanGetLoginAndPasswords {
 
@@ -47,7 +46,7 @@ public class BeanGetLoginAndPasswords {
 
 
     @SuppressWarnings("unused")
-    public  Boolean МетодGetLoginAndPassword(@NotNull ServletContext ЛОГ,
+    public  Boolean МетодGetsLoginAndPassword(@NotNull ServletContext ЛОГ,
                                                     @NotNull HttpServletRequest request,
                                                     @NotNull HttpSession sessionEJB) {
         int РазрешонныеПрава = 2;
@@ -62,7 +61,7 @@ public class BeanGetLoginAndPasswords {
             String IDДевайсаКлиента =  Optional.ofNullable(((HttpServletRequest) request).getHeader("id_device_androis") ).orElse("");
             ЛОГ.log(" ЛогинОтКлиента " +ЛогинОтКлиента+" ЛогинОтКлиента " + ЛогинОтКлиента );
             ////// TODO полученный нданные от Клиента
-            if (ЛогинОтКлиента.trim().length()>3 && ПарольОтКлиента.trim().length()>3 ) {
+            if (! ЛогинОтКлиента.trim().isEmpty() && !  ПарольОтКлиента.trim().isEmpty() &&  ! IDДевайсаКлиента.trim().isEmpty() ) {
                 // TODO: 10.03.2023 получение сессиии HIREBIANTE
                 session = sessionSousJboss.getCurrentSession();
                 // TODO: 10.03.2023 получение сессиии Transaction

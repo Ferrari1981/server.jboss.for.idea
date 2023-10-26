@@ -18,9 +18,8 @@ import java.util.concurrent.TimeUnit;
 /**
  * Session Bean implementation class BeanPOST
  */
-@Stateless(mappedName = "SessionBeanForPOST")
+@Stateless(mappedName = "beanPOST")
 @LocalBean
-@TransactionAttribute(   TransactionAttributeType.REQUIRES_NEW)
 @TransactionTimeout(value = 1, unit = TimeUnit.HOURS)
 @Asynchronous
 public class BeanPOST {

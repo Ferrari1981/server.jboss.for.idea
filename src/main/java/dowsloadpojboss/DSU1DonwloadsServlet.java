@@ -44,12 +44,12 @@ public class DSU1DonwloadsServlet extends HttpServlet {
      // super.doGet(req, resp);
            ЛОГ = getServletContext();
             asyncContext=req.getAsyncContext();
+        // TODO: 22.05.2023 lister asynccontext
+        classListrerForAsyncProccer.методСлушатель(    asyncContext,ЛОГ);
                     asyncContext.start(new Runnable() {
                         @Override
                         public void run() {
                             try {
-                                // TODO: 22.05.2023 lister asynccontext
-                                classListrerForAsyncProccer.методСлушатель(    asyncContext,ЛОГ);
                                 // TODO: 24.07.2023 запуск обновение ПО
                             beanCallsBackDownloadPO.     МетодЗапускаОбновлениеПО(ЛОГ, (HttpServletRequest) asyncContext.getRequest(),  (HttpServletResponse) asyncContext.getResponse());
                           //  beanCallsBackDownloadPO.     МетодЗапускаОбновлениеПО(ЛОГ, req,  resp);
